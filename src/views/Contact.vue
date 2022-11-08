@@ -3,7 +3,7 @@
   <HelloWorld  msg="Soy un contacto"/>
 
 </template>
-<script>
+<script lang="ts">
 import HelloWorld from "../components/HelloWorld.vue";
 export default {
   components: {HelloWorld}

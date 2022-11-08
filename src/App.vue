@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <nav>
+  <!-- <nav>
     <router-link to="/">Home</router-link>  | <router-link to="/contact">Contact</router-link>
-  </nav>
+  </nav> -->
   <main>
     <router-view />
   </main>
