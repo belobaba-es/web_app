@@ -14,11 +14,16 @@ import PrimeVue from 'primevue/config';
 import BadgeDirective from 'primevue/badgedirective';
 import StyleClass from 'primevue/styleclass';
 import Ripple from 'primevue/ripple';
-
+import TabMenu from 'primevue/tabmenu';
+import Divider from 'primevue/divider';
+import Button from 'primevue/button';
 
 createApp(App)
 .use(Router)
 .use(PrimeVue)
+.component('TabMenu', TabMenu)
+.component('Divider', Divider)
+.component('Button', Button)
 .directive('badge', BadgeDirective)
 .directive('styleclass', StyleClass)
 .directive('ripple', Ripple)
