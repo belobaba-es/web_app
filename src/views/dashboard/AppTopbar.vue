@@ -1,12 +1,12 @@
 <template>
 	<div class="layout-topbar">
 		<router-link to="/" class="layout-topbar-logo">
-			<img alt="Logo" :src="'/src/assets/logo.svg'" />
+			<img alt="Logo" :src="'/src/assets/icons/logo.svg'" />
 			<span></span>
 		</router-link>
-		<button class="p-link layout-menu-button layout-topbar-button" >
+		<Button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
 			<i class="pi pi-bars"></i>
-		</button>
+		</Button>
 
 		<button class="p-link layout-topbar-menu-button layout-topbar-button"
 		    v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'scalein', 
@@ -15,27 +15,25 @@
 		</button>
 		<ul class="layout-topbar-menu hidden lg:flex origin-top">
 			
-			
 			<li>
-				
-					<p style="margin: 0; font-size: 0.8em;">Mi Saldo</p>
+				<div>
+					<p style="margin: 0; font-size: 12px;">Mi Saldo</p>
 					<span>14.000.000</span>
+
+				</div>
 
 				
 			</li>
 			<li>
-				<button class="p-link layout-topbar-button"
+				<Button class="p-button-outlined" >
+					<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>
 					
-					@click="logout">
-					<i class="pi pi-bell"></i>
-					<span>Cerrar Sesión</span>
-				</button>
-
+				</Button>
 			</li>
 			
 		</ul>
 		<SplitButton label="Save"  :model="items" class="p-button-text mr-2 mb-2">
-			<img alt="logo" src="/src/assets/maletin.svg" style="width: 2.5rem"/>
+			<img alt="logo" src="/src/assets/icons/maletin.svg" style="width: 2.5rem"/>
 			<span style="margin: auto 0;">Pintosoft CA</span>
 		</SplitButton>
 		
@@ -46,11 +44,13 @@
 
 import Tooltip from 'primevue/tooltip';
 import SplitButton from 'primevue/splitbutton'
+import Button from 'primevue/button';
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
 	components: {
-		SplitButton
+		SplitButton,
+		Button
 	},
 	directives: {
 		'tooltip': Tooltip
@@ -81,27 +81,31 @@ export default defineComponent({
 			},
 			{
 				label: 'Contacto',
-				icon: 'pi ',
-				class: 'example',
+				icon: 'pi pi-phone',
+
 				command: () => {
 					
 				}
 			},
             {
-                label: 'Navigate',
-                items: [{
-                    label: 'Vue Website',
-                    icon: 'pi pi-external-link',
-                    url: 'https://vuejs.org/'
-                },
-                {
-                    label: 'Router',
-                    icon: 'pi pi-upload',
-                    command: () => {
-                        window.location.hash = "/fileupload"
-                    }
-                }
-            ]}
+				label: 'Ayuda',
+				icon: 'pi ',
+				class: 'icon-home',
+				command: () => {
+					
+				}
+            },
+			{
+				separator: true
+			},
+			{
+				label: 'Cerrar sesion',
+				icon: 'pi pi-sign-out',
+				command: () => {
+					
+				}
+            },
+
         ]);
 
 		const toggle = (event: any) =>{
@@ -116,27 +120,11 @@ export default defineComponent({
 			items
 		}
   	},
-	// methods: {
-	// 	onMenuToggle(event) {
-	// 		this.$emit('menu-toggle', event);
-	// 	},
-	// 	onTopbarMenuToggle(event) {
-	// 		this.$emit('topbar-menu-toggle', event);
-	// 	},
-	// 	topbarImage() {
-	// 		return  '/images/logo-horizontal.png' 
-	// 	},
-	// 	logout(){
-			
-	// 	}
-	// },
 });
 
 </script>
 
 <style lang="scss">
 	
-.example .p-menuitem-icon::before{
-	content: url(/src/assets/home.svg);;
-}
+
 </style>
