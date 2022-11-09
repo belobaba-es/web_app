@@ -17,6 +17,9 @@ import Ripple from 'primevue/ripple';
 import TabMenu from 'primevue/tabmenu';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import Dropdown from 'primevue/dropdown';
+import Checkbox from 'primevue/checkbox';
 
 createApp(App)
 .use(Router)
@@ -24,6 +27,9 @@ createApp(App)
 .component('TabMenu', TabMenu)
 .component('Divider', Divider)
 .component('Button', Button)
+.component('InputText', InputText)
+.component('Dropdown', Dropdown)
+.component('Checkbox', Checkbox)
 .directive('badge', BadgeDirective)
 .directive('styleclass', StyleClass)
 .directive('ripple', Ripple)
