@@ -20,6 +20,8 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
+import Password from 'primevue/password';
+import SelectButton from 'primevue/selectbutton';
 
 createApp(App)
 .use(Router)
@@ -30,6 +32,8 @@ createApp(App)
 .component('InputText', InputText)
 .component('Dropdown', Dropdown)
 .component('Checkbox', Checkbox)
+.component('Password', Password)
+.component('SelectButton', SelectButton)
 .directive('badge', BadgeDirective)
 .directive('styleclass', StyleClass)
 .directive('ripple', Ripple)
