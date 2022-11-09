@@ -8,6 +8,8 @@ import Partners from "./views/profile/Partners.vue";
 import Documents from "./views/profile/Documents.vue";
 import Settings from "./views/profile/Settings.vue";
 import Edit from "./views/profile/Edit.vue";
+import Deposit from "./views/deposit/Deposit.vue";
+import DepositFiat from "./views/deposit/Fiat.vue"
 
 export default createRouter({
     history: createWebHistory(),
@@ -39,6 +41,19 @@ export default createRouter({
                         {
                             path: 'settings',
                             component: Settings
+                        }
+                    ]
+                },
+                {
+                    path: '/deposit',
+                    children: [
+                        {
+                            path: '',
+                            component: Deposit
+                        },
+                        {
+                            path: 'fiat',
+                            component: DepositFiat
                         }
                     ]
                 },

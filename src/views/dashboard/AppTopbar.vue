@@ -46,6 +46,7 @@ import Tooltip from 'primevue/tooltip';
 import SplitButton from 'primevue/splitbutton'
 import Button from 'primevue/button';
 import { defineComponent, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
 	components: {
@@ -62,22 +63,19 @@ export default defineComponent({
 		}
   	},
 	setup (props,{emit}) {
+		const router = useRouter()
 		const menu = ref();
 		const onMenuToggle = (payload: any) => {
 			emit('menu-toggle', payload);
 		}
 
-		const logout = (event: Event) =>{
-
-		}
+		const logout = (event: Event) =>{}
 
 		const items = ref([
 			{
 				label: 'Mi Perfil',
 				icon: 'pi pi-user',
-				command: () => {
-				
-				}
+				command: () => router.push('/profile')
 			},
 			{
 				label: 'Contacto',

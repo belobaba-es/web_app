@@ -25,13 +25,12 @@ import AppMenu from './AppMenu.vue';
 import { defineComponent, ref, computed } from 'vue'
 
 export default defineComponent({
-  components: {
+    components: {
     'AppTopBar': AppTopBar,
     'AppMenu': AppMenu,
-  },
-  props: {
-  },
-  data() {
+    },
+    props: {},
+    data() {
         return {
             staticMenuInactive: false,
             example:true,
@@ -40,7 +39,7 @@ export default defineComponent({
                     label: '',
                     items: [
                         {label: 'Inicio', class: 'icon-home', icon: 'pi', to: '/'},
-                        {label: 'Depositos', class: 'icon-piggy-bank', icon: 'pi', to: '/',},
+                        {label: 'Depositos', class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
                         {label: 'Retiros', class: 'icon-bank', icon: 'pi', to: '/'},
                         {label: 'Billetera', class:'icon-wallet', icon: 'pi', to: '/'},
                         {label: 'Intercambio', class: 'icon-swap', icon: 'pi', to: '/'},

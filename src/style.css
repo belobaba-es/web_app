@@ -1,11 +1,26 @@
 @font-face {
   font-family: 'Kanit';
-  src: url('/src/assets/fonts/Kanit-Regular.ttf') format('ttf');
+  src: url('/src/assets/fonts/Kanit-Regular.ttf');
+  font-weight: 400;
 }
 
+@font-face {
+  font-family: 'Kanit';
+  src: url('/src/assets/fonts/Kanit-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Kanit';
+  src: url('/src/assets/fonts/Kanit-Bold.ttf');
+  font-weight: 800;
+}
+
+
+
 :root {
-  --font-family: Kanit, Avenir, Helvetica, Arial, sans-serif;
-  font-family: Kanit, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: 'Kanit',  Arial, sans-serif;
+  font-family: 'Kanit', Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -21,6 +36,7 @@
   -webkit-text-size-adjust: 100%;
 
   --surface-overlay: #E7E6E7;
+  --surface-ground: #FFFFFF;
   --primary-color: #088D82;
 }
 
