@@ -112,7 +112,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getAccountByID } from './services/profile.service';
+import { ProfileService } from './services/profile';
 
 const route = useRoute();
 const countries = ref([]);
@@ -142,11 +142,10 @@ const phone = ref({
 
 const isNaturalAccount = computed<boolean>(() => false);
 
+const profileService = ProfileService.instance();
+
 onMounted(async () => {
-    await getAccountByID(route.params.id)
-        .then(({ data }) => {
-            console.log(data);
-        });
+    profileService.getAccountByID(route.params.id).then(data => console.log(data));
 });
 
 </script>
