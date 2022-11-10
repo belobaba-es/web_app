@@ -1,4 +1,4 @@
-interface GeneralData {
+export interface GeneralData {
     email: string;
     name?: string | undefined;
     firstName?: string | undefined;

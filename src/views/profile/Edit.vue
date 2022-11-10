@@ -113,6 +113,9 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ProfileService } from './services/profile';
+import Dropdown from 'primevue/dropdown';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 const route = useRoute();
 const countries = ref([]);

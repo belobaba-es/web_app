@@ -50,6 +50,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import SelectButton from 'primevue/selectbutton';
+
 
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');

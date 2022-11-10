@@ -35,6 +35,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import Divider from 'primevue/divider';
+import Button from 'primevue/button';
+
 const router = useRouter()
 
 const onClickEditProfile = (): void => {

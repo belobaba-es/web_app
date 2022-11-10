@@ -14,26 +14,10 @@ import PrimeVue from 'primevue/config';
 import BadgeDirective from 'primevue/badgedirective';
 import StyleClass from 'primevue/styleclass';
 import Ripple from 'primevue/ripple';
-import TabMenu from 'primevue/tabmenu';
-import Divider from 'primevue/divider';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import Dropdown from 'primevue/dropdown';
-import Checkbox from 'primevue/checkbox';
-import Password from 'primevue/password';
-import SelectButton from 'primevue/selectbutton';
 
 createApp(App)
 .use(Router)
 .use(PrimeVue)
-.component('TabMenu', TabMenu)
-.component('Divider', Divider)
-.component('Button', Button)
-.component('InputText', InputText)
-.component('Dropdown', Dropdown)
-.component('Checkbox', Checkbox)
-.component('Password', Password)
-.component('SelectButton', SelectButton)
 .directive('badge', BadgeDirective)
 .directive('styleclass', StyleClass)
 .directive('ripple', Ripple)
