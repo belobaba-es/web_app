@@ -38,11 +38,12 @@
             </div>
         </div>
     </div>
+    
     <div class="grid">
         <div class="col-6">
             <div class="border-1 border-gray-300 p-4 border-round">
-                <p>Cambio de idioma</p>
-                <SelectButton v-model="languageSelected" :options="languages" aria-labelledby="single" />
+                <p>{{t('languageSelector')}}</p>
+                <SelectButton  v-model="languageSelected" :options="languages" aria-labelledby="single" optionLabel="name" @change="changeLang"/>
             </div>
         </div>
     </div>
@@ -50,13 +51,30 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+interface LangSelect {
+    name: string;
+    code: string
+}
+
+interface ChangeEvent<T> {
+    value: T
+}
+const { t, locale } = useI18n({
+      useScope: 'global'
+})
+
+const changeLang = (event: ChangeEvent<LangSelect>) => {
+    locale.value = event.value.code;
+}
 
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');
 const confirmNewPassword = ref<string>('');
 const showPassword = ref<boolean>(false);
-const languages = ref<string[]>(['EN', 'ESP']);
-const languageSelected = ref<string>('ESP');
+const languages = ref<LangSelect[]>([{name: 'ESP', code:'es'}, {name: 'EN', code:'en'}]);
+const languageSelected = ref<LangSelect>({name: 'EN', code:'en'});
 
 const toggleShowPassword = () => {
     showPassword.value = !showPassword.value
