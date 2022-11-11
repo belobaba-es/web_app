@@ -1,6 +1,5 @@
 <template>
-    <p>Depositos</p>
-    
+    <p>{{t('deposit')}} </p>
     
     <div class="grid">
         <div class="col-12">
@@ -33,13 +32,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-
+import { useI18n } from 'vue-i18n'
 interface tabItem {
     label: string;
     icon?: string;
     to: string;
 }
 
+const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1);
 
 const menuItems = ref<tabItem[]>([
