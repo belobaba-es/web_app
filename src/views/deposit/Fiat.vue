@@ -74,6 +74,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import Divider from 'primevue/divider';
 
 interface tabItem {
     label: string;
