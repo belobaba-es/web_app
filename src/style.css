@@ -18,8 +18,14 @@
 
 @font-face {
   font-family: 'Kanit';
+  src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Kanit';
   src: url('/src/assets/fonts/Kanit-Bold.ttf');
-  font-weight: 800;
+  font-weight: 700;
 }
 
 

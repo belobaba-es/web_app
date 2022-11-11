@@ -1,30 +1,22 @@
 <template>
-    <p>{{t('deposit')}} </p>
+    <p class="text-3xl">{{t('deposit')}} </p>
     
-    <div class="grid">
-        <div class="col-12">
-            <p class="text-center">  Elije el tipo de moneda</p>
+    <div class="grid justify-content-center">
+        <div class="col-12 text-center">
+            <span class="text-center border text-2xl ">{{t('selectCurrency')}} <b> {{t('currency')}}</b></span>
         </div>
-        <div class="col">
+        <div class="flex justify-content-evenly" >
             <router-link to="/deposit/fiat">
-                <div>
-                    <img alt="logo" src="/src/assets/icons/save-money.svg" style="width: 2.5rem"/>
-                    Billetera Fiat
-                </div>
-
+                <CardButon class="m-4" icon="/src/assets/icons/save-money.svg" :label="t('fiatWallet')"/>
             </router-link>
-            
-        </div>
-        <div class="col">
+       
             <router-link to="/deposit/crypto">
-                <div>
-                    <img alt="logo" src="/src/assets/icons/ewallet.svg" style="width: 2.5rem"/>
-                    Billetera Crypto
-                </div>
-
+                <CardButon class="m-4" icon="/src/assets/icons/ewallet.svg" :label="t('cryptoWallet')"/>
             </router-link>
 
         </div>
+        
+       
     </div>
 
     <router-view />
@@ -33,6 +25,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n'
+import CardButon from './components/CardButon.vue'
 interface tabItem {
     label: string;
     icon?: string;
@@ -59,5 +52,8 @@ const menuItems = ref<tabItem[]>([
 </script>
 
 <style lang="css">
-
+.border{
+    border-bottom: 1px solid #BFEFEB;
+    padding: 0.4rem 1rem;
+}
 </style>
