@@ -54,6 +54,10 @@ export default createRouter({
                         {
                             path: 'fiat',
                             component: DepositFiat
+                        },
+                        {
+                            path: 'crypto',
+                            component: DepositFiat
                         }
                     ]
                 },

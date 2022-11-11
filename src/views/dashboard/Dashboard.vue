@@ -21,14 +21,9 @@
 import { ref, computed } from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
+import { MenuItemCommandEvent } from 'primevue/menuitem';
 
-interface MenuI {
-    label: string;
-    class: string;
-    icon:  string;
-    to?:   string;
-    items: MenuI[];
-}
+
 const menu = [
     {
         label: '',
@@ -67,42 +62,17 @@ const onSidebarClick = () => {
 
 }
 
-const onMenuItemClick = (event:Event) =>{
+const onMenuItemClick = (event: MenuItemCommandEvent) =>{
 
-    // if (event.item && !event.item.items) {
+    if (event.item && !event.item.items) {
         
-    //     // this.overlayMenuActive = false;
-    //     // this.mobileMenuActive = false;
-    // }
+        // this.overlayMenuActive = false;
+        // this.mobileMenuActive = false;
+    }
 }
 
 </script>
-<!-- <script lang="ts">
-import AppTopBar from './AppTopbar.vue';
-import AppMenu from './AppMenu.vue';
 
-import { defineComponent, ref, computed } from 'vue'
-
-export default defineComponent({
-    components: {
-    'AppTopBar': AppTopBar,
-    'AppMenu': AppMenu,
-    },
-    props: {},
-    data() {
-        return {
-            
-        }
-    },
-    setup (props,{emit}) {
-        
-        
-        
-    },
-  
-})
-
-</script> -->
 
 <style >
 

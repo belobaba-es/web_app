@@ -22,37 +22,11 @@
 			</SplitButton>
 
 		</div>
-
-		<!-- <Button class="p-link layout-topbar-menu-button layout-topbar-button"
-		    v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'scalein', 
-			leaveToClass: 'hidden', leaveActiveClass: 'fadeout', hideOnOutsideClick: true}">
-			<i class="pi pi-ellipsis-v"></i>
-		</Button>
-		<ul class="layout-topbar-menu hidden lg:flex origin-top">
-			
-			<li>
-				<div>
-					<p style="margin: 0; font-size: 12px;">Mi Saldo</p>
-					<span>14.000.000</span>
-
-				</div>
-
-				
-			</li>
-			<li>
-				<Button class="p-button-outlined" >
-					<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>
-					
-				</Button>
-			</li>
-			
-		</ul> -->
 		
 	</div>
 </template>
 
 <script lang="ts" setup>
-import Tooltip from 'primevue/tooltip';
 import SplitButton from 'primevue/splitbutton'
 import Button from 'primevue/button';
 import { ref } from 'vue'
@@ -100,8 +74,5 @@ const items = ref([
 
 
 <style lang="scss">
-.margin-1{
-	margin: 0 1rem;
-}
 
 </style>
