@@ -1,5 +1,11 @@
 @font-face {
   font-family: 'Kanit';
+  src: url('/src/assets/fonts/Kanit-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Kanit';
   src: url('/src/assets/fonts/Kanit-Regular.ttf');
   font-weight: 400;
 }
@@ -26,7 +32,7 @@ html, body {
   font-family: 'Kanit', Arial, sans-serif;
   font-size: 10pt;
   line-height: 24px;
-  font-weight: 400;
+  font-weight: 300;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -38,7 +44,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --surface-overlay: #E7E6E7;
+  --surface-overlay: #f9f9f9;
   --surface-ground: #FFFFFF;
   --primary-color: #088D82;
 }
