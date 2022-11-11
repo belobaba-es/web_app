@@ -32,8 +32,8 @@ const fileName = computed<string>(() => {
 })
 
 const substringFileName = computed(() => {
-    const text = fileName.value.substring(0, 25);
-    return  fileName.value.length >= 25 ? `${text} ...` : fileName.value;
+    const text = fileName.value.substring(0, 10);
+    return  fileName.value.length >= 10 ? `${text} ...` : fileName.value;
 })
 </script>
 

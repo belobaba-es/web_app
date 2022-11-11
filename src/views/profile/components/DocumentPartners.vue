@@ -1,45 +1,29 @@
 <template>
-    <div class="pt-5">
-        <h1 class="text-2xl">Documentos</h1>
-    </div>
-    <div class="mb-4">
-        <p class="font-medium text-sm uppercase">COMPANY - OWNERSHIP STRUCTURE</p>
-    </div>
-    <div class="border-2 border-200 border-solid p-3">
-        <div class="grid">
-            <div v-for="document in documents" class="col-12 md:col-2">
-                <Document :document=document />
+    <div class="border-2 border-200 border-solid border-round-left border-round-right">
+        <div class="px-3 pt-3 flex justify-content-between align-items-center">
+            <div>
+                <p class="font-medium text-sm">Pedro Gonzalez</p>
+            </div>
+            <div>
+                <img src="../../../assets/icons/icon-user.svg" alt="">
             </div>
         </div>
-    </div>
-    <div class="my-4">
-        <p class="font-medium text-sm uppercase">SHAREHOLDERS - IDENTITY DOCUMENT</p>
-    </div>
-    <div class="grid">
-        <div class="col-4">
-            <DocumentPartners />
+        <Divider type="solid" />
+        <div class="px-2">
+            <div class="grid">
+                <div v-for="document in documents" class="col-12 md:col-6">
+                    <Document :document=document />
+                </div>
+            </div>
         </div>
-        <div class="col-4">
-            <DocumentPartners />
-        </div>
-        <div class="col-4">
-            <DocumentPartners />
-        </div>
-    </div>
-    <div class="mt-5">
-        <Button 
-            label="Actualizar Documentos" 
-            class="p-button-outlined p-button-secondary" 
-        />
     </div>
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button';
+import Divider from 'primevue/divider';
 import { ref } from 'vue';
-import Document from './components/Document.vue';
-import DocumentPartners from './components/DocumentPartners.vue';
-import { Document as DocumentType } from './types/document.interface';
+import { Document as DocumentType } from '../types/document.interface';
+import Document from './Document.vue';
 
 const documents = ref<DocumentType[]>([
     {
