@@ -22,10 +22,19 @@ import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import Password from 'primevue/password';
 import SelectButton from 'primevue/selectbutton';
+import { createI18n } from 'vue-i18n';
+import messages from '@intlify/vite-plugin-vue-i18n/messages'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  messages
+});
 
 createApp(App)
 .use(Router)
 .use(PrimeVue)
+.use(i18n)
 .component('TabMenu', TabMenu)
 .component('Divider', Divider)
 .component('Button', Button)
