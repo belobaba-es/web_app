@@ -116,6 +116,7 @@ import { ProfileService } from './services/profile';
 import Dropdown from 'primevue/dropdown';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import { GeneralData } from './types/general-data.interface';
 
 const route = useRoute();
 const countries = ref([]);
