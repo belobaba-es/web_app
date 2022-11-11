@@ -52,6 +52,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n'
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import SelectButton from 'primevue/selectbutton';
 
 interface LangSelect {
     name: string;
@@ -68,6 +71,7 @@ const { t, locale } = useI18n({
 const changeLang = (event: ChangeEvent<LangSelect>) => {
     locale.value = event.value.code;
 }
+
 
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');

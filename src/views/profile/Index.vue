@@ -1,6 +1,7 @@
 <template>
-    <div class="pt-5">
+    <div class="pt-5 flex justify-content-between align-items-center">
         <h1 class="text-2xl">Datos personales</h1>
+        <Button label="Editar" icon="pi pi-pencil" iconPos="right" class="p-button-link" @click="onClickEditProfile()" />
     </div>
     <div class="card">
         <h5 class="text-base text-600">Nombre completo</h5>
@@ -17,7 +18,6 @@
 
     <div class="pt-5 flex justify-content-between align-items-center">
         <h1 class="text-2xl">Informacion de contacto</h1>
-        <Button label="Editar" icon="pi pi-pencil" iconPos="right" class="p-button-link" @click="onClickEditProfile()" />
     </div>
     <div class="card">
         <h5 class="text-base text-600">Email</h5>
@@ -35,10 +35,13 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import Divider from 'primevue/divider';
+import Button from 'primevue/button';
+
 const router = useRouter()
 
 const onClickEditProfile = (): void => {
-    router.push(`/profile/edit/1`)
+    router.push(`/profile/edit/8ffb9e5c-0f39-4f3d-96ad-1579f514ff05`)
 }
 
 </script>

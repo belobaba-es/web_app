@@ -3,11 +3,43 @@
         <h1 class="text-2xl">Datos accionistas</h1>
     </div>
     <div class="formgrid grid">
-        <div class="field col-8">
+        <div v-if="!isNaturalAccount" class="field col-4">
+            <label>Nombre</label>
+            <InputText 
+                type="text" 
+                v-model="generalData.name" 
+                class="w-full" 
+            />
+        </div>
+        <div v-if="isNaturalAccount" class="field col-4">
+            <label>First Name</label>
+            <InputText 
+                type="text" 
+                v-model="generalData.firstName" 
+                class="w-full" 
+            />
+        </div>
+        <div v-if="isNaturalAccount" class="field col-4">
+            <label>Middle Name</label>
+            <InputText 
+                type="text" 
+                v-model="generalData.middleName" 
+                class="w-full" 
+            />
+        </div>
+        <div v-if="isNaturalAccount" class="field col-4">
+            <label>Last Name</label>
+            <InputText 
+                type="text" 
+                v-model="generalData.lastName" 
+                class="w-full" 
+            />
+        </div>
+        <div class="field col-4">
             <label>Email</label>
             <InputText 
                 type="text" 
-                v-model="form.email" 
+                v-model="generalData.email" 
                 class="w-full" 
             />
         </div>
@@ -15,19 +47,20 @@
             <label>Teléfono</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
-                    +58
+                    {{ phone.phoneCountry }}
                 </span>
                 <InputText 
                     id="phoneNumber" 
                     type="text" 
                     class="w-full" 
+                    v-model="phone.phoneNumber"
                 />
             </div>
         </div>
         <div class="field col-4">
             <label>Pais</label>
             <Dropdown 
-                v-model="form.country" 
+                v-model="address.country" 
                 :options="countries" 
                 optionLabel="name" 
                 option-value="code"
@@ -38,7 +71,7 @@
         <div class="field col-4">
             <label>Estado</label>
             <Dropdown 
-                v-model="form.state" 
+                v-model="address.region" 
                 :options="states" 
                 optionLabel="name" 
                 option-value="code"
@@ -50,7 +83,7 @@
             <label>Ciudad</label>
             <InputText 
                 type="text" 
-                v-model="form.city" 
+                v-model="address.city" 
                 class="w-full" 
             />
         </div>
@@ -58,7 +91,7 @@
             <label>Direccion 1</label>
             <InputText 
                 type="text" 
-                v-model="form.address1" 
+                v-model="address.streetOne" 
                 class="w-full" 
             />
         </div>
@@ -66,20 +99,9 @@
             <label>Direccion 2</label>
             <InputText 
                 type="text" 
-                v-model="form.address2" 
+                v-model="address.streetTwo" 
                 class="w-full" 
             />
-        </div>
-        <div class="field col-12 flex align-items-center">
-            <Checkbox 
-                v-model="form.terms" 
-                :binary="true" 
-                required
-                input-id="terms"
-            />
-            <label for="terms" class="mt-1 ml-3">
-                Acepto las <RouterLink to="/" class=" font-medium text-900">condiciones generales</RouterLink> y la <RouterLink to="/" class=" font-medium text-900">política de confidencialidad</RouterLink>
-            </label>
         </div>
         <div class="field col-12 flex align-items-center">
             <Button label="Guardar" class="px-5"/>
@@ -88,34 +110,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { ProfileService } from './services/profile';
+import Dropdown from 'primevue/dropdown';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import { GeneralData } from './types/general-data.interface';
 
-const countries = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-])
+const route = useRoute();
+const countries = ref([]);
+const states = ref([])
 
-const states = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-])
-
-const form = ref({
+const generalData = ref<GeneralData>({
     email: '',
-    phoneNumber: '',
-    country: '',
-    state: '',
-    city: '',
-    address1: '',
-    address2: '',
-    terms: false
+    name: undefined,
+    lastName: undefined,
+    middleName: undefined,
+    firstName: undefined,
 })
+
+const address = ref({
+    streetOne: "",
+    streetTwo: "",
+    city: "",
+    country: "",
+    postalCode: "",
+    region: ""
+})
+
+const phone = ref({
+    phoneNumber: "4249123703",
+    phoneCountry: "+58"
+})
+
+const isNaturalAccount = computed<boolean>(() => false);
+
+const profileService = ProfileService.instance();
+
+onMounted(async () => {
+    profileService.getAccountByID(route.params.id).then(data => console.log(data));
+});
 
 </script>
 

@@ -5,6 +5,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import TabMenu from 'primevue/tabmenu';
 
 interface tabItem {
     label: string;
