@@ -16,13 +16,13 @@
         <p class="font-medium text-sm uppercase">SHAREHOLDERS - IDENTITY DOCUMENT</p>
     </div>
     <div class="grid">
-        <div class="col-4">
+        <div class="col-12 md:col-4">
             <DocumentPartners />
         </div>
-        <div class="col-4">
+        <div class="col-12 md:col-4">
             <DocumentPartners />
         </div>
-        <div class="col-4">
+        <div class="col-12 md:col-4">
             <DocumentPartners />
         </div>
     </div>

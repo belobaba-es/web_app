@@ -3,7 +3,7 @@
         <h1 class="text-2xl">Cambiar contraseña</h1>
     </div>
     <div class="grid">
-        <div class="col-6">
+        <div class="col-12 md:col-6">
             <div class="border-1 border-gray-300 p-4 border-round">
                 <div class="field">
                     <label>Escribe te contraseña actual</label>
@@ -40,7 +40,7 @@
     </div>
     
     <div class="grid">
-        <div class="col-6">
+        <div class="col-12 md:col-6">
             <div class="border-1 border-gray-300 p-4 border-round">
                 <p>{{t('languageSelector')}}</p>
                 <SelectButton  v-model="languageSelected" :options="languages" aria-labelledby="single" optionLabel="name" @change="changeLang"/>
