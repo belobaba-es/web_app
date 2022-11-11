@@ -36,7 +36,7 @@ export default createRouter({
                         },
                         {
                             path: 'documentation',
-                            component: Documents
+                            component: Documents,
                         },
                         {
                             path: 'settings',
