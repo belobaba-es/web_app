@@ -1,6 +1,5 @@
 <template>
 	<div class="layout-menu-container">
-		
 		<AppSubmenu 
 			:items="model" 
 			class="layout-menu" 
