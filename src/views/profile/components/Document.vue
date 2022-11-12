@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 flex-column border-2 border-200 border-solid surface-100 cursor-pointer">
-        <div class="flex justify-content-center mb-3">
-            <img src="../../../assets/icons/icon-document.svg" alt="" srcset="">
+        <div class="flex justify-content-center mb-3 icon-document-file">
+            <i class="pi"></i>
         </div>
         <div class="flex justify-content-center" v-tooltip.top="fileName">
             <span>{{ substringFileName }}</span>

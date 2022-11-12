@@ -1,5 +1,5 @@
 <template>
-    <TabMenu :model="menuItems" v-model:activeIndex="active" />
+    <TabMenu :model="menuItems" v-model:activeIndex="active" class="profile-tabmenu" />
     <router-view />
 </template>
 
@@ -35,28 +35,12 @@ const menuItems = ref<tabItem[]>([
 ])
 </script>
 
-<style lang="css">
-.p-tabmenu .p-tabmenu-nav {
-    background: transparent!important;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 2px 0;
-}
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    background: transparent!important;
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    border: solid #dee2e6;
-    border-width: 0 0 2px 0;
-    border-color: transparent transparent #dee2e6 transparent;
-    background: transparent!important;
-    color: #6c757d;
-    padding: 1rem;
-    font-weight: 600;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    transition: box-shadow 0.2s;
-    margin: 0 0 -2px 0;
+<style lang="scss" scoped>
+::v-deep(.p-tabmenu.p-component.profile-tabmenu) {
+    ul.p-tabmenu-nav.p-reset {
+        background: red!important;
+        border: none;
+        border-width: 0 0 2px 0;
+    }
 }
 </style>

@@ -4,8 +4,8 @@
             <div>
                 <p class="font-medium text-sm">Pedro Gonzalez</p>
             </div>
-            <div>
-                <img src="../../../assets/icons/icon-user.svg" alt="">
+            <div class="icon-profile-user">
+                <i class="pi"></i>
             </div>
         </div>
         <Divider type="solid" />
