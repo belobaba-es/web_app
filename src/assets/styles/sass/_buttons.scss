@@ -1,0 +1,20 @@
+.p-button.p-button-text{
+    color: var(--primary-color);
+}
+  
+.p-button.p-button-text:enabled:hover {
+    // background: rgba(33, 150, 243, 0.04);
+    color: var(--primary-color);
+    border-color: transparent;
+}
+
+.p-button, .p-button:hover, .p-button:enabled:hover {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+  .p-selectbutton .p-button.p-highlight:hover,
+  .p-selectbutton .p-button.p-highlight {
+    background: var(--surface-overlay);
+    border-color: var(--surface-overlay);
+    color: #1B1B19;
+  }
