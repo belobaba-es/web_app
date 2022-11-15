@@ -48,13 +48,14 @@ const items = ref([
 	},
 	{
 		label: 'Contacto',
-		icon: 'pi pi-phone',
+		icon: 'pi',
+		class: 'icon-headset',
 		command: () => {}
 	},
 	{
 		label: 'Ayuda',
 		icon: 'pi ',
-		class: 'icon-home',
+		class: 'icon-help',
 		command: () => {}
 	},
 	{
