@@ -1,80 +1,79 @@
 <template>
-	<div :class="containerClass" @click="onWrapperClick">
-         <AppTopBar  @menu-toggle="onMenuToggle"/>
-        <div class="layout-sidebar" @click="onSidebarClick">
-            <AppMenu :model="menu" @menuitem-click="onMenuItemClick" />
-        </div> 
+  <div :class="containerClass" @click="onWrapperClick">
+    <AppTopBar @menu-toggle="onMenuToggle"/>
+    <div class="layout-sidebar" @click="onSidebarClick">
+      <AppMenu :model="menu" @menuitem-click="onMenuItemClick"/>
+    </div>
 
-        <div class="layout-main-container">
-            <div class="layout-main">
-                <router-view />
-            </div>
-        </div>
+    <div class="layout-main-container">
+      <div class="layout-main">
+        <router-view/>
+      </div>
+    </div>
 
-        <transition name="layout-mask">
-            <div class="layout-mask p-component-overlay" v-if="mobileMenuActive" @click="onMenuToggle"></div>
-        </transition>
-	</div>
-    
+    <transition name="layout-mask">
+      <div class="layout-mask p-component-overlay" v-if="mobileMenuActive" @click="onMenuToggle"></div>
+    </transition>
+  </div>
+
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
-import { MenuItemCommandEvent } from 'primevue/menuitem';
+import {MenuItemCommandEvent} from 'primevue/menuitem';
 import {useI18n} from "vue-i18n";
-const { t } = useI18n({ useScope: 'global' })
+
+const {t} = useI18n({useScope: 'global'})
 
 const menu = [
-    {
-        label: '',
-        items: [
-            {label: t('home'), class: 'icon-home', icon: 'pi', to: '/'},
-            {label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
-            {label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/'},
-            {label: t('wallet'), class:'icon-wallet', icon: 'pi', to: '/'},
-            {label: t('Swap'), class: 'icon-swap', icon: 'pi', to: '/'},
-        ]
-        
-    },
+  {
+    label: '',
+    items: [
+      {label: t('home'), class: 'icon-home', icon: 'pi', to: '/'},
+      {label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
+      {label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/'},
+      {label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/'},
+      {label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/'},
+    ]
+
+  },
 ]
 
 
 const mobileMenuActive = ref(false);
 const overlayMenuActive = ref(false)
 
-const containerClass = computed(()=>
+const containerClass = computed(() => {
+      return ['layout-wrapper', 'layout-static', {
+        'layout-mobile-sidebar-active': mobileMenuActive.value,
 
-    {
-        return ['layout-wrapper', 'layout-static', {
-            'layout-mobile-sidebar-active': mobileMenuActive.value,
-
-        }];
+      }];
     }
-) 
+)
 
-const onMenuToggle = () =>{
-    mobileMenuActive.value = !mobileMenuActive.value
+const onMenuToggle = () => {
+  mobileMenuActive.value = !mobileMenuActive.value
 }
-const onWrapperClick = ()=> {
+const onWrapperClick = () => {
 
 }
 const onSidebarClick = () => {
 
 }
 
-const onMenuItemClick = (event: MenuItemCommandEvent) =>{
+const onMenuItemClick = (event: MenuItemCommandEvent) => {
 
-    if (event.item && !event.item.items) {
-        
-        // this.overlayMenuActive = false;
-        // this.mobileMenuActive = false;
-    }
+  if (event.item && !event.item.items) {
+
+    // this.overlayMenuActive = false;
+    // this.mobileMenuActive = false;
+  }
 }
 
 </script>
 
 
-<style >
+<style>
 
 </style>

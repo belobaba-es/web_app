@@ -14,16 +14,8 @@ import BadgeDirective from 'primevue/badgedirective'
 import StyleClass from 'primevue/styleclass'
 import Ripple from 'primevue/ripple'
 
-import { createI18n } from 'vue-i18n'
-import messages from '@intlify/vite-plugin-vue-i18n/messages'
-
 import Tooltip from 'primevue/tooltip'
-
-const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  messages,
-})
+import i18n from './i18n'
 
 createApp(App)
   .use(Router)
