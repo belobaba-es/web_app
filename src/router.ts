@@ -10,6 +10,7 @@ import Settings from "./views/profile/Settings.vue";
 import Edit from "./views/profile/Edit.vue";
 import Deposit from "./views/deposit/Deposit.vue";
 import DepositFiat from "./views/deposit/Fiat.vue"
+import DepositCrypto from "./views/deposit/Crypto.vue"
 
 export default createRouter({
     history: createWebHistory(),
@@ -57,7 +58,7 @@ export default createRouter({
                         },
                         {
                             path: 'crypto',
-                            component: DepositFiat
+                            component: DepositCrypto
                         }
                     ]
                 },
