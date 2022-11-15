@@ -19,7 +19,9 @@
     "wallet": "Billetera",
     "fiatWallet":"Billetera Fiat",
     "cryptoWallet": "Billetera Cripto",
+    "selectCrypto": "Seleccione cripto",
     "search": "Buscar",
+    "createWallet": "Crear billetera",
     "searchWallet": "Buscar billetera cripto",
     "newWallet": "Agregar nueva dirección de billetera",
     "swap": "Intercambio",
@@ -87,5 +89,6 @@
     "labelCurrentPassword": "Escribe tu contraseña actual",
     "labelNewPassword": "Nueva contraseña",
     "labelConfirmNewPassword": "Confirmar tu nueva contraseña",
-    "withdraw": "Retiros"
+    "withdraw": "Retiros",
+    "done": "Hecho"
 }

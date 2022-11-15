@@ -1,5 +1,50 @@
 <template>
     <div>
+        <Dialog v-model:visible="displayNew">
+            <template #header>
+                <h3>Nueva dirección de billetera</h3>
+            </template>
+            <div class="grid">
+
+                <div class="field  ">
+                    
+                  <span>
+                      <label for="select-crypto">Select crypto</label>
+                      <Dropdown id="select-crypto" v-model="selectedAsset" :options="assets" optionLabel="name" placeholder="" />
+                          
+
+                  </span>
+              
+            </div>
+                
+
+
+            </div>
+
+            <template #footer>
+                <Button :label="t('createWallet')" icon="" autofocus />
+            </template>
+        </Dialog>
+
+        <Dialog v-model:visible="display">
+            <template #header>
+                <h3>Header</h3>
+            </template>
+
+            <div class="col-12 ">
+                <div class="p-inputgroup">
+                    <InputText :placeholder="t('walletAddress')" />
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-copy"></i>
+                    </span>
+                </div>
+            </div>
+
+            <template #footer>
+                <Button :label="t('done')" icon="pi pi-check" autofocus />
+            </template>
+        </Dialog>
+
         <p class="text-3xl">{{t('deposit')}} / Crypto</p>
         
         <div class="grid">
@@ -9,11 +54,10 @@
                     <i class="pi pi-search" />
                     <InputText type="text" class="b-gray"  :placeholder="t('searchWallet')" />
                     <Button class="p-button search-btn" :label="t('search')"/>
-                    
                 </span>
             </div>
             <div class="col-4">
-                <Button class="p-button" :label="t('newWallet')"/>
+                <Button class="p-button" :label="t('newWallet')" @click="displayNew = !displayNew"/>
             </div>
             <div class="col-10">
                 <div class="container">
@@ -22,12 +66,12 @@
                             <img src="/src/assets/icons/deposit-assets/litecoin.svg" alt="">
                         </div>
                         <span>{{item.name}}</span>
-                        <Button icon="pi pi-eye" class="p-button-text" label="ver direccion"> </Button>
+                        <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="display = !display"/>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <Button class="p-button" :label="t('newWallet')"/>
+                <Button class="p-button" :label="t('newWallet')" @click="displayNew = !displayNew"/>
             </div>
         </div>
     </div>
@@ -39,12 +83,16 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import Divider from 'primevue/divider';
+import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
 import { Asset } from './types/asset.interface';
 
 const { t } = useI18n({ useScope: 'global' })
 
 const value = ref('');
+const display = ref(false);
+const displayNew = ref(false);
+const selectedAsset = ref('')
 
 const assets = ref<Asset[]>([
         {
