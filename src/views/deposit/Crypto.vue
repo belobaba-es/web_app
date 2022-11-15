@@ -1,23 +1,26 @@
 <template>
     <div>
-        <Dialog v-model:visible="displayNew">
+        <Dialog v-model:visible="displayNew" :modal="true" closeIcon="pi pi-times-circle">
             <template #header>
-                <h3>Nueva dirección de billetera</h3>
+                <img src="/src/assets/icons/ewallet.svg" alt="" height="50">
             </template>
             <div class="grid">
+                <div class="col-12">
+                    <span class="text-xl txt-border-bottom mb-2">Nueva dirección de billetera</span>
 
-                <div class="field  ">
-                    
-                  <span>
-                      <label for="select-crypto">Select crypto</label>
-                      <Dropdown id="select-crypto" v-model="selectedAsset" :options="assets" optionLabel="name" placeholder="" />
-                          
-
-                  </span>
+                </div>
+                <div class="field col-12" style="display: grid;">
+                    <label for="select-crypto">Select crypto</label>
+                    <Dropdown id="select-crypto" v-model="selectedAsset" :options="assets" optionLabel="name" placeholder="" />
+                  
               
-            </div>
-                
-
+                </div>
+                <div class="field col-12" style="display: grid;">
+                    <label for="name">Nombre de la Billetera</label>
+                    <InputText id="name" type="text" v-model="value" />
+                  
+              
+                </div>
 
             </div>
 
@@ -45,7 +48,7 @@
             </template>
         </Dialog>
 
-        <p class="text-3xl">{{t('deposit')}} / Crypto</p>
+        <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">Crypto </span></p>
         
         <div class="grid">
             <div class="col-8 ">
@@ -62,7 +65,7 @@
             <div class="col-10">
                 <div class="container">
                     <div class="flex justify-content-between align-items-center asset-item" v-for="(item) in assets">
-                        <div class="asset-icon">
+                        <div class="asset-icon asset-ltc">
                             <img src="/src/assets/icons/deposit-assets/litecoin.svg" alt="">
                         </div>
                         <span>{{item.name}}</span>
@@ -261,10 +264,24 @@ const assets = ref<Asset[]>([
 }
 
 .asset-icon{
+    border-radius: 5%;
+}
+.asset-ltc::after{
+    content: "";
+    background-color: #43D5AE;
+    opacity: 0.2;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+.asset-icon{
     height: 56px;
     width: 56px;
+    margin: 0.5rem;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 .asset-icon > img {
     margin: auto 0;

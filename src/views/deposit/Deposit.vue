@@ -3,7 +3,7 @@
     
     <div class="grid justify-content-center">
         <div class="col-12 text-center">
-            <span class="text-center border text-2xl ">{{t('selectCurrency')}} <b> {{t('currency')}}</b></span>
+            <span class="text-center txt-border-bottom text-2xl ">{{t('selectCurrency')}} <b> {{t('currency')}}</b></span>
         </div>
         <div class="flex justify-content-evenly" >
             <router-link to="/deposit/fiat">
@@ -52,8 +52,5 @@ const menuItems = ref<tabItem[]>([
 </script>
 
 <style lang="css">
-.border{
-    border-bottom: 1px solid #BFEFEB;
-    padding: 0.4rem 1rem;
-}
+
 </style>
