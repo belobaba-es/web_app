@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-topbar">
-		<router-link to="/" class="layout-topbar-logo">
-			<img alt="Logo" :src="'/src/assets/icons/logo.svg'" />
+		<router-link to="/dashboard" class="layout-topbar-logo">
+			<img alt="Logo" :src="logo" />
 			<span></span>
 		</router-link>
 		<Button class="p-link layout-menu-button  lg:hidden layout-topbar-button p-button-text" @click="onMenuToggle">
@@ -32,6 +32,7 @@ import Button from 'primevue/button';
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {useI18n} from "vue-i18n";
+import logo from '../../assets/img/logo.svg'
 
 const router = useRouter()
 const menu = ref();

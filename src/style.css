@@ -69,6 +69,7 @@ html, body {
   --surface-ground: #FFFFFF;
   --primary-color: #00BEB0;
   --text-color: #1B1B19;
+
 }
 
 
@@ -120,4 +121,11 @@ html, body {
 }
 
 
+
+.container-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0 3rem 0;
+}
 
