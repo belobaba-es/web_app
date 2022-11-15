@@ -52,7 +52,8 @@ html, body {
 
   --surface-overlay: #f9f9f9;
   --surface-ground: #FFFFFF;
-  --primary-color: #088D82;
+
+  --primary-color: #00BEB0; 
   --text-color: #1B1B19;
 }
 
@@ -104,13 +105,5 @@ html, body {
   background: #e9ecef;
 }
 
-.p-button, .p-button:hover, .p-button:enabled:hover {
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
-}
-.p-selectbutton .p-button.p-highlight:hover,
-.p-selectbutton .p-button.p-highlight {
-  background: var(--surface-overlay);
-  border-color: var(--surface-overlay);
-  color: #1B1B19;
-}
+
+
