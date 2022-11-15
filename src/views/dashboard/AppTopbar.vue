@@ -9,7 +9,7 @@
 		</Button>
 		<div class="flex ">
 			<div class="mr-2 ml-2">
-				<p style="margin: 0; font-size: 12px;">Mi Saldo</p>
+				<p style="margin: 0; font-size: 12px;">{{t('balance')}}</p>
 				<span>14.000.000</span>
 			</div>
 			<Button class="p-button-outlined mr-2 ml-2" >
@@ -31,10 +31,13 @@ import SplitButton from 'primevue/splitbutton'
 import Button from 'primevue/button';
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import {useI18n} from "vue-i18n";
 
 const router = useRouter()
 const menu = ref();
 const emit = defineEmits(['menu-toggle'])
+
+const { t } = useI18n({ useScope: 'global' })
 
 const onMenuToggle = (payload: any) => {
 	emit('menu-toggle', payload);
@@ -42,18 +45,18 @@ const onMenuToggle = (payload: any) => {
 
 const items = ref([
 	{
-		label: 'Mi Perfil',
+		label: t('profile'),
 		icon: 'pi pi-user',
 		command: () => router.push('/profile')
 	},
 	{
-		label: 'Contacto',
 		icon: 'pi',
 		class: 'icon-headset',
+		label: t('contact'),
 		command: () => {}
 	},
 	{
-		label: 'Ayuda',
+		label: t('help'),
 		icon: 'pi ',
 		class: 'icon-help',
 		command: () => {}
@@ -62,7 +65,7 @@ const items = ref([
 		separator: true
 	},
 	{
-		label: 'Cerrar sesion',
+		label: t('logOut'),
 		icon: 'pi pi-sign-out',
 		command: () => {
 			

@@ -22,17 +22,18 @@ import { ref, computed } from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 import { MenuItemCommandEvent } from 'primevue/menuitem';
-
+import {useI18n} from "vue-i18n";
+const { t } = useI18n({ useScope: 'global' })
 
 const menu = [
     {
         label: '',
         items: [
-            {label: 'Inicio', class: 'icon-home', icon: 'pi', to: '/'},
-            {label: 'Depositos', class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
-            {label: 'Retiros', class: 'icon-bank', icon: 'pi', to: '/'},
-            {label: 'Billetera', class:'icon-wallet', icon: 'pi', to: '/'},
-            {label: 'Intercambio', class: 'icon-swap', icon: 'pi', to: '/'},
+            {label: t('home'), class: 'icon-home', icon: 'pi', to: '/'},
+            {label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
+            {label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/'},
+            {label: t('wallet'), class:'icon-wallet', icon: 'pi', to: '/'},
+            {label: t('Swap'), class: 'icon-swap', icon: 'pi', to: '/'},
         ]
         
     },

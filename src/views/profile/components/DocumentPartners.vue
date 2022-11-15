@@ -1,22 +1,16 @@
 <template>
-    <div class="border-2 border-200 border-solid border-round-left border-round-right">
-        <div class="px-3 pt-3 flex justify-content-between align-items-center">
-            <div>
-                <p class="font-medium text-sm">Pedro Gonzalez</p>
-            </div>
-            <div class="icon-profile-user">
-                <i class="pi"></i>
-            </div>
-        </div>
-        <Divider type="solid" />
-        <div class="px-2">
-            <div class="grid">
-                <div v-for="document in documents" class="col-12 md:col-6">
-                    <Document :document=document />
-                </div>
-            </div>
-        </div>
+  <Panel header="Pedro Gonzalez">
+    <template #icons>
+      <div class="icon-profile-user">
+        <i class="pi"></i>
+      </div>
+    </template>
+    <div class="grid">
+      <div v-for="document in documents" class="col-12 md:col-6">
+        <Document :document=document />
+      </div>
     </div>
+  </Panel>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +18,7 @@ import Divider from 'primevue/divider';
 import { ref } from 'vue';
 import { Document as DocumentType } from '../types/document.interface';
 import Document from './Document.vue';
+import Panel from 'primevue/panel';
 
 const documents = ref<DocumentType[]>([
     {

@@ -11,6 +11,7 @@ import Edit from "./views/profile/Edit.vue";
 import Deposit from "./views/deposit/Deposit.vue";
 import DepositFiat from "./views/deposit/Fiat.vue"
 import DepositCrypto from "./views/deposit/Crypto.vue"
+import PartnersEditDocument from "./views/profile/PartnersEditDocuments.vue"
 
 export default createRouter({
     history: createWebHistory(),
@@ -38,6 +39,10 @@ export default createRouter({
                         {
                             path: 'documentation',
                             component: Documents,
+                        },
+                        {
+                            path: 'documentation/company/edit',
+                            component: PartnersEditDocument,
                         },
                         {
                             path: 'settings',

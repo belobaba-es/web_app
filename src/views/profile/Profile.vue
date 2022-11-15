@@ -1,11 +1,13 @@
 <template>
-    <TabMenu :model="menuItems" v-model:activeIndex="active" class="profile-tabmenu" />
+    <TabMenu :model="menuItems" v-model:activeIndex="active" class="font-light" />
     <router-view />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import TabMenu from 'primevue/tabmenu';
+import {useI18n} from "vue-i18n";
+const { t } = useI18n({ useScope: 'global' })
 
 interface tabItem {
     label: string;
@@ -17,30 +19,27 @@ const active = ref<number>(1);
 
 const menuItems = ref<tabItem[]>([
     {
-        label: 'Perfil',
+        label: t('profile'),
         to: '/profile'
     },
     {
-        label: 'Accionistas',
+        label: t('shareholders'),
         to: '/profile/partners'
     },
     {
-        label: 'Documentación',
+        label: t('documents'),
         to: '/profile/documentation'
     },
     {
-        label: 'Ajustes',
+        label:t('setting'),
         to: '/profile/settings'
     }
 ])
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.p-tabmenu.p-component.profile-tabmenu) {
-    ul.p-tabmenu-nav.p-reset {
-        background: red!important;
-        border: none;
-        border-width: 0 0 2px 0;
-    }
+
+::v-deep(.p-tabmenuitem) {
+  font-size: 14pt;
 }
 </style>
