@@ -31,11 +31,10 @@
 
 <script lang="ts" setup>
 // import Badge from 'primevue/badge';
-import { MenuItem} from 'primevue/menuitem';
 import { ref, defineProps } from 'vue';
 
 defineProps({
-	items: Array<MenuItem>,
+	items: [],
 	root: {
 		type: Boolean,
 		default: false

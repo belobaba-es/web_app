@@ -10,11 +10,10 @@
 
 <script lang="ts" setup>
 import AppSubmenu from './AppSubmenu.vue';
-import { MenuItem, MenuItemCommandEvent } from 'primevue/menuitem';
 import { defineProps } from 'vue';
 
 defineProps<{
-	model: Array<MenuItem>,
+	model: [],
 }>()
 
 const emit = defineEmits(['menuitem-click']);
