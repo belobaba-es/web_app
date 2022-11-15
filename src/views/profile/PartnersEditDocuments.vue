@@ -9,7 +9,7 @@
     <div class="col-12 md:col-6">
       <Panel header="EMPRESA - CARGA DE DOCUMENTOS">
         <ScrollPanel style="width: 100%; height: 285px" class="custom">
-          <div class="mb-4">
+          <div>
             <p class="font-semibold">Tipo de documento empresa que indiquen la estructura de propiedad</p>
           </div>
           <div class="field">
@@ -80,7 +80,11 @@
     </div>
     <div class="col-12 md:col-6">
       <Panel header="ACCIONISTAS - CARGA DE DOCUMENTOS">
-
+        <ScrollPanel style="width: 100%; height: 285px" class="custom">
+          <DocumentPartnersEditForm />
+          <DocumentPartnersEditForm />
+          <DocumentPartnersEditForm />
+        </ScrollPanel>
       </Panel>
     </div>
   </div>
@@ -94,6 +98,7 @@ import FileUpload from 'primevue/fileupload';
 import Divider from "primevue/divider";
 import ScrollPanel from 'primevue/scrollpanel';
 import Chip from 'primevue/chip';
+import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue';
 
 const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
 const companyDocumentType = ref('');
