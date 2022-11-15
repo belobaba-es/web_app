@@ -1,5 +1,4 @@
 {
-    "example": "ezampllelelel",
     "loginTitle": "Usuarios Registrados",
     "loginSubtitle": "Bienvenido ¡Por favor ingrese sus datos!",
     "languageSelector": "Cambio de idioma",
@@ -22,6 +21,9 @@
     "wallet": "Billetera",
     "fiatWallet":"Billetera Fiat",
     "cryptoWallet": "Billetera Cripto",
+    "search": "Buscar",
+    "searchWallet": "Buscar billetera cripto",
+    "newWallet": "Agregar nueva dirección de billetera",
     "swap": "Swap",
     "countryLabel": "Pais",
     "countryPlaceholder": "Seleccionar país",

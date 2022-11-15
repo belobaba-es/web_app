@@ -21,6 +21,9 @@
     "wallet": "Wallet",
     "fiatWallet":"Fiat Wallet",
     "cryptoWallet": "Crypto wallet",
+    "search": "Search",
+    "searchWallet": "Search crypto wallet",
+    "newWallet": "Add new wallet address",
     "swap": "Swap",
     "save": "Save",
     "cancel": "Cancel",
@@ -79,5 +82,4 @@
     "roleLabel": "Position within the company",
     "rolePlaceholder": "Position within the company",
     "partnerTitle": "Shareholder data"
-
 }
