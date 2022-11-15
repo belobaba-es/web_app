@@ -1,12 +1,12 @@
 <template>
     <div class="pt-5">
-        <h1 class="text-2xl">Cambiar contraseña</h1>
+        <h1 class="text-2xl">{{t('changePassword')}}</h1>
     </div>
     <div class="grid">
         <div class="col-12 md:col-6">
             <div class="border-1 border-gray-300 p-4 border-round">
                 <div class="field">
-                    <label>Escribe te contraseña actual</label>
+                    <label>{{t('labelCurrentPassword')}}</label>
                     <div class="p-inputgroup">
                         <InputText :type="inputPasswordType" v-model="currentPassword" />
                         <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Nueva contraseña</label>
+                    <label>{{t('labelNewPassword')}}</label>
                     <div class="p-inputgroup">
                         <InputText :type="inputPasswordType" v-model="newPassword" />
                         <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Confirmar nueva contraseña</label>
+                    <label>{{t('labelConfirmNewPassword')}}</label>
                     <div class="p-inputgroup">
                         <InputText :type="inputPasswordType" v-model="confirmNewPassword" />
                         <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="field flex justify-content-end">
-                    <Button label="Guardar" class="px-5"/>
+                    <Button :label=btnSave class="px-5"/>
                 </div>
             </div>
         </div>
@@ -72,12 +72,13 @@ const changeLang = (event: ChangeEvent<LangSelect>) => {
     locale.value = event.value.code;
 }
 
+const btnSave = t('Save')
 
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');
 const confirmNewPassword = ref<string>('');
 const showPassword = ref<boolean>(false);
-const languages = ref<LangSelect[]>([{name: 'ESP', code:'es'}, {name: 'EN', code:'en'}]);
+const languages = ref<LangSelect[]>([{name: 'ES', code:'es'}, {name: 'EN', code:'en'}]);
 const languageSelected = ref<LangSelect>({name: 'EN', code:'en'});
 
 const toggleShowPassword = () => {

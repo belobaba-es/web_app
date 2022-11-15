@@ -62,7 +62,7 @@
     "shareholderFileBackLabel": "Back",
     "shareholderAddressLabel": "Proof of fiscal domicile",
     "balance": "My balance",
-    "profile": "Profile ",
+    "profile": "Profile",
     "setting": "Settings",
     "logOut": "Logout",
     "help": "Help",
@@ -78,6 +78,13 @@
     "titleViewRegisterPartner": "Shareholders",
     "roleLabel": "Position within the company",
     "rolePlaceholder": "Position within the company",
-    "partnerTitle": "Shareholder data"
-
+    "partnerTitle": "Shareholder data",
+    "contact": "Contact",
+    "loginTitle": "Registered users",
+    "loginSubtitle": "Welcome Please enter your details!",
+    "write": "Write",
+    "labelCurrentPassword": "Type your current password",
+    "labelNewPassword": "New password",
+    "labelConfirmNewPassword": "Confirm new password",
+    "withdraw": "Withdraw"
 }

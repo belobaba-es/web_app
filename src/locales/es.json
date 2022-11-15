@@ -22,7 +22,7 @@
     "wallet": "Billetera",
     "fiatWallet":"Billetera Fiat",
     "cryptoWallet": "Billetera Cripto",
-    "swap": "Swap",
+    "swap": "Intercambio",
     "countryLabel": "Pais",
     "countryPlaceholder": "Seleccionar país",
     "nameLabel": "Primer nombre",
@@ -79,6 +79,13 @@
     "titleViewRegisterPartner": "Accionistas",
     "roleLabel": "Cargo dentro de la empresa",
     "rolePlaceholder": "Cargo dentro de la empresa",
-    "partnerTitle": "Datos accionista"
-   
+    "partnerTitle": "Datos accionista",
+    "contact": "Contacto",
+    "loginTitle": "Usuarios Registrados",
+    "loginSubtitle": "Bienvenido ¡Por favor ingrese sus datos!",
+    "write": "Write",
+    "labelCurrentPassword": "Escribe tu contraseña actual",
+    "labelNewPassword": "Nueva contraseña",
+    "labelConfirmNewPassword": "Confirmar tu nueva contraseña",
+    "withdraw": "Retiros"
 }
