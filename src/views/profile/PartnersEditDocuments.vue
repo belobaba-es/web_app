@@ -8,7 +8,7 @@
   <div class="grid">
     <div class="col-12 md:col-6">
       <Panel header="EMPRESA - CARGA DE DOCUMENTOS">
-        <ScrollPanel style="width: 100%; height: 200px">
+        <ScrollPanel style="width: 100%; height: 285px" class="custom">
           <div class="mb-4">
             <p class="font-semibold">Tipo de documento empresa que indiquen la estructura de propiedad</p>
           </div>
@@ -21,11 +21,58 @@
             />
           </div>
           <div class="field">
-            <FileUpload mode="basic" name="demo[]" url="./upload"  />
+            <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
+            <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
+          </div>
+          <div class="grid px-2 gap-2">
+            <div class="col-auto">
+              <Chip
+                label="Archivo_1.jpg"
+                icon="pi pi-check"
+                removable 
+                removeIconClass="pi pi-trash"
+              />
+            </div>
+            <div class="col-auto">
+              <Chip
+                label="Archivo_1.jpg"
+                icon="pi pi-check"
+                removable 
+                removeIconClass="pi pi-trash"
+              />
+            </div>
+            <div class="col-auto">
+              <Chip
+                label="Archivo_1.jpg"
+                icon="pi pi-check"
+                removable 
+                removeIconClass="pi pi-trash"
+              />
+            </div>
+            <div class="col-auto">
+              <Chip
+                label="Archivo_1.jpg"
+                icon="pi pi-check"
+                removable 
+                removeIconClass="pi pi-trash"
+              />
+            </div>
           </div>
           <Divider />
           <div class="mb-4">
             <p class="font-semibold">Comprobante de domicilio fiscal</p>
+          </div>
+          <div class="field">
+            <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
+            <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
+          </div>
+          <div class="col-auto">
+            <Chip
+              label="Archivo_1.jpg"
+              icon="pi pi-check"
+              removable 
+              removeIconClass="pi pi-trash"
+            />
           </div>
         </ScrollPanel>
 
@@ -46,10 +93,15 @@ import { ref } from "vue";
 import FileUpload from 'primevue/fileupload';
 import Divider from "primevue/divider";
 import ScrollPanel from 'primevue/scrollpanel';
+import Chip from 'primevue/chip';
+
 const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
 const companyDocumentType = ref('');
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.p-chip {
+  border-radius: 3px;
+  padding: 10px 9px;
+}
 </style>
