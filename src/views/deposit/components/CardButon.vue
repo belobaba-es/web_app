@@ -15,7 +15,7 @@ defineProps({
 })
 </script>
 
-<style>
+<style scoped>
     .card{
         text-align: center;
         padding: 2rem 3rem;
