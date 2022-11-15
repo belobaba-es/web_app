@@ -66,12 +66,16 @@ html, body {
   -webkit-text-size-adjust: 100%;
 
   --surface-overlay: #f9f9f9;
-  --surface-ground: #FFFFFF;
+  --surface-ground: #f9f9f9;
   --primary-color: #00BEB0;
   --text-color: #1B1B19;
 
 }
 
+*:focus{
+  outline: 0
+
+}
 
 .icon-home .pi::before, 
 .icon-home .p-menuitem-icon::before{
@@ -128,4 +132,46 @@ html, body {
   justify-content: center;
   padding: 3rem 0 3rem 0;
 }
+.p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext {
+  border-radius: 00px;
+}
+.p-inputgroup input:hover, .p-inputgroup input:focus{
+  border: 1px solid #00BEB0 !important;
+  outline:none;
+}
+.p-inputtext {
+  padding: 0.8rem;
+  border: 1px solid #ECECEC;
+  box-sizing: initial;
+  font-family: KanitLight;
+  font-size: 1.1rem;
+}
 
+label {
+  font-size: 1.1rem;
+  font-family: KanitLight;
+}
+
+.container-end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.container-start {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: start;
+}
+
+.container-flex {
+  -webkit-box-flex: 1;
+}
+.float-right{
+  float: right;
+}
+.float-left {
+  float: left;
+}

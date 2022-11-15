@@ -1,29 +1,48 @@
 <template>
 
   <div class="container-center">
-    <img :src="logo"  alt="logo"/>
+    <img :src="logo" alt="logo"/>
   </div>
   <div class="container-main">
 
 
     <div class="lg:bg-contain container">
+
+      <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
+      <p class="font-extra-light text-center">{{ t('loginSubtitle') }}</p>
       <div class="pt-5">
-        <h1 class="text-center">{{t('loginTitle')}}</h1>
-      </div>
-      <p class="text-center">{{t('loginSubtitle')}}</p>
-
-        <div class="field">
-          <label class="font-light">{{t('email')}}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="form.user" @input="$emit('update:user', $event.target.value)"/>
+        <form @submit.prevent="handleSubmit" class="checkout-form">
+          <div class="field">
+            <label class="font-light">{{ t('emailLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.user" :placeholder = "t('emailPlaceholder')"  @input="$emit('update:user', $event.target.value)"/>
+            </div>
           </div>
-        </div>
-        <div class="field col-12 md:col-4">
-          <label>{{t('password')}}</label>
-          <Password  v-model="form.pass" />
-        </div>
+          <div class="field">
+            <label>{{ t('passwordLabel') }}</label>
+            <div class="p-inputgroup">
+              <Password v-model="form.pass" placeholder="**********" />
+            </div>
+          </div>
 
-        <Button type="submit" label="Login"/>
+          <div class="container-flex mt-lg-5">
+            <div class="float-left w-25">
+              <Button type="button" icon="pi pi-angle-left"  :label="t('backButtonTitle')" class="font-light w-100 border-300 p-button-outlined"/>
+            </div>
+            <div class="float-right w-25">
+              <Button type="submit" icon="pi pi-angle-right" iconPos="right" label="Login" class="font-light w-100"/>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <Button type="button" :label="t('noAccount')"
+              class="font-light mt-lg-5 p-button-outlined border-300" />
+    </div>
+    <div class="container-center">
+      <div>
+        <Lang />
+      </div>
 
     </div>
 
@@ -34,10 +53,11 @@ import {reactive} from "vue";
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
-import { useI18n } from 'vue-i18n'
+import {useI18n} from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
+import Lang from "../../components/Lang.vue";
 
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
 
 const form = reactive({
   user: '',
@@ -57,6 +77,7 @@ const handleSubmit = () => {
   margin: 0 auto;
   padding: 0 3rem 3rem;
 }
+
 .container {
   display: flex;
   flex-direction: column;

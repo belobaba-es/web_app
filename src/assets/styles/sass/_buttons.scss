@@ -1,11 +1,18 @@
-.p-button.p-button-text{
-    color: var(--primary-color);
+.p-button{
+  color: white;
+  border-radius: 5px;
+
 }
+
+.p-button-label {
+  font-size: 1.2rem;
+}
+
   
-.p-button.p-button-text:enabled:hover {
-    // background: rgba(33, 150, 243, 0.04);
-    color: var(--primary-color);
+.p-button:enabled:hover {
+  filter: brightness(0.9);
     border-color: transparent;
+
 }
 
 .p-button, .p-button:hover, .p-button:enabled:hover {
@@ -18,3 +25,20 @@
     border-color: var(--surface-overlay);
     color: #1B1B19;
   }
+
+.p-button:hover:hover {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.p-button.p-button-outlined {
+  border-radius: 5px;
+  border: 1px solid var(--primary-color);
+  color: var(--gray-900);
+}
+
+.p-button.p-button-outlined:enabled:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border: transparent;
+}

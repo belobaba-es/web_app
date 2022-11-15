@@ -1,13 +1,11 @@
 <template>
-  <div class="grid">
-    <div class="col-12 md:col-6">
-      <div class="border-1 border-gray-300 p-4 border-round">
-        <p>{{ t('languageSelector') }}</p>
-        <SelectButton v-model="languageSelected" :options="languages" aria-labelledby="custom" optionLabel="name"
-                      dataKey="code" @click="changeLang"/>
-      </div>
-    </div>
+
+  <p>{{ t('languageSelector') }}</p>
+  <div class="container-center pt-0">
+    <SelectButton v-model="languageSelected" :options="languages" aria-labelledby="custom" optionLabel="name"
+                  dataKey="code" @click="changeLang"/>
   </div>
+
 
 </template>
 <script setup lang="ts">
@@ -20,11 +18,6 @@ interface LangSelect {
   name: string;
   code: string
 }
-
-interface ChangeEvent<T> {
-  value: T
-}
-
 
 const route = useRouter()
 let languageSelected = ref<LangSelect>();
@@ -61,3 +54,9 @@ function setLang(code: string) {
 }
 
 </script>
+<style scoped>
+p{
+  font-size: 1rem;
+  color: #A4A4A4;
+}
+</style>

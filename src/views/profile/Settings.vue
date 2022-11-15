@@ -32,11 +32,16 @@
                         </span>
           </div>
         </div>
-
-        <Lang />
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <div class="border-1 border-gray-300 p-4 border-round">
+              <Lang />
+            </div>
+          </div>
+        </div>
 
         <div class="field flex justify-content-end">
-          <Button :label=btnSave class="px-5"/>
+          <Button :label="t('save')" class="px-5"/>
         </div>
       </div>
     </div>
