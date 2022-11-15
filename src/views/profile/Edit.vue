@@ -163,4 +163,7 @@ onMounted(async () => {
     border-color: var(--primary-color);
     background: var(--primary-color);
 }
+.p-inputtext {
+    box-sizing: border-box;
+}
 </style>
