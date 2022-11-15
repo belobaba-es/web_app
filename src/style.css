@@ -132,14 +132,14 @@ html, body {
   justify-content: center;
   padding: 3rem 0 3rem 0;
 }
-.p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext {
+.p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-dropdown.p-component.p-inputwrapper {
   border-radius: 0;
 }
-.p-inputgroup input:hover, .p-inputgroup input:focus{
+.p-inputgroup input:hover, .p-inputgroup input:focus, .p-dropdown.p-component.p-inputwrapper:hover, .p-dropdown.p-component.p-inputwrapper:focus{
   border: 1px solid #00BEB0 !important;
   outline:none;
 }
-.p-inputtext {
+.p-inputtext, .p-dropdown.p-component.p-inputwrapper {
   border: 1px solid #ECECEC;
   box-sizing: initial;
   font-family: KanitLight;
@@ -173,4 +173,14 @@ label {
 }
 .float-left {
   float: left;
+}
+
+span.p-button.p-component.p-fileupload-choose {
+  border-radius: 3px;
+  padding: 10px 9px;
+}
+
+.edit-document-chip.p-chip {
+  border-radius: 3px;
+  padding: 10px 9px;
 }

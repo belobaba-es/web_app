@@ -15,7 +15,7 @@
         </div>
         <div class="field col-12 md:col-6">
             <Chip
-                class="w-full"
+                class="edit-document-chip w-full"
                 label="Archivo_1.jpg"
                 icon="pi pi-check"
                 removable 
@@ -57,8 +57,5 @@ const companyDocumentType = ref('');
 </script>
 
 <style scoped>
-.p-chip {
-  border-radius: 3px;
-  padding: 10px 9px;
-}
+
 </style>
