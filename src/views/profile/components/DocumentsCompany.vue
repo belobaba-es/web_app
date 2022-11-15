@@ -26,7 +26,7 @@
     <div class="mt-5">
         <Button 
             label="Actualizar Documentos" 
-            class="p-button py-3 px-6 font-bold bg-white text-700 border-2 border-200 border-solid" 
+            class="p-button p-button-outlined border-300"
         />
     </div>
 </template>

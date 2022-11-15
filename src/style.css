@@ -133,14 +133,13 @@ html, body {
   padding: 3rem 0 3rem 0;
 }
 .p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext {
-  border-radius: 00px;
+  border-radius: 0;
 }
 .p-inputgroup input:hover, .p-inputgroup input:focus{
   border: 1px solid #00BEB0 !important;
   outline:none;
 }
 .p-inputtext {
-  padding: 0.8rem;
   border: 1px solid #ECECEC;
   box-sizing: initial;
   font-family: KanitLight;
