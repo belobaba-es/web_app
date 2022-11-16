@@ -1,6 +1,6 @@
 <template>
 
-    <Dialog v-model:visible="display" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <Dialog :visible="display" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
         <template #header>
             <img src="../../../assets/icons/ewallet.svg" alt="" height="50">
         </template>
@@ -15,7 +15,7 @@
             </div>
             <div class="field col-12" style="display: grid;">
                 <label for="name">Nombre de la Billetera</label>
-                <InputText id="name" type="text" v-model="name" @update:model-value="emit('update:name', $event)"/>
+                <InputText id="name" type="text" :v-model="name" @update:model-value="emit('update:name', $event)"/>
             </div>
         </div>
 

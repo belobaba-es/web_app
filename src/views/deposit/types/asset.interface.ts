@@ -10,3 +10,7 @@ export interface Asset {
     minimumWithdrawal: number;
     fee:               number;
 }
+
+export interface AssetResponse{
+    data: Asset[]
+}

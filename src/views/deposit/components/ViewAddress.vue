@@ -1,5 +1,5 @@
 <template>
-<Dialog v-model:visible="visible" @update:visible="emit('update:visible', $event)" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '60vw', '640px': '100vw'}" :style="{width: '40vw'}">
+<Dialog :visible="visible" @update:visible="emit('update:visible', $event)" :modal="true" closeIcon="pi pi-times-circle" >
     <template #header>
         <h3></h3>
     </template>
@@ -51,7 +51,7 @@ defineProps<{
 }>()
 const emit = defineEmits(['update:visible']);
 const { t } = useI18n({ useScope: 'global' })
-
+const breakPoints = {'960px': '60vw', '640px': '100vw'}
 const value = ref('');
 
 
