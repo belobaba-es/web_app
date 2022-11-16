@@ -13,11 +13,14 @@ import PrimeVue from 'primevue/config'
 import BadgeDirective from 'primevue/badgedirective'
 import StyleClass from 'primevue/styleclass'
 import Ripple from 'primevue/ripple'
-
+import { createPinia } from 'pinia'
 import Tooltip from 'primevue/tooltip'
 import i18n from './i18n'
 
+const pinia = createPinia()
+
 createApp(App)
+  .use(pinia)
   .use(Router)
   .use(PrimeVue)
   .use(i18n)

@@ -58,6 +58,7 @@ import logo from '../../assets/img/logo.svg'
 import Lang from "../../components/Lang.vue";
 import { LoginService } from "./services/login";
 import { useRouter } from "vue-router";
+import { useUserStore } from '../../stores/user';
 
 const {t} = useI18n({useScope: 'global'})
 const loginService = LoginService.instance();
@@ -68,10 +69,14 @@ const form = reactive({
 
 const router = useRouter()
 
+const userStore = useUserStore();
+
 const handleSubmit = () => {
   
   loginService.login(form.user, form.pass).then(data =>  {
     console.log(form.user);
+    const { data: userPayload } = data;
+    userStore.setUser(userPayload);
     router.push('/dashboard')
 
   });

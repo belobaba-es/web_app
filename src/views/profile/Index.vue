@@ -6,7 +6,7 @@
     </div>
     <div class="card">
         <h5 class="text-base text-600">Nombre completo</h5>
-        <p class="text-base font-medium">Ángel José Salazar Gómez</p>
+        <p class="text-base font-medium">{{ getFullName }}</p>
         <Divider type="solid" />
 
         <h5 class="text-base text-600">Docuemnto de identidad</h5>
@@ -14,7 +14,7 @@
         <Divider type="solid" />
 
         <h5 class="text-base text-600">Fecha de nacimiento</h5>
-        <p class="text-base font-medium">28/04/2022</p>
+        <p class="text-base font-medium">{{ userStore.getUser.dateBirth }}</p>
     </div>
 
     <div class="pt-5 flex justify-content-between align-items-center">
@@ -22,7 +22,7 @@
     </div>
     <div class="card">
         <h5 class="text-base text-600">Email</h5>
-        <p class="text-base font-medium">angeljsg@email.com</p>
+        <p class="text-base font-medium">{{ userStore.getUser.email }}</p>
         <Divider type="solid" />
 
         <h5 class="text-base text-600">Teléfono</h5>
@@ -39,13 +39,17 @@
 import { useRouter } from 'vue-router'
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import { useUserStore } from '../../stores/user';
+import { computed } from 'vue';
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const onClickEditProfile = (): void => {
     router.push(`/profile/edit/8ffb9e5c-0f39-4f3d-96ad-1579f514ff05`)
 }
 
+const getFullName = computed(() => `${userStore.getUser.firstName} ${userStore.getUser.middleName} ${userStore.getUser.lastName}`)
 </script>
 
 <style scoped>
