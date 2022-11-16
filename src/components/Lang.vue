@@ -1,6 +1,6 @@
 <template>
 
-  <p>{{ t('languageSelector') }}</p>
+  <p class="text-center">{{ t('languageSelector') }}</p>
   <div class="container-center pt-0">
     <SelectButton v-model="languageSelected" :options="languages" aria-labelledby="custom" optionLabel="name"
                   dataKey="code" @click="changeLang"/>

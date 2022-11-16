@@ -21,7 +21,6 @@
 import {ref, computed} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
-import {MenuItemCommandEvent} from 'primevue/menuitem';
 import {useI18n} from "vue-i18n";
 
 const {t} = useI18n({useScope: 'global'})
@@ -62,7 +61,7 @@ const onSidebarClick = () => {
 
 }
 
-const onMenuItemClick = (event: MenuItemCommandEvent) => {
+const onMenuItemClick = (event: any) => {
 
   if (event.item && !event.item.items) {
 

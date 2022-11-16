@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-5">
+  <div class="mb-4">
     <h1 class="text-2xl">{{ t('changePassword') }}</h1>
   </div>
   <div class="grid">
@@ -8,41 +8,41 @@
         <div class="field">
           <label>{{ t('labelCurrentPassword') }}</label>
           <div class="p-inputgroup">
-            <InputText :type="inputPasswordType" v-model="currentPassword"/>
+            <InputText :type="inputPasswordType" v-model="currentPassword" />
             <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
-                            <i :class="eyeIconState"></i>
-                        </span>
+              <i :class="eyeIconState"></i>
+            </span>
           </div>
         </div>
         <div class="field">
           <label>{{ t('labelNewPassword') }}</label>
           <div class="p-inputgroup">
-            <InputText :type="inputPasswordType" v-model="newPassword"/>
+            <InputText :type="inputPasswordType" v-model="newPassword" />
             <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
-                            <i :class="eyeIconState"></i>
-                        </span>
+              <i :class="eyeIconState"></i>
+            </span>
           </div>
         </div>
         <div class="field">
           <label>{{ t('labelConfirmNewPassword') }}</label>
           <div class="p-inputgroup">
-            <InputText :type="inputPasswordType" v-model="confirmNewPassword"/>
+            <InputText :type="inputPasswordType" v-model="confirmNewPassword" />
             <span class="p-inputgroup-addon cursor-pointer" @click="toggleShowPassword">
-                            <i :class="eyeIconState"></i>
-                        </span>
+              <i :class="eyeIconState"></i>
+            </span>
           </div>
         </div>
-        <div class="grid">
-          <div class="col-12 md:col-6">
-            <div class="border-1 border-gray-300 p-4 border-round">
-              <Lang />
-            </div>
-          </div>
-        </div>
-
         <div class="field flex justify-content-end">
-          <Button :label="t('save')" class="px-5"/>
+          <Button :label="t('save')" class="px-5" />
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 md:col-6">
+      <div class="border-1 border-gray-300 p-4 border-round">
+        <Lang />
       </div>
     </div>
   </div>
@@ -50,14 +50,14 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue';
-import {useI18n} from 'vue-i18n'
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Lang from "../../components/Lang.vue";
 
 
-const {t} = useI18n({
+const { t } = useI18n({
   useScope: 'global'
 })
 
@@ -79,7 +79,8 @@ const inputPasswordType = computed(() => showPassword.value ? 'text' : 'password
 </script>
 
 <style lang="css" scoped>
-.p-button, .p-button:hover {
+.p-button,
+.p-button:hover {
   background: var(--primary-color);
   border: 1px solid var(--primary-color);
 }

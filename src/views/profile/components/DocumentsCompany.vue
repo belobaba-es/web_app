@@ -26,7 +26,8 @@
     <div class="mt-5">
         <Button 
             label="Actualizar Documentos" 
-            class="p-button py-3 px-6 font-bold bg-white text-700 border-2 border-200 border-solid" 
+            class="p-button edit-document-button"
+            @click="onEdit()"
         />
     </div>
 </template>
@@ -37,6 +38,11 @@ import Button from 'primevue/button';
 import { ref } from 'vue';
 import Document from './Document.vue';
 import DocumentPartners from './DocumentPartners.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onEdit = () => router.push('documentation/company/edit');
 
 const documents = ref<DocumentType[]>([
     {

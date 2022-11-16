@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-5">
+    <div>
         <h1 class="text-2xl">Documentos</h1>
     </div>
     <template v-if="accountType === 'company'">

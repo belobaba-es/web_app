@@ -1,107 +1,131 @@
 <template>
-    <div class="pt-5">
-        <h1 class="text-2xl">Datos accionistas</h1>
+    <div class="mb-4">
+        <h1 class="text-2xl">
+            {{ formTitle }}
+        </h1>
     </div>
     <div class="formgrid grid">
         <div v-if="!isNaturalAccount" class="field col-4">
             <label>Nombre</label>
-            <InputText 
-                type="text" 
-                v-model="generalData.name" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="generalData.name" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
             <label>First Name</label>
-            <InputText 
-                type="text" 
-                v-model="generalData.firstName" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="generalData.firstName" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
             <label>Middle Name</label>
-            <InputText 
-                type="text" 
-                v-model="generalData.middleName" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="generalData.middleName" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
             <label>Last Name</label>
-            <InputText 
-                type="text" 
-                v-model="generalData.lastName" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="generalData.lastName" 
+                    class="w-full" 
+                />
+            </div>
         </div>
-        <div class="field col-4">
+        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
             <label>Email</label>
-            <InputText 
-                type="text" 
-                v-model="generalData.email" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="generalData.email" 
+                    class="w-full" 
+                />
+            </div>
         </div>
-        <div class="field col-4">
+        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
             <label>Teléfono</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
                     {{ phone.phoneCountry }}
                 </span>
-                <InputText 
+                <div class="p-inputgroup">
+                    <InputText 
                     id="phoneNumber" 
-                    type="text" 
-                    class="w-full" 
-                    v-model="phone.phoneNumber"
-                />
+                        type="text" 
+                        class="w-full" 
+                        v-model="phone.phoneNumber"
+                    />
+                </div>
             </div>
         </div>
         <div class="field col-4">
             <label>Pais</label>
-            <Dropdown 
+            <div class="p-inputgroup">
+                <Dropdown 
                 v-model="address.country" 
                 :options="countries" 
                 optionLabel="name" 
-                option-value="code"
-                placeholder="Seleccione pais"
-                class="w-full"
-            />
+                    option-value="code"
+                    placeholder="Seleccione pais"
+                    class="w-full"
+                />
+            </div>
         </div>
         <div class="field col-4">
             <label>Estado</label>
-            <Dropdown 
+            <div class="p-inputgroup">
+                <Dropdown 
                 v-model="address.region" 
                 :options="states" 
                 optionLabel="name" 
-                option-value="code"
-                placeholder="Seleccione estado"
-                class="w-full"
-            />
+                    option-value="code"
+                    placeholder="Seleccione estado"
+                    class="w-full"
+                />
+            </div>
         </div>
         <div class="field col-4">
             <label>Ciudad</label>
-            <InputText 
-                type="text" 
-                v-model="address.city" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="address.city" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div class="field col-6">
             <label>Direccion 1</label>
-            <InputText 
-                type="text" 
-                v-model="address.streetOne" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="address.streetOne" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div class="field col-6">
             <label>Direccion 2</label>
-            <InputText 
-                type="text" 
-                v-model="address.streetTwo" 
-                class="w-full" 
-            />
+            <div class="p-inputgroup">
+                <InputText 
+                    type="text" 
+                    v-model="address.streetTwo" 
+                    class="w-full" 
+                />
+            </div>
         </div>
         <div class="field col-12 flex align-items-center">
             <Button label="Guardar" class="px-5"/>
@@ -152,6 +176,8 @@ onMounted(async () => {
     profileService.getAccountByID(route.params.id).then(data => console.log(data));
 });
 
+
+const formTitle = computed (() => isNaturalAccount.value ? 'Datos accionistas' : 'Company information')
 </script>
 
 <style scoped>

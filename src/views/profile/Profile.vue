@@ -1,38 +1,52 @@
 <template>
-    <TabMenu :model="menuItems" v-model:activeIndex="active" class="font-light" />
-    <router-view />
+    <PageLayout title="My Profile" class="profile">
+        <template #contentHeader>
+            <div class="grid gap-4 py-4">
+                <div v-for="(item, idx) in menuItems" class="col-auto">
+                    <RouterLink :to="item.to" class="p-button profile-navigation" exact>
+                        {{ item.label }}
+                    </RouterLink>
+                </div>
+            </div>
+        </template>
+        <router-view />
+    </PageLayout>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import TabMenu from 'primevue/tabmenu';
 import {useI18n} from "vue-i18n";
+import PageLayout from '../../components/PageLayout.vue';
+
 const { t } = useI18n({ useScope: 'global' })
 
 interface tabItem {
     label: string;
     icon?: string;
     to: string;
+    canSee: string[]
 }
-
-const active = ref<number>(1);
 
 const menuItems = ref<tabItem[]>([
     {
         label: t('profile'),
-        to: '/profile'
+        to: '/profile',
+        canSee: ['person', 'company']
     },
     {
         label: t('shareholders'),
-        to: '/profile/partners'
+        to: '/profile/partners',
+        canSee: ['company']
     },
     {
         label: t('documents'),
-        to: '/profile/documentation'
+        to: '/profile/documentation',
+        canSee: ['person']
     },
     {
         label:t('setting'),
-        to: '/profile/settings'
+        to: '/profile/settings',
+        canSee: ['person']
     }
 ])
 </script>
