@@ -1,6 +1,6 @@
 <template>
 
-    <Dialog :visible="display" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+    <Dialog :visible="display" @update:visible="emit('update:display', $event)" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
         <template #header>
             <img src="../../../assets/icons/ewallet.svg" alt="" height="50">
         </template>
@@ -42,7 +42,7 @@ defineProps<{
     name: string,
 }>()
 
-const emit = defineEmits(['update:name']);
+const emit = defineEmits(['update:name', 'update:display']);
 const { t } = useI18n({ useScope: 'global' })
 
 

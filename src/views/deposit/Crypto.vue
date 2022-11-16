@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NewWallet :assets="assets" v-model:name="name" :display="displayNew" > </NewWallet>
+        <NewWallet :assets="assets" v-model:name="name" v-model:display="displayNew" > </NewWallet>
         <ViewAddress v-model:visible="display" :asset="selectViewAsset"> </ViewAddress>
         
         <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">Crypto </span></p>
