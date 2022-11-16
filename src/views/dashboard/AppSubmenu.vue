@@ -34,7 +34,7 @@
 import { ref, defineProps } from 'vue';
 
 defineProps({
-	items: [],
+	items: Array<any>,
 	root: {
 		type: Boolean,
 		default: false

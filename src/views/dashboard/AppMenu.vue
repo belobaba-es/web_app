@@ -13,7 +13,7 @@ import AppSubmenu from './AppSubmenu.vue';
 import { defineProps } from 'vue';
 
 defineProps<{
-	model: [],
+	model: Array<any>,
 }>()
 
 const emit = defineEmits(['menuitem-click']);

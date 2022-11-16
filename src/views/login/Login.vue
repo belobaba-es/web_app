@@ -15,7 +15,7 @@
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" v-model="form.user" :placeholder = "t('emailPlaceholder')"  @input="$emit('update:user', $event.target.value)"/>
+              <InputText type="text" v-model="form.user" :placeholder = "t('emailPlaceholder')"  />
             </div>
           </div>
           <div class="field">
