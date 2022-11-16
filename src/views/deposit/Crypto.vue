@@ -17,16 +17,9 @@
             <div class="col-4">
                 <Button class="p-button" :label="t('newWallet')" @click="displayNew = !displayNew"/>
             </div>
-            <div class="col-10">
-                <div class="container">
-                    <div class="flex justify-content-between align-items-center asset-item" v-for="(item) in assets">
-                        <div class="asset-icon">
-                            <img :src="item.icon" alt="">
-                        </div>
-                        <span>{{item.name}}</span>
-                        <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="viewAddressAsset(item); display = true"/>
-                    </div>
-                </div>
+            <div class="col-10">.
+                <ListAssets :assets="assets" v-on:select="viewAddressAsset($event)"></ListAssets>
+                
             </div>
             <div class="col-4">
                 <Button class="p-button" :label="t('newWallet')" @click="displayNew = !displayNew"/>
@@ -47,15 +40,17 @@ import { Asset } from './types/asset.interface';
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue';
 import { AssetsService } from './services/assets';
+import ListAssets from './components/ListAssets.vue';
 
 const { t } = useI18n({ useScope: 'global' })
 
-const value = ref('');
+
 const display = ref(false);
 const displayNew = ref(false);
 const selectedAsset = ref('')
 const name = ref('');
 const selectViewAsset= ref<Asset | null> (null);
+
 const viewAddressAsset = (item: Asset) =>{
     display.value = !display.value;
     display.value = true;
@@ -73,32 +68,11 @@ onMounted(async () => {
 
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .b-gray{
     background-color: var(--surface-overlay);
 }
 .search-btn{
     width: 30% !important;
 }
-.asset-item{
-    border-top: 1px solid var(--surface-overlay);
-    border-bottom: 1px solid var(--surface-overlay);
-}
-
-.asset-item:hover{
-    background-color: var(--surface-overlay);
-    
-}
-
-
-
-.asset-icon{
-    height: 56px;
-    width: 56px;
-    margin: 0.5rem;
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
 </style>
