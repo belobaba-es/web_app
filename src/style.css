@@ -234,3 +234,24 @@ button.p-button.p-component.p-button.edit-document-button {
 .profile .container-center {
   padding: 0px;
 }
+
+.profile .router-link-exact-active.p-button.profile-navigation, .profile .router-link-exact-active.p-button.profile-navigation:hover {
+  background-color: #1B1B19;
+  border-color: #1B1B19;
+  color: #FFFFFF;
+}
+
+.profile .p-button.profile-navigation {
+  background-color: #F9F9F9;
+  border: solid 1px #E7E6E7;
+  color: #1B1B19
+}
+
+.profile .p-button:hover {
+  background-color: #E7E6E7;
+  border: solid 1px #E7E6E7;
+}
+
+.profile .p-button:focus {
+  box-shadow: none;
+}
