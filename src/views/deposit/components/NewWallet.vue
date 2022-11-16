@@ -6,7 +6,7 @@
         </template>
         <div class="grid">
             <div class="col-12">
-                <span class="text-xl txt-border-bottom mb-2">Nueva dirección de billetera</span>
+                <span class="text-xl txt-border-bottom mb-2">{{t('newWallet')}}</span>
 
             </div>
             <div class="field col-12" style="display: grid;">
@@ -14,7 +14,7 @@
                 <Dropdown id="select-crypto" v-model="selectedAsset" :options="assets" optionLabel="name" placeholder="" />
             </div>
             <div class="field col-12" style="display: grid;">
-                <label for="name">Nombre de la Billetera</label>
+                <label for="name">{{t('nameWallet')}}</label>
                 <InputText id="name" type="text" :v-model="name" @update:model-value="emit('update:name', $event)"/>
             </div>
         </div>
