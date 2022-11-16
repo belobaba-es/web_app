@@ -56,18 +56,26 @@ import Button from 'primevue/button';
 import {useI18n} from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from "../../components/Lang.vue";
+import { LoginService } from "./services/login";
+import { useRouter } from "vue-router";
 
 const {t} = useI18n({useScope: 'global'})
-
+const loginService = LoginService.instance();
 const form = reactive({
-  user: '',
-  pass: ''
+  user: 'angel.bejarano@jaspesoft.com',
+  pass: '12345678'
 })
 
+const router = useRouter()
 
 const handleSubmit = () => {
-  alert("form submitted");
-  console.log(form.user)
+  
+  loginService.login(form.user, form.pass).then(data =>  {
+    console.log(form.user);
+    router.push('/dashboard')
+
+  });
+
 }
 </script>
 

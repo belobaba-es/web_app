@@ -1,5 +1,5 @@
 import { HttpService } from '../../../shared/services/http';
-import { AssetResponse } from '../types/asset.interface';
+import {  Asset } from '../types/asset.interface';
 
 
 export class AssetsService extends HttpService {
@@ -19,8 +19,8 @@ export class AssetsService extends HttpService {
 
         return this._instance;
     }
-    async list (): Promise<AssetResponse> {
-        return await this.get<AssetResponse>(`assets/`);
+    async list (): Promise<Asset[]> {
+        return await this.get<Asset[]>(`assets/`);
     }
     
     

@@ -67,7 +67,7 @@ const assetsService = AssetsService.instance();
 const assets = ref<Asset[]>([])
 
 onMounted(async () => {
-    assetsService.list().then(data => assets.value = data.data);
+    assetsService.list().then(data => assets.value = data);
 });
 
 

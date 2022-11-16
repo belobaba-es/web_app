@@ -19,7 +19,7 @@ export abstract class HttpService {
     return response.token;
   }
 
-  private setToken(token: string) {
+  protected setToken(token: string) {
     sessionStorage.setItem("noba", this.encrypt(token));
   }
 
@@ -43,7 +43,8 @@ export abstract class HttpService {
   private async getHeader(method: string, isFormData: boolean = false) {
     let token = await this.getToken();
     if (!token) {
-      token = await this.authAPI();
+      // token = await this.authAPI();
+      token = ''
     }
     const type = isFormData ? "multipart/form-data" : "application/json";
     return {
