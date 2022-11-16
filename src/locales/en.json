@@ -17,6 +17,8 @@
     "currency": "currency",
     "transfer": "Transfer",
     "wallet": "Wallet",
+    "nameWallet": "Wallet name",
+    "warningSendAsset": "Send only {asset} to this wallet address. Any other type of asset shipped may be lost and unrecoverable",
     "createWallet": "Create wallet",
     "walletAddress": "Wallet address",
     "fiatWallet":"Fiat Wallet",

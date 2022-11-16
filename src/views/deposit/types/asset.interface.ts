@@ -1,5 +1,6 @@
 export interface Asset {
     id:                string;
+    icon:              string;
     assetId:           string;
     active:            boolean;
     updatedAt:         string;
