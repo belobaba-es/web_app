@@ -4,14 +4,14 @@
             <i class="pi"></i>
         </div>
         <div class="flex justify-content-center" v-tooltip.top="fileName">
-            <span>{{ substringFileName }}</span>
+            <span class="text-sm">{{ substringFileName }}</span>
         </div>
         <div class="flex justify-content-center">
 
         </div>
     </div>
     <div class="py-2 flex justify-content-center">
-        <p>{{ props.document.label }}</p>
+        <p class="text-sm">{{ props.document.label }}</p>
     </div>
 </template>
 

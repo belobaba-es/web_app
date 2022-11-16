@@ -184,3 +184,53 @@ span.p-button.p-component.p-fileupload-choose {
   border-radius: 3px;
   padding: 10px 9px;
 }
+
+.p-inputtext:enabled:focus, 
+.p-dropdown.p-component.p-inputwrapper:focus, 
+.p-dropdown.p-component.p-inputwrapper:hover {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+  border-color: var(--primary-color);
+}
+
+button.p-button.p-component.p-button.edit-document-button {
+  background-color: #fff;
+  border: solid 0.2rem #E7E6E7;
+  border-radius: 5px;
+  color: #1B1B19;
+}
+
+.custom .p-scrollpanel-wrapper {
+  border-right: 9px solid #f4f4f4;
+}
+
+.custom .p-scrollpanel-bar {
+  background-color: var(--primary-color);
+  opacity: 1;
+  transition: background-color .3s;
+}
+
+.custom .p-scrollpanel-bar:hover {
+  background-color: var(--primary-color);
+}
+
+.shareholders-panel > .p-toggleable-content > .p-panel-content {
+  padding: 0px;
+}
+
+.p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+.p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
+  background: #ffffff;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.profile .container-center {
+  padding: 0px;
+}

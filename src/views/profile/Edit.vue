@@ -1,6 +1,8 @@
 <template>
-    <div class="pt-5">
-        <h1 class="text-2xl">Datos accionistas</h1>
+    <div class="mb-4">
+        <h1 class="text-2xl">
+            {{ formTitle }}
+        </h1>
     </div>
     <div class="formgrid grid">
         <div v-if="!isNaturalAccount" class="field col-4">
@@ -43,7 +45,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4">
+        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
             <label>Email</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -53,7 +55,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4">
+        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
             <label>Teléfono</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
@@ -174,6 +176,8 @@ onMounted(async () => {
     profileService.getAccountByID(route.params.id).then(data => console.log(data));
 });
 
+
+const formTitle = computed (() => isNaturalAccount.value ? 'Datos accionistas' : 'Company information')
 </script>
 
 <style scoped>

@@ -1,12 +1,17 @@
 <template>
-    <TabMenu :model="menuItems" v-model:activeIndex="active" class="font-light" />
-    <router-view />
+    <PageLayout title="My Profile" class="profile">
+        <template #contentHeader>
+            <TabMenu :model="menuItems" v-model:activeIndex="active" class="font-light tab-menu-profile py-4" />
+        </template>
+        <router-view />
+    </PageLayout>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import TabMenu from 'primevue/tabmenu';
 import {useI18n} from "vue-i18n";
+import PageLayout from '../../components/PageLayout.vue';
 const { t } = useI18n({ useScope: 'global' })
 
 interface tabItem {
