@@ -1,25 +1,8 @@
 <template>
     <div>
-        <NewWallet :assets="assets" v-model:name="name" :display="true" > </NewWallet>
-        <ViewAddress :display="display" > </ViewAddress>
-        <!-- <Dialog v-model:visible="display">
-            <template #header>
-                <h3>Header</h3>
-            </template>
-
-            <div class="col-12 ">
-                <div class="p-inputgroup">
-                    <InputText :placeholder="t('walletAddress')" />
-                    <span class="p-inputgroup-addon">
-                        <i class="pi pi-copy"></i>
-                    </span>
-                </div>
-            </div>
-
-            <template #footer>
-                <Button :label="t('done')" icon="pi pi-check" autofocus />
-            </template>
-        </Dialog> -->
+        <NewWallet :assets="assets" v-model:name="name" :display="displayNew" > </NewWallet>
+        <ViewAddress v-model:visible="display" :asset="selectViewAsset"> </ViewAddress>
+        
 
         <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">Crypto </span></p>
         
@@ -42,7 +25,7 @@
                             <img :src="item.icon" alt="">
                         </div>
                         <span>{{item.name}}</span>
-                        <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="display = !display"/>
+                        <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="viewAddressAsset(item); display = true"/>
                     </div>
                 </div>
             </div>
@@ -72,7 +55,13 @@ const display = ref(false);
 const displayNew = ref(false);
 const selectedAsset = ref('')
 const name = ref('');
-
+const selectViewAsset= ref<Asset | null> (null);
+const viewAddressAsset = (item: Asset) =>{
+    display.value = !display.value;
+    display.value = true;
+    console.log(item, display)
+    selectViewAsset.value = item
+}
 
 const assets = ref<Asset[]>([
         {

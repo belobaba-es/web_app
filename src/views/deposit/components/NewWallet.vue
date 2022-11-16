@@ -1,6 +1,6 @@
 <template>
 
-    <Dialog v-model:visible="display" :modal="true" closeIcon="pi pi-times-circle">
+    <Dialog v-model:visible="display" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
         <template #header>
             <img src="../../../assets/icons/ewallet.svg" alt="" height="50">
         </template>
