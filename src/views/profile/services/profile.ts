@@ -1,5 +1,5 @@
 import { HttpService } from '../../../shared/services/http';
-import { AccountByIDResponse } from '../types/account-by-id-response.interface';
+import { Account } from '../types/account.interface';
 
 export class ProfileService extends HttpService {
     private static _instance: ProfileService;
@@ -19,8 +19,8 @@ export class ProfileService extends HttpService {
         return this._instance;
     }
     
-    async getAccountByID (accountID: string | string[]): Promise<AccountByIDResponse> {
-        return await this.get<AccountByIDResponse>(`account/${accountID}`);
+    async getAccountByID (accountID: string | string[]): Promise<Account> {
+        return await this.get<Account>(`account/${accountID}`);
     }
     
 }

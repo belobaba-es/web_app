@@ -34,11 +34,8 @@ interface Account {
 }
 
 export const useUserStore = defineStore('user', () => {
-    const user = ref<User>();
-
     const setUser = (payload: User) => {
         const cryptoService = new CryptoService;
-        user.value = { ...payload };
         sessionStorage.setItem('user', cryptoService.encrypt(JSON.stringify({ ...payload })))
     }
 

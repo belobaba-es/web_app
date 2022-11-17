@@ -33,6 +33,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {useI18n} from "vue-i18n";
 import logo from '../../assets/img/logo.svg'
+import { useUserStore } from '../../stores/user';
 
 const router = useRouter()
 const menu = ref();
@@ -44,11 +45,13 @@ const onMenuToggle = (payload: any) => {
 	emit('menu-toggle', payload);
 }
 
+const userStore = useUserStore();
+
 const items = ref([
 	{
 		label: t('profile'),
 		icon: 'pi pi-user',
-		command: () => router.push('/profile')
+		command: () => router.push(`/profile/${userStore.getUser.accountId}`)
 	},
 	{
 		icon: 'pi',

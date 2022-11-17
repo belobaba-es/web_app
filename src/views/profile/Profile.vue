@@ -2,8 +2,15 @@
     <PageLayout title="My Profile" class="profile">
         <template #contentHeader>
             <div class="grid gap-4 py-4">
-                <div v-for="(item, idx) in menuItems" class="col-auto">
-                    <RouterLink :to="item.to" class="p-button profile-navigation" exact>
+                <div 
+                    v-for="(item, idx) in menuItemsFiltered"
+                    :key="idx"
+                    class="col-auto">
+                    <RouterLink
+                        :to="item.to"
+                        class="p-button profile-navigation" 
+                        exact
+                    >
                         {{ item.label }}
                     </RouterLink>
                 </div>
@@ -14,41 +21,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import {useI18n} from "vue-i18n";
+import { ref, computed, onMounted } from 'vue';
 import PageLayout from '../../components/PageLayout.vue';
+import { useAccount } from '../../composables/useAccount';
+import { useI18n } from "vue-i18n";
+const { t } = useI18n({ useScope: 'global' });
+const { natureAccount, accountId, fetchAccount } = useAccount();
 
-const { t } = useI18n({ useScope: 'global' })
-
-interface tabItem {
-    label: string;
-    icon?: string;
-    to: string;
-    canSee: string[]
+const checkCanSee = (...args: string[]) => {
+    if (!natureAccount.value) return;
+    return args.includes(natureAccount.value || '');
 }
 
-const menuItems = ref<tabItem[]>([
-    {
-        label: t('profile'),
-        to: '/profile',
-        canSee: ['person', 'company']
-    },
-    {
-        label: t('shareholders'),
-        to: '/profile/partners',
-        canSee: ['company']
-    },
-    {
-        label: t('documents'),
-        to: '/profile/documentation',
-        canSee: ['person']
-    },
-    {
-        label:t('setting'),
-        to: '/profile/settings',
-        canSee: ['person']
-    }
-])
+onMounted(async () => await fetchAccount());
+
+const menuItems = ref([
+        {
+            label: t('profile'),
+            to: `/profile/${accountId.value}`,
+            canSee: checkCanSee('company', 'natural_person')
+        },
+        {
+            label: t('shareholders'),
+            to: `/profile/${accountId.value}/partners`,
+            canSee: checkCanSee('company')
+        },
+        {
+            label: t('documents'),
+            to: `/profile/${accountId.value}/documentation`,
+            canSee: checkCanSee('company', 'natural_person')
+        },
+        {
+            label:t('setting'),
+            to: `/profile/${accountId.value}/settings`,
+            canSee: checkCanSee('company', 'natural_person')
+        }
+]);
+
+const menuItemsFiltered = computed(() => menuItems.value.filter(item => item.canSee))
 </script>
 
 <style lang="scss" scoped>

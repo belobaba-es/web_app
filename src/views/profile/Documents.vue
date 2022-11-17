@@ -2,7 +2,7 @@
     <div>
         <h1 class="text-2xl">Documentos</h1>
     </div>
-    <template v-if="accountType === 'company'">
+    <template v-if="natureAccount === 'company'">
         <DocumentsCompany />
     </template>
     <template v-else>
@@ -14,9 +14,8 @@
 import { ref } from 'vue';
 import DocumentsCompany from './components/DocumentsCompany.vue'
 import DocumentsPerson from './components/DocumentsPerson.vue'
-
-const accountType = ref('company');
-
+import { useAccount } from '../../composables/useAccount';
+const { natureAccount } = useAccount()
 </script>
 
 <style scoped>

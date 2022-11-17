@@ -24,7 +24,7 @@ export default createRouter({
       component: Dashboard,
       children: [
         {
-          path: '/profile',
+          path: '/profile/:accountId',
           component: Profile,
           children: [
             {
@@ -32,7 +32,7 @@ export default createRouter({
               component: ProfileIndex,
             },
             {
-              path: 'edit/:id',
+              path: 'edit',
               component: Edit,
             },
             {

@@ -142,7 +142,7 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { GeneralData } from './types/general-data.interface';
 
-const route = useRoute();
+
 const countries = ref([]);
 const states = ref([])
 
@@ -170,11 +170,7 @@ const phone = ref({
 
 const isNaturalAccount = computed<boolean>(() => false);
 
-const profileService = ProfileService.instance();
 
-onMounted(async () => {
-    profileService.getAccountByID(route.params.id).then(data => console.log(data));
-});
 
 
 const formTitle = computed (() => isNaturalAccount.value ? 'Datos accionistas' : 'Company information')
