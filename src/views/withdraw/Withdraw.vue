@@ -1,16 +1,17 @@
 <template>
-    <p class="text-3xl">{{t('deposit')}} </p>
+    <p class="text-3xl">{{t('withdraw')}} </p>
     
     <div class="grid justify-content-center">
-        <div class="col-12 text-center">
-            <span class="text-center txt-border-bottom text-2xl ">{{t('selectCurrency')}} <b> {{t('currency')}}</b></span>
-        </div>
-        <div class="col-5">
-            <p class="text-center">Withdraw Fiat</p>
+       
+        <div class="col-5 text-center">
+            
+            <img src="../../assets/icons/cash-back.svg" alt="" srcset="">
+            <p class="">Withdraw Fiat</p>
+            <p class="text-base">{{t('withdrawFiatSelectMsg')}}</p>
             <router-link to="/deposit/fiat">
                 <CardButon class="m-4"  :label="t('betweenNOBA')"/>
             </router-link>
-       
+            
             <router-link to="/deposit/crypto">
                 <CardButon class="m-4" :label="t('domesticWire')"/>
             </router-link>
@@ -20,8 +21,10 @@
                 <CardButon class="m-4" :label="t('internationalWire')"/>
             </router-link>
         </div>
-        <div class="col-5">
-            <p class="text-center">Withdraw Crypto </p>
+        <div class="col-5 text-center">
+            <img src="../../assets/icons/blockchain.svg" alt="" srcset="">
+            <p class="">Withdraw Crypto </p>
+            <p class="text-base">{{t('withdrawCryptoSelectMsg')}}</p>
             <router-link to="/deposit/crypto">
                 <CardButon class="m-4" :label="t('betweenNOBACrypto')"/>
             </router-link>
@@ -30,12 +33,7 @@
                 <CardButon class="m-4" :label="t('otherPlatformCrypto')"/>
             </router-link>
         </div>
-        <div class="flex justify-content-evenly" >
-
-
-        </div>
         
-       
     </div>
 
     <router-view />
