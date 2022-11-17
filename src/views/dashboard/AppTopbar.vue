@@ -17,7 +17,7 @@
 			</Button>
 
 			<SplitButton label="Save"  :model="items" class="p-button-text mr-2 mb-2 ml-2">
-				<img alt="logo" src="/src/assets/icons/maletin.svg" style="width: 2.5rem"/>
+				<img alt="logo" src="../../assets/icons/maletin.svg" style="width: 2.5rem"/>
 				<span style="margin: auto 0;">Pintosoft CA</span>
 			</SplitButton>
 

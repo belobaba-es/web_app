@@ -7,11 +7,11 @@
         </div>
         <div class="flex justify-content-evenly" >
             <router-link to="/deposit/fiat">
-                <CardButon class="m-4" icon="/src/assets/icons/save-money.svg" :label="t('fiatWallet')"/>
+                <CardButon class="m-4" icon="../../assets/icons/save-money.svg" :label="t('fiatWallet')"/>
             </router-link>
        
             <router-link to="/deposit/crypto">
-                <CardButon class="m-4" icon="/src/assets/icons/ewallet.svg" :label="t('cryptoWallet')"/>
+                <CardButon class="m-4" icon="../../assets/icons/ewallet.svg" :label="t('cryptoWallet')"/>
             </router-link>
 
         </div>

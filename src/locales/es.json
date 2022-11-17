@@ -100,5 +100,8 @@
     "domesticWire":"Banco Domestico",
     "betweenNOBACrypto":"Entre billeteras criptográficas NOBA",
     "otherPlatformCrypto":"A otras plataformas Crypto Wallets",
-    "betweenNOBA": "Transferencia entre cuentas NOBA"
+    "betweenNOBA": "Transferencia entre cuentas NOBA",
+    "withdrawFiatSelectMsg":"Seleccione transferencia nacional (dentro de los EE. UU.) o internacional (bancos internacionales)",
+    "withdrawCryptoSelectMsg":"Seleccione Crypto Transfer Interno (dentro de Noba) o Externo (Fuera de Noba)"
+
 }
