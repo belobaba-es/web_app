@@ -73,33 +73,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Divider from 'primevue/divider';
+import TabMenu from 'primevue/tabmenu';
+import { FiatService } from './services/fiat';
+import { BankData } from './types/fiat.interface';
+import { useUserStore } from '../../stores/user';
 
 interface tabItem {
     label: string;
     icon?: string;
     to?: string;
 }
-interface EventTab{
-    index: number
-}
 
-interface BankData {
-    id:              string;
-    swiftCode:       string;
-    reference:       string;
-    accountNumber:   string;
-    bankName:        string;
-    routingNumber:   string;
-    creditTo:        string;
-    bankAddress:     string;
-    address:         string;
-    typeBankingData: string;
-    bankPhone:       string;
-    accountId?:      string
-}
+const fiatService = FiatService.instance();
 
+const dataBank = ref<BankData[]>([])
+const bankNational = ref()
+const bankInternational = ref()
+const userStore = useUserStore();
+
+onMounted(async () => {
+    userStore.getUser.accountId
+    fiatService.bankData('cbbecf6b-3ede-4459-a283-c64d1276f136').then(data=> {
+        dataBank.value = data
+        bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "NATIONAL")
+        bankInternational.value = dataBank.value.find(bank=> bank.typeBankingData == "INTERNATIONAL")
+    })
+    
+});
 const active = ref<number>(0);
 
 const menuItems = ref<tabItem[]>([
@@ -111,38 +113,6 @@ const menuItems = ref<tabItem[]>([
         label: 'Internacional'
     }
 ])
-
-const dataBank = [
-    {
-            "id": "IRzTNCVq6cAJ9ovuoono",
-            "swiftCode": "RBBCUS6L",
-            "reference": "QNCUSZXYE6M",
-            "accountNumber": "2030136050",
-            "bankName": "ROYAL BUSINESS BANK",
-            "routingNumber": "122045037",
-            "creditTo": "Prime Trust, LLC",
-            "bankAddress": "1055 Wilshire Blvd. Suite 1200, LOS ANGELES, CA 90017",
-            "address": "330 S Rampart Blvd, Suite 260, Las Vegas, NV 89145",
-            "typeBankingData": "INTERNATIONAL",
-            "bankPhone": "+1 (888) 616-8188"
-        },
-        {
-            "id": "UnGvO6rOWzeq8xuEckZI",
-            "typeBankingData": "NATIONAL",
-            "bankName": "SIGNATURE BANK",
-            "swiftCode": "",
-            "bankAddress": "565 Fifth Avenue, NEW YORK, NY 10017",
-            "routingNumber": "026013576",
-            "accountNumber": "1503666126",
-            "address": "330 S Rampart Blvd, Suite 260, Las Vegas, NV 89145",
-            "accountId": "cbbecf6b-3ede-4459-a283-c64d1276f136",
-            "creditTo": "Prime Trust, LLC",
-            "bankPhone": "+1 (646) 822-1500",
-            "reference": "QNCUSZXYE6M"
-        }
-]
-const bankNational = dataBank.find(bank=>bank.typeBankingData == "NATIONAL")
-const bankInternational = dataBank.find(bank=> bank.typeBankingData == "INTERNATIONAL")
 </script>
 
 <style lang="css">
