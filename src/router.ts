@@ -11,6 +11,7 @@ import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
 import PartnersEditDocument from './views/profile/PartnersEditDocuments.vue'
 import Login from './views/login/Login.vue'
+import Withdraw from './views/withdraw/Withdraw.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -59,6 +60,23 @@ export default createRouter({
             {
               path: '',
               component: Deposit,
+            },
+            {
+              path: 'fiat',
+              component: DepositFiat,
+            },
+            {
+              path: 'crypto',
+              component: DepositCrypto,
+            },
+          ],
+        },
+        {
+          path: '/withdraw',
+          children: [
+            {
+              path: '',
+              component: Withdraw,
             },
             {
               path: 'fiat',

@@ -31,7 +31,7 @@ const menu = [
     items: [
       {label: t('home'), class: 'icon-home', icon: 'pi', to: '/'},
       {label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit',},
-      {label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/'},
+      {label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw'},
       {label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/'},
       {label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/'},
     ]

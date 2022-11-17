@@ -93,5 +93,12 @@
     "labelNewPassword": "Nueva contraseña",
     "labelConfirmNewPassword": "Confirmar tu nueva contraseña",
     "withdraw": "Retiros",
-    "done": "Hecho"
+    "withdrawFiat": "Retiros Fiat",
+    "withdrawCrypto": "Retiros Cripto",
+    "done": "Hecho",
+    "internationalWire": "Banco International",
+    "domesticWire":"Banco Domestico",
+    "betweenNOBACrypto":"Entre billeteras criptográficas NOBA",
+    "otherPlatformCrypto":"A otras plataformas Crypto Wallets",
+    "betweenNOBA": "Transferencia entre cuentas NOBA"
 }
