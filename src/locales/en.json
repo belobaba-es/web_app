@@ -100,5 +100,6 @@
     "domesticWire":"Domestic Wire",
     "betweenNOBACrypto":"Between NOBA Crypto Wallets",
     "otherPlatformCrypto":"To other Platforms Crypto Wallets",
-    "betweenNOBA": "Transfer Between NOBA Accounts"
+    "betweenNOBA": "Transfer Between NOBA Accounts",
+    "statePlaceHolder": "Select state"
 }

@@ -100,5 +100,6 @@
     "domesticWire":"Banco Domestico",
     "betweenNOBACrypto":"Entre billeteras criptográficas NOBA",
     "otherPlatformCrypto":"A otras plataformas Crypto Wallets",
-    "betweenNOBA": "Transferencia entre cuentas NOBA"
+    "betweenNOBA": "Transferencia entre cuentas NOBA",
+    "statePlaceHolder": "Seleccionar estado"
 }
