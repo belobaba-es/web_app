@@ -102,6 +102,6 @@
     "otherPlatformCrypto":"To other Platforms Crypto Wallets",
     "betweenNOBA": "Transfer Between NOBA Accounts",
     "withdrawFiatSelectMsg":"Select national wire (within the USA) or International (international banks)",
-    "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)"
+    "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)",
     "statePlaceHolder": "Select state"
 }
