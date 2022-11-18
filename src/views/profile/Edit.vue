@@ -79,7 +79,7 @@
                     v-model="form.address.country" 
                     :options="countries" 
                     optionLabel="name" 
-                    option-value="country_id"
+                    option-value="country_code"
                     :loading="loadingCountiesField"
                     :placeholder="t('countryPlaceholder')"
                     :disabled="countriesInputIsEmpty"
@@ -175,7 +175,17 @@ const { t } = useI18n({
   useScope: 'global'
 })
 
-onMounted(async () =>  await fetchCountries());
+onMounted(async () =>  {
+    await fetchCountries();
+
+    if (form.value.address.country?.length! > 0) {
+        fetchStates();
+    }
+
+    if (form.value.address.region?.length! > 0) {
+        fetchCities();
+    }
+});
 </script>
 
 <style scoped>

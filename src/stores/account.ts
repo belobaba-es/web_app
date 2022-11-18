@@ -38,7 +38,7 @@ interface FormPhoneData {
     phoneCountry: string | undefined
 }
 
-interface FormData {
+export interface FormData {
     generalData: FormGeneralData;
     address: FormAddressData;
     phone: FormPhoneData;

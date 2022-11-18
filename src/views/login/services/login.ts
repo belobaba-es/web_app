@@ -27,7 +27,7 @@ export class LoginService extends HttpService {
         return resp
     }
     
-    async logout(): Promise<any> {
+    async logout (): Promise<void> {
         this.removeTokens();
     }
 }

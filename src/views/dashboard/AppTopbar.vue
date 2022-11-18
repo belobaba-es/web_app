@@ -34,6 +34,7 @@ import { useRouter, useRoute } from 'vue-router'
 import {useI18n} from "vue-i18n";
 import logo from '../../assets/img/logo.svg'
 import { useUserStore } from '../../stores/user';
+import { LoginService } from '../login/services/login';
 
 const router = useRouter()
 const menu = ref();
@@ -46,6 +47,7 @@ const onMenuToggle = (payload: any) => {
 }
 
 const userStore = useUserStore();
+const loginService = LoginService.instance();
 
 const items = ref([
 	{
@@ -71,8 +73,9 @@ const items = ref([
 	{
 		label: t('logOut'),
 		icon: 'pi pi-sign-out',
-		command: () => {
-			
+		command: async () => {
+			await loginService.logout();
+			router.push('/');
 		}
 	},
 
