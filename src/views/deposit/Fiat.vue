@@ -1,71 +1,71 @@
 <template>
-    <p class="text-3xl">Depositos / Fiat</p>
+    <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">{{t('fiat')}} </span></p>
     <TabMenu :model="menuItems"  v-model:activeIndex="active"/>
     <div v-if="active==0" class="mt-2">
-        <p class="">Los depósitos en esta cuenta deben ser realizados en Dólares Americanos</p>
+        <p class="">{{t('depositAccountUSD')}}</p>
         
-        <p class="font-medium text-sm">Depository Bank Name</p>
+        <p class="font-medium text-sm">{{t('depositBankName')}}</p>
         <p class="">{{bankNational?.bankName}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Routing Number </p>
+        <p class="font-medium text-sm">{{t('routingNumber')}} </p>
         <p class="">{{bankNational?.routingNumber}} </p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm"> Credit To</p>
+        <p class="font-medium text-sm"> {{t('creditTo')}}</p>
         <p class="">{{bankNational?.creditTo}} </p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Address</p>
+        <p class="font-medium text-sm">{{t('address')}}</p>
         <p class=""> {{bankNational?.address}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Account Number </p>
+        <p class="font-medium text-sm">{{t('accountNumber')}} </p>
         <p class="">{{bankNational?.accountNumber}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Bank Address</p>
+        <p class="font-medium text-sm">{{t('bankAddress')}}</p>
         <p class=""> {{bankNational?.bankAddress}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Bank Phone</p>
+        <p class="font-medium text-sm">{{t('bankPhone')}}</p>
         <p class="">{{bankNational?.bankPhone}}</p>
         <Divider type="solid" />
        
     </div>
 
     <div v-if="active==1" class="mt-2">
-        <p>Los depósitos en esta cuenta podrán ser realizados desde otras monedas diferentes al dólar americano.</p>
+        <p>{{('depositAccountOther')}}</p>
         
-        <p class="font-medium text-sm">Depository Bank Name</p>
+        <p class="font-medium text-sm">{{t('depositBankName')}}</p>
         <p class="">{{bankInternational?.bankName}}</p>
         <Divider type="solid" />
         
-        <p class="font-medium text-sm">Routing Number</p>
+        <p class="font-medium text-sm">{{t('routingNumber')}}</p>
         <p class="">{{bankInternational?.routingNumber}}</p>
         <Divider type="solid" />
         
-        <p class="font-medium text-sm">Swift Code</p>
+        <p class="font-medium text-sm">{{t('swiftCode')}}</p>
         <p class="">{{bankInternational?.swiftCode}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Credit To</p>
+        <p class="font-medium text-sm">{{t('creditTo')}}</p>
         <p class=""> {{bankInternational?.creditTo}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Address</p>
+        <p class="font-medium text-sm">{{t('address')}}</p>
         <p class="">{{bankInternational?.address}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Account Number</p>
+        <p class="font-medium text-sm">{{t('accountNumber')}}</p>
         <p class="">{{bankInternational?.accountNumber}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Bank Address</p>
+        <p class="font-medium text-sm">{{t('bankAddress')}}</p>
         <p class="">{{bankInternational?.bankAddress}}</p>
         <Divider type="solid" />
 
-        <p class="font-medium text-sm">Bank Phone</p>
+        <p class="font-medium text-sm">{{t('bankPhone')}}</p>
         <p class="">{{bankInternational?.bankPhone}}</p>
         <Divider type="solid" />
 
@@ -76,16 +76,17 @@
 import { ref, onMounted } from 'vue';
 import Divider from 'primevue/divider';
 import TabMenu from 'primevue/tabmenu';
+import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat';
 import { BankData } from './types/fiat.interface';
 import { useUserStore } from '../../stores/user';
-
 interface tabItem {
     label: string;
     icon?: string;
     to?: string;
 }
 
+const { t } = useI18n({ useScope: 'global' })
 const fiatService = FiatService.instance();
 
 const dataBank = ref<BankData[]>([])
