@@ -42,3 +42,13 @@
   color: white;
   border: transparent;
 }
+
+.p-button.p-button-text {
+  color: var(--primary-color);
+}
+
+.p-button.p-button-text:enabled:hover {
+  background: rgba(0, 190, 177, 0.04);
+  color: var(--primary-color);
+  border-color: transparent;
+}
