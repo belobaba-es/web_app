@@ -1,5 +1,5 @@
 <template>
-    <div class="card"  @click="toRoute">
+    <div class="card-button"  @click="toRoute">
         <p class="text-lg font-medium">{{label}}</p>
     </div>
 </template>
@@ -23,8 +23,9 @@ const toRoute = () => {
 </script>
 
 <style scoped>
-    .card{
+    .card-button{
         display: flex;
+        color: var(--surface-900);
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -33,13 +34,20 @@ const toRoute = () => {
         background: #F7FDFD 0% 0% no-repeat padding-box;
         min-width: 280px;
         min-height: 60px;
+        border-radius: 20px;
+        cursor: pointer;
     }
-    .card > div{
+
+    .card-button:hover{
+        background: #FFF;
+        box-shadow: 0px 3px 30px #4CD1C733;
+    }
+    .card-button > div{
         height: 80px;
         margin-bottom: 1rem;
     }
 
-    .card > div >img {
+    .card-button > div >img {
         margin: auto;
     }
 

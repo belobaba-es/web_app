@@ -95,8 +95,8 @@ const bankInternational = ref()
 const userStore = useUserStore();
 
 onMounted(async () => {
-    userStore.getUser.accountId
-    fiatService.bankData('cbbecf6b-3ede-4459-a283-c64d1276f136').then(data=> {
+    
+    fiatService.bankData(userStore.getUser.accountId).then(data=> {
         dataBank.value = data
         bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "NATIONAL")
         bankInternational.value = dataBank.value.find(bank=> bank.typeBankingData == "INTERNATIONAL")
