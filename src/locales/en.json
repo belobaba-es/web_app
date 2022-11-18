@@ -106,7 +106,7 @@
     "withdrawFiatSelectMsg":"Select national wire (within the USA) or International (international banks)",
     "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)",
     "depositAccountUSD":"Deposits in this account must be made in US Dollars",
-    "depositAccountOther": "Los depósitos en esta cuenta podrán ser realizados desde otras monedas diferentes al dólar americano.",
+    "depositAccountOther": "Deposits into this account can be made in currencies other than US dollars.",
     "depositBankName":"Depository Bank Name",
     "routingNumber": "Routing Number",
     "creditTo": "Credit To",

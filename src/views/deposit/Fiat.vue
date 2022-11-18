@@ -35,7 +35,7 @@
     </div>
 
     <div v-if="active==1" class="mt-2">
-        <p>{{('depositAccountOther')}}</p>
+        <p>{{t('depositAccountOther')}}</p>
         
         <p class="font-medium text-sm">{{t('depositBankName')}}</p>
         <p class="">{{bankInternational?.bankName}}</p>
