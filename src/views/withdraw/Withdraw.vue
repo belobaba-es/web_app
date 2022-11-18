@@ -8,18 +8,13 @@
             <img src="../../assets/icons/cash-back.svg" alt="" srcset="">
             <p class="">Withdraw Fiat</p>
             <p class="text-base">{{t('withdrawFiatSelectMsg')}}</p>
-            <router-link to="/deposit/fiat">
-                <CardButon class="m-4"  :label="t('betweenNOBA')"/>
-            </router-link>
             
-            <router-link to="/deposit/crypto">
-                <CardButon class="m-4" :label="t('domesticWire')"/>
-            </router-link>
-            
-            
-            <router-link to="/deposit/crypto">
-                <CardButon class="m-4" :label="t('internationalWire')"/>
-            </router-link>
+            <CardButon class="m-4"  :label="t('betweenNOBA')" to="/withdraw/fiat/noba"/>
+        
+            <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/fiat/domestic"/>
+    
+            <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/fiat/international"/>
+      
         </div>
         <div class="col-5 text-center">
             <img src="../../assets/icons/blockchain.svg" alt="" srcset="">

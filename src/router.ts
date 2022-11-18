@@ -12,7 +12,13 @@ import DepositCrypto from './views/deposit/Crypto.vue'
 import PartnersEditDocument from './views/profile/PartnersEditDocuments.vue'
 import Login from './views/login/Login.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
+import WithdrawFiat from './views/withdraw/Fiat.vue'
+import WithdrawCrypto from './views/withdraw/Crypto.vue'
 import { useUserStore } from './stores/user'
+import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
+import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
+import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
+
 
 const routes: RouteRecordRaw[] = [
   {
@@ -79,8 +85,17 @@ const routes: RouteRecordRaw[] = [
             component: Withdraw,
           },
           {
-            path: 'fiat',
-            component: DepositFiat,
+            path: 'fiat/noba',
+            component: WithdrawFiatNoba
+          },
+          {
+            path: 'fiat/domestic',
+            component: WithdrawFiatDomestic
+
+          },
+          {
+            path: 'fiat/international',
+            component: WithdrawFiatInternational
           },
           {
             path: 'crypto',

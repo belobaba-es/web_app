@@ -111,10 +111,10 @@
     "routingNumber": "Número de ruta",
     "creditTo": "Crédito a",
     "address": "Dirección",
-    "accountNumber":"Account Number",
+    "accountNumber":"Numero de cuenta",
     "bankAddress": "Dirección del banco",
     "bankPhone": "Teléfono del banco",
-    "swiftCode": "CodigoSwift ",
+    "swiftCode": "Codigo Swift ",
     "statePlaceHolder": "Seleccionar estado",
     "cityPlaceHolder": "Seleccionar ciudad"
 }

@@ -1,15 +1,25 @@
 <template>
-    <div class="card">
+    <div class="card"  @click="toRoute">
         <p class="text-lg font-medium">{{label}}</p>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue';
-defineProps({
+import { ref, defineProps, computed } from 'vue';
+import RouteLocationRaw from 'vue-router'
+import { useRouter } from "vue-router";
+const props = defineProps({
     icon: String,
-    label: String
+    label: String,
+    to:  String
 })
+const router = useRouter();
+const toRoute = () => {
+    if(props.to){
+        router.push({path: props.to})
+    }
+} 
+
 </script>
 
 <style scoped>
