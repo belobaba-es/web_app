@@ -3,7 +3,7 @@
         <NewWallet :assets="assets" v-model:name="name" v-model:display="displayNew" > </NewWallet>
         <ViewAddress v-model:visible="display" :asset="selectViewAsset"> </ViewAddress>
         
-        <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">Crypto </span></p>
+        <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">{{t('crypto')}} </span></p>
         
         <div class="grid">
             <div class="col-8 ">
