@@ -24,7 +24,7 @@ export abstract class HttpService {
   }
 
   protected removeTokens() {
-    sessionStorage.removeItem("moba");
+    sessionStorage.removeItem("noba");
     sessionStorage.removeItem("user");
   }
 
@@ -66,6 +66,24 @@ export abstract class HttpService {
     }
 
     const response = await this.client.post(url, form, headerRequest);
+
+    return response.data as T;
+  }
+
+  public async patch<T>(
+    url: string,
+    form: any,
+    isPrivate: boolean = true,
+    isFormData: boolean = false
+  ): Promise<T> {
+    let headerRequest: any;
+    if (isPrivate) {
+      headerRequest = await this.getHeader("PATCH", isFormData);
+    } else {
+      headerRequest = {};
+    }
+
+    const response = await this.client.patch(url, form, headerRequest);
 
     return response.data as T;
   }

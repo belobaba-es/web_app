@@ -1,5 +1,6 @@
 import { HttpService } from '../../../shared/services/http';
 import { Account } from '../types/account.interface';
+import { FormData } from '../../../stores/account';
 
 export class ProfileService extends HttpService {
     private static _instance: ProfileService;
@@ -23,4 +24,7 @@ export class ProfileService extends HttpService {
         return await this.get<Account>(`account/${accountID}`);
     }
     
+    async updateContact(accountID: string, form: FormData): Promise<any> {
+        return await this.patch(`account/${accountID}`, form);
+    }
 }

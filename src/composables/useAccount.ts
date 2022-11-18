@@ -21,6 +21,8 @@ export const useAccount = () => {
     const loadingCitiesField = ref(false);
     const loadingStatesField = ref(false);
 
+    const submitting = ref(false);
+
     const editProfile = (): void => {
         router.push(`/profile/${route.params.accountId}/edit`)
     }
@@ -45,7 +47,9 @@ export const useAccount = () => {
     const citiesInputIsEmpty = computed(() => cities.value.length === 0);
     const countriesInputIsEmpty = computed(() => countries.value.length === 0);
 
-    const submitEditForm = () => {};
+    const submitEditForm = () => {
+        submitting.value = true;
+    };
 
     const fetchCountries = async () => {
         loadingCountiesField.value = true;
