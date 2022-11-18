@@ -22,6 +22,8 @@
     "createWallet": "Create wallet",
     "walletAddress": "Wallet address",
     "fiatWallet":"Fiat Wallet",
+    "fiat": "Fiat",
+    "crypto": "Crypto",
     "cryptoWallet": "Crypto wallet",
     "selectCrypto": "Select crypto",
     "search": "Search",
@@ -102,5 +104,15 @@
     "otherPlatformCrypto":"To other Platforms Crypto Wallets",
     "betweenNOBA": "Transfer Between NOBA Accounts",
     "withdrawFiatSelectMsg":"Select national wire (within the USA) or International (international banks)",
-    "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)"
+    "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)",
+    "depositAccountUSD":"Deposits in this account must be made in US Dollars",
+    "depositAccountOther": "Los depósitos en esta cuenta podrán ser realizados desde otras monedas diferentes al dólar americano.",
+    "depositBankName":"Depository Bank Name",
+    "routingNumber": "Routing Number",
+    "creditTo": "Credit To",
+    "address": "Address",
+    "accountNumber":"Account Number",
+    "bankAddress": "Bank Address",
+    "bankPhone": "Bank Phone",
+    "swiftCode": "Swift Code"
 }
