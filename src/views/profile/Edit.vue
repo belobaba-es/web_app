@@ -11,7 +11,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="generalData.name" 
+                    v-model="form.generalData.name" 
                     class="w-full" 
                 />
             </div>
@@ -21,7 +21,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="generalData.firstName" 
+                    v-model="form.generalData.firstName" 
                     class="w-full" 
                 />
             </div>
@@ -31,7 +31,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="generalData.middleName" 
+                    v-model="form.generalData.middleName" 
                     class="w-full" 
                 />
             </div>
@@ -41,7 +41,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="generalData.lastName" 
+                    v-model="form.generalData.lastName" 
                     class="w-full"
                 />
             </div>
@@ -51,7 +51,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="generalData.email" 
+                    v-model="form.generalData.email" 
                     class="w-full" 
                 />
             </div>
@@ -60,14 +60,14 @@
             <label>{{ t('phoneLabel') }}</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
-                    {{ phone.phoneCountry }}
+                    {{ form.phone.phoneCountry }}
                 </span>
                 <div class="p-inputgroup">
                     <InputText 
                     id="phoneNumber" 
                         type="text" 
                         class="w-full" 
-                        v-model="phone.phoneNumber"
+                        v-model="form.phone.phoneNumber"
                     />
                 </div>
             </div>
@@ -76,12 +76,13 @@
             <label>{{ t('countryLabel') }}</label>
             <div class="p-inputgroup">
                 <Dropdown 
-                    v-model="address.country" 
+                    v-model="form.address.country" 
                     :options="countries" 
                     optionLabel="name" 
                     option-value="country_id"
-                    :loading="false"
+                    :loading="loadingCountiesField"
                     :placeholder="t('countryPlaceholder')"
+                    :disabled="countriesInputIsEmpty"
                     class="w-full"
                     @change="fetchStates"
                 />
@@ -91,12 +92,13 @@
             <label>{{ t('stateLabel') }}</label>
             <div class="p-inputgroup">
                 <Dropdown 
-                    v-model="address.region" 
+                    v-model="form.address.region" 
                     :options="states" 
                     optionLabel="name" 
                     option-value="id"
-                    :loading="false"
+                    :loading="loadingStatesField"
                     :placeholder="t('statePlaceHolder')"
+                    :disabled="statesInputIsEmpty"
                     class="w-full"
                     @change="fetchCities"
                 />
@@ -106,13 +108,14 @@
             <label>{{ t('cityLabel') }}</label>
             <div class="p-inputgroup">
                 <Dropdown 
-                    v-model="address.city"
+                    v-model="form.address.city"
                     :options="cities" 
                     optionLabel="name" 
                     option-value="name"
                     :placeholder="t('cityPlaceHolder')"
                     class="w-full"
-                    :loading="false"
+                    :loading="loadingCitiesField"
+                    :disabled="citiesInputIsEmpty"
                 />
             </div>
         </div>
@@ -121,7 +124,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="address.streetOne" 
+                    v-model="form.address.streetOne" 
                     class="w-full" 
                 />
             </div>
@@ -131,7 +134,7 @@
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
-                    v-model="address.streetTwo" 
+                    v-model="form.address.streetTwo" 
                     class="w-full" 
                 />
             </div>
@@ -149,10 +152,7 @@ import InputText from 'primevue/inputtext';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
-const { 
-    address, 
-    generalData, 
-    phone, 
+const {
     isNaturalAccount, 
     formTitle, 
     submitEditForm, 
@@ -161,13 +161,21 @@ const {
     fetchStates, 
     fetchCountries,
     fetchCities,
-    cities
+    cities,
+    loadingCitiesField,
+    loadingCountiesField,
+    loadingStatesField,
+    statesInputIsEmpty,
+    countriesInputIsEmpty,
+    citiesInputIsEmpty,
+    form,
+    loading,
 } = useAccount();
 const { t } = useI18n({
   useScope: 'global'
 })
 
-onMounted(() => fetchCountries())
+onMounted(async () =>  await fetchCountries());
 </script>
 
 <style scoped>

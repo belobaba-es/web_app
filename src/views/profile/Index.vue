@@ -5,40 +5,77 @@
             @click="editProfile()" />
     </div>
     <div class="card">
-        <h5 class="text-base text-600">Nombre completo</h5>
-        <p class="text-base font-medium">{{ fullName }}</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Nombre completo</h5>
+            <p class="text-base font-medium">{{ fullName }}</p>
+        </template>
         <Divider type="solid" />
 
-        <h5 class="text-base text-600">Docuemnto de identidad</h5>
-        <p class="text-base font-medium">123456</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Docuemnto de identidad</h5>
+            <p class="text-base font-medium">123456</p>
+        </template>
         <Divider type="solid" />
 
-        <h5 class="text-base text-600">Fecha de nacimiento</h5>
-        <p class="text-base font-medium">{{ owner?.dateBirth }}</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Fecha de nacimiento</h5>
+            <p class="text-base font-medium">{{ owner?.dateBirth }}</p>
+        </template>
     </div>
 
     <div class="pt-5 flex justify-content-between align-items-center">
         <h1 class="text-2xl">Informacion de contacto</h1>
     </div>
     <div class="card">
-        <h5 class="text-base text-600">Email</h5>
-        <p class="text-base font-medium">{{ owner?.email }}</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Email</h5>
+            <p class="text-base font-medium">{{ owner?.email }}</p>
+        </template>
         <Divider type="solid" />
 
-        <h5 class="text-base text-600">Teléfono</h5>
-        <p class="text-base font-medium">{{ phoneNumberWithCountry }}</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Teléfono</h5>
+            <p class="text-base font-medium">{{ phoneNumberWithCountry }}</p>
+        </template>
         <Divider type="solid" />
 
-        <h5 class="text-base text-600">Dirección</h5>
-        <p class="text-base font-medium">{{ owner?.streetOne }}</p>
+        <template v-if="loading">
+            <Skeleton width="10rem" class="mb-2"></Skeleton>
+            <Skeleton class="mb-2"></Skeleton>
+        </template>
+        <template v-else>
+            <h5 class="text-base text-600">Dirección</h5>
+            <p class="text-base font-medium">{{ owner?.streetOne }}</p>
+        </template>
     </div>
 </template>
 
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import Skeleton from 'primevue/skeleton';
 import { useAccount } from '../../composables/useAccount';
-const { editProfile, fullName, owner, phoneNumberWithCountry } = useAccount();
+const { editProfile, fullName, owner, phoneNumberWithCountry, loading } = useAccount();
 </script>
 
 <style scoped>
