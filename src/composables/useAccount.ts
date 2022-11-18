@@ -1,9 +1,9 @@
 import { useRouter, useRoute } from "vue-router";
 import { useAccountStore } from "../stores/account";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, reactive, ref } from 'vue';
-import { GeneralData } from "../views/profile/types/general-data.interface";
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n'
+import { WorldService } from "../shared/services/world";
 
 export const useAccount = () => {
     const router = useRouter();
@@ -13,16 +13,25 @@ export const useAccount = () => {
     const { t } = useI18n({
         useScope: 'global'
     })
+    const countries = ref([]);
+    const states = ref([]);
+    const cities = ref([]);
 
-    const generalData = reactive<GeneralData>({
+    const generalData = ref<{
+        email: string | undefined;
+        name: string | undefined;
+        lastName: string | undefined;
+        middleName: string | undefined;
+        firstName: string | undefined;
+    }>({
         email: '',
-        name: undefined,
-        lastName: undefined,
-        middleName: undefined,
-        firstName: undefined,
+        name: '',
+        lastName: '',
+        middleName: '',
+        firstName: '',
     })
     
-    const address = reactive<{
+    const address = ref<{
         streetOne: string | undefined;
         streetTwo: string | undefined;
         city: string | undefined;
@@ -38,9 +47,9 @@ export const useAccount = () => {
         region: ""
     })
     
-    const phone = reactive<{
+    const phone = ref<{
         phoneNumber: string | undefined;
-        phoneCountry: string | undefined;
+        phoneCountry: string | undefined
     }>({
         phoneNumber: "",
         phoneCountry: ""
@@ -67,19 +76,21 @@ export const useAccount = () => {
     const formTitle = computed (() => isNaturalAccount.value ? t('partnerTitle') : t('companyData'));
 
     onMounted(() => {
-        generalData.email = account.owner.value?.email;
-        generalData.firstName = account.owner.value?.firstName;
-        generalData.middleName = account.owner.value?.middleName;
-        generalData.lastName = account.owner.value?.lastName;
-        
-        phone.phoneCountry = account.owner.value?.phoneCountry;
-        phone.phoneNumber = account.owner.value?.phoneNumber;
+        generalData.value.email = accountStore.owner?.email;
+        generalData.value.firstName = accountStore.owner?.firstName;
+        generalData.value.middleName = accountStore.owner?.middleName;
+        generalData.value.lastName = accountStore.owner?.lastName;
+        generalData.value.name = accountStore.owner?.name;
 
-        address.streetOne = account.owner.value?.streetOne;
-        address.streetTwo = account.owner.value?.streetTwo;
-        address.country = account.owner.value?.country;
-        address.region = account.owner.value?.region;
-        address.city = account.owner.value?.city;
+        phone.value.phoneCountry = accountStore.owner?.phoneCountry;
+        phone.value.phoneNumber = accountStore.owner?.phoneNumber;
+
+        address.value.city = accountStore.owner?.city;
+        address.value.streetOne = accountStore.owner?.streetOne;
+        address.value.streetTwo = accountStore.owner?.streetTwo;
+        address.value.country = accountStore.owner?.country;
+        address.value.postalCode = accountStore.owner?.postalCode;
+        address.value.region = accountStore.owner?.region;
     });
 
     const submitEditForm = () => {
@@ -90,9 +101,37 @@ export const useAccount = () => {
         })
     };
 
+    const fetchCountries = async () => {
+        const worldService = WorldService.instance();
+        await worldService.getCountries()
+            .then(resp => {
+                countries.value = resp;
+            })
+    }
+
+    const fetchStates = async () => {
+        const worldService = WorldService.instance();
+        await worldService.getStates(address.value.country!)
+            .then(resp => {
+                states.value = resp;
+            })
+    }
+
+    const fetchCities = async () => {
+        const worldService = WorldService.instance();
+        await worldService.getCities(address.value.country!, address.value.region!)
+            .then(resp => {
+                cities.value = resp;
+            })
+    }
+
     return {
         fetchAccount,
+        fetchCountries,
+        fetchStates,
         editProfile,
+        submitEditForm,
+        fetchCities,
         ...account,
         fullName,
         phoneNumberWithCountry,
@@ -101,6 +140,8 @@ export const useAccount = () => {
         phone,
         formTitle,
         isNaturalAccount,
-        submitEditForm
+        countries,
+        states,
+        cities
     }
 }

@@ -71,14 +71,11 @@ const router = useRouter()
 
 const userStore = useUserStore();
 
-const handleSubmit = () => {
-  
-  loginService.login(form.user, form.pass).then(data =>  {
-    console.log(form.user);
+const handleSubmit = async () => {
+  await loginService.login(form.user, form.pass).then(data => {
     const { data: userPayload } = data;
     userStore.setUser(userPayload);
-    router.push('/dashboard')
-
+    router.push('/dashboard');
   });
 
 }

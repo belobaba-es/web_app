@@ -3,7 +3,7 @@
         <template #contentHeader>
             <div class="grid gap-4 py-4">
                 <div 
-                    v-for="(item, idx) in menuItemsFiltered"
+                    v-for="(item, idx) in menuItems"
                     :key="idx"
                     class="col-auto">
                     <RouterLink
@@ -21,21 +21,27 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import PageLayout from '../../components/PageLayout.vue';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from "vue-i18n";
 const { t } = useI18n({ useScope: 'global' });
 const { natureAccount, accountId, fetchAccount } = useAccount();
 
+const menuItems = ref();
+
 const checkCanSee = (...args: string[]) => {
     if (!natureAccount.value) return;
     return args.includes(natureAccount.value || '');
 }
 
-onMounted(async () => await fetchAccount());
+onMounted(async () => {
+    await fetchAccount();
+    setMenuItems();
+});
 
-const menuItems = ref([
+const setMenuItems = () => {
+    menuItems.value = [
         {
             label: t('profile'),
             to: `/profile/${accountId.value}`,
@@ -56,9 +62,9 @@ const menuItems = ref([
             to: `/profile/${accountId.value}/settings`,
             canSee: checkCanSee('company', 'natural_person')
         }
-]);
+    ].filter(item => item.canSee);
+};
 
-const menuItemsFiltered = computed(() => menuItems.value.filter(item => item.canSee))
 </script>
 
 <style lang="scss" scoped>

@@ -23,7 +23,10 @@ export abstract class HttpService {
     sessionStorage.setItem("noba", this.cryptoService.encrypt(token));
   }
 
-  
+  protected removeTokens() {
+    sessionStorage.removeItem("moba");
+    sessionStorage.removeItem("user");
+  }
 
   public async getToken<T>(): Promise<string | undefined> {
     const token = sessionStorage.getItem("noba");

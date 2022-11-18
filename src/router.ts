@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import Profile from './views/profile/Profile.vue'
 import ProfileIndex from './views/profile/Index.vue'
@@ -12,83 +12,96 @@ import DepositCrypto from './views/deposit/Crypto.vue'
 import PartnersEditDocument from './views/profile/PartnersEditDocuments.vue'
 import Login from './views/login/Login.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
+import { useUserStore } from './stores/user'
 
-export default createRouter({
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    component: Login,
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '/profile/:accountId',
+        component: Profile,
+        children: [
+          {
+            path: '',
+            component: ProfileIndex,
+          },
+          {
+            path: 'edit',
+            component: Edit,
+          },
+          {
+            path: 'partners',
+            component: Partners,
+          },
+          {
+            path: 'documentation',
+            component: Documents,
+          },
+          {
+            path: 'documentation/company/edit',
+            component: PartnersEditDocument,
+          },
+          {
+            path: 'settings',
+            component: Settings,
+          },
+        ],
+      },
+      {
+        path: '/deposit',
+        children: [
+          {
+            path: '',
+            component: Deposit,
+          },
+          {
+            path: 'fiat',
+            component: DepositFiat,
+          },
+          {
+            path: 'crypto',
+            component: DepositCrypto,
+          },
+        ],
+      },
+      {
+        path: '/withdraw',
+        children: [
+          {
+            path: '',
+            component: Withdraw,
+          },
+          {
+            path: 'fiat',
+            component: DepositFiat,
+          },
+          {
+            path: 'crypto',
+            component: DepositCrypto,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: Login,
-    },
-    {
-      path: '/dashboard',
-      component: Dashboard,
-      children: [
-        {
-          path: '/profile/:accountId',
-          component: Profile,
-          children: [
-            {
-              path: '',
-              component: ProfileIndex,
-            },
-            {
-              path: 'edit',
-              component: Edit,
-            },
-            {
-              path: 'partners',
-              component: Partners,
-            },
-            {
-              path: 'documentation',
-              component: Documents,
-            },
-            {
-              path: 'documentation/company/edit',
-              component: PartnersEditDocument,
-            },
-            {
-              path: 'settings',
-              component: Settings,
-            },
-          ],
-        },
-        {
-          path: '/deposit',
-          children: [
-            {
-              path: '',
-              component: Deposit,
-            },
-            {
-              path: 'fiat',
-              component: DepositFiat,
-            },
-            {
-              path: 'crypto',
-              component: DepositCrypto,
-            },
-          ],
-        },
-        {
-          path: '/withdraw',
-          children: [
-            {
-              path: '',
-              component: Withdraw,
-            },
-            {
-              path: 'fiat',
-              component: DepositFiat,
-            },
-            {
-              path: 'crypto',
-              component: DepositCrypto,
-            },
-          ],
-        },
-      ],
-    },
-  ],
+  routes,
 })
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  if (to.path === '/' && userStore.getUser) next({ path: '/dashboard' });
+  else if (to.meta.requiresAuth && !userStore.getUser) next({ path: '/' });
+  next();
+})
+
+export default router;

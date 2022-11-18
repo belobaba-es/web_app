@@ -79,9 +79,11 @@
                     v-model="address.country" 
                     :options="countries" 
                     optionLabel="name" 
-                    option-value="code"
+                    option-value="country_id"
+                    :loading="false"
                     :placeholder="t('countryPlaceholder')"
                     class="w-full"
+                    @change="fetchStates"
                 />
             </div>
         </div>
@@ -92,19 +94,25 @@
                     v-model="address.region" 
                     :options="states" 
                     optionLabel="name" 
-                    option-value="code"
+                    option-value="id"
+                    :loading="false"
                     :placeholder="t('statePlaceHolder')"
                     class="w-full"
+                    @change="fetchCities"
                 />
             </div>
         </div>
         <div class="field col-4">
             <label>{{ t('cityLabel') }}</label>
             <div class="p-inputgroup">
-                <InputText 
-                    type="text" 
-                    v-model="address.city" 
-                    class="w-full" 
+                <Dropdown 
+                    v-model="address.city"
+                    :options="cities" 
+                    optionLabel="name" 
+                    option-value="name"
+                    :placeholder="t('cityPlaceHolder')"
+                    class="w-full"
+                    :loading="false"
                 />
             </div>
         </div>
@@ -135,19 +143,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import Dropdown from 'primevue/dropdown';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from 'vue-i18n'
-
-const countries = ref([]);
-const states = ref([])
-const { address, generalData, phone, isNaturalAccount, formTitle, submitEditForm } = useAccount();
+import { onMounted } from 'vue';
+const { 
+    address, 
+    generalData, 
+    phone, 
+    isNaturalAccount, 
+    formTitle, 
+    submitEditForm, 
+    countries, 
+    states, 
+    fetchStates, 
+    fetchCountries,
+    fetchCities,
+    cities
+} = useAccount();
 const { t } = useI18n({
   useScope: 'global'
 })
+
+onMounted(() => fetchCountries())
 </script>
 
 <style scoped>

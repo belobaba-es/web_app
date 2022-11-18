@@ -103,5 +103,6 @@
     "betweenNOBA": "Transfer Between NOBA Accounts",
     "withdrawFiatSelectMsg":"Select national wire (within the USA) or International (international banks)",
     "withdrawCryptoSelectMsg":"Select Crypto Transfer Internal (within Noba) or External (Outside Noba)",
-    "statePlaceHolder": "Select state"
+    "statePlaceHolder": "Select state",
+    "cityPlaceHolder": "Select City"
 }

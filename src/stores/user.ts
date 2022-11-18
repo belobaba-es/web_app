@@ -41,7 +41,10 @@ export const useUserStore = defineStore('user', () => {
 
     const getUser = computed(() => {
         const cryptoService = new CryptoService;
-        const storageUser = sessionStorage.getItem('user') || '';
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return;
+
         return JSON.parse(
             cryptoService.decrypt(storageUser)
         );
