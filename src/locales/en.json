@@ -114,5 +114,6 @@
     "accountNumber":"Account Number",
     "bankAddress": "Bank Address",
     "bankPhone": "Bank Phone",
-    "swiftCode": "Swift Code"
+    "swiftCode": "Swift Code",
+    "statePlaceHolder": "Select state"
 }

@@ -1,5 +1,5 @@
 <template>
-    <PageLayout title="My Profile" class="profile">
+    <PageLayout :title="t('profile')" class="profile">
         <template #contentHeader>
             <div class="grid gap-4 py-4">
                 <div 

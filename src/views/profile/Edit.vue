@@ -4,9 +4,10 @@
             {{ formTitle }}
         </h1>
     </div>
+    
     <div class="formgrid grid">
         <div v-if="!isNaturalAccount" class="field col-4">
-            <label>Nombre</label>
+            <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -16,7 +17,7 @@
             </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
-            <label>First Name</label>
+            <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -26,7 +27,7 @@
             </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
-            <label>Middle Name</label>
+            <label>{{ t('secondNameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -36,17 +37,17 @@
             </div>
         </div>
         <div v-if="isNaturalAccount" class="field col-4">
-            <label>Last Name</label>
+            <label>{{ t('surnameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
                     v-model="generalData.lastName" 
-                    class="w-full" 
+                    class="w-full"
                 />
             </div>
         </div>
         <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
-            <label>Email</label>
+            <label>{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -56,7 +57,7 @@
             </div>
         </div>
         <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
-            <label>Teléfono</label>
+            <label>{{ t('phoneLabel') }}</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
                     {{ phone.phoneCountry }}
@@ -72,33 +73,33 @@
             </div>
         </div>
         <div class="field col-4">
-            <label>Pais</label>
+            <label>{{ t('countryLabel') }}</label>
             <div class="p-inputgroup">
                 <Dropdown 
-                v-model="address.country" 
-                :options="countries" 
-                optionLabel="name" 
+                    v-model="address.country" 
+                    :options="countries" 
+                    optionLabel="name" 
                     option-value="code"
-                    placeholder="Seleccione pais"
+                    :placeholder="t('countryPlaceholder')"
                     class="w-full"
                 />
             </div>
         </div>
         <div class="field col-4">
-            <label>Estado</label>
+            <label>{{ t('stateLabel') }}</label>
             <div class="p-inputgroup">
                 <Dropdown 
-                v-model="address.region" 
-                :options="states" 
-                optionLabel="name" 
+                    v-model="address.region" 
+                    :options="states" 
+                    optionLabel="name" 
                     option-value="code"
-                    placeholder="Seleccione estado"
+                    :placeholder="t('statePlaceHolder')"
                     class="w-full"
                 />
             </div>
         </div>
         <div class="field col-4">
-            <label>Ciudad</label>
+            <label>{{ t('cityLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -108,7 +109,7 @@
             </div>
         </div>
         <div class="field col-6">
-            <label>Direccion 1</label>
+            <label>{{ t('addressLabel1') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -118,7 +119,7 @@
             </div>
         </div>
         <div class="field col-6">
-            <label>Direccion 2</label>
+            <label>{{ t('addressLabel2') }}</label>
             <div class="p-inputgroup">
                 <InputText 
                     type="text" 
@@ -128,52 +129,25 @@
             </div>
         </div>
         <div class="field col-12 flex align-items-center">
-            <Button label="Guardar" class="px-5"/>
+            <Button :label="t('save')" class="px-5" @click="submitEditForm"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { ProfileService } from './services/profile';
+import { ref } from 'vue';
 import Dropdown from 'primevue/dropdown';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-import { GeneralData } from './types/general-data.interface';
-
+import { useAccount } from '../../composables/useAccount';
+import { useI18n } from 'vue-i18n'
 
 const countries = ref([]);
 const states = ref([])
-
-const generalData = ref<GeneralData>({
-    email: '',
-    name: undefined,
-    lastName: undefined,
-    middleName: undefined,
-    firstName: undefined,
+const { address, generalData, phone, isNaturalAccount, formTitle, submitEditForm } = useAccount();
+const { t } = useI18n({
+  useScope: 'global'
 })
-
-const address = ref({
-    streetOne: "",
-    streetTwo: "",
-    city: "",
-    country: "",
-    postalCode: "",
-    region: ""
-})
-
-const phone = ref({
-    phoneNumber: "4249123703",
-    phoneCountry: "+58"
-})
-
-const isNaturalAccount = computed<boolean>(() => false);
-
-
-
-
-const formTitle = computed (() => isNaturalAccount.value ? 'Datos accionistas' : 'Company information')
 </script>
 
 <style scoped>
