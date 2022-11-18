@@ -116,5 +116,7 @@
     "bankPhone": "Bank Phone",
     "swiftCode": "Swift Code",
     "statePlaceHolder": "Select state",
-    "cityPlaceHolder": "Select City"
+    "cityPlaceHolder": "Select City",
+    "youBeneficiaries": "Your Beneficiaries",
+    "nobaBeneficiaryEmail": "Noba beneficiary email"
 }
