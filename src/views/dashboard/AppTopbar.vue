@@ -53,7 +53,7 @@ const items = ref([
 	{
 		label: t('profile'),
 		icon: 'pi pi-user',
-		command: () => router.push(`/profile/${userStore.getUser.accountId}`)
+		command: () => router.push(`/profile/${userStore.getUser.account.accountId}`)
 	},
 	{
 		icon: 'pi',

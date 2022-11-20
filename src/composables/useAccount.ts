@@ -34,9 +34,6 @@ export const useAccount = () => {
         await accountStore.getAccountByID(route.params.accountId);
     }
 
-    const fullName = computed(() => {
-        return `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
-    })
 
     const phoneNumberWithCountry = computed(() => {
         return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
@@ -44,13 +41,23 @@ export const useAccount = () => {
 
     const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person');
 
+    const fullName = computed(() => {
+        const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`;
+        const companyAccount = account.owner.value?.name;
+        return isNaturalAccount ? naturalAccount : companyAccount;
+    })
+
+    const labelNameProfile = computed(() => {
+
+    });
+
     const formTitle = computed (() => isNaturalAccount.value ? t('partnerTitle') : t('companyData'));
 
     const statesInputIsEmpty = computed(() => states.value.length === 0);
     const citiesInputIsEmpty = computed(() => cities.value.length === 0);
     const countriesInputIsEmpty = computed(() => countries.value.length === 0);
 
-    const submitEditForm = () => {
+    const submitProfileForm = () => {
         submitting.value = true;
         const profileService = ProfileService.instance();
         profileService.updateContact(account.accountId.value!, userStore.getUser.contactId, accountStore.form)
@@ -94,7 +101,7 @@ export const useAccount = () => {
         fetchCountries,
         fetchStates,
         editProfile,
-        submitEditForm,
+        submitProfileForm,
         fetchCities,
         ...account,
         fullName,

@@ -247,7 +247,7 @@ button.p-button.p-component.p-button.edit-document-button {
   color: #1B1B19
 }
 
-.profile .p-button:hover {
+.profile .p-button.edit-document-button:hover {
   background-color: #E7E6E7;
   border: solid 1px #E7E6E7;
 }

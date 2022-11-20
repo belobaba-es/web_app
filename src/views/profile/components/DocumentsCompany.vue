@@ -33,7 +33,6 @@
 </template>
 
 <script setup lang="ts">
-import { Document as DocumentType } from '../types/document.interface';
 import Button from 'primevue/button';
 import { ref } from 'vue';
 import Document from './Document.vue';
@@ -44,7 +43,7 @@ const router = useRouter();
 
 const onEdit = () => router.push('documentation/company/edit');
 
-const documents = ref<DocumentType[]>([
+const documents = ref([
     {
         label: "other undefined",
         documentType: "other",
