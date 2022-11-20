@@ -6,6 +6,7 @@ import { useI18n } from 'vue-i18n'
 import { WorldService } from "../shared/services/world";
 import { ProfileService } from '../views/profile/services/profile';
 import { useUserStore } from "../stores/user";
+import { Member, Owner } from '../views/profile/types/account.interface';
 
 export const useAccount = () => {
     const router = useRouter();
@@ -44,11 +45,15 @@ export const useAccount = () => {
     const fullName = computed(() => {
         const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`;
         const companyAccount = account.owner.value?.name;
-        return isNaturalAccount ? naturalAccount : companyAccount;
+        return isNaturalAccount.value ? naturalAccount : companyAccount;
     })
 
-    const labelNameProfile = computed(() => {
+    const getFullName = (payload: Owner | Member) => {
+        return `${payload.firstName} ${payload.middleName} ${payload.lastName}`;
+    }
 
+    const labelNameProfile = computed(() => {
+        return isNaturalAccount.value ? t('fullName') : t('businessNameLabel');
     });
 
     const formTitle = computed (() => isNaturalAccount.value ? t('partnerTitle') : t('companyData'));
@@ -103,6 +108,7 @@ export const useAccount = () => {
         editProfile,
         submitProfileForm,
         fetchCities,
+        getFullName,
         ...account,
         fullName,
         phoneNumberWithCountry,
@@ -118,5 +124,6 @@ export const useAccount = () => {
         citiesInputIsEmpty,
         countriesInputIsEmpty,
         submitting,
+        labelNameProfile,
     }
 }

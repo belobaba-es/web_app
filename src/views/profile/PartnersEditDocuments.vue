@@ -56,9 +56,11 @@
     <div class="col-12 md:col-6">
       <Panel header="ACCIONISTAS - CARGA DE DOCUMENTOS" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
-          <DocumentPartnersEditForm />
-          <DocumentPartnersEditForm />
-          <DocumentPartnersEditForm />
+          <div v-for="(partner, idx) in members">
+            <DocumentPartnersEditForm
+              :partner="partner"
+              :key="idx" />
+          </div>
         </ScrollPanel>
       </Panel>
     </div>
@@ -74,7 +76,9 @@ import Divider from "primevue/divider";
 import ScrollPanel from 'primevue/scrollpanel';
 import Chip from 'primevue/chip';
 import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue';
+import { useAccount } from '../../composables/useAccount';
 
+const { owner, members } = useAccount();
 const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
 const companyDocumentType = ref('');
 </script>
