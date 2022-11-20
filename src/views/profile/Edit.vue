@@ -12,7 +12,8 @@
                 <InputText 
                     type="text" 
                     v-model="form.generalData.name" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -22,7 +23,8 @@
                 <InputText 
                     type="text" 
                     v-model="form.generalData.firstName" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -32,7 +34,8 @@
                 <InputText 
                     type="text" 
                     v-model="form.generalData.middleName" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -43,6 +46,7 @@
                     type="text" 
                     v-model="form.generalData.lastName" 
                     class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -52,7 +56,8 @@
                 <InputText 
                     type="text" 
                     v-model="form.generalData.email" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -64,10 +69,11 @@
                 </span>
                 <div class="p-inputgroup">
                     <InputText 
-                    id="phoneNumber" 
+                        id="phoneNumber" 
                         type="text" 
                         class="w-full" 
                         v-model="form.phone.phoneNumber"
+                        required
                     />
                 </div>
             </div>
@@ -79,12 +85,13 @@
                     v-model="form.address.country" 
                     :options="countries" 
                     optionLabel="name" 
-                    option-value="country_code"
+                    option-value="country_id"
                     :loading="loadingCountiesField"
                     :placeholder="t('countryPlaceholder')"
                     :disabled="countriesInputIsEmpty"
                     class="w-full"
                     @change="fetchStates"
+                    required
                 />
             </div>
         </div>
@@ -101,6 +108,7 @@
                     :disabled="statesInputIsEmpty"
                     class="w-full"
                     @change="fetchCities"
+                    required
                 />
             </div>
         </div>
@@ -116,6 +124,7 @@
                     class="w-full"
                     :loading="loadingCitiesField"
                     :disabled="citiesInputIsEmpty"
+                    required
                 />
             </div>
         </div>
@@ -125,7 +134,8 @@
                 <InputText 
                     type="text" 
                     v-model="form.address.streetOne" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
@@ -135,12 +145,18 @@
                 <InputText 
                     type="text" 
                     v-model="form.address.streetTwo" 
-                    class="w-full" 
+                    class="w-full"
+                    required
                 />
             </div>
         </div>
         <div class="field col-12 flex align-items-center">
-            <Button :label="t('save')" class="px-5" @click="submitEditForm"/>
+            <Button 
+                :label="t('save')" 
+                class="px-5" 
+                @click="submitEditForm" 
+                :loading="submitting"
+            />
         </div>
     </div>
 </template>
@@ -169,7 +185,7 @@ const {
     countriesInputIsEmpty,
     citiesInputIsEmpty,
     form,
-    loading,
+    submitting
 } = useAccount();
 const { t } = useI18n({
   useScope: 'global'

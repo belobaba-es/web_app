@@ -1,8 +1,13 @@
 <template>
     <div class="flex justify-content-between align-items-center">
         <h1 class="text-2xl">Datos personales</h1>
-        <Button label="Editar" icon="pi pi-pencil" iconPos="right" class="p-button-link"
+        <template v-if="loading">
+            <Skeleton width="6rem" height="2rem" class="px-3 mb-3"></Skeleton>
+        </template>
+        <template v-else>
+            <Button label="Editar" icon="pi pi-pencil" iconPos="right" class="p-button-link"
             @click="editProfile()" />
+        </template>
     </div>
     <div class="card">
         <template v-if="loading">

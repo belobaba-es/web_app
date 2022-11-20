@@ -4,11 +4,14 @@ import { storeToRefs } from "pinia";
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { WorldService } from "../shared/services/world";
+import { ProfileService } from '../views/profile/services/profile';
+import { useUserStore } from "../stores/user";
 
 export const useAccount = () => {
     const router = useRouter();
     const route = useRoute();
     const accountStore = useAccountStore();
+    const userStore = useUserStore();
     const account = storeToRefs(accountStore)
     const { t } = useI18n({
         useScope: 'global'
@@ -49,6 +52,11 @@ export const useAccount = () => {
 
     const submitEditForm = () => {
         submitting.value = true;
+        const profileService = ProfileService.instance();
+        profileService.updateContact(account.accountId.value!, userStore.getUser.contactId, accountStore.form)
+            .then(() => {
+                submitting.value = false;
+            })
     };
 
     const fetchCountries = async () => {
@@ -102,5 +110,6 @@ export const useAccount = () => {
         statesInputIsEmpty,
         citiesInputIsEmpty,
         countriesInputIsEmpty,
+        submitting,
     }
 }

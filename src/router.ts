@@ -19,7 +19,6 @@ import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
 
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -28,7 +27,6 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true },
     children: [
       {
         path: '/profile/:accountId',
@@ -114,9 +112,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  if (to.path === '/' && userStore.getUser) next({ path: '/dashboard' });
-  else if (to.meta.requiresAuth && !userStore.getUser) next({ path: '/' });
-  next();
+  // if (to.path === '/' && userStore.getUser) next({ path: '/dashboard' });
+  // else if (to.meta.requiresAuth && !userStore.getUser) next({ path: '/' });
+  // next();
+  if (to.path !== '/' && !userStore.getUser)  {
+    next({ path: '/' })
+  } else if (to.path === '/' && userStore.getUser){
+    next({ path: '/dashboard' })
+  } else {
+    next()
+  }
 })
 
 export default router;
