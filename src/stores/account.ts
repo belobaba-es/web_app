@@ -88,6 +88,7 @@ export const useAccountStore = defineStore('account', {
             this.id = payload.id || null;
             this.createdAt = payload.createdAt || null;
             this.agreement = payload.agreement || null;
+            this.natureAccount = payload.natureAccount;
         },
         async getAccountByID(accountId: string | string[]) {
             this.loading = true;

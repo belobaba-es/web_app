@@ -61,9 +61,6 @@ const { t } = useI18n({
   useScope: 'global'
 })
 
-
-const btnSave = t('save')
-
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');
 const confirmNewPassword = ref<string>('');

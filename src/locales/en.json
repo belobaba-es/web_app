@@ -118,5 +118,6 @@
     "statePlaceHolder": "Select state",
     "cityPlaceHolder": "Select City",
     "youBeneficiaries": "Your Beneficiaries",
-    "nobaBeneficiaryEmail": "Noba beneficiary email"
+    "nobaBeneficiaryEmail": "Noba beneficiary email",
+    "fullName": "Full Name"
 }

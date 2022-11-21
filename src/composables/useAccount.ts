@@ -4,11 +4,15 @@ import { storeToRefs } from "pinia";
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { WorldService } from "../shared/services/world";
+import { ProfileService } from '../views/profile/services/profile';
+import { useUserStore } from "../stores/user";
+import { Member, Owner } from '../views/profile/types/account.interface';
 
 export const useAccount = () => {
     const router = useRouter();
     const route = useRoute();
     const accountStore = useAccountStore();
+    const userStore = useUserStore();
     const account = storeToRefs(accountStore)
     const { t } = useI18n({
         useScope: 'global'
@@ -31,9 +35,6 @@ export const useAccount = () => {
         await accountStore.getAccountByID(route.params.accountId);
     }
 
-    const fullName = computed(() => {
-        return `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
-    })
 
     const phoneNumberWithCountry = computed(() => {
         return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
@@ -41,14 +42,33 @@ export const useAccount = () => {
 
     const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person');
 
+    const fullName = computed(() => {
+        const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`;
+        const companyAccount = account.owner.value?.name;
+        return isNaturalAccount.value ? naturalAccount : companyAccount;
+    })
+
+    const getFullName = (payload: Owner | Member) => {
+        return `${payload.firstName} ${payload.middleName} ${payload.lastName}`;
+    }
+
+    const labelNameProfile = computed(() => {
+        return isNaturalAccount.value ? t('fullName') : t('businessNameLabel');
+    });
+
     const formTitle = computed (() => isNaturalAccount.value ? t('partnerTitle') : t('companyData'));
 
     const statesInputIsEmpty = computed(() => states.value.length === 0);
     const citiesInputIsEmpty = computed(() => cities.value.length === 0);
     const countriesInputIsEmpty = computed(() => countries.value.length === 0);
 
-    const submitEditForm = () => {
+    const submitProfileForm = () => {
         submitting.value = true;
+        const profileService = ProfileService.instance();
+        profileService.updateContact(account.accountId.value!, userStore.getUser.contactId, accountStore.form)
+            .then(() => {
+                submitting.value = false;
+            })
     };
 
     const fetchCountries = async () => {
@@ -86,8 +106,9 @@ export const useAccount = () => {
         fetchCountries,
         fetchStates,
         editProfile,
-        submitEditForm,
+        submitProfileForm,
         fetchCities,
+        getFullName,
         ...account,
         fullName,
         phoneNumberWithCountry,
@@ -102,5 +123,7 @@ export const useAccount = () => {
         statesInputIsEmpty,
         citiesInputIsEmpty,
         countriesInputIsEmpty,
+        submitting,
+        labelNameProfile,
     }
 }
