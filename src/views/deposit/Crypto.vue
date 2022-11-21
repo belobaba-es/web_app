@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NewWallet :assets="assets" v-model:name="name" v-model:display="displayNew" > </NewWallet>
+        <NewWallet :assets="assets" v-model:name="name" v-model:display="displayNew" @create=""> </NewWallet>
         <ViewAddress v-model:visible="display" :asset="selectViewAsset"> </ViewAddress>
         
         <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">{{t('crypto')}} </span></p>
@@ -65,7 +65,9 @@ onMounted(async () => {
     assetsService.list().then(data => assets.value = data);
 });
 
-
+const onCreateAddress = () =>{
+    
+}
 </script>
 
 <style lang="css" scoped>

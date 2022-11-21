@@ -18,6 +18,7 @@ import { useUserStore } from './stores/user'
 import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
+import StepAmount from './views/withdraw/components/StepAmount.vue'
 
 
 const routes: RouteRecordRaw[] = [
@@ -87,6 +88,11 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'fiat/noba',
             component: WithdrawFiatNoba
+          },
+          {
+            path: 'fiat/noba/amount',
+            name: 'withdraw-noba-amount',
+            component: StepAmount
           },
           {
             path: 'fiat/domestic',

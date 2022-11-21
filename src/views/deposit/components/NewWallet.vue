@@ -11,16 +11,16 @@
             </div>
             <div class="field col-12" style="display: grid;">
                 <label for="select-crypto">{{t('selectCrypto')}}</label>
-                <Dropdown id="select-crypto" v-model="selectedAsset" :options="assets" optionLabel="name" placeholder="" />
+                <Dropdown id="select-crypto" v-model="model.assetCode" @update:model-value="" :options="assets" optionLabel="name" placeholder="" />
             </div>
             <div class="field col-12" style="display: grid;">
                 <label for="name">{{t('nameWallet')}}</label>
-                <InputText id="name" type="text" :v-model="name" @update:model-value="emit('update:name', $event)"/>
+                <InputText id="name" type="text" :v-model="model.label" @update:model-value="emit('update:name', $event)"/>
             </div>
         </div>
 
         <template #footer>
-            <Button :label="t('createWallet')" icon="" autofocus />
+            <Button :label="t('createWallet')" icon="" autofocus @click="onCreate"/>
         </template>
     </Dialog>
 
@@ -33,7 +33,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
-import { Asset } from '../types/asset.interface';
+import { Asset, CreatePaymentAddress } from '../types/asset.interface';
 import { defineProps } from 'vue';
 
 defineProps<{
@@ -42,10 +42,16 @@ defineProps<{
     name: string,
 }>()
 
-const emit = defineEmits(['update:name', 'update:display']);
+const model = {
+    assetCode: '',
+    label:     ''
+}
+const emit = defineEmits(['update:name', 'update:display', 'create']);
 const { t } = useI18n({ useScope: 'global' })
 
-
+const onCreate= () => {
+    emit('create', model)
+}
 
 const selectedAsset = ref('')
 
