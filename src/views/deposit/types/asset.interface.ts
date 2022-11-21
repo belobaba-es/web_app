@@ -11,3 +11,8 @@ export interface Asset {
     fee:               number;
 }
 
+
+export interface CreatePaymentAddress {
+    assetCode: string;
+    label:     string;
+}
