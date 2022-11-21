@@ -75,7 +75,7 @@ const items = ref([
 		icon: 'pi pi-sign-out',
 		command: async () => {
 			await loginService.logout();
-			router.push('/');
+			await router.push('/');
 		}
 	},
 
