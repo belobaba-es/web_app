@@ -42,6 +42,7 @@ export interface FormData {
     generalData: FormGeneralData;
     address: FormAddressData;
     phone: FormPhoneData;
+    documentResponseId: string | null
 }
 
 export const useAccountStore = defineStore('account', {
@@ -75,7 +76,8 @@ export const useAccountStore = defineStore('account', {
             phone: {
                 phoneNumber: "",
                 phoneCountry: ""
-            }
+            },
+            documentResponseId: null
         }
     }),
     actions: {
@@ -113,6 +115,9 @@ export const useAccountStore = defineStore('account', {
             this.form.address.country = this.owner?.country;
             this.form.address.postalCode = this.owner?.postalCode;
             this.form.address.region = this.owner?.region;
+        },
+        setDocumentResponseId(documentResponseId: string) {
+            this.form.documentResponseId = documentResponseId;
         }
     }
 })

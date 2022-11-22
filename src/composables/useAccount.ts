@@ -24,7 +24,6 @@ export const useAccount = () => {
     const loadingCountiesField = ref(false);
     const loadingCitiesField = ref(false);
     const loadingStatesField = ref(false);
-
     const submitting = ref(false);
 
     const editProfile = (): void => {
@@ -101,6 +100,11 @@ export const useAccount = () => {
             })
     }
 
+    const setDocumentResponseId = (documentResponseId: string | null) => {
+        if (!documentResponseId) return;
+        accountStore.setDocumentResponseId(documentResponseId);
+    }
+
     return {
         fetchAccount,
         fetchCountries,
@@ -109,6 +113,7 @@ export const useAccount = () => {
         submitProfileForm,
         fetchCities,
         getFullName,
+        setDocumentResponseId,
         ...account,
         fullName,
         phoneNumberWithCountry,
