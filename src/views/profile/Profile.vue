@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import PageLayout from '../../components/PageLayout.vue';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from "vue-i18n";
@@ -47,7 +47,7 @@ const checkCanSee = (...args: string[]) => {
     return args.includes(natureAccount.value || '');
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await fetchAccount();
     setMenuItems();
 });
