@@ -193,8 +193,12 @@ const { t } = useI18n({
   useScope: 'global'
 })
 
-onMounted(async () =>  {
+onMounted(async () => {
     await fetchCountries();
+    if (props.formMode === 'edit-own-profile') {
+        await onChangeCountryHandler();
+        await onChangeStateHandler();
+    }
 });
 
 const props = defineProps({
@@ -204,18 +208,18 @@ const props = defineProps({
     }
 })
 
-const onChangeCountryHandler = () => {
+const onChangeCountryHandler = async () => {
     const country = countries.value.find(country => country.country_code === form.value.address.country);
     if (!country) return;
     setCountry(country);
-    fetchStates();
+    await fetchStates();
 };
 
-const onChangeStateHandler = () => {
+const onChangeStateHandler = async () => {
     const state = states.value.find(state => state.name === form.value.address.region);
     if (!state) return;
     setState(state);
-    fetchCities();
+    await fetchCities();
 };
 
 </script>
