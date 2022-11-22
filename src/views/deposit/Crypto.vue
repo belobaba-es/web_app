@@ -35,7 +35,7 @@ import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 
-import { Asset, CreatePaymentAddress, PaymentAddress } from './types/asset.interface';
+import { Asset, CreatePaymentAddress, EventCreatePaymentAddress, PaymentAddress } from './types/asset.interface';
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue';
 import { AssetsService } from './services/assets';
@@ -75,22 +75,24 @@ onMounted(async () => {
     assetsService.listPaymentAddress().then(data=>paymentAddress.value = data.results)
 });
 
-const onCreateAddress = (data: CreatePaymentAddress) =>{
+const onCreateAddress = (event: EventCreatePaymentAddress) =>{
     console.log(assetSelect, 'asset')
-    console.log('data', data.assetCode, data.label, data.asset);
-    // assetsService.paymentAddress(data).then(resp=>{
-    //     console.log('response',data)
-    //     display.value = true;
-    //     findAsset(data.assetCode)
-    //     const payment = {
-    //         label:     data.label,
-    //         accountId: "",
-    //         address:   resp,
-    //         assetsId:  data.assetCode,
-    //         qr:       resp.qr,
-    //     }
-
-    // })
+    const data = {label: event.label, assetCode: event.assetCode}
+    
+    assetsService.paymentAddress(data).then(resp=>{
+        console.log('response',data)
+        
+        const payment = {
+            label:     data.label,
+            accountId: "",
+            address:   resp.paymentAddress,
+            assetsId:  event.asset.assetId,
+            qr:       resp.qr,
+        }
+        selectPaymentAddress.value = payment
+        displayNew.value = true;
+        display.value = true;
+    })
     // selectViewAsset.value = data
 }
 </script>
