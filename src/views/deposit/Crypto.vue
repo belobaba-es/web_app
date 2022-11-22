@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NewWallet :assets="assets"  v-model:display="displayNew" @create="onCreateAddress"> </NewWallet>
+        <NewWallet :assets="assets"  v-model:display="displayNew" v-model:asset-select="assetSelect" @create="onCreateAddress"> </NewWallet>
         <ViewAddress v-model:visible="display" :asset="selectViewAsset" :payment-address="selectPaymentAddress"> </ViewAddress>
         
         <p class="text-3xl font-medium mb-4">{{t('deposit')}} / <span class="text-primary">{{t('crypto')}} </span></p>
@@ -46,19 +46,24 @@ const { t } = useI18n({ useScope: 'global' })
 
 const display = ref(false);
 const displayNew = ref(false);
-
+const assetSelect = ref(null)
 const selectViewAsset= ref<Asset | null > (null);
 const selectPaymentAddress = ref<PaymentAddress | null> (null);
+
+const findAsset = (assetId: string) => {
+    const assetSelect = assets.value.find(asset=>asset.assetId == assetId)
+    if(assetSelect){
+        return assetSelect 
+    }
+    return null 
+}
 
 const viewAddressAsset = (item: PaymentAddress) =>{
     display.value = !display.value;
     display.value = true;
-    console.log(item, display)
+   
     selectPaymentAddress.value = item
-    const assetSelect = assets.value.find(asset=>asset.assetId == item.assetsId)
-    if(assetSelect){
-        selectViewAsset.value = assetSelect 
-    } 
+    selectViewAsset.value = findAsset(item.assetsId)
 }
 
 const assetsService = AssetsService.instance();
@@ -71,8 +76,21 @@ onMounted(async () => {
 });
 
 const onCreateAddress = (data: CreatePaymentAddress) =>{
-    console.log('data', data.assetCode, data.label);
-    // assetsService.paymentAddress(data).then(data=>{console.log('response',data)})
+    console.log(assetSelect, 'asset')
+    console.log('data', data.assetCode, data.label, data.asset);
+    // assetsService.paymentAddress(data).then(resp=>{
+    //     console.log('response',data)
+    //     display.value = true;
+    //     findAsset(data.assetCode)
+    //     const payment = {
+    //         label:     data.label,
+    //         accountId: "",
+    //         address:   resp,
+    //         assetsId:  data.assetCode,
+    //         qr:       resp.qr,
+    //     }
+
+    // })
     // selectViewAsset.value = data
 }
 </script>

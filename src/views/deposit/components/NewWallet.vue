@@ -11,11 +11,11 @@
             </div>
             <div class="field col-12" style="display: grid;">
                 <label for="select-crypto">{{t('selectCrypto')}}</label>
-                <Dropdown id="select-crypto" v-model="model.assetCode"  :options="assets" optionLabel="name" optionValue="code" placeholder="" />
+                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />
             </div>
             <div class="field col-12" style="display: grid;">
                 <label for="name">{{t('nameWallet')}}</label>
-                <InputText id="name" type="text" v-model="model.label" />
+                <InputText id="name" type="text" v-model="label" />
                 <!-- @update:model-value="emit('update:name', $event)" -->
             </div>
         </div>
@@ -40,18 +40,21 @@ import { defineProps } from 'vue';
 defineProps<{
 	assets: Array<Asset>,
     display: boolean,
-   
+    assetSelect: Asset | null
 }>()
 
-const model = ref({
-    assetCode: '',
-    label:     ''
-})
-const emit = defineEmits(['update:name', 'update:display', 'create']);
+const assetSelect = ref<Asset|null>(null)  
+const label = ref('')
+
+const emit = defineEmits(['update:asset-select', 'update:display', 'create']);
 const { t } = useI18n({ useScope: 'global' })
 
 const onCreate= () => {
-    emit('create', {assetCode: model.value.assetCode, label: model.value.label})
+    emit('create', {
+        assetCode: assetSelect.value?.code, 
+        label: label,
+        asset: assetSelect.value
+    })
 }
 
 const selectedAsset = ref('')

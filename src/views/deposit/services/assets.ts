@@ -1,5 +1,5 @@
 import { HttpService } from '../../../shared/services/http';
-import {  Asset } from '../types/asset.interface';
+import {  Asset, CreatePaymentAddress, CreatePaymentAddressResponse, PaymentAddressResponse } from '../types/asset.interface';
 
 
 export class AssetsService extends HttpService {
@@ -21,6 +21,14 @@ export class AssetsService extends HttpService {
     }
     async list (): Promise<Asset[]> {
         return await this.get<Asset[]>(`assets/`);
+    }
+
+    async listPaymentAddress (): Promise<PaymentAddressResponse> {
+        return await this.get<PaymentAddressResponse>(`assets/payment-address`);
+    }
+
+    async paymentAddress(data: CreatePaymentAddress): Promise<CreatePaymentAddressResponse>{
+        return await this.post(`assets/payment-address`, data)
     }
     
     
