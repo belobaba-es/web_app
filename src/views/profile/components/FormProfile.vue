@@ -75,7 +75,7 @@
         <div class="field col-4">
             <label>{{ t('countryLabel') }}</label>
             <div class="p-inputgroup">
-                <Dropdown 
+                <Dropdown
                     v-model="form.address.country" 
                     :options="countries" 
                     optionLabel="name" 
@@ -84,7 +84,7 @@
                     :placeholder="t('countryPlaceholder')"
                     :disabled="countriesInputIsEmpty"
                     class="w-full"
-                    @change="fetchStates"
+                    @change="onChangeCountryHandler()"
                     required
                 />
             </div>
@@ -96,12 +96,12 @@
                     v-model="form.address.region" 
                     :options="states" 
                     optionLabel="name" 
-                    option-value="id"
+                    option-value="name"
                     :loading="loadingStatesField"
                     :placeholder="t('statePlaceHolder')"
                     :disabled="statesInputIsEmpty"
                     class="w-full"
-                    @change="fetchCities"
+                    @change="onChangeStateHandler()"
                     required
                 />
             </div>
@@ -162,13 +162,20 @@ import InputText from 'primevue/inputtext';
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
+import { useWorld } from '../../../composables/useWorld';
 
 const {
     isNaturalAccount,
-    submitProfileForm, 
-    countries, 
-    states, 
-    fetchStates, 
+    submitProfileForm,
+    form,
+    submitting
+} = useAccount();
+
+
+const {
+    countries,
+    states,
+    fetchStates,
     fetchCountries,
     fetchCities,
     cities,
@@ -178,31 +185,37 @@ const {
     statesInputIsEmpty,
     countriesInputIsEmpty,
     citiesInputIsEmpty,
-    form,
-    submitting
-} = useAccount();
+    setCountry,
+    setState,
+} = useWorld();
+
 const { t } = useI18n({
   useScope: 'global'
 })
 
 onMounted(async () =>  {
     await fetchCountries();
-
-    if (form.value.address.country?.length! > 0) {
-        fetchStates();
-    }
-
-    if (form.value.address.region?.length! > 0) {
-        fetchCities();
-    }
 });
 
 const props = defineProps({
     formMode: {
         type: String,
-        required: true,
         default: () => 'edit-own-profile'
     }
 })
+
+const onChangeCountryHandler = () => {
+    const country = countries.value.find(country => country.country_code === form.value.address.country);
+    if (!country) return;
+    setCountry(country);
+    fetchStates();
+};
+
+const onChangeStateHandler = () => {
+    const state = states.value.find(state => state.name === form.value.address.region);
+    if (!state) return;
+    setState(state);
+    fetchCities();
+};
 
 </script>

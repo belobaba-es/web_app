@@ -26,7 +26,7 @@ export class WorldService extends HttpService {
         return await this.get(`world/states/${countryId}`);
     }
     
-    async getCities(countryId: string, stateId: string): Promise<any> {
+    async getCities(countryId: string, stateId: number): Promise<any> {
         return await this.get(`world/cities/${countryId}/${stateId}`);
     }
 }
