@@ -1,26 +1,38 @@
 <template>
     <div class="container">
-        <div class="flex justify-content-between align-items-center asset-item" v-for="(item) in assets">
-            <div class="asset-icon">
-                <img :src="item.icon">
+        <div class="flex justify-content-between align-items-center asset-item" v-for="(item) in paymentAddress">
+            <div class="flex align-items-center">
+                <div class="asset-icon">
+                    <img :src=" asssetImg(item.assetsId)">
+                </div>
+                <span class="font-semi-bold">{{assetName(item.assetsId)}}</span>
             </div>
-            <span>{{item.name}}</span>
+            <span>{{item.label}}</span>
             <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="emit('select',item);"/>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-
+import { computed } from 'vue';
 import Button from 'primevue/button';
-import { Asset } from '../types/asset.interface';
+import { Asset, PaymentAddress } from '../types/asset.interface';
 
-defineProps<{
+const props = defineProps<{
 	assets: Array<Asset>,
+    paymentAddress: Array<PaymentAddress>
 }>()
 
 const emit = defineEmits(['select']);
 
+
+const asssetImg = (assetId: string) => {
+      return props.assets.find(asset=>asset.assetId == assetId)?.icon
+}
+
+const assetName = (assetId: string) => {
+    return props.assets.find(asset=>asset.assetId == assetId)?.code
+}
 </script>
 
 <style lang="css" scoped>
