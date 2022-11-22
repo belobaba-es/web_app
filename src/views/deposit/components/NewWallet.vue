@@ -52,7 +52,7 @@ const { t } = useI18n({ useScope: 'global' })
 const onCreate= () => {
     emit('create', {
         assetCode: assetSelect.value?.code, 
-        label: label,
+        label: label.value,
         asset: assetSelect.value
     })
 }

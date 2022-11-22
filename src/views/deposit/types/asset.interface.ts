@@ -13,6 +13,9 @@ export interface Asset {
     paymentAddress:    string
 }
 
+export interface EventCreatePaymentAddress extends CreatePaymentAddress{
+    asset:    Asset
+}
 
 export interface CreatePaymentAddress {
     assetCode: string;
