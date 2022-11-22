@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import { onMounted, ref } from 'vue';
+import { useAccount } from '../../../composables/useAccount';
 
 const isInitFileLoader = ref(false);
 const loadingBtn = ref(false);
@@ -47,6 +48,8 @@ const initFileLoader = () => {
     globalThis.start();
 }
 
+const { setDocumentResponseId } = useAccount();
+
 onMounted(() => {
     window.SDK_ID = import.meta.env.VITE_PUBLIC_SDK_ID;
     const tag1 = document.createElement("script");
@@ -59,6 +62,14 @@ onMounted(() => {
     tag2.setAttribute("src", '/documents.js');
     tag2.setAttribute("type", "text/javascript");
     document.head.appendChild(tag2);
+
+    if (typeof window !== undefined) {
+      setInterval(() => {
+        const documentID = sessionStorage.getItem("noba@documentUuid");
+        console.log("noba@documentUuid", documentID);
+        setDocumentResponseId(documentID);
+      }, 10000);
+    }
 });
 </script>
 
