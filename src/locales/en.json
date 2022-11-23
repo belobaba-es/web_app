@@ -119,5 +119,8 @@
     "cityPlaceHolder": "Select City",
     "youBeneficiaries": "Your Beneficiaries",
     "nobaBeneficiaryEmail": "Noba beneficiary email",
-    "fullName": "Full Name"
+    "fullName": "Full Name",
+    "somethingWentWrong": "Something went wrong",
+    "updatePasswordSuccessMessage": "Password successfully updated",
+    "successfulOperation": "Successful operation"
 }

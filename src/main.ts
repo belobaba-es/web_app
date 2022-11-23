@@ -16,7 +16,7 @@ import Ripple from 'primevue/ripple'
 import { createPinia } from 'pinia'
 import Tooltip from 'primevue/tooltip'
 import i18n from './i18n'
-
+import ToastService from 'primevue/toastservice';
 const pinia = createPinia()
 
 createApp(App)
@@ -24,6 +24,7 @@ createApp(App)
   .use(Router)
   .use(PrimeVue)
   .use(i18n)
+  .use(ToastService)
   .directive('badge', BadgeDirective)
   .directive('styleclass', StyleClass)
   .directive('ripple', Ripple)

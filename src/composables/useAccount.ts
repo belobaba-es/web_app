@@ -6,6 +6,7 @@ import { useI18n } from 'vue-i18n'
 import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
 import { Member, Owner } from '../views/profile/types/account.interface'
+import { useToast } from 'primevue/usetoast'
 
 export const useAccount = () => {
   const router = useRouter()
@@ -16,8 +17,12 @@ export const useAccount = () => {
   const { t } = useI18n({
     useScope: 'global',
   })
+  const toast = useToast();
+  const submitting = ref(false);
 
-  const submitting = ref(false)
+  const currentPassword = ref<string>('');
+  const newPassword = ref<string>('');
+  const confirmNewPassword = ref<string>('');
 
   const phoneNumberWithCountry = computed(() => {
     return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
@@ -62,12 +67,45 @@ export const useAccount = () => {
     await accountStore.getAccountByID(route.params.accountId)
   }
 
+  const submitUpdatePassword = async () => {
+    submitting.value = true
+    const profileService = ProfileService.instance()
+    profileService
+      .updatePassword(userStore.getUser.email, newPassword.value, currentPassword.value)
+      .then(() => {
+        submitting.value = false;
+        clearUpdatePasswordForm();
+        toast.add({
+          severity: 'info',
+          summary: t('successfulOperation'),
+          detail: t('updatePasswordSuccessMessage'),
+          life: 3000,
+        });
+      })
+      .catch(error => {
+        submitting.value = false
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+      })
+  }
+
+  const clearUpdatePasswordForm = () => {
+    newPassword.value = '';
+    confirmNewPassword.value = '';
+    currentPassword.value = '';
+  }
+
   return {
     fetchAccount,
     editProfile,
     submitProfileForm,
     getFullName,
     setDocumentResponseId,
+    submitUpdatePassword,
     ...account,
     fullName,
     phoneNumberWithCountry,
@@ -75,5 +113,8 @@ export const useAccount = () => {
     isNaturalAccount,
     submitting,
     labelNameProfile,
+    newPassword,
+    currentPassword,
+    confirmNewPassword
   }
 }
