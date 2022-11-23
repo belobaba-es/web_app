@@ -20,11 +20,11 @@
             <img src="../../assets/icons/blockchain.svg" alt="" srcset="">
             <p class="">Withdraw Crypto </p>
             <p class="text-base">{{t('withdrawCryptoSelectMsg')}}</p>
-            <router-link to="/deposit/crypto/noba">
+            <router-link to="/withdraw/crypto/noba">
                 <CardButon class="m-4" :label="t('betweenNOBACrypto')"/>
             </router-link>
     
-            <router-link to="/deposit/crypto">
+            <router-link to="/withdraw/crypto">
                 <CardButon class="m-4" :label="t('otherPlatformCrypto')"/>
             </router-link>
         </div>

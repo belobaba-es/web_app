@@ -34,7 +34,7 @@ import ListBeneficiary from '../components/ListBeneficiary.vue';
 import InputText from 'primevue/inputtext';
 import Steps from 'primevue/steps';
 import { useRouter } from "vue-router";
-import { Beneficiary } from '../types/beneficiaries.interface';
+import { Beneficiary } from '../types/beneficiary.interface';
 
 const router = useRouter();
 
