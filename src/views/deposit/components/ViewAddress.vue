@@ -29,7 +29,7 @@
     </div>   
 
     <template #footer>
-        <Button :label="t('done')" icon="pi pi-check" autofocus />
+        <Button :label="t('done')" icon="pi pi-check" autofocus @click="emit('update:visible', false)"/>
     </template>
 </Dialog>
 
