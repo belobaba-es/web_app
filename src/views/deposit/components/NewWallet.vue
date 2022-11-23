@@ -34,7 +34,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
-import { Asset, CreatePaymentAddress } from '../types/asset.interface';
+import { Asset } from '../types/asset.interface';
 import { defineProps } from 'vue';
 
 defineProps<{
@@ -55,6 +55,8 @@ const onCreate= () => {
         label: label.value,
         asset: assetSelect.value
     })
+    assetSelect.value = null  
+    label.value = ''
 }
 
 const selectedAsset = ref('')
