@@ -46,7 +46,23 @@ export const useAccount = () => {
     submitting.value = true
     const profileService = ProfileService.instance()
     profileService.updateContact(account.accountId.value!, userStore.getUser.contactId, accountStore.form).then(() => {
-      submitting.value = false
+      submitting.value = false;
+      toast.add({
+        severity: 'info',
+        summary: t('successfulOperation'),
+        detail: t('shareholderDataSuccessSend'),
+        life: 3000,
+      });
+    })
+    .catch(error => {
+      submitting.value = false;
+      toast.add({
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: error.response.data.message,
+        life: 4000,
+      })
+      
     })
   }
 
