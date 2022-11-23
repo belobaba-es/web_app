@@ -1,7 +1,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import { useAccountStore } from '../stores/account'
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
@@ -14,9 +14,7 @@ export const useAccount = () => {
   const accountStore = useAccountStore()
   const userStore = useUserStore()
   const account = storeToRefs(accountStore)
-  const { t } = useI18n({
-    useScope: 'global',
-  })
+  const { t } = useI18n({ useScope: 'global' });
   const toast = useToast();
   const submitting = ref(false);
 
@@ -40,7 +38,30 @@ export const useAccount = () => {
     return isNaturalAccount.value ? t('fullName') : t('businessNameLabel')
   })
 
-  const formTitle = computed(() => (isNaturalAccount.value ? t('partnerTitle') : t('companyData')))
+  const formTitle = computed(() => {
+    return isNaturalAccount.value ? t('partnerTitle') : t('companyData');
+  })
+
+  const isCreateView = computed(() => {
+    if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('create')) {
+        return true;
+    }
+    return false;
+  });
+
+  const isEditView = computed(() => {
+    if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('edit')) {
+        return true;
+    }
+    return false;
+  });
+
+  const isUpdateProfileView = computed(() => {
+    if (route.fullPath.split('/').includes('edit')) {
+        return true;
+    }
+    return false;
+  });
 
   const submitProfileForm = () => {
     submitting.value = true
@@ -80,7 +101,10 @@ export const useAccount = () => {
   }
 
   const fetchAccount = async () => {
-    await accountStore.getAccountByID(route.params.accountId)
+    await accountStore.getAccountByID(route.params.accountId);
+    if (isEditView.value || isUpdateProfileView.value) {
+      accountStore.setFormInitialInfo();
+    }
   }
 
   const submitUpdatePassword = async () => {
@@ -115,6 +139,8 @@ export const useAccount = () => {
     currentPassword.value = '';
   }
 
+  const clearAccountFormData = () => accountStore.clearAccountFormData();
+
   return {
     fetchAccount,
     editProfile,
@@ -122,6 +148,7 @@ export const useAccount = () => {
     getFullName,
     setDocumentResponseId,
     submitUpdatePassword,
+    clearAccountFormData,
     ...account,
     fullName,
     phoneNumberWithCountry,
@@ -131,6 +158,9 @@ export const useAccount = () => {
     labelNameProfile,
     newPassword,
     currentPassword,
-    confirmNewPassword
+    confirmNewPassword,
+    isCreateView,
+    isEditView,
+    isUpdateProfileView
   }
 }

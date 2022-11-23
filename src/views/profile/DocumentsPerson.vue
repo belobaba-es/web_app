@@ -1,4 +1,7 @@
 <template>
+    <div>
+        <h1 class="text-2xl">Documentos</h1>
+    </div>
     <template v-if="isInitFileLoader">
         <div id="websdk"></div>
     </template>
@@ -23,7 +26,7 @@
                 </div>
             </div>
             <div class="col-12 md:col-6">
-                <img src="../../../assets/img/ilustracion@2x.png" class="w-full"/>
+                <img src="../../assets/img/ilustracion@2x.png" class="w-full"/>
             </div>
         </div>
     </template>
@@ -32,7 +35,7 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import { onMounted, ref } from 'vue';
-import { useAccount } from '../../../composables/useAccount';
+import { useAccount } from '../../composables/useAccount';
 
 const isInitFileLoader = ref(false);
 const loadingBtn = ref(false);

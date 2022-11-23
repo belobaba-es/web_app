@@ -31,11 +31,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import PageLayout from '../../components/PageLayout.vue';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from "vue-i18n";
 import Skeleton from 'primevue/skeleton';
+import { TypeAccount } from './types/account.interface';
 
 const { t } = useI18n({ useScope: 'global' });
 const { natureAccount, accountId, fetchAccount, loading } = useAccount();
@@ -50,6 +51,10 @@ const checkCanSee = (...args: string[]) => {
 onBeforeMount(async () => {
     await fetchAccount();
     setMenuItems();
+});
+ 
+const documentsPath = computed(() => {
+    return natureAccount.value === TypeAccount.natural ? `/profile/${accountId.value}/documentation/person` : `/profile/${accountId.value}/documentation/company`;
 });
 
 const setMenuItems = () => {
@@ -66,7 +71,7 @@ const setMenuItems = () => {
         },
         {
             label: t('documents'),
-            to: `/profile/${accountId.value}/documentation`,
+            to: documentsPath,
             canSee: checkCanSee('company', 'natural_person')
         },
         {
