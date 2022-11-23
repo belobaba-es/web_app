@@ -122,5 +122,6 @@
     "fullName": "Full Name",
     "somethingWentWrong": "Something went wrong",
     "updatePasswordSuccessMessage": "Password successfully updated",
-    "successfulOperation": "Successful operation"
+    "successfulOperation": "Successful operation",
+    "shareholderDataSuccessSend": "Shareholder data sent correctly"
 }
