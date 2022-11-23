@@ -28,7 +28,10 @@ export class ProfileService extends HttpService {
         return await this.patch(`account/${accountID}/contact/${contactId}`, form);
     }
 
-    async updatePassword(email: string, password: string): Promise<any> {
-        return await this.patch(`user/${email}`, password);
+    async updatePassword(email: string, password: string, currentPassword: string): Promise<any> {
+        return await this.patch(`user/${email}`, { 
+            password,
+            currentPassword
+        });
     }
 }

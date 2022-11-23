@@ -119,5 +119,8 @@
     "cityPlaceHolder": "Seleccionar ciudad",
     "youBeneficiaries": "Tus beneficiarios",
     "nobaBeneficiaryEmail": "Correo electrónico del beneficiario de Noba",
-    "fullName": "Nombre completo"
+    "fullName": "Nombre completo",
+    "somethingWentWrong": "Algo salio mal",
+    "updatePasswordSuccessMessage": "Contrasena actualizada con exito",
+    "successfulOperation": "Operacion exitosa"
 }

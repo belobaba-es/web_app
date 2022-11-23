@@ -33,7 +33,12 @@
           </div>
         </div>
         <div class="field flex justify-content-end">
-          <Button :label="t('save')" class="px-5" />
+          <Button 
+            :label="t('save')" 
+            class="px-5"
+            @click="submitUpdatePassword"
+            :loading="submitting"
+          />
         </div>
       </div>
     </div>
@@ -55,15 +60,14 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Lang from "../../components/Lang.vue";
-
+import { useAccount } from '../../composables/useAccount';
 
 const { t } = useI18n({
   useScope: 'global'
 })
 
-const currentPassword = ref<string>('');
-const newPassword = ref<string>('');
-const confirmNewPassword = ref<string>('');
+const { submitUpdatePassword, submitting, newPassword, confirmNewPassword, currentPassword } = useAccount();
+
 const showPassword = ref<boolean>(false);
 
 const toggleShowPassword = () => {
