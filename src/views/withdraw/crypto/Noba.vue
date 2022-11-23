@@ -39,14 +39,15 @@ import { useRouter } from "vue-router";
 import { Beneficiary } from '../types/beneficiary.interface';
 import { BeneficiaryService } from '../services/beneficiary';
 import { AccountService } from '../services/account';
+import { useToast } from 'primevue/usetoast';
 
 const router = useRouter();
+const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 const beneficiaryService = BeneficiaryService.instance();
 const accountService = AccountService.instance()
-
 const toRoute = (item: Beneficiary) => {
     const data = {
         data:1,example:''
@@ -64,7 +65,17 @@ onMounted(async () => {
 
 const onSearch = () => {
     console.log(search.value)
-    // accountService.getAccountByEmail(search.value)
+    accountService.getAccountByEmail(search.value).then(resp=>{
+        console.log(resp)
+    }).catch(error=>{
+        console.log(error.response)
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+    })
 }
 
 
