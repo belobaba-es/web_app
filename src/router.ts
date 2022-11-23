@@ -19,6 +19,7 @@ import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
 import StepAmount from './views/withdraw/components/StepAmount.vue'
+import WithdrawCryptoNoba from './views/withdraw/crypto/Noba.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -104,6 +105,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'crypto',
             component: DepositCrypto,
+          },
+          {
+            path: 'crypto/noba',
+            component: WithdrawCryptoNoba,
           },
         ],
       },
