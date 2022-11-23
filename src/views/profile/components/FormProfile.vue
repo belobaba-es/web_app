@@ -1,6 +1,6 @@
 <template>
     <div class="formgrid grid">
-        <div v-if="!isNaturalAccount" class="field col-4">
+        <div v-if="!isNaturalAccount && isUpdateProfileView" class="field col-4">
             <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -11,7 +11,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
             <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -22,7 +22,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
             <label>{{ t('secondNameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -33,7 +33,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
             <label>{{ t('surnameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -44,7 +44,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
+        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView) }">
             <label>{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -55,7 +55,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4" :class="{ 'col-6': isNaturalAccount }">
+        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView) }">
             <label>{{ t('phoneLabel') }}</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
@@ -161,16 +161,20 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useWorld } from '../../../composables/useWorld';
+import { useRoute } from 'vue-router';
 
 const {
     isNaturalAccount,
     submitProfileForm,
     form,
-    submitting
+    submitting,
+    isEditView,
+    isCreateView,
+    isUpdateProfileView,
+    clearAccountFormData
 } = useAccount();
-
 
 const {
     countries,
@@ -189,24 +193,22 @@ const {
     setState,
 } = useWorld();
 
-const { t } = useI18n({
-  useScope: 'global'
-})
+const { t } = useI18n({ useScope: 'global' });
+
+const route = useRoute();
 
 onMounted(async () => {
     await fetchCountries();
-    if (props.formMode === 'edit-own-profile') {
+
+    if (isEditView.value || isUpdateProfileView.value) {
         await onChangeCountryHandler();
         await onChangeStateHandler();
     }
 });
 
-const props = defineProps({
-    formMode: {
-        type: String,
-        default: () => 'edit-own-profile'
-    }
-})
+onUnmounted(() => {
+    // clearAccountFormData();
+});
 
 const onChangeCountryHandler = async () => {
     const country = countries.value.find(country => country.country_code === form.value.address.country);

@@ -42,8 +42,9 @@ export interface FormData {
     generalData: FormGeneralData;
     address: FormAddressData;
     phone: FormPhoneData;
-    documentId: string | null
+    documentId: string | null;
 }
+
 
 export const useAccountStore = defineStore('account', {
     state: (): AccountState => ({
@@ -77,7 +78,7 @@ export const useAccountStore = defineStore('account', {
                 phoneNumber: "",
                 phoneCountry: ""
             },
-            documentId: "5f6fabfb-61b5-4dec-ae25-96c820b39e3e"
+            documentId: ""
         }
     }),
     actions: {
@@ -96,8 +97,7 @@ export const useAccountStore = defineStore('account', {
             this.loading = true;
             const profileService = ProfileService.instance();
             await profileService.getAccountByID(accountId).then(data => {
-                this.setAccount(data)
-                this.setFormInitialInfo();
+                this.setAccount(data);
                 this.loading = false;
             });
         },
@@ -118,6 +118,21 @@ export const useAccountStore = defineStore('account', {
         },
         setDocumentResponseId(documentResponseId: string) {
             this.form.documentId = documentResponseId;
-        }
+        },
+        clearAccountFormData() {
+            this.form.generalData.email = "";
+            this.form.generalData.firstName = "";
+            this.form.generalData.middleName = "";
+            this.form.generalData.lastName = "";
+            this.form.generalData.name = "";
+            this.form.phone.phoneCountry = "";
+            this.form.phone.phoneNumber = "";
+            this.form.address.city = "";
+            this.form.address.streetOne = "";
+            this.form.address.streetTwo = "";
+            this.form.address.country = "";
+            this.form.address.postalCode = "";
+            this.form.address.region = "";
+        },
     }
 })

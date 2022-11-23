@@ -20,6 +20,9 @@ import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
 import StepAmount from './views/withdraw/components/StepAmount.vue'
 import WithdrawCryptoNoba from './views/withdraw/crypto/Noba.vue'
+import DocumentsPerson from './views/profile/DocumentsPerson.vue'
+import DocumentsCompany from './views/profile/DocumentsCompany.vue'
+import NewPartner from './views/profile/NewPartner.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -47,12 +50,16 @@ const routes: RouteRecordRaw[] = [
             component: Partners,
           },
           {
-            path: 'documentation',
-            component: Documents,
+            path: 'partners/create',
+            component: NewPartner,
           },
           {
-            path: 'documentation/company/edit',
-            component: PartnersEditDocument,
+            path: 'documentation/person',
+            component: DocumentsPerson,
+          },
+          {
+            path: 'documentation/company',
+            component: DocumentsCompany,
           },
           {
             path: 'settings',

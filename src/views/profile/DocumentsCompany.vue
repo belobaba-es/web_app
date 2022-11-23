@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-content-between align-items-center">
+    <div class="flex justify-content-between align-items-center">
     <h1 class="text-2xl">Documents</h1>
   </div>
   <div class="mb-4">
@@ -22,17 +22,11 @@
               <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
             </div>
             <div class="grid px-2 gap-2">
-              <div class="col-auto">
-                <Chip label="Archivo_1.jpg" icon="pi pi-check" removable removeIconClass="pi pi-trash" />
-              </div>
-              <div class="col-auto">
-                <Chip label="Archivo_1.jpg" icon="pi pi-check" removable removeIconClass="pi pi-trash" />
-              </div>
-              <div class="col-auto">
-                <Chip label="Archivo_1.jpg" icon="pi pi-check" removable removeIconClass="pi pi-trash" />
-              </div>
-              <div class="col-auto">
-                <Chip label="Archivo_1.jpg" icon="pi pi-check" removable removeIconClass="pi pi-trash" />
+              <div v-for="(document, idx) in owner?.documents" class="col-auto">
+                <Chip 
+                    :label="document.label" 
+                    :key="idx"
+                />
               </div>
             </div>
           </div>
@@ -81,6 +75,7 @@ import { useAccount } from '../../composables/useAccount';
 const { owner, members } = useAccount();
 const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
 const companyDocumentType = ref('');
+
 </script>
 
 <style scoped lang="scss">
