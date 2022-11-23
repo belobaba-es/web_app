@@ -40,7 +40,6 @@ import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue';
 import { AssetsService } from './services/assets';
 import ListAssets from './components/ListAssets.vue';
-import { datetime } from '@intlify/core-base';
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -76,24 +75,19 @@ onMounted(async () => {
 });
 
 const onCreateAddress = (event: EventCreatePaymentAddress) =>{
-    console.log(assetSelect, 'asset')
-    const data = {label: event.label, assetCode: event.assetCode}
-    
-    assetsService.paymentAddress(data).then(resp=>{
-        console.log('response',data)
-        
+    assetsService.paymentAddress({label: event.label, assetCode: event.assetCode}).then(resp=>{
         const payment = {
-            label:     data.label,
+            label:     event.label,
             accountId: "",
             address:   resp.paymentAddress,
             assetsId:  event.asset.assetId,
             qr:       resp.qr,
         }
+        selectViewAsset.value = event.asset;
         selectPaymentAddress.value = payment
-        displayNew.value = true;
+        displayNew.value = false;
         display.value = true;
     })
-    // selectViewAsset.value = data
 }
 </script>
 
