@@ -122,5 +122,6 @@
     "fullName": "Nombre completo",
     "somethingWentWrong": "Algo salio mal",
     "updatePasswordSuccessMessage": "Contrasena actualizada con exito",
-    "successfulOperation": "Operacion exitosa"
+    "successfulOperation": "Operacion exitosa",
+    "whitdraw": "Retirar"
 }
