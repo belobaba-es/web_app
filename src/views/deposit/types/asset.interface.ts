@@ -1,3 +1,5 @@
+import { Pagination } from "../../../shared/types/pagination";
+
 export interface Asset {
     id:                string;
     icon:              string;
@@ -33,12 +35,6 @@ export interface CreatePaymentAddressResponse {
 
 export interface PaymentAddressResponse extends Pagination<PaymentAddress>{}
 
-export interface Pagination<T> {
-    nextPag: string;
-    prevPag: string;
-    count:   number;
-    results: T[];
-}
 
 export interface PaymentAddress {
     label:     string;
