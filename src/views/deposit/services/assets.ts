@@ -23,8 +23,8 @@ export class AssetsService extends HttpService {
         return await this.get<Asset[]>(`assets/`);
     }
 
-    async listPaymentAddress (): Promise<PaymentAddressResponse> {
-        return await this.get<PaymentAddressResponse>(`assets/payment-address`);
+    async listPaymentAddress (next=''): Promise<PaymentAddressResponse> {
+        return await this.get<PaymentAddressResponse>(`assets/payment-address${next}`);
     }
 
     async paymentAddress(data: CreatePaymentAddress): Promise<CreatePaymentAddressResponse>{
