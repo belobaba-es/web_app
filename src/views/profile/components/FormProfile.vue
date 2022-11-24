@@ -1,6 +1,6 @@
 <template>
     <div class="formgrid grid">
-        <div v-if="!isNaturalAccount && isUpdateProfileView" class="field col-4">
+        <div v-if="!isNaturalAccount && isUpdateProfileView && !isEditPartnerAccount" class="field col-4">
             <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -11,7 +11,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView || isEditPartnerAccount" class="field col-4">
             <label>{{ t('nameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -22,7 +22,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView || isEditPartnerAccount" class="field col-4">
             <label>{{ t('secondNameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -33,7 +33,7 @@
                 />
             </div>
         </div>
-        <div v-if="isNaturalAccount || isCreateView" class="field col-4">
+        <div v-if="isNaturalAccount || isCreateView || isEditPartnerAccount" class="field col-4">
             <label>{{ t('surnameLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -44,7 +44,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView) }">
+        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView || isEditPartnerAccount) }">
             <label>{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -55,7 +55,7 @@
                 />
             </div>
         </div>
-        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView) }">
+        <div class="field col-4" :class="{ 'col-6': (isNaturalAccount || isCreateView || isEditPartnerAccount) }">
             <label>{{ t('phoneLabel') }}</label>
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
@@ -173,7 +173,11 @@ const {
     isEditView,
     isCreateView,
     isUpdateProfileView,
-    clearAccountFormData
+    clearAccountFormData,
+    setAccountForm,
+    setFormInitialInfo,
+    isEditPartnerAccount,
+    getPartnerToEdit,
 } = useAccount();
 
 const {
@@ -201,13 +205,73 @@ onMounted(async () => {
     await fetchCountries();
 
     if (isEditView.value || isUpdateProfileView.value) {
+        setFormInitialInfo();
         await onChangeCountryHandler();
         await onChangeStateHandler();
+    }
+
+    if (isEditPartnerAccount.value) {
+        const data = {
+            generalData: {
+                email: getPartnerToEdit.value?.email,
+                name: '',
+                lastName: getPartnerToEdit.value?.lastName,
+                middleName: getPartnerToEdit.value?.middleName,
+                firstName: getPartnerToEdit.value?.firstName,
+            },
+            address: {
+                streetOne: getPartnerToEdit.value?.streetOne,
+                streetTwo: getPartnerToEdit.value?.streetTwo,
+                city: getPartnerToEdit.value?.city,
+                country: getPartnerToEdit.value?.country,
+                postalCode: getPartnerToEdit.value?.postalCode,
+                region: getPartnerToEdit.value?.region
+            },
+            phone: {
+                phoneNumber: getPartnerToEdit.value?.phoneNumber,
+                phoneCountry: getPartnerToEdit.value?.phoneCountry
+            },
+            documentId: "",
+            isAccountBusiness: false
+        }
+        setAccountForm(data);
+
+        await onChangeCountryHandler();
+        await onChangeStateHandler();
+    }
+
+    if (isCreateView.value) {
+        const data = {
+            generalData: {
+                email: '',
+                name: '',
+                lastName: '',
+                middleName: '',
+                firstName: '',
+            },
+            address: {
+                streetOne: "",
+                streetTwo: "",
+                city: "",
+                country: "US",
+                postalCode: "",
+                region: ""
+            },
+            phone: {
+                phoneNumber: "",
+                phoneCountry: "+1"
+            },
+            documentId: "",
+            isAccountBusiness: false
+        }
+
+        setAccountForm(data);
+        await onChangeCountryHandler();
     }
 });
 
 onUnmounted(() => {
-    // clearAccountFormData();
+    clearAccountFormData();
 });
 
 const onChangeCountryHandler = async () => {

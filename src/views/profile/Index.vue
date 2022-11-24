@@ -26,18 +26,18 @@
         </template>
         <template v-else>
             <h5 class="text-base text-600">Docuemnto de identidad</h5>
-            <p class="text-base font-medium">{{ owner?.taxId }}</p>
+            <p class="text-base font-medium">{{ taxId }}</p>
         </template>
         <Divider type="solid" />
         
-        <template v-if="isNaturalAccount">
+        <template v-if="isNaturalAccount || isShowView">
             <template v-if="loading">
                 <Skeleton width="10rem" class="mb-2"></Skeleton>
                 <Skeleton class="mb-2"></Skeleton>
             </template>
             <template v-else>
                 <h5 class="text-base text-600">Fecha de nacimiento</h5>
-                <p class="text-base font-medium">{{ owner?.dateBirth }}</p>
+                <p class="text-base font-medium">{{ dateBirth }}</p>
             </template>
         </template>
         <template v-else>
@@ -56,7 +56,7 @@
         </template>
         <template v-else>
             <h5 class="text-base text-600">{{ t('emailLabel') }}</h5>
-            <p class="text-base font-medium">{{ owner?.email }}</p>
+            <p class="text-base font-medium">{{ email }}</p>
         </template>
         <Divider type="solid" />
 
@@ -76,7 +76,7 @@
         </template>
         <template v-else>
             <h5 class="text-base text-600">{{ t('address') }}</h5>
-            <p class="text-base font-medium">{{ owner?.streetOne }}</p>
+            <p class="text-base font-medium">{{ address }}</p>
         </template>
     </div>
 </template>
@@ -90,7 +90,20 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n({ useScope: 'global' });
 
-const { editProfile, fullName, owner, phoneNumberWithCountry, loading, labelNameProfile, isNaturalAccount } = useAccount();
+const {
+    editProfile,
+    fullName,
+    owner,
+    phoneNumberWithCountry,
+    loading,
+    labelNameProfile,
+    isNaturalAccount,
+    dateBirth,
+    taxId,
+    isShowView,
+    email,
+    address
+} = useAccount();
 </script>
 
 <style scoped>

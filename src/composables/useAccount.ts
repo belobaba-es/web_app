@@ -1,5 +1,5 @@
 import { useRouter, useRoute } from 'vue-router'
-import { useAccountStore } from '../stores/account'
+import { FormData, useAccountStore } from '../stores/account'
 import { storeToRefs } from 'pinia'
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n'
@@ -23,23 +23,88 @@ export const useAccount = () => {
   const confirmNewPassword = ref<string>('');
 
   const phoneNumberWithCountry = computed(() => {
-    return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
-  })
+    // return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
+    if (isShowView.value && route.params.contactId) {
+      const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+      return `${member?.phoneCountry} ${member?.phoneNumber}`;
+    } else {
+      return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
+    }
+  });
+
+  const address = computed(() => {
+    if (isShowView.value && route.params.contactId) {
+      const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+      return member?.streetOne;
+    } else {
+      return account.owner.value?.streetOne;
+    }
+  });
 
   const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person')
 
   const fullName = computed(() => {
-    const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
-    const companyAccount = account.owner.value?.name
-    return isNaturalAccount.value ? naturalAccount : companyAccount
+    const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`;
+    const companyAccount = account.owner.value?.name;
+    const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+    const memberFullName = `${member?.firstName} ${member?.middleName} ${member?.lastName}`;
+    // return isNaturalAccount.value ? naturalAccount : companyAccount
+    if ((isShowView.value && route.params.contactId)) {
+      return memberFullName;
+    }
+
+    if (isNaturalAccount.value) {
+      return naturalAccount;
+    }
+
+    return companyAccount;
+  })
+
+  const dateBirth = computed(() => {
+    if (isShowView.value && route.params.contactId) {
+      return accountStore.members?.find(member => member.contactId === route.params.contactId)?.dateBirth;
+    } else {
+      return account.owner.value?.dateBirth;
+    }
+  });
+
+  const taxId = computed(() => {
+    if (isShowView.value && route.params.contactId) {
+      return accountStore.members?.find(member => member.contactId === route.params.contactId)?.taxId;
+    } else {
+      return account.owner.value?.taxId;
+    }
+  });
+
+  const email = computed(() => {
+    if (isShowView.value && route.params.contactId) {
+      const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+      return member?.email;
+    } else {
+      return account.owner.value?.email;
+    }
   })
 
   const labelNameProfile = computed(() => {
-    return isNaturalAccount.value ? t('fullName') : t('businessNameLabel')
+    // return isNaturalAccount.value ? t('fullName') : t('businessNameLabel')
+    if ((isShowView.value && route.params.contactId) || isNaturalAccount.value) {
+      return t('fullName')
+    } else {
+      return t('businessNameLabel');
+    }
   })
 
   const formTitle = computed(() => {
-    return isNaturalAccount.value ? t('partnerTitle') : t('companyData');
+    // return isNaturalAccount.value ? t('partnerTitle') : t('companyData');
+    if (isCreateView.value) {
+      return t('partnerTitle');
+    }
+
+    if (isNaturalAccount.value) {
+      return t('partnerTitle');
+    } 
+
+    return t('companyData');
   })
 
   const isCreateView = computed(() => {
@@ -50,23 +115,61 @@ export const useAccount = () => {
   });
 
   const isEditView = computed(() => {
-    if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('edit')) {
+    if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('edit') && !isEditPartnerAccount.value) {
         return true;
     }
     return false;
+  });
+
+  const isEditPartnerAccount = computed(() => {
+    if (
+      route.fullPath.split('/').includes('partners') &&
+      route.fullPath.split('/').includes('edit') &&
+      route.params.contactId
+    ) {
+      return true;
+    }
+    return false;
+  });
+
+  const getPartnerToEdit = computed(() => {
+    const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+    return member
   });
 
   const isUpdateProfileView = computed(() => {
-    if (route.fullPath.split('/').includes('edit')) {
+    if (route.fullPath.split('/').includes('edit') && !isEditPartnerAccount.value) {
         return true;
     }
     return false;
   });
 
+  const isShowView = computed(() => {
+    if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('show')) {
+        return true;
+    }
+    return false;
+  });
+
+
+
   const submitProfileForm = () => {
-    submitting.value = true
+    submitting.value = true;
     const profileService = ProfileService.instance()
-    profileService.updateContact(account.accountId.value!, userStore.getUser.contactId, accountStore.form).then(() => {
+
+    let contactId = null;
+
+    if (getPartnerToEdit.value) {
+      contactId = route.params.contactId;
+    } else {
+      contactId = account.accountId.value;
+    }
+
+    profileService.updateContact(
+      account.accountId.value!,
+      contactId!,
+      accountStore.form
+    ).then(() => {
       submitting.value = false;
       toast.add({
         severity: 'info',
@@ -97,14 +200,22 @@ export const useAccount = () => {
   }
 
   const editProfile = (): void => {
-    router.push(`/profile/${route.params.accountId}/edit`)
+    if (isShowView.value && route.params.contactId) {
+      const member = accountStore.members?.find(member => member.contactId === route.params.contactId);
+      router.push(`/profile/${route.params.accountId}/partners/edit/${member?.contactId}`)
+    } else {
+      router.push(`/profile/${route.params.accountId}/edit`)
+    }
   }
 
   const fetchAccount = async () => {
-    await accountStore.getAccountByID(route.params.accountId);
-    if (isEditView.value || isUpdateProfileView.value) {
-      accountStore.setFormInitialInfo();
-    }
+    await accountStore.getAccountByID(route.params.accountId)
+      .then(() => {
+        if ((isEditView.value || isUpdateProfileView.value) && !isEditPartnerAccount.value) {
+          setFormInitialInfo();
+          console.log('holaaa')
+        }
+      });
   }
 
   const submitUpdatePassword = async () => {
@@ -140,6 +251,8 @@ export const useAccount = () => {
   }
 
   const clearAccountFormData = () => accountStore.clearAccountFormData();
+  const setFormInitialInfo = () => accountStore.setFormInitialInfo();
+  const setAccountForm = (payload: FormData) => accountStore.setForm(payload);
 
   return {
     fetchAccount,
@@ -149,6 +262,8 @@ export const useAccount = () => {
     setDocumentResponseId,
     submitUpdatePassword,
     clearAccountFormData,
+    setFormInitialInfo,
+    setAccountForm,
     ...account,
     fullName,
     phoneNumberWithCountry,
@@ -161,6 +276,13 @@ export const useAccount = () => {
     confirmNewPassword,
     isCreateView,
     isEditView,
-    isUpdateProfileView
+    isUpdateProfileView,
+    isShowView,
+    dateBirth,
+    taxId,
+    email,
+    address,
+    isEditPartnerAccount,
+    getPartnerToEdit
   }
 }
