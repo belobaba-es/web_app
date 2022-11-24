@@ -58,9 +58,9 @@ const onMenuItemClick = (event: any, item:any, index: number) => {
 	}
 
 	//execute command
-	if (item.command) {
-		item.command({originalEvent: event, item: item});
-	}
+	// if (item.command) {
+	// 	item.command({originalEvent: event, item: item});
+	// }
 
 	activeIndex.value = index === activeIndex.value ? null : index;
 

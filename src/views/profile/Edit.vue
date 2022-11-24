@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import FormProfile from './components/FormProfile.vue';
 import { useAccount } from '../../composables/useAccount';
-
 const { formTitle } = useAccount();
 </script>
 

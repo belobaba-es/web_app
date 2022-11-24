@@ -57,6 +57,14 @@ const routes: RouteRecordRaw[] = [
             component: NewPartner,
           },
           {
+            path: 'partners/show/:contactId',
+            component: ProfileIndex,
+          },
+          {
+            path: 'partners/edit/:contactId',
+            component: Edit,
+          },
+          {
             path: 'documentation/person',
             component: DocumentsPerson,
           },

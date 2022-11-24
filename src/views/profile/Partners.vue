@@ -5,7 +5,7 @@
             class="col-3"
             :key="idx"
         >
-            <div class="p-3 border-1 border-gray-300 border-round-2xl flex-column">
+            <div class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer" @click="showDetails(member)">
                 <div class="mb-2">
                     <img src="../../assets/icons/icon-user.svg"/>
                 </div>
@@ -15,9 +15,9 @@
                 <div class="flex justify-content-between align-items-center">
                     <span class="text-base">{{ member.label }}</span>
                     <Button 
-                        label="Remove" 
-                        class="p-button-text" 
-                        icon="pi pi-trash" 
+                        label="Remove"
+                        class="p-button-text"
+                        icon="pi pi-trash"
                         icon-pos="right"
                     />
                 </div>
@@ -40,12 +40,17 @@
 import Button from 'primevue/button';
 import { useAccount } from '../../composables/useAccount';
 import { useRouter } from 'vue-router';
+import { Member } from './types/account.interface';
 const { members, getFullName } = useAccount();
 const router = useRouter();
 
 const onCreateNewShareholder = () => {
     router.push('partners/create');
 };
+
+const showDetails = (member: Member) => {
+    router.push(`partners/show/${member.contactId}`);
+}
 
 </script>
 

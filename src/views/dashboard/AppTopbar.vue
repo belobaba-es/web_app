@@ -53,7 +53,9 @@ const items = ref([
 	{
 		label: t('profile'),
 		icon: 'pi pi-user',
-		command: () => router.push(`/profile/${userStore.getUser.account.accountId}`)
+		command: () => {
+      router.push(`/profile/${userStore.getUser.account.accountId}`)
+    }
 	},
 	{
 		icon: 'pi',
@@ -74,8 +76,8 @@ const items = ref([
 		label: t('logOut'),
 		icon: 'pi pi-sign-out',
 		command: async () => {
-			await loginService.logout();
-			await router.push('/');
+      await loginService.logout();
+      window.location.href = '/'
 		}
 	},
 
