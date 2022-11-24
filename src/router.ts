@@ -23,6 +23,9 @@ import WithdrawCryptoNoba from './views/withdraw/crypto/Noba.vue'
 import DocumentsPerson from './views/profile/DocumentsPerson.vue'
 import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
+import StepAccounts from './views/withdraw/components/StepAccounts.vue'
+import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
+import AddBeneficiary from './views/withdraw/components/AddBeneficiary.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -93,17 +96,44 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/noba',
-            component: WithdrawFiatNoba
+            component:  WithdrawFiatNoba,
+            children: [
+              {
+                path: '',
+                component:  StepAccounts,
+              },
+              {
+                path: 'amount',
+                component: StepAmount
+              },
+              {
+                path: 'comfirmation',
+                component: StepConfirmation
+              },
+
+            ]
           },
           {
-            path: 'fiat/noba/amount',
-            name: 'withdraw-noba-amount',
-            component: StepAmount
+            path: 'fiat/domestic/new',
+            component: AddBeneficiary,
           },
           {
             path: 'fiat/domestic',
-            component: WithdrawFiatDomestic
-
+            component: WithdrawFiatDomestic,
+            children: [
+              {
+                path: '',
+                component:  StepAccounts,
+              },
+              {
+                path: 'amount',
+                component: StepAmount
+              },
+              {
+                path: 'comfirmation',
+                component: StepConfirmation
+              },
+            ]
           },
           {
             path: 'fiat/international',
@@ -116,6 +146,24 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'crypto/noba',
             component: WithdrawCryptoNoba,
+            children: [
+              {
+                path: '',
+                name: 'withdraw-crypto-noba',
+                component: StepAccounts
+
+              },
+              {
+                path: 'amount',
+                name: 'withdraw-crypto-noba-amount',
+                component: StepAmount 
+              },
+              {
+                path: 'confirmation',
+                name: 'withdraw-crypto-noba-confirmation',
+                component: StepConfirmation 
+              }
+            ]
           },
         ],
       },

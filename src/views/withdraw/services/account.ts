@@ -1,5 +1,6 @@
 
 import { HttpService } from '../../../shared/services/http';
+import { UserAccount } from '../types/account';
 
 export class AccountService extends HttpService {
     private static _instance: AccountService;
@@ -19,8 +20,8 @@ export class AccountService extends HttpService {
         return this._instance;
     }
     
-    async getAccountByEmail (email: string | string[]): Promise<any> {
-        return await this.get<any>(`/account/owner-email/${email}`);
+    async getAccountByEmail (email: string | string[]): Promise<UserAccount> {
+        return await this.get<UserAccount>(`/account/owner-email/${email}`);
     }
     
     

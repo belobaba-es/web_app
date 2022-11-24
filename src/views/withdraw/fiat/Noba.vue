@@ -7,27 +7,34 @@
             <span class="text-xl"> Between NOBA Accounts </span> 
         </div>
         <Steps :model="items" :readonly="false" />
-        <router-view />
-        <div class="col-10 ">
+        <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+            <keep-alive>
+                <component :is="Component" />
+            </keep-alive>
+        </router-view>
+
+        <!-- <div class="col-10 ">
                 
             <span class="p-input-icon-left flex p-fluid">
                 <i class="pi pi-search" />
-                <InputText type="text" class="b-gray"  :placeholder="t('nobaBeneficiaryEmail')" />
-                <Button class="p-button search-btn" :label="t('search')"/>
+                <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
+                <Button class="p-button search-btn" :label="t('search')" @click="onSearch"/>
             </span>
         </div>
         <div class="grid">
             <span class="mt-4">{{t('youBeneficiaries')}}</span>
             <Divider></Divider>
             <div class="col-10">
-                <ListBeneficiary :list="list" @select="toRoute($event)"></ListBeneficiary>
+                <ListBeneficiary :list="beneficiaryAssets" @select="toRoute($event)"></ListBeneficiary>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup lang="ts">
+
 import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue';
 import Button from 'primevue/button';
 import Divider from 'primevue/divider';
 import ListBeneficiary from '../components/ListBeneficiary.vue';
@@ -35,41 +42,80 @@ import InputText from 'primevue/inputtext';
 import Steps from 'primevue/steps';
 import { useRouter } from "vue-router";
 import { Beneficiary } from '../types/beneficiary.interface';
+import { BeneficiaryService } from '../services/beneficiary';
+import { AccountService } from '../services/account';
+import { useToast } from 'primevue/usetoast';
+import { WithdrawForm } from '../types/withdraw';
 
 const router = useRouter();
-
-const toRoute = (item: Beneficiary) => {
-    const data = {
-        data:1,example:''
-    }
-    router.push({name: "withdraw-noba-amount", state: data})
-    
-} 
-
+const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 
-const list = [
-    {name: 'example', email: 'example@email'},
-    {name: 'example2', email: 'example@email'},
-    {name: 'example3', email: 'example@email'},
-    {name: 'example4', email: 'example@email'},
-    {name: 'example5', email: 'example@email'}
-]
+const search = ref('')
+const beneficiaryService = BeneficiaryService.instance();
+const accountService = AccountService.instance()
+const toRoute = (item: Beneficiary) => {
+   
+    router.push({name: "withdraw-crypto-noba-amount"})
+    
+} 
+const beneficiaryAssets = ref<Beneficiary[]>([])
 
-const items = [
+onMounted(async () => {
+   beneficiaryService.listBeneficiaryAssets().then(data=>{
+        beneficiaryAssets.value = data.results
+    })
+});
+
+const onSearch = () => {
+    console.log(search.value)
+    accountService.getAccountByEmail(search.value).then(resp=>{
+        console.log(resp)
+        beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
+    }).catch(error=>{
+        console.log(error.response)
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+    })
+}
+
+
+const items = ref([
     {
         label: 'Accounts',
-        to: '/steps'
+        to: '/withdraw/fiat/noba'
     },
     {
         label: 'Amount',
-        to: '/steps/seat'
+        to: '/withdraw/fiat/noba/amount'
     },
     {
         label: 'Confirmation',
-        to: '/steps/confirmation'
+        to: '/withdraw/fiat/noba/confirmation'
     }
-]
+])
+
+
+const formObject = ref<WithdrawForm>({});
+
+const nextPage = (event: any)  => {
+    for (let field in event.formData) {
+        formObject.value[field] = event.formData[field];
+    }
+
+    router.push(items.value[event.pageIndex + 1].to);
+};
+const prevPage = (event:any) => {
+    router.push(items.value[event.pageIndex - 1].to);
+};
+
+const complete = () => {
+    toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
+};
 
 </script>
 

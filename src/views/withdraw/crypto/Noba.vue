@@ -7,8 +7,13 @@
             <span class="text-xl"> Between NOBA Accounts </span> 
         </div>
         <Steps :model="items" :readonly="false" />
-        <router-view />
-        <div class="col-10 ">
+        <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+            <keep-alive>
+                <component :is="Component" />
+            </keep-alive>
+        </router-view>
+
+        <!-- <div class="col-10 ">
                 
             <span class="p-input-icon-left flex p-fluid">
                 <i class="pi pi-search" />
@@ -22,7 +27,7 @@
             <div class="col-10">
                 <ListBeneficiary :list="beneficiaryAssets" @select="toRoute($event)"></ListBeneficiary>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -40,6 +45,7 @@ import { Beneficiary } from '../types/beneficiary.interface';
 import { BeneficiaryService } from '../services/beneficiary';
 import { AccountService } from '../services/account';
 import { useToast } from 'primevue/usetoast';
+import { WithdrawForm } from '../types/withdraw';
 
 const router = useRouter();
 const toast = useToast();
@@ -49,10 +55,8 @@ const search = ref('')
 const beneficiaryService = BeneficiaryService.instance();
 const accountService = AccountService.instance()
 const toRoute = (item: Beneficiary) => {
-    const data = {
-        data:1,example:''
-    }
-    router.push({name: "withdraw-noba-amount", state: data})
+   
+    router.push({name: "withdraw-crypto-noba-amount"})
     
 } 
 const beneficiaryAssets = ref<Beneficiary[]>([])
@@ -67,6 +71,7 @@ const onSearch = () => {
     console.log(search.value)
     accountService.getAccountByEmail(search.value).then(resp=>{
         console.log(resp)
+        beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
     }).catch(error=>{
         console.log(error.response)
         toast.add({
@@ -79,20 +84,38 @@ const onSearch = () => {
 }
 
 
-const items = [
+const items = ref([
     {
         label: 'Accounts',
-        to: '/steps'
+        to: '/withdraw/crypto/noba'
     },
     {
         label: 'Amount',
-        to: '/steps/seat'
+        to: '/withdraw/crypto/noba/amount'
     },
     {
         label: 'Confirmation',
-        to: '/steps/confirmation'
+        to: '/withdraw/crypto/noba/confirmation'
     }
-]
+])
+
+
+const formObject = ref<WithdrawForm>({});
+
+const nextPage = (event: any)  => {
+    for (let field in event.formData) {
+        formObject.value[field] = event.formData[field];
+    }
+
+    router.push(items.value[event.pageIndex + 1].to);
+};
+const prevPage = (event) => {
+    router.push(items.value[event.pageIndex - 1].to);
+};
+
+const complete = () => {
+    toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
+};
 
 </script>
 

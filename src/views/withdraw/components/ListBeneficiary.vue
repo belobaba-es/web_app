@@ -2,8 +2,8 @@
     <div class="container">
         <div class="flex justify-content-between align-items-center asset-item" v-for="(item) in list">
             
-            <span class="ml-4 mt-2 mb-2">{{item.label}}</span>
-            <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span>
+            <span class="ml-4 mt-2 mb-2">{{item.realName}}</span>
+            <!-- <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span> -->
             <Button icon="pi pi-angle-right" class="p-button-text p-button-primary" label="" @click="emit('select',item);"/>
         </div>
     </div>
@@ -12,11 +12,11 @@
 <script lang="ts" setup>
 
 import Button from 'primevue/button';
-import { Beneficiary } from '../types/beneficiary.interface';
+import { Beneficiary, BeneficiaryFiatDomestic } from '../types/beneficiary.interface';
 
 
 defineProps<{
-	list: Array<Beneficiary>,
+	list: Array<BeneficiaryFiatDomestic>,
 }>()
 
 const emit = defineEmits(['select']);
