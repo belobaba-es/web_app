@@ -125,5 +125,9 @@
     "successfulOperation": "Successful operation",
     "whitdraw": "Whitdraw",
     "shareholderDataSuccessSend": "Shareholder data sent correctly",
-    "continue": "Continue"
+    "continue": "Continue",
+    "docTypeLabelDriversLicense": "Driver License",
+    "docTypeLabelGovernmentId": "GovernmentId",
+    "docTypeLabelPassport": "Passport",
+    "docTypeLabelResidencePermit": "Residence Permit"
 }

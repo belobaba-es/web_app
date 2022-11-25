@@ -125,5 +125,9 @@
     "successfulOperation": "Operacion exitosa",
     "whitdraw": "Retirar",
     "shareholderDataSuccessSend": "Datos de accionista enviados correctamente",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "docTypeLabelDriversLicense": "Licencia de conducir",
+    "docTypeLabelGovernmentId": "Identificación del Gobierno",
+    "docTypeLabelPassport": "Pasaporte",
+    "docTypeLabelResidencePermit": "Permiso de residencia"
 }
