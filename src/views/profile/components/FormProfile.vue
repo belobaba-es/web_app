@@ -178,6 +178,8 @@ const {
     setFormInitialInfo,
     isEditPartnerAccount,
     getPartnerToEdit,
+    isAccountBusinessComputed,
+    setIsAccountBusiness
 } = useAccount();
 
 const {
@@ -208,6 +210,7 @@ onMounted(async () => {
         setFormInitialInfo();
         await onChangeCountryHandler();
         await onChangeStateHandler();
+        setIsAccountBusiness(isAccountBusinessComputed.value);
     }
 
     if (isEditPartnerAccount.value) {
@@ -232,7 +235,7 @@ onMounted(async () => {
                 phoneCountry: getPartnerToEdit.value?.phoneCountry
             },
             documentId: "",
-            isAccountBusiness: false
+            isAccountBusiness: isAccountBusinessComputed.value
         }
         setAccountForm(data);
 
@@ -262,7 +265,7 @@ onMounted(async () => {
                 phoneCountry: "+1"
             },
             documentId: "",
-            isAccountBusiness: false
+            isAccountBusiness: isAccountBusinessComputed.value
         }
 
         setAccountForm(data);

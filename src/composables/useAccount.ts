@@ -113,7 +113,7 @@ export const useAccount = () => {
     }
     return false;
   });
-
+  
   const isEditView = computed(() => {
     if (route.fullPath.split('/').includes('partners') && route.fullPath.split('/').includes('edit') && !isEditPartnerAccount.value) {
         return true;
@@ -151,7 +151,9 @@ export const useAccount = () => {
     return false;
   });
 
-
+  const isAccountBusinessComputed = computed(() => {
+    return !isNaturalAccount.value;
+  })
 
   const submitProfileForm = () => {
     submitting.value = true;
@@ -162,7 +164,7 @@ export const useAccount = () => {
     if (getPartnerToEdit.value) {
       contactId = route.params.contactId;
     } else {
-      contactId = account.accountId.value;
+      contactId = account.owner.value?.contactId;
     }
 
     profileService.updateContact(
@@ -253,6 +255,7 @@ export const useAccount = () => {
   const clearAccountFormData = () => accountStore.clearAccountFormData();
   const setFormInitialInfo = () => accountStore.setFormInitialInfo();
   const setAccountForm = (payload: FormData) => accountStore.setForm(payload);
+  const setIsAccountBusiness = (payload: boolean) => accountStore.setIsAccountBusiness(payload);
 
   return {
     fetchAccount,
@@ -283,6 +286,8 @@ export const useAccount = () => {
     email,
     address,
     isEditPartnerAccount,
-    getPartnerToEdit
+    getPartnerToEdit,
+    isAccountBusinessComputed,
+    setIsAccountBusiness
   }
 }
