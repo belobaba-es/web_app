@@ -12,11 +12,11 @@
 <script lang="ts" setup>
 
 import Button from 'primevue/button';
-import { Beneficiary, BeneficiaryFiatDomestic } from '../types/beneficiary.interface';
+import { Beneficiary, BeneficiaryFiat, BeneficiaryFiatDomestic } from '../types/beneficiary.interface';
 
 
 defineProps<{
-	list: Array<BeneficiaryFiatDomestic>,
+	list: Array<BeneficiaryFiat | any>,
 }>()
 
 const emit = defineEmits(['select']);

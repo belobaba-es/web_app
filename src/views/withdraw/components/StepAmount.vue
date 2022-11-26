@@ -4,18 +4,19 @@
             <span class="mt-4">{{t('youBeneficiaries')}}</span>
             
             <Divider></Divider>
-            
         </div>
-        
-        
+        <div class="col-12 mb-4">
+            <p>{{formData?.beneficiary?.realName}}</p>
+            <p class="text-base">{{formData?.beneficiary?.accountNumber}}</p>
+        </div>
         <div class="col-12 field p-fluid">
             <div class="flex col-6 justify-content-end">
 
-                <span class="text-left">Current balance: 524.95 USD</span>
             </div>
-            <div class="field col-6">
-                <label for="name1">{{t('Amount')}}</label>
-                <InputText id="name1" type="text" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
+            <div class="field col-6 relative" >
+                <span class="text-left absolute" style="right: 0px;">Current balance: 524.95 USD</span>
+                <label for="amount">{{t('Amount')}}</label>
+                <InputText id="amount" type="text" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
             </div>
         </div>
         
@@ -53,22 +54,22 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from "vue-router";
 import Timeline from 'primevue/timeline';
 import Button from 'primevue/button';
+import { BeneficiaryFiatDomestic, BeneficiaryFiatInternacional } from '../types/beneficiary.interface';
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute();
+const props = defineProps<{
+    formData:  any
+}>()
 const emit = defineEmits(['nextPage']);
 const amount = ref('')
 const events = ref([
-            {amount: '3,5', label: 'Fee'},
-            {amount: '2,5', label: 'You send to Alberto Rodriguez',},
-        ]);
-        const events2 = ref([
-            "2020", "2021", "2022", "2023"
-        ]);
+    {amount: '3,5', label: 'Fee'},
+    {amount: '2,5', label: `You send to ${props.formData.beneficiary?.realName}`,},
+]);
+       
 onMounted(async () => {
-
-    const data = route.params.data;
-    console.log("data is", data);
+    console.log(props.formData, 'amount')
 });
 
 </script>

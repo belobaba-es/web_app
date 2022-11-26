@@ -25,7 +25,10 @@ import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
 import StepAccounts from './views/withdraw/components/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
-import AddBeneficiary from './views/withdraw/components/AddBeneficiary.vue'
+import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
+import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
+
+
 
 const routes: RouteRecordRaw[] = [
   {
@@ -123,7 +126,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/new',
-            component: AddBeneficiary,
+            component: NewBeneficiaryDomestic,
           },
           {
             path: 'fiat/domestic',
@@ -146,6 +149,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'fiat/international',
             component: WithdrawFiatInternational
+          },
+          {
+            path: 'fiat/international/new',
+            component: NewBeneficiaryInternational
           },
           {
             path: 'crypto',

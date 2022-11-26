@@ -125,5 +125,9 @@
     "successfulOperation": "Successful operation",
     "whitdraw": "Whitdraw",
     "shareholderDataSuccessSend": "Shareholder data sent correctly",
-    "continue": "Continue"
+    "continue": "Continue",
+    "addBeneficiaries": "Add Beneficiaries",
+    "streetAddress": "Street Address (Apt, Suite, Etc.)",
+    "saveNewPayee": "Save new payee",
+    "newBeneficiary": "New Beneficiary"
 }

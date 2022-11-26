@@ -100,7 +100,7 @@ const items = ref([
 ])
 
 
-const formObject = ref<WithdrawForm>({});
+const formObject = ref<WithdrawForm | any>({});
 
 const nextPage = (event: any)  => {
     for (let field in event.formData) {

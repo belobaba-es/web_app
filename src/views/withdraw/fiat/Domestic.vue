@@ -7,10 +7,18 @@
         <span class="text-xl"> Domestic Wire</span> 
     </div>
     <Steps :model="items" :readonly="false" />
-    <div class="mt-2 mb-2">
-        <Button class="p-button search-btn" :label="t('New Beneficiary')" @click="newBeneficiary"/>
+    <div class="mt-4 mb-4">
+        <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
     </div>
-    <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+    <router-view v-slot="{Component}"   
+        :list="list"
+        :formData="formObject" 
+        @prevPage="prevPage($event)" 
+        @nextPage="nextPage($event)" 
+        @complete="complete"
+        @selectBeneficiary="onSelectBeneficiary"
+        >
+
         <keep-alive>
             <component :is="Component" />
         </keep-alive>
@@ -55,6 +63,7 @@ const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
+const beneficiarySelect = ref({})
 const beneficiaryService = BeneficiaryService.instance();
 const accountService = AccountService.instance()
 const toRoute = (item: Beneficiary) => {
@@ -63,14 +72,23 @@ const toRoute = (item: Beneficiary) => {
     
 } 
 
+
+const onSelectBeneficiary = (item: any) => {
+    console.log(beneficiarySelect, 'select')
+    console.log(item)
+    router.push('/withdraw/fiat/domestic/new')
+}
 const newBeneficiary = ()=> {
     router.push('/withdraw/fiat/domestic/new')
 }
 const beneficiaryAssets = ref<Beneficiary[]>([])
-
+const list = ref<any[]>([])
 onMounted(async () => {
    beneficiaryService.listBeneficiaryAssets().then(data=>{
         beneficiaryAssets.value = data.results
+    })
+    beneficiaryService.listBeneficiaryDomestic().then(resp=>{
+        list.value = resp.results
     })
 });
 
@@ -94,26 +112,26 @@ const onSearch = () => {
 const items = ref([
     {
         label: 'Accounts',
-        to: '/withdraw/fiat/noba'
+        to: '/withdraw/fiat/domestic'
     },
     {
         label: 'Amount',
-        to: '/withdraw/fiat/noba/amount'
+        to: '/withdraw/fiat/domestic/amount'
     },
     {
         label: 'Confirmation',
-        to: '/withdraw/fiat/noba/confirmation'
+        to: '/withdraw/fiat/domestic/confirmation'
     }
 ])
 
 
-const formObject = ref<WithdrawForm>({});
+const formObject = ref<WithdrawForm | any>({});
 
 const nextPage = (event: any)  => {
     for (let field in event.formData) {
         formObject.value[field] = event.formData[field];
     }
-
+    console.log(formObject, 'nextpage')
     router.push(items.value[event.pageIndex + 1].to);
 };
 const prevPage = (event:any) => {

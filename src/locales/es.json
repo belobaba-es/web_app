@@ -125,5 +125,9 @@
     "successfulOperation": "Operacion exitosa",
     "whitdraw": "Retirar",
     "shareholderDataSuccessSend": "Datos de accionista enviados correctamente",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "addBeneficiaries": "Agregar beneficiarios",
+    "streetAddress": "Dirección (apt, suite, etc.)",
+    "saveNewPayee": "Guardar nuevo beneficiario",
+    "newBeneficiary": "Nuevo Beneficiario"
 }

@@ -100,7 +100,7 @@ const items = ref([
 ])
 
 
-const formObject = ref<WithdrawForm>({});
+const formObject = ref<WithdrawForm | any>({});
 
 const nextPage = (event: any)  => {
     for (let field in event.formData) {
@@ -109,7 +109,7 @@ const nextPage = (event: any)  => {
 
     router.push(items.value[event.pageIndex + 1].to);
 };
-const prevPage = (event) => {
+const prevPage = (event: any) => {
     router.push(items.value[event.pageIndex - 1].to);
 };
 

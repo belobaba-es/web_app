@@ -42,17 +42,17 @@ interface IntermediaryBank {
 }
 
 export interface BeneficiaryFiat {
-    id:                            string;
+    id?:                            string;
     city:                          string;
-    routingNumber:                 string;
+    state:                         string;
     country:                       string;
-    streetTwo:                     string;
     realName:                      string;
-    accountNumber:                 string;
+    streetTwo:                     string;
     streetOne:                     string;
     postalCode:                    string;
-    accountId:                     string;
-    state:                         string;
+    accountId?:                    string;
+    accountNumber:                 string;
+    routingNumber:                 string;
     typeBeneficiaryBankWithdrawal: string;
 }
 
@@ -63,9 +63,10 @@ export interface BeneficiaryFiatInternacional extends BeneficiaryFiat {
 }
 
 export interface BeneficiaryFiatDomestic extends BeneficiaryFiat{
-    fundsTransferMethods:         string
+    fundsTransferMethods?:         string
 }
 
 export interface BeneficiaryFiatInternacionalResp  extends Pagination<BeneficiaryFiatInternacional> { }
 
 export interface BeneficiaryFiatDomesticResp  extends Pagination<BeneficiaryFiatDomestic> { }
+
