@@ -129,5 +129,9 @@
     "addBeneficiaries": "Agregar beneficiarios",
     "streetAddress": "Dirección (apt, suite, etc.)",
     "saveNewPayee": "Guardar nuevo beneficiario",
-    "newBeneficiary": "Nuevo Beneficiario"
+    "newBeneficiary": "Nuevo Beneficiario",
+    "docTypeLabelDriversLicense": "Licencia de conducir",
+    "docTypeLabelGovernmentId": "Identificación del Gobierno",
+    "docTypeLabelPassport": "Pasaporte",
+    "docTypeLabelResidencePermit": "Permiso de residencia"
 }

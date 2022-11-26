@@ -73,7 +73,7 @@ import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue'
 import { useAccount } from '../../composables/useAccount';
 
 const { owner, members } = useAccount();
-const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
+const companyDocumentTypeOptions = ref([]);
 const companyDocumentType = ref('');
 
 </script>

@@ -43,7 +43,7 @@ export interface FormData {
     address: FormAddressData;
     phone: FormPhoneData;
     documentId: string | null;
-    isAccountBusiness: boolean | null;
+    isAccountBusiness: boolean;
 }
 
 
@@ -79,8 +79,8 @@ export const useAccountStore = defineStore('account', {
                 phoneNumber: "",
                 phoneCountry: ""
             },
-            documentId: "",
-            isAccountBusiness: null,
+            documentId: null,
+            isAccountBusiness: false,
         }
     }),
     actions: {
@@ -138,6 +138,9 @@ export const useAccountStore = defineStore('account', {
         },
         setForm(payload: FormData) {
             this.form = payload;
+        },
+        setIsAccountBusiness(payload: boolean) {
+            this.form.isAccountBusiness = payload;
         }
     }
 })

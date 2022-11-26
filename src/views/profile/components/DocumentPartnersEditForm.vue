@@ -10,6 +10,8 @@
                 <Dropdown
                     v-model="companyDocumentType"
                     :options="companyDocumentTypeOptions"
+                    option-label="name"
+                    option-value="value"
                     placeholder="Elija el tipo de documento"
                     class="w-full"
                 />
@@ -76,12 +78,20 @@ import Divider from "primevue/divider";
 import Chip from 'primevue/chip';
 import { Member } from '../types/account.interface';
 import { useAccount } from '../../../composables/useAccount';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n({ useScope: 'global' });
 
 interface Props {
     partner: Member
 }
 
-const companyDocumentTypeOptions = ref(['DNI', 'Pasaporte']);
+const companyDocumentTypeOptions = ref([
+  { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
+  { value: "government_id", name: t('docTypeLabelGovernmentId') },
+  { value: "passport", name: t('docTypeLabelPassport') },
+  { value: "residence_permit", name: t('docTypeLabelResidencePermit') },
+]);
 const companyDocumentType = ref('');
 
 const props = defineProps<Props>()

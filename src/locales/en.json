@@ -129,5 +129,9 @@
     "addBeneficiaries": "Add Beneficiaries",
     "streetAddress": "Street Address (Apt, Suite, Etc.)",
     "saveNewPayee": "Save new payee",
-    "newBeneficiary": "New Beneficiary"
+    "newBeneficiary": "New Beneficiary",
+    "docTypeLabelDriversLicense": "Driver License",
+    "docTypeLabelGovernmentId": "GovernmentId",
+    "docTypeLabelPassport": "Passport",
+    "docTypeLabelResidencePermit": "Residence Permit"
 }
