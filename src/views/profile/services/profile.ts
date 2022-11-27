@@ -24,8 +24,10 @@ export class ProfileService extends HttpService {
         return await this.get<Account>(`account/${accountID}`);
     }
     
-    async updateContact(accountID: string, contactId: string | string[], form: FormData): Promise<any> {
-        return await this.patch(`account/${accountID}/contact/${contactId}`, form);
+    async updateContact(accountID: string, contactId: string | string[], isNaturalAccount: boolean, form: FormData): Promise<any> {
+        let url = `account/${accountID}/contact/${contactId}`;
+        if (!isNaturalAccount) url = `account/company/${accountID}/contact/${contactId}`;
+        return await this.patch(url, form);
     }
 
     async updatePassword(email: string, password: string, currentPassword: string): Promise<any> {

@@ -170,6 +170,7 @@ export const useAccount = () => {
     profileService.updateContact(
       account.accountId.value!,
       contactId!,
+      isNaturalAccount.value,
       accountStore.form
     ).then(() => {
       submitting.value = false;
