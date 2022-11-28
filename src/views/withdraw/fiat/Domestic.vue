@@ -47,9 +47,9 @@
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue';
 import Button from 'primevue/button';
-import Divider from 'primevue/divider';
-import ListBeneficiary from '../components/ListBeneficiary.vue';
-import InputText from 'primevue/inputtext';
+
+
+
 import Steps from 'primevue/steps';
 import { useRouter } from "vue-router";
 import { Beneficiary } from '../types/beneficiary.interface';
@@ -80,7 +80,7 @@ const newBeneficiary = ()=> {
 const beneficiaryAssets = ref<Beneficiary[]>([])
 
 onMounted(async () => {
-    await fetchBeneficiaries()
+    await fetchBeneficiariesDomestic()
 });
 
 const onSearch = () => {
@@ -116,7 +116,7 @@ const items = ref([
 ])
 const {
     formObject,
-    fetchBeneficiaries, 
+    fetchBeneficiariesDomestic, 
     listBeneficiary,
     nextStepPage,
     prevStepPage,

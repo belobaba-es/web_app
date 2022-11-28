@@ -26,9 +26,8 @@ import ListBeneficiary from './ListBeneficiary.vue';
 import InputText from 'primevue/inputtext';
 import Steps from 'primevue/steps';
 import { useRouter } from "vue-router";
-import { Beneficiary, BeneficiaryFiat } from '../types/beneficiary.interface';
-import { BeneficiaryService } from '../services/beneficiary';
-import { AccountService } from '../services/account';
+import { Beneficiary } from '../types/beneficiary.interface';
+
 import { useToast } from 'primevue/usetoast';
 
 const router = useRouter();
@@ -36,8 +35,9 @@ const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
 	list: Array<any>,
+    formData:  any
 }>()
-const emit = defineEmits(['nextPage', 'selectBeneficiary', 'update:beneficiary']);
+const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary']);
 const search = ref('')
 
 

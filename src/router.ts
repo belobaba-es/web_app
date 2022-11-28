@@ -118,7 +118,7 @@ const routes: RouteRecordRaw[] = [
                 component: StepAmount
               },
               {
-                path: 'comfirmation',
+                path: 'confirmation',
                 component: StepConfirmation
               },
 
@@ -148,7 +148,22 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/international',
-            component: WithdrawFiatInternational
+            component: WithdrawFiatInternational,
+            children:[
+              {
+                path: '',
+                component:  StepAccounts,
+              },
+              {
+                path: 'amount',
+                component: StepAmount
+              },
+              {
+                path: 'confirmation',
+                component: StepConfirmation
+              },
+              
+            ]
           },
           {
             path: 'fiat/international/new',

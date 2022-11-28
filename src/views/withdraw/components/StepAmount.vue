@@ -16,7 +16,7 @@
             <div class="field col-6 relative" >
                 <span class="text-left absolute" style="right: 0px;">Current balance: 524.95 USD</span>
                 <label for="amount">{{t('Amount')}}</label>
-                <InputText id="amount" type="text" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
+                <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
             </div>
         </div>
         
@@ -60,7 +60,6 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from "vue-router";
 import Timeline from 'primevue/timeline';
 import Button from 'primevue/button';
-import { BeneficiaryFiatDomestic, BeneficiaryFiatInternacional } from '../types/beneficiary.interface';
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute();
@@ -68,7 +67,7 @@ const props = defineProps<{
     formData:  any
 }>()
 const emit = defineEmits(['nextPage']);
-const amount = ref(0)
+const amount = ref('')
 const fee = ref(2.5)
 const reference = ref('')
 
@@ -82,7 +81,7 @@ onMounted(async () => {
     console.log(props.formData, 'amount')
 });
 const amountFee = computed(()=>{
-    return amount.value - fee.value
+    return parseFloat(amount.value) - fee.value
 })
 const nextPage = () => {
     const page = 1

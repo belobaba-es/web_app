@@ -23,20 +23,19 @@
         </div>
         
         
-        <div class="col-12 field p-fluid">
-            <div class="col-6">
-                <p class="text-base">Your are sending to Alberto Rodriguez</p>
-                
-            </div>
+        <div class="col-12 mb-2">
+            <p class="text-base">Your are sending to {{formData?.beneficiary?.realName}}</p>
+            
         </div>
-        <div class="col-12 m-2">
+        
+        <div class="col-12 mb-2">
             <span>{{t('The wire will take 24 hours.')}}</span>
             <p>
                 {{formData.amount}}
             </p>
         </div>
 
-        <Button class="p-button search-btn" :label="t('continue')" @click=""/>
+        <Button class="p-button search-btn" :label="t('continue')" @click="emit('complete')"/>
     </div>
 </template>
 
@@ -54,14 +53,10 @@ const route = useRoute();
 const props = defineProps<{
     formData:  any
 }>()
-const amount = ref('')
-const events = ref([
-            {amount: '3,5', label: 'Fee'},
-            {amount: '2,5', label: 'You send to Alberto Rodriguez',},
-        ]);
-        const events2 = ref([
-            "2020", "2021", "2022", "2023"
-        ]);
+
+const emit = defineEmits(['complete']);
+
+      
 onMounted(async () => {
 
     const data = props.formData;

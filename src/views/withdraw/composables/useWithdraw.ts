@@ -28,12 +28,7 @@ export const useWithdraw = (items: any) => {
         toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
     };
 
-    const beneficiaryService = BeneficiaryService.instance();
-    beneficiaryService.listBeneficiaryDomestic().then(resp=>{
-        listBeneficiary.value = resp.results
-    })
-
-    const fetchBeneficiaries = async () => {
+    const fetchBeneficiariesDomestic = async () => {
         const beneficiaryService = BeneficiaryService.instance()
         await beneficiaryService.listBeneficiaryDomestic()
         .then(resp=>{
@@ -41,13 +36,20 @@ export const useWithdraw = (items: any) => {
         })
     }
 
-
+    const fetchBeneficiariesInternational = async() =>{
+        const beneficiaryService = BeneficiaryService.instance()
+        await beneficiaryService.listBeneficiaryInternacional()
+        .then(resp=>{
+            listBeneficiary.value = resp.results
+        })
+    }
    
 
     return {
         formObject,
         listBeneficiary,
-        fetchBeneficiaries,
+        fetchBeneficiariesDomestic,
+        fetchBeneficiariesInternational,
         nextStepPage,
         prevStepPage,
         stepComplete
