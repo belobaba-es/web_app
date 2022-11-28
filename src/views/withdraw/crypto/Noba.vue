@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="text-3xl font-medium mb-4">{{t('whitdraw')}} / <span class="text-primary">{{t('crypto')}} </span></p>
+        <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('crypto')}} </span></p>
         <div class="flex align-items-center">
 
             <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text"/>
