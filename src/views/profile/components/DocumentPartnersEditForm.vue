@@ -24,7 +24,7 @@
                     <FileInput 
                         :label="documentType+'_front_side'" 
                         side="front" 
-                        :account-id="props.partner.contactId"
+                        :account-id="accountId!"
                         :document-country="props.partner.taxCountry"
                         :tax-id="props.partner.taxId"
                         :type="documentType"
@@ -39,7 +39,7 @@
                     <FileInput 
                         :label="documentType+'_back_side'" 
                         side="backside" 
-                        :account-id="props.partner.contactId"
+                        :account-id="accountId!"
                         :document-country="props.partner.taxCountry"
                         :tax-id="props.partner.taxId"
                         :type="documentType"
@@ -58,7 +58,7 @@
                                 label="utility_bill" 
                                 side="address" 
                                 type="utility_bill"
-                                :account-id="props.partner.contactId"
+                                :account-id="accountId!"
                                 :document-country="props.partner.taxCountry"
                                 :tax-id="props.partner.taxId"
                             />
@@ -87,7 +87,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { getFullName } = useAccount();
+const { getFullName, accountId } = useAccount();
 
 const documentTypeOptions = ref([
   { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
