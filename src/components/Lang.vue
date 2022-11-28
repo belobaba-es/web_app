@@ -2,14 +2,14 @@
 
   <p class="text-center">{{ t('languageSelector') }}</p>
   <div class="container-center pt-0">
-    <SelectButton v-model="languageSelected" :options="languages" aria-labelledby="custom" optionLabel="name"
+    <SelectButton class="lang-selector" v-model="languageSelected" :options="languages" aria-labelledby="custom" optionLabel="name"
                   dataKey="code" @click="changeLang"/>
   </div>
 
 
 </template>
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref, onMounted } from 'vue';
 import {useI18n} from 'vue-i18n'
 import SelectButton from 'primevue/selectbutton';
 import {useRoute, useRouter} from "vue-router";
@@ -20,8 +20,7 @@ interface LangSelect {
 }
 
 const route = useRouter()
-let languageSelected = ref<LangSelect>();
-languageSelected.value = {name: 'EN', code: 'en'}
+const languageSelected = ref<LangSelect>();
 const languages = ref<LangSelect[]>([{name: 'ES', code: 'es'}, {name: 'EN', code: 'en'}]);
 
 const {t, locale} = useI18n({
@@ -53,10 +52,23 @@ function setLang(code: string) {
   route.go(0)
 }
 
+onMounted(() => {
+  const localeLocalStorage = localStorage.getItem('noba@lang');
+  if (!localeLocalStorage) {
+    languageSelected.value = { name: 'EN', code: 'en' };
+    setLang('en');
+  } else {
+    const langToSet = languages.value.find(lang => lang.code === localeLocalStorage);
+    languageSelected.value = langToSet;
+  }
+
+})
+
 </script>
 <style scoped>
 p{
   font-size: 1rem;
   color: #A4A4A4;
 }
+
 </style>

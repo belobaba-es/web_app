@@ -256,6 +256,14 @@ button.p-button.p-component.p-button.edit-document-button {
   box-shadow: none;
 }
 
+
+.p-selectbutton .p-button.p-highlight:hover, .p-selectbutton .p-button.p-highlight {
+  background: #d7dadd;
+  border-color: #cbcbcb;
+  color: #1B1B19;
+  font-weight: bold;
+}
+
 .bg-primary{
   background: var(--primary-color);
 }

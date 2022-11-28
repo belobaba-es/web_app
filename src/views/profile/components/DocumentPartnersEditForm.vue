@@ -8,8 +8,8 @@
         <div class="grid">
             <div class="field col-12">
                 <Dropdown
-                    v-model="companyDocumentType"
-                    :options="companyDocumentTypeOptions"
+                    v-model="documentType"
+                    :options="documentTypeOptions"
                     option-label="name"
                     option-value="value"
                     placeholder="Elija el tipo de documento"
@@ -17,42 +17,32 @@
                 />
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="props.partner.documents[0]">
-                    <Chip
-                        class="edit-document-chip w-full"
-                        :label="props.partner.documents[0].label"
-                        icon="pi pi-check"
-                        removable
-                        removeIconClass="pi pi-trash"
-                    />
+                <template v-if="identityDocuments[0]">
+                    <FileUploaded :identity-document="identityDocuments[0]"/>
                 </template>
                 <template v-else>
-                    <FileUpload
-                        mode="basic"
-                        name="demo[]"
-                        url="./upload"
-                        chooseLabel="Seleccionar archivo" 
-                        class="w-full"
+                    <FileInput 
+                        :label="documentType+'_front_side'" 
+                        side="front" 
+                        :account-id="props.partner.contactId"
+                        :document-country="props.partner.taxCountry"
+                        :tax-id="props.partner.taxId"
+                        :type="documentType"
                     />
                 </template>
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="props.partner.documents[1]">
-                    <Chip
-                        class="edit-document-chip w-full"
-                        :label="props.partner.documents[1].label"
-                        icon="pi pi-check"
-                        removable
-                        removeIconClass="pi pi-trash"
-                    />
+                <template v-if="identityDocuments[1]">
+                    <FileUploaded :identity-document="identityDocuments[1]"/>
                 </template>
                 <template v-else>
-                    <FileUpload
-                        mode="basic"
-                        name="demo[]"
-                        url="./upload"
-                        chooseLabel="Seleccionar archivo" 
-                        class="w-full"
+                    <FileInput 
+                        :label="documentType+'_back_side'" 
+                        side="backside" 
+                        :account-id="props.partner.contactId"
+                        :document-country="props.partner.taxCountry"
+                        :tax-id="props.partner.taxId"
+                        :type="documentType"
                     />
                 </template>
             </div>
@@ -62,7 +52,18 @@
                 </div>
                 <div class="field">
                     <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
-                    <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
+                    <div class="grid">
+                        <div class="col-6">
+                            <FileInput 
+                                label="utility_bill" 
+                                side="address" 
+                                type="utility_bill"
+                                :account-id="props.partner.contactId"
+                                :document-country="props.partner.taxCountry"
+                                :tax-id="props.partner.taxId"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,31 +72,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, computed, onMounted } from 'vue';
 import Dropdown from 'primevue/dropdown';
-import FileUpload from 'primevue/fileupload';
 import Divider from "primevue/divider";
-import Chip from 'primevue/chip';
-import { Member } from '../types/account.interface';
+import { Document, Member } from '../types/account.interface';
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n';
-
+import FileInput from './FileInput.vue';
+import FileUploaded from './FileUploaded.vue';
 const { t } = useI18n({ useScope: 'global' });
 
 interface Props {
     partner: Member
 }
 
-const companyDocumentTypeOptions = ref([
+const props = defineProps<Props>()
+const { getFullName } = useAccount();
+
+const documentTypeOptions = ref([
   { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
   { value: "government_id", name: t('docTypeLabelGovernmentId') },
   { value: "passport", name: t('docTypeLabelPassport') },
   { value: "residence_permit", name: t('docTypeLabelResidencePermit') },
 ]);
-const companyDocumentType = ref('');
 
-const props = defineProps<Props>()
-const { getFullName } = useAccount();
+const documentType = ref('government_id');
+const documents = ref<Document[]>([]);
+
+onMounted(() => {
+    fillDocuments();
+});
+
+const fillDocuments = () => {
+    const documentsKeys = Object.keys(props.partner.documents);
+    documentsKeys.forEach((value) => {
+        if (!isNaN(parseInt(value))) {
+            documents.value.push(props.partner.documents[parseInt(value)]);
+        }
+    });
+}
+
+const identityDocuments = computed(() => {
+    const data = documents.value.filter((document) => {
+        return document.documentType === documentType.value && document.documentType !== 'utility_bill';
+    });
+
+    return data.slice(0, 2);
+});
+
 
 </script>
 
