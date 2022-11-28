@@ -7,12 +7,13 @@
         <span class="text-xl"> International Wire</span> 
     </div>
     <Steps :model="items" :readonly="false" />
-    <div class="mt-2 mb-2">
+    <!-- <div class="mt-2 mb-2">
         <Button class="p-button search-btn" :label="t('New Beneficiary')" @click="newBeneficiary"/>
-    </div>
+    </div> -->
     <router-view v-slot="{Component}"   
         :list="listBeneficiary"
         :formData="formObject" 
+        toNew="/withdraw/fiat/international/new"
         @prevPage="prevStepPage($event)" 
         @nextPage="nextStepPage($event)" 
         @complete="stepComplete"
@@ -48,9 +49,7 @@ const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 
-const newBeneficiary = ()=> {
-    router.push('/withdraw/fiat/international/new')
-}
+
 
 
 onMounted(async () => {

@@ -49,7 +49,7 @@
             <Divider></Divider>
             
         </div>
-        <div class="col-12 md:col-6">
+        <div class="col-12 md:col-8">
             
             <div class="field">
                 <label>{{ t('Full Name') }}</label>
@@ -86,7 +86,7 @@
             <div class="field">
                 <label>{{ t('Swift Code') }}</label>
                 <div class="p-inputgroup">
-                    <InputText type="text"  />
+                    <InputText type="text"  v-model="form.intermediaryBank.swiftCode"/>
                 </div>
             </div>
            
@@ -95,7 +95,7 @@
             <div class="field">
                 <label>{{ t(' Intermediary Routing Number') }}</label>
                 <div class="p-inputgroup">
-                    <InputText type="text"  />
+                    <InputText type="text"  v-model="form.routingNumber"/>
                     
                 </div>
             </div>
@@ -117,7 +117,7 @@
                 <label>{{ t('countryLabel') }}</label>
                 <div class="p-inputgroup">
                     <Dropdown
-                        v-model="form.address" 
+                        v-model="form.intermediaryBank.intermediaryBankCountry" 
                         :options="countries" 
                         optionLabel="name" 
                         option-value="country_code"
@@ -125,7 +125,7 @@
                         :placeholder="t('countryPlaceholder')"
                         :disabled="countriesInputIsEmpty"
                         class="w-full"
-                        @change="onChangeCountryHandler()"
+                        @change="onBankChangeCountryHandler"
                         required
                     />
                 </div>
@@ -141,20 +141,37 @@
                 </div>
             </div>
             <div class="field">
-                <label>{{ t('City') }}</label>
+                <label>{{ t('stateLabel') }}</label>
                 <div class="p-inputgroup">
-                    <InputText type="text"  />
-                    
+                    <Dropdown 
+                        v-model="form.intermediaryBank.intermediaryBankState" 
+                        :options="bankStates" 
+                        optionLabel="name" 
+                        option-value="name"
+                        :loading="bankLoadingStatesField"
+                        :placeholder="t('statePlaceHolder')"
+                        :disabled="bankStatesInputIsEmpty"
+                        class="w-full"
+                        @change="onBankChangeStateHandler"
+                        required
+                    />
                 </div>
             </div>
             <div class="grid">
-                <div class="field col-6">
-                    <label>{{ t('Region') }}</label>
+                <label>{{ t('cityLabel') }}</label>
                     <div class="p-inputgroup">
-                        <InputText type="text"  />
-                        
+                        <Dropdown 
+                            v-model="form.intermediaryBank.intermediaryBankCity"
+                            :options="bankCities" 
+                            optionLabel="name" 
+                            option-value="name"
+                            :placeholder="t('cityPlaceHolder')"
+                            class="w-full"
+                            :loading="bankLoadingCitiesField"
+                            :disabled="bankCitiesInputIsEmpty"
+                            required
+                        />
                     </div>
-                </div>
                 <div class="field col-6">
                     <label>{{ t('Postal Code') }}</label>
                     <div class="p-inputgroup">
@@ -180,7 +197,7 @@
                 <label>{{ t('countryLabel') }}</label>
                 <div class="p-inputgroup">
                     <Dropdown
-                        v-model="form.address" 
+                        v-model="form.country" 
                         :options="countries" 
                         optionLabel="name" 
                         option-value="country_code"
@@ -188,7 +205,7 @@
                         :placeholder="t('countryPlaceholder')"
                         :disabled="countriesInputIsEmpty"
                         class="w-full"
-                        @change="onChangeCountryHandler()"
+                        @change="onChangeCountryHandler"
                         required
                     />
                 </div>
@@ -200,26 +217,45 @@
                 </div>
             </div>
             <div class="field">
-                <label>{{ t('City') }}</label>
+                <label>{{ t('stateLabel') }}</label>
                 <div class="p-inputgroup">
-                    <InputText type="text"  />
-                    
+                    <Dropdown 
+                        v-model="form.state" 
+                        :options="states" 
+                        optionLabel="name" 
+                        option-value="name"
+                        :loading="loadingStatesField"
+                        :placeholder="t('statePlaceHolder')"
+                        :disabled="statesInputIsEmpty"
+                        class="w-full"
+                        @change="onChangeStateHandler"
+                        required
+                    />
                 </div>
             </div>
 
             <div class="grid">
                 
                 <div class="field col-6">
-                    <label>{{ t('State') }}</label>
+                    <label>{{ t('cityLabel') }}</label>
                     <div class="p-inputgroup">
-                        <InputText type="text"  />
-                        
+                        <Dropdown 
+                            v-model="form.city"
+                            :options="cities" 
+                            optionLabel="name" 
+                            option-value="name"
+                            :placeholder="t('cityPlaceHolder')"
+                            class="w-full"
+                            :loading="loadingCitiesField"
+                            :disabled="citiesInputIsEmpty"
+                            required
+                        />
                     </div>
                 </div>
                 <div class="field col-6">
                     <label>{{ t(' Postal Code ') }}</label>
                     <div class="p-inputgroup">
-                        <InputText type="text"  />
+                        <InputText type="text"  v-model="form.postalCode"/>
                     </div>
                 </div>
 
@@ -243,37 +279,88 @@
 import { onMounted, ref } from 'vue';
 import { useWorld } from '../../../composables/useWorld';
 import { useI18n } from 'vue-i18n';
-import Dropdown from 'primevue/dropdown';
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import RadioButton from 'primevue/radiobutton'
 import Divider from 'primevue/divider';
+import { BeneficiaryFiatInternacional } from '../types/beneficiary.interface';
 
 const { t } = useI18n({ useScope: 'global' })
 
 const {
     countries,
     fetchCountries,
-    fetchStates,
     loadingCountiesField,
     countriesInputIsEmpty,
-    setCountry
-
+    statesInputIsEmpty,
+    loadingStatesField,
+    states,
+    cities,
+    citiesInputIsEmpty,
+    loadingCitiesField,
+    onChangeCountryHandler,
+    onChangeStateHandler
 } = useWorld();
-onMounted(async () => {
-    await fetchCountries();
+
+const {
+    countries: bankCountries,
+    statesInputIsEmpty: bankStatesInputIsEmpty,
+    loadingStatesField: bankLoadingStatesField,
+    states:bankStates,
+    cities: bankCities,
+    citiesInputIsEmpty: bankCitiesInputIsEmpty,
+    loadingCitiesField: bankLoadingCitiesField,
+    onChangeCountryHandler: onBankChangeCountryHandler,
+    onChangeStateHandler:onBankChangeStateHandler
+} = useWorld();
+
+const form = ref<BeneficiaryFiatInternacional>({
+    realName: "",
+    accountNumber: "",
+    routingNumber: "",
+    streetOne: "",
+    streetTwo: "",
+    postalCode: "",  
+    country: "",
+    city: "",
+    state: "",
+    iban: "",
+    intermediaryBank: {
+        bankCity:                      "",
+        intermediaryBankCountry:       "",
+        intermediaryBankCity:          "",
+        bankPostalCode:                "",
+        intermediaryBankPostalCode:    "",
+        nameBank:                      "",
+        intermediaryBankState:         "",
+        swiftCode:                     "",
+        intermediaryBankBName:         "",
+        intermediaryBankStreetTwo:     "",
+        intermediaryBankAccountNumber: "",
+        intermediaryBankStreetOne:     "",
+        bankCountry:                   "",
+        intermediaryNumber:            "",
+        bankState:                     "",
+        bankStreetTwo:                 "",
+        bankStreetOne:                 "",
+        intermediaryNumberType:        "",
+    },
+    typeBeneficiaryBankWithdrawal: "INTERNATIONAL",
 })
 
-const onChangeCountryHandler = async () => {
-    const country = countries.value.find(country => country.country_code === form.value.address);
-    if (!country) return;
-    setCountry(country);
-    await fetchStates();
-};
+onMounted(async () => {
+    
+    await fetchCountries().then(()=>{
+        bankCountries.value = countries.value
+    });
+})
+
+
+
 const type = ref('intermediary')
-const form = ref({address: ''})
+
 </script>
 
 <style scoped>
-
 </style>

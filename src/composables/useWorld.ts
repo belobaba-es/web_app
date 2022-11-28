@@ -1,5 +1,6 @@
 import { WorldService } from "../shared/services/world";
 import { ref, computed } from 'vue';
+import { DropdownChangeEvent } from 'primevue/dropdown';
 
 export interface Country {
     country_code: string;
@@ -34,7 +35,7 @@ export const useWorld = () => {
     const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0);
     const citiesInputIsEmpty = computed<boolean>(() => cities.value.length === 0);
     const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0);
-
+    
     const fetchCountries = async () => {
         loadingCountiesField.value = true;
         const worldService = WorldService.instance();
@@ -76,6 +77,21 @@ export const useWorld = () => {
         state.value = payload;
     }
 
+    const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
+        const country = countries.value.find(country => country.country_code === event.value);
+        console.log('bank', country, event, countries)
+        if (!country) return;
+        setCountry(country);
+        await fetchStates();
+    };
+
+    const onChangeStateHandler = async (event: DropdownChangeEvent) => {
+        const state = states.value.find(state => state.name === event.value);
+        if (!state) return;
+        setState(state);
+        await fetchCities();
+    };
+
     return {
         countries,
         states,
@@ -92,6 +108,8 @@ export const useWorld = () => {
         fetchStates,
         fetchCities,
         setCountry,
-        setState
+        setState,
+        onChangeCountryHandler,
+        onChangeStateHandler
     }
 }

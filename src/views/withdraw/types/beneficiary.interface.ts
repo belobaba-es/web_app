@@ -42,7 +42,7 @@ interface IntermediaryBank {
 }
 
 export interface BeneficiaryFiat {
-    id?:                            string;
+    id?:                           string;
     city:                          string;
     state:                         string;
     country:                       string;
@@ -57,7 +57,7 @@ export interface BeneficiaryFiat {
 }
 
 export interface BeneficiaryFiatInternacional extends BeneficiaryFiat {
-    intermediaryBank:              IntermediaryBank;
+    intermediaryBank:              IntermediaryBank ;
     iban:                          string;
     typeBeneficiaryBankWithdrawal: string;
 }

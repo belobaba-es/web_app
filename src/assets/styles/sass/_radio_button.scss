@@ -1,0 +1,15 @@
+.p-radiobutton .p-radiobutton-box.p-highlight{
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: #ffffff;
+}
+
+.p-radiobutton .p-radiobutton-focused{
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+}
