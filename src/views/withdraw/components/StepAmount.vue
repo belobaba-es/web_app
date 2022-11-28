@@ -16,17 +16,21 @@
             <div class="field col-6 relative" >
                 <span class="text-left absolute" style="right: 0px;">Current balance: 524.95 USD</span>
                 <label for="amount">{{t('Amount')}}</label>
-                <InputText id="amount" type="text" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
+                <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
             </div>
         </div>
         
         <div class="col-4">
-            <Timeline :value="events">
+            <Timeline :value="events" >
+                
                 <template #content="slotProps">
                     {{slotProps.item.label}}
-                    <p>
-                        {{slotProps.item.amount}}
+                       <span v-if="slotProps.item.name">{{formData.beneficiary?.realName}}</span>
+                       
+                   <p v-if="slotProps.item.name">
+                        {{amountFee}} 
                     </p>
+                    <p v-else> {{fee}}</p>
                 </template>
             </Timeline>
             
@@ -34,27 +38,28 @@
         <div class="col-12 field p-fluid">
             <div class="col-6">
                 <label for="">{{t('Reference')}}</label>
-                <InputText type="text" class="p-inputtext p-component  b-gray" v-model="amount" :placeholder="t('reference')" />
+                <InputText type="text" class="p-inputtext p-component  b-gray" v-model="reference" :placeholder="t('reference')" />
                 
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 m-2">
             <span>{{t('The wire will take 24 hours.')}}</span>
         </div>
+        <div class="col-6">
 
-        <Button class="p-button search-btn" :label="t('continue')" @click="$emit('nextPage', {pageIndex: 1})"/>
+            <Button class="p-button " :label="t('continue')" @click="nextPage"/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import InputText from 'primevue/inputtext';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from "vue-router";
 import Timeline from 'primevue/timeline';
 import Button from 'primevue/button';
-import { BeneficiaryFiatDomestic, BeneficiaryFiatInternacional } from '../types/beneficiary.interface';
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute();
@@ -63,14 +68,34 @@ const props = defineProps<{
 }>()
 const emit = defineEmits(['nextPage']);
 const amount = ref('')
-const events = ref([
-    {amount: '3,5', label: 'Fee'},
-    {amount: '2,5', label: `You send to ${props.formData.beneficiary?.realName}`,},
+const fee = ref(2.5)
+const reference = ref('')
+
+const events = ref<any>([
+    {amount: '2,5', label: 'Fee', name: false},
+    {amount: '2,5', label: `You send to `, name: true},
+
 ]);
        
 onMounted(async () => {
     console.log(props.formData, 'amount')
 });
+const amountFee = computed(()=>{
+    return parseFloat(amount.value) - fee.value
+})
+const nextPage = () => {
+    const page = 1
+    const formData = {
+        ...props.formData.value,
+        amount: amount.value,
+        fee: 2.5,
+        reference: reference.value
+    };
+    emit('nextPage', {
+        pageIndex: page, 
+        formData: formData
+    })
+} 
 
 </script>
 
