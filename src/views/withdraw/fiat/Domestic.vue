@@ -2,16 +2,16 @@
     <div>
         <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
     <div class="flex align-items-center">
-
         <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
         <span class="text-xl"> Domestic Wire</span> 
     </div>
     <Steps :model="items" :readonly="false" />
-    <div class="mt-4 mb-4">
+    <!-- <div class="mt-4 mb-4">
         <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
-    </div>
+    </div> -->
     <router-view v-slot="{Component}"   
         :list="listBeneficiary"
+        toNew="/withdraw/fiat/domestic/new"
         :formData="formObject" 
         @prevPage="prevStepPage($event)" 
         @nextPage="nextStepPage($event)" 
@@ -23,21 +23,7 @@
         </keep-alive>
     </router-view>
 
-    <!-- <div class="col-10 ">
-            
-        <span class="p-input-icon-left flex p-fluid">
-            <i class="pi pi-search" />
-            <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
-            <Button class="p-button search-btn" :label="t('search')" @click="onSearch"/>
-        </span>
-    </div>
-    <div class="grid">
-        <span class="mt-4">{{t('youBeneficiaries')}}</span>
-        <Divider></Divider>
-        <div class="col-10">
-            <ListBeneficiary :list="beneficiaryAssets" @select="toRoute($event)"></ListBeneficiary>
-        </div>
-    </div> -->
+
 </div>
 </template>
 
@@ -64,12 +50,6 @@ const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 
 const accountService = AccountService.instance()
-// const toRoute = (item: Beneficiary) => {
-   
-//     router.push({name: "withdraw-crypto-noba-amount"})
-    
-// } 
-
 
 
 const newBeneficiary = ()=> {

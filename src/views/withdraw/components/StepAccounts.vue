@@ -1,4 +1,7 @@
 <template>
+     <div class="col-4 mt-4 mb-4" v-if="toNew != ''">
+        <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNewBeneficiary"/>
+    </div>
     <div class="col-10 ">
                 
         <span class="p-input-icon-left flex p-fluid">
@@ -35,7 +38,8 @@ const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
 	list: Array<any>,
-    formData:  any
+    formData:  any,
+    toNew: string
 }>()
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary']);
 const search = ref('')
@@ -76,7 +80,9 @@ const onSearch = () => {
     // })
 }
 
-
+const toNewBeneficiary = ()=> {
+    router.push(props.toNew)
+}
 
 </script>
 

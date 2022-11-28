@@ -1,6 +1,6 @@
 <template>
     <div class="formgrid grid ">
-        <div class="col-12">
+        <div class="col-12 m-2">
             <span class="mt-4">{{t('youBeneficiaries')}}</span>
             
             <Divider></Divider>
@@ -88,7 +88,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits(['nextPage']);
 const amount = ref('')
-const fee = ref(2.5)
+const fee = ref(0)
 const reference = ref('')
 
 const events = ref<any>([
@@ -101,7 +101,8 @@ onMounted(async () => {
     console.log(props.formData, 'amount')
 });
 const amountFee = computed(()=>{
-    return parseFloat(amount.value) - fee.value
+    console.log(parseFloat(amount.value) - fee.value, 'undefined')
+    return isNaN(parseFloat(amount.value) - fee.value) ? 0  : parseFloat(amount.value) - fee.value
 })
 const nextPage = () => {
     const page = 1
