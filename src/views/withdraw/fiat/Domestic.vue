@@ -11,13 +11,13 @@
         <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
     </div>
     <router-view v-slot="{Component}"   
-        :list="list"
+        :list="listBeneficiary"
         :formData="formObject" 
-        @prevPage="prevPage($event)" 
-        @nextPage="nextPage($event)" 
-        @complete="complete"
-        @selectBeneficiary="onSelectBeneficiary"
+        @prevPage="prevStepPage($event)" 
+        @nextPage="nextStepPage($event)" 
+        @complete="stepComplete"
         >
+        <!-- @selectBeneficiary="onSelectBeneficiary" -->
 
         <keep-alive>
             <component :is="Component" />
@@ -57,39 +57,30 @@ import { BeneficiaryService } from '../services/beneficiary';
 import { AccountService } from '../services/account';
 import { useToast } from 'primevue/usetoast';
 import { WithdrawForm } from '../types/withdraw';
+import { useWithdraw } from '../composables/useWithdraw';
 
 const router = useRouter();
 const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
-const beneficiarySelect = ref({})
-const beneficiaryService = BeneficiaryService.instance();
+
 const accountService = AccountService.instance()
-const toRoute = (item: Beneficiary) => {
+// const toRoute = (item: Beneficiary) => {
    
-    router.push({name: "withdraw-crypto-noba-amount"})
+//     router.push({name: "withdraw-crypto-noba-amount"})
     
-} 
+// } 
 
 
-const onSelectBeneficiary = (item: any) => {
-    console.log(beneficiarySelect, 'select')
-    console.log(item)
-    router.push('/withdraw/fiat/domestic/new')
-}
+
 const newBeneficiary = ()=> {
     router.push('/withdraw/fiat/domestic/new')
 }
 const beneficiaryAssets = ref<Beneficiary[]>([])
-const list = ref<any[]>([])
+
 onMounted(async () => {
-   beneficiaryService.listBeneficiaryAssets().then(data=>{
-        beneficiaryAssets.value = data.results
-    })
-    beneficiaryService.listBeneficiaryDomestic().then(resp=>{
-        list.value = resp.results
-    })
+    await fetchBeneficiaries()
 });
 
 const onSearch = () => {
@@ -123,24 +114,16 @@ const items = ref([
         to: '/withdraw/fiat/domestic/confirmation'
     }
 ])
+const {
+    formObject,
+    fetchBeneficiaries, 
+    listBeneficiary,
+    nextStepPage,
+    prevStepPage,
+    stepComplete,
+} = useWithdraw(items)
 
 
-const formObject = ref<WithdrawForm | any>({});
-
-const nextPage = (event: any)  => {
-    for (let field in event.formData) {
-        formObject.value[field] = event.formData[field];
-    }
-    console.log(formObject, 'nextpage')
-    router.push(items.value[event.pageIndex + 1].to);
-};
-const prevPage = (event:any) => {
-    router.push(items.value[event.pageIndex - 1].to);
-};
-
-const complete = () => {
-    toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
-};
 
 </script>
 

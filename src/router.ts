@@ -141,7 +141,7 @@ const routes: RouteRecordRaw[] = [
                 component: StepAmount
               },
               {
-                path: 'comfirmation',
+                path: 'confirmation',
                 component: StepConfirmation
               },
             ]
