@@ -16,8 +16,8 @@
         <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
         <div class="flex align-items-center">
 
-            <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text"/>
-            <span class="text-xl"> Between NOBA Accounts </span> 
+            <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="back"/>
+            <span class="text-xl"> Domestic Wire</span> 
         </div>
         <div class="col-12">
             <span class="mt-4">{{t('addBeneficiaries')}}</span>
@@ -61,6 +61,7 @@
                         :loading="loadingCountiesField"
                         :placeholder="t('countryPlaceholder')"
                         :disabled="countriesInputIsEmpty"
+                        @change="onChangeCountryHandler()"
                         class="w-full"
                         required
                     />
@@ -74,22 +75,39 @@
                 </div>
             </div>
             <div class="field">
-                <label>{{ t('cityLabel') }}</label>
+                <label>{{ t('stateLabel') }}</label>
                 <div class="p-inputgroup">
-                    <InputText type="text"  
-                        v-model="form.city"/>
-                    
+                    <Dropdown 
+                        v-model="form.state" 
+                        :options="states" 
+                        optionLabel="name" 
+                        option-value="name"
+                        :loading="loadingStatesField"
+                        :placeholder="t('statePlaceHolder')"
+                        :disabled="statesInputIsEmpty"
+                        class="w-full"
+                        @change="onChangeStateHandler()"
+                        required
+                    />
                 </div>
             </div>
 
             <div class="grid">
                 
                 <div class="field col-6">
-                    <label>{{ t('stateLabel') }}</label>
+                    <label>{{ t('cityLabel') }}</label>
                     <div class="p-inputgroup">
-                        <InputText type="text"  
-                            v-model="form.state"/>
-                        
+                        <Dropdown 
+                            v-model="form.city"
+                            :options="cities" 
+                            optionLabel="name" 
+                            option-value="name"
+                            :placeholder="t('cityPlaceHolder')"
+                            class="w-full"
+                            :loading="loadingCitiesField"
+                            :disabled="citiesInputIsEmpty"
+                            required
+                        />
                     </div>
                 </div>
                 <div class="field col-6">
@@ -138,9 +156,17 @@ const {
     countries,
     fetchCountries,
     fetchStates,
+    statesInputIsEmpty,
+    loadingStatesField,
+    states,
     loadingCountiesField,
     countriesInputIsEmpty,
-    setCountry
+    setCountry,
+    setState,
+    cities,
+    fetchCities,
+    citiesInputIsEmpty,
+    loadingCitiesField
 
 } = useWorld();
 
@@ -176,6 +202,26 @@ const saveBeneficiary = () =>{
         })
     })
 }
+
+const back = () =>{
+   
+    router.back()
+}
+
+const onChangeCountryHandler = async () => {
+    const country = countries.value.find(country => country.country_code === form.value.country);
+    console.log(country)
+    if (!country) return;
+    setCountry(country);
+    await fetchStates();
+};
+
+const onChangeStateHandler = async () => {
+    const state = states.value.find(state => state.name === form.value.state);
+    if (!state) return;
+    setState(state);
+    await fetchCities();
+};
 </script>
 
 <style scoped>

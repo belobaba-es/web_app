@@ -29,6 +29,10 @@ export const useWithdraw = (items: any) => {
         toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
     };
 
+    const toBack = ()=>{
+        router.back()
+    }
+
     const fetchBeneficiariesDomestic = async () => {
         const beneficiaryService = BeneficiaryService.instance()
         await beneficiaryService.listBeneficiaryDomestic()
@@ -53,6 +57,7 @@ export const useWithdraw = (items: any) => {
         fetchBeneficiariesInternational,
         nextStepPage,
         prevStepPage,
-        stepComplete
+        stepComplete,
+        toBack
     }
 }

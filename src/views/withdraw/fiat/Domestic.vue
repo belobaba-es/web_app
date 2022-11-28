@@ -3,7 +3,7 @@
         <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
     <div class="flex align-items-center">
 
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
         <span class="text-xl"> Domestic Wire</span> 
     </div>
     <Steps :model="items" :readonly="false" />
@@ -17,7 +17,6 @@
         @nextPage="nextStepPage($event)" 
         @complete="stepComplete"
         >
-        <!-- @selectBeneficiary="onSelectBeneficiary" -->
 
         <keep-alive>
             <component :is="Component" />
@@ -53,10 +52,9 @@ import Button from 'primevue/button';
 import Steps from 'primevue/steps';
 import { useRouter } from "vue-router";
 import { Beneficiary } from '../types/beneficiary.interface';
-import { BeneficiaryService } from '../services/beneficiary';
 import { AccountService } from '../services/account';
 import { useToast } from 'primevue/usetoast';
-import { WithdrawForm } from '../types/withdraw';
+
 import { useWithdraw } from '../composables/useWithdraw';
 
 const router = useRouter();
@@ -121,6 +119,7 @@ const {
     nextStepPage,
     prevStepPage,
     stepComplete,
+    toBack,
 } = useWithdraw(items)
 
 
