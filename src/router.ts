@@ -27,8 +27,7 @@ import StepAccounts from './views/withdraw/components/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
-
-
+import  StepSuccessful from './views/withdraw/components/StepSuccessful.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -129,6 +128,10 @@ const routes: RouteRecordRaw[] = [
             component: NewBeneficiaryDomestic,
           },
           {
+            path: 'fiat/domestic/successful',
+            component:  StepSuccessful,
+          },
+          {
             path: 'fiat/domestic',
             component: WithdrawFiatDomestic,
             children: [
@@ -143,7 +146,7 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'confirmation',
                 component: StepConfirmation
-              },
+              }
             ]
           },
           {
@@ -161,13 +164,16 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'confirmation',
                 component: StepConfirmation
-              },
-              
+              }
             ]
           },
           {
             path: 'fiat/international/new',
             component: NewBeneficiaryInternational
+          },
+          {
+            path: 'fiat/international/successful',
+            component:  StepSuccessful,
           },
           {
             path: 'crypto',

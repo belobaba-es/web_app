@@ -255,3 +255,7 @@ button.p-button.p-component.p-button.edit-document-button {
 .profile .p-button:focus {
   box-shadow: none;
 }
+
+.bg-primary{
+  background: var(--primary-color);
+}

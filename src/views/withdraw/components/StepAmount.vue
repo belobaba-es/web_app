@@ -16,7 +16,27 @@
             <div class="field col-6 relative" >
                 <span class="text-left absolute" style="right: 0px;">Current balance: 524.95 USD</span>
                 <label for="amount">{{t('Amount')}}</label>
-                <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
+                
+                <div class="flex">
+                    <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount" :placeholder="t('amount')" />
+                    <span class="p-inputgroup-addon bg-primary">$</span>
+                </div>
+                
+            
+                <div class="grid">
+            <!-- <div class="col-12">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-clock"></i>
+                    </span>
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-star-fill"></i>
+                    </span>
+                    <InputText placeholder="Price" />
+                    <span class="p-inputgroup-addon">.00</span>
+                </div>
+            </div> -->
+        </div>
             </div>
         </div>
         
