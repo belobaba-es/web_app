@@ -160,17 +160,24 @@ export const useAccount = () => {
     const profileService = ProfileService.instance()
 
     let contactId = null;
+    let isNaturalAccountLet = null;
 
     if (getPartnerToEdit.value) {
       contactId = route.params.contactId;
+      isNaturalAccountLet = true;
     } else {
       contactId = account.owner.value?.contactId;
+      isNaturalAccountLet = false;
+    }
+
+    if (isUpdateProfileView.value && isNaturalAccount.value) {
+      isNaturalAccountLet = true;
     }
 
     profileService.updateContact(
       account.accountId.value!,
       contactId!,
-      isNaturalAccount.value,
+      isNaturalAccountLet!,
       accountStore.form
     ).then(() => {
       submitting.value = false;
