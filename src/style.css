@@ -267,3 +267,19 @@ button.p-button.p-component.p-button.edit-document-button {
 .bg-primary{
   background: var(--primary-color);
 }
+
+.p-timeline-event-opposite {
+  display: none !important;
+}
+
+.p-timeline-event {
+  color: var(--primary-color);
+}
+
+.p-timeline .p-timeline-event-marker {
+  border: 1px solid transparent;
+  /*border-radius: 50%;*/
+  /*width: 1rem;*/
+  /*height: 1rem;*/
+  background-color: var(--primary-color);;
+}

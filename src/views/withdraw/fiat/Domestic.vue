@@ -29,19 +29,18 @@
 
 <script setup lang="ts">
 
-import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue';
+import {useI18n} from 'vue-i18n'
+import {onMounted, ref} from 'vue';
 import Button from 'primevue/button';
 
 
-
 import Steps from 'primevue/steps';
-import { useRouter } from "vue-router";
-import { Beneficiary } from '../types/beneficiary.interface';
-import { AccountService } from '../services/account';
-import { useToast } from 'primevue/usetoast';
+import {useRouter} from "vue-router";
+import {Beneficiary} from '../types/beneficiary.interface';
+import {AccountService} from '../services/account';
+import {useToast} from 'primevue/usetoast';
 
-import { useWithdraw } from '../composables/useWithdraw';
+import {useWithdrawOLD} from '../composables/useWithdrawOLD';
 
 const router = useRouter();
 const toast = useToast();
@@ -100,7 +99,7 @@ const {
     prevStepPage,
     stepComplete,
     toBack,
-} = useWithdraw(items)
+} = useWithdrawOLD(items)
 
 
 

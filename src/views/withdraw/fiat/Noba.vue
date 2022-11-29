@@ -49,7 +49,7 @@ const items = ref([
 
 
 const formObject = ref<WithdrawForm | any>({});
-//
+
 const nextPage = (event: any) => {
   for (let field in event.formData) {
     formObject.value[field] = event.formData[field];
@@ -72,7 +72,8 @@ const complete = () => {
 </script>
 
 <style scoped>
-.search-btn {
-  width: 30% !important;
+
+.p-timeline-event-opposite {
+  display: none !important;
 }
 </style>
