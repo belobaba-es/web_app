@@ -3,17 +3,13 @@ import Dashboard from './views/dashboard/Dashboard.vue'
 import Profile from './views/profile/Profile.vue'
 import ProfileIndex from './views/profile/Index.vue'
 import Partners from './views/profile/Partners.vue'
-import Documents from './views/profile/Documents.vue'
 import Settings from './views/profile/Settings.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
 import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
-import PartnersEditDocument from './views/profile/PartnersEditDocuments.vue'
 import Login from './views/login/Login.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
-import WithdrawFiat from './views/withdraw/Fiat.vue'
-import WithdrawCrypto from './views/withdraw/Crypto.vue'
 import { useUserStore } from './stores/user'
 import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
@@ -27,7 +23,7 @@ import StepAccounts from './views/withdraw/components/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
-import  StepSuccessful from './views/withdraw/components/StepSuccessful.vue'
+import StepSuccessful from './views/withdraw/components/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
 
 const routes: RouteRecordRaw[] = [
@@ -41,7 +37,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: DashboardIndex
+        component: DashboardIndex,
       },
       {
         path: '/profile/:accountId',
@@ -111,22 +107,21 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/noba',
-            component:  WithdrawFiatNoba,
+            component: WithdrawFiatNoba,
             children: [
               {
                 path: '',
-                component:  StepAccounts,
+                component: StepAccounts,
               },
               {
                 path: 'amount',
-                component: StepAmount
+                component: StepAmount,
               },
               {
                 path: 'confirmation',
-                component: StepConfirmation
+                component: StepConfirmation,
               },
-
-            ]
+            ],
           },
           {
             path: 'fiat/domestic/new',
@@ -134,7 +129,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/successful',
-            component:  StepSuccessful,
+            component: StepSuccessful,
           },
           {
             path: 'fiat/domestic',
@@ -142,43 +137,43 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component:  StepAccounts,
+                component: StepAccounts,
               },
               {
                 path: 'amount',
-                component: StepAmount
+                component: StepAmount,
               },
               {
                 path: 'confirmation',
-                component: StepConfirmation
-              }
-            ]
+                component: StepConfirmation,
+              },
+            ],
           },
           {
             path: 'fiat/international',
             component: WithdrawFiatInternational,
-            children:[
+            children: [
               {
                 path: '',
-                component:  StepAccounts,
+                component: StepAccounts,
               },
               {
                 path: 'amount',
-                component: StepAmount
+                component: StepAmount,
               },
               {
                 path: 'confirmation',
-                component: StepConfirmation
-              }
-            ]
+                component: StepConfirmation,
+              },
+            ],
           },
           {
             path: 'fiat/international/new',
-            component: NewBeneficiaryInternational
+            component: NewBeneficiaryInternational,
           },
           {
             path: 'fiat/international/successful',
-            component:  StepSuccessful,
+            component: StepSuccessful,
           },
           {
             path: 'crypto',
@@ -191,26 +186,25 @@ const routes: RouteRecordRaw[] = [
               {
                 path: '',
                 name: 'withdraw-crypto-noba',
-                component: StepAccounts
-
+                component: StepAccounts,
               },
               {
                 path: 'amount',
                 name: 'withdraw-crypto-noba-amount',
-                component: StepAmount 
+                component: StepAmount,
               },
               {
                 path: 'confirmation',
                 name: 'withdraw-crypto-noba-confirmation',
-                component: StepConfirmation 
-              }
-            ]
+                component: StepConfirmation,
+              },
+            ],
           },
         ],
       },
     ],
   },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
@@ -218,12 +212,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-  if (to.path !== '/' && !userStore.getUser)  {
+  const userStore = useUserStore()
+
+  if (to.path !== '/' && !userStore.getUser) {
     next({ path: '/' })
-  } else if (to.path === '/' && userStore.getUser){
+  } else if (to.path === '/' && userStore.getUser) {
     next({ path: '/dashboard' })
-  } else if(
+  } else if (
+    userStore.getUser &&
     userStore.getUser.account.status !== 'opened' &&
     ['/deposit', '/withdraw'].includes(to.path)
   ) {
@@ -233,4 +229,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router;
+export default router
