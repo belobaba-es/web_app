@@ -63,9 +63,10 @@ import Lang from '../../components/Lang.vue'
 import { LoginService } from './services/login'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/user'
+import {useToast} from "primevue/usetoast";
 
 const submitting = ref(false);
-
+const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const loginService = LoginService.instance()
@@ -88,6 +89,14 @@ const handleSubmit = () => {
     window.location.href = '/dashboard'
 
 
+  }).catch(e => {
+    submitting.value = false
+    toast.add({
+      severity: 'info',
+      summary: t('somethingWentWrong'),
+      detail: e.response.data.message,
+      life: 4000
+    })
   })
 }
 </script>
