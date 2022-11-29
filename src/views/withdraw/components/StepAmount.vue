@@ -1,15 +1,14 @@
 <template>
-    <div class="formgrid grid ">
+    <div class="formgrid grid mt-3">
         <div class="col-12 m-2">
             <span class="mt-4">{{t('youBeneficiaries')}}</span>
-            
             <Divider></Divider>
         </div>
         <div class="col-12 mb-4">
-            <p>{{formData?.beneficiary?.realName}}</p>
-            <p class="text-base">{{formData?.beneficiary?.accountNumber}}</p>
+            <p class="title-beneficiary">{{beneficiary.name}}</p>
+            <p class="text-base">{{beneficiary.email}}</p>
         </div>
-        <div class="col-12 field p-fluid">
+        <div class="col-12 field p-fluid mt-3">
             <div class="flex col-6 justify-content-end">
 
             </div>
@@ -75,17 +74,21 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import InputText from 'primevue/inputtext';
-import { ref, onMounted, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRouter, useRoute } from "vue-router";
+import {computed, onMounted, ref} from 'vue';
+import {useI18n} from 'vue-i18n';
+import {useRoute} from "vue-router";
 import Timeline from 'primevue/timeline';
 import Button from 'primevue/button';
+import {BeneficiaryInternal} from "../types/beneficiary.interface";
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute();
 const props = defineProps<{
     formData:  any
 }>()
+
+const beneficiary = props.formData.beneficiary as BeneficiaryInternal
+
 const emit = defineEmits(['nextPage']);
 const amount = ref('')
 const fee = ref(0)
@@ -98,7 +101,7 @@ const events = ref<any>([
 ]);
        
 onMounted(async () => {
-    console.log(props.formData, 'amount')
+    console.log(props.formData.beneficiary, 'amount')
 });
 const amountFee = computed(()=>{
     console.log(parseFloat(amount.value) - fee.value, 'undefined')
@@ -121,4 +124,7 @@ const nextPage = () => {
 </script>
 
 <style scoped>
+.title-beneficiary {
+  color: #14443F;
+}
 </style>

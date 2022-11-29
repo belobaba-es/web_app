@@ -18,13 +18,15 @@
 
 </template>
 <script lang="ts" setup>
-import {ref, computed} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 import {useI18n} from "vue-i18n";
+import {useBalanceWallet} from "../../composables/useBalanceWallet";
+
 
 const {t} = useI18n({useScope: 'global'})
-
+const {fetchBalanceWallets} = useBalanceWallet()
 const menu = [
   {
     label: '',
@@ -43,7 +45,14 @@ const menu = [
 const mobileMenuActive = ref(false);
 const overlayMenuActive = ref(false)
 
+onMounted(() => {
+  // console.log('ACCCOUNTID', accountId)
+
+  fetchBalanceWallets()
+})
+
 const containerClass = computed(() => {
+
       return ['layout-wrapper', 'layout-static', {
         'layout-mobile-sidebar-active': mobileMenuActive.value,
 

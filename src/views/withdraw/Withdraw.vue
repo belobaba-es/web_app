@@ -6,7 +6,7 @@
         <div class="col-5 text-center">
             
             <img src="../../assets/icons/cash-back.svg" alt="" srcset="">
-            <p class="">Withdraw Fiat</p>
+            <p class="">{{t('withdrawFiat')}}</p>
             <p class="text-base">{{t('withdrawFiatSelectMsg')}}</p>
             
             <CardButon class="m-4"  :label="t('betweenNOBA')" to="/withdraw/fiat/noba"/>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-5 text-center">
             <img src="../../assets/icons/blockchain.svg" alt="" srcset="">
-            <p class="">Withdraw Crypto </p>
+          <p class="">{{t('withdrawCrypto')}}</p>
             <p class="text-base">{{t('withdrawCryptoSelectMsg')}}</p>
             <router-link to="/withdraw/crypto/noba">
                 <CardButon class="m-4" :label="t('betweenNOBACrypto')"/>
@@ -35,9 +35,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
+import {ref} from 'vue';
+import {useI18n} from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
+
 interface tabItem {
     label: string;
     icon?: string;

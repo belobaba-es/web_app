@@ -10,7 +10,9 @@
 		<div class="flex ">
 			<div class="mr-2 ml-2">
 				<p style="margin: 0; font-size: 12px;">{{t('balance')}}</p>
-				<span>14.000.000</span>
+				<span>
+         <strong class="font-bold"> {{balanceWalletUsd()}} USD</strong>
+        </span>
 			</div>
 			<Button class="p-button-outlined mr-2 ml-2" >
 				<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>	
@@ -18,7 +20,7 @@
 
 			<SplitButton label="Save"  :model="items" class="p-button-text mr-2 mb-2 ml-2">
 				<img alt="logo" src="../../assets/icons/maletin.svg" style="width: 2.5rem"/>
-				<span style="margin: auto 0;">Pintosoft CA</span>
+				<span style="margin: auto 0;">{{username}}</span>
 			</SplitButton>
 
 		</div>
@@ -29,15 +31,16 @@
 <script lang="ts" setup>
 import SplitButton from 'primevue/splitbutton'
 import Button from 'primevue/button';
-import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import {ref} from 'vue'
+import {useRouter} from 'vue-router'
 import {useI18n} from "vue-i18n";
 import logo from '../../assets/img/logo.svg'
-import { useUserStore } from '../../stores/user';
-import { LoginService } from '../login/services/login';
+import {useUserStore} from '../../stores/user';
+import {LoginService} from '../login/services/login';
+import {useBalanceWallet} from "../../composables/useBalanceWallet";
 
 const router = useRouter()
-const menu = ref();
+const {getBalanceByCode} = useBalanceWallet()
 const emit = defineEmits(['menu-toggle'])
 
 const { t } = useI18n({ useScope: 'global' })
@@ -48,6 +51,18 @@ const onMenuToggle = (payload: any) => {
 
 const userStore = useUserStore();
 const loginService = LoginService.instance();
+
+const username = userStore.getUser.firstName ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName :  userStore.getUser.name
+
+
+const balanceWalletUsd = () => {
+  const balanceWalletUsd = getBalanceByCode('USD')
+  if (balanceWalletUsd) {
+    return balanceWalletUsd.balance ?? 0
+  }
+
+  return 0
+}
 
 const items = ref([
 	{
