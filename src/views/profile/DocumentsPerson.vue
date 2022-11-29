@@ -48,13 +48,13 @@ const initFileLoader = () => {
         loadingBtn.value = false;
     }, 5000);
 
-    globalThis.start();
+    (globalThis as any).start();
 }
 
 const { setDocumentResponseId } = useAccount();
 
 onMounted(() => {
-    window.SDK_ID = import.meta.env.VITE_PUBLIC_SDK_ID;
+    (window as any).SDK_ID = import.meta.env.VITE_PUBLIC_SDK_ID;
     const tag1 = document.createElement("script");
     const tag2 = document.createElement("script");
 
