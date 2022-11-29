@@ -28,6 +28,7 @@ import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
 import  StepSuccessful from './views/withdraw/components/StepSuccessful.vue'
+import DashboardIndex from './views/dashboard/Index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -38,6 +39,10 @@ const routes: RouteRecordRaw[] = [
     path: '/dashboard',
     component: Dashboard,
     children: [
+      {
+        path: '',
+        component: DashboardIndex
+      },
       {
         path: '/profile/:accountId',
         component: Profile,
@@ -214,12 +219,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  // if (to.path === '/' && userStore.getUser) next({ path: '/dashboard' });
-  // else if (to.meta.requiresAuth && !userStore.getUser) next({ path: '/' });
-  // next();
   if (to.path !== '/' && !userStore.getUser)  {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser){
+    next({ path: '/dashboard' })
+  } else if(
+    userStore.getUser.account.status !== 'opened' &&
+    ['/deposit', '/withdraw'].includes(to.path)
+  ) {
     next({ path: '/dashboard' })
   } else {
     next()

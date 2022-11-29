@@ -6,15 +6,18 @@
         <span>
             {{ props.identityDocument.label }}
         </span>
-        <span class="cursor-pointer">
+        <span class="cursor-pointer" @click="removeDocumentHandler(
+            props.identityDocument.taxId,
+            props.identityDocument.documentId
+        )">
             <i class="pi pi-trash"></i>
         </span>
     </div>
 </template>
 
 <script lang="ts" setup>
-
 import { defineProps } from 'vue';
+import { useAccountStore } from '../../../stores/account';
 
 const props = defineProps({
     identityDocument: {
@@ -22,6 +25,12 @@ const props = defineProps({
         required: true,
     }
 });
+
+const accountStore = useAccountStore();
+
+const removeDocumentHandler = (taxId: string, documentId: string) => {
+    accountStore.removeDocument(taxId, documentId);
+}
 
 </script>
 

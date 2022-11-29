@@ -23,7 +23,7 @@ import { ProfileService } from '../services/profile';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
-const {  } = useAccount();
+const { addDocumentToMember } = useAccount();
 const { t } = useI18n({ useScope: 'global' });
 const props = defineProps({
     label: {
@@ -82,6 +82,18 @@ const handleUpload = async (event: any) => {
     formData.append("documentCountry",props.documentCountry);
     formData.append("documentType", props.type);
 
+    const newDocumentObject = {
+        documentId: "",
+        documentSide: props.side,
+        label: props.label,
+        taxId: props.taxId,
+        documentType: props.type,
+        file: "",
+        isBusinessMember: "true",
+        description: props.label,
+        documentCountry: props.documentCountry
+    }
+
     const profileService = ProfileService.instance();
     await profileService.updateDocuments(formData)
         .then(response => {
@@ -92,6 +104,7 @@ const handleUpload = async (event: any) => {
                 detail: t('shareholderDataSuccessSend'),
                 life: 3000,
             });
+            addDocumentToMember(props.taxId, newDocumentObject);
         })
         .catch(error => {
             setLoading(false);

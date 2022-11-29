@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Account, CreatedAt, TypeAccount, Owner, Agreement, Member, Questionnaire } from '../views/profile/types/account.interface';
+import { Account, CreatedAt, TypeAccount, Owner, Agreement, Member, Questionnaire, Document } from '../views/profile/types/account.interface';
 import { ProfileService } from "../views/profile/services/profile";
 
 interface AccountState {
@@ -141,6 +141,22 @@ export const useAccountStore = defineStore('account', {
         },
         setIsAccountBusiness(payload: boolean) {
             this.form.isAccountBusiness = payload;
+        },
+        addDocumentToMember(taxId: string, payload: Document) {
+            const member = this.findMember(taxId);
+            member?.documents.unshift(payload);
+        },
+        findDocumentToMember(taxId: string, documentId: string) {
+            const member = this.findMember(taxId);
+            return member?.documents.find(document => document.documentId === documentId);
+        },
+        findMember(taxId: string) {
+            return this.members?.find(member => member.taxId === taxId);
+        },
+        removeDocument(taxId: string, documentId: string) {
+            const member = this.findMember(taxId);
+            const index = member?.documents.findIndex(document => document.documentId === documentId);
+            member?.documents.splice(index!, 1);
         }
     }
 })

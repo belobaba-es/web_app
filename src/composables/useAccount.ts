@@ -5,7 +5,7 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
-import { Member, Owner } from '../views/profile/types/account.interface'
+import { Member, Owner, Document } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
 
 export const useAccount = () => {
@@ -264,6 +264,7 @@ export const useAccount = () => {
   const setFormInitialInfo = () => accountStore.setFormInitialInfo();
   const setAccountForm = (payload: FormData) => accountStore.setForm(payload);
   const setIsAccountBusiness = (payload: boolean) => accountStore.setIsAccountBusiness(payload);
+  const addDocumentToMember = (taxId: string, payload: Document) => accountStore.addDocumentToMember(taxId, payload);
 
   return {
     fetchAccount,
@@ -296,6 +297,7 @@ export const useAccount = () => {
     isEditPartnerAccount,
     getPartnerToEdit,
     isAccountBusinessComputed,
-    setIsAccountBusiness
+    setIsAccountBusiness,
+    addDocumentToMember
   }
 }

@@ -17,12 +17,12 @@
                 />
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="identityDocuments[0]">
-                    <FileUploaded :identity-document="identityDocuments[0]"/>
+                <template v-if="identityDocuments.frontSide">
+                    <FileUploaded :identity-document="identityDocuments.frontSide"/>
                 </template>
                 <template v-else>
                     <FileInput 
-                        :label="documentType+'_front_side'" 
+                        :label="documentType+'_front_side'"
                         side="front" 
                         :account-id="accountId!"
                         :document-country="props.partner.taxCountry"
@@ -32,13 +32,13 @@
                 </template>
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="identityDocuments[1]">
-                    <FileUploaded :identity-document="identityDocuments[1]"/>
+                <template v-if="identityDocuments.backSide">
+                    <FileUploaded :identity-document="identityDocuments.backSide"/>
                 </template>
                 <template v-else>
-                    <FileInput 
-                        :label="documentType+'_back_side'" 
-                        side="backside" 
+                    <FileInput
+                        :label="documentType+'_back_side'"
+                        side="backside"
                         :account-id="accountId!"
                         :document-country="props.partner.taxCountry"
                         :tax-id="props.partner.taxId"
@@ -55,8 +55,8 @@
                     <div class="grid">
                         <div class="col-6">
                             <FileInput 
-                                label="utility_bill" 
-                                side="address" 
+                                label="utility_bill"
+                                side="address"
                                 type="utility_bill"
                                 :account-id="accountId!"
                                 :document-country="props.partner.taxCountry"
@@ -93,7 +93,7 @@ const documentTypeOptions = ref([
   { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
   { value: "government_id", name: t('docTypeLabelGovernmentId') },
   { value: "passport", name: t('docTypeLabelPassport') },
-  { value: "residence_permit", name: t('docTypeLabelResidencePermit') },
+//   { value: "residence_permit", name: t('docTypeLabelResidencePermit') },
 ]);
 
 const documentType = ref('government_id');
@@ -116,8 +116,9 @@ const identityDocuments = computed(() => {
     const data = documents.value.filter((document) => {
         return document.documentType === documentType.value && document.documentType !== 'utility_bill';
     });
-
-    return data.slice(0, 2);
+    const frontSide = data.find(document => document.documentSide === 'front');
+    const backSide = data.find(document => document.documentSide === 'backside');
+    return { frontSide, backSide }
 });
 
 
