@@ -168,7 +168,8 @@ export const useAccountStore = defineStore('account', {
     removeDocument(taxId: string, documentId: string) {
       const member = this.findMember(taxId)
       const index = member?.documents.findIndex(document => document.documentId === documentId)
-      member?.documents.splice(index!, 1)
+      if (index === -1) return;
+      member?.documents.splice(index!, 1);
     },
   },
 })
