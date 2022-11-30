@@ -14,13 +14,13 @@
 
       </div>
       <div class="field col-6 relative">
-        <span class="text-left absolute" style="right: 0px;">Current balance: {{balance}} USD</span>
+        <span class="text-left absolute" style="right: 0px;">Current balance: {{ balance }} USD</span>
         <label for="amount">{{ t('Amount') }}</label>
 
         <div class="flex">
           <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount"
                      :placeholder="t('amount')"/>
-          <span class="p-inputgroup-addon symbol">{{assetSymbol}}</span>
+          <span class="p-inputgroup-addon symbol">{{ assetSymbol }}</span>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import InputText from 'primevue/inputtext';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from "vue-router";
 import Timeline from 'primevue/timeline';
@@ -100,10 +100,10 @@ const events = ref<any>([
 //     console.log(props.formData.beneficiary, 'amount')
 // });
 
-// const amountFee = computed(()=>{
-//     console.log(parseFloat(amount.value) - fee.value, 'undefined')
-//     return isNaN(parseFloat(amount.value) - fee.value) ? 0  : parseFloat(amount.value) - fee.value
-// })
+const amountFee = computed(() => {
+  console.log(parseFloat(amount.value) - fee.value, 'undefined')
+  return isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+})
 
 const nextPage = () => {
   const page = 1
@@ -126,6 +126,7 @@ const nextPage = () => {
 .title-beneficiary {
   color: #14443F;
 }
+
 .symbol {
   background: #8CE2DB;
   padding: 2px 20px;
