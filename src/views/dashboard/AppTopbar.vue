@@ -56,12 +56,8 @@ const username = userStore.getUser.firstName ? userStore.getUser.firstName + ' '
 
 
 const balanceWalletUsd = () => {
-  const balanceWalletUsd = getBalanceByCode('USD')
-  if (balanceWalletUsd) {
-    return balanceWalletUsd.balance ?? 0
-  }
-
-  return 0
+  return  getBalanceByCode('USD')
+  
 }
 
 const items = ref([

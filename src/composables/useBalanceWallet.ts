@@ -19,11 +19,22 @@ export const useBalanceWallet = () => {
     submitting.value = false
   }
 
-  const getBalanceByCode = (assetCode: string): BalanceWallet | undefined => {
+  const getBalanceByCode = (assetCode: string): number => {
     return balanceWalletStore.getBalanceByCode(assetCode)
   }
+
+  const getWalletByAssetCode = (assetCode: string): BalanceWallet | undefined => {
+    return balanceWalletStore.getWalletByAssetCode(assetCode)
+  }
+
+  const updateBlockedBalanceWalletByCode = (assetCode: string, blockedBalance: number): void => {
+    balanceWalletStore.updateBlockedBalanceWalletByCode(assetCode, blockedBalance)
+  }
+
   return {
     fetchBalanceWallets,
     getBalanceByCode,
+    getWalletByAssetCode,
+    updateBlockedBalanceWalletByCode,
   }
 }

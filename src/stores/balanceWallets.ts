@@ -14,19 +14,26 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
       this.wallets = payload
     },
 
-    getBalanceByCode(assetCode: string): BalanceWallet | undefined {
+    getBalanceByCode(assetCode: string): number {
       const w = this.wallets.filter(w => (w.assetCode = assetCode))
       if (w.length === 0) {
-        return undefined
+        return 0
       }
 
-      return w[0]
+      return w[0].balance - (w[0].blockedBalance ?? 0)
     },
 
-    updateBalanceWalletByCode(assetCode: string, newBalance: number): void {
+    getWalletByAssetCode(assetCode: string): BalanceWallet | undefined {
       for (const w of this.wallets) {
         if (w.assetCode === assetCode) {
-          w.balance = newBalance
+          return w
+        }
+      }
+    },
+    updateBlockedBalanceWalletByCode(assetCode: string, blockedBalance: number): void {
+      for (const w of this.wallets) {
+        if (w.assetCode === assetCode) {
+          w.blockedBalance = (w.blockedBalance ?? 0) + blockedBalance
         }
       }
     },

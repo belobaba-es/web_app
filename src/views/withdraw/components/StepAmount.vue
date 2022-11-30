@@ -33,9 +33,9 @@
           <span v-if="slotProps.item.name">{{ beneficiary.name }}</span>
 
           <p class="font-medium" v-if="slotProps.item.name">
-            {{ amountFee }} <small>{{assetSymbol}}</small>
+            {{ amountFee }} <small>{{ assetSymbol }}</small>
           </p>
-          <p v-else> {{ fee }} <small>{{assetSymbol}}</small></p>
+          <p v-else> {{ fee }} <small>{{ assetSymbol }}</small></p>
         </template>
       </Timeline>
 
@@ -73,7 +73,7 @@ import {useToast} from 'primevue/usetoast'
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
 const route = useRoute()
-const {getBalanceByCode} = useBalanceWallet()
+const {getBalanceByCode, getWalletByAssetCode} = useBalanceWallet()
 
 const props = defineProps<{
   formData: any
@@ -89,8 +89,8 @@ const asset = ref('USD')
 const assetSymbol = ref('USD')
 const balance = ref(0)
 
-balance.value = getBalanceByCode(asset.value)?.balance ?? 0
-assetSymbol.value = getBalanceByCode(asset.value)?.assetCode ?? 'USD'
+balance.value = getBalanceByCode(asset.value)
+assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
 
 const events = ref<any>([
   {amount: '2,5', label: t('Fee'), name: false},
@@ -99,7 +99,7 @@ const events = ref<any>([
 ]);
 
 const amountFee = computed(() => {
-  console.log(parseFloat(amount.value) - fee.value, 'undefined')
+
   const total = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
   if (total > balance.value) {
     toast.add({
@@ -108,7 +108,7 @@ const amountFee = computed(() => {
       detail: 'Please enter the amount you wish to send.',
       life: 4000
     })
-    
+
     amount.value = '0'
   }
 })
@@ -175,8 +175,4 @@ const nextPage = () => {
   border-radius: 0;
 }
 
-
-.p-timeline-event-opposite {
-  display: none !important;
-}
 </style>

@@ -60,10 +60,13 @@ import {BeneficiaryInternal} from "../types/beneficiary.interface";
 import {WithdrawService} from "../services/withdraw";
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
+import {useBalanceWallet} from "../../../composables/useBalanceWallet";
 
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
 const route = useRoute();
+const {updateBlockedBalanceWalletByCode} = useBalanceWallet()
+
 const submitting = ref(false);
 const props = defineProps<{
   formData: any
@@ -88,6 +91,9 @@ function makeTransaction() {
         reference: props.formData.reference
       }).then(() => {
         submitting.value = false
+
+        updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
+
         emit('complete')
       }).catch(e => {
         submitting.value = false
@@ -104,7 +110,6 @@ function makeTransaction() {
     default:
       submitting.value = false
   }
-
 }
 
 </script>
