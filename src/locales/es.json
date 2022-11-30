@@ -23,7 +23,7 @@
     "fiat": "Fiat",
     "crypto": "Cripto",
     "cryptoWallet": "Billetera Cripto",
-    "selectCrypto": "Seleccione cripto",
+    "selectCrypto": "Seleccione una cripto",
     "search": "Buscar",
     "createWallet": "Crear billetera",
     "searchWallet": "Buscar billetera cripto",
@@ -136,5 +136,6 @@
     "youSendTo" : "Enviaras para ",
     "fee": "Comisión",
     "currentBalance": "Saldo actual",
-    "confirmWithdraw": "Confirmar la transacción de retiro"
+    "confirmWithdraw": "Confirmar la transacción de retiro",
+    "account": "Cuenta"
 }

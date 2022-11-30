@@ -88,6 +88,8 @@ export abstract class HttpService {
 
     data = await this.client.get(url, header)
 
-    return data.data.data as T
+    console.log('RRRRRR', data)
+
+    return data.data.data
   }
 }

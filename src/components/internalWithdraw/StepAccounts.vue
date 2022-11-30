@@ -28,10 +28,10 @@ import {useI18n} from 'vue-i18n'
 import {ref} from 'vue'
 import Divider from 'primevue/divider'
 import {useRouter} from "vue-router"
-import {BeneficiaryInternal} from '../types/beneficiary.interface'
+import {BeneficiaryInternal} from '../../views/withdraw/types/beneficiary.interface'
 
 import {useToast} from 'primevue/usetoast'
-import SearchAccountByEmail from "../../../components/SearchAccountByEmail.vue"
+import SearchAccountByEmail from "../SearchAccountByEmail.vue"
 
 const router = useRouter()
 const toast = useToast()
@@ -50,7 +50,6 @@ const onSelect = (item: BeneficiaryInternal) => {
     beneficiary: item
   }
   console.log(formData)
-  emit('update:beneficiary', item)
   emit('nextPage', {
     pageIndex: page,
     formData: formData

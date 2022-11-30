@@ -56,11 +56,11 @@ import Divider from 'primevue/divider';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from "vue-router";
 import Button from 'primevue/button';
-import {BeneficiaryInternal} from "../types/beneficiary.interface";
-import {WithdrawService} from "../services/withdraw";
+import {BeneficiaryInternal} from "../../views/withdraw/types/beneficiary.interface";
+import {WithdrawService} from "../../views/withdraw/services/withdraw";
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
-import {useBalanceWallet} from "../../../composables/useBalanceWallet";
+import {useBalanceWallet} from "../../composables/useBalanceWallet";
 
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
@@ -83,9 +83,9 @@ function makeTransaction() {
 
   submitting.value = true
 
-  switch (route.params.typeTransaction) {
-    case 'internal':
-      withDrawService.makeInternalTransfer({
+  switch (route.params.type) {
+    case 'fiat':
+      withDrawService.makeFiatInternalTransfer({
         amount: props.formData.amount,
         accountDestination: props.formData.beneficiary.accountId,
         reference: props.formData.reference
@@ -107,6 +107,13 @@ function makeTransaction() {
 
       })
       break
+    case 'crypto':
+      withDrawService.makeAssetInternalTransfer({
+        amount: props.formData.amount,
+        accountDestination: props.formData.beneficiary.accountId,
+        reference: props.formData.reference,
+        assetId: props.formData.assetId
+      });
     default:
       submitting.value = false
   }

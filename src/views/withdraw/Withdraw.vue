@@ -4,29 +4,25 @@
     <div class="grid justify-content-center">
 
       <div class="col-5 text-center line">
-
         <img src="../../assets/icons/cash-back.svg" alt="" srcset="">
         <p class="">{{ t('withdrawFiat') }}</p>
         <p class="text-base">{{ t('withdrawFiatSelectMsg') }}</p>
 
-        <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/fiat/noba/internal"/>
+        <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/fiat"/>
 
         <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/fiat/domestic"/>
 
         <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/fiat/international"/>
-
       </div>
+
       <div class="col-5 text-center">
         <img src="../../assets/icons/blockchain.svg" alt="" srcset="">
         <p class="">{{ t('withdrawCrypto') }}</p>
         <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
-        <router-link to="/withdraw/crypto/noba">
-          <CardButon class="m-4" :label="t('betweenNOBACrypto')"/>
-        </router-link>
 
-        <router-link to="/withdraw/crypto">
-          <CardButon class="m-4" :label="t('otherPlatformCrypto')"/>
-        </router-link>
+        <CardButon class="m-4" :label="t('betweenNOBACrypto')" to="/withdraw/noba/crypto"/>
+
+        <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto"/>
       </div>
 
     </div>

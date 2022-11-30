@@ -7,7 +7,7 @@
             <span class="text-xl"> Between NOBA Accounts </span> 
         </div>
         <Steps :model="items" :readonly="false" />
-        <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+        <router-view v-sl$ot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
             <keep-alive>
                 <component :is="Component" />
             </keep-alive>
@@ -33,19 +33,16 @@
 
 <script setup lang="ts">
 
-import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue';
+import {useI18n} from 'vue-i18n'
+import {onMounted, ref} from 'vue';
 import Button from 'primevue/button';
-import Divider from 'primevue/divider';
-import ListBeneficiary from '../components/ListBeneficiary.vue';
-import InputText from 'primevue/inputtext';
 import Steps from 'primevue/steps';
-import { useRouter } from "vue-router";
-import { Beneficiary } from '../types/beneficiary.interface';
-import { BeneficiaryService } from '../services/beneficiary';
-import { AccountService } from '../services/account';
-import { useToast } from 'primevue/usetoast';
-import { WithdrawForm } from '../types/withdraw';
+import {useRouter} from "vue-router";
+import {Beneficiary} from '../types/beneficiary.interface';
+import {BeneficiaryService} from '../services/beneficiary';
+import {AccountService} from '../services/account';
+import {useToast} from 'primevue/usetoast';
+import {WithdrawForm} from '../types/withdraw';
 
 const router = useRouter();
 const toast = useToast();

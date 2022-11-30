@@ -18,7 +18,7 @@
 
 </template>
 <script lang="ts" setup>
-import {computed, onMounted, ref} from 'vue';
+import {computed, ref} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 import {useI18n} from "vue-i18n";
@@ -45,11 +45,7 @@ const menu = [
 const mobileMenuActive = ref(false);
 const overlayMenuActive = ref(false)
 
-onMounted(() => {
-  // console.log('ACCCOUNTID', accountId)
-
-  fetchBalanceWallets()
-})
+fetchBalanceWallets()
 
 const containerClass = computed(() => {
 

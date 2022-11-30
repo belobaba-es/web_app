@@ -7,8 +7,15 @@ export interface WithdrawForm {
   [key: string]: string
 }
 
-export type MakeInternalTransfer = {
+export type MakeFiatInternalTransfer = {
   amount: string
   accountDestination: string
+  reference: string
+}
+
+export type MakeAssetInternalTransfer = {
+  amount: string
+  accountDestination: string
+  assetId: string
   reference: string
 }

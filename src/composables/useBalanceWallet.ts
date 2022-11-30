@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { AssetsService } from '../views/deposit/services/assets'
 import { useBalanceWalletStore } from '../stores/balanceWallets'
 import { storeToRefs } from 'pinia'
@@ -10,13 +9,10 @@ export const useBalanceWallet = () => {
   const balanceWalletStore = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
 
-  const submitting = ref(false)
-
   const fetchBalanceWallets = async () => {
-    submitting.value = true
-    balanceWallets.wallets.value = await assetsService.getBalanceWallets()
-
-    submitting.value = false
+    const w = await assetsService.getBalanceWallets()
+    console.log('WALLETS', w)
+    balanceWallets.wallets.value = w
   }
 
   const getBalanceByCode = (assetCode: string): number => {

@@ -11,19 +11,18 @@ import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Login.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
 import { useUserStore } from './stores/user'
-import WithdrawFiatNoba from './views/withdraw/fiat/Noba.vue'
+import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
-import StepAmount from './views/withdraw/components/StepAmount.vue'
-import WithdrawCryptoNoba from './views/withdraw/crypto/Noba.vue'
+import StepAmount from './components/internalWithdraw/StepAmount.vue'
 import DocumentsPerson from './views/profile/DocumentsPerson.vue'
 import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
-import StepAccounts from './views/withdraw/components/StepAccounts.vue'
-import StepConfirmation from './views/withdraw/components/StepConfirmation.vue'
+import StepAccounts from './components/internalWithdraw/StepAccounts.vue'
+import StepConfirmation from './components/internalWithdraw/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
-import StepSuccessful from './views/withdraw/components/StepSuccessful.vue'
+import StepSuccessful from './components/internalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
 
 const routes: RouteRecordRaw[] = [
@@ -106,8 +105,8 @@ const routes: RouteRecordRaw[] = [
             component: Withdraw,
           },
           {
-            path: 'fiat/noba/:typeTransaction',
-            component: WithdrawFiatNoba,
+            path: 'noba/:type',
+            component: InternalWithdraw,
             children: [
               {
                 path: '',
@@ -178,27 +177,6 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'crypto',
             component: DepositCrypto,
-          },
-          {
-            path: 'crypto/noba',
-            component: WithdrawCryptoNoba,
-            children: [
-              {
-                path: '',
-                name: 'withdraw-crypto-noba',
-                component: StepAccounts,
-              },
-              {
-                path: 'amount',
-                name: 'withdraw-crypto-noba-amount',
-                component: StepAmount,
-              },
-              {
-                path: 'confirmation',
-                name: 'withdraw-crypto-noba-confirmation',
-                component: StepConfirmation,
-              },
-            ],
           },
         ],
       },

@@ -1,11 +1,11 @@
 <template>
   <div class="col-8">
-    <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span></p>
+    <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary"> {{ typeAsset }} </span></p>
     <div class="flex align-items-center">
       <router-link to="/withdraw">
         <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text"/>
       </router-link>
-      <span class="text-xl"> Between NOBA Accounts </span>
+      <span class="text-xl"> Between NOBA {{ typeWallet }}s </span>
     </div>
     <Steps :model="items" :readonly="false"/>
     <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)"
@@ -26,26 +26,26 @@ import Button from 'primevue/button'
 import Steps from 'primevue/steps'
 import {useRoute, useRouter} from "vue-router"
 import {useToast} from 'primevue/usetoast'
-import {WithdrawForm} from "../types/withdraw"
+import {WithdrawForm} from "../../views/withdraw/types/withdraw";
 
 const router = useRouter();
 const route = useRoute()
 const toast = useToast();
 const {t} = useI18n({useScope: 'global'})
-
-
+const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('crypto')
+const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 const items = ref([
   {
     label: 'Accounts',
-    to: `/withdraw/fiat/noba/${route.params.typeTransaction}`
+    to: `/withdraw/noba/${route.params.type}`
   },
   {
     label: 'Amount',
-    to: `/withdraw/fiat/noba/${route.params.typeTransaction}/amount`
+    to: `/withdraw/noba/${route.params.type}/amount`
   },
   {
     label: 'Confirmation',
-    to: `/withdraw/fiat/noba/${route.params.typeTransaction}/confirmation`
+    to: `/withdraw/noba/${route.params.type}/confirmation`
   }
 ])
 
@@ -58,7 +58,7 @@ const nextPage = (event: any) => {
   }
 
   router.push(items.value[event.pageIndex + 1].to);
-};
+}
 const prevPage = (event: any) => {
   router.push(items.value[event.pageIndex - 1].to);
 };
@@ -76,10 +76,3 @@ const complete = () => {
 };
 
 </script>
-
-<style scoped>
-
-.p-timeline-event-opposite {
-  display: none !important;
-}
-</style>

@@ -5,15 +5,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, computed } from 'vue';
-import RouteLocationRaw from 'vue-router'
-import { useRouter } from "vue-router";
+import {defineProps} from 'vue';
+import {useRouter} from 'vue-router'
+
 const props = defineProps({
     icon: String,
     label: String,
     to:  String
 })
+
 const router = useRouter();
+
 const toRoute = () => {
     if(props.to){
         router.push({path: props.to})

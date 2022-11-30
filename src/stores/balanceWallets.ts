@@ -15,7 +15,7 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
     },
 
     getBalanceByCode(assetCode: string): number {
-      const w = this.wallets.filter(w => (w.assetCode = assetCode))
+      const w = this.wallets.filter(w => w.assetCode === assetCode)
       if (w.length === 0) {
         return 0
       }

@@ -1,5 +1,5 @@
 import { HttpService } from '../../../shared/services/http'
-import { MakeInternalTransfer } from '../types/withdraw'
+import { MakeAssetInternalTransfer, MakeFiatInternalTransfer } from '../types/withdraw'
 
 export class WithdrawService extends HttpService {
   private static _instance: WithdrawService
@@ -18,7 +18,11 @@ export class WithdrawService extends HttpService {
     return this._instance
   }
 
-  async makeInternalTransfer(transaction: MakeInternalTransfer): Promise<void> {
+  async makeFiatInternalTransfer(transaction: MakeFiatInternalTransfer): Promise<void> {
     return await this.post<any>(`banking/withdrawal/internal`, transaction)
+  }
+
+  async makeAssetInternalTransfer(transaction: MakeAssetInternalTransfer): Promise<void> {
+    return await this.post<any>(`assets/withdrawal/internal`, transaction)
   }
 }

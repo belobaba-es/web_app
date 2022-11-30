@@ -1,7 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
 import {
   Asset,
-  BalanceWallet,
   CreatePaymentAddress,
   CreatePaymentAddressResponse,
   PaymentAddressResponse,
@@ -36,7 +35,7 @@ export class AssetsService extends HttpService {
     return await this.post(`assets/payment-address`, data)
   }
 
-  async getBalanceWallets(): Promise<BalanceWallet[]> {
-    return await this.get<BalanceWallet[]>(`assets/balance-wallets`)
+  async getBalanceWallets(): Promise<any> {
+    return await this.get<any>(`assets/balance-wallets`)
   }
 }

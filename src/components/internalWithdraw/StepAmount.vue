@@ -4,28 +4,30 @@
       <span class="mt-4">{{ t('youBeneficiaries') }}</span>
       <Divider></Divider>
     </div>
+
     <div class="col-12 mb-4">
       <p class="title-beneficiary">{{ beneficiary.name }}</p>
       <p class="text-base">{{ beneficiary.email }}</p>
     </div>
 
-    <div class="col-12 field p-fluid mt-3">
+    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset"/>
+
+    <div v-if="showAmount" class="col-12 field p-fluid mt-3">
 
       <div class="field col-8 relative">
-        <span class="text-left absolute" style="right: 0px;">{{ t('currentBalance') }}: {{ balance }} {{
-            assetSymbol
-          }}</span>
+        <span class="text-left absolute" style="right: 0px;">
+          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b></span>
         <label for="amount">{{ t('Amount') }}</label>
 
         <div class="flex">
           <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount"
                      :placeholder="t('amount')"/>
-          <span class="p-inputgroup-addon symbol">{{ assetSymbol }}</span>
+          <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
         </div>
       </div>
     </div>
 
-    <div class="col-12 field">
+    <div v-if="showAmount" class="col-12 field">
       <Timeline :value="events">
 
         <template #content="slotProps">
@@ -40,6 +42,7 @@
       </Timeline>
 
     </div>
+
     <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
@@ -48,6 +51,7 @@
 
       </div>
     </div>
+
     <div class="col-12 m-2">
       <span>{{ t('The wire will take 24 hours.') }}</span>
     </div>
@@ -66,9 +70,11 @@ import {useI18n} from 'vue-i18n'
 import {useRoute} from "vue-router"
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import {BeneficiaryInternal} from "../types/beneficiary.interface"
-import {useBalanceWallet} from "../../../composables/useBalanceWallet"
+import {BeneficiaryInternal} from "../../views/withdraw/types/beneficiary.interface"
+import {useBalanceWallet} from "../../composables/useBalanceWallet"
 import {useToast} from 'primevue/usetoast'
+import SelectedAssets from "../SelectedAssets.vue";
+import {Asset} from "../../views/deposit/types/asset.interface";
 
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
@@ -85,9 +91,14 @@ const emit = defineEmits(['nextPage']);
 const amount = ref('')
 const fee = ref(0)
 const reference = ref('')
+const assetId = ref('')
 const asset = ref('USD')
 const assetSymbol = ref('USD')
 const balance = ref(0)
+const isAsset = route.params.type === 'crypto'
+
+const showAmount = ref(!isAsset)
+const showSelectedAsset = ref(isAsset)
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -110,7 +121,11 @@ const amountFee = computed(() => {
     })
 
     amount.value = '0'
+
+    return 0
   }
+
+  return total
 })
 
 const validateField = (): boolean => {
@@ -144,20 +159,30 @@ const nextPage = () => {
     return;
   }
 
-
   const page = 1
   const formData = {
     ...props.formData.value,
     amount: amount.value,
-    fee: fee,
+    fee: fee.value,
     reference: reference.value,
     asset: asset.value,
-    symbol: assetSymbol
+    symbol: assetSymbol.value,
+    assetId: assetId.value
   };
   emit('nextPage', {
     pageIndex: page,
     formData: formData
   })
+}
+
+const selectedAsset = (evt: Asset) => {
+  console.log('SELEEEEEE', evt)
+  showAmount.value = true
+  assetSymbol.value = evt.code
+
+  balance.value = getBalanceByCode(evt.code)
+  fee.value = evt.fee
+  assetId.value = evt.assetId
 }
 
 </script>
