@@ -132,5 +132,9 @@
     "docTypeLabelDriversLicense": "Driver License",
     "docTypeLabelGovernmentId": "GovernmentId",
     "docTypeLabelPassport": "Passport",
-    "docTypeLabelResidencePermit": "Residence Permit"
+    "docTypeLabelResidencePermit": "Residence Permit",
+    "youSendTo" : "You send to ",
+    "fee": "Fee",
+    "currentBalance": "Current balance",
+    "confirmWithdraw": "Confirm transaction withdraw"
 }

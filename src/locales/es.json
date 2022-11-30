@@ -132,5 +132,9 @@
     "docTypeLabelDriversLicense": "Licencia de conducir",
     "docTypeLabelGovernmentId": "Identificación del Gobierno",
     "docTypeLabelPassport": "Pasaporte",
-    "docTypeLabelResidencePermit": "Permiso de residencia"
+    "docTypeLabelResidencePermit": "Permiso de residencia",
+    "youSendTo" : "Enviaras para ",
+    "fee": "Comisión",
+    "currentBalance": "Saldo actual",
+    "confirmWithdraw": "Confirmar la transacción de retiro"
 }

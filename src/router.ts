@@ -106,7 +106,7 @@ const routes: RouteRecordRaw[] = [
             component: Withdraw,
           },
           {
-            path: 'fiat/noba',
+            path: 'fiat/noba/:typeTransaction',
             component: WithdrawFiatNoba,
             children: [
               {

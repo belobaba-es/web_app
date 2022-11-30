@@ -10,11 +10,11 @@
     </div>
 
     <div class="col-12 field p-fluid mt-3">
-      <div class="flex col-6 justify-content-end">
 
-      </div>
-      <div class="field col-6 relative">
-        <span class="text-left absolute" style="right: 0px;">Current balance: {{ balance }} USD</span>
+      <div class="field col-8 relative">
+        <span class="text-left absolute" style="right: 0px;">{{ t('currentBalance') }}: {{ balance }} {{
+            assetSymbol
+          }}</span>
         <label for="amount">{{ t('Amount') }}</label>
 
         <div class="flex">
@@ -25,23 +25,23 @@
       </div>
     </div>
 
-    <div class="col-4 field">
+    <div class="col-12 field">
       <Timeline :value="events">
 
         <template #content="slotProps">
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ beneficiary.name }}</span>
 
-          <p v-if="slotProps.item.name">
-            {{ amountFee }} 23
+          <p class="font-medium" v-if="slotProps.item.name">
+            {{ amountFee }} <small>{{assetSymbol}}</small>
           </p>
-          <p v-else> {{ fee }} 2</p>
+          <p v-else> {{ fee }} <small>{{assetSymbol}}</small></p>
         </template>
       </Timeline>
 
     </div>
     <div class="col-12 field p-fluid">
-      <div class="col-6">
+      <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText type="text" class="p-inputtext p-component  b-gray" v-model="reference"
                    :placeholder="t('reference')"/>
@@ -59,16 +59,18 @@
 </template>
 
 <script setup lang="ts">
-import Divider from 'primevue/divider';
-import InputText from 'primevue/inputtext';
-import {computed, ref} from 'vue';
-import {useI18n} from 'vue-i18n';
-import {useRoute} from "vue-router";
-import Timeline from 'primevue/timeline';
-import Button from 'primevue/button';
-import {BeneficiaryInternal} from "../types/beneficiary.interface";
-import {useBalanceWallet} from "../../../composables/useBalanceWallet";
+import Divider from 'primevue/divider'
+import InputText from 'primevue/inputtext'
+import {computed, ref} from 'vue'
+import {useI18n} from 'vue-i18n'
+import {useRoute} from "vue-router"
+import Timeline from 'primevue/timeline'
+import Button from 'primevue/button'
+import {BeneficiaryInternal} from "../types/beneficiary.interface"
+import {useBalanceWallet} from "../../../composables/useBalanceWallet"
+import {useToast} from 'primevue/usetoast'
 
+const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
 const route = useRoute()
 const {getBalanceByCode} = useBalanceWallet()
@@ -91,28 +93,66 @@ balance.value = getBalanceByCode(asset.value)?.balance ?? 0
 assetSymbol.value = getBalanceByCode(asset.value)?.assetCode ?? 'USD'
 
 const events = ref<any>([
-  {amount: '2,5', label: 'Fee', name: false},
-  {amount: '2,5', label: `You send to `, name: true},
+  {amount: '2,5', label: t('Fee'), name: false},
+  {amount: '2,5', label: t('youSendTo'), name: true},
 
 ]);
 
-// onMounted(async () => {
-//     console.log(props.formData.beneficiary, 'amount')
-// });
-
 const amountFee = computed(() => {
   console.log(parseFloat(amount.value) - fee.value, 'undefined')
-  return isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+  const total = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+  if (total > balance.value) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Order structure',
+      detail: 'Please enter the amount you wish to send.',
+      life: 4000
+    })
+    
+    amount.value = '0'
+  }
 })
 
+const validateField = (): boolean => {
+  if (amount.value.trim().length === 0) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Order structure',
+      detail: 'Please enter the amount you wish to send.',
+      life: 4000
+    })
+
+    return false;
+  }
+
+  if (reference.value.trim().length === 0) {
+    toast.add({
+      severity: 'warn',
+      summary: 'Order structure',
+      detail: 'Please include a reference.',
+      life: 4000
+    })
+
+    return false;
+  }
+
+  return true
+}
+
 const nextPage = () => {
+  if (!validateField()) {
+    return;
+  }
+
+
   const page = 1
   const formData = {
     ...props.formData.value,
     amount: amount.value,
-    fee: 2.5,
+    fee: fee,
     reference: reference.value,
-    asset: asset.value
+    asset: asset.value,
+    symbol: assetSymbol
   };
   emit('nextPage', {
     pageIndex: page,

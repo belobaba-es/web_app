@@ -38,7 +38,6 @@ import Steps from 'primevue/steps';
 import {useRouter} from "vue-router";
 import {useToast} from 'primevue/usetoast';
 
-import {useWithdrawOLD} from '../composables/useWithdrawOLD';
 
 const router = useRouter();
 const toast = useToast();

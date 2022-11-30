@@ -56,7 +56,7 @@ export abstract class HttpService {
 
     const response = await this.client.post(url, form, headerRequest)
 
-    return response.data as T
+    return response.data ?? ('' as T)
   }
 
   public async patch<T>(url: string, form: any, isPrivate: boolean = true, isFormData: boolean = false): Promise<T> {
@@ -69,7 +69,7 @@ export abstract class HttpService {
 
     const response = await this.client.patch(url, form, headerRequest)
 
-    return response.data as T
+    return response.data ?? ('' as T)
   }
 
   public async get<T>(url: string, payload = [], isPrivate = true): Promise<T> {

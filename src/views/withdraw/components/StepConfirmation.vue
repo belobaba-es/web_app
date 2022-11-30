@@ -1,73 +1,120 @@
 <template>
-    <div class="formgrid grid ">
-        <div class="col-12">
-            <span class="mt-4">{{t('Confirm wire information')}}</span>
-            <Divider></Divider>
-        </div>
-        <div>
-            <p>{{formData?.beneficiary?.realName}}</p>
-            <p class="font-ligth text-base">{{formData?.beneficiary?.accountNumber}}</p>
-        </div>
-        <Divider></Divider>
-        
-        <div class="col-12 field p-fluid">
-            
-            <div class="field col-12">
-                <label for="name1">{{t('Amount')}}</label>
-                <p>{{amountFee}}</p>
-            </div>
-            <div class="field col-12">
-                <label for="name1">{{t('fee')}}</label>
-                <p>{{formData.fee}}</p>
-            </div>
-        </div>
-        
-        
-        <div class="col-12 mb-2">
-            <p class="text-base">Your are sending to {{formData?.beneficiary?.realName}}</p>
-            
-        </div>
-        
-        <div class="col-12 mb-2">
-            <span>{{t('The wire will take 24 hours.')}}</span>
-            <p>
-                {{formData.amount}}
-            </p>
-        </div>
-
-        <Button class="p-button search-btn" :label="t('continue')" @click="emit('complete')"/>
+  <div class="formgrid grid mt-5">
+    <div class="col-12">
+      <span class="mt-4">{{ t('Confirm wire information') }}</span>
+      <Divider></Divider>
     </div>
+    <div>
+      <p class="title-beneficiary">{{ beneficiary.name }}</p>
+
+    </div>
+    <Divider></Divider>
+
+    <div class="col-12 field p-fluid">
+
+      <div class="field col-12">
+        <label for="name1">{{ t('Amount') }}</label>
+        <p class="green-color">{{ formData.amount }}</p>
+      </div>
+      <div class="field col-12">
+
+        <small>{{ t('fee') }}</small>
+
+        <p class="green-color mt-0">
+          <small>{{ formData.fee }} {{ formData.symbol }}</small>
+        </p>
+      </div>
+    </div>
+
+
+    <div class="col-12 mb-2">
+      <p class="text-base">Your are sending to {{ beneficiary.name }}</p>
+
+    </div>
+
+    <div class="col-12">
+      <p class="font-medium green-color">
+        {{ formData.amount }} {{ assetSymbol }}
+      </p>
+    </div>
+    <div class="col-12 mb-3 mt-3">
+      <span>{{ t('The wire will take 24 hours.') }}</span>
+    </div>
+
+    <Button
+        class="p-button search-btn"
+        iconPos="right"
+        :label="t('confirmWithdraw')"
+        @click="makeTransaction()"
+        :loading="submitting"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import Divider from 'primevue/divider';
-import InputText from 'primevue/inputtext';
-import { ref, onMounted, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRouter, useRoute } from "vue-router";
-import Timeline from 'primevue/timeline';
+import {useI18n} from 'vue-i18n';
+import {useRoute} from "vue-router";
 import Button from 'primevue/button';
+import {BeneficiaryInternal} from "../types/beneficiary.interface";
+import {WithdrawService} from "../services/withdraw";
+import {ref} from "vue";
+import {useToast} from "primevue/usetoast";
 
-const { t } = useI18n({ useScope: 'global' })
+const toast = useToast()
+const {t} = useI18n({useScope: 'global'})
 const route = useRoute();
+const submitting = ref(false);
 const props = defineProps<{
-    formData:  any
+  formData: any
 }>()
+
+const assetSymbol = props.formData.symbol
+
+const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 
 const emit = defineEmits(['complete']);
 
-      
-onMounted(async () => {
+function makeTransaction() {
+  const withDrawService = WithdrawService.instance()
 
-    const data = props.formData;
-    console.log("confirmation", data);
-});
+  submitting.value = true
 
-const amountFee = computed(()=>{
-    return parseFloat(props.formData.amount) - props.formData.fee
-})
+  switch (route.params.typeTransaction) {
+    case 'internal':
+      withDrawService.makeInternalTransfer({
+        amount: props.formData.amount,
+        accountDestination: props.formData.beneficiary.accountId,
+        reference: props.formData.reference
+      }).then(() => {
+        submitting.value = false
+        emit('complete')
+      }).catch(e => {
+        submitting.value = false
+
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: e.response.data.message,
+          life: 4000
+        })
+
+      })
+      break
+    default:
+      submitting.value = false
+  }
+
+}
 
 </script>
 
 <style scoped>
+.title-beneficiary {
+  color: #14443F;
+}
+
+.green-color {
+  color: var(--primary-color);
+}
 </style>

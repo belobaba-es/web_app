@@ -2,8 +2,9 @@
   <div class="col-8">
     <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span></p>
     <div class="flex align-items-center">
-
-      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text"/>
+      <router-link to="/withdraw">
+        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text"/>
+      </router-link>
       <span class="text-xl"> Between NOBA Accounts </span>
     </div>
     <Steps :model="items" :readonly="false"/>
@@ -20,14 +21,15 @@
 <script setup lang="ts">
 
 import {useI18n} from 'vue-i18n'
-import {ref} from 'vue';
-import Button from 'primevue/button';
-import Steps from 'primevue/steps';
-import {useRouter} from "vue-router";
-import {useToast} from 'primevue/usetoast';
-import {WithdrawForm} from "../types/withdraw";
+import {ref} from 'vue'
+import Button from 'primevue/button'
+import Steps from 'primevue/steps'
+import {useRoute, useRouter} from "vue-router"
+import {useToast} from 'primevue/usetoast'
+import {WithdrawForm} from "../types/withdraw"
 
 const router = useRouter();
+const route = useRoute()
 const toast = useToast();
 const {t} = useI18n({useScope: 'global'})
 
@@ -35,15 +37,15 @@ const {t} = useI18n({useScope: 'global'})
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/noba'
+    to: `/withdraw/fiat/noba/${route.params.typeTransaction}`
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/noba/amount'
+    to: `/withdraw/fiat/noba/${route.params.typeTransaction}/amount`
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/noba/confirmation'
+    to: `/withdraw/fiat/noba/${route.params.typeTransaction}/confirmation`
   }
 ])
 
@@ -60,13 +62,17 @@ const nextPage = (event: any) => {
 const prevPage = (event: any) => {
   router.push(items.value[event.pageIndex - 1].to);
 };
-//
+
 const complete = () => {
+
   toast.add({
     severity: 'success',
     summary: 'Order submitted',
-    detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'
-  });
+    detail: formObject.value.beneficiary.name + ' your order completed.',
+    life: 4000
+  })
+
+  router.push('/withdraw')
 };
 
 </script>

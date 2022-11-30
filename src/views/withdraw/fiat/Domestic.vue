@@ -40,7 +40,6 @@ import {Beneficiary} from '../types/beneficiary.interface';
 import {AccountService} from '../services/account';
 import {useToast} from 'primevue/usetoast';
 
-import {useWithdrawOLD} from '../composables/useWithdrawOLD';
 
 const router = useRouter();
 const toast = useToast();
