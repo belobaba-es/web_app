@@ -52,7 +52,7 @@
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
           <div v-for="(partner, idx) in members">
             <DocumentPartnersEditForm
-              :partner="partner"
+              :tax-id="partner.taxId"
               :key="idx" />
           </div>
         </ScrollPanel>

@@ -20,8 +20,20 @@
               <Password v-model="form.pass" placeholder="**********" />
             </div>
           </div>
-
-          <div class="container-flex mt-lg-5">
+          <div class="flex justify-content-between align-items-center">
+            <div class="field-checkbox mt-2">
+                <Checkbox inputId="binary" v-model="form.remember" :binary="true" />
+                <label for="binary">
+                  Recuerdame
+                </label>
+            </div>
+            <div>
+              <RouterLink to="/forgot-password">
+                Recuperar contresana
+              </RouterLink>
+            </div>
+          </div>
+          <div class="container-flex mt-lg-2">
             <div class="float-left w-25">
               <Button
                 type="button"
@@ -64,6 +76,7 @@ import { LoginService } from './services/login'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/user'
 import {useToast} from "primevue/usetoast";
+import Checkbox from 'primevue/checkbox';
 
 const submitting = ref(false);
 const toast = useToast()
@@ -73,6 +86,7 @@ const loginService = LoginService.instance()
 const form = reactive({
   user: 'angel.bejarano@jaspesoft.com',
   pass: '12345678',
+  remember: false
 })
 
 const router = useRouter()
