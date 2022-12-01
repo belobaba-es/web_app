@@ -1,289 +1,300 @@
 @font-face {
-  font-family: KanitLight;
-  src: url('/src/assets/fonts/Kanit-Light.ttf');
+    font-family: KanitLight;
+    src: url('/src/assets/fonts/Kanit-Light.ttf');
 }
 
 @font-face {
-  font-family: KanitExtraLight;
-  src: url('/src/assets/fonts/Kanit-ExtraLight.ttf');
+    font-family: KanitExtraLight;
+    src: url('/src/assets/fonts/Kanit-ExtraLight.ttf');
 }
 
 @font-face {
-  font-family: KanitRegular;
-  src: url('/src/assets/fonts/Kanit-Regular.ttf');
+    font-family: KanitRegular;
+    src: url('/src/assets/fonts/Kanit-Regular.ttf');
 }
 
 @font-face {
-  font-family: KanitMedium;
-  src: url('/src/assets/fonts/Kanit-Medium.ttf');
+    font-family: KanitMedium;
+    src: url('/src/assets/fonts/Kanit-Medium.ttf');
 }
 
 @font-face {
-  font-family: KanitSemiBold;
-  src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
+    font-family: KanitSemiBold;
+    src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
 }
 
 @font-face {
-  font-family: KanitBold;
-  src: url('/src/assets/fonts/Kanit-Bold.ttf');
+    font-family: KanitBold;
+    src: url('/src/assets/fonts/Kanit-Bold.ttf');
 }
 
 .font-light {
-  font-family: KanitLight !important;
+    font-family: KanitLight !important;
 }
 
 .font-extra-light {
-  font-family: KanitExtraLight !important;
+    font-family: KanitExtraLight !important;
 }
 
 .font-regular {
-  font-family: KanitRegular !important;
+    font-family: KanitRegular !important;
 }
+
 .font-medium {
-  font-family: KanitMedium !important;
+    font-family: KanitMedium !important;
 }
+
 .font-semi-bold {
-  font-family: KanitSemiBold !important;
+    font-family: KanitSemiBold !important;
 }
+
 .font-bold {
-  font-family: KanitBold !important;
+    font-family: KanitBold !important;
 }
 
 
 html, body {
-  font-family: KanitLight;
+    font-family: KanitLight;
 }
 
 :root {
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 
-  --surface-overlay: #f9f9f9;
-  --surface-ground: #f9f9f9;
-  --primary-color: #00BEB0;
-  --text-color: #1B1B19;
-
-}
-
-*:focus{
-  outline: 0
+    --surface-overlay: #f9f9f9;
+    --surface-ground: #f9f9f9;
+    --primary-color: #00BEB0;
+    --text-color: #1B1B19;
 
 }
 
-.icon-home .pi::before, 
-.icon-home .p-menuitem-icon::before{
-	content: url(/src/assets/icons/home.svg);
+*:focus {
+    outline: 0
+
 }
 
-.icon-piggy-bank .pi::before{
-  content: url(/src/assets/icons/piggy-bank.svg);
+.icon-home .pi::before,
+.icon-home .p-menuitem-icon::before {
+    content: url(/src/assets/icons/home.svg);
 }
 
-.icon-swap .pi::before{
-  content: url(/src/assets/icons/swap.svg);
+.icon-piggy-bank .pi::before {
+    content: url(/src/assets/icons/piggy-bank.svg);
 }
 
-.icon-bank .pi::before{
-  content: url(/src/assets/icons/bank.svg);
+.icon-swap .pi::before {
+    content: url(/src/assets/icons/swap.svg);
 }
 
-.icon-wallet .pi::before{
-  content: url(/src/assets/icons/wallet.svg);
+.icon-bank .pi::before {
+    content: url(/src/assets/icons/bank.svg);
 }
 
-.icon-profile-user .pi::before{
-  content: url(/src/assets/icons/icon-user.svg);
+.icon-wallet .pi::before {
+    content: url(/src/assets/icons/wallet.svg);
 }
 
-.icon-document-file .pi::before{
-  content: url(/src/assets/icons/icon-document.svg);
+.icon-profile-user .pi::before {
+    content: url(/src/assets/icons/icon-user.svg);
 }
 
-.icon-headset .pi::before{
-  content: url(/src/assets/icons/headset.svg);
+.icon-document-file .pi::before {
+    content: url(/src/assets/icons/icon-document.svg);
 }
 
-.icon-help .pi::before{
-  content: url(/src/assets/icons/help.svg);
+.icon-headset .pi::before {
+    content: url(/src/assets/icons/headset.svg);
+}
+
+.icon-help .pi::before {
+    content: url(/src/assets/icons/help.svg);
 }
 
 .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
 .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
-  color: #00BEB0;
+    color: #00BEB0;
 }
 
 .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-ico {
-  color: #00BEB0;
-  background: #e9ecef;
+    color: #00BEB0;
+    background: #e9ecef;
 }
-
 
 
 .container-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 0 3rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0 3rem 0;
 }
+
 .p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-dropdown.p-component.p-inputwrapper {
-  border-radius: 0;
+    border-radius: 0;
 }
-.p-inputgroup input:hover, .p-inputgroup input:focus, .p-dropdown.p-component.p-inputwrapper:hover, .p-dropdown.p-component.p-inputwrapper:focus{
-  border: 1px solid #00BEB0 !important;
-  outline:none;
-}
+
 .p-inputtext, .p-dropdown.p-component.p-inputwrapper {
-  border: 1px solid #ECECEC;
-  box-sizing: initial;
-  font-family: KanitLight;
-  font-size: 1.1rem;
+    border-radius: 0;
+}
+
+.p-inputgroup input:hover, .p-inputgroup input:focus, .p-dropdown.p-component.p-inputwrapper:hover, .p-dropdown.p-component.p-inputwrapper:focus {
+    border: 1px solid #00BEB0 !important;
+    outline: none;
+}
+
+.p-inputtext, .p-dropdown.p-component.p-inputwrapper {
+    border: 1px solid #ECECEC;
+    box-sizing: initial;
+    font-family: KanitLight;
+    font-size: 1.1rem;
 }
 
 label {
-  font-size: 1.1rem;
-  font-family: KanitLight;
+    font-size: 1.1rem;
+    font-family: KanitLight;
 }
 
 .container-end {
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  text-align: end;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    text-align: end;
 }
 
 .container-start {
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  text-align: start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    text-align: start;
 }
 
 .container-flex {
-  -webkit-box-flex: 1;
+    -webkit-box-flex: 1;
 }
-.float-right{
-  float: right;
+
+.float-right {
+    float: right;
 }
+
 .float-left {
-  float: left;
+    float: left;
 }
 
 span.p-button.p-component.p-fileupload-choose {
-  border-radius: 3px;
-  padding: 10px 9px;
+    border-radius: 3px;
+    padding: 10px 9px;
 }
 
 .edit-document-chip.p-chip {
-  border-radius: 3px;
-  padding: 10px 9px;
+    border-radius: 3px;
+    padding: 10px 9px;
 }
 
-.p-inputtext:enabled:focus, 
-.p-dropdown.p-component.p-inputwrapper:focus, 
+.p-inputtext:enabled:focus,
+.p-dropdown.p-component.p-inputwrapper:focus,
 .p-dropdown.p-component.p-inputwrapper:hover {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: none;
-  border-color: var(--primary-color);
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+    border-color: var(--primary-color);
 }
 
 button.p-button.p-component.p-button.edit-document-button {
-  background-color: #fff;
-  border: solid 0.2rem #E7E6E7;
-  border-radius: 5px;
-  color: #1B1B19;
+    background-color: #fff;
+    border: solid 0.2rem #E7E6E7;
+    border-radius: 5px;
+    color: #1B1B19;
 }
 
 .custom .p-scrollpanel-wrapper {
-  border-right: 9px solid #f4f4f4;
+    border-right: 9px solid #f4f4f4;
 }
 
 .custom .p-scrollpanel-bar {
-  background-color: var(--primary-color);
-  opacity: 1;
-  transition: background-color .3s;
+    background-color: var(--primary-color);
+    opacity: 1;
+    transition: background-color .3s;
 }
 
 .custom .p-scrollpanel-bar:hover {
-  background-color: var(--primary-color);
+    background-color: var(--primary-color);
 }
 
 .shareholders-panel > .p-toggleable-content > .p-panel-content {
-  padding: 0px;
+    padding: 0px;
 }
 
 .p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: none;
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
 }
 
 .p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
-  background: #ffffff;
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+    background: #ffffff;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .profile .container-center {
-  padding: 0px;
+    padding: 0px;
 }
 
 .profile .router-link-exact-active.p-button.profile-navigation, .profile .router-link-exact-active.p-button.profile-navigation:hover {
-  background-color: #1B1B19;
-  border-color: #1B1B19;
-  color: #FFFFFF;
+    background-color: #1B1B19;
+    border-color: #1B1B19;
+    color: #FFFFFF;
 }
 
 .profile .p-button.profile-navigation {
-  background-color: #F9F9F9;
-  border: solid 1px #E7E6E7;
-  color: #1B1B19
+    background-color: #F9F9F9;
+    border: solid 1px #E7E6E7;
+    color: #1B1B19
 }
 
 .profile .p-button.edit-document-button:hover {
-  background-color: #E7E6E7;
-  border: solid 1px #E7E6E7;
+    background-color: #E7E6E7;
+    border: solid 1px #E7E6E7;
 }
 
 .profile .p-button:focus {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 
 .p-selectbutton .p-button.p-highlight:hover, .p-selectbutton .p-button.p-highlight {
-  background: #d7dadd;
-  border-color: #cbcbcb;
-  color: #1B1B19;
-  font-weight: bold;
+    background: #d7dadd;
+    border-color: #cbcbcb;
+    color: #1B1B19;
+    font-weight: bold;
 }
 
-.bg-primary{
-  background: var(--primary-color);
+.bg-primary {
+    background: var(--primary-color);
 }
 
 .p-timeline-event-opposite {
-  display: none !important;
+    display: none !important;
 }
 
 .p-timeline-event {
-  color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .p-timeline .p-timeline-event-marker {
-  border: 1px solid transparent;
-  /*border-radius: 50%;*/
-  /*width: 1rem;*/
-  /*height: 1rem;*/
-  background-color: var(--primary-color);
+    border: 1px solid transparent;
+    /*border-radius: 50%;*/
+    /*width: 1rem;*/
+    /*height: 1rem;*/
+    background-color: var(--primary-color);
 }
 
 small {
-  font-size: 10pt;
+    font-size: 10pt;
 }
