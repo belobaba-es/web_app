@@ -23,6 +23,7 @@ interface AccountState {
   status: string | null
   loading: boolean
   form: FormData
+  documentType: string
 }
 
 interface FormGeneralData {
@@ -90,6 +91,7 @@ export const useAccountStore = defineStore('account', {
       documentId: null,
       isAccountBusiness: false,
     },
+    documentType: 'government_id',
   }),
   actions: {
     getAccountId() {
@@ -170,6 +172,16 @@ export const useAccountStore = defineStore('account', {
       const index = member?.documents.findIndex(document => document.documentId === documentId)
       if (index === -1) return;
       member?.documents.splice(index!, 1);
+    },
+    findDocumentsToMember(taxId: string) {
+      const filtered = this.findMember(taxId)?.documents.filter(document => {
+        return document.documentType === this.documentType && document.documentType !== 'utility_bill';
+      });
+
+      const frontSide = filtered?.find(document => document.documentSide === 'front');
+      const backSide = filtered?.find(document => document.documentSide === 'backside');
+
+      return { frontSide, backSide }
     },
   },
 })

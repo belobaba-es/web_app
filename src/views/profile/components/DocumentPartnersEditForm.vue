@@ -2,13 +2,13 @@
     <div class="px-3 pt-3 pb-0">
         <div>
             <p class="font-semibold">
-                {{ getFullName(props.partner) }}
+                {{ getFullName(member) }}
             </p>
         </div>
         <div class="grid">
             <div class="field col-12">
                 <Dropdown
-                    v-model="documentType"
+                    v-model="accountStore.documentType"
                     :options="documentTypeOptions"
                     option-label="name"
                     option-value="value"
@@ -22,12 +22,12 @@
                 </template>
                 <template v-else>
                     <FileInput 
-                        :label="documentType+'_front_side'"
+                        :label="accountStore.documentType+'_front_side'"
                         side="front" 
                         :account-id="accountId!"
-                        :document-country="props.partner.taxCountry"
-                        :tax-id="props.partner.taxId"
-                        :type="documentType"
+                        :document-country="member.taxCountry"
+                        :tax-id="member.taxId"
+                        :type="accountStore.documentType"
                     />
                 </template>
             </div>
@@ -37,12 +37,12 @@
                 </template>
                 <template v-else>
                     <FileInput
-                        :label="documentType+'_back_side'"
+                        :label="accountStore.documentType+'_back_side'"
                         side="backside"
                         :account-id="accountId!"
-                        :document-country="props.partner.taxCountry"
-                        :tax-id="props.partner.taxId"
-                        :type="documentType"
+                        :document-country="member.taxCountry"
+                        :tax-id="member.taxId"
+                        :type="accountStore.documentType"
                     />
                 </template>
             </div>
@@ -59,8 +59,8 @@
                                 side="address"
                                 type="utility_bill"
                                 :account-id="accountId!"
-                                :document-country="props.partner.taxCountry"
-                                :tax-id="props.partner.taxId"
+                                :document-country="member.taxCountry"
+                                :tax-id="member.taxId"
                             />
                         </div>
                     </div>
@@ -72,55 +72,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, computed, onMounted } from 'vue';
+import { ref, defineProps, onBeforeMount, watch } from 'vue';
 import Dropdown from 'primevue/dropdown';
 import Divider from "primevue/divider";
-import { Document, Member } from '../types/account.interface';
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n';
 import FileInput from './FileInput.vue';
 import FileUploaded from './FileUploaded.vue';
+import { useAccountStore } from '../../../stores/account';
+
 const { t } = useI18n({ useScope: 'global' });
+const accountStore = useAccountStore();
 
 interface Props {
-    partner: Member
+    taxId: string
 }
 
 const props = defineProps<Props>()
-const { getFullName, accountId } = useAccount();
+const { getFullName, accountId, documentType, members } = useAccount();
 
 const documentTypeOptions = ref([
   { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
   { value: "government_id", name: t('docTypeLabelGovernmentId') },
   { value: "passport", name: t('docTypeLabelPassport') },
-//   { value: "residence_permit", name: t('docTypeLabelResidencePermit') },
 ]);
 
-const documentType = ref('government_id');
-const documents = ref<Document[]>([]);
+const member = ref();
+const identityDocuments = ref();
 
-onMounted(() => {
-    fillDocuments();
+onBeforeMount(() => {
+    member.value = accountStore.findMember(props.taxId);
+    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
 });
 
-const fillDocuments = () => {
-    const documentsKeys = Object.keys(props.partner.documents);
-    documentsKeys.forEach((value) => {
-        if (!isNaN(parseInt(value))) {
-            documents.value.push(props.partner.documents[parseInt(value)]);
-        }
-    });
-}
+watch(documentType, () => {
+    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
+})
 
-const identityDocuments = computed(() => {
-    const data = documents.value.filter((document) => {
-        return document.documentType === documentType.value && document.documentType !== 'utility_bill';
-    });
-    const frontSide = data.find(document => document.documentSide === 'front');
-    const backSide = data.find(document => document.documentSide === 'backside');
-    return { frontSide, backSide }
-});
-
+watch(members?.value!, () => {
+    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
+})
 
 </script>
 
