@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 
 import Button from 'primevue/button';
-import { Beneficiary, BeneficiaryFiat, BeneficiaryFiatDomestic } from '../types/beneficiary.interface';
+import {BeneficiaryFiat} from '../../types/beneficiary.interface';
 
 
 defineProps<{

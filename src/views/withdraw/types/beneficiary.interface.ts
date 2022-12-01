@@ -1,9 +1,18 @@
 import { Pagination } from '../../../shared/types/pagination'
 
-// export interface Beneficiary{
-//     name: string,
-//     email: string
-// }
+export interface Beneficiary {
+  name: string
+  email: string
+}
+
+export interface BeneficiaryAssets {
+  id: string
+  assetId: string
+  assetTransferMethod: string
+  label: string
+  walletAddress: string
+  accountId: string
+}
 
 export type BeneficiaryInternal = {
   accountId: string

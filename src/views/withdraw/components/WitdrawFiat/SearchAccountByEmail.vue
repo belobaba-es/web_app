@@ -28,7 +28,7 @@ import Button from 'primevue/button'
 import {useI18n} from "vue-i18n";
 import {onMounted, ref} from "vue";
 import {useToast} from "primevue/usetoast";
-import {AccountService} from "../views/withdraw/services/account";
+import {AccountService} from "../../services/account";
 
 const toast = useToast();
 const emit = defineEmits(['listBeneficiaries'])
@@ -52,7 +52,6 @@ const onSearch = () => {
   }
   submitting.value = true
   accountService.getAccountByEmail(search.value).then(resp => {
-    // beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
     emit('listBeneficiaries', [resp])
     submitting.value = false
   }).catch(error => {

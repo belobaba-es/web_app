@@ -14,16 +14,20 @@ import { useUserStore } from './stores/user'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
-import StepAmount from './components/internalWithdraw/StepAmount.vue'
+import StepAmount from './views/withdraw/components/internalWithdraw/StepAmount.vue'
 import DocumentsPerson from './views/profile/DocumentsPerson.vue'
 import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
-import StepAccounts from './components/internalWithdraw/StepAccounts.vue'
-import StepConfirmation from './components/internalWithdraw/StepConfirmation.vue'
+import StepAccounts from './views/withdraw/components/internalWithdraw/StepAccounts.vue'
+import StepConfirmation from './views/withdraw/components/internalWithdraw/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
-import StepSuccessful from './components/internalWithdraw/StepSuccessful.vue'
+import StepSuccessful from './views/withdraw/components/internalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
+
+import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/StepAccounts.vue'
+import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
+import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -123,6 +127,24 @@ const routes: RouteRecordRaw[] = [
             ],
           },
           {
+            path: 'fiat/domestic',
+            component: WithdrawFiatDomestic,
+            children: [
+              {
+                path: '',
+                component: WithdrawFiatStepAccounts,
+              },
+              {
+                path: 'amount',
+                component: WithdrawFiatStepAmount,
+              },
+              {
+                path: 'confirmation',
+                component: WithdrawFiatStepConfirmation,
+              },
+            ],
+          },
+          {
             path: 'fiat/domestic/new',
             component: NewBeneficiaryDomestic,
           },
@@ -130,39 +152,22 @@ const routes: RouteRecordRaw[] = [
             path: 'fiat/domestic/successful',
             component: StepSuccessful,
           },
-          {
-            path: 'fiat/domestic',
-            component: WithdrawFiatDomestic,
-            children: [
-              {
-                path: '',
-                component: StepAccounts,
-              },
-              {
-                path: 'amount',
-                component: StepAmount,
-              },
-              {
-                path: 'confirmation',
-                component: StepConfirmation,
-              },
-            ],
-          },
+
           {
             path: 'fiat/international',
             component: WithdrawFiatInternational,
             children: [
               {
                 path: '',
-                component: StepAccounts,
+                component: WithdrawFiatStepAccounts,
               },
               {
                 path: 'amount',
-                component: StepAmount,
+                component: WithdrawFiatStepAmount,
               },
               {
                 path: 'confirmation',
-                component: StepConfirmation,
+                component: WithdrawFiatStepConfirmation,
               },
             ],
           },

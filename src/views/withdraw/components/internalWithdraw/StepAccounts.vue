@@ -28,10 +28,10 @@ import {useI18n} from 'vue-i18n'
 import {ref} from 'vue'
 import Divider from 'primevue/divider'
 import {useRouter} from "vue-router"
-import {BeneficiaryInternal} from '../../views/withdraw/types/beneficiary.interface'
 
 import {useToast} from 'primevue/usetoast'
-import SearchAccountByEmail from "../SearchAccountByEmail.vue"
+import SearchAccountByEmail from "./SearchAccountByEmail.vue"
+import {BeneficiaryInternal} from "../../types/beneficiary.interface";
 
 const router = useRouter()
 const toast = useToast()

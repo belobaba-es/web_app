@@ -37,6 +37,7 @@ import Button from 'primevue/button';
 import Steps from 'primevue/steps';
 import {useRouter} from "vue-router";
 import {useToast} from 'primevue/usetoast';
+import {useWithdraw} from "../composables/useWithdraw";
 
 
 const router = useRouter();
@@ -91,7 +92,7 @@ const {
     nextStepPage,
     prevStepPage,
     stepComplete,
-} = useWithdrawOLD(items)
+} = useWithdraw(items)
 
 </script>
 

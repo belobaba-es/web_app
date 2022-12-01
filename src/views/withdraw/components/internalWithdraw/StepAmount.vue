@@ -70,11 +70,11 @@ import {useI18n} from 'vue-i18n'
 import {useRoute} from "vue-router"
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import {BeneficiaryInternal} from "../../views/withdraw/types/beneficiary.interface"
-import {useBalanceWallet} from "../../composables/useBalanceWallet"
+import {BeneficiaryInternal} from "../../types/beneficiary.interface"
+import {useBalanceWallet} from "../../../../composables/useBalanceWallet"
 import {useToast} from 'primevue/usetoast'
-import SelectedAssets from "../SelectedAssets.vue";
-import {Asset} from "../../views/deposit/types/asset.interface";
+import SelectedAssets from "../../../../components/SelectedAssets.vue";
+import {Asset} from "../../../deposit/types/asset.interface";
 
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})

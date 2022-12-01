@@ -56,11 +56,11 @@ import Divider from 'primevue/divider';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from "vue-router";
 import Button from 'primevue/button';
-import {BeneficiaryInternal} from "../../views/withdraw/types/beneficiary.interface";
-import {WithdrawService} from "../../views/withdraw/services/withdraw";
+import {BeneficiaryInternal} from "../../types/beneficiary.interface";
+import {WithdrawService} from "../../services/withdraw";
 import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
-import {useBalanceWallet} from "../../composables/useBalanceWallet";
+import {useBalanceWallet} from "../../../../composables/useBalanceWallet";
 
 const toast = useToast()
 const {t} = useI18n({useScope: 'global'})
