@@ -3,7 +3,7 @@
     <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
     <div class="flex align-items-center">
       <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
-      <span class="text-xl"> Domestic Wire</span>
+      <span class="text-xl"> {{type}} Wire</span>
     </div>
     <Steps :model="items" :readonly="false" />
     <!-- <div class="mt-4 mb-4">
@@ -35,7 +35,7 @@ import Button from 'primevue/button';
 
 
 import Steps from 'primevue/steps';
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {BeneficiaryAssets} from '../types/beneficiary.interface';
 import {AccountService} from '../services/account';
 import {useToast} from 'primevue/usetoast';
@@ -43,12 +43,41 @@ import {useToast} from 'primevue/usetoast';
 import {useWithdraw} from '../composables/useWithdraw';
 
 const router = useRouter();
+const route = useRoute()
 const toast = useToast();
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
+const type = ref('Domestic')
 
 const accountService = AccountService.instance()
+
+const items = ref([
+  {
+    label: 'Accounts',
+    to: '/withdraw/fiat/domestic'
+  },
+  {
+    label: 'Amount',
+    to: '/withdraw/fiat/domestic/amount'
+  },
+  {
+    label: 'Confirmation',
+    to: '/withdraw/fiat/domestic/confirmation'
+  }
+])
+
+
+const {
+  formObject,
+  fetchBeneficiariesDomestic,
+  fetchBeneficiariesInternational,
+  listBeneficiary,
+  nextStepPage,
+  prevStepPage,
+  stepComplete,
+  toBack,
+} = useWithdraw(items)
 
 
 const newBeneficiary = ()=> {
@@ -57,7 +86,14 @@ const newBeneficiary = ()=> {
 const beneficiaryAssets = ref<BeneficiaryAssets[]>([])
 
 onMounted(async () => {
-  await fetchBeneficiariesDomestic()
+  if (route.params.type === 'domestic') {
+    await fetchBeneficiariesDomestic()
+  } else {
+    type.value = 'International'
+    await fetchBeneficiariesInternational()
+  }
+
+
 });
 
 const onSearch = () => {
@@ -75,33 +111,6 @@ const onSearch = () => {
     })
   })
 }
-
-
-const items = ref([
-  {
-    label: 'Accounts',
-    to: '/withdraw/fiat/domestic'
-  },
-  {
-    label: 'Amount',
-    to: '/withdraw/fiat/domestic/amount'
-  },
-  {
-    label: 'Confirmation',
-    to: '/withdraw/fiat/domestic/confirmation'
-  }
-])
-const {
-  formObject,
-  fetchBeneficiariesDomestic,
-  listBeneficiary,
-  nextStepPage,
-  prevStepPage,
-  stepComplete,
-  toBack,
-} = useWithdraw(items)
-
-
 
 </script>
 

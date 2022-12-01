@@ -42,6 +42,7 @@
 
     <Button
         class="w-50 p-button search-btn"
+        iconPos="right"
         :label="t('continue')"
         @click="makeTransaction()"
         :loading="submitting"
