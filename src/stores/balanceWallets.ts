@@ -33,7 +33,14 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
     updateBlockedBalanceWalletByCode(assetCode: string, blockedBalance: number): void {
       for (const w of this.wallets) {
         if (w.assetCode === assetCode) {
-          w.blockedBalance = (w.blockedBalance ?? 0) + blockedBalance
+          let blocked: number = 0
+
+          if (w.blockedBalance) {
+            blocked = w.blockedBalance
+          }
+
+          console.log('TOTAL', blocked + blockedBalance)
+          w.blockedBalance = blocked + blockedBalance
         }
       }
     },
