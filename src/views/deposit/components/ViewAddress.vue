@@ -1,13 +1,15 @@
 <template>
-<Dialog :visible="visible" @update:visible="emit('update:visible', $event)" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
+<Dialog :visible="visible" @update:visible="emit('update:visible', $event)" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}"
+        :style="{width: '35vw'}">
     <template #header>
         <h3></h3>
     </template>
-    <div class="grid">
-        <div class="col-6">
+    <div class="grid" style="padding: 0 3rem">
+        <div class="col-6 mt-3">
             <img :src="asset?.icon" alt="">
-            <p class="text-base">{{asset?.name}}</p>
-            <p class="text-base font-bold">{{asset?.code}}</p>
+            <p class="text-base mt-3">{{asset?.name}}</p>
+          <p class="text-base font-bold">{{paymentAddress?.label}}</p>
+          <small class="font-medium">{{asset?.code}}</small>
         </div>
         <div class="col-6 justify-content-end flex">
             <img height="150" :src="paymentAddress?.qr" alt="">
@@ -36,13 +38,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
+import {ref} from 'vue';
+import {useI18n} from 'vue-i18n'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Message from 'primevue/message';
-import { Asset, PaymentAddress } from '../types/asset.interface';
+import {Asset, PaymentAddress} from '../types/asset.interface';
 
 defineProps<{
     visible: boolean,
