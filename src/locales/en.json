@@ -137,5 +137,9 @@
     "fee": "Fee",
     "currentBalance": "Current balance",
     "confirmWithdraw": "Confirm transaction withdraw",
-    "account": "Account"
+    "account": "Account",
+    "forgotPasswordTitle": "Password recovery",
+    "forgotPasswordSubtitle": "Enter your email address and you will receive a link to create a new password.",
+    "forgotPasswordButton": "Send",
+    "alreadyAccount": "Do you already have an account?"
 }

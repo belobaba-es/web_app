@@ -137,5 +137,9 @@
     "fee": "Comisión",
     "currentBalance": "Saldo actual",
     "confirmWithdraw": "Confirmar la transacción de retiro",
-    "account": "Cuenta"
+    "account": "Cuenta",
+    "forgotPasswordTitle": "Recuperar contraseña",
+    "forgotPasswordSubtitle": "Escribe tu correo electronico y recibirás un enlace para crear la contraseña nueva.",
+    "forgotPasswordButton": "Enviar",
+    "alreadyAccount": "¿Ya tienes tu contraseña?"
 }

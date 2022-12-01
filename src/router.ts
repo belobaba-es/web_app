@@ -24,11 +24,16 @@ import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDo
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
 import StepSuccessful from './components/internalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
+import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: Login,
+  },
+  {
+    path: '/forgot-password',
+    component: ForgotPassword
   },
   {
     path: '/dashboard',
@@ -192,7 +197,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
 
-  if (to.path !== '/' && !userStore.getUser) {
+  if ((to.path !== '/' && to.path !== '/forgot-password') && !userStore.getUser) {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser) {
     next({ path: '/dashboard' })
