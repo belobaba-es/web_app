@@ -114,6 +114,11 @@ function makeTransaction() {
         reference: props.formData.reference,
         assetId: props.formData.assetId
       });
+
+      updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
+
+      emit('complete')
+      break
     default:
       submitting.value = false
   }
