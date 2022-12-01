@@ -13,6 +13,12 @@ export type MakeFiatInternalTransfer = {
   reference: string
 }
 
+export type MakeFiatExternalTransfer = {
+  amount: number
+  beneficiaryId: string
+  reference: string
+}
+
 export type MakeAssetInternalTransfer = {
   amount: string
   accountDestination: string

@@ -16,7 +16,8 @@ export const useBalanceWallet = () => {
   }
 
   const getBalanceByCode = (assetCode: string): number => {
-    return balanceWalletStore.getBalanceByCode(assetCode)
+    const balance = balanceWalletStore.getBalanceByCode(assetCode)
+    return Number(balance.toFixed(2))
   }
 
   const getWalletByAssetCode = (assetCode: string): BalanceWallet | undefined => {

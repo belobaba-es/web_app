@@ -2,16 +2,27 @@
   <div class="col-4 mt-4 mb-4" v-if="toNew != ''">
     <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNewBeneficiary"/>
   </div>
-  <div class="col-10 ">
 
-        <span class="p-input-icon-left flex p-fluid">
-            <i class="pi pi-search" />
-            <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
-            <Button class="p-button search-btn" :label="t('search')" @click="onSearch"/>
-        </span>
+
+  <div class="col-10 md:col-8">
+    <span class="p-input-icon-left flex p-fluid">
+      <i class="pi pi-search"/>
+      <InputText
+          type="text"
+          class="b-gray"
+          v-model="search"
+          :placeholder="t('nobaBeneficiaryEmail')"
+      />
+      <Button style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+              class="p-button search-btn w-25"
+              :label="t('search')"
+              @click="onSearch"
+      />
+    </span>
   </div>
+
   <div class="grid">
-    <span class="mt-4">{{t('youBeneficiaries')}}</span>
+    <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
       <ListBeneficiary :list="list" @select="onSelect($event)"/>
@@ -34,16 +45,14 @@ import {Beneficiary} from "../../types/beneficiary.interface";
 
 const router = useRouter();
 const toast = useToast();
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
 const props = defineProps<{
   list: Array<any>,
-  formData:  any,
+  formData: any,
   toNew: string
 }>()
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary']);
 const search = ref('')
-
-
 
 
 const onSelect = (item: Beneficiary) => {
@@ -64,7 +73,7 @@ onMounted(async () => {
 });
 
 const onSearch = () => {
-  console.log(search.value)
+  console.log('===========OOOOOOOOOO', search.value)
   // accountService.getAccountByEmail(search.value).then(resp=>{
   //     console.log(resp)
   //     beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
@@ -79,11 +88,12 @@ const onSearch = () => {
   // })
 }
 
-const toNewBeneficiary = ()=> {
+const toNewBeneficiary = () => {
   router.push(props.toNew)
 }
 
 </script>
 
 <style scoped>
+
 </style>

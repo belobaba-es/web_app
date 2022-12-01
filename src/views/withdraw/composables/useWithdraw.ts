@@ -22,11 +22,12 @@ export const useWithdraw = (items: any) => {
   }
 
   const stepComplete = () => {
-    router.push('successful')
+    router.push('/withdraw')
     toast.add({
       severity: 'success',
       summary: 'Order submitted',
-      detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.',
+      detail: 'Your order completed.',
+      life: 4000,
     })
   }
 

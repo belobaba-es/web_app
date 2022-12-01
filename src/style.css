@@ -298,3 +298,10 @@ button.p-button.p-component.p-button.edit-document-button {
 small {
     font-size: 10pt;
 }
+.symbol {
+    background: #8CE2DB;
+    padding: 2px 20px;
+    color: #0F655D;
+    font-size: 1.4rem;
+    border-radius: 0;
+}

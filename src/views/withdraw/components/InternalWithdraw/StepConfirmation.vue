@@ -42,7 +42,7 @@
     </div>
 
     <Button
-        class="p-button search-btn"
+        class="w-50 p-button search-btn"
         iconPos="right"
         :label="t('confirmWithdraw')"
         @click="makeTransaction()"

@@ -13,16 +13,15 @@ import Withdraw from './views/withdraw/Withdraw.vue'
 import { useUserStore } from './stores/user'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
-import WithdrawFiatInternational from './views/withdraw/fiat/International.vue'
-import StepAmount from './views/withdraw/components/internalWithdraw/StepAmount.vue'
+import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
 import DocumentsPerson from './views/profile/DocumentsPerson.vue'
 import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
-import StepAccounts from './views/withdraw/components/internalWithdraw/StepAccounts.vue'
-import StepConfirmation from './views/withdraw/components/internalWithdraw/StepConfirmation.vue'
+import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
+import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
-import StepSuccessful from './views/withdraw/components/internalWithdraw/StepSuccessful.vue'
+import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
 import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
 
@@ -37,7 +36,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/forgot-password',
-    component: ForgotPassword
+    component: ForgotPassword,
   },
   {
     path: '/dashboard',
@@ -132,7 +131,7 @@ const routes: RouteRecordRaw[] = [
             ],
           },
           {
-            path: 'fiat/domestic',
+            path: 'fiat/:type',
             component: WithdrawFiatDomestic,
             children: [
               {
@@ -158,24 +157,24 @@ const routes: RouteRecordRaw[] = [
             component: StepSuccessful,
           },
 
-          {
-            path: 'fiat/international',
-            component: WithdrawFiatInternational,
-            children: [
-              {
-                path: '',
-                component: WithdrawFiatStepAccounts,
-              },
-              {
-                path: 'amount',
-                component: WithdrawFiatStepAmount,
-              },
-              {
-                path: 'confirmation',
-                component: WithdrawFiatStepConfirmation,
-              },
-            ],
-          },
+          // {
+          //   path: 'fiat/international',
+          //   component: WithdrawFiatInternational,
+          //   children: [
+          //     {
+          //       path: '',
+          //       component: WithdrawFiatStepAccounts,
+          //     },
+          //     {
+          //       path: 'amount',
+          //       component: WithdrawFiatStepAmount,
+          //     },
+          //     {
+          //       path: 'confirmation',
+          //       component: WithdrawFiatStepConfirmation,
+          //     },
+          //   ],
+          // },
           {
             path: 'fiat/international/new',
             component: NewBeneficiaryInternational,
@@ -202,7 +201,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
 
-  if ((to.path !== '/' && to.path !== '/forgot-password') && !userStore.getUser) {
+  if (to.path !== '/' && to.path !== '/forgot-password' && !userStore.getUser) {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser) {
     next({ path: '/dashboard' })

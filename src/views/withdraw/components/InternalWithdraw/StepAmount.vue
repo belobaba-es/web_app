@@ -20,8 +20,13 @@
         <label for="amount">{{ t('Amount') }}</label>
 
         <div class="flex">
-          <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount"
-                     :placeholder="t('amount')"/>
+          <InputText
+              id="amount"
+              type="number"
+              class="p-inputtext p-component b-gray"
+              v-model="amount"
+              :placeholder="t('amount')"
+          />
           <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
         </div>
       </div>
@@ -46,8 +51,12 @@
     <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
-        <InputText type="text" class="p-inputtext p-component  b-gray" v-model="reference"
-                   :placeholder="t('reference')"/>
+        <InputText
+            type="text"
+            class="p-inputtext p-component  b-gray"
+            v-model="reference"
+            :placeholder="t('reference')"
+        />
 
       </div>
     </div>
@@ -57,7 +66,7 @@
     </div>
     <div class="col-6">
 
-      <Button class="p-button " :label="t('continue')" @click="nextPage"/>
+      <Button class="w-75 p-button " :label="t('continue')" @click="nextPage"/>
     </div>
   </div>
 </template>
@@ -156,7 +165,7 @@ const validateField = (): boolean => {
 
 const nextPage = () => {
   if (!validateField()) {
-    return;
+    return
   }
 
   const page = 1
@@ -191,13 +200,4 @@ const selectedAsset = (evt: Asset) => {
 .title-beneficiary {
   color: #14443F;
 }
-
-.symbol {
-  background: #8CE2DB;
-  padding: 2px 20px;
-  color: #0F655D;
-  font-size: 2rem;
-  border-radius: 0;
-}
-
 </style>

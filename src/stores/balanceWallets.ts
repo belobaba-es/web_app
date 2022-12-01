@@ -40,7 +40,7 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
           }
 
           console.log('TOTAL', blocked + blockedBalance)
-          w.blockedBalance = blocked + blockedBalance
+          w.blockedBalance = Number(blocked) + Number(blockedBalance)
         }
       }
     },
