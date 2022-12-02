@@ -56,7 +56,7 @@ const toRoute = (item: Beneficiary) => {
     router.push({name: "withdraw-crypto-noba-amount"})
     
 } 
-const beneficiaryAssets = ref<Beneficiary[]>([])
+const beneficiaryAssets = ref<any[]>([])
 
 onMounted(async () => {
    beneficiaryService.listBeneficiaryAssets().then(data=>{
