@@ -23,7 +23,7 @@ import { ProfileService } from '../services/profile';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
-const { addDocumentToMember } = useAccount();
+const { addDocumentToMember, addDocumentToCompany } = useAccount();
 const { t } = useI18n({ useScope: 'global' });
 const props = defineProps({
     label: {
@@ -49,7 +49,11 @@ const props = defineProps({
     documentCountry: {
         type: String,
         required: true
-    }
+    },
+    isCompany: {
+        type: Boolean,
+        default: () => false
+    },
 });
 
 const loading = ref(false);
@@ -75,7 +79,7 @@ const handleUpload = async (event: any) => {
 
     formData.append("file", file);
     formData.append("accountId", props.accountId);
-    formData.append("isBusinessMember", "true");
+    formData.append("isBusinessMember", props.isCompany ? "false" : "true");
     formData.append("isAccountBusiness", "true");
     formData.append("documentSide", props.side);
     formData.append("taxId", props.taxId);
@@ -104,7 +108,11 @@ const handleUpload = async (event: any) => {
                 detail: t('shareholderDataSuccessSend'),
                 life: 3000,
             });
-            addDocumentToMember(props.taxId, newDocumentObject);
+            if(props.isCompany) {
+                addDocumentToCompany(newDocumentObject);
+            } else {
+                addDocumentToMember(props.taxId, newDocumentObject);
+            }
         })
         .catch(error => {
             setLoading(false);

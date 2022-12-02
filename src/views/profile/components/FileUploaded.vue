@@ -23,13 +23,18 @@ const props = defineProps({
     identityDocument: {
         type: Object,
         required: true,
+    },
+    isCompany: {
+        type: Boolean,
+        default: () => false
     }
 });
 
 const accountStore = useAccountStore();
 
 const editDocumentHandler = (taxId: string, documentId: string) => {
-    accountStore.editDocument(taxId, documentId);
+    console.log(props.isCompany);
+    accountStore.editDocument(taxId, documentId, props.isCompany);
 }
 
 </script>

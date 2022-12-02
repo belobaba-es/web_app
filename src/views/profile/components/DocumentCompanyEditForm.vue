@@ -2,19 +2,27 @@
     <div class="px-3 pt-3 pb-0">
         <div class="field">
             <p class="font-medium">{{ t('uploadFileText') }}</p>
-            <template v-if="canEdit(otherDocument.documentId)">
-                <FileInput
-                    label="other"
-                    side="front"
-                    type="other"
-                    :account-id="accountId!"
-                    :document-country="owner?.taxCountry!"
-                    :tax-id="owner?.taxId!"
-                />
-            </template>
-            <template v-else>
-                <FileUploaded :identity-document="utilityBill"/>
-            </template>
+            <div class="grid">
+                <div class="col-6">
+                    <template v-if="canEdit(otherDocument.documentId)">
+                        <FileInput
+                            label="other"
+                            side="front"
+                            type="other"
+                            :account-id="accountId!"
+                            :document-country="owner?.taxCountry!"
+                            :tax-id="owner?.taxId!"
+                            :is-company="true"
+                        />
+                    </template>
+                    <template v-else>
+                        <FileUploaded 
+                            :identity-document="otherDocument"
+                            :is-company="true"
+                        />
+                    </template>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -25,25 +33,33 @@
         </div>
         <div class="field">
             <p class="font-medium">{{ t('uploadFileText') }}</p>
-            <template v-if="canEdit(utilityBill.documentId)">
-                <FileInput
-                    label="utility_bill"
-                    side="front"
-                    type="utility_bill"
-                    :account-id="accountId!"
-                    :document-country="owner?.taxCountry!"
-                    :tax-id="owner?.taxId!"
-                />
-            </template>
-            <template v-else>
-                <FileUploaded :identity-document="utilityBill"/>
-            </template>
+            <div class="grid">
+                <div class="col-6">
+                    <template v-if="canEdit(utilityBill.documentId)">
+                        <FileInput
+                            label="utility_bill"
+                            side="front"
+                            type="utility_bill"
+                            :account-id="accountId!"
+                            :document-country="owner?.taxCountry!"
+                            :tax-id="owner?.taxId!"
+                            :is-company="true"
+                        />
+                    </template>
+                    <template v-else>
+                        <FileUploaded 
+                            :identity-document="utilityBill"
+                            :is-company="true"
+                        />
+                    </template>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import Divider from "primevue/divider";
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n';
@@ -63,6 +79,11 @@ onBeforeMount(() => {
     otherDocument.value = accountStore.findOtherDocumentCompany();
     console.log('onBeforeMount DocumentCompanyEditForm');
 });
+
+watch(owner?.value!, () => {
+    utilityBill.value = accountStore.findUtilityBillCompany();
+    otherDocument.value = accountStore.findOtherDocumentCompany();
+})
 
 const canEdit = (documentId: string) => {
     return documentId === documentToEdit.value?.documentId;

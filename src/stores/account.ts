@@ -190,8 +190,11 @@ export const useAccountStore = defineStore('account', {
         return document.documentType === 'utility_bill';
       });
     },
-    editDocument(taxId: string, documentId: string) {
-      const document = this.findDocumentToMember(taxId, documentId);
+    editDocument(taxId: string, documentId: string, isCompany: boolean = false) {
+      const document = !isCompany ?
+        this.findDocumentToMember(taxId, documentId) :
+        this.findDocumentCompany(documentId);
+
       this.documentToEdit = document;
     },
     findUtilityBillCompany() {
@@ -204,5 +207,11 @@ export const useAccountStore = defineStore('account', {
         return document.documentType === 'other';
       });
     },
+    findDocumentCompany(documentId: string) {
+      return this.owner?.documents.find(document => document.documentId === documentId);
+    },
+    addDocumentToCompany(payload: Document) {
+      this.owner?.documents.unshift(payload);
+    }
   },
 })

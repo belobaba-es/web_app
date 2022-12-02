@@ -264,6 +264,7 @@ export const useAccount = () => {
   const setAccountForm = (payload: FormData) => accountStore.setForm(payload)
   const setIsAccountBusiness = (payload: boolean) => accountStore.setIsAccountBusiness(payload)
   const addDocumentToMember = (taxId: string, payload: Document) => accountStore.addDocumentToMember(taxId, payload)
+  const addDocumentToCompany = (payload: Document) => accountStore.addDocumentToCompany(payload)
 
   return {
     fetchAccount,
@@ -299,5 +300,6 @@ export const useAccount = () => {
     setIsAccountBusiness,
     addDocumentToMember,
     getAccountId: () => accountStore.getAccountId(),
+    addDocumentToCompany,
   }
 }

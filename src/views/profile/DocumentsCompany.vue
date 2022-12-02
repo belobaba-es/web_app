@@ -9,7 +9,7 @@
     <div class="col-12 md:col-6">
       <Panel :header="t('uploadFileDocumentCompanyText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
-          <!-- <DocumentCompanyEditForm /> -->
+          <DocumentCompanyEditForm />
         </ScrollPanel>
       </Panel>
     </div>
