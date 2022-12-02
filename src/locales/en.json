@@ -141,5 +141,20 @@
     "forgotPasswordTitle": "Password recovery",
     "forgotPasswordSubtitle": "Enter your email address and you will receive a link to create a new password.",
     "forgotPasswordButton": "Send",
-    "alreadyAccount": "Do you already have an account?"
+    "alreadyAccount": "Do you already have an account?",
+    "documentsPersonTitle": "Verify Documents",
+    "documentsPersonText": "We are going to start with the document upload process for verification",
+    "addNewShareHolder": "Add New Shareholder",
+    "personalData": "Personal data",
+    "dni": "Identity document",
+    "contactInfo": "Contact information",
+    "documentsCompanyCardTitle": "COMPANY - OWNERSHIP STRUCTURE",
+    "documentTypePlaceHolder": "Choose document type",
+    "utilityBillLabel": "Proof of fiscal domicile",
+    "uploadFileText": "Upload the document file here (Supported format JPG, PNG or PDF)",
+    "uploadFileDocumentCompanyText": "COMPANY - DOCUMENT UPLOAD",
+    "uploadFileDocumentShareHolderText": "SHAREHOLDERS - DOCUMENT UPLOAD",
+    "selectFile": "Select File",
+    "updateDocuments": "UPDATE DOCUMENTS"
+
 }

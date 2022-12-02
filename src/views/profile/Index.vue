@@ -1,11 +1,11 @@
 <template>
     <div class="flex justify-content-between align-items-center">
-        <h1 class="text-2xl">Datos personales</h1>
+        <h1 class="text-2xl">{{ t('personalData') }}</h1>
         <template v-if="loading">
             <Skeleton width="6rem" height="2rem" class="px-3 mb-3"></Skeleton>
         </template>
         <template v-else>
-            <Button label="Editar" icon="pi pi-pencil" iconPos="right" class="p-button-link"
+            <Button :label="t('edit')" icon="pi pi-pencil" iconPos="right" class="p-button-link"
             @click="editProfile()" />
         </template>
     </div>
@@ -25,7 +25,7 @@
             <Skeleton class="mb-2"></Skeleton>
         </template>
         <template v-else>
-            <h5 class="text-base text-600">Docuemnto de identidad</h5>
+            <h5 class="text-base text-600">{{ t('dni') }}</h5>
             <p class="text-base font-medium">{{ taxId }}</p>
         </template>
         <Divider type="solid" />
@@ -36,7 +36,7 @@
                 <Skeleton class="mb-2"></Skeleton>
             </template>
             <template v-else>
-                <h5 class="text-base text-600">Fecha de nacimiento</h5>
+                <h5 class="text-base text-600">{{ t('birthdateLabel') }}</h5>
                 <p class="text-base font-medium">{{ dateBirth }}</p>
             </template>
         </template>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="pt-5 flex justify-content-between align-items-center">
-        <h1 class="text-2xl">Informacion de contacto</h1>
+        <h1 class="text-2xl">{{ t('contactInfo') }}</h1>
     </div>
     <div class="card">
         <template v-if="loading">

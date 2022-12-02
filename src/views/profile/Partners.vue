@@ -29,7 +29,7 @@
                     <img src="../../assets/icons/user-add.svg"/>
                 </div>
                 <div>
-                    <p class="text-lg">Add new Shareholder</p>
+                    <p class="text-lg">{{ t('addNewShareHolder') }}</p>
                 </div>
             </div>
         </div>
@@ -41,6 +41,9 @@ import Button from 'primevue/button';
 import { useAccount } from '../../composables/useAccount';
 import { useRouter } from 'vue-router';
 import { Member } from './types/account.interface';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n({ useScope: 'global' });
 const { members, getFullName } = useAccount();
 const router = useRouter();
 

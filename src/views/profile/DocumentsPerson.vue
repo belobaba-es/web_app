@@ -1,21 +1,21 @@
 <template>
     <div>
-        <h1 class="text-2xl">Documentos</h1>
+        <h1 class="text-2xl">{{ t('documents') }}</h1>
     </div>
     <template v-if="isInitFileLoader">
         <div id="websdk"></div>
     </template>
     <template v-else>
         <div class="grid">
-            <div class="col-12 md:col-4 flex align-items-center">
+            <div class="col-12 md:col-5 flex align-items-center">
                 <div>
-                    <h2 class="text-5xl mb-5 font-light">Verify Documents</h2>
+                    <h2 class="text-5xl mb-5 font-light">{{ t('documentsPersonTitle') }}</h2>
                     <p class="text-3xl">
-                        We are going to start with the document upload process for verification
+                        {{ t('documentsPersonText') }}
                     </p>
                     <div class="mt-5">
                         <Button 
-                            label="UPDATE DOCUMENTS" 
+                            :label="t('updateDocuments')"
                             class="p-button-raised py-3 px-6 font-bold"
                             icon="pi pi-angle-right"
                             icon-pos="right"
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 md:col-6">
+            <div class="col-12 md:col-7">
                 <img src="../../assets/img/ilustracion@2x.png" class="w-full"/>
             </div>
         </div>
@@ -36,7 +36,9 @@
 import Button from 'primevue/button';
 import { onMounted, ref } from 'vue';
 import { useAccount } from '../../composables/useAccount';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n({ useScope: 'global' });
 const isInitFileLoader = ref(false);
 const loadingBtn = ref(false);
 

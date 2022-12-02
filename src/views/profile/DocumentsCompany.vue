@@ -1,24 +1,17 @@
 <template>
     <div class="flex justify-content-between align-items-center">
-    <h1 class="text-2xl">Documents</h1>
+    <h1 class="text-2xl">{{ t('documents') }}</h1>
   </div>
   <div class="mb-4">
-    <p class="font-medium text-sm uppercase">COMPANY - OWNERSHIP STRUCTURE</p>
+    <p class="font-medium text-sm uppercase">{{ t('documentsCompanyCardTitle') }}</p>
   </div>
   <div class="grid">
     <div class="col-12 md:col-6">
-      <Panel header="EMPRESA - CARGA DE DOCUMENTOS" class="shareholders-panel">
+      <Panel :header="t('uploadFileDocumentCompanyText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
           <div class="px-3 pt-3 pb-0">
-            <div>
-              <p class="font-semibold">Tipo de documento empresa que indiquen la estructura de propiedad</p>
-            </div>
             <div class="field">
-              <Dropdown v-model="companyDocumentType" :options="companyDocumentTypeOptions"
-                placeholder="Elija el tipo de documento" class="w-full" />
-            </div>
-            <div class="field">
-              <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
+              <p class="font-medium">{{ t('uploadFileText') }}</p>
               <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
             </div>
             <div class="grid px-2 gap-2">
@@ -34,10 +27,10 @@
           <Divider />
           <div class="px-3 py-3">
             <div class="mb-4">
-              <p class="font-semibold">Comprobante de domicilio fiscal</p>
+              <p class="font-semibold">{{ t('utilityBillLabel') }}</p>
             </div>
             <div class="field">
-              <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
+              <p class="font-medium">{{ t('uploadFileText') }}</p>
               <FileUpload mode="basic" name="demo[]" url="./upload" chooseLabel="Seleccionar archivo" />
             </div>
             <div class="col-auto">
@@ -48,7 +41,7 @@
       </Panel>
     </div>
     <div class="col-12 md:col-6">
-      <Panel header="ACCIONISTAS - CARGA DE DOCUMENTOS" class="shareholders-panel">
+      <Panel :header="t('uploadFileDocumentShareHolderText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
           <div v-for="(partner, idx) in members">
             <DocumentPartnersEditForm
@@ -63,18 +56,16 @@
 
 <script setup lang="ts">
 import Panel from 'primevue/panel';
-import Dropdown from 'primevue/dropdown';
-import { ref } from "vue";
 import FileUpload from 'primevue/fileupload';
 import Divider from "primevue/divider";
 import ScrollPanel from 'primevue/scrollpanel';
 import Chip from 'primevue/chip';
 import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue';
 import { useAccount } from '../../composables/useAccount';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n({ useScope: 'global' });
 const { owner, members } = useAccount();
-const companyDocumentTypeOptions = ref([]);
-const companyDocumentType = ref('');
 
 </script>
 

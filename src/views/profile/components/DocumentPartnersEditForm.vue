@@ -12,7 +12,7 @@
                     :options="documentTypeOptions"
                     option-label="name"
                     option-value="value"
-                    placeholder="Elija el tipo de documento"
+                    :placeholder="t('documentTypePlaceHolder')"
                     class="w-full"
                 />
             </div>
@@ -48,10 +48,10 @@
             </div>
             <div class="field col-12">
                 <div class="mb-4">
-                    <p class="font-semibold">Comprobante de domicilio fiscal</p>
+                    <p class="font-semibold">{{ t('utilityBillLabel') }}</p>
                 </div>
                 <div class="field">
-                    <p class="font-medium">Cargue el archivo del documento aqui (Formato admitido JPG, PNG o PDF)</p>
+                    <p class="font-medium">{{ t('uploadFileText') }}</p>
                     <div class="grid">
                         <div class="col-6">
                             <FileInput 

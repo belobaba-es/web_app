@@ -141,5 +141,19 @@
     "forgotPasswordTitle": "Recuperar contraseña",
     "forgotPasswordSubtitle": "Escribe tu correo electronico y recibirás un enlace para crear la contraseña nueva.",
     "forgotPasswordButton": "Enviar",
-    "alreadyAccount": "¿Ya tienes tu contraseña?"
+    "alreadyAccount": "¿Ya tienes tu contraseña?",
+    "documentsPersonTitle": "Verificar los documentos",
+    "documentsPersonText": "Vamos a comenzar con el proceso de carga de documentos para su verificación",
+    "addNewShareHolder": "Añadir nuevo accionista",
+    "personalData": "Datos personales",
+    "dni": "Documento de identidad",
+    "contactInfo": "Información de contacto",
+    "documentsCompanyCardTitle": "EMPRESA - ESTRUCTURA DE PROPIEDAD",
+    "documentTypePlaceHolder": "Elija el tipo de documento",
+    "utilityBillLabel": "Prueba de domicilio fiscal",
+    "uploadFileText": "Suba el archivo del documento aquí (formato compatible JPG, PNG o PDF)",
+    "uploadFileDocumentCompanyText": "EMPRESA - CARGA DE DOCUMENTOS",
+    "uploadFileDocumentShareHolderText": "ACCIONISTAS - CARGA DE DOCUMENTOS",
+    "selectFile": "Seleccione el archivo",
+    "updateDocuments": "ACTUALIZAR LOS DOCUMENTOS"
 }
