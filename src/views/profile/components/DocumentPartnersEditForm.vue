@@ -17,10 +17,7 @@
                 />
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="identityDocuments.frontSide">
-                    <FileUploaded :identity-document="identityDocuments.frontSide"/>
-                </template>
-                <template v-else>
+                <template v-if="canEdit(identityDocuments.frontSide.documentId)">
                     <FileInput 
                         :label="accountStore.documentType+'_front_side'"
                         side="front" 
@@ -30,12 +27,12 @@
                         :type="accountStore.documentType"
                     />
                 </template>
+                <template v-else>
+                    <FileUploaded :identity-document="identityDocuments.frontSide"/>
+                </template>
             </div>
             <div class="field col-12 md:col-6">
-                <template v-if="identityDocuments.backSide">
-                    <FileUploaded :identity-document="identityDocuments.backSide"/>
-                </template>
-                <template v-else>
+                <template v-if="canEdit(identityDocuments.backSide.documentId)">
                     <FileInput
                         :label="accountStore.documentType+'_back_side'"
                         side="backside"
@@ -44,6 +41,9 @@
                         :tax-id="member.taxId"
                         :type="accountStore.documentType"
                     />
+                </template>
+                <template v-else>
+                    <FileUploaded :identity-document="identityDocuments.backSide"/>
                 </template>
             </div>
             <div class="field col-12">
@@ -54,14 +54,19 @@
                     <p class="font-medium">{{ t('uploadFileText') }}</p>
                     <div class="grid">
                         <div class="col-6">
-                            <FileInput 
-                                label="utility_bill"
-                                side="address"
-                                type="utility_bill"
-                                :account-id="accountId!"
-                                :document-country="member.taxCountry"
-                                :tax-id="member.taxId"
-                            />
+                            <template v-if="canEdit(utilityBill.documentId)">
+                                <FileInput 
+                                    label="utility_bill"
+                                    side="front"
+                                    type="utility_bill"
+                                    :account-id="accountId!"
+                                    :document-country="member.taxCountry"
+                                    :tax-id="member.taxId"
+                                />
+                            </template>
+                            <template v-else>
+                                <FileUploaded :identity-document="utilityBill"/>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -89,7 +94,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { getFullName, accountId, documentType, members } = useAccount();
+const { getFullName, accountId, documentType, members, documentToEdit } = useAccount();
 
 const documentTypeOptions = ref([
   { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
@@ -99,10 +104,13 @@ const documentTypeOptions = ref([
 
 const member = ref();
 const identityDocuments = ref();
+const utilityBill = ref();
 
 onBeforeMount(() => {
     member.value = accountStore.findMember(props.taxId);
     identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
+    utilityBill.value = accountStore.findUtilityBill(props.taxId);
+    console.log('onBeforeMount DocumentPartnersEditForm');
 });
 
 watch(documentType, () => {
@@ -111,7 +119,12 @@ watch(documentType, () => {
 
 watch(members?.value!, () => {
     identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
+    utilityBill.value = accountStore.findUtilityBill(props.taxId);
 })
+
+const canEdit = (documentId: string) => {
+    return documentId === documentToEdit.value?.documentId;
+}
 
 </script>
 

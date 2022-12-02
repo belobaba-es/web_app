@@ -6,11 +6,11 @@
         <span>
             {{ props.identityDocument.label }}
         </span>
-        <span class="cursor-pointer" @click="removeDocumentHandler(
+        <span class="cursor-pointer" @click="editDocumentHandler(
             props.identityDocument.taxId,
             props.identityDocument.documentId
         )">
-            <i class="pi pi-trash"></i>
+            <i class="pi pi-pencil"></i>
         </span>
     </div>
 </template>
@@ -28,8 +28,8 @@ const props = defineProps({
 
 const accountStore = useAccountStore();
 
-const removeDocumentHandler = (taxId: string, documentId: string) => {
-    accountStore.removeDocument(taxId, documentId);
+const editDocumentHandler = (taxId: string, documentId: string) => {
+    accountStore.editDocument(taxId, documentId);
 }
 
 </script>

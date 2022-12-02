@@ -23,7 +23,8 @@ interface AccountState {
   status: string | null
   loading: boolean
   form: FormData
-  documentType: string
+  documentType: string,
+  documentToEdit: Document | undefined
 }
 
 interface FormGeneralData {
@@ -92,6 +93,7 @@ export const useAccountStore = defineStore('account', {
       isAccountBusiness: false,
     },
     documentType: 'government_id',
+    documentToEdit: undefined,
   }),
   actions: {
     getAccountId() {
@@ -182,6 +184,25 @@ export const useAccountStore = defineStore('account', {
       const backSide = filtered?.find(document => document.documentSide === 'backside');
 
       return { frontSide, backSide }
+    },
+    findUtilityBill(taxId: string) {
+      return this.findMember(taxId)?.documents.find(document => {
+        return document.documentType === 'utility_bill';
+      });
+    },
+    editDocument(taxId: string, documentId: string) {
+      const document = this.findDocumentToMember(taxId, documentId);
+      this.documentToEdit = document;
+    },
+    findUtilityBillCompany() {
+      return this.owner?.documents.find(document => {
+        return document.documentType === 'utility_bill';
+      });
+    },
+    findOtherDocumentCompany() {
+      return this.owner?.documents.find(document => {
+        return document.documentType === 'other';
+      });
     },
   },
 })
