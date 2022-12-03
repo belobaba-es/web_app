@@ -129,6 +129,7 @@
     "streetAddress": "Dirección (apt, suite, etc.)",
     "saveNewPayee": "Guardar nuevo beneficiario",
     "newBeneficiary": "Nuevo Beneficiario",
+    "beneficiaryAddress": "Dirección del beneficiario",
     "docTypeLabelDriversLicense": "Licencia de conducir",
     "docTypeLabelGovernmentId": "Identificación del Gobierno",
     "docTypeLabelPassport": "Pasaporte",
@@ -155,7 +156,7 @@
     "uploadFileDocumentCompanyText": "EMPRESA - CARGA DE DOCUMENTOS",
     "uploadFileDocumentShareHolderText": "ACCIONISTAS - CARGA DE DOCUMENTOS",
     "selectFile": "Seleccione el archivo",
-    "updateDocuments": "ACTUALIZAR LOS DOCUMENTOS",
     "viewSwapHistory": "Ver el historial de intercambios",
-    "iHave": "Yo tengo"
+    "iHave": "Yo tengo",
+    "intermediaryBankAddress": "Dirección del banco intermediario"
 }

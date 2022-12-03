@@ -7,11 +7,11 @@
         </div>
         <div class="flex justify-content-evenly" >
             <router-link to="/deposit/fiat">
-                <CardButon class="m-4" icon="src/assets/icons/save-money.svg" :label="t('fiatWallet')"/>
+                <CardButon class="m-4" :icon="saveMoney" :label="t('fiatWallet')"/>
             </router-link>
        
             <router-link to="/deposit/crypto">
-                <CardButon class="m-4" icon="src/assets/icons/ewallet.svg" :label="t('cryptoWallet')"/>
+                <CardButon class="m-4" :icon="ewallet" :label="t('cryptoWallet')"/>
             </router-link>
 
         </div>
@@ -23,9 +23,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
+import {ref} from 'vue';
+import {useI18n} from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
+import saveMoney from "../../assets/icons/save-money.svg"
+import ewallet from "../../assets/icons/ewallet.svg"
+
+
 interface tabItem {
     label: string;
     icon?: string;

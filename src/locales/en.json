@@ -129,6 +129,7 @@
     "streetAddress": "Street Address (Apt, Suite, Etc.)",
     "saveNewPayee": "Save new payee",
     "newBeneficiary": "New Beneficiary",
+    "beneficiaryAddress": "Beneficiary Address",
     "docTypeLabelDriversLicense": "Driver License",
     "docTypeLabelGovernmentId": "GovernmentId",
     "docTypeLabelPassport": "Passport",
@@ -155,7 +156,7 @@
     "uploadFileDocumentCompanyText": "COMPANY - DOCUMENT UPLOAD",
     "uploadFileDocumentShareHolderText": "SHAREHOLDERS - DOCUMENT UPLOAD",
     "selectFile": "Select File",
-    "updateDocuments": "UPDATE DOCUMENTS",
     "viewSwapHistory": "View Swap History",
-    "iHave": "I Have"
+    "iHave": "I Have",
+    "intermediaryBankAddress": "Intermediary bank address"
 }

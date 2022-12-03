@@ -1,6 +1,6 @@
 <template>
   <div class="col-4 mt-4 mb-4" v-if="toNew != ''">
-    <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNewBeneficiary"/>
+    <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNew"/>
   </div>
 
 
