@@ -158,5 +158,12 @@
     "selectFile": "Seleccione el archivo",
     "viewSwapHistory": "Ver el historial de intercambios",
     "iHave": "Yo tengo",
-    "intermediaryBankAddress": "Dirección del banco intermediario"
+    "intermediaryBankAddress": "Dirección del banco intermediario",
+    "swapSuccessfulTitle": "Intercambio exitoso",
+    "swapSuccessfulText": "La transacción se ha procesado con éxito. La transferencia puede estar todavía en proceso; compruebe el registro de transacciones más tarde.",
+    "swapFrom": "de",
+    "swapTo": "a",
+    "swapPriceQuote": "Presupuesto / Precio",
+    "swapBackButtonTitle": "Volver al intercambio", 
+    "swapExchangeServiceText": "Los servicios de intercambio están disponibles a través de proveedores de API de terceros"
 }

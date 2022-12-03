@@ -48,7 +48,7 @@
                         <Button label="Asset SWAP" class="w-full py-3 text-uppercase"/>
                     </div>
                     <div>
-                        <p class="text-sm text-center">Exchange services are available through third-party API providers</p>
+                        <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
                     </div>
                 </div>
             </div>
