@@ -1,17 +1,17 @@
 <template>
   <div class="col-8">
-    <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
+    <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span></p>
     <div class="flex align-items-center">
       <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
-      <span class="text-xl"> {{type}} Wire</span>
+      <span class="text-xl"> {{ type }} Wire</span>
     </div>
-    <Steps :model="items" :readonly="false" />
+    <Steps :model="items" :readonly="false"/>
     <!-- <div class="mt-4 mb-4">
         <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
     </div> -->
     <router-view v-slot="{Component}"
                  :list="listBeneficiary"
-                 toNew="/withdraw/fiat/domestic/new"
+                 :toNew="newBeneficiary"
                  :formData="formObject"
                  @prevPage="prevStepPage($event)"
                  @nextPage="nextStepPage($event)"
@@ -19,7 +19,7 @@
     >
 
       <keep-alive>
-        <component :is="Component" />
+        <component :is="Component"/>
       </keep-alive>
     </router-view>
 
@@ -45,7 +45,7 @@ import {useWithdraw} from '../composables/useWithdraw';
 const router = useRouter();
 const route = useRoute()
 const toast = useToast();
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
 
 const search = ref('')
 const type = ref('Domestic')
@@ -80,8 +80,8 @@ const {
 } = useWithdraw(items)
 
 
-const newBeneficiary = ()=> {
-  router.push('/withdraw/fiat/domestic/new')
+const newBeneficiary = () => {
+  return router.push(`/withdraw/fiat/${route.params.type}/new`)
 }
 const beneficiaryAssets = ref<BeneficiaryAssets[]>([])
 
@@ -98,10 +98,17 @@ onMounted(async () => {
 
 const onSearch = () => {
   console.log(search.value)
-  accountService.getAccountByEmail(search.value).then(resp=>{
+  accountService.getAccountByEmail(search.value).then(resp => {
     console.log(resp)
-    beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
-  }).catch(error=>{
+    beneficiaryAssets.value = [{
+      label: resp.name,
+      accountId: resp.email,
+      assetId: resp.email,
+      id: '',
+      walletAddress: '',
+      assetTransferMethod: ''
+    }]
+  }).catch(error => {
     console.log(error.response)
     toast.add({
       severity: 'error',
@@ -115,7 +122,7 @@ const onSearch = () => {
 </script>
 
 <style scoped>
-.search-btn{
+.search-btn {
   width: 30% !important;
 }
 </style>

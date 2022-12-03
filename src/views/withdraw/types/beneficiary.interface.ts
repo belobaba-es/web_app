@@ -40,7 +40,7 @@ interface IntermediaryBank {
   nameBank: string
   intermediaryBankState: string
   swiftCode: string
-  intermediaryBankBName: string
+  intermediaryBankName: string
   intermediaryBankStreetTwo: string
   intermediaryBankAccountNumber: string
   intermediaryBankStreetOne: string
@@ -64,6 +64,7 @@ export interface BeneficiaryFiat {
   accountId?: string
   accountNumber: string
   routingNumber: string
+  bankName: string
   typeBeneficiaryBankWithdrawal: string
 }
 

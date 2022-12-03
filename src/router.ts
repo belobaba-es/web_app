@@ -156,7 +156,14 @@ const routes: RouteRecordRaw[] = [
             path: 'fiat/domestic/successful',
             component: StepSuccessful,
           },
-
+          {
+            path: 'fiat/international/new',
+            component: NewBeneficiaryInternational,
+          },
+          {
+            path: 'fiat/international/successful',
+            component: StepSuccessful,
+          },
           // {
           //   path: 'fiat/international',
           //   component: WithdrawFiatInternational,
@@ -175,14 +182,7 @@ const routes: RouteRecordRaw[] = [
           //     },
           //   ],
           // },
-          {
-            path: 'fiat/international/new',
-            component: NewBeneficiaryInternational,
-          },
-          {
-            path: 'fiat/international/successful',
-            component: StepSuccessful,
-          },
+
           {
             path: 'crypto',
             component: DepositCrypto,
