@@ -155,5 +155,7 @@
     "uploadFileDocumentCompanyText": "EMPRESA - CARGA DE DOCUMENTOS",
     "uploadFileDocumentShareHolderText": "ACCIONISTAS - CARGA DE DOCUMENTOS",
     "selectFile": "Seleccione el archivo",
-    "updateDocuments": "ACTUALIZAR LOS DOCUMENTOS"
+    "updateDocuments": "ACTUALIZAR LOS DOCUMENTOS",
+    "viewSwapHistory": "Ver el historial de intercambios",
+    "iHave": "Yo tengo"
 }

@@ -28,6 +28,9 @@ import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
 import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/StepAccounts.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
+import SwapIndexVue from './views/swap/Index.vue'
+import SwapHistory from './views/swap/History.vue'
+import SwapSuccess from './views/swap/Success.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -189,6 +192,23 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: '/swap',
+        children: [
+          {
+            path: '',
+            component: SwapIndexVue
+          },
+          {
+            path: 'history',
+            component: SwapHistory
+          },
+          {
+            path: 'success',
+            component: SwapSuccess
+          }
+        ]
+      }
     ],
   },
 ]

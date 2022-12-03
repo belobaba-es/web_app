@@ -155,6 +155,7 @@
     "uploadFileDocumentCompanyText": "COMPANY - DOCUMENT UPLOAD",
     "uploadFileDocumentShareHolderText": "SHAREHOLDERS - DOCUMENT UPLOAD",
     "selectFile": "Select File",
-    "updateDocuments": "UPDATE DOCUMENTS"
-
+    "updateDocuments": "UPDATE DOCUMENTS",
+    "viewSwapHistory": "View Swap History",
+    "iHave": "I Have"
 }
