@@ -17,40 +17,19 @@
     </div>
   </section>
 
-  <Dialog
-      :visible="showModal"
-      @update:visible="modal($event)"
-      :modal="true"
+  <ModalAssetSelector
+      :show-modal="showModal" @update:visible="modal($event)"
       closeIcon="pi pi-times-circle"
       :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-  >
-    <template #header>
-      <h3 class="font-medium">{{ t('selectCrypto') }}</h3>
-    </template>
-    <div class="grid">
-      <div
-          v-for="(item) in listAsset"
-          class="col-12 grid selectCypto"
-          @click="selectedAsset(item)"
-      >
-        <div class="col-2">
-          <img width="26" :src="item.icon"/>
-        </div>
-        <div class="col-10 text-uppercase">
-          <strong class="font-medium">{{ item.code }}</strong> {{ item.name }}
-        </div>
-      </div>
-    </div>
-  </Dialog>
-
+      @selected-asset="selectedAsset"
+  />
 </template>
 
 <script setup lang="ts">
 import {ref} from "vue"
-import Dialog from 'primevue/dialog'
-import {AssetsService} from "../views/deposit/services/assets"
 import {Asset} from "../views/deposit/types/asset.interface"
 import {useI18n} from "vue-i18n"
+import ModalAssetSelector from "./ModalAssetSelector.vue";
 
 const showModal = ref(false)
 const nameAsset = ref('Bitcoin')
@@ -58,20 +37,7 @@ const iconAsset = ref('https://storage.googleapis.com/noba-dev/798debbc-ec84-43e
 
 const {t} = useI18n({useScope: 'global'})
 
-let listAsset: Asset[]
-
 const emit = defineEmits(['selectedAsset']);
-
-const assetService = AssetsService.instance()
-assetService.list().then(data => {
-  listAsset = data as Asset[]
-
-  for (const asset of listAsset) {
-    if (asset.code === 'bitcoin') {
-      selectedAsset(asset)
-    }
-  }
-})
 
 const modal = (b: boolean) => {
   showModal.value = b
