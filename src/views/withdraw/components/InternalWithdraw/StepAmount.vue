@@ -104,6 +104,7 @@ const assetId = ref('')
 const asset = ref('USD')
 const assetSymbol = ref('USD')
 const balance = ref(0)
+const total = ref(0)
 const isAsset = route.params.type === 'crypto'
 
 const showAmount = ref(!isAsset)
@@ -120,8 +121,8 @@ const events = ref<any>([
 
 const amountFee = computed(() => {
 
-  const total = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
-  if (total > balance.value) {
+  const t = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+  if (t > balance.value) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',
@@ -131,10 +132,16 @@ const amountFee = computed(() => {
 
     amount.value = '0'
 
-    return 0
+    total.value = 0
   }
 
-  return total
+  if (assetSymbol.value === 'USD') {
+    total.value = Number(t.toFixed(2))
+  }
+
+  total.value = Number(t.toFixed(8))
+
+  return Number(t.toFixed(8))
 })
 
 const validateField = (): boolean => {
@@ -176,7 +183,8 @@ const nextPage = () => {
     reference: reference.value,
     asset: asset.value,
     symbol: assetSymbol.value,
-    assetId: assetId.value
+    assetId: assetId.value,
+    total: total.value
   };
   emit('nextPage', {
     pageIndex: page,

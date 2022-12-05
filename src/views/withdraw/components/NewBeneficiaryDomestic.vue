@@ -121,7 +121,7 @@
 
       <div class="field flex justify-content-end">
         <Button
-            :label="t('saveNewPayee')"
+            :label="t('Save new beneficiary')"
             class="px-5"
             @click="saveBeneficiary"
         />

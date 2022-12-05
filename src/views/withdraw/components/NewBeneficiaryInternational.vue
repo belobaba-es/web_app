@@ -84,7 +84,7 @@
       <div class="field">
         <label>{{ t('swiftCode') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="form.intermediaryBank.swiftCode"/>
+          <InputText type="text" v-model="form.swiftCode"/>
         </div>
       </div>
 
@@ -282,6 +282,8 @@
             :label="t('Save new beneficiary')"
             class="px-5"
             @click="saveBeneficiary"
+            iconPos="right"
+            :loading="submitting"
         />
       </div>
     </div>
@@ -346,15 +348,14 @@ const form = ref<BeneficiaryFiatInternacional>({
   state: "",
   iban: "",
   bankName: "",
+  swiftCode: "",
   intermediaryBank: {
     bankCity: "",
     intermediaryBankCountry: "",
     intermediaryBankCity: "",
     bankPostalCode: "",
     intermediaryBankPostalCode: "",
-    nameBank: "",
     intermediaryBankState: "",
-    swiftCode: "",
     intermediaryBankName: "",
     intermediaryBankStreetTwo: "",
     intermediaryBankAccountNumber: "",

@@ -32,8 +32,9 @@ import {useI18n} from "vue-i18n"
 import ModalAssetSelector from "./ModalAssetSelector.vue";
 
 const showModal = ref(false)
-const nameAsset = ref('Bitcoin')
-const iconAsset = ref('https://storage.googleapis.com/noba-dev/798debbc-ec84-43ea-8096-13e2ebcf4749.svg')
+const nameAsset = ref('')
+// const iconAsset = ref('https://storage.googleapis.com/noba-dev/798debbc-ec84-43ea-8096-13e2ebcf4749.svg')
+const iconAsset = ref('')
 
 const {t} = useI18n({useScope: 'global'})
 

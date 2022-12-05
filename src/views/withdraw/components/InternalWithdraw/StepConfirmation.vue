@@ -34,7 +34,7 @@
 
     <div class="col-12">
       <p class="font-medium green-color">
-        {{ formData.amount }} {{ assetSymbol }}
+        {{ formData.total }} {{ assetSymbol }}
       </p>
     </div>
     <div class="col-12 mb-3 mt-3">
