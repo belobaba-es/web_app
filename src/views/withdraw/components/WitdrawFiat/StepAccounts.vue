@@ -1,5 +1,5 @@
 <template>
-  <div class="col-4 mt-4 mb-4" v-if="toNew !== ''">
+  <div class="col-4 mt-4 mb-4">
     <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNew"/>
   </div>
 
@@ -49,7 +49,7 @@ const {t} = useI18n({useScope: 'global'})
 const props = defineProps<{
   list: Array<any>,
   formData: any,
-  toNew: string
+  toNew: any
 }>()
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary']);
 const search = ref('')
@@ -86,10 +86,6 @@ const onSearch = () => {
   //       life: 4000,
   //     })1
   // })
-}
-
-const toNewBeneficiary = () => {
-  router.push(props.toNew)
 }
 
 </script>
