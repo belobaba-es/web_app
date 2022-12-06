@@ -5,7 +5,7 @@
                 <div class="flex justify-content-end mb-4">
                     <Button type="button" :label="t('viewSwapHistory')"
                         class="font-light mt-lg-5 border-300 bg-white text-black-alpha-80" icon="pi pi-history"
-                        icon-pos="right" />
+                        icon-pos="right" @click="router.push('/swap/history')" />
                 </div>
                 <div class="flex-row">
                     <div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <Button label="Asset SWAP" class="w-full py-3 text-uppercase"/>
+                        <Button label="Asset SWAP" class="w-full py-3 text-uppercase" @click="router.push('/swap/success')"/>
                     </div>
                     <div>
                         <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
@@ -68,8 +68,9 @@ import { Asset } from '../deposit/types/asset.interface';
 import { SwapAsset } from './types/swap-asset.interface';
 import ModalAssetSelector from '../../components/ModalAssetSelector.vue';
 import ProgressBar from 'primevue/progressbar';
-
+import { useRouter } from 'vue-router';
 const { t } = useI18n({ useScope: 'global' });
+const router = useRouter();
 
 const showModalAsset = ref(false);
 const showModalAssetDirection = ref();

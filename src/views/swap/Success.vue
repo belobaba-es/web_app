@@ -48,11 +48,11 @@
                 <div class="flex justify-content-center mt-lg-2">
                     <div class="mr-4">
                         <Button type="button" icon="pi pi-angle-left" :label="t('swapBackButtonTitle')"
-                            class="font-light w-100" />
+                            class="font-light w-100" @click="router.push('/swap')" />
                     </div>
                     <div class="">
                         <Button type="button" icon="pi pi-history" iconPos="right" :label="t('viewSwapHistory')"
-                            class="font-light w-100 border-300 p-button-outlined"/>
+                            class="font-light w-100 border-300 p-button-outlined" @click="router.push('/swap/history')"/>
                     </div>
                 </div>
             </div>
@@ -66,9 +66,12 @@ import { useSwap } from '../../composables/useSwap';
 import { useI18n } from "vue-i18n";
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n({ useScope: 'global' });
 const { successIcon, swapOneArrowIcon } = useSwap();
+const router = useRouter();
+
 </script>
 
 <style scoped>

@@ -49,6 +49,13 @@ export const useWithdraw = (items: any) => {
     })
   }
 
+  const fetchBeneficiariesAssets = async () => {
+    const beneficiaryService = BeneficiaryService.instance()
+    await beneficiaryService.listBeneficiaryAssets().then(resp => {
+      listBeneficiary.value = resp.results
+    })
+  }
+
   return {
     formObject,
     listBeneficiary,
@@ -58,5 +65,6 @@ export const useWithdraw = (items: any) => {
     prevStepPage,
     stepComplete,
     toBack,
+    fetchBeneficiariesAssets
   }
 }

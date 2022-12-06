@@ -165,6 +165,10 @@
     "swapTo": "to",
     "swapPriceQuote": "Quote / Price",
     "swapBackButtonTitle": "Back to swap", 
-    "swapExchangeServiceText": "Exchange services are available through third-party API providers"
-
+    "swapExchangeServiceText": "Exchange services are available through third-party API providers",
+    "wallets": "Wallets",
+    "amount": "Amount",
+    "confirmation": "Confirmation",
+    "beneficiary": "Beneficiary",
+    "description": "Description"
 }

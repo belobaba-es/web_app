@@ -22,7 +22,7 @@
 
         <CardButon class="m-4" :label="t('betweenNOBACrypto')" to="/withdraw/noba/crypto"/>
 
-        <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto"/>
+        <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto/other"/>
       </div>
 
     </div>
