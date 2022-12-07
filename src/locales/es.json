@@ -166,5 +166,6 @@
     "swapPriceQuote": "Presupuesto / Precio",
     "swapBackButtonTitle": "Volver al intercambio", 
     "swapExchangeServiceText": "Los servicios de intercambio están disponibles a través de proveedores de API de terceros",
-    "reference": "Referencia"
+    "reference": "Referencia",
+    "rememberMe": "Recordarme"
 }

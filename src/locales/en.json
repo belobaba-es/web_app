@@ -175,5 +175,6 @@
     "searchBeneficiaryLabel": "Search Beneficiary",
     "label": "Label",
     "pleaseVerifyField": "Please verify the form fields",
-    "reference": "Reference"
+    "reference": "Reference",
+    "rememberMe": "Remember me"
 }

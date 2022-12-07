@@ -24,12 +24,12 @@
             <div class="field-checkbox mt-2">
                 <Checkbox inputId="binary" v-model="form.remember" :binary="true" />
                 <label for="binary">
-                  Recuerdame
+                  {{ t('rememberMe') }}
                 </label>
             </div>
             <div>
               <RouterLink to="/forgot-password">
-                Recuperar contresana
+                {{ t('recoveryPassword')}}
               </RouterLink>
             </div>
           </div>
@@ -40,6 +40,7 @@
                 icon="pi pi-angle-left"
                 :label="t('backButtonTitle')"
                 class="font-light w-100 border-300 p-button-outlined"
+                @click="redirectPage"
               />
             </div>
             <div class="float-right w-25">
@@ -55,7 +56,12 @@
           </div>
         </form>
       </div>
-      <Button type="button" :label="t('noAccount')" class="font-light mt-lg-5 p-button-outlined border-300" />
+      <Button
+          type="button"
+          :label="t('noAccount')"
+          class="font-light mt-lg-5 p-button-outlined border-300"
+          @click="redirectSignin"
+      />
     </div>
     <div class="container-center">
       <div>
@@ -69,12 +75,12 @@ import {reactive, ref} from 'vue'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import { useI18n } from 'vue-i18n'
+import {useI18n} from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
-import { LoginService } from './services/login'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '../../stores/user'
+import {LoginService} from './services/login'
+import {useRouter} from 'vue-router'
+import {useUserStore} from '../../stores/user'
 import {useToast} from "primevue/usetoast";
 import Checkbox from 'primevue/checkbox';
 
@@ -92,6 +98,16 @@ const form = reactive({
 const router = useRouter()
 
 const userStore = useUserStore()
+
+const redirectSignin = () => {
+  window.location.href = import.meta.env.VITE_NOBA_SIGNIN
+}
+
+const redirectPage = () => {
+  window.location.href = 'https://noba.cash/'
+}
+
+
 
 const handleSubmit = () => {
   submitting.value = true
