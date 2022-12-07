@@ -35,6 +35,7 @@ import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets
 import WithdrawOtherPlatformsStepAccounts from './views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'
 import WithdrawOtherPlatformsStepAmount from './views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
+import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -206,6 +207,10 @@ const routes: RouteRecordRaw[] = [
                 component: WithdrawOtherPlatformsStepConfirmation,
               },
             ],
+          },
+          {
+            path: 'crypto/other/add-beneficiary',
+            component: AddBeneficiary,
           }
         ],
       },

@@ -170,5 +170,9 @@
     "amount": "Amount",
     "confirmation": "Confirmation",
     "beneficiary": "Beneficiary",
-    "description": "Description"
+    "description": "Description",
+    "addNewBeneficiary": "Add new beneficiary wallet",
+    "searchBeneficiaryLabel": "Search Beneficiary",
+    "label": "Label",
+    "pleaseVerifyField": "Please verify the form fields"
 }

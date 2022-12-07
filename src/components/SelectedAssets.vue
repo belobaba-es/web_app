@@ -1,34 +1,28 @@
 <template>
 
-  <section class="col-12 mb-4">
-    <div class="col-8">
-      <label>{{ t('selectCrypto') }}</label>
-      <div class="grid selectCypto mt-3" @click="modal(true)">
-        <div class="col-2">
-          <img width="26" :src="iconAsset"/>
-        </div>
-        <div class="col-8 pt-2">
-          {{ nameAsset }}
-        </div>
-        <div class="col-2 text-right">
-          <i class="pi pi-chevron-down mt-2"></i>
-        </div>
+  <section class="col-12">
+    <label>{{ t('selectCrypto') }}</label>
+    <div class="grid selectCypto mt-3" @click="modal(true)">
+      <div class="col-2">
+        <img width="26" :src="iconAsset" />
+      </div>
+      <div class="col-8 pt-2">
+        {{ nameAsset }}
+      </div>
+      <div class="col-2 text-right">
+        <i class="pi pi-chevron-down mt-2"></i>
       </div>
     </div>
   </section>
 
-  <ModalAssetSelector
-      :show-modal="showModal" @update:visible="modal($event)"
-      closeIcon="pi pi-times-circle"
-      :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
-      @selected-asset="selectedAsset"
-  />
+  <ModalAssetSelector :show-modal="showModal" @update:visible="modal($event)" closeIcon="pi pi-times-circle"
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }" :style="{ width: '50vw' }" @selected-asset="selectedAsset" />
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue"
-import {Asset} from "../views/deposit/types/asset.interface"
-import {useI18n} from "vue-i18n"
+import { ref } from "vue"
+import { Asset } from "../views/deposit/types/asset.interface"
+import { useI18n } from "vue-i18n"
 import ModalAssetSelector from "./ModalAssetSelector.vue";
 
 const showModal = ref(false)
@@ -36,7 +30,7 @@ const nameAsset = ref('')
 // const iconAsset = ref('https://storage.googleapis.com/noba-dev/798debbc-ec84-43ea-8096-13e2ebcf4749.svg')
 const iconAsset = ref('')
 
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 
 const emit = defineEmits(['selectedAsset']);
 
@@ -63,5 +57,4 @@ const selectedAsset = (asset: Asset) => {
   background: #F9F9F9 0% 0% no-repeat padding-box;
   border: 1px solid #ECECEC;
 }
-
 </style>

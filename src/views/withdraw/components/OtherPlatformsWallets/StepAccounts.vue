@@ -1,7 +1,7 @@
 <template>
-
-  <SearchAccountByEmail style="margin-top: 3rem" />
-
+  <div class="my-3">
+    <SearchAccount />
+  </div>
   <div class="grid" style="margin-top:1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
@@ -28,12 +28,10 @@
 <script setup lang="ts">
 
 import {useI18n} from 'vue-i18n'
-import {ref} from 'vue'
 import Divider from 'primevue/divider'
 import {useRouter} from "vue-router"
-
+import SearchAccount from './SearchAccount.vue'
 import {useToast} from 'primevue/usetoast'
-import SearchAccountByEmail from "./SearchAccountByEmail.vue"
 import {BeneficiaryInternal} from "../../types/beneficiary.interface";
 
 const router = useRouter()

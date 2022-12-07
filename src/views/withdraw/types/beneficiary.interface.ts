@@ -82,3 +82,9 @@ export interface BeneficiaryFiatDomestic extends BeneficiaryFiat {
 export interface BeneficiaryFiatInternacionalResp extends Pagination<BeneficiaryFiatInternacional> {}
 
 export interface BeneficiaryFiatDomesticResp extends Pagination<BeneficiaryFiatDomestic> {}
+
+export interface BeneficiaryAsset {
+  assetId: string;
+  walletAddress: string;
+  label: string;
+}

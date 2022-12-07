@@ -1,5 +1,5 @@
 import { HttpService } from '../../../shared/services/http';
-import { BeneficiaryAssetsResponse, BeneficiaryFiatDomestic, BeneficiaryFiatDomesticResp, BeneficiaryFiatInternacional, BeneficiaryFiatInternacionalResp } from '../types/beneficiary.interface';
+import { BeneficiaryAsset, BeneficiaryAssetsResponse, BeneficiaryFiatDomestic, BeneficiaryFiatDomesticResp, BeneficiaryFiatInternacional, BeneficiaryFiatInternacionalResp } from '../types/beneficiary.interface';
 
 
 
@@ -40,6 +40,10 @@ export class BeneficiaryService extends HttpService {
     
     async saveBeneficiaryInternational(payload: BeneficiaryFiatInternacional): Promise<any>{
         return await this.post<any>(`beneficiary/international`, payload)
+    }
+    
+    async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any>{
+        return await this.post<any>(`beneficiary/asset/`, payload);
     }
     
 }

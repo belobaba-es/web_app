@@ -7,7 +7,7 @@
           type="text"
           class="b-gray w-75"
           v-model="search"
-          :placeholder="t('nobaBeneficiaryEmail')"
+          :placeholder="t('searchBeneficiaryLabel')"
       />
       <Button
           class="p-button search-btn w-25"
@@ -16,6 +16,11 @@
           :loading="submitting"
       />
     </span>
+    </div>
+    <div class="col-4">
+      <RouterLink to="/withdraw/crypto/other/add-beneficiary" class="p-button">
+        {{ t('addNewBeneficiary') }}
+      </RouterLink>
     </div>
   </div>
 
@@ -26,43 +31,25 @@
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button'
 import {useI18n} from "vue-i18n";
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {useToast} from "primevue/usetoast";
-import {AccountService} from "../../services/account";
 
 const toast = useToast();
 const emit = defineEmits(['listBeneficiaries'])
-let accountService:AccountService
 const {t} = useI18n({useScope: 'global'})
 const search = ref('')
 const submitting = ref(false);
-
-onMounted(() => {
-  accountService = AccountService.instance()
-})
 
 const onSearch = () => {
   if (search.value.trim() === "") {
     toast.add({
       severity: 'warn',
-      summary: 'please write an email',
+      summary: 'please write an text',
       life: 4000,
     })
     return
   }
-  submitting.value = true
-  accountService.getAccountByEmail(search.value).then(resp => {
-    emit('listBeneficiaries', [resp])
-    submitting.value = false
-  }).catch(error => {
-    submitting.value = false
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: error.response.data.message,
-      life: 4000,
-    })
-  })
+  submitting.value = true;
 }
 
 </script>
