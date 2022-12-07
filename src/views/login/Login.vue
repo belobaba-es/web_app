@@ -104,7 +104,7 @@ const redirectSignin = () => {
 }
 
 const redirectPage = () => {
-  window.location.href = 'https://noba.cash/'
+  window.location.href = window.location.origin ?? 'https://noba.cash/'
 }
 
 
