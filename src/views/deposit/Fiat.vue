@@ -108,6 +108,10 @@ onMounted(async () => {
     fiatService.bankData(userStore.getUser.accountId).then(data=> {
         dataBank.value = data
         bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "DOMESTIC")
+      console.log(bankNational.value)
+         if (!bankNational.value) {
+           bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "NATIONAL")
+         }
         bankInternational.value = dataBank.value.find(bank=> bank.typeBankingData == "INTERNATIONAL")
     })
     
