@@ -53,7 +53,6 @@ const onSelect = (item: BeneficiaryInternal) => {
   const formData = {
     beneficiary: item
   }
-  console.log(formData)
   emit('nextPage', {
     pageIndex: page,
     formData: formData

@@ -18,8 +18,6 @@
       </div>
     </div>
 
-    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset"/>
-
     <div v-if="showAmount" class="col-12 field p-fluid mt-3">
 
       <div class="field col-8 relative">
@@ -28,13 +26,8 @@
         <label for="amount">{{ t('Amount') }}</label>
 
         <div class="flex">
-          <InputText
-              id="amount"
-              type="number"
-              class="p-inputtext p-component b-gray"
-              v-model="amount"
-              :placeholder="t('amount')"
-          />
+          <InputText id="amount" type="number" class="p-inputtext p-component b-gray" v-model="amount"
+            :placeholder="t('amount')" />
           <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
         </div>
       </div>
@@ -45,12 +38,10 @@
 
         <template #content="slotProps">
           {{ slotProps.item.label }}
-          <!-- <span v-if="slotProps.item.name">{{ beneficiary.name }}</span> -->
-
-          <p class="font-medium" v-if="slotProps.item.name">
-            {{ amountFee }} <small>{{ assetSymbol }}</small>
+          <p class="font-medium" v-if="slotProps.item.label">
+            {{ slotProps.item.amount }} <small>{{ assetSymbol }}</small>
           </p>
-          <p v-else> {{ fee }} <small>{{ assetSymbol }}</small></p>
+          <p v-else> {{ slotProps.item.amount }} <small>{{ assetSymbol }}</small></p>
         </template>
       </Timeline>
 
@@ -59,12 +50,8 @@
     <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
-        <InputText
-            type="text"
-            class="p-inputtext p-component  b-gray"
-            v-model="reference"
-            :placeholder="t('reference')"
-        />
+        <InputText type="text" class="p-inputtext p-component  b-gray" v-model="reference"
+          :placeholder="t('reference')" />
 
       </div>
     </div>
@@ -74,7 +61,7 @@
     </div>
     <div class="col-6">
 
-      <Button class="w-100 p-button " :label="t('continue')" @click="nextPage"/>
+      <Button class="w-100 p-button " :label="t('continue')" @click="nextPage" />
     </div>
   </div>
 </template>
@@ -82,21 +69,19 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
-import {computed, ref} from 'vue'
-import {useI18n} from 'vue-i18n'
-import {useRoute} from "vue-router"
+import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from "vue-router"
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import {BeneficiaryInternal} from "../../types/beneficiary.interface"
-import {useBalanceWallet} from "../../../../composables/useBalanceWallet"
-import {useToast} from 'primevue/usetoast'
-import SelectedAssets from "../../../../components/SelectedAssets.vue";
-import {Asset} from "../../../deposit/types/asset.interface";
+import { useBalanceWallet } from "../../../../composables/useBalanceWallet"
+import { useToast } from 'primevue/usetoast'
+import { Asset } from "../../../deposit/types/asset.interface";
 
 const toast = useToast()
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
-const {getBalanceByCode, getWalletByAssetCode} = useBalanceWallet()
+const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 
 const props = defineProps<{
   formData: any
@@ -109,23 +94,19 @@ const amount = ref('')
 const fee = ref(0)
 const reference = ref('')
 const assetId = ref('')
-const asset = ref('USD')
-const assetSymbol = ref('USD')
+const asset = ref('')
+const assetSymbol = ref('')
 const balance = ref(0)
 const total = ref(0)
-const isAsset = route.params.type === 'crypto'
+const showAmount = ref(true)
 
-const showAmount = ref(!isAsset)
-const showSelectedAsset = ref(isAsset)
-
-balance.value = getBalanceByCode(asset.value)
-assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
-
-const events = ref<any>([
-  {amount: '2,5', label: t('Fee'), name: false},
-  {amount: '2,5', label: t('youSendTo'), name: true},
-
-]);
+onMounted(() => {
+  asset.value = props.formData.beneficiary.assetCode
+  assetId.value = props.formData.beneficiary.assetId
+  balance.value = getBalanceByCode(asset.value)
+  assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? ''
+  fee.value = props.formData.beneficiary.fee
+});
 
 const amountFee = computed(() => {
 
@@ -143,13 +124,16 @@ const amountFee = computed(() => {
     total.value = 0
   }
 
-  if (assetSymbol.value === 'USD') {
-    total.value = Number(t.toFixed(2))
-  }
-
   total.value = Number(t.toFixed(8))
-
+  console.log(fee.value);
   return Number(t.toFixed(8))
+})
+
+const events = computed(() => {
+  return [
+    { amount: fee.value, label: t('Fee'), name: false },
+    { amount: amountFee.value, label: `${t('youSendTo')}: ${props.formData.beneficiary.label}`, name: true },
+  ]
 })
 
 const validateField = (): boolean => {
