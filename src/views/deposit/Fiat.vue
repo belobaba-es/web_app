@@ -16,6 +16,10 @@
         <p class="">{{bankNational?.creditTo}} </p>
         <Divider type="solid" />
 
+      <p class="font-medium text-sm">{{t('reference')}}</p>
+      <p class=""> {{bankNational?.reference}}</p>
+      <Divider type="solid" />
+
         <p class="font-medium text-sm">{{t('address')}}</p>
         <p class=""> {{bankNational?.address}}</p>
         <Divider type="solid" />
@@ -53,6 +57,10 @@
         <p class=""> {{bankInternational?.creditTo}}</p>
         <Divider type="solid" />
 
+      <p class="font-medium text-sm">{{t('reference')}}</p>
+      <p class=""> {{bankInternational?.reference}}</p>
+      <Divider type="solid" />
+
         <p class="font-medium text-sm">{{t('address')}}</p>
         <p class="">{{bankInternational?.address}}</p>
         <Divider type="solid" />
@@ -73,13 +81,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import {onMounted, ref} from 'vue';
 import Divider from 'primevue/divider';
 import TabMenu from 'primevue/tabmenu';
-import { useI18n } from 'vue-i18n'
-import { FiatService } from './services/fiat';
-import { BankData } from './types/fiat.interface';
-import { useUserStore } from '../../stores/user';
+import {useI18n} from 'vue-i18n'
+import {FiatService} from './services/fiat';
+import {BankData} from './types/fiat.interface';
+import {useUserStore} from '../../stores/user';
+
 interface tabItem {
     label: string;
     icon?: string;
@@ -98,7 +107,7 @@ onMounted(async () => {
     
     fiatService.bankData(userStore.getUser.accountId).then(data=> {
         dataBank.value = data
-        bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "NATIONAL")
+        bankNational.value = dataBank.value.find(bank=>bank.typeBankingData == "DOMESTIC")
         bankInternational.value = dataBank.value.find(bank=> bank.typeBankingData == "INTERNATIONAL")
     })
     

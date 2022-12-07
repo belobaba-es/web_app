@@ -174,5 +174,6 @@
     "addNewBeneficiary": "Add new beneficiary wallet",
     "searchBeneficiaryLabel": "Search Beneficiary",
     "label": "Label",
-    "pleaseVerifyField": "Please verify the form fields"
+    "pleaseVerifyField": "Please verify the form fields",
+    "reference": "Reference"
 }
