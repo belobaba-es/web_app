@@ -176,5 +176,6 @@
     "label": "Label",
     "pleaseVerifyField": "Please verify the form fields",
     "reference": "Reference",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "swapHistory": "Swap History"
 }
