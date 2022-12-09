@@ -9,7 +9,7 @@
         </div>
         <div class="col-8 ">
           <p class="font-bold text-right">
-            {{calc(item.assetCode, item.balance, item.blockedBalance)}}
+            {{calc(item.assetCode, item.balance, item.blockedBalance ?? 0)}}
           </p>
 
         </div>
