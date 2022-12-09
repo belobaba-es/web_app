@@ -45,4 +45,5 @@ export type BalanceWallet = {
   balance: number
   blockedBalance?: number
   icon?: string
+  name: string
 }

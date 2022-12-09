@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { BalanceWallet } from '../views/deposit/types/asset.interface'
+import {defineStore} from 'pinia'
+import {BalanceWallet} from '../views/deposit/types/asset.interface'
 
 interface BalanceWalletsState {
   wallets: BalanceWallet[]
@@ -38,8 +38,6 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
           if (w.blockedBalance) {
             blocked = w.blockedBalance
           }
-
-          console.log('TOTAL', blocked + blockedBalance)
           w.blockedBalance = Number(blocked) + Number(blockedBalance)
         }
       }
