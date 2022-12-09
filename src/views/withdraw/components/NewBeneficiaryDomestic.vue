@@ -124,6 +124,8 @@
             :label="t('Save new beneficiary')"
             class="px-5"
             @click="saveBeneficiary"
+            iconPos="right"
+            :loading="submitting"
         />
       </div>
 
@@ -147,6 +149,8 @@ import {BeneficiaryFiatDomestic} from '../types/beneficiary.interface';
 const router = useRouter();
 const {t} = useI18n({useScope: 'global'})
 const toast = useToast();
+
+const submitting = ref(false);
 
 const {
   countries,
@@ -183,16 +187,29 @@ const form = ref<BeneficiaryFiatDomestic>({
 
 
 const saveBeneficiary = () => {
-
+  submitting.value = true
   const beneficiaryService = BeneficiaryService.instance();
   beneficiaryService.saveBeneficiaryDomestic(form.value).then(resp => {
-
+    submitting.value = false
     router.push('/withdraw/fiat/domestic')
     toast.add({
       severity: 'success',
       detail: resp.message,
       life: 4000,
     })
+  }).catch(e => {
+
+    submitting.value = false
+
+    for (const eElement of Object.values(e.response.data)) {
+      toast.add({
+        severity: 'info',
+        summary: t('somethingWentWrong'),
+        detail: eElement.message,
+        life: 4000
+      })
+    }
+
   })
 }
 
