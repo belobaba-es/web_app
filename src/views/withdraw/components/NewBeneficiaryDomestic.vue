@@ -202,10 +202,11 @@ const saveBeneficiary = () => {
     submitting.value = false
 
     for (const eElement of Object.values(e.response.data)) {
+      let m: any = eElement
       toast.add({
         severity: 'info',
         summary: t('somethingWentWrong'),
-        detail: eElement.message,
+        detail: m.message,
         life: 4000
       })
     }
