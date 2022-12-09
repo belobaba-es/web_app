@@ -1,4 +1,4 @@
-import { Pagination } from '../../../shared/types/pagination'
+import {Pagination} from '../../../shared/types/pagination'
 
 export interface Asset {
   id: string
@@ -20,7 +20,7 @@ export interface EventCreatePaymentAddress extends CreatePaymentAddress {
 }
 
 export interface CreatePaymentAddress {
-  assetCode: string
+  assetCode?: string
   label: string
   asset?: Asset
 }

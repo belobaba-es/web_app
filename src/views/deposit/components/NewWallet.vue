@@ -1,66 +1,84 @@
 <template>
 
-    <Dialog :visible="display" @update:visible="emit('update:display', $event)" :modal="true" closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}">
-        <template #header>
-            <img src="../../../assets/icons/ewallet.svg" alt="" height="50">
-        </template>
-        <div class="grid">
-            <div class="col-12">
-                <span class="text-xl txt-border-bottom mb-2">{{t('newWallet')}}</span>
+  <Dialog :visible="display" @update:visible="emit('update:display', $event)" :modal="true"
+          closeIcon="pi pi-times-circle" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '35vw'}">
+    <template #header>
+      <img src="../../../assets/icons/ewallet.svg" alt="" height="50">
+    </template>
+    <div class="formgrid grid mt-3">
+      <div class="col-12">
+        <span class="text-xl txt-border-bottom mb-2">{{ t('newWallet') }}</span>
+      </div>
+      <div class="field col-12 mt-4">
+        <!--                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />-->
+        <SelectedAssets @selectedAsset="selectAsset"/>
+      </div>
+      <div class="field col-12" style="display: grid;">
+        <label for="name">{{ t('nameWallet') }}</label>
+        <InputText id="name" type="text" v-model="label"/>
+        <!-- @update:model-value="emit('update:name', $event)" -->
+      </div>
+    </div>
 
-            </div>
-            <div class="field col-12" style="display: grid;">
-                <label for="select-crypto">{{t('selectCrypto')}}</label>
-                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />
-            </div>
-            <div class="field col-12" style="display: grid;">
-                <label for="name">{{t('nameWallet')}}</label>
-                <InputText id="name" type="text" v-model="label" />
-                <!-- @update:model-value="emit('update:name', $event)" -->
-            </div>
-        </div>
-
-        <template #footer>
-            <Button :label="t('createWallet')" icon="" autofocus @click="onCreate"/>
-        </template>
-    </Dialog>
+    <template #footer>
+      <Button :label="t('createWallet')" autofocus @click="onCreate" icon="pi pi-angle-right"
+              :loading="submitting"/>
+    </template>
+  </Dialog>
 
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
+import {defineProps, ref} from 'vue';
+import {useI18n} from 'vue-i18n'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
-import Dropdown from 'primevue/dropdown';
-import { Asset } from '../types/asset.interface';
-import { defineProps } from 'vue';
+import {Asset} from '../types/asset.interface';
+import SelectedAssets from '../../../components/SelectedAssets.vue';
+import {AssetsService} from "../services/assets";
+import {useToast} from "primevue/usetoast";
 
 defineProps<{
-	assets: Array<Asset>,
-    display: boolean,
-    assetSelect: Asset | null
+  display: boolean,
+  assetSelect: Asset | null
 }>()
 
-const assetSelect = ref<Asset|null>(null)  
+const toast = useToast()
+const assetSelect = ref<Asset>()
 const label = ref('')
-
+const submitting = ref(false)
 const emit = defineEmits(['update:asset-select', 'update:display', 'create']);
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
 
-const onCreate= () => {
+const assetsService = AssetsService.instance();
+
+const onCreate = () => {
+
+  submitting.value = true
+  assetsService.paymentAddress({label: label.value, assetCode: assetSelect.value?.code}).then(resp => {
+    submitting.value = false
     emit('create', {
-        assetCode: assetSelect.value?.code, 
-        label: label.value,
-        asset: assetSelect.value
+      assetId: assetSelect.value?.assetId,
+      paymentAddress: resp.paymentAddress,
+      name: label.value,
+      qr: resp.qr,
     })
-    assetSelect.value = null  
-    label.value = ''
+  }).catch(e => {
+    console.log(e)
+    submitting.value = false
+    toast.add({
+      severity: 'info',
+      summary: t('somethingWentWrong'),
+      detail: e.response.data.message,
+      life: 4000
+    })
+  })
 }
 
-const selectedAsset = ref('')
-
+const selectAsset = (asset: Asset) => {
+  assetSelect.value = asset
+}
 
 </script>
 

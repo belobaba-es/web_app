@@ -1,6 +1,9 @@
 <template>
-  <NewWallet :assets="assets" v-model:display="displayNew" v-model:asset-select="assetSelect"
-             @create="onCreateAddress"></NewWallet>
+  <NewWallet
+      @create="onCreateAddress"
+      v-model:display="displayNew"
+      v-model:asset-select="assetSelect"
+  />
   <ViewAddress v-model:visible="display" :asset="selectViewAsset"
                :payment-address="selectPaymentAddress"/>
 
@@ -51,7 +54,7 @@ import {useI18n} from 'vue-i18n'
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import VirtualScroller from 'primevue/virtualscroller';
-import {Asset, EventCreatePaymentAddress, PaymentAddress} from './types/asset.interface';
+import {Asset, PaymentAddress} from './types/asset.interface';
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue';
 import {AssetsService} from './services/assets';
@@ -63,9 +66,8 @@ const {t} = useI18n({useScope: 'global'})
 const nextPag = ref('')
 const display = ref(false);
 const displayNew = ref(false);
-const lazyItems = ref(Array.from({length: 10000}));
 const lazyLoading = ref(false);
-const loadLazyTimeout = ref(null);
+
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null);
 const selectPaymentAddress = ref<PaymentAddress | null>(null);
@@ -92,26 +94,34 @@ const paymentAddress = ref<PaymentAddress[]>([])
 
 onMounted(async () => {
   assetsService.list().then(data => assets.value = data);
+  await searchWallets()
+});
+
+const searchWallets = () => {
+  lazyLoading.value = true;
+  assetsService.list().then(data => assets.value = data);
   assetsService.listPaymentAddress().then(data => {
+    lazyLoading.value = false;
     paymentAddress.value = data.results;
     nextPag.value = data.nextPag
   })
-});
+}
 
-const onCreateAddress = (event: EventCreatePaymentAddress) => {
-  assetsService.paymentAddress({label: event.label, assetCode: event.assetCode}).then(resp => {
-    const payment = {
-      label: event.label,
-      accountId: "",
-      address: resp.paymentAddress,
-      assetsId: event.asset.assetId,
-      qr: resp.qr,
-    }
-    selectViewAsset.value = event.asset;
-    selectPaymentAddress.value = payment
-    displayNew.value = false;
-    display.value = true;
-  })
+const onCreateAddress = (event: any) => {
+
+  selectPaymentAddress.value =  {
+    label: event.name,
+    accountId: "",
+    address: event.paymentAddress,
+    assetsId: event.assetId,
+    qr: event.qr,
+  }
+
+  selectViewAsset.value = findAsset(event.assetId)
+  displayNew.value = false;
+  display.value = true;
+
+  searchWallets()
 }
 
 const onLazyLoad = (event: any) => {
