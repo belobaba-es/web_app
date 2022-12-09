@@ -1,6 +1,6 @@
 <template>
 
-  <section class="col-12">
+  <section class="col-12 m-0 p-0">
     <label>{{ t('selectCrypto') }}</label>
     <div class="grid selectCypto mt-3" @click="modal(true)">
       <div class="col-2">
@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-import { Asset } from "../views/deposit/types/asset.interface"
-import { useI18n } from "vue-i18n"
+import {ref} from "vue"
+import {Asset} from "../views/deposit/types/asset.interface"
+import {useI18n} from "vue-i18n"
 import ModalAssetSelector from "./ModalAssetSelector.vue";
 
 const showModal = ref(false)

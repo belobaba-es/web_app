@@ -5,21 +5,24 @@
       <i class="pi pi-search"/>
       <InputText
           type="text"
-          class="b-gray w-75"
+          class="b-gray w-50"
           v-model="search"
           :placeholder="t('searchBeneficiaryLabel')"
       />
-      <Button
-          class="p-button search-btn w-25"
-          :label="t('search')"
-          @click="onSearch"
-          :loading="submitting"
+      <Button style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+              class="p-button search-btn w-25"
+              :label="t('search')"
+              @click="onSearch"
+              :loading="submitting"
       />
     </span>
     </div>
     <div class="col-4">
-      <RouterLink to="/withdraw/crypto/other/add-beneficiary" class="p-button">
-        {{ t('addNewBeneficiary') }}
+      <RouterLink to="/withdraw/crypto/other/add-beneficiary" >
+        <Button
+            :label="t('addNewBeneficiary')"
+        />
+
       </RouterLink>
     </div>
   </div>
@@ -55,8 +58,5 @@ const onSearch = () => {
 </script>
 
 <style scoped>
-.p-button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
+
 </style>
