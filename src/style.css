@@ -305,3 +305,7 @@ small {
     font-size: 1.4rem;
     border-radius: 0;
 }
+
+.p-progressbar.p-component.p-progressbar-determinate.swap > .p-progressbar-value.p-progressbar-value-animate {
+    background: #00beb0;
+}

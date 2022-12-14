@@ -23,7 +23,7 @@
                     <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
                         <div class="grid">
                             <div class="col-8 mx-auto">
-                                <ProgressBar :value="progressBarPercent">
+                                <ProgressBar :value="progressBarPercent" class="swap">
                                     {{ progressBarSeconds }} Seg
                                 </ProgressBar>
                             </div>
@@ -65,7 +65,7 @@ const selectedAsset = async (asset: Asset) => {
     assetIcon.value = asset.icon;
     assetName.value = asset.name;
     assetId.value = asset.assetId;
-    await createQuote()
+    await createQuote();
 };
 
 </script>
@@ -84,4 +84,5 @@ const selectedAsset = async (asset: Asset) => {
     transform: rotate(90deg);
     width: 2rem;
 }
+
 </style>
