@@ -167,5 +167,7 @@
     "swapBackButtonTitle": "Volver al intercambio", 
     "swapExchangeServiceText": "Los servicios de intercambio están disponibles a través de proveedores de API de terceros",
     "reference": "Referencia",
-    "rememberMe": "Recordarme"
+    "rememberMe": "Recordarme",
+    "swapHistory": "Historia del intercambio",
+    "iWant": "Quiero"
 }

@@ -9,13 +9,7 @@
                 </div>
                 <div class="flex-row">
                     <div>
-                        <AssetSelector
-                            :asset="fromSwap!"
-                            :asset-balance="fromAssetBalance"
-                            :fiat-balance="fromFiatBalance"
-                            :direction="'from'"
-                            @open-modal-selector="onAssetSelectorClick"
-                        />
+                        <AssetInput type="fiat" />
                     </div>
                     <div class="flex justify-content-center align-items-center">
                         <div
@@ -24,28 +18,19 @@
                         </div>
                     </div>
                     <div>
-                        <AssetSelector
-                            :asset="toSwap!"
-                            :asset-balance="toAssetBalance"
-                            :fiat-balance="toFiatBalance"
-                            :direction="'to'"
-                            @open-modal-selector="onAssetSelectorClick"
-                        />
+                        <AssetInput type="crypto" />
                     </div>
-                    <div class="flex-row justify-content-center align-items-center">
-                        <p class="text-center">
-                            1 ETH = 20.0003201 EOS
-                        </p>
+                    <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
                         <div class="grid">
                             <div class="col-8 mx-auto">
-                                <ProgressBar :value="percent" class="my-3 py-3">
-                                    {{ showSegs }} Seg
+                                <ProgressBar :value="progressBarPercent">
+                                    {{ progressBarSeconds }} Seg
                                 </ProgressBar>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2">
-                        <Button label="Asset SWAP" class="w-full py-3 text-uppercase" @click="router.push('/swap/success')"/>
+                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" @click=""/>
                     </div>
                     <div>
                         <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
@@ -53,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <ModalAssetSelector v-if="showModalAsset" :show-modal="showModalAsset" @selected-asset="selectedAsset"/>
+        <ModalAssetSelector @selected-asset="selectedAsset"/>
     </PageLayout>
 </template>
 
@@ -61,79 +46,28 @@
 import PageLayout from '../../components/PageLayout.vue';
 import { useI18n } from "vue-i18n";
 import Button from 'primevue/button';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import AssetSelector from './components/AssetSelector.vue';
+import AssetInput from './components/AssetInput.vue';
 import swapIcon from '../../assets/icons/swap.svg';
 import { Asset } from '../deposit/types/asset.interface';
-import { SwapAsset } from './types/swap-asset.interface';
 import ModalAssetSelector from '../../components/ModalAssetSelector.vue';
 import ProgressBar from 'primevue/progressbar';
 import { useRouter } from 'vue-router';
+import { useSwapStore } from '../../stores/swap';
+import { storeToRefs } from 'pinia';
+
+const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
+const { createQuote } = useSwapStore();
 
-const showModalAsset = ref(false);
-const showModalAssetDirection = ref();
-
-const onAssetSelectorClick = (direction: string) => {
-    showModalAsset.value = true;
-    showModalAssetDirection.value = direction;
-}
-
-const selectedAsset = (asset: Asset) => {
-    showModalAsset.value = false;
-    const assetObject: SwapAsset = {
-            id: asset.id,
-            minimumWithdrawal: asset.minimumWithdrawal,
-            code: asset.code,
-            updatedAt: asset.updatedAt,
-            createdAt: asset.createdAt,
-            fee: asset.fee,
-            assetId: asset.assetId,
-            active: asset.active,
-            icon: asset.icon,
-            name: asset.name,
-            network: showModalAssetDirection.value === 'from' ? fromSwap.value?.network! : toSwap.value?.network!,
-            value: '0.0000000'
-        };
-    if (showModalAssetDirection.value === 'from') {
-        fromSwap.value = assetObject;
-    } else {
-        toSwap.value = assetObject;
-    }
+const selectedAsset = async (asset: Asset) => {
+    showModalAssetSelector.value = false;
+    assetIcon.value = asset.icon;
+    assetName.value = asset.name;
+    assetId.value = asset.assetId;
+    await createQuote()
 };
 
-const fromAssetBalance = ref('0.0000000');
-const fromFiatBalance = ref('0.0000000');
-
-const toAssetBalance = ref('0.0000000');
-const toFiatBalance = ref('0.0000000');
-
-const fromSwap = ref<SwapAsset | null>();
-const toSwap = ref<SwapAsset | null>();
-
-const interval = ref(0);
-const showSegs = ref(0);
-const percent = ref(0);
-
-const startProgress = () => {
-    interval.value = setInterval(() => {
-        
-    }, 1000);
-};
-
-const endProgress = () => {
-    clearInterval(interval.value);
-    interval.value = 0;
-};
-
-onMounted(() => {
-    startProgress();
-})
-
-onBeforeUnmount(() => {
-    endProgress();
-})
 </script>
 
 <style scoped>
