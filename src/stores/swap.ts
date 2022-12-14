@@ -46,7 +46,17 @@ export const useSwapStore = defineStore('swap', () => {
       })
   }
 
-
+  const swapHandler = async () => {
+    if (amount.value === 0.00) return;
+    swapping.value = true;
+    const swapService = SwapService.instance()
+    await swapService.execute(quoteId.value)
+      .then(response => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
 
   return {
     baseAmount,
@@ -63,6 +73,9 @@ export const useSwapStore = defineStore('swap', () => {
     showModalAssetSelector,
     progressBarPercent,
     progressBarSeconds,
-    swapBtnText
+    swapBtnText,
+    swapping,
+    swapHandler,
+    quoteId
   }
 })

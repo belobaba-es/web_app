@@ -22,4 +22,9 @@ export class SwapService extends HttpService {
     const resp = await this.post<CreateQuoteResponse>(`swap/quotes/create`, payload, true)
     return resp;
   }
+
+  async execute(quoteId: string): Promise<any> {
+    const resp = await this.post<any>(`swap/quotes/execute`, { quoteId }, true)
+    return resp;
+  }
 }

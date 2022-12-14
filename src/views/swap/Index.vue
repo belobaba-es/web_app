@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" @click=""/>
+                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" :disabled="swapping" @click="swapHandler"/>
                     </div>
                     <div>
                         <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
@@ -55,10 +55,10 @@ import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
 
-const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText } = storeToRefs(useSwapStore());
+const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, swapping } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
-const { createQuote } = useSwapStore();
+const { createQuote, swapHandler } = useSwapStore();
 
 const selectedAsset = async (asset: Asset) => {
     showModalAssetSelector.value = false;
