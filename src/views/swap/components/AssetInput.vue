@@ -3,7 +3,7 @@
         <div class="flex justify-content-between align-items-center">
             <template v-if="type === 'fiat'">
                 <span>
-                    {{ t('iHave') }}: <span class="font-medium">{{ balance }}</span>
+                    {{ t('iHave') }}: <span class="font-medium">{{ getWalletByAssetCode("USD")?.balance }}</span>
                 </span>
             </template>
             <template v-else>
@@ -30,7 +30,7 @@
                     </Button>
                 </template>
                 <template v-else>
-                    <img alt="logo" :src="wallet?.icon" style="width: 3.5rem" />
+                    <img alt="logo" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
                 </template>
             </div>
         </div>
@@ -59,7 +59,6 @@ const { t } = useI18n({ useScope: 'global' });
 
 const props = defineProps<Props>();
 const balance = getBalanceByCode("USD");
-const wallet = getWalletByAssetCode("USD");
 
 const openModalSelector = () => {
     showModalAssetSelector.value = true;
