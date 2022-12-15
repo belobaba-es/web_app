@@ -90,8 +90,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const loginService = LoginService.instance()
 const form = reactive({
-  user: 'angel.bejarano@jaspesoft.com',
-  pass: '12345678',
+  user: '',
+  pass: '',
   remember: false
 })
 
