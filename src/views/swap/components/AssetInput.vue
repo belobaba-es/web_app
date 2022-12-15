@@ -3,7 +3,7 @@
         <div class="flex justify-content-between align-items-center">
             <template v-if="type === 'fiat'">
                 <span>
-                    {{ t('iHave') }}: <span class="font-medium">{{ wallet?.balance }}</span>
+                    {{ t('iHave') }}: <span class="font-medium">{{ balance }}</span>
                 </span>
             </template>
             <template v-else>
@@ -23,7 +23,7 @@
             </div>
             <div>
                 <template v-if="type === 'crypto'">
-                    <Button type="button" class="bg-white border-none border-round-3xl" @click="openModalSelector">
+                    <Button type="button" class="bg-white border-none border-round-3xl" @click="openModalSelector" :disabled="amount === 0.00">
                         <img v-if="assetIcon" alt="logo" :src="assetIcon" style="width: 3.5rem" />
                         <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{ assetName ? assetName : t('selectCrypto') }}</span>
                         <i class="pi pi-caret-down text-primary"></i>
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { defineProps } from "vue";
 import Button from "primevue/button";
 import { useSwapStore } from "../../../stores/swap";
@@ -51,19 +51,30 @@ interface Props {
     type: string,
 }
 
-const { getWalletByAssetCode } = useBalanceWallet()
+const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
 const { amount, assetName, assetIcon, unitCount, showModalAssetSelector } = storeToRefs(useSwapStore())
 
 const { t } = useI18n({ useScope: 'global' });
 
 const props = defineProps<Props>();
-
-const wallet = ref(getWalletByAssetCode("USD"));
+const balance = getBalanceByCode("USD");
+const wallet = getWalletByAssetCode("USD");
 
 const openModalSelector = () => {
     showModalAssetSelector.value = true;
 };
+
+watch(amount, (newValue) => {
+    if(!balance) return;
+    if (newValue > balance) {
+        amount.value = balance
+    }
+
+    if (!newValue) {
+        amount.value = 0.00
+    }
+})
 
 </script>
 

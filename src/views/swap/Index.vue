@@ -29,8 +29,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-center" v-if="quoteId">
+                        <span class="font-medium text-primary text-2xl">Fee:</span> <span class="text-2xl font-medium">{{ feeAmount }}</span> 
+                        / 
+                        <span class="font-medium text-primary text-2xl">Total:</span> <span class="text-2xl font-medium">{{ totalAmount }}</span>
+                    </div>
                     <div class="mb-2">
-                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" :disabled="swapping" @click="swapHandler"/>
+                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" :disabled="(loading || !quoteId)" @click="swapHandler" :loading="loading"/>
                     </div>
                     <div>
                         <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
@@ -55,7 +60,7 @@ import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
 
-const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, swapping } = storeToRefs(useSwapStore());
+const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, loading, quoteId, feeAmount, totalAmount } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
 const { createQuote, swapHandler } = useSwapStore();

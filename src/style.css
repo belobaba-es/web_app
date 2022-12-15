@@ -309,3 +309,10 @@ small {
 .p-progressbar.p-component.p-progressbar-determinate.swap > .p-progressbar-value.p-progressbar-value-animate {
     background: #00beb0;
 }
+
+.input-mount .p-inputtext {
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    font-weight: bold;
+}

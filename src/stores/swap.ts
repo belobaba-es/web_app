@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { SwapService } from '../views/swap/services/swap'
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
 
 export const useSwapStore = defineStore('swap', () => {
+  const { t } = useI18n({ useScope: 'global' })
+  const router = useRouter()
+  const toast = useToast()
   const baseAmount = ref(0.0)
   const feeAmount = ref(0.0)
   const totalAmount = ref(0.0)
@@ -17,17 +23,23 @@ export const useSwapStore = defineStore('swap', () => {
   const showModalAssetSelector = ref(false)
   const progressBarPercent = ref(0)
   const progressBarSeconds = ref(0)
-  const swapping = ref(false)
+  const loading = ref(false)
   const timer = ref()
   const shouldRefreshQuote = ref(false)
+  const quotes = ref({
+    count: 0,
+    nextPag: null,
+    prevPag: null,
+    results: [],
+  })
 
   const swapBtnText = computed(() => {
-    return progressBarPercent.value === 100 ? 'REFRESH QUOTE' : 'ASSET SWAP'
+    return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
   })
 
   const createQuote = async () => {
     if (amount.value === 0.0) return
-    swapping.value = true
+    loading.value = true
     const swapService = SwapService.instance()
     await swapService
       .createQuote({
@@ -43,30 +55,47 @@ export const useSwapStore = defineStore('swap', () => {
         feeAmount.value = response.data.feeAmount
         totalAmount.value = response.data.totalAmount
         unitCount.value = response.data.unitCount
-        swapping.value = false
+        loading.value = false
         startTimer()
       })
       .catch(() => {
-        swapping.value = false
+        loading.value = false
+      })
+  }
+
+  const amountWithFee = computed(() => amount.value - feeAmount.value)
+
+  const executeQuote = async () => {
+    if (amount.value === 0.0) return
+    loading.value = true
+    const swapService = SwapService.instance()
+    await swapService
+      .execute(quoteId.value)
+      .then(response => {
+        toast.add({
+          severity: 'success',
+          summary: t('successfulOperation'),
+          detail: response.message,
+          life: 4000,
+        })
+        router.push('/swap/success')
+      })
+      .catch(error => {
+        loading.value = false
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
       })
   }
 
   const swapHandler = async () => {
-    if (amount.value === 0.0) return
-    console.log(shouldRefreshQuote.value)
-    if (!shouldRefreshQuote.value) {
-      swapping.value = true
-      const swapService = SwapService.instance()
-      await swapService
-        .execute(quoteId.value)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    } else {
+    if (shouldRefreshQuote.value) {
       refreshQuote()
+    } else {
+      executeQuote()
     }
   }
 
@@ -81,6 +110,8 @@ export const useSwapStore = defineStore('swap', () => {
   const clearTimer = () => {
     clearInterval(timer.value)
     timer.value = undefined
+    progressBarSeconds.value = 0
+    progressBarPercent.value = 0
   }
 
   watch(progressBarSeconds, newValue => {
@@ -103,6 +134,14 @@ export const useSwapStore = defineStore('swap', () => {
     progressBarPercent.value = 0
     assetIcon.value = undefined
     assetName.value = undefined
+    shouldRefreshQuote.value = false
+  }
+
+  const fetchQuotes = async () => {
+    const swapService = SwapService.instance()
+    await swapService.quotes().then(response => {
+      quotes.value = response
+    })
   }
 
   return {
@@ -121,10 +160,12 @@ export const useSwapStore = defineStore('swap', () => {
     progressBarPercent,
     progressBarSeconds,
     swapBtnText,
-    swapping,
+    loading,
     swapHandler,
     quoteId,
     startTimer,
     clearTimer,
+    fetchQuotes,
+    quotes,
   }
 })
