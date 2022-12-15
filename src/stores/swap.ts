@@ -4,9 +4,11 @@ import { SwapService } from '../views/swap/services/swap'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { useBalanceWallet } from '../composables/useBalanceWallet'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
+  const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
   const router = useRouter()
   const toast = useToast()
   const baseAmount = ref(0.0)
@@ -26,6 +28,7 @@ export const useSwapStore = defineStore('swap', () => {
   const loading = ref(false)
   const timer = ref()
   const shouldRefreshQuote = ref(false)
+  const assetCode = ref()
   const quotes = ref({
     count: 0,
     nextPag: null,
@@ -78,6 +81,8 @@ export const useSwapStore = defineStore('swap', () => {
           detail: response.message,
           life: 4000,
         })
+        loading.value = false;
+        updateBlockedBalanceWalletByCode("USD", amount.value)
         router.push('/swap/success')
       })
       .catch(error => {
@@ -135,6 +140,7 @@ export const useSwapStore = defineStore('swap', () => {
     assetIcon.value = undefined
     assetName.value = undefined
     shouldRefreshQuote.value = false
+    assetCode.value = undefined
   }
 
   const fetchQuotes = async () => {
@@ -142,6 +148,22 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService.quotes().then(response => {
       quotes.value = response
     })
+  }
+
+  const switchTransactionType = async () => {
+    if (transactionType.value === 'buy') {
+      transactionType.value = 'sell'
+    } else {
+      transactionType.value = 'buy'
+    }
+    if (quoteId.value) {
+      clearTimer()
+    }
+    if (shouldRefreshQuote.value) {
+      shouldRefreshQuote.value = false
+    }
+    
+    await createQuote();
   }
 
   return {
@@ -167,5 +189,8 @@ export const useSwapStore = defineStore('swap', () => {
     clearTimer,
     fetchQuotes,
     quotes,
+    switchTransactionType,
+    assetCode,
+    refreshQuote
   }
 })

@@ -9,16 +9,19 @@
                 </div>
                 <div class="flex-row">
                     <div>
-                        <AssetInput type="fiat" />
+                        <AssetInput type="fiat" v-if="transactionType === 'buy'"/>
+                        <AssetInput type="crypto" v-else/>
                     </div>
                     <div class="flex justify-content-center align-items-center">
                         <div
-                            class="swap-circle border-circle w-5rem h-5rem m-2 flex align-items-center justify-content-center">
+                            class="swap-circle border-circle w-5rem h-5rem m-2 flex align-items-center justify-content-center cursor-pointer"
+                            @click="switchTransactionType()">
                             <img :src="swapIcon">
                         </div>
                     </div>
                     <div>
-                        <AssetInput type="crypto" />
+                        <AssetInput type="crypto" v-if="transactionType === 'buy'"/>
+                        <AssetInput type="fiat" v-else/>
                     </div>
                     <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
                         <div class="grid">
@@ -60,16 +63,17 @@ import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
 
-const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, loading, quoteId, feeAmount, totalAmount } = storeToRefs(useSwapStore());
+const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, loading, quoteId, feeAmount, totalAmount, transactionType, assetCode } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
-const { createQuote, swapHandler } = useSwapStore();
+const { createQuote, swapHandler, switchTransactionType } = useSwapStore();
 
 const selectedAsset = async (asset: Asset) => {
     showModalAssetSelector.value = false;
     assetIcon.value = asset.icon;
     assetName.value = asset.name;
     assetId.value = asset.assetId;
+    assetCode.value = asset.code;
     await createQuote();
 };
 

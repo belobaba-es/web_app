@@ -10,13 +10,22 @@
                 <div class="my-5 flex justify-content-between">
                     <div>
                         <span class="mb-1">{{ t('swapFrom') }}</span>
-                        <div class="flex">
+                        <div class="flex" v-if="transactionType === 'buy'">
                             <div class="flex-shrink-0 flex align-items-center mr-2">
                                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
                             </div>
                             <div class="flex-grow-1 flex-row align-items-center">
                                 <div class="font-medium">{{ usdName }}</div>
                                 <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
+                            </div>
+                        </div>
+                        <div class="flex" v-else>
+                            <div class="flex-shrink-0 flex align-items-center mr-2">
+                                <img alt="logo" :src="assetIcon" style="width: 4rem" />
+                            </div>
+                            <div class="flex-grow-1 flex-row align-items-center">
+                                <div class="font-medium">{{ assetName }}</div>
+                                <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
                             </div>
                         </div>
                     </div>
@@ -27,13 +36,22 @@
                     </div>
                     <div>
                         <span class="mb-1">{{ t('swapTo') }}</span>
-                        <div class="flex">
+                        <div class="flex" v-if="transactionType === 'buy'">
                             <div class="flex-shrink-0 flex align-items-center mr-2">
                                 <img alt="logo" :src="assetIcon" style="width: 4rem" />
                             </div>
                             <div class="flex-grow-1 flex-row align-items-center">
                                 <div class="font-medium">{{ assetName }}</div>
                                 <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
+                            </div>
+                        </div>
+                        <div class="flex" v-else>
+                            <div class="flex-shrink-0 flex align-items-center mr-2">
+                                <img alt="logo" :src="usdIcon" style="width: 4rem" />
+                            </div>
+                            <div class="flex-grow-1 flex-row align-items-center">
+                                <div class="font-medium">{{ usdName }}</div>
+                                <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
                             </div>
                         </div>
                     </div>
@@ -50,7 +68,7 @@
                 <div class="flex justify-content-center mt-lg-2">
                     <div class="mr-4">
                         <Button type="button" icon="pi pi-angle-left" :label="t('swapBackButtonTitle')"
-                            class="font-light w-100" @click="router.push('/swap')" />
+                            class="font-light w-100" @click="back()" />
                     </div>
                     <div class="">
                         <Button type="button" icon="pi pi-history" iconPos="right" :label="t('viewSwapHistory')"
@@ -70,12 +88,18 @@ import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 import { useRouter } from 'vue-router';
 import { useBalanceWallet } from '../../composables/useBalanceWallet';
+import { useSwapStore } from '../../stores/swap';
 const { t } = useI18n({ useScope: 'global' });
-const { successIcon, swapOneArrowIcon, assetIcon, unitCount, assetName, totalAmount, quoteId, feeAmount } = useSwap();
+const { successIcon, swapOneArrowIcon, assetIcon, unitCount, assetName, totalAmount, quoteId, feeAmount, transactionType } = useSwap();
 const router = useRouter();
 const { getWalletByAssetCode } = useBalanceWallet();
 const usdIcon = getWalletByAssetCode("USD")?.icon;
 const usdName = getWalletByAssetCode("USD")?.name;
+const back = () => {
+    useSwapStore().refreshQuote()
+    useSwapStore().clearTimer()
+    router.push('/swap')
+}
 </script>
 
 <style scoped>
