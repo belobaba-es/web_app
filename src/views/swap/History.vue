@@ -75,8 +75,9 @@ const secondsToDate = (seconds: number) => {
 
 const statusClass = (status:string) => {
     return {
-        'text-green-500': status === 'completed',
-        'text-orange-500': status === 'pending'
+        'text-green-500': status === 'process',
+        'text-orange-500': status === 'pending',
+        'text-red-500': status === 'cancel'
     }
 }
 </script>
