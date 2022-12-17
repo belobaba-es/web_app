@@ -66,8 +66,6 @@ export const useSwapStore = defineStore('swap', () => {
       })
   }
 
-  const amountWithFee = computed(() => amount.value - feeAmount.value)
-
   const executeQuote = async () => {
     if (amount.value === 0.0) return
     loading.value = true
@@ -124,10 +122,13 @@ export const useSwapStore = defineStore('swap', () => {
   })
 
   watch(timer, (newValue, oldValue) => {
-    if (!newValue && oldValue) shouldRefreshQuote.value = true
+    if (!newValue && oldValue) {
+      shouldRefreshQuote.value = true
+      cancelQuote()
+    }
   })
 
-  const refreshQuote = () => {
+  const refreshQuote = async () => {
     assetId.value = undefined
     quoteId.value = undefined
     baseAmount.value = 0.0
@@ -164,6 +165,11 @@ export const useSwapStore = defineStore('swap', () => {
     }
     
     await createQuote();
+  }
+
+  const cancelQuote = async () => {
+    const swapService = SwapService.instance()
+    await swapService.cancelQuote(quoteId.value)
   }
 
   return {

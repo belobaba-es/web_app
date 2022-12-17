@@ -32,4 +32,9 @@ export class SwapService extends HttpService {
     const resp = await this.get<any>(`swap/quotes`, [], true)
     return resp;
   }
+
+  async cancelQuote(quiteId: string) {
+    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, [], true)
+    return resp;
+  }
 }
