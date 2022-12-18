@@ -81,6 +81,7 @@ export const useSwapStore = defineStore('swap', () => {
         })
         loading.value = false;
         updateBlockedBalanceWalletByCode("USD", amount.value)
+        clearTimer()
         router.push('/swap/success')
       })
       .catch(error => {
@@ -97,6 +98,7 @@ export const useSwapStore = defineStore('swap', () => {
   const swapHandler = async () => {
     if (shouldRefreshQuote.value) {
       refreshQuote()
+      cancelQuote()
     } else {
       executeQuote()
     }
@@ -122,9 +124,9 @@ export const useSwapStore = defineStore('swap', () => {
   })
 
   watch(timer, (newValue, oldValue) => {
+    console.log(newValue, oldValue);
     if (!newValue && oldValue) {
       shouldRefreshQuote.value = true
-      cancelQuote()
     }
   })
 

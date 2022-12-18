@@ -23,7 +23,7 @@
             </div>
             <div>
                 <template v-if="type === 'crypto'">
-                    <Button type="button" class="bg-white border-none border-round-3xl" @click="openModalSelector" :disabled="amount === 0.00">
+                    <Button type="button" class="bg-white border-none border-round-3xl" @click="openModalSelector" :disabled="amount === 0.00 || loading">
                         <img v-if="assetIcon" alt="logo" :src="assetIcon" style="width: 3.5rem" />
                         <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{ assetName ? assetName : t('selectCrypto') }}</span>
                         <i class="pi pi-caret-down text-primary"></i>
@@ -53,7 +53,7 @@ interface Props {
 
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
-const { amount, assetName, assetIcon, unitCount, showModalAssetSelector } = storeToRefs(useSwapStore())
+const { amount, assetName, assetIcon, unitCount, showModalAssetSelector, loading } = storeToRefs(useSwapStore())
 
 const { t } = useI18n({ useScope: 'global' });
 

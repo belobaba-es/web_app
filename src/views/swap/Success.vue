@@ -97,7 +97,6 @@ const usdIcon = getWalletByAssetCode("USD")?.icon;
 const usdName = getWalletByAssetCode("USD")?.name;
 const back = () => {
     useSwapStore().refreshQuote()
-    useSwapStore().clearTimer()
     router.push('/swap')
 }
 </script>
