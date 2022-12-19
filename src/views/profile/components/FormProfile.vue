@@ -122,7 +122,19 @@
                 />
             </div>
         </div>
-        <div class="field col-6">
+        <div class="field col-2">
+          <label>{{ t('postalCodeLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText
+                id="phoneNumber"
+                type="text"
+                class="w-full"
+                v-model="form.address.postalCode"
+                required
+            />
+          </div>
+        </div>
+        <div class="field col-4">
             <label>{{ t('addressLabel1') }}</label>
             <div class="p-inputgroup">
                 <InputText 
@@ -133,7 +145,7 @@
                 />
             </div>
         </div>
-        <div class="field col-6">
+        <div class="field col-4">
             <label>{{ t('addressLabel2') }}</label>
             <div class="p-inputgroup">
                 <InputText 
