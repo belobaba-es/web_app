@@ -1,4 +1,4 @@
-export default (toast, data) => {
+export default (toast: any, data: any) => {
     for (const errorKey in data) {
         toast.add({
             severity: 'warn',
