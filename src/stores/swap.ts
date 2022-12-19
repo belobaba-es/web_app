@@ -41,12 +41,17 @@ export const useSwapStore = defineStore('swap', () => {
   })
 
   const createQuote = async () => {
-    if (amount.value === 0.0) return
+    
+    if (
+      (transactionType.value === 'buy' && amount.value === 0.0) ||
+      (transactionType.value === 'sell' && unitCount.value === 0.0)
+    ) return
+
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
       .createQuote({
-        amount: amount.value,
+        amount: amountIsUnitCount.value ? unitCount.value : amount.value,
         amountIsUnitCount: amountIsUnitCount.value,
         transactionType: transactionType.value,
         assetId: assetId.value,
@@ -57,8 +62,13 @@ export const useSwapStore = defineStore('swap', () => {
         baseAmount.value = response.data.baseAmount
         feeAmount.value = response.data.feeAmount
         totalAmount.value = response.data.totalAmount
-        unitCount.value = response.data.unitCount
+        if (transactionType.value === 'buy') {
+          unitCount.value = response.data.unitCount
+        }
         loading.value = false
+        if (transactionType.value === 'sell') {
+          amount.value = response.data.baseAmount
+        }
         startTimer()
       })
       .catch(() => {
@@ -132,7 +142,6 @@ export const useSwapStore = defineStore('swap', () => {
 
   const refreshQuote = async () => {
     assetId.value = undefined
-    quoteId.value = undefined
     baseAmount.value = 0.0
     feeAmount.value = 0.0
     totalAmount.value = 0.0
@@ -155,23 +164,32 @@ export const useSwapStore = defineStore('swap', () => {
 
   const switchTransactionType = async () => {
     if (transactionType.value === 'buy') {
+      amountIsUnitCount.value = true
+      if (amount.value > 0.00) {
+        amount.value = 0.00
+      }
       transactionType.value = 'sell'
     } else {
+      amountIsUnitCount.value = false
+      if (unitCount.value > 0.00) {
+        unitCount.value = 0.00
+      }
       transactionType.value = 'buy'
     }
+
     if (quoteId.value) {
       clearTimer()
     }
+
     if (shouldRefreshQuote.value) {
       shouldRefreshQuote.value = false
     }
     
-    await createQuote();
   }
 
   const cancelQuote = async () => {
     const swapService = SwapService.instance()
-    await swapService.cancelQuote(quoteId.value)
+    await swapService.cancelQuote(quoteId.value).then(() => quoteId.value = undefined)
   }
 
   return {
