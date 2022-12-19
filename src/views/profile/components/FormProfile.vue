@@ -152,7 +152,6 @@
                     type="text" 
                     v-model="form.address.streetTwo" 
                     class="w-full"
-                    required
                 />
             </div>
         </div>
