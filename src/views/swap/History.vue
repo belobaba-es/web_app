@@ -9,7 +9,7 @@
         <template #body="slotProps">
           <div class="h-5rem w-6rem relative">
             <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
-            <img :src="iconAsset(slotProps.data.assetId)" class="h-3rem h-3rem absolute bottom-0 right-0" />
+            <img :src="iconAsset(slotProps.data.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
           </div>
         </template>
       </Column>
@@ -67,8 +67,8 @@ onMounted(async () => {
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
 
-const iconAsset = (assetId: string) => {
-  return `https://storage.googleapis.com/noba-dev/${assetId}.svg`
+const iconAsset = (assetCode: string) => {
+  return `https://storage.googleapis.com/noba-dev/${assetCode}.svg`
 }
 const secondsToDate = (seconds: number) => {
   const locale = localStorage.getItem('noba@lang')

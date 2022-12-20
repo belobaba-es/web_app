@@ -17,7 +17,7 @@
           <div class="field">
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
-              <Password v-model="form.pass" placeholder="**********" />
+              <Password v-model="form.pass" :feedback="false" placeholder="**********" />
             </div>
           </div>
           <div class="flex justify-content-between align-items-center">
@@ -90,8 +90,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const loginService = LoginService.instance()
 const form = reactive({
-  user: 'angel.bejarano@jaspesoft.com',
-  pass: '12345678',
+  user: '',
+  pass: '',
   remember: false
 })
 
