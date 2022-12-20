@@ -156,9 +156,11 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const fetchQuotes = async () => {
+    loading.value = true;
     const swapService = SwapService.instance()
     await swapService.quotes().then(response => {
       quotes.value = response
+      loading.value = false
     })
   }
 
@@ -192,6 +194,18 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService.cancelQuote(quoteId.value).then(() => quoteId.value = undefined)
   }
 
+  const getNextPage = async () => {
+    if(!quotes.value.nextPag) return;
+    loading.value = true;
+    const swapService = SwapService.instance()
+    await swapService.nextQuotes(quotes.value.nextPag).then(response => {
+      response.results.forEach((result: any) => {
+        quotes.value.results.push(result)
+      });
+      loading.value = false
+    })
+  }
+
   return {
     baseAmount,
     feeAmount,
@@ -217,6 +231,7 @@ export const useSwapStore = defineStore('swap', () => {
     quotes,
     switchTransactionType,
     assetCode,
-    refreshQuote
+    refreshQuote,
+    getNextPage
   }
 })

@@ -4,7 +4,7 @@
       <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
       <span class="text-xl"> {{ t('swapHistory') }}</span>
     </div>
-    <DataTable :value="quotes.results" responsiveLayout="scroll">
+    <DataTable :value="quotes.results" responsiveLayout="scroll" ref="root" :loading="useSwapStore().loading">
       <Column field="assetId" :header="t('Swap')" header-class="flex justify-content-center">
         <template #body="slotProps">
           <div class="h-5rem w-6rem relative">
@@ -50,13 +50,16 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import { onMounted } from 'vue'
+import { onMounted, Ref, ref } from 'vue'
 import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
+import { useIntersectionObserver } from '@vueuse/core'
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
-const { fetchQuotes } = useSwapStore()
+const { fetchQuotes, getNextPage } = useSwapStore()
+
+const root = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   await fetchQuotes()
@@ -80,6 +83,7 @@ const statusClass = (status:string) => {
         'text-red-500': status === 'cancel'
     }
 }
+
 </script>
 
 <style scoped></style>
