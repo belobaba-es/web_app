@@ -84,7 +84,6 @@
                     :placeholder="t('countryPlaceholder')"
                     :disabled="countriesInputIsEmpty"
                     class="w-full"
-                    @change="onChangeCountryHandler()"
                     required
                 />
             </div>
@@ -101,7 +100,6 @@
                     :placeholder="t('statePlaceHolder')"
                     :disabled="statesInputIsEmpty"
                     class="w-full"
-                    @change="onChangeStateHandler()"
                     required
                 />
             </div>
@@ -173,7 +171,7 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { useAccount } from '../../../composables/useAccount';
 import { useI18n } from 'vue-i18n'
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import { useWorld } from '../../../composables/useWorld';
 import { useRoute } from 'vue-router';
 
@@ -220,8 +218,8 @@ onMounted(async () => {
 
     if (isEditView.value || isUpdateProfileView.value) {
         setFormInitialInfo();
-        await onChangeCountryHandler();
-        await onChangeStateHandler();
+        // await onChangeCountryHandler();
+        // await onChangeStateHandler();
         setIsAccountBusiness(isAccountBusinessComputed.value);
     }
 
@@ -251,8 +249,8 @@ onMounted(async () => {
         }
         setAccountForm(data);
 
-        await onChangeCountryHandler();
-        await onChangeStateHandler();
+        // await onChangeCountryHandler();
+        // await onChangeStateHandler();
     }
 
     if (isCreateView.value) {
@@ -281,7 +279,7 @@ onMounted(async () => {
         }
 
         setAccountForm(data);
-        await onChangeCountryHandler();
+        // await onChangeCountryHandler();
     }
 });
 
@@ -289,18 +287,29 @@ onUnmounted(() => {
     clearAccountFormData();
 });
 
-const onChangeCountryHandler = async () => {
-    const country = countries.value.find(country => country.country_code === form.value.address.country);
+const onChangeCountryHandler = async (value: string) => {
+    const country = countries.value.find(country => country.country_code === value);
     if (!country) return;
     setCountry(country);
     await fetchStates();
 };
 
-const onChangeStateHandler = async () => {
-    const state = states.value.find(state => state.name === form.value.address.region);
+const onChangeStateHandler = async (value:string) => {
+    const state = states.value.find(state => state.name === value);
     if (!state) return;
     setState(state);
     await fetchCities();
 };
+
+watch(form.value, async (newValue) => {
+    if (newValue.address.country) {
+        await onChangeCountryHandler(newValue.address.country)
+    }
+
+    if (newValue.address.region) {
+        await onChangeStateHandler(newValue.address.region)
+    }
+    
+})
 
 </script>
