@@ -166,17 +166,13 @@
         <div class="field col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <Dropdown
+            <InputText
+                type="text"
                 v-model="form.intermediaryBank.intermediaryBankCity"
-                :options="bankCities"
-                optionLabel="name"
-                option-value="name"
-                :placeholder="t('cityPlaceHolder')"
                 class="w-full"
-                :loading="bankLoadingCitiesField"
-                :disabled="bankCitiesInputIsEmpty"
                 required
             />
+
           </div>
 
         </div>
@@ -242,15 +238,10 @@
         <div class="field col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <Dropdown
+            <InputText
+                type="text"
                 v-model="form.city"
-                :options="cities"
-                optionLabel="name"
-                option-value="name"
-                :placeholder="t('cityPlaceHolder')"
                 class="w-full"
-                :loading="loadingCitiesField"
-                :disabled="citiesInputIsEmpty"
                 required
             />
           </div>
@@ -266,14 +257,14 @@
       <div class="field">
         <label>{{ t(' Street Address') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="form.streetOne"/>
+          <InputText type="text" v-model="form.streetOne" />
         </div>
       </div>
 
       <div class="field">
         <label>{{ t(' Street Address (Apt, Suite, Etc.) ') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="form.streetTwo"/>
+          <InputText type="text" v-model="form.streetTwo" />
         </div>
       </div>
 
@@ -317,9 +308,6 @@ const {
   statesInputIsEmpty,
   loadingStatesField,
   states,
-  cities,
-  citiesInputIsEmpty,
-  loadingCitiesField,
   onChangeCountryHandler,
   onChangeStateHandler
 } = useWorld();
@@ -329,9 +317,6 @@ const {
   statesInputIsEmpty: bankStatesInputIsEmpty,
   loadingStatesField: bankLoadingStatesField,
   states: bankStates,
-  cities: bankCities,
-  citiesInputIsEmpty: bankCitiesInputIsEmpty,
-  loadingCitiesField: bankLoadingCitiesField,
   onChangeCountryHandler: onBankChangeCountryHandler,
   onChangeStateHandler: onBankChangeStateHandler
 } = useWorld();
