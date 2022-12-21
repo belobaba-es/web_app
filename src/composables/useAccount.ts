@@ -231,7 +231,6 @@ export const useAccount = () => {
     await accountStore.getAccountByID(route.params.accountId).then(() => {
       if ((isEditView.value || isUpdateProfileView.value) && !isEditPartnerAccount.value) {
         setFormInitialInfo()
-        console.log('holaaa')
       }
     })
   }
