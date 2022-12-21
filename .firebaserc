@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "noba-dev-360623"
-  }
+    "default": "noba-prod",
+    "prod": "noba-prod"
+  },
+  "targets": {},
+  "etags": {}
 }

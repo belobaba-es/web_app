@@ -7,6 +7,7 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
 import { Document, Member, Owner } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
+import showMessage from "../shared/showMessageArray";
 
 export const useAccount = () => {
   const router = useRouter()
@@ -191,12 +192,20 @@ export const useAccount = () => {
       })
       .catch(error => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.response.data.message,
-          life: 4000,
-        })
+
+        if (error.response.data.message) {
+          toast.add({
+            severity: 'error',
+            summary: t('somethingWentWrong'),
+            detail: error.response.data.message,
+            life: 4000,
+          })
+          return
+        }
+
+      showMessage(toast, error.response.data)
+
+
       })
   }
 
