@@ -46,7 +46,11 @@
                 </div>
             </div>
         </div>
-        <ModalAssetSelector :show-modal="showModalAssetSelector" @selected-asset="selectedAsset"/>
+        <ModalAssetSelector
+            :show-modal="showModalAssetSelector"
+            @update:visible="modal($event)"
+            @selected-asset="selectedAsset"
+        />
     </PageLayout>
 </template>
 
@@ -77,6 +81,10 @@ const selectedAsset = async (asset: Asset) => {
     assetCode.value = asset.code;
     await createQuote();
 };
+
+const modal = (b: boolean) => {
+  showModalAssetSelector.value = b
+}
 
 </script>
 
