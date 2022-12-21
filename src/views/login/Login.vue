@@ -17,7 +17,7 @@
           <div class="field">
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
-              <Password v-model="form.pass" placeholder="**********" />
+              <Password v-model="form.pass" :feedback="false" placeholder="**********" />
             </div>
           </div>
           <div class="flex justify-content-between align-items-center">
