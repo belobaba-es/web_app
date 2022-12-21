@@ -1,6 +1,10 @@
 <template>
-  <Dialog v-model:visible="showModalAssetSelector" closeIcon="pi pi-times-circle"
-    :breakpoints="{ '960px': '75vw', '640px': '100vw' }" :style="{ width: '50vw' }" class="modal-asset-selector">
+  <Dialog
+      :visible="props.showModal"
+      :modal="true" closeIcon="pi pi-times-circle"
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }" :style="{ width: '50vw' }"
+      class="modal-asset-selector"
+  >
     <template #header>
       <h3 class="font-medium">{{ t('selectCrypto') }}</h3>
     </template>
@@ -28,6 +32,10 @@
 </template>
 
 <script setup lang="ts">
+interface Props {
+  showModal: boolean
+}
+
 import Dialog from 'primevue/dialog';
 import { ref, onMounted } from 'vue';
 import { AssetsService } from '../views/deposit/services/assets';
@@ -36,11 +44,9 @@ import { useI18n } from "vue-i18n";
 import ScrollPanel from 'primevue/scrollpanel';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import { useSwapStore } from '../stores/swap';
-import { storeToRefs } from 'pinia';
 
-const { showModalAssetSelector } = storeToRefs(useSwapStore())
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
+const props = defineProps<Props>();
 const emit = defineEmits(['selectedAsset']);
 
 const listAsset = ref<Asset[]>([]);

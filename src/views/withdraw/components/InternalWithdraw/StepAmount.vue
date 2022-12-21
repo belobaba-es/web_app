@@ -193,7 +193,6 @@ const nextPage = () => {
 }
 
 const selectedAsset = (evt: Asset) => {
-  console.log('SELEEEEEE', evt)
   showAmount.value = true
   assetSymbol.value = evt.code
 
