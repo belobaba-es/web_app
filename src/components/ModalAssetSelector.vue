@@ -3,7 +3,6 @@
       v-model:visible="props.showModal"
       :modal="true"
       closeIcon="pi pi-times-circle"
-      :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '50vw'}"
       class="modal-asset-selector"
   >
     <template #header>
