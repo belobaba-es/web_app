@@ -195,15 +195,15 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const getNextPage = async () => {
-    if(!quotes.value.nextPag) return;
-    loading.value = true;
-    const swapService = SwapService.instance()
-    await swapService.nextQuotes(quotes.value.nextPag).then(response => {
-      response.results.forEach((result: any) => {
-        quotes.value.results.push(result)
-      });
-      loading.value = false
-    })
+    // if(!quotes.value.nextPag) return;
+    // loading.value = true;
+    // const swapService = SwapService.instance()
+    // await swapService.nextQuotes(quotes.value.nextPag).then(response => {
+    //   response.results.forEach((result: any) => {
+    //     quotes.value.results.push(result)
+    //   });
+    //   loading.value = false
+    // })
   }
 
   return {
