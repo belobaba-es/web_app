@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <ModalAssetSelector @selected-asset="selectedAsset"/>
+        <ModalAssetSelector :show-modal="showModalAssetSelector" @selected-asset="selectedAsset"/>
     </PageLayout>
 </template>
 
@@ -63,7 +63,8 @@ import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
 
-const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText, loading, quoteId, feeAmount, totalAmount, transactionType, assetCode } = storeToRefs(useSwapStore());
+const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText,
+  loading, quoteId, feeAmount, totalAmount, transactionType, assetCode } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
 const { createQuote, swapHandler, switchTransactionType } = useSwapStore();
