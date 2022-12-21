@@ -84,15 +84,10 @@
         <div class="field col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <Dropdown
+            <InputText
+                type="text"
                 v-model="form.city"
-                :options="cities"
-                optionLabel="name"
-                option-value="name"
-                :placeholder="t('cityPlaceHolder')"
                 class="w-full"
-                :loading="loadingCitiesField"
-                :disabled="citiesInputIsEmpty"
                 required
             />
           </div>
@@ -160,9 +155,6 @@ const {
   states,
   loadingCountiesField,
   countriesInputIsEmpty,
-  cities,
-  citiesInputIsEmpty,
-  loadingCitiesField,
   onChangeStateHandler,
   onChangeCountryHandler: onBankChangeCountryHandler,
 } = useWorld();
