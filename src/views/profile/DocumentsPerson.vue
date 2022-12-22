@@ -7,7 +7,7 @@
     <div class="mt-5 flex justify-content-center" v-if="documentIdRef">
       <Button
         :label="t('backToDocuments')"
-        class="p-button-raised py-3 px-6 font-bold"
+        class="p-button-raised py-3 px-6 font-medium"
         icon="pi pi-angle-right"
         icon-pos="right"
         @click="backToDocuments"
@@ -25,7 +25,7 @@
           <div class="mt-5">
             <Button
               :label="t('updateDocuments')"
-              class="p-button-raised py-3 px-6 font-bold"
+              class="p-button-raised py-3 px-6 font-medium"
               icon="pi pi-angle-right"
               icon-pos="right"
               @click="initFileLoader"
@@ -62,27 +62,37 @@ const initFileLoader = () => {
   setFormInitialInfo()
 }
 
-const { setDocumentResponseId, setFormInitialInfo, form, submitProfileForm } = useAccount()
+const { setDocumentResponseId, setFormInitialInfo, form, submitProfileForm, setDeviceResponseId } = useAccount()
 const documentIdRef = toRef(form.value, 'documentId')
 
 onMounted(async () => {
+
+
   ;(window as any).SDK_ID = import.meta.env.VITE_PUBLIC_SDK_ID
-  const tag1 = document.createElement('script')
-  const tag2 = document.createElement('script')
 
-  tag1.setAttribute('src', 'https://websdk.socure.com/bundle.js')
-  tag1.setAttribute('type', 'text/javascript')
-  document.head.appendChild(tag1)
+  const socureWebSdk = document.createElement('script')
+  const socureWebSdkDevicer = document.createElement('script')
+  const socureScript = document.createElement('script')
 
-  tag2.setAttribute('src', '/documents.js')
-  tag2.setAttribute('type', 'text/javascript')
-  document.head.appendChild(tag2)
+  socureWebSdk.setAttribute('src', 'https://websdk.socure.com/bundle.js')
+  socureWebSdk.setAttribute('type', 'text/javascript')
+  document.head.appendChild(socureWebSdk)
+
+  socureWebSdkDevicer.setAttribute('src', 'https://js.dvnfo.com/devicer.min.js')
+  socureWebSdkDevicer.setAttribute('type', 'text/javascript')
+  document.head.appendChild(socureWebSdkDevicer)
+
+  socureScript.setAttribute('src', '/documents.js')
+  socureScript.setAttribute('type', 'text/javascript')
+  document.head.appendChild(socureScript)
 
   if (typeof window !== undefined) {
     setInterval(() => {
       const documentID = sessionStorage.getItem('noba@documentUuid')
-      console.log('noba@documentUuid', documentID)
+      const deviceId = sessionStorage.getItem('noba@deviceId')
+
       setDocumentResponseId(documentID)
+      setDeviceResponseId(deviceId)
     }, 10000)
   }
 })
@@ -90,7 +100,17 @@ onMounted(async () => {
 const backToDocuments = () => {
   isInitFileLoader.value = false
   documentIdRef.value = null
+  clearEnv()
 }
+
+const clearEnv = () => {
+  sessionStorage.removeItem('noba@deviceId')
+  sessionStorage.removeItem('noba@documentUuid')
+  sessionStorage.removeItem('documentVerificationToken')
+  sessionStorage.removeItem('publicApiKey')
+  localStorage.removeItem('devicer_id')
+}
+
 
 watch(documentIdRef, (value, old) => {
   if (!old && value && isInitFileLoader.value === true) submitProfileForm()

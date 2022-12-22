@@ -222,6 +222,11 @@ export const useAccount = () => {
     accountStore.setDocumentResponseId(documentResponseId)
   }
 
+  const setDeviceResponseId = (deviceResponseId: string | null) => {
+    if (!deviceResponseId) return
+    accountStore.setDeviceResponseId(deviceResponseId)
+  }
+
   const editProfile = (): void => {
     if (isShowView.value && route.params.contactId) {
       const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
@@ -284,6 +289,7 @@ export const useAccount = () => {
     submitProfileForm,
     getFullName,
     setDocumentResponseId,
+    setDeviceResponseId,
     submitUpdatePassword,
     clearAccountFormData,
     setFormInitialInfo,

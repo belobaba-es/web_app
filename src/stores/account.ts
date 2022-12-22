@@ -54,6 +54,7 @@ export interface FormData {
   address: FormAddressData
   phone: FormPhoneData
   documentId: string | null
+  deviceId: string | null
   isAccountBusiness: boolean
 }
 
@@ -90,6 +91,7 @@ export const useAccountStore = defineStore('account', {
         phoneCountry: '',
       },
       documentId: null,
+      deviceId: null,
       isAccountBusiness: false,
     },
     documentType: 'government_id',
@@ -136,6 +138,9 @@ export const useAccountStore = defineStore('account', {
     },
     setDocumentResponseId(documentResponseId: string) {
       this.form.documentId = documentResponseId
+    },
+    setDeviceResponseId(deviceResponseId: string) {
+      this.form.deviceId = deviceResponseId
     },
     clearAccountFormData() {
       this.form.generalData.email = ''
