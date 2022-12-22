@@ -179,6 +179,10 @@ export const useAccount = () => {
       isNaturalAccountLet = true
     }
 
+    if (isNaturalAccount.value) {
+      isNaturalAccountLet = true
+    }
+
     profileService
       .updateContact(account.accountId.value!, contactId!, isNaturalAccountLet!, accountStore.form)
       .then(() => {
