@@ -209,12 +209,16 @@ const route = useRoute();
 
 onMounted(async () => {
   await fetchCountries();
+  if (getPartnerToEdit.value?.country) {
+    await onChangeCountryHandler(getPartnerToEdit.value?.country ?? 'US')
+  }
 
   if (isEditView.value || isUpdateProfileView.value) {
     setFormInitialInfo();
     setIsAccountBusiness(isAccountBusinessComputed.value);
   }
-
+  console.log(getPartnerToEdit.value?.region)
+  console.log(getPartnerToEdit.value?.country)
   let data = {
     generalData: {
       email: getPartnerToEdit.value?.email ?? '',
