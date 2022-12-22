@@ -236,6 +236,7 @@ onMounted(async () => {
       phoneCountry: getPartnerToEdit.value?.phoneCountry
     },
     documentId: "",
+    deviceId: "",
     isAccountBusiness: isAccountBusinessComputed.value
   }
 
