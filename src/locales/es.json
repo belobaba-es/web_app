@@ -169,5 +169,7 @@
     "reference": "Referencia",
     "rememberMe": "Recordarme",
     "swapHistory": "Historia del intercambio",
-    "iWant": "Quiero"
+    "iWant": "Quiero",
+    "backToDocuments": "Volver a documentos",
+    "updateDocuments": "Actualizar documentos"
 }
