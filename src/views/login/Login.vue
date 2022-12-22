@@ -27,7 +27,7 @@
                   {{ t('rememberMe') }}
                 </label>
             </div>
-            <div>
+            <div class="text-right">
               <RouterLink to="/forgot-password">
                 {{ t('recoveryPassword')}}
               </RouterLink>
