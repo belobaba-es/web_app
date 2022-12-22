@@ -26,7 +26,7 @@
                     </div>
                 </form>
             </div>
-            <Button type="button" :label="t('alreadyAccount')" class="font-light mt-lg-5 p-button-outlined border-300" @click="router.push('/')" />
+            <Button type="button" :label="t('alreadyAccount')" class="font-light mt-4 p-button-outlined border-300" @click="router.push('/')" />
         </div>
         <div class="container-center">
             <div>
