@@ -7,13 +7,6 @@ function onProgress(progress) {
 
 function onSuccess(response) {
   sessionStorage.setItem('noba@documentUuid', response.documentUuid)
-  console.log(response)
-  console.log('response')
-
-  //Get the DocumentUUID
-  console.log(response.documentUuid)
-  //Get the Status
-  console.log(response.status)
 
   if (response.status === 'DOCUMENTS_UPLOADED') {
     clearSession()
@@ -38,6 +31,18 @@ function start() {
     clearSession()
   }
 
+  devicer.run({
+    publicKey: `${window.SDK_ID}`,
+    userConsent: true,
+    context: 'signup'
+  }, function(response) {
+    console.log("DeviceRisk Response ======: "+JSON.stringify(response));
+
+    if (response.sessionId !== "") {
+      sessionStorage.setItem('noba@deviceId', response.sessionId)
+    }
+  })
+
   SocureInitializer.init(window.SDK_ID).then(lib => {
     lib.init(window.SDK_ID, '#websdk', config).then(function () {
       lib.start(1).then(
@@ -60,5 +65,6 @@ function clearSession() {
   sessionStorage.removeItem('documentVerificationToken')
   sessionStorage.removeItem('publicApiKey')
   localStorage.removeItem('devicer_id')
+
   console.log('Socure DocV Session cleaned!')
 }
