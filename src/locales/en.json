@@ -178,5 +178,7 @@
     "reference": "Reference",
     "rememberMe": "Remember me",
     "swapHistory": "Swap History",
-    "iWant": "I want"
+    "iWant": "I want",
+    "backToDocuments": "Back to documents",
+    "updateDocuments": "Update documents"
 }
