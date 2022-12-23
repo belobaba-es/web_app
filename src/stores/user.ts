@@ -26,10 +26,12 @@ interface User {
     city:         string;
     region:       string;
     account:      Account;
+    vip: boolean
 }
 
 interface Account {
     accountId: string;
+    kyc: any[];
     status:    string;
 }
 
@@ -37,6 +39,34 @@ export const useUserStore = defineStore('user', () => {
     const setUser = (payload: User) => {
         const cryptoService = new CryptoService;
         sessionStorage.setItem('user', cryptoService.encrypt(JSON.stringify({ ...payload })))
+    }
+
+    const isAccountActive = (): boolean => {
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return true;
+
+        const user = JSON.parse(new CryptoService().decrypt(storageUser))
+
+        return user.account.status === 'opened'
+    }
+
+    const isVIP = (): boolean => {
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return false;
+
+        const user = JSON.parse(new CryptoService().decrypt(storageUser))
+
+        return user.vip ?? false
+    }
+
+    const getWarningKYC = () =>{
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return;
+
+        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kyc
     }
 
     const getUser = computed(() => {
@@ -50,5 +80,5 @@ export const useUserStore = defineStore('user', () => {
         );
     })
 
-    return { setUser, getUser }
+    return { setUser, getUser, isAccountActive, isVIP, getWarningKYC }
 });

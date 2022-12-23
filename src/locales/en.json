@@ -180,5 +180,7 @@
     "swapHistory": "Swap History",
     "iWant": "I want",
     "backToDocuments": "Back to documents",
-    "updateDocuments": "Update documents"
+    "updateDocuments": "Update documents",
+    "titleAccountValidationProcess": "Validation pending",
+    "accountValidationProcess": "Once your account is approved, we will send you an email with the validation of your account."
 }
