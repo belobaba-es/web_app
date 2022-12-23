@@ -26,6 +26,7 @@ interface User {
     city:         string;
     region:       string;
     account:      Account;
+    vip: boolean
 }
 
 interface Account {
@@ -50,6 +51,16 @@ export const useUserStore = defineStore('user', () => {
         return user.account.status === 'opened'
     }
 
+    const isVIP = (): boolean => {
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return false;
+
+        const user = JSON.parse(new CryptoService().decrypt(storageUser))
+
+        return user.vip ?? false
+    }
+
     const getWarningKYC = () =>{
         const storageUser = sessionStorage.getItem('user');
 
@@ -69,5 +80,5 @@ export const useUserStore = defineStore('user', () => {
         );
     })
 
-    return { setUser, getUser, isAccountActive, getWarningKYC }
+    return { setUser, getUser, isAccountActive, isVIP, getWarningKYC }
 });
