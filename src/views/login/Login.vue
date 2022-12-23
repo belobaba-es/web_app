@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <div class="container-flex mt-lg-2">
+          <div class="container-flex">
             <div class="float-left w-100 with-buttons">
               <Button
                 type="button"
