@@ -171,5 +171,7 @@
     "swapHistory": "Historia del intercambio",
     "iWant": "Quiero",
     "backToDocuments": "Volver a documentos",
-    "updateDocuments": "Actualizar documentos"
+    "updateDocuments": "Actualizar documentos",
+    "titleAccountValidationProcess": "Validación pendiente",
+    "accountValidationProcess": "\nUna vez que su cuenta sea aprobada, le enviaremos un correo electrónico con la validación de su cuenta."
 }

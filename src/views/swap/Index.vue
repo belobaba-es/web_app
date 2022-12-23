@@ -1,5 +1,7 @@
 <template>
-    <PageLayout :title="t('swap')">
+  <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+
+    <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
         <div class="grid flex justify-content-center">
             <div class="col-6">
                 <div class="flex justify-content-end mb-4">
@@ -66,7 +68,10 @@ import ProgressBar from 'primevue/progressbar';
 import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
+import {useUserStore} from "../../stores/user";
+import AccountValidationProcess from "../../components/AccountValidationProcess.vue";
 
+const useUser = useUserStore()
 const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText,
   loading, quoteId, feeAmount, totalAmount, transactionType, assetCode } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });

@@ -14,12 +14,12 @@
          <strong class="font-bold"> {{balanceWalletUsd()}} USD</strong>
         </span>
 			</div>
-			<Button class="p-button-outlined mr-2 ml-2" >
-				<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>	
-			</Button>
+<!--			<Button class="p-button-outlined mr-2 ml-2" >-->
+<!--				<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>	-->
+<!--			</Button>-->
 
 			<SplitButton label="Save"  :model="items" class="p-button-text mr-2 mb-2 ml-2">
-				<img alt="logo" src="../../assets/icons/maletin.svg" style="width: 2.5rem"/>
+				<img alt="logo" :src="avatar()" class="avatar" />
 				<span style="margin: auto 0;">{{username}}</span>
 			</SplitButton>
 
@@ -94,9 +94,18 @@ const items = ref([
 
 ]);
 
+const avatar = () => {
+  return `https://ui-avatars.com/api/?name=${userStore.getUser.firstName}+${userStore.getUser.lastName }`
+}
+
+
 </script>
 
 
 <style lang="scss">
-
+.avatar {
+  border-radius: 100px;
+  width: 3rem;
+  margin-right: 0.6rem;
+}
 </style>

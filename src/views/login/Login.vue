@@ -107,8 +107,6 @@ const redirectPage = () => {
   window.location.href = window.location.origin ?? 'https://noba.cash/'
 }
 
-
-
 const handleSubmit = () => {
   submitting.value = true
   loginService.login(form.user, form.pass).then(data => {
@@ -116,7 +114,13 @@ const handleSubmit = () => {
     userStore.setUser(userPayload)
 
     submitting.value = false
-    window.location.href = '/dashboard'
+
+    if (userPayload.account.status !== 'pending') {
+      window.location.href = '/dashboard'
+    } else {
+      window.location.href = `/profile/${userPayload.accountId}`
+    }
+
 
 
   }).catch(e => {
