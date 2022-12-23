@@ -54,7 +54,6 @@ import { onMounted, Ref, ref } from 'vue'
 import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
-import { useIntersectionObserver } from '@vueuse/core'
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
 const { fetchQuotes, getNextPage } = useSwapStore()

@@ -8,7 +8,7 @@ import { useBalanceWallet } from '../composables/useBalanceWallet'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
-  const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
+  const { fetchBalanceWallets } = useBalanceWallet()
   const router = useRouter()
   const toast = useToast()
   const baseAmount = ref(0.0)
@@ -35,6 +35,7 @@ export const useSwapStore = defineStore('swap', () => {
     prevPag: null,
     results: [],
   })
+  const successExecuted = ref(false);
 
   const swapBtnText = computed(() => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
@@ -71,30 +72,7 @@ export const useSwapStore = defineStore('swap', () => {
         }
         startTimer()
       })
-      .catch(() => {
-        loading.value = false
-      })
-  }
-
-  const executeQuote = async () => {
-    if (amount.value === 0.0) return
-    loading.value = true
-    const swapService = SwapService.instance()
-    await swapService
-      .execute(quoteId.value)
-      .then(response => {
-        toast.add({
-          severity: 'success',
-          summary: t('successfulOperation'),
-          detail: response.message,
-          life: 4000,
-        })
-        loading.value = false;
-        updateBlockedBalanceWalletByCode("USD", amount.value)
-        clearTimer()
-        router.push('/swap/success')
-      })
-      .catch(error => {
+      .catch((error) => {
         loading.value = false
         toast.add({
           severity: 'error',
@@ -105,10 +83,42 @@ export const useSwapStore = defineStore('swap', () => {
       })
   }
 
+  const executeQuote = async () => {
+    if (amount.value === 0.0) return
+    loading.value = true
+    const swapService = SwapService.instance()
+    await swapService
+      .execute(quoteId.value)
+      .then(async (response) => {
+        successExecuted.value = true;
+        await fetchBalanceWallets()
+        toast.add({
+          severity: 'success',
+          summary: t('successfulOperation'),
+          detail: response.message,
+          life: 4000,
+        })
+        loading.value = false;
+        clearTimer()
+        router.push('/swap/success')
+      })
+      .catch(async (error) => {
+        loading.value = false
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+        await cancelQuote();
+        clearTimer();
+        refreshQuote();
+      })
+  }
+
   const swapHandler = async () => {
     if (shouldRefreshQuote.value) {
       refreshQuote()
-      cancelQuote()
     } else {
       executeQuote()
     }
@@ -129,14 +139,13 @@ export const useSwapStore = defineStore('swap', () => {
     progressBarPercent.value = 0
   }
 
-  watch(progressBarSeconds, newValue => {
-    if (newValue === 10) clearTimer()
-  })
-
-  watch(timer, (newValue, oldValue) => {
-    console.log(newValue, oldValue);
-    if (!newValue && oldValue) {
-      shouldRefreshQuote.value = true
+  watch(progressBarSeconds, async (newValue) => {
+    if (newValue === 10) {
+      clearTimer()
+      if (quoteId.value && !successExecuted.value) {
+        shouldRefreshQuote.value = true
+        await cancelQuote()
+      }
     }
   })
 
@@ -181,10 +190,15 @@ export const useSwapStore = defineStore('swap', () => {
 
     if (quoteId.value) {
       clearTimer()
+      await cancelQuote()
     }
 
     if (shouldRefreshQuote.value) {
       shouldRefreshQuote.value = false
+    }
+
+    if (assetId.value) {
+      await createQuote()
     }
     
   }
@@ -232,6 +246,7 @@ export const useSwapStore = defineStore('swap', () => {
     switchTransactionType,
     assetCode,
     refreshQuote,
-    getNextPage
+    getNextPage,
+    shouldRefreshQuote
   }
 })

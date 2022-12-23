@@ -38,7 +38,7 @@
                         <span class="font-medium text-primary text-2xl">Total:</span> <span class="text-2xl font-medium">{{ totalAmount }}</span>
                     </div>
                     <div class="mb-2">
-                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" :disabled="(loading || !quoteId)" @click="swapHandler" :loading="loading"/>
+                        <Button :label="swapBtnText" class="w-full py-3 text-uppercase" :disabled="(loading || (!quoteId && !shouldRefreshQuote))" @click="swapHandler" :loading="loading"/>
                     </div>
                     <div>
                         <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
@@ -68,7 +68,7 @@ import { useSwapStore } from '../../stores/swap';
 import { storeToRefs } from 'pinia';
 
 const { assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText,
-  loading, quoteId, feeAmount, totalAmount, transactionType, assetCode } = storeToRefs(useSwapStore());
+  loading, quoteId, feeAmount, totalAmount, transactionType, assetCode, shouldRefreshQuote } = storeToRefs(useSwapStore());
 const { t } = useI18n({ useScope: 'global' });
 const router = useRouter();
 const { createQuote, swapHandler, switchTransactionType } = useSwapStore();

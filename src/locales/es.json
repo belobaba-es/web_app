@@ -169,5 +169,6 @@
     "reference": "Referencia",
     "rememberMe": "Recordarme",
     "swapHistory": "Historia del intercambio",
-    "iWant": "Quiero"
+    "iWant": "Quiero",
+    "insufficientFunds": "Fondos insuficientes"
 }
