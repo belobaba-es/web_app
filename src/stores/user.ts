@@ -41,11 +41,21 @@ export const useUserStore = defineStore('user', () => {
     }
 
     const isAccountActive = (): boolean => {
-        return this.account.status === 'opened'
+        const storageUser = sessionStorage.getItem('user');
+
+        if (!storageUser) return true;
+
+        const user = JSON.parse(new CryptoService().decrypt(storageUser))
+
+        return user.account.status === 'opened'
     }
 
     const getWarningKYC = () =>{
+        const storageUser = sessionStorage.getItem('user');
 
+        if (!storageUser) return;
+
+        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kyc
     }
 
     const getUser = computed(() => {
@@ -59,5 +69,5 @@ export const useUserStore = defineStore('user', () => {
         );
     })
 
-    return { setUser, getUser }
+    return { setUser, getUser, isAccountActive, getWarningKYC }
 });

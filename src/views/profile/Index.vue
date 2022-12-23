@@ -1,4 +1,5 @@
 <template>
+   <WarningKYC />
     <div class="flex justify-content-between align-items-center">
         <h1 class="text-2xl">{{ t('personalData') }}</h1>
         <template v-if="loading">
@@ -87,6 +88,7 @@ import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
 import { useAccount } from '../../composables/useAccount';
 import { useI18n } from 'vue-i18n';
+import WarningKYC from "./components/WarningKYC.vue";
 
 const { t } = useI18n({ useScope: 'global' });
 
