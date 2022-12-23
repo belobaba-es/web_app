@@ -30,6 +30,7 @@ interface User {
 
 interface Account {
     accountId: string;
+    kyc: any[];
     status:    string;
 }
 
@@ -37,6 +38,14 @@ export const useUserStore = defineStore('user', () => {
     const setUser = (payload: User) => {
         const cryptoService = new CryptoService;
         sessionStorage.setItem('user', cryptoService.encrypt(JSON.stringify({ ...payload })))
+    }
+
+    const isAccountActive = (): boolean => {
+        return this.account.status === 'opened'
+    }
+
+    const getWarningKYC = () =>{
+
     }
 
     const getUser = computed(() => {

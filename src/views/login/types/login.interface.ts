@@ -28,9 +28,11 @@ export interface LoginData {
     taxCountry:   string;
     streetTwo:    string;
     account:      Account;
+
 }
 
 export interface Account {
+    kyc: any[];
     accountId: string;
     status:    string;
 }
