@@ -26,7 +26,7 @@
         </div>
         <div class="col-8">
           <div class="w-100 h-100 text-right" style="position: relative">
-            <p class="font-semi-bold text-right balance">
+            <p class="text-balance-lg font-semi-bold text-right">
               {{ calc(item.assetCode, item.balance, item.blockedBalance ?? 0) }} <small>{{ item.assetCode }}</small>
             </p>
           </div>
@@ -48,6 +48,7 @@
           class="custom-carousel"
           :circular="true"
           :autoplayInterval="2000"
+          
         >
           <template #item="slotProps">
             <!-- card responsive -->
@@ -116,12 +117,12 @@ const getStyle = (assetCode: string) => {}
 const responsiveOptions = ref([
   {
     breakpoint: '1024px',
-    numVisible: 1,
-    numScroll: 1,
+    numVisible: 2,
+    numScroll: 2,
   },
   {
     breakpoint: '600px',
-    numVisible: 1,
+    numVisible: 2,
     numScroll: 1,
   },
   {
@@ -170,8 +171,8 @@ const responsiveOptions = ref([
   margin: auto;
   width: fit-content;
 
-  --max-font: 80;
-  --min-font: 25;
+  --max-font: 60;
+  --min-font: 20;
   font-size: var(--responsive);
 }
 
@@ -184,9 +185,25 @@ const responsiveOptions = ref([
   margin: auto;
   width: fit-content;
 
+  @media only screen and (max-width: 480px) {
+    --max-font: 100;
+    --min-font: 25;
+    font-size: var(--responsive);
+  }
+
   /* Set max and min font sizes */
-  --max-font: 80;
-  --min-font: 25;
+  --max-font: 40;
+  --min-font: 12;
+  font-size: var(--responsive);
+}
+.text-balance-lg {
+  font-family: KanitMedium !important;
+  margin: auto;
+  width: fit-content;
+
+  /* Set max and min font sizes */
+  --max-font: 15;
+  --min-font: 5;
   font-size: var(--responsive);
 }
 </style>
