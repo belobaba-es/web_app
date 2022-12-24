@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="col-3 card mr-2 ml-2" v-bind:class="getStyle(item.assetCode)" v-for="item in getWallets()">
+    <div class="col-2 card mr-2 ml-2" v-bind:class="getStyle(item.assetCode)" v-for="item in getWallets()">
       <p class="font-bold text-uppercase mb-3" style="font-size: 9pt">{{ item.name }}</p>
       <div class="grid">
         <div class="col-4">
@@ -48,7 +48,6 @@
           class="custom-carousel"
           :circular="true"
           :autoplayInterval="2000"
-          
         >
           <template #item="slotProps">
             <!-- card responsive -->
@@ -71,6 +70,7 @@
                 <div class="col-6 flex justify-content-end align-content-end flex-wrap">
                   <p class="text-balance">
                     {{ calc(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
+                    <br />
                     <small>{{ slotProps.data.assetCode }}</small>
                   </p>
                 </div>
@@ -85,9 +85,8 @@
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton'
 import Carousel from 'primevue/carousel'
-import Button from 'primevue/button'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -100,7 +99,6 @@ const getWallets = () => {
   const wallets = getAllWallets()
   submitting.value = false
   return wallets
-  console.log(wallets)
 }
 
 const calc = (assetCode: string, balance: number, blocked: number) => {
@@ -185,6 +183,7 @@ const responsiveOptions = ref([
   margin: auto;
   width: fit-content;
 
+  /* Set max and min font sizes in mobile view */
   @media only screen and (max-width: 480px) {
     --max-font: 100;
     --min-font: 25;
