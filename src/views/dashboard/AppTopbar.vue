@@ -17,7 +17,7 @@
 
       <SplitButton label="Save" :model="items" class="p-button-text mr-2 mb-2 ml-2">
         <img alt="logo" src="../../assets/icons/maletin.svg" style="width: 2.5rem" />
-        <span style="margin: auto 0">{{ username }}</span>
+        <span class="hidden sm:hidden md:hidden lg:flex xl:flex" style="margin: auto 0">{{ username }}</span>
       </SplitButton>
     </div>
   </div>
