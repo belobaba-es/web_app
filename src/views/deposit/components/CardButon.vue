@@ -4,6 +4,7 @@
             <img :src="icon" alt="" >
         </div>
         <p class="text-2xl font-medium">{{label}}</p>
+        
     </div>
 </template>
 

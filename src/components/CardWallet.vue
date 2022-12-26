@@ -1,84 +1,79 @@
 <template>
   <h2 class="font-medium">{{ t('wallet') }}</h2>
-  <section class="grid mt-5 hidden sm:hidden md:hidden lg:flex xl:flex">
-    <div v-if="submitting === true" class="field card col-3 mr-2 ml-2" v-for="x in ['', '', '']">
-      <div class="grid">
-        <div class="col-4">
-          <Skeleton width="5rem" class="mb-2"></Skeleton>
-          <Skeleton shape="circle" size="6rem" class="mr-2"></Skeleton>
-        </div>
 
-        <div class="col-8">
-          <div class="w-100 h-100" style="position: relative">
-            <p class="font-semi-bold text-right balance">
-              <Skeleton width="10rem" class="mb-2"></Skeleton>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-2 card mr-2 ml-2" v-bind:class="getStyle(item.assetCode)" v-for="item in getWallets()">
-      <p class="font-bold text-uppercase mb-3" style="font-size: 9pt">{{ item.name }}</p>
-      <div class="grid">
-        <div class="col-4">
-          <img :src="item.icon" style="width: 100%" />
-        </div>
-        <div class="col-8">
-          <div class="w-100 h-100 text-right" style="position: relative">
-            <p class="text-balance-lg font-semi-bold text-right">
-              {{ calc(item.assetCode, item.balance, item.blockedBalance ?? 0) }} <small>{{ item.assetCode }}</small>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block sm:block md:block lg:hidden xl:hidden">
-    <div>
-      <div class="carrousel">
-        <Carousel
-          :value="getAllWallets()"
-          :numVisible="1"
-          :numScroll="1"
-          :responsiveOptions="responsiveOptions"
-          :showNavigators="false"
-          :showIndicators="false"
-          class="custom-carousel"
-          :circular="true"
-          :autoplayInterval="2000"
-        >
-          <template #item="slotProps">
-            <!-- card responsive -->
-            <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
-              <div class="flex justify-content-between flex-wrap">
-                <div class="flex align-items-center justify-content-center">
-                  <p>
-                    <strong class="name-cripto">{{ slotProps.data.name }}</strong>
-                  </p>
-                </div>
-                <div class="flex align-items-center justify-content-center">
-                  <i class="pi pi-ellipsis-v"></i>
-                </div>
+  <section>
+    <div v-if="submitting === true">
+      <Carousel
+        :value="skeleton"
+        :numVisible="5"
+        :showIndicators="false"
+        :showNavigators="true"
+        :numScroll="1"
+        :circular="false"
+        :responsiveOptions="responsiveOptionsCarouselSkeleton"
+      >
+        <template #item="slotProps">
+          <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
+            <div class="flex justify-content-between flex-wrap">
+              <div class="flex align-items-center justify-content-center">
+                <Skeleton width="5rem" class="mb-2"></Skeleton>
               </div>
-
-              <div class="grid mt-1">
-                <div class="col-6">
-                  <img class="icon-cripto" :src="slotProps.data.icon" :alt="slotProps.data.name" />
-                </div>
-                <div class="col-6 flex justify-content-end align-content-end flex-wrap">
-                  <p class="text-balance">
-                    {{ calc(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
-                    <br />
-                    <small>{{ slotProps.data.assetCode }}</small>
-                  </p>
-                </div>
+              <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-ellipsis-v"></i>
               </div>
             </div>
-          </template>
-        </Carousel>
-      </div>
+
+            <div class="grid mt-1">
+              <div class="col-6">
+                <Skeleton shape="circle" size="6rem" class="mr-2"></Skeleton>
+              </div>
+              <div class="col-6 flex justify-content-end align-content-end flex-wrap">
+                <Skeleton width="80%" class="mb-2"></Skeleton>
+              </div>
+            </div>
+          </div>
+        </template>
+      </Carousel>
+    </div>
+
+    <div class="">
+      <Carousel
+        :value="getWallets()"
+        :numVisible="5"
+        :showIndicators="false"
+        :showNavigators="true"
+        :numScroll="1"
+        :circular="false"
+        :responsiveOptions="responsiveOptions"
+      >
+        <template #item="slotProps">
+          <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
+            <div class="flex justify-content-between flex-wrap">
+              <div class="flex align-items-center justify-content-center">
+                <p>
+                  <strong class="name-cripto">{{ slotProps.data.name }}</strong>
+                </p>
+              </div>
+              <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-ellipsis-v"></i>
+              </div>
+            </div>
+
+            <div class="grid mt-1">
+              <div class="col-6">
+                <img class="icon-cripto" :src="slotProps.data.icon" :alt="slotProps.data.name" />
+              </div>
+              <div class="col-6 flex justify-content-end align-content-end flex-wrap">
+                <p class="text-balance">
+                  {{ calc(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
+                  <br />
+                  <small>{{ slotProps.data.assetCode }}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </template>
+      </Carousel>
     </div>
   </section>
 </template>
@@ -94,6 +89,8 @@ const { t } = useI18n({ useScope: 'global' })
 const { getAllWallets } = useBalanceWallet()
 
 const submitting = ref(true)
+
+const skeleton = ['', '', '', '', '']
 
 const getWallets = () => {
   const wallets = getAllWallets()
@@ -111,12 +108,49 @@ const calc = (assetCode: string, balance: number, blocked: number) => {
 }
 
 const getStyle = (assetCode: string) => {}
+const responsiveOptionsCarouselSkeleton = ref([
+  {
+    breakpoint: '1456px',
+    numVisible: 4,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '1280px',
+    numVisible: 3,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '899px',
+    numVisible: 2,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '600px',
+    numVisible: 2,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '480px',
+    numVisible: 1,
+    numScroll: 1,
+  },
+])
 
 const responsiveOptions = ref([
   {
-    breakpoint: '1024px',
+    breakpoint: '1456px',
+    numVisible: 4,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '1280px',
+    numVisible: 3,
+    numScroll: 1,
+  },
+  {
+    breakpoint: '899px',
     numVisible: 2,
-    numScroll: 2,
+    numScroll: 1,
   },
   {
     breakpoint: '600px',
@@ -169,13 +203,20 @@ const responsiveOptions = ref([
   margin: auto;
   width: fit-content;
 
-  --max-font: 60;
+  /* Set max and min font sizes in mobile view */
+  @media only screen and (min-width: 992px) {
+    --max-font: 13;
+    --min-font: 12;
+    font-size: var(--responsive);
+  }
+
+  --max-font: 10;
   --min-font: 20;
   font-size: var(--responsive);
 }
 
 .icon-cripto {
-  width: 100%;
+  width: 70%;
 }
 
 .text-balance {
@@ -186,23 +227,25 @@ const responsiveOptions = ref([
   /* Set max and min font sizes in mobile view */
   @media only screen and (max-width: 480px) {
     --max-font: 100;
-    --min-font: 25;
+    --min-font: 20;
     font-size: var(--responsive);
   }
 
-  /* Set max and min font sizes */
-  --max-font: 40;
-  --min-font: 12;
-  font-size: var(--responsive);
-}
-.text-balance-lg {
-  font-family: KanitMedium !important;
-  margin: auto;
-  width: fit-content;
+  @media only screen and (min-width: 481px) {
+    --max-font: 24;
+    --min-font: 12;
+    font-size: var(--responsive);
+  }
 
-  /* Set max and min font sizes */
-  --max-font: 15;
-  --min-font: 5;
+  @media only screen and (min-width: 991px) {
+    //991
+
+    /* Set max and min font sizes */
+    --max-font: 15;
+    --min-font: 12;
+    font-size: var(--responsive);
+  }
+
   font-size: var(--responsive);
 }
 </style>

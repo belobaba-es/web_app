@@ -3,16 +3,17 @@
     <template #header>
       <h3 class="font-medium">{{ t('selectCrypto') }}</h3>
     </template>
-    <div class="grid gap-0">
-      <div class="col-10">
+    <div class="grid mt-2">
+      <div class="col-8">
         <InputText type="text" v-model="search" placeholder="Search" class="w-full" />
       </div>
-      <div class="col-2">
+      <div class="col-4">
         <Button :label="'search'" class="w-full border-noround-left" @click="onSearch" />
       </div>
     </div>
+
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
-      <div class="grid py-3">
+      <div class="grid py-3 mt-2">
         <div v-for="item in listAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="26" :src="item.icon" />

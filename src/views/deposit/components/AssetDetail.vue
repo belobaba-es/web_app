@@ -1,27 +1,42 @@
 <template>
-  <div class="flex align-items-center asset-item">
-    <div class="col-2 align-items-center grid">
-      <div class="col-8 asset-icon">
-        <img :src=" asssetImg(paymentAddress.assetsId)">
+  <div class="asset-item">
+    <div class="grid align-items-center flex justify-content-center align-content-center flex-wrap sm:justify-content-center md:justify-content-center lg:justify-content-start xl:justify-content-start">
+      
+      <div class="col-4 align-items-start flex align-items-center justify-content-start">
+        <div class="asset-icon">
+          <img class="icon-cripto" :src="asssetImg(paymentAddress.assetsId)" />
+          <div class="font-semi-bold text-uppercase pl-3 text-center name-cripto-wallet">
+            {{ assetName(paymentAddress.assetsId) }}
+          </div>
+        </div>
       </div>
-      <div class="col-4 font-semi-bold text-uppercase pl-3">{{ assetName(paymentAddress.assetsId) }}</div>
+
+      <div class="col-4 align-items-start flex align-items-center justify-content-start">
+        <div class="text-center">{{ paymentAddress.label }}</div>
+      </div>
+
+      <div class="col-4 align-items-center flex align-items-center justify-content-center">
+        <Button
+          icon="pi pi-eye"
+          class="p-button-text btn-view-address"
+          label="Ver direccion"
+          @click="emit('select', paymentAddress)"
+        />
+      </div>
     </div>
-    <div class="col-7 text-left">{{ paymentAddress.label }}</div>
-    <Button icon="pi pi-eye" class="p-button-text" label="ver direccion" @click="emit('select',paymentAddress);"/>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Button from 'primevue/button';
-import {Asset, PaymentAddress} from '../types/asset.interface';
+import Button from 'primevue/button'
+import { Asset, PaymentAddress } from '../types/asset.interface'
 
 const props = defineProps<{
-  assets: Array<Asset>,
+  assets: Array<Asset>
   paymentAddress: PaymentAddress
 }>()
 
-const emit = defineEmits(['select']);
-
+const emit = defineEmits(['select'])
 
 const asssetImg = (assetId: string) => {
   return props.assets.find(asset => asset.assetId == assetId)?.icon
@@ -33,7 +48,6 @@ const assetName = (assetId: string) => {
 </script>
 
 <style lang="css" scoped>
-
 .asset-item {
   border-top: 1px solid var(--surface-overlay);
   border-bottom: 1px solid var(--surface-overlay);
@@ -41,16 +55,27 @@ const assetName = (assetId: string) => {
 
 .asset-item:hover {
   background-color: var(--surface-overlay);
-
 }
 
 .asset-icon {
   height: 56px;
-  width: 56px;
-  margin: 0.5rem;
+    width: 56px;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    align-items: center;
+    align-content: flex-start;
+    flex-direction: row;
+}
+.name-cripto-wallet {
   display: flex;
   justify-content: center;
   position: relative;
+  align-items: center;
 }
+/* .btn-view-address {
+} */
+
 
 </style>
