@@ -27,6 +27,7 @@
   <div class="col-12 lg:col-9 xl:col-9">
     <VirtualScroller
       scrollHeight="500px"
+      class="test"
       :items="paymentAddress"
       :itemSize="75"
       showLoader
@@ -157,4 +158,5 @@ const onLazyLoad = (event: any) => {
 .wallet-btn {
   width: 100% !important;
 }
+
 </style>
