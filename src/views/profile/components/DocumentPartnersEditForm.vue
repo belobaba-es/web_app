@@ -60,7 +60,7 @@
                 />
               </div>
               <FileInput
-                  side=""
+                  side="front"
                   :label="getSelectedTypeDocumentProofOfAddress(taxId)"
                   :type="getSelectedTypeDocumentProofOfAddress(taxId)"
                   :account-id="accountId??''"

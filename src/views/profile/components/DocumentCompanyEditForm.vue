@@ -6,7 +6,7 @@
           <label>{{ t('companyIncorporationFile') }}</label>
           <FileInput
               label="other"
-              side=""
+              side="front"
               type="other"
               :account-id="accountId??''"
               :document-country="getOwner()?.taxCountry??'US'"
@@ -38,7 +38,7 @@
           </div>
           <FileInput
               :label="getSelectedTypeDocumentProofOfAddress('0')"
-              side=""
+              side="front"
               :type="getSelectedTypeDocumentProofOfAddress('0')"
               :account-id="accountId??''"
               :document-country="getOwner()?.taxCountry??'US'"
