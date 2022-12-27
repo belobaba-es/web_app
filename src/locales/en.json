@@ -66,8 +66,8 @@
     "messageImageSize": "El archivo supera los 4Mb.",
     "shareholders": "Shareholders",
     "shareholderTitle": "SHAREHOLDERS - UPLOAD OF DOCUMENTS",
-    "shareholderFileFrontLabel": "Front",
-    "shareholderFileBackLabel": "Back",
+    "shareholderFileFrontLabel": "Front side",
+    "shareholderFileBackLabel": "Back side",
     "shareholderAddressLabel": "Proof of fiscal domicile",
     "balance": "My balance",
     "profile": "Profile",
@@ -152,6 +152,7 @@
     "documentsCompanyCardTitle": "COMPANY - OWNERSHIP STRUCTURE",
     "documentTypePlaceHolder": "Choose document type",
     "utilityBillLabel": "Proof of fiscal domicile",
+    "companyIncorporationFile": "Documents of Incorporation of the company",
     "uploadFileText": "Upload the document file here (Supported format JPG, PNG or PDF)",
     "uploadFileDocumentCompanyText": "COMPANY - DOCUMENT UPLOAD",
     "uploadFileDocumentShareHolderText": "SHAREHOLDERS - DOCUMENT UPLOAD",
@@ -182,5 +183,12 @@
     "backToDocuments": "Back to documents",
     "updateDocuments": "Update documents",
     "titleAccountValidationProcess": "Validation pending",
-    "accountValidationProcess": "Once your account is approved, we will send you an email with the validation of your account."
+    "accountValidationProcess": "Once your account is approved, we will send you an email with the validation of your account.",
+    "documentProofOfAddress1": "Monthly utility bills (e.g., electricity, phone)",
+    "documentProofOfAddress2": "Statements (e.g., bank, credit card)",
+    "documentProofOfAddress3": "Rental Lease Agreement",
+    "documentProofOfAddress4": "Vehicle Registration",
+    "documentProofOfAddress5": "Copy of Real Estate Property Title",
+    "documentProofOfAddress6": "Property Tax Bill",
+    "documentProofOfAddress7": "W2 or other tax return document"
 }
