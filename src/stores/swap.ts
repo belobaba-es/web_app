@@ -211,11 +211,14 @@ export const useSwapStore = defineStore('swap', () => {
 
   const getNextPage = async (event: any) => {
     const { last } = event;
-    if (last === quotes.value.results.length && quotes.value.nextPag !== '') {
+    if (last === quotes.value.results.length && quotes.value.nextPag !== '' && !loading.value) {
       loading.value = true;
       const swapService = SwapService.instance()
       await swapService.nextQuotes(quotes.value.nextPag).then(response => {
-        quotes.value.results = [...quotes.value.results, ...response.results];
+        response.results.forEach((result) => {
+          const existInResults = quotes.value.results.find((item => item.id === result.id))
+          if(!existInResults) quotes.value.results.push(result)
+        })
         quotes.value.nextPag = response.nextPag;
       }).finally(() => {
         loading.value = false;

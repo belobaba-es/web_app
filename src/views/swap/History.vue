@@ -31,8 +31,8 @@
     <VirtualScroller
       scrollHeight="370px"
       :items="quotes.results"
-      :itemSize="75"
-      :showLoader="true"
+      :itemSize="70"
+      :showLoader="false"
       :loading="useSwapStore().loading"
       :lazy="true"
       :delay="250"
