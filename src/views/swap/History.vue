@@ -11,9 +11,7 @@
       <div class="w-6rem h-4rem flex justify-content-center align-items-center">
         <span>{{ t('moveDone') }}</span>
       </div>
-      <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-        
-      </div>
+      <div class="w-6rem h-4rem flex justify-content-center align-items-center"></div>
       <div class="w-6rem h-4rem flex justify-content-center align-items-center">
         <span>{{ t('toYourBalanceIn') }}</span>
       </div>
@@ -31,16 +29,17 @@
       </div>
     </div>
     <VirtualScroller
-      scrollHeight="500px"
+      scrollHeight="370px"
       :items="quotes.results"
-      :itemSize="70"
+      :itemSize="75"
       :showLoader="true"
-      :loading="loading"
+      :loading="useSwapStore().loading"
       :lazy="true"
+      :delay="250"
       @lazy-load="getNextPage"
     >
       <template v-slot:item="{ item, options }">
-        <div class="flex justify-content-between px-2">
+        <div :class="['scroll-item flex justify-content-between pr-2', { odd: options.odd }]">
           <div class="h-5rem w-6rem relative">
             <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
             <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
@@ -70,7 +69,9 @@
         <Divider />
       </template>
       <template v-slot:loader="{ options }">
-        <Skeleton :width="'100%'" height="1.3rem"/>
+        <div :class="['scroll-item p-2', { odd: options.odd }]" style="height: 70px">
+          <Skeleton :width="'100%'" height="1.3rem" />
+        </div>
       </template>
     </VirtualScroller>
   </PageLayout>
@@ -85,12 +86,12 @@ import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
-import VirtualScroller from 'primevue/virtualscroller';
+import VirtualScroller from 'primevue/virtualscroller'
 import Divider from 'primevue/divider'
 import Skeleton from 'primevue/skeleton'
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
-const { fetchQuotes, getNextPage, loading } = useSwapStore()
+const { fetchQuotes, getNextPage } = useSwapStore()
 const router = useRouter()
 
 onMounted(async () => {

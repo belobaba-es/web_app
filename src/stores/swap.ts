@@ -209,15 +209,18 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService.cancelQuote(quoteId.value).then(() => quoteId.value = undefined)
   }
 
-  const getNextPage = async () => {
-    if(quotes.value.nextPag.length < 1) return;
-    loading.value = true;
-    const swapService = SwapService.instance()
-    await swapService.nextQuotes(quotes.value.nextPag).then(response => {
-      quotes.value.results = [...quotes.value.results, ...response.results];
-      quotes.value.nextPag = response.nextPag;
-      loading.value = false;
-    })
+  const getNextPage = async (event: any) => {
+    const { last } = event;
+    if (last === quotes.value.results.length && quotes.value.nextPag !== '') {
+      loading.value = true;
+      const swapService = SwapService.instance()
+      await swapService.nextQuotes(quotes.value.nextPag).then(response => {
+        quotes.value.results = [...quotes.value.results, ...response.results];
+        quotes.value.nextPag = response.nextPag;
+      }).finally(() => {
+        loading.value = false;
+      })
+    }
   }
 
   return {
