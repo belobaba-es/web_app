@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
+import { QuoteResponse } from '../views/swap/types/quote-response.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -29,10 +30,10 @@ export const useSwapStore = defineStore('swap', () => {
   const timer = ref()
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
-  const quotes = ref({
+  const quotes = ref<QuoteResponse>({
     count: 0,
-    nextPag: null,
-    prevPag: null,
+    nextPag: '',
+    prevPag: '',
     results: [],
   })
   const successExecuted = ref(false);
@@ -209,14 +210,13 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const getNextPage = async () => {
-    if(!quotes.value.nextPag) return;
+    if(quotes.value.nextPag.length < 1) return;
     loading.value = true;
     const swapService = SwapService.instance()
     await swapService.nextQuotes(quotes.value.nextPag).then(response => {
-      response.results.forEach((result: any) => {
-        quotes.value.results.push(result)
-      });
-      loading.value = false
+      quotes.value.results = [...quotes.value.results, ...response.results];
+      quotes.value.nextPag = response.nextPag;
+      loading.value = false;
     })
   }
 

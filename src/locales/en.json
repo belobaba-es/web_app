@@ -179,5 +179,12 @@
     "rememberMe": "Remember me",
     "swapHistory": "Swap History",
     "iWant": "I want",
-    "insufficientFunds": "Insufficient funds"
+    "insufficientFunds": "Insufficient funds",
+    "moveDone": "Move done",
+    "toYourBalanceIn": "To your balance in",
+    "operationDate": "Operation date",
+    "status": "Status",
+    "quotePrice": "Quote / Price",
+    "numberOfOrder": "Number of order"
+
 }

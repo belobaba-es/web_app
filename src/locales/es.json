@@ -170,5 +170,11 @@
     "rememberMe": "Recordarme",
     "swapHistory": "Historia del intercambio",
     "iWant": "Quiero",
-    "insufficientFunds": "Fondos insuficientes"
+    "insufficientFunds": "Fondos insuficientes",
+    "moveDone": "Movimiento realizado",
+    "toYourBalanceIn": "A su saldo en",
+    "operationDate": "Fecha de la operación",
+    "status": "Estado",
+    "quotePrice": "Presupuesto / Precio",
+    "numberOfOrder": "Número de pedido"
 }
