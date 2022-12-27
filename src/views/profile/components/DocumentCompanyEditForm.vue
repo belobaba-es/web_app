@@ -6,7 +6,6 @@
           <label>{{ t('companyIncorporationFile') }}</label>
           <FileInput
               label="other"
-              side="front"
               type="other"
               :account-id="accountId"
               :document-country="getOwner()?.taxCountry"
@@ -58,7 +57,7 @@ import Divider from "primevue/divider";
 import {useAccount} from '../../../composables/useAccount';
 import {useI18n} from 'vue-i18n';
 import FileInput from './FileInput.vue';
-import {useAccountStore} from '../../../stores/account';
+import FileUpload from './FileUploaded.vue'
 import {useDocuments} from "../../../composables/useDocuments";
 
 const {t} = useI18n({useScope: 'global'});

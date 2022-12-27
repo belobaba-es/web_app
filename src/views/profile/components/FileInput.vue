@@ -1,5 +1,7 @@
 <template>
-  <div
+  <FileUpload v-if="doc" :label="doc?.name" @click="editEnable" />
+
+  <div v-if="!doc"
       class="flex justify-content-between align-items-center p-3 border-round bg-primary cursor-pointer"
       @click="handleClick">
       <span>
@@ -22,6 +24,7 @@ import {useI18n} from 'vue-i18n';
 import {defineProps, ref, computed} from 'vue';
 import {ProfileService} from '../services/profile';
 import {useToast} from 'primevue/usetoast';
+import FileUpload from './FileUploaded.vue'
 
 const toast = useToast();
 
@@ -58,6 +61,7 @@ const props = defineProps({
 });
 
 const loading = ref(false);
+const doc = ref<File>()
 
 const setLoading = (value: boolean) => {
   loading.value = value;
@@ -78,6 +82,7 @@ const icon = computed(() => {
 
 const handleUpload = async (event: any) => {
   const file = event.target.files[0];
+  doc.value = file
   setLoading(true);
 
   let formData = new FormData();
@@ -128,5 +133,9 @@ const handleUpload = async (event: any) => {
           }
         })
       });
+}
+
+const editEnable = () => {
+  doc.value = undefined
 }
 </script>
