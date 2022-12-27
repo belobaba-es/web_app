@@ -23,7 +23,7 @@
             :label="getSelectedTypeIdentificationDocument(taxId)"
             side="front"
             :type="getSelectedTypeIdentificationDocument(taxId)"
-            :account-id="accountId"
+            :account-id="accountId??''"
             :document-country="member.taxCountry"
             :tax-id="member.taxId"
         />
@@ -34,7 +34,7 @@
             :label="getSelectedTypeIdentificationDocument(taxId)"
             side="backside"
             :type="getSelectedTypeIdentificationDocument(taxId)"
-            :account-id="accountId"
+            :account-id="accountId??''"
             :document-country="member.taxCountry"
             :tax-id="member.taxId"
         />
@@ -60,9 +60,10 @@
                 />
               </div>
               <FileInput
+                  side=""
                   :label="getSelectedTypeDocumentProofOfAddress(taxId)"
                   :type="getSelectedTypeDocumentProofOfAddress(taxId)"
-                  :account-id="accountId"
+                  :account-id="accountId??''"
                   :document-country="member.taxCountry"
                   :tax-id="member.taxId"
               />

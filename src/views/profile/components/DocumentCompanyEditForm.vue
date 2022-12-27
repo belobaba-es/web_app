@@ -6,10 +6,11 @@
           <label>{{ t('companyIncorporationFile') }}</label>
           <FileInput
               label="other"
+              side=""
               type="other"
-              :account-id="accountId"
-              :document-country="getOwner()?.taxCountry"
-              :tax-id="getOwner()?.taxId"
+              :account-id="accountId??''"
+              :document-country="getOwner()?.taxCountry??'US'"
+              :tax-id="getOwner()?.taxId??''"
               :is-company="true"
           />
 
@@ -39,9 +40,9 @@
               :label="getSelectedTypeDocumentProofOfAddress('0')"
               side=""
               :type="getSelectedTypeDocumentProofOfAddress('0')"
-              :account-id="accountId"
-              :document-country="getOwner()?.taxCountry"
-              :tax-id="getOwner()?.taxId"
+              :account-id="accountId??''"
+              :document-country="getOwner()?.taxCountry??'US'"
+              :tax-id="getOwner()?.taxId??''"
               :is-company="true"
           />
         </div>
