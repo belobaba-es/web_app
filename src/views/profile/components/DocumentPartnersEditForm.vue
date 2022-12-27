@@ -1,130 +1,144 @@
 <template>
-    <div class="px-3 pt-3 pb-0">
-        <div>
-            <p class="font-semibold">
-                {{ getFullName(member) }}
-            </p>
-        </div>
-        <div class="grid">
-            <div class="field col-12">
+  <div class="px-3 pt-3 pb-0">
+    <div>
+      <p class="font-medium">
+        {{ getFullName(member) }}
+      </p>
+    </div>
+    <div class="grid">
+      <div class="field col-12">
+        <Dropdown
+            v-model="identifyDocument"
+            :options="documentTypeOptions"
+            option-label="name"
+            option-value="value"
+            :placeholder="t('documentTypePlaceHolder')"
+            class="w-full"
+            @change="selectedIdentifyDocument"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label>{{ t('dni') }} {{ t('shareholderFileFrontLabel') }}</label>
+        <FileInput
+            :label="getSelectedTypeIdentificationDocument(taxId)"
+            side="front"
+            :type="getSelectedTypeIdentificationDocument(taxId)"
+            :account-id="accountId??''"
+            :document-country="member.taxCountry"
+            :tax-id="member.taxId"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label>{{ t('dni') }} {{ t('shareholderFileBackLabel') }}</label>
+        <FileInput
+            :label="getSelectedTypeIdentificationDocument(taxId)"
+            side="backside"
+            :type="getSelectedTypeIdentificationDocument(taxId)"
+            :account-id="accountId??''"
+            :document-country="member.taxCountry"
+            :tax-id="member.taxId"
+        />
+
+      </div>
+
+      <div class="field col-12">
+
+        <div class="field">
+
+          <div class="grid">
+            <div class="col-6">
+              <label>{{ t('utilityBillLabel') }}</label>
+              <div class="mt-2 mb-4">
                 <Dropdown
-                    v-model="accountStore.documentType"
-                    :options="documentTypeOptions"
+                    v-model="proofOfAddress"
+                    :options="documentTypeProofOfAddress"
                     option-label="name"
                     option-value="value"
                     :placeholder="t('documentTypePlaceHolder')"
                     class="w-full"
+                    @change="selectedProofOfAddress"
                 />
+              </div>
+              <FileInput
+                  side="front"
+                  :label="getSelectedTypeDocumentProofOfAddress(taxId)"
+                  :type="getSelectedTypeDocumentProofOfAddress(taxId)"
+                  :account-id="accountId??''"
+                  :document-country="member.taxCountry"
+                  :tax-id="member.taxId"
+              />
             </div>
-            <div class="field col-12 md:col-6">
-                <template v-if="canEdit(identityDocuments.frontSide.documentId)">
-                    <FileInput 
-                        :label="accountStore.documentType+'_front_side'"
-                        side="front" 
-                        :account-id="accountId!"
-                        :document-country="member.taxCountry"
-                        :tax-id="member.taxId"
-                        :type="accountStore.documentType"
-                    />
-                </template>
-                <template v-else>
-                    <FileUploaded :identity-document="identityDocuments.frontSide"/>
-                </template>
-            </div>
-            <div class="field col-12 md:col-6">
-                <template v-if="canEdit(identityDocuments.backSide.documentId)">
-                    <FileInput
-                        :label="accountStore.documentType+'_back_side'"
-                        side="backside"
-                        :account-id="accountId!"
-                        :document-country="member.taxCountry"
-                        :tax-id="member.taxId"
-                        :type="accountStore.documentType"
-                    />
-                </template>
-                <template v-else>
-                    <FileUploaded :identity-document="identityDocuments.backSide"/>
-                </template>
-            </div>
-            <div class="field col-12">
-                <div class="mb-4">
-                    <p class="font-semibold">{{ t('utilityBillLabel') }}</p>
-                </div>
-                <div class="field">
-                    <p class="font-medium">{{ t('uploadFileText') }}</p>
-                    <div class="grid">
-                        <div class="col-6">
-                            <template v-if="canEdit(utilityBill.documentId)">
-                                <FileInput 
-                                    label="utility_bill"
-                                    side="front"
-                                    type="utility_bill"
-                                    :account-id="accountId!"
-                                    :document-country="member.taxCountry"
-                                    :tax-id="member.taxId"
-                                />
-                            </template>
-                            <template v-else>
-                                <FileUploaded :identity-document="utilityBill"/>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <Divider />
+  </div>
+  <Divider/>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, onBeforeMount, watch } from 'vue';
+import {ref, defineProps, onBeforeMount, watch} from 'vue';
 import Dropdown from 'primevue/dropdown';
 import Divider from "primevue/divider";
-import { useAccount } from '../../../composables/useAccount';
-import { useI18n } from 'vue-i18n';
+import {useAccount} from '../../../composables/useAccount';
+import {useI18n} from 'vue-i18n';
 import FileInput from './FileInput.vue';
-import FileUploaded from './FileUploaded.vue';
-import { useAccountStore } from '../../../stores/account';
+import {useAccountStore} from '../../../stores/account';
+import {useDocuments} from "../../../composables/useDocuments";
 
-const { t } = useI18n({ useScope: 'global' });
+const {t} = useI18n({useScope: 'global'});
 const accountStore = useAccountStore();
+const {
+  addDocument,
+  setSelectedTypeIdentificationDocument,
+  setSelectedTypeDocumentProofOfAddress,
+  getSelectedTypeIdentificationDocument,
+  getSelectedTypeDocumentProofOfAddress
+} = useDocuments()
 
 interface Props {
-    taxId: string
+  taxId: string
 }
 
 const props = defineProps<Props>()
-const { getFullName, accountId, documentType, members, documentToEdit } = useAccount();
+
+const proofOfAddress = ref('')
+const identifyDocument = ref('')
+
+const {getFullName, accountId, findMember} = useAccount();
+
 
 const documentTypeOptions = ref([
-  { value: "drivers_license", name: t('docTypeLabelDriversLicense') }, 
-  { value: "government_id", name: t('docTypeLabelGovernmentId') },
-  { value: "passport", name: t('docTypeLabelPassport') },
+  {value: "drivers_license", name: t('docTypeLabelDriversLicense')},
+  {value: "government_id", name: t('docTypeLabelGovernmentId')},
+  {value: "passport", name: t('docTypeLabelPassport')},
 ]);
 
+const documentTypeProofOfAddress = ref([
+  {value: "monthly_utility", name: t('documentProofOfAddress1')},
+  {value: "statements", name: t('documentProofOfAddress2')},
+  {value: "rental_lease_agreement", name: t('documentProofOfAddress3')},
+  {value: "vehicle_registration", name: t('documentProofOfAddress4')},
+  {value: "real_estate_property_title", name: t('documentProofOfAddress5')},
+  {value: "property_tax_bill", name: t('documentProofOfAddress6')},
+  {value: "w2", name: t('documentProofOfAddress7')}
+])
+
 const member = ref();
-const identityDocuments = ref();
-const utilityBill = ref();
 
 onBeforeMount(() => {
-    member.value = accountStore.findMember(props.taxId);
-    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
-    utilityBill.value = accountStore.findUtilityBill(props.taxId);
-    console.log('onBeforeMount DocumentPartnersEditForm');
+  addDocument(props.taxId, {selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: ''})
+  member.value = findMember(props.taxId);
 });
 
-watch(documentType, () => {
-    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
-})
-
-watch(members?.value!, () => {
-    identityDocuments.value = accountStore.findDocumentsToMember(props.taxId);
-    utilityBill.value = accountStore.findUtilityBill(props.taxId);
-})
-
-const canEdit = (documentId: string) => {
-    return documentId === documentToEdit.value?.documentId;
+const selectedIdentifyDocument = (e: any) => {
+  setSelectedTypeIdentificationDocument(props.taxId, e.value)
 }
+
+const selectedProofOfAddress = (e: any) => {
+  setSelectedTypeDocumentProofOfAddress(props.taxId, e.value)
+}
+
 
 </script>
 

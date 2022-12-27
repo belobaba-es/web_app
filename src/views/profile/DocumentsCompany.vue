@@ -16,7 +16,7 @@
     <div class="col-12 md:col-6">
       <Panel :header="t('uploadFileDocumentShareHolderText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
-          <div v-for="(partner, idx) in members">
+          <div v-for="(partner, idx) in getMembers()">
             <DocumentPartnersEditForm
               :tax-id="partner.taxId"
               :key="idx" />
@@ -36,7 +36,9 @@ import { useAccount } from '../../composables/useAccount';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n({ useScope: 'global' });
-const { members } = useAccount();
+const { getMembers } = useAccount();
+
+
 </script>
 
 <style scoped lang="scss">

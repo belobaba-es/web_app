@@ -30,25 +30,31 @@
 
 .font-light {
     font-family: KanitLight !important;
+    font-weight: 0 !important;
 }
 
 .font-extra-light {
     font-family: KanitExtraLight !important;
+    font-weight: 0 !important;
 }
 
 .font-regular {
     font-family: KanitRegular !important;
+    font-weight: 0 !important;
 }
 
 .font-medium {
     font-family: KanitMedium !important;
+    font-weight: 0 !important;
 }
 
 .font-semi-bold {
+    font-weight: 0 !important;
     font-family: KanitSemiBold !important;
 }
 
 .font-bold {
+    font-weight: 0 !important;
     font-family: KanitBold !important;
 }
 
