@@ -4,11 +4,10 @@
             <i class="pi pi-check"></i>
         </span>
         <span>
-            {{ props.identityDocument.label }}
+            {{ props.label }}
         </span>
         <span class="cursor-pointer" @click="editDocumentHandler(
-            props.identityDocument.taxId,
-            props.identityDocument.documentId
+            props.taxId
         )">
             <i class="pi pi-pencil"></i>
         </span>
@@ -16,25 +15,17 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
 import { useAccountStore } from '../../../stores/account';
 
-const props = defineProps({
-    identityDocument: {
-        type: Object,
-        required: true,
-    },
-    isCompany: {
-        type: Boolean,
-        default: () => false
-    }
-});
+const props = defineProps<{
+    label: string,
+    taxId: string
+}>();
 
 const accountStore = useAccountStore();
 
-const editDocumentHandler = (taxId: string, documentId: string) => {
-    console.log(props.isCompany);
-    accountStore.editDocument(taxId, documentId, props.isCompany);
+const editDocumentHandler = (taxId: string) => {
+    // accountStore.editDocument(taxId, documentId, props.isCompany);
 }
 
 </script>

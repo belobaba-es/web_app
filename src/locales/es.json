@@ -173,5 +173,14 @@
     "backToDocuments": "Volver a documentos",
     "updateDocuments": "Actualizar documentos",
     "titleAccountValidationProcess": "Validación pendiente",
-    "accountValidationProcess": "\nUna vez que su cuenta sea aprobada, le enviaremos un correo electrónico con la validación de su cuenta."
+    "accountValidationProcess": "Una vez que su cuenta sea aprobada, le enviaremos un correo electrónico con la validación de su cuenta.",
+    "documentProofOfAddress1":
+    "Facturas mensuales de servicios públicos (por ejemplo, electricidad, teléfono)",
+    "documentProofOfAddress2":
+    "Estados de cuenta (por ejemplo, banco, tarjeta de crédito)",
+    "documentProofOfAddress3": "Contrato de arrendamiento de alquiler",
+    "documentProofOfAddress4": "Registro de vehículos",
+    "documentProofOfAddress5": "Copia del Título de Propiedad Inmobiliaria",
+    "documentProofOfAddress6": " Factura del Impuesto sobre la Propiedad",
+    "documentProofOfAddress7": "W2 u otro documento de declaración de impuestos"
 }

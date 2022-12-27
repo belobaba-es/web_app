@@ -7,7 +7,7 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
 import { Document, Member, Owner } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
-import showMessage from "../shared/showMessageArray";
+import showMessage from '../shared/showMessageArray'
 
 export const useAccount = () => {
   const router = useRouter()
@@ -207,9 +207,7 @@ export const useAccount = () => {
           return
         }
 
-      showMessage(toast, error.response.data)
-
-
+        showMessage(toast, error.response.data)
       })
   }
 
@@ -276,12 +274,18 @@ export const useAccount = () => {
     currentPassword.value = ''
   }
 
+  const getMembers = () => {
+    return accountStore.members
+  }
+
+  const findMember = (taxId: string) => {
+    return accountStore.members?.find(member => member.taxId === taxId)
+  }
+
   const clearAccountFormData = () => accountStore.clearAccountFormData()
   const setFormInitialInfo = () => accountStore.setFormInitialInfo()
   const setAccountForm = (payload: FormData) => accountStore.setForm(payload)
   const setIsAccountBusiness = (payload: boolean) => accountStore.setIsAccountBusiness(payload)
-  const addDocumentToMember = (taxId: string, payload: Document) => accountStore.addDocumentToMember(taxId, payload)
-  const addDocumentToCompany = (payload: Document) => accountStore.addDocumentToCompany(payload)
 
   return {
     fetchAccount,
@@ -315,9 +319,9 @@ export const useAccount = () => {
     isEditPartnerAccount,
     getPartnerToEdit,
     isAccountBusinessComputed,
+    findMember,
+    getMembers,
     setIsAccountBusiness,
-    addDocumentToMember,
     getAccountId: () => accountStore.getAccountId(),
-    addDocumentToCompany,
   }
 }

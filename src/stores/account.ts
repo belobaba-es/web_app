@@ -23,7 +23,7 @@ interface AccountState {
   status: string | null
   loading: boolean
   form: FormData
-  documentType: string,
+  documentType: string
   documentToEdit: Document | undefined
 }
 
@@ -100,7 +100,7 @@ export const useAccountStore = defineStore('account', {
   actions: {
     getAccountId() {
       console.log(this.id)
-      return this.accountId ?? 'puta'
+      return this.accountId ?? ''
     },
     setAccount(payload: Account) {
       this.members = payload.members || null
@@ -163,60 +163,5 @@ export const useAccountStore = defineStore('account', {
     setIsAccountBusiness(payload: boolean) {
       this.form.isAccountBusiness = payload
     },
-    addDocumentToMember(taxId: string, payload: Document) {
-      const member = this.findMember(taxId)
-      member?.documents.unshift(payload)
-    },
-    findDocumentToMember(taxId: string, documentId: string) {
-      const member = this.findMember(taxId)
-      return member?.documents.find(document => document.documentId === documentId)
-    },
-    findMember(taxId: string) {
-      return this.members?.find(member => member.taxId === taxId)
-    },
-    removeDocument(taxId: string, documentId: string) {
-      const member = this.findMember(taxId)
-      const index = member?.documents.findIndex(document => document.documentId === documentId)
-      if (index === -1) return;
-      member?.documents.splice(index!, 1);
-    },
-    findDocumentsToMember(taxId: string) {
-      const filtered = this.findMember(taxId)?.documents.filter(document => {
-        return document.documentType === this.documentType && document.documentType !== 'utility_bill';
-      });
-
-      const frontSide = filtered?.find(document => document.documentSide === 'front');
-      const backSide = filtered?.find(document => document.documentSide === 'backside');
-
-      return { frontSide, backSide }
-    },
-    findUtilityBill(taxId: string) {
-      return this.findMember(taxId)?.documents.find(document => {
-        return document.documentType === 'utility_bill';
-      });
-    },
-    editDocument(taxId: string, documentId: string, isCompany: boolean = false) {
-      const document = !isCompany ?
-        this.findDocumentToMember(taxId, documentId) :
-        this.findDocumentCompany(documentId);
-
-      this.documentToEdit = document;
-    },
-    findUtilityBillCompany() {
-      return this.owner?.documents.find(document => {
-        return document.documentType === 'utility_bill';
-      });
-    },
-    findOtherDocumentCompany() {
-      return this.owner?.documents.find(document => {
-        return document.documentType === 'other';
-      });
-    },
-    findDocumentCompany(documentId: string) {
-      return this.owner?.documents.find(document => document.documentId === documentId);
-    },
-    addDocumentToCompany(payload: Document) {
-      this.owner?.documents.unshift(payload);
-    }
   },
 })
