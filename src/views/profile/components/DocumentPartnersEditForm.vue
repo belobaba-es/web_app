@@ -1,7 +1,7 @@
 <template>
   <div class="px-3 pt-3 pb-0">
     <div>
-      <p class="font-semibold">
+      <p class="font-medium">
         {{ getFullName(member) }}
       </p>
     </div>
@@ -40,24 +40,25 @@
         />
 
       </div>
+
       <div class="field col-12">
-        <div class="mb-4">
-          <p class="font-semibold">{{ t('utilityBillLabel') }}</p>
-        </div>
+
         <div class="field">
-          <div class="field col-12">
-            <Dropdown
-                v-model="proofOfAddress"
-                :options="documentTypeProofOfAddress"
-                option-label="name"
-                option-value="value"
-                :placeholder="t('documentTypePlaceHolder')"
-                class="w-full"
-                @change="selectedProofOfAddress"
-            />
-          </div>
+
           <div class="grid">
             <div class="col-6">
+              <label>{{ t('utilityBillLabel') }}</label>
+              <div class="mt-2 mb-4">
+                <Dropdown
+                    v-model="proofOfAddress"
+                    :options="documentTypeProofOfAddress"
+                    option-label="name"
+                    option-value="value"
+                    :placeholder="t('documentTypePlaceHolder')"
+                    class="w-full"
+                    @change="selectedProofOfAddress"
+                />
+              </div>
               <FileInput
                   :label="getSelectedTypeDocumentProofOfAddress(taxId)"
                   :type="getSelectedTypeDocumentProofOfAddress(taxId)"

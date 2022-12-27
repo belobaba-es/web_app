@@ -323,5 +323,6 @@ export const useAccount = () => {
     getMembers,
     setIsAccountBusiness,
     getAccountId: () => accountStore.getAccountId(),
+    getOwner: () => accountStore.owner,
   }
 }

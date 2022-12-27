@@ -69,7 +69,7 @@ const handleClick = () => {
 }
 
 const getIdInput = () => {
-  return `${props.label}${props.side}`
+  return `${props.label}${props.side}${props.isCompany ? 'yes': 'no'}`
 }
 
 const icon = computed(() => {
