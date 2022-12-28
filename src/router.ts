@@ -55,6 +55,10 @@ const routes: RouteRecordRaw[] = [
         component: DashboardIndex,
       },
       {
+        path: 'wallet',
+        component: DashboardIndex,
+      },
+      {
         path: '/profile/:accountId',
         component: Profile,
         children: [

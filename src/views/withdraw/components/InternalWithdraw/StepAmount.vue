@@ -10,31 +10,39 @@
       <p class="text-base">{{ beneficiary.email }}</p>
     </div>
 
-    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset"/>
+    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset" />
 
-    <div v-if="showAmount" class="col-12 field p-fluid mt-3">
+    <div v-if="showAmount">
+      <div class="grid col-12 mb-2">
+        <div class="col-3 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+          <p>
+            <label for="amount">{{ t('Amount') }}</label>
+          </p>
+        </div>
 
-      <div class="field col-8 relative">
-        <span class="text-left absolute" style="right: 0px;">
-          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b></span>
-        <label for="amount">{{ t('Amount') }}</label>
+        <div class="col-9 sm:col-9 md:col-9 lg:col-9 xl:col-9">
+          <p class="text-base text-amount">
+            {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b>
+          </p>
+        </div>
+      </div>
 
-        <div class="flex">
+      <div class="grid col-12 flex w-full">
+        <div class="flex w-full">
           <InputText
-              id="amount"
-              type="number"
-              class="p-inputtext p-component b-gray"
-              v-model="amount"
-              :placeholder="t('amount')"
+            id="amount"
+            type="number"
+            class="p-inputtext p-component b-gray"
+            v-model="amount"
+            :placeholder="t('amount')"
           />
           <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
         </div>
       </div>
     </div>
 
-    <div v-if="showAmount" class="col-12 field">
+    <div v-if="showAmount" class="col-12 field mt-4">
       <Timeline :value="events">
-
         <template #content="slotProps">
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ beneficiary.name }}</span>
@@ -42,22 +50,22 @@
           <p class="font-medium" v-if="slotProps.item.name">
             {{ amountFee }} <small>{{ assetSymbol }}</small>
           </p>
-          <p v-else> {{ fee }} <small>{{ assetSymbol }}</small></p>
+          <p v-else>
+            {{ fee }} <small>{{ assetSymbol }}</small>
+          </p>
         </template>
       </Timeline>
-
     </div>
 
     <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText
-            type="text"
-            class="p-inputtext p-component  b-gray"
-            v-model="reference"
-            :placeholder="t('reference')"
+          type="text"
+          class="p-inputtext p-component b-gray"
+          v-model="reference"
+          :placeholder="t('reference')"
         />
-
       </div>
     </div>
 
@@ -65,8 +73,7 @@
       <span>{{ t('The wire will take 24 hours.') }}</span>
     </div>
     <div class="col-6">
-
-      <Button class="w-100 p-button " :label="t('continue')" @click="nextPage"/>
+      <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
 </template>
@@ -74,21 +81,21 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
-import {computed, ref} from 'vue'
-import {useI18n} from 'vue-i18n'
-import {useRoute} from "vue-router"
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import {BeneficiaryInternal} from "../../types/beneficiary.interface"
-import {useBalanceWallet} from "../../../../composables/useBalanceWallet"
-import {useToast} from 'primevue/usetoast'
-import SelectedAssets from "../../../../components/SelectedAssets.vue";
-import {Asset} from "../../../deposit/types/asset.interface";
+import { BeneficiaryInternal } from '../../types/beneficiary.interface'
+import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
+import { useToast } from 'primevue/usetoast'
+import SelectedAssets from '../../../../components/SelectedAssets.vue'
+import { Asset } from '../../../deposit/types/asset.interface'
 
 const toast = useToast()
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
-const {getBalanceByCode, getWalletByAssetCode} = useBalanceWallet()
+const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 
 const props = defineProps<{
   formData: any
@@ -96,7 +103,7 @@ const props = defineProps<{
 
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 
-const emit = defineEmits(['nextPage']);
+const emit = defineEmits(['nextPage'])
 const amount = ref('')
 const fee = ref(0)
 const reference = ref('')
@@ -114,20 +121,18 @@ balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
 
 const events = ref<any>([
-  {amount: '2,5', label: t('Fee'), name: false},
-  {amount: '2,5', label: t('youSendTo'), name: true},
-
-]);
+  { amount: '2,5', label: t('Fee'), name: false },
+  { amount: '2,5', label: t('youSendTo'), name: true },
+])
 
 const amountFee = computed(() => {
-
   const t = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
   if (t > balance.value) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',
       detail: 'Please enter the amount you wish to send.',
-      life: 4000
+      life: 4000,
     })
 
     amount.value = '0'
@@ -150,10 +155,10 @@ const validateField = (): boolean => {
       severity: 'warn',
       summary: 'Order structure',
       detail: 'Please enter the amount you wish to send.',
-      life: 4000
+      life: 4000,
     })
 
-    return false;
+    return false
   }
 
   if (reference.value.trim().length === 0) {
@@ -161,10 +166,10 @@ const validateField = (): boolean => {
       severity: 'warn',
       summary: 'Order structure',
       detail: 'Please include a reference.',
-      life: 4000
+      life: 4000,
     })
 
-    return false;
+    return false
   }
 
   return true
@@ -184,11 +189,11 @@ const nextPage = () => {
     asset: asset.value,
     symbol: assetSymbol.value,
     assetId: assetId.value,
-    total: total.value
-  };
+    total: total.value,
+  }
   emit('nextPage', {
     pageIndex: page,
-    formData: formData
+    formData: formData,
   })
 }
 
@@ -200,11 +205,35 @@ const selectedAsset = (evt: Asset) => {
   fee.value = evt.fee
   assetId.value = evt.assetId
 }
-
 </script>
 
-<style scoped>
+<style lang="scss">
 .title-beneficiary {
-  color: #14443F;
+  color: #14443f;
+}
+
+.text-amount {
+  @media only screen and (max-width: 992px) {
+    text-align: right;
+  }
+
+  @media only screen and (min-width: 993px) {
+    text-align: left;
+  }
+}
+
+.btn-amount {
+  @media only screen and (max-width: 992px) {
+    max-width: 100%;
+  }
+
+  @media only screen and (min-width: 993px) {
+    max-width: 80%;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 60%;
+  }
 }
 </style>
+
