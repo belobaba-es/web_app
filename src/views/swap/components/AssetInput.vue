@@ -4,7 +4,7 @@
       <template v-if="type === 'fiat'">
 
         <span v-if="transactionType === 'buy'">
-          {{ t('iHave') }}: <span class="font-medium">{{ getWalletByAssetCode('USD')?.balance }}</span>
+          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
         </span>
         <span v-else>
           <span> {{ t('iWant') }}: </span>
@@ -14,7 +14,7 @@
       <template v-else>
         <span v-if="transactionType === 'buy'"> {{ t('iWant') }}: </span>
         <span v-else>
-          {{ t('iHave') }}: <span class="font-medium">{{ getWalletByAssetCode(assetCode)?.balance }}</span>
+          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
         </span>
       </template>
     </div>
@@ -119,7 +119,7 @@ const disabledBtnSelectCrypto = computed(() => {
 
 watch(unitCount, async (newVal) => {
   if (transactionType.value === 'sell' && props.type === 'crypto' && newVal > 0.0 && assetId.value) {
-    if (newVal > getWalletByAssetCode(assetCode.value)?.balance!) {
+    if (newVal > getBalanceByCode(assetCode.value)) {
       toast.add({
           severity: 'error',
           summary: t('somethingWentWrong'),
