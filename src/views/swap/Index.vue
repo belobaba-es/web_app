@@ -1,5 +1,6 @@
 <template>
-  <PageLayout :title="t('swap')">
+  <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+  <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
     <div class="grid flex justify-content-center">
       <div class="col-6">
         <div class="flex justify-content-end mb-4">
@@ -67,9 +68,11 @@ import swapIcon from '../../assets/icons/swap.svg';
 import {Asset} from '../deposit/types/asset.interface';
 import ModalAssetSelector from '../../components/ModalAssetSelector.vue';
 import ProgressBar from 'primevue/progressbar';
+import {useUserStore} from "../../stores/user";
 import {useRouter} from 'vue-router';
 import {useSwapStore} from '../../stores/swap';
 import {storeToRefs} from 'pinia';
+import AccountValidationProcess from "../../components/AccountValidationProcess.vue";
 
 const {
   assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText,
@@ -78,6 +81,8 @@ const {
 const {t} = useI18n({useScope: 'global'});
 const router = useRouter();
 const {createQuote, swapHandler, switchTransactionType} = useSwapStore();
+
+const useUser = useUserStore()
 
 const selectedAsset = async (asset: Asset) => {
   showModalAssetSelector.value = false;

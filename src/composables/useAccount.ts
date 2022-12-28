@@ -7,6 +7,7 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
 import { Document, Member, Owner } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
+import showMessage from '../shared/showMessageArray'
 
 export const useAccount = () => {
   const router = useRouter()
@@ -178,6 +179,10 @@ export const useAccount = () => {
       isNaturalAccountLet = true
     }
 
+    if (isNaturalAccount.value) {
+      isNaturalAccountLet = true
+    }
+
     profileService
       .updateContact(account.accountId.value!, contactId!, isNaturalAccountLet!, accountStore.form)
       .then(() => {
@@ -191,12 +196,18 @@ export const useAccount = () => {
       })
       .catch(error => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.response.data.message,
-          life: 4000,
-        })
+
+        if (error.response.data.message) {
+          toast.add({
+            severity: 'error',
+            summary: t('somethingWentWrong'),
+            detail: error.response.data.message,
+            life: 4000,
+          })
+          return
+        }
+
+        showMessage(toast, error.response.data)
       })
   }
 
@@ -207,6 +218,11 @@ export const useAccount = () => {
   const setDocumentResponseId = (documentResponseId: string | null) => {
     if (!documentResponseId) return
     accountStore.setDocumentResponseId(documentResponseId)
+  }
+
+  const setDeviceResponseId = (deviceResponseId: string | null) => {
+    if (!deviceResponseId) return
+    accountStore.setDeviceResponseId(deviceResponseId)
   }
 
   const editProfile = (): void => {
@@ -258,12 +274,18 @@ export const useAccount = () => {
     currentPassword.value = ''
   }
 
+  const getMembers = () => {
+    return accountStore.members
+  }
+
+  const findMember = (taxId: string) => {
+    return accountStore.members?.find(member => member.taxId === taxId)
+  }
+
   const clearAccountFormData = () => accountStore.clearAccountFormData()
   const setFormInitialInfo = () => accountStore.setFormInitialInfo()
   const setAccountForm = (payload: FormData) => accountStore.setForm(payload)
   const setIsAccountBusiness = (payload: boolean) => accountStore.setIsAccountBusiness(payload)
-  const addDocumentToMember = (taxId: string, payload: Document) => accountStore.addDocumentToMember(taxId, payload)
-  const addDocumentToCompany = (payload: Document) => accountStore.addDocumentToCompany(payload)
 
   return {
     fetchAccount,
@@ -271,6 +293,7 @@ export const useAccount = () => {
     submitProfileForm,
     getFullName,
     setDocumentResponseId,
+    setDeviceResponseId,
     submitUpdatePassword,
     clearAccountFormData,
     setFormInitialInfo,
@@ -296,9 +319,10 @@ export const useAccount = () => {
     isEditPartnerAccount,
     getPartnerToEdit,
     isAccountBusinessComputed,
+    findMember,
+    getMembers,
     setIsAccountBusiness,
-    addDocumentToMember,
     getAccountId: () => accountStore.getAccountId(),
-    addDocumentToCompany,
+    getOwner: () => accountStore.owner,
   }
 }

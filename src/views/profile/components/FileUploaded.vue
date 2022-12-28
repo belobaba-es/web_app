@@ -1,41 +1,27 @@
 <template>
-    <div class="flex justify-content-between align-items-center p-3 border-round surface-200">
+  <div class="flex justify-content-between align-items-center p-3 border-round surface-200">
         <span>
             <i class="pi pi-check"></i>
         </span>
-        <span>
-            {{ props.identityDocument.label }}
+    <span>
+            {{ props.label }}
         </span>
-        <span class="cursor-pointer" @click="editDocumentHandler(
-            props.identityDocument.taxId,
-            props.identityDocument.documentId
+    <span class="cursor-pointer" @click="editDocumentHandler(
+            props.label
         )">
             <i class="pi pi-pencil"></i>
         </span>
-    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
-import { useAccountStore } from '../../../stores/account';
 
-const props = defineProps({
-    identityDocument: {
-        type: Object,
-        required: true,
-    },
-    isCompany: {
-        type: Boolean,
-        default: () => false
-    }
-});
+const props = defineProps<{label: string}>();
 
-const accountStore = useAccountStore();
 
-const editDocumentHandler = (taxId: string, documentId: string) => {
-    console.log(props.isCompany);
-    accountStore.editDocument(taxId, documentId, props.isCompany);
+const editDocumentHandler = (taxId: string, ) => {
+  console.log(props.label);
+
 }
-
 </script>
 
