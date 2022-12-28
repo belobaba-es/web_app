@@ -2,12 +2,20 @@
   <div class="flex-row mb-3">
     <div class="flex justify-content-between align-items-center">
       <template v-if="type === 'fiat'">
-        <span>
-          {{ t('iHave') }}: <span class="font-medium">{{ getWalletByAssetCode('USD')?.balance }}</span>
+
+        <span v-if="transactionType === 'buy'">
+          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
         </span>
+        <span v-else>
+          <span> {{ t('iWant') }}: </span>
+        </span>
+
       </template>
       <template v-else>
-        <span> {{ t('iWant') }}: <span class="font-medium"></span> </span>
+        <span v-if="transactionType === 'buy'"> {{ t('iWant') }}: </span>
+        <span v-else>
+          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
+        </span>
       </template>
     </div>
     <div
@@ -58,23 +66,28 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, toRef } from 'vue'
 import { defineProps } from 'vue'
 import Button from 'primevue/button'
 import { useSwapStore } from '../../../stores/swap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import InputNumber from 'primevue/inputnumber'
 import { storeToRefs } from 'pinia'
+import { useToast } from 'primevue/usetoast'
 
 interface Props {
   type: string
 }
 
+const toast = useToast()
+
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
-const { amount, assetName, assetIcon, unitCount, showModalAssetSelector, loading, transactionType } = storeToRefs(
+const { amount, assetName, assetIcon, unitCount, showModalAssetSelector, loading, transactionType, assetCode, assetId } = storeToRefs(
   useSwapStore()
 )
+
+const { createQuote } = useSwapStore()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -100,8 +113,23 @@ const disabledBtnSelectCrypto = computed(() => {
     if (transactionType.value === 'buy') {
         return amount.value === 0.0 || loading.value
     } else if (transactionType.value === 'sell') {
-        return loading.value || unitCount.value == 0.0;
+        return loading.value;
     }
+})
+
+watch(unitCount, async (newVal) => {
+  if (transactionType.value === 'sell' && props.type === 'crypto' && newVal > 0.0 && assetId.value) {
+    if (newVal > getBalanceByCode(assetCode.value)) {
+      toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: t("insufficientFunds"),
+          life: 4000,
+        })
+      return;
+    }
+    await createQuote()
+  }
 })
 </script>
 

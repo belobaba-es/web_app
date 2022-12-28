@@ -1,5 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
 import { CreateQuoteResponse } from '../types/create-quote-response.interface'
+import { QuoteResponse } from '../types/quote-response.interface'
 
 export class SwapService extends HttpService {
   private static _instance: SwapService
@@ -33,8 +34,8 @@ export class SwapService extends HttpService {
     return resp;
   }
 
-  async nextQuotes(nextPag: string) {
-    const resp = await this.get<any>(`swap/quotes/${nextPag}`, [], true)
+  async nextQuotes(nextPag: string): Promise<QuoteResponse> {
+    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, [], true)
     return resp;
   }
 
