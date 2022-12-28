@@ -5,10 +5,11 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
+import { QuoteResponse } from '../views/swap/types/quote-response.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
-  const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
+  const { fetchBalanceWallets } = useBalanceWallet()
   const router = useRouter()
   const toast = useToast()
   const baseAmount = ref(0.0)
@@ -29,24 +30,30 @@ export const useSwapStore = defineStore('swap', () => {
   const timer = ref()
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
-  const quotes = ref({
+  const quotes = ref<QuoteResponse>({
     count: 0,
-    nextPag: null,
-    prevPag: null,
+    nextPag: '',
+    prevPag: '',
     results: [],
   })
+  const successExecuted = ref(false)
 
   const swapBtnText = computed(() => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
   })
 
   const createQuote = async () => {
-    if (amount.value === 0.0) return
+    if (
+      (transactionType.value === 'buy' && amount.value === 0.0) ||
+      (transactionType.value === 'sell' && unitCount.value === 0.0)
+    )
+      return
+
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
       .createQuote({
-        amount: amount.value,
+        amount: amountIsUnitCount.value ? unitCount.value : amount.value,
         amountIsUnitCount: amountIsUnitCount.value,
         transactionType: transactionType.value,
         assetId: assetId.value,
@@ -57,33 +64,14 @@ export const useSwapStore = defineStore('swap', () => {
         baseAmount.value = response.data.baseAmount
         feeAmount.value = response.data.feeAmount
         totalAmount.value = response.data.totalAmount
-        unitCount.value = response.data.unitCount
+        if (transactionType.value === 'buy') {
+          unitCount.value = response.data.unitCount
+        }
         loading.value = false
+        if (transactionType.value === 'sell') {
+          amount.value = response.data.baseAmount
+        }
         startTimer()
-      })
-      .catch(() => {
-        loading.value = false
-      })
-  }
-
-  const amountWithFee = computed(() => amount.value - feeAmount.value)
-
-  const executeQuote = async () => {
-    if (amount.value === 0.0) return
-    loading.value = true
-    const swapService = SwapService.instance()
-    await swapService
-      .execute(quoteId.value)
-      .then(response => {
-        toast.add({
-          severity: 'success',
-          summary: t('successfulOperation'),
-          detail: response.message,
-          life: 4000,
-        })
-        loading.value = false;
-        updateBlockedBalanceWalletByCode("USD", amount.value)
-        router.push('/swap/success')
       })
       .catch(error => {
         loading.value = false
@@ -93,6 +81,42 @@ export const useSwapStore = defineStore('swap', () => {
           detail: error.response.data.message,
           life: 4000,
         })
+      })
+  }
+
+  const executeQuote = async () => {
+    if (amount.value === 0.0) return
+    loading.value = true
+    const swapService = SwapService.instance()
+    await swapService
+      .execute(quoteId.value)
+      .then(async response => {
+        setTimeout(async () => {
+          toast.add({
+            severity: 'success',
+            summary: t('successfulOperation'),
+            detail: response.message,
+            life: 5000,
+          })
+          loading.value = false
+          clearTimer()
+          router.push('/swap/success')
+
+          successExecuted.value = true
+          await fetchBalanceWallets()
+        }, 5000)
+      })
+      .catch(async error => {
+        loading.value = false
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+        await cancelQuote()
+        clearTimer()
+        refreshQuote()
       })
   }
 
@@ -119,17 +143,18 @@ export const useSwapStore = defineStore('swap', () => {
     progressBarPercent.value = 0
   }
 
-  watch(progressBarSeconds, newValue => {
-    if (newValue === 10) clearTimer()
+  watch(progressBarSeconds, async newValue => {
+    if (newValue === 10) {
+      clearTimer()
+      if (quoteId.value && !successExecuted.value) {
+        shouldRefreshQuote.value = true
+        await cancelQuote()
+      }
+    }
   })
 
-  watch(timer, (newValue, oldValue) => {
-    if (!newValue && oldValue) shouldRefreshQuote.value = true
-  })
-
-  const refreshQuote = () => {
+  const refreshQuote = async () => {
     assetId.value = undefined
-    quoteId.value = undefined
     baseAmount.value = 0.0
     feeAmount.value = 0.0
     totalAmount.value = 0.0
@@ -144,26 +169,66 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const fetchQuotes = async () => {
+    loading.value = true
     const swapService = SwapService.instance()
     await swapService.quotes().then(response => {
       quotes.value = response
+      loading.value = false
     })
   }
 
   const switchTransactionType = async () => {
     if (transactionType.value === 'buy') {
+      amountIsUnitCount.value = true
+      if (amount.value > 0.0) {
+        amount.value = 0.0
+      }
       transactionType.value = 'sell'
     } else {
+      amountIsUnitCount.value = false
+      if (unitCount.value > 0.0) {
+        unitCount.value = 0.0
+      }
       transactionType.value = 'buy'
     }
+
     if (quoteId.value) {
       clearTimer()
+      await cancelQuote()
     }
+
     if (shouldRefreshQuote.value) {
       shouldRefreshQuote.value = false
     }
-    
-    await createQuote();
+
+    if (assetId.value) {
+      await createQuote()
+    }
+  }
+
+  const cancelQuote = async () => {
+    const swapService = SwapService.instance()
+    await swapService.cancelQuote(quoteId.value).then(() => (quoteId.value = undefined))
+  }
+
+  const getNextPage = async (event: any) => {
+    const { last } = event
+    if (last === quotes.value.results.length && quotes.value.nextPag !== '' && !loading.value) {
+      loading.value = true
+      const swapService = SwapService.instance()
+      await swapService
+        .nextQuotes(quotes.value.nextPag)
+        .then(response => {
+          response.results.forEach(result => {
+            const existInResults = quotes.value.results.find(item => item.id === result.id)
+            if (!existInResults) quotes.value.results.push(result)
+          })
+          quotes.value.nextPag = response.nextPag
+        })
+        .finally(() => {
+          loading.value = false
+        })
+    }
   }
 
   return {
@@ -191,6 +256,8 @@ export const useSwapStore = defineStore('swap', () => {
     quotes,
     switchTransactionType,
     assetCode,
-    refreshQuote
+    refreshQuote,
+    getNextPage,
+    shouldRefreshQuote,
   }
 })
