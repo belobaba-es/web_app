@@ -9,7 +9,6 @@ name: Deploy to Firebase Hosting in the Production Environment
 jobs:
   push-changes:
     runs-on: ubuntu-latest
-    needs: verify-code
     steps:
       - uses: actions/checkout@v2
 
