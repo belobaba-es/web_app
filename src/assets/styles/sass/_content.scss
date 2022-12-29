@@ -1,14 +1,21 @@
 .layout-main-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6rem 1rem 0rem 1rem;
+  transition: margin-left $transitionDuration;
+  background: rgb(247, 253, 253);
+  overflow: auto;
+
+  @media only screen and (max-width: 991px) {
+    max-height: 90vh;
+  }
+
+  @media only screen and (min-width: 992px) {
     min-height: 100vh;
-    justify-content: space-between;
-    padding: 6rem 1rem 0rem 1rem;
-    transition: margin-left $transitionDuration;
-    background: rgb(247, 253, 253);
-    overflow: auto;
+  }
 }
 
 .layout-main {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
