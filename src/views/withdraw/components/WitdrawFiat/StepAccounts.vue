@@ -1,22 +1,19 @@
 <template>
-  <div class="col-4 mt-4 mb-4">
-    <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNew"/>
+  <div class="grid">
+    <div class="col-8 sm:col-8 md:col-8 lg:col-5 xl:col-5 mt-4 mb-4">
+      <Button class="p-button w-full" :label="t('newBeneficiary')" @click="toNew" />
+    </div>
   </div>
 
-
-  <div class="col-10 md:col-8">
+  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
     <span class="p-input-icon-left flex p-fluid">
-      <i class="pi pi-search"/>
-      <InputText
-          type="text"
-          class="b-gray"
-          v-model="search"
-          :placeholder="t('nobaBeneficiaryEmail')"
-      />
-      <Button style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
-              class="p-button search-btn w-25"
-              :label="t('search')"
-              @click="onSearch"
+      <i class="pi pi-search" />
+      <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
+      <Button
+        style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+        class="p-button search-btn w-25"
+        :label="t('search')"
+        @click="onSearch"
       />
     </span>
   </div>
@@ -25,52 +22,48 @@
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
-      <ListBeneficiary :list="list" @select="onSelect($event)"/>
+      <ListBeneficiary :list="list" @select="onSelect($event)" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue'
+import Button from 'primevue/button'
+import Divider from 'primevue/divider'
+import ListBeneficiary from './ListBeneficiary.vue'
+import InputText from 'primevue/inputtext'
+import { useRouter } from 'vue-router'
 
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref} from 'vue';
-import Button from 'primevue/button';
-import Divider from 'primevue/divider';
-import ListBeneficiary from './ListBeneficiary.vue';
-import InputText from 'primevue/inputtext';
-import {useRouter} from "vue-router";
+import { useToast } from 'primevue/usetoast'
+import { Beneficiary } from '../../types/beneficiary.interface'
 
-import {useToast} from 'primevue/usetoast';
-import {Beneficiary} from "../../types/beneficiary.interface";
-
-const router = useRouter();
-const toast = useToast();
-const {t} = useI18n({useScope: 'global'})
+const router = useRouter()
+const toast = useToast()
+const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
-  list: Array<any>,
-  formData: any,
+  list: Array<any>
+  formData: any
   toNew: any
 }>()
-const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary']);
+const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const search = ref('')
-
 
 const onSelect = (item: Beneficiary) => {
   const page = 0
   const formData = {
-    beneficiary: item
+    beneficiary: item,
   }
   emit('update:beneficiary', item)
   emit('nextPage', {
     pageIndex: page,
-    formData: formData
+    formData: formData,
   })
 }
 // const beneficiaryAssets = ref<BeneficiaryFiat[]>([])
 
-onMounted(async () => {
-
-});
+onMounted(async () => {})
 
 const onSearch = () => {
   console.log('===========OOOOOOOOOO', search.value)
@@ -87,9 +80,6 @@ const onSearch = () => {
   //     })1
   // })
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,51 +1,49 @@
 <template>
-  <div class="col-8">
-    <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span></p>
+  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+    <p class="text-3xl font-medium mb-4">
+      {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
+    </p>
     <div class="flex align-items-center">
-      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
+      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
       <span class="text-xl"> {{ type }} Wire</span>
     </div>
-    <Steps :model="items" :readonly="false"/>
+    <Steps class="stepper" :model="items" :readonly="false" />
     <!-- <div class="mt-4 mb-4">
         <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
     </div> -->
-    <router-view v-slot="{Component}"
-                 :list="listBeneficiary"
-                 :toNew="newBeneficiary"
-                 :formData="formObject"
-                 @prevPage="prevStepPage($event)"
-                 @nextPage="nextStepPage($event)"
-                 @complete="stepComplete"
+    <router-view
+      v-slot="{ Component }"
+      :list="listBeneficiary"
+      :toNew="newBeneficiary"
+      :formData="formObject"
+      @prevPage="prevStepPage($event)"
+      @nextPage="nextStepPage($event)"
+      @complete="stepComplete"
     >
-
       <keep-alive>
-        <component :is="Component"/>
+        <component :is="Component" />
       </keep-alive>
     </router-view>
-
-
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue'
+import Button from 'primevue/button'
 
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref} from 'vue';
-import Button from 'primevue/button';
+import Steps from 'primevue/steps'
+import { useRoute, useRouter } from 'vue-router'
+import { BeneficiaryAssets } from '../types/beneficiary.interface'
+import { AccountService } from '../services/account'
+import { useToast } from 'primevue/usetoast'
 
+import { useWithdraw } from '../composables/useWithdraw'
 
-import Steps from 'primevue/steps';
-import {useRoute, useRouter} from "vue-router";
-import {BeneficiaryAssets} from '../types/beneficiary.interface';
-import {AccountService} from '../services/account';
-import {useToast} from 'primevue/usetoast';
-
-import {useWithdraw} from '../composables/useWithdraw';
-
-const router = useRouter();
+const router = useRouter()
 const route = useRoute()
-const toast = useToast();
-const {t} = useI18n({useScope: 'global'})
+const toast = useToast()
+const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 const type = ref('Domestic')
@@ -55,18 +53,17 @@ const accountService = AccountService.instance()
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/domestic'
+    to: '/withdraw/fiat/domestic',
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/domestic/amount'
+    to: '/withdraw/fiat/domestic/amount',
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/domestic/confirmation'
-  }
+    to: '/withdraw/fiat/domestic/confirmation',
+  },
 ])
-
 
 const {
   formObject,
@@ -78,7 +75,6 @@ const {
   stepComplete,
   toBack,
 } = useWithdraw(items)
-
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)
@@ -92,37 +88,40 @@ onMounted(async () => {
     type.value = 'International'
     await fetchBeneficiariesInternational()
   }
-
-
-});
+})
 
 const onSearch = () => {
   console.log(search.value)
-  accountService.getAccountByEmail(search.value).then(resp => {
-    console.log(resp)
-    beneficiaryAssets.value = [{
-      label: resp.name,
-      accountId: resp.email,
-      assetId: resp.email,
-      id: '',
-      walletAddress: '',
-      assetTransferMethod: ''
-    }]
-  }).catch(error => {
-    console.log(error.response)
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: error.response.data.message,
-      life: 4000,
+  accountService
+    .getAccountByEmail(search.value)
+    .then(resp => {
+      console.log(resp)
+      beneficiaryAssets.value = [
+        {
+          label: resp.name,
+          accountId: resp.email,
+          assetId: resp.email,
+          id: '',
+          walletAddress: '',
+          assetTransferMethod: '',
+        },
+      ]
     })
-  })
+    .catch(error => {
+      console.log(error.response)
+      toast.add({
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: error.response.data.message,
+        life: 4000,
+      })
+    })
 }
-
 </script>
 
 <style scoped>
 .search-btn {
   width: 30% !important;
 }
+
 </style>

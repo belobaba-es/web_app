@@ -31,7 +31,7 @@
     </div>   
 
     <template #footer>
-        <Button :label="t('done')" icon="pi pi-check" autofocus @click="emit('update:visible', false)"/>
+        <Button class="mt-2" :label="t('done')" icon="pi pi-check" autofocus @click="emit('update:visible', false)"/>
     </template>
 </Dialog>
 

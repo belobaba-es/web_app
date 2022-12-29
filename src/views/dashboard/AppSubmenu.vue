@@ -9,7 +9,7 @@
 				<template v-else>
 					<router-link v-if="item.to" :to="item.to" :class="[item.class, 'p-ripple', {'p-disabled': item.disabled}]" :style="item.style" @click="onMenuItemClick($event,item,i)" :target="item.target" :aria-label="item.label" exact role="menuitem" v-ripple>
 						<i :class="item.icon"></i>
-						<span>{{item.label}}</span>
+						<span>{{item.label}} </span>
 						<i v-if="item.items" class="pi pi-fw pi-angle-down menuitem-toggle-icon"></i>
 						<!-- <Badge v-if="item.badge" :value="item.badge"></Badge> -->
 					</router-link>

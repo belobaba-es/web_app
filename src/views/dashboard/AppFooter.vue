@@ -1,10 +1,20 @@
 <template>
-	<div class="layout-footer">
-		<img alt="Logo" src="../../assets/icons/bank.svg" height="20" class="mr-2" />
-		by
-		<span class="font-medium ml-2">PrimeVue</span>
-	</div>
+  <footer>
+    <div class="layout-footer hidden sm:hidden md:hidden lg:flex xl:flex">
+      <div class="flex justify-content-start">
+        <div class="flex align-items-center justify-content-center">
+          <span>&copy; </span>
+          <span class="text"> Noba<sup>TM</sup> {{ getYear() }} - All rights reserved. </span>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 <script lang="ts" setup>
+
+const getYear = () => {
+  const d = new Date()
+  return d.getFullYear()
+}
 
 </script>
