@@ -1,57 +1,50 @@
 <template>
-    <div>
-        <p class="text-3xl font-medium mb-4">{{t('withdraw')}} / <span class="text-primary">{{t('fiat')}} </span></p>
+  <div>
+    <p class="text-3xl font-medium mb-4">
+      {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
+    </p>
     <div class="flex align-items-center">
-
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
-        <span class="text-xl"> International Wire</span> 
+      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+      <span class="text-xl"> International Wire</span>
     </div>
-    <Steps :model="items" :readonly="false" />
-    <!-- <div class="mt-2 mb-2">
-        <Button class="p-button search-btn" :label="t('New Beneficiary')" @click="newBeneficiary"/>
-    </div> -->
-    <router-view v-slot="{Component}"   
-        :list="listBeneficiary"
-        :formData="formObject" 
-        toNew="/withdraw/fiat/international/new"
-        @prevPage="prevStepPage($event)" 
-        @nextPage="nextStepPage($event)" 
-        @complete="stepComplete"
-        >
 
-        <keep-alive>
-            <component :is="Component" />
-        </keep-alive>
+    <Steps class="w-100" :model="items" :readonly="false" />
+
+    <router-view
+      v-slot="{ Component }"
+      :list="listBeneficiary"
+      :formData="formObject"
+      toNew="/withdraw/fiat/international/new"
+      @prevPage="prevStepPage($event)"
+      @nextPage="nextStepPage($event)"
+      @complete="stepComplete"
+    >
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
     </router-view>
-
-
-</div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue'
+import Button from 'primevue/button'
 
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref} from 'vue';
-import Button from 'primevue/button';
+import Steps from 'primevue/steps'
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+import { useWithdraw } from '../composables/useWithdraw'
 
-import Steps from 'primevue/steps';
-import {useRouter} from "vue-router";
-import {useToast} from 'primevue/usetoast';
-import {useWithdraw} from "../composables/useWithdraw";
-
-
-const router = useRouter();
-const toast = useToast();
+const router = useRouter()
+const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 
-
-
-
 onMounted(async () => {
   await fetchBeneficiariesInternational()
-});
+})
 
 // const onSearch = () => {
 //     console.log(search.value)
@@ -69,35 +62,27 @@ onMounted(async () => {
 //     })
 // }
 
-
 const items = ref([
-    {
-        label: 'Accounts',
-        to: '/withdraw/fiat/international'
-    },
-    {
-        label: 'Amount',
-        to: '/withdraw/fiat/international/amount'
-    },
-    {
-        label: 'Confirmation',
-        to: '/withdraw/fiat/international/confirmation'
-    }
+  {
+    label: 'Accounts',
+    to: '/withdraw/fiat/international',
+  },
+  {
+    label: 'Amount',
+    to: '/withdraw/fiat/international/amount',
+  },
+  {
+    label: 'Confirmation',
+    to: '/withdraw/fiat/international/confirmation',
+  },
 ])
 
-const {
-    formObject,
-    fetchBeneficiariesInternational, 
-    listBeneficiary,
-    nextStepPage,
-    prevStepPage,
-    stepComplete,
-} = useWithdraw(items)
-
+const { formObject, fetchBeneficiariesInternational, listBeneficiary, nextStepPage, prevStepPage, stepComplete } =
+  useWithdraw(items)
 </script>
 
 <style scoped>
-.search-btn{
-    width: 30% !important;
+.search-btn {
+  width: 30% !important;
 }
 </style>

@@ -9,6 +9,8 @@
       <div class="layout-main">
         <router-view/>
       </div>
+      <AppFooter></AppFooter>
+      <AppTabBarContainer :model="menu"></AppTabBarContainer>
     </div>
 
     <transition name="layout-mask">
@@ -21,12 +23,17 @@
 import {computed, ref} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
+import AppFooter from './AppFooter.vue';
+import AppTabBarContainer from './AppTabBarContainer.vue'; 
+
+
 import {useI18n} from "vue-i18n";
 import {useBalanceWallet} from "../../composables/useBalanceWallet";
 
 
 const {t} = useI18n({useScope: 'global'})
 const {fetchBalanceWallets} = useBalanceWallet()
+
 const menu = [
   {
     label: '',

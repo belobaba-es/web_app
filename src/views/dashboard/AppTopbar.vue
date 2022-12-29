@@ -1,106 +1,94 @@
 <template>
-	<div class="layout-topbar">
-		<router-link to="/dashboard" class="layout-topbar-logo">
-			<img alt="Logo" :src="logo" />
-			<span></span>
-		</router-link>
-		<Button class="p-link layout-menu-button  lg:hidden layout-topbar-button p-button-text" @click="onMenuToggle">
-			<i class="pi pi-bars"></i>
-		</Button>
-		<div class="flex ">
-			<div class="mr-2 ml-2">
-				<p style="margin: 0; font-size: 12px;">{{t('balance')}}</p>
-				<span>
-         <strong class="font-bold"> {{balanceWalletUsd()}} USD</strong>
+  <div class="layout-topbar">
+    <router-link to="/dashboard" class="layout-topbar-logo">
+      <img alt="Logo" :src="logo" />
+      <span></span>
+    </router-link>
+    <div class="flex">
+      <div class="mr-2 ml-2">
+        <p style="margin: 0; font-size: 12px">{{ t('balance') }}</p>
+        <span>
+          <strong class="font-bold"> {{ balanceWalletUsd() }} USD</strong>
         </span>
-			</div>
-<!--			<Button class="p-button-outlined mr-2 ml-2" >-->
-<!--				<i class="pi pi-bell  p-text-secondary"  v-badge.danger="2"></i>	-->
-<!--			</Button>-->
+      </div>
+<!--      <Button class="p-button-outlined mr-2 ml-2">-->
+<!--        <i class="pi pi-bell p-text-secondary" v-badge.danger="2"></i>-->
+<!--      </Button>-->
 
-			<SplitButton label="Save"  :model="items" class="p-button-text mr-2 mb-2 ml-2">
-				<img alt="logo" :src="avatar()" class="avatar" />
-				<span style="margin: auto 0;">{{username}}</span>
-			</SplitButton>
-
-		</div>
-		
-	</div>
+      <SplitButton label="Save" :model="items" class="p-button-text mr-2 mb-2 ml-2">
+        <img alt="logo" :src="avatar()" class="avatar" style="width: 2.5rem" />
+        <span class="hidden sm:hidden md:hidden lg:flex xl:flex" style="margin: auto 0">{{ username }}</span>
+      </SplitButton>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import SplitButton from 'primevue/splitbutton'
-import Button from 'primevue/button';
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
-import {useI18n} from "vue-i18n";
+import Button from 'primevue/button'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
-import {useUserStore} from '../../stores/user';
-import {LoginService} from '../login/services/login';
-import {useBalanceWallet} from "../../composables/useBalanceWallet";
+import { useUserStore } from '../../stores/user'
+import { LoginService } from '../login/services/login'
+import { useBalanceWallet } from '../../composables/useBalanceWallet'
 
 const router = useRouter()
-const {getBalanceByCode} = useBalanceWallet()
+const { getBalanceByCode } = useBalanceWallet()
 const emit = defineEmits(['menu-toggle'])
 
 const { t } = useI18n({ useScope: 'global' })
 
-const onMenuToggle = (payload: any) => {
-	emit('menu-toggle', payload);
-}
+const userStore = useUserStore()
+const loginService = LoginService.instance()
 
-const userStore = useUserStore();
-const loginService = LoginService.instance();
-
-const username = userStore.getUser.firstName ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName :  userStore.getUser.name
-
+const username = userStore.getUser.firstName
+    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+    : userStore.getUser.name
 
 const balanceWalletUsd = () => {
-  return  getBalanceByCode('USD')
-  
+  return getBalanceByCode('USD')
 }
 
 const items = ref([
-	{
-		label: t('profile'),
-		icon: 'pi pi-user',
-		command: () => {
+  {
+    label: t('profile'),
+    icon: 'pi pi-user',
+    command: () => {
       router.push(`/profile/${userStore.getUser.account.accountId}`)
-    }
-	},
-	{
-		icon: 'pi',
-		class: 'icon-headset',
-		label: t('contact'),
-		command: () => {}
-	},
-	{
-		label: t('help'),
-		icon: 'pi ',
-		class: 'icon-help',
-		command: () => {}
-	},
-	{
-		separator: true
-	},
-	{
-		label: t('logOut'),
-		icon: 'pi pi-sign-out',
-		command: async () => {
-      await loginService.logout();
+    },
+  },
+  {
+    icon: 'pi',
+    class: 'icon-headset',
+    label: t('contact'),
+    command: () => {},
+  },
+  {
+    label: t('help'),
+    icon: 'pi ',
+    class: 'icon-help',
+    command: () => {},
+  },
+  {
+    separator: true,
+  },
+  {
+    label: t('logOut'),
+    icon: 'pi pi-sign-out',
+    command: async () => {
+      await loginService.logout()
       window.location.href = '/'
-		}
-	},
-
-]);
+    },
+  },
+])
 
 const avatar = () => {
   return `https://ui-avatars.com/api/?name=${userStore.getUser.firstName}+${userStore.getUser.lastName }`
 }
 
-
 </script>
-
 
 <style lang="scss">
 .avatar {

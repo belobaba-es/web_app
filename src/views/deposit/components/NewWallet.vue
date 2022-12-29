@@ -21,7 +21,7 @@
     </div>
 
     <template #footer>
-      <Button :label="t('createWallet')" autofocus @click="onCreate" icon="pi pi-angle-right"
+      <Button class="mt-2" :label="t('createWallet')" autofocus @click="onCreate" icon="pi pi-angle-right"
               :loading="submitting"/>
     </template>
   </Dialog>
