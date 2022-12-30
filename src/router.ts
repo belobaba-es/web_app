@@ -37,6 +37,9 @@ import WithdrawOtherPlatformsStepAmount from './views/withdraw/components/OtherP
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
+import WalletIndex from './views/wallet/Wallet.vue'
+
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -52,10 +55,6 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: DashboardIndex,
-      },
-      {
-        path: 'wallet',
         component: DashboardIndex,
       },
       {
@@ -234,7 +233,11 @@ const routes: RouteRecordRaw[] = [
             component: SwapSuccess
           }
         ]
-      }
+      },
+      {
+        path: '/wallet',
+        component: WalletIndex,
+      },
     ],
   },
 ]
