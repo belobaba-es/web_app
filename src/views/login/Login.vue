@@ -132,7 +132,7 @@ const handleSubmit = () => {
 .container-main {
   max-width: 668px;
   margin: 0 auto;
-  padding: 0 3rem 3rem;
+  padding: 0 1rem 1rem;
 }
 
 .container {

@@ -2,7 +2,7 @@
   <AccountValidationProcess v-show="!useUser.isAccountActive()" />
   <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
     <div class="grid flex justify-content-center">
-      <div class="col-6">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <div class="flex justify-content-end mb-4">
           <Button type="button" :label="t('viewSwapHistory')"
                   class="font-light mt-lg-5 border-300 bg-white text-black-alpha-80" icon="pi pi-history"
@@ -26,14 +26,14 @@
           </div>
           <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
             <div class="grid">
-              <div class="col-8 mx-auto">
+              <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 mx-auto mb-3 mt-3">
                 <ProgressBar :value="progressBarPercent" class="swap">
                   {{ progressBarSeconds }} Seg
                 </ProgressBar>
               </div>
             </div>
           </div>
-          <div class="text-center" v-if="quoteId">
+          <div class="text-center mt-3 mb-3" v-if="quoteId">
             <span class="font-medium text-primary text-2xl">Fee:</span> <span class="text-2xl font-medium">{{
               feeAmount
             }}</span>
@@ -45,7 +45,7 @@
             <Button :label="swapBtnText" class="w-full py-3 text-uppercase"
                     :disabled="(loading || (!quoteId && !shouldRefreshQuote))" @click="swapHandler" :loading="loading"/>
           </div>
-          <div>
+          <div class="mt-3 mb-3">
             <p class="text-sm text-center">{{ t('swapExchangeServiceText') }}</p>
           </div>
         </div>

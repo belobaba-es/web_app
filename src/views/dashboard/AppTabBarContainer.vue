@@ -15,10 +15,14 @@ defineProps<{
 </script>
 
 <style lang="scss">
+
 .tap-bar-container {
-  background-color: #f9f9f9;
-  border: 1px solid #e7e6e7;
-  border-radius: 20px;
-  padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #e7e6e7;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0rem;
+    left: 0;
 }
 </style>

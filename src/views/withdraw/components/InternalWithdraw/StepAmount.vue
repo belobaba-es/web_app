@@ -5,39 +5,42 @@
       <Divider></Divider>
     </div>
 
-    <div class="col-12 mb-4">
-      <p class="title-beneficiary">{{ beneficiary.name }}</p>
-      <p class="text-base">{{ beneficiary.email }}</p>
+    <div class="grid col-12 mb-4">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <p class="title-beneficiary text-capitalize">{{ beneficiary.name }}</p>
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <p class="text-base">{{ beneficiary.email }}</p>
+      </div>
     </div>
 
     <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset" />
 
-    <div v-if="showAmount">
-      <div class="grid col-12 mb-2">
-        <div class="col-3 sm:col-3 md:col-3 lg:col-3 xl:col-3">
-          <p>
-            <label for="amount">{{ t('Amount') }}</label>
-          </p>
-        </div>
-
-        <div class="col-9 sm:col-9 md:col-9 lg:col-9 xl:col-9">
-          <p class="text-base text-amount">
-            {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b>
-          </p>
-        </div>
+    <div v-if="showAmount" class="grid col-12 mb-2">
+      <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
+        <p>
+          <label for="amount">{{ t('Amount') }}</label>
+        </p>
       </div>
 
-      <div class="grid col-12 flex w-full">
-        <div class="flex w-full">
-          <InputText
-            id="amount"
-            type="number"
-            class="p-inputtext p-component b-gray"
-            v-model="amount"
-            :placeholder="t('amount')"
-          />
-          <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
-        </div>
+      <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
+        <p class="text-base text-amount">
+          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b>
+        </p>
+      </div>
+    </div>
+
+    <div v-if="showAmount" class="grid col-12 flex w-full">
+      <div class="flex w-full">
+        <InputText
+          id="amount"
+          type="number"
+          class="p-inputtext p-component b-gray w-full btn-amount"
+          v-model="amount"
+          :placeholder="t('amount')"
+        />
+        <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
       </div>
     </div>
 
@@ -236,4 +239,3 @@ const selectedAsset = (evt: Asset) => {
   }
 }
 </style>
-
