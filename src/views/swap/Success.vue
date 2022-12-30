@@ -15,13 +15,13 @@
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ transactionSummary.usdName }}</div>
-                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ usdName }}</div>
               </div>
             </div>
             <div class="flex" v-else>
               <div class="flex-shrink-0 flex align-items-center mr-2">
-                <img alt="logo" :src="assetIcon" style="width: 4rem" />
+                <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
                 <div class="font-medium">{{ transactionSummary.assetName }}</div>
@@ -38,7 +38,7 @@
             <span class="mb-1">{{ t('swapTo') }}</span>
             <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
               <div class="flex-shrink-0 flex align-items-center mr-2">
-                <img alt="logo" :src="assetIcon" style="width: 4rem" />
+                <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
                 <div class="font-medium">{{ transactionSummary.assetName }}</div>
@@ -50,8 +50,8 @@
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ transactionSummary.usdName }}</div>
-                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ usdName }}</div>
               </div>
             </div>
           </div>
@@ -67,13 +67,13 @@
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ transactionSummary.usdName }}</div>
-                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ usdName }}</div>
               </div>
             </div>
             <div class="flex" v-else>
               <div class="flex-shrink-0 flex align-items-center mr-2">
-                <img alt="logo" :src="assetIcon" style="width: 4rem" />
+                <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
                 <div class="font-medium">{{ transactionSummary.assetName }}</div>
@@ -93,7 +93,7 @@
               </div>
               <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
                 <div class="flex-shrink-0 flex align-items-center mr-2">
-                  <img alt="logo" :src="assetIcon" style="width: 4rem" />
+                  <img alt="logo" :src="usdIcon" style="width: 4rem" />
                 </div>
                 <div class="flex-grow-1 flex-row align-items-center">
                   <div class="font-medium">{{ transactionSummary.assetName }}</div>
@@ -105,8 +105,8 @@
                   <img alt="logo" :src="usdIcon" style="width: 4rem" />
                 </div>
                 <div class="flex-grow-1 flex-row align-items-center">
-                  <div class="font-medium">{{ transactionSummary.usdName }}</div>
-                  <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
+                  <div class="font-medium">{{ usdName }}</div>
+                  <div class="font-medium">{{ transactionSummary.totalAmount }} {{ usdName }}</div>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@
         <p class="mt-3 mb-3 text-sm text-center">
           {{ t('swapPriceQuote') }}
         </p>
-        <div class="text-center" v-if="quoteId">
+        <div class="text-center" v-if="transactionSummary.quoteId">
           <span class="font-medium text-primary text-2xl">Fee:</span>
           <span class="text-2xl font-medium">{{ transactionSummary.feeAmount }}</span>
           /
@@ -131,7 +131,7 @@
               icon="pi pi-angle-left"
               :label="t('swapBackButtonTitle')"
               class="font-light w-100"
-              @click="back('/swap')"
+              @click="router.push('/swap')"
             />
           </div>
           <div class="">
