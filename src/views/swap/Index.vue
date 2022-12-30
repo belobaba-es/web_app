@@ -73,6 +73,7 @@ import {useRouter} from 'vue-router';
 import {useSwapStore} from '../../stores/swap';
 import {storeToRefs} from 'pinia';
 import AccountValidationProcess from "../../components/AccountValidationProcess.vue";
+import { onUnmounted } from 'vue';
 
 const {
   assetIcon, assetName, showModalAssetSelector, assetId, progressBarPercent, progressBarSeconds, swapBtnText,
@@ -80,7 +81,7 @@ const {
 } = storeToRefs(useSwapStore());
 const {t} = useI18n({useScope: 'global'});
 const router = useRouter();
-const {createQuote, swapHandler, switchTransactionType} = useSwapStore();
+const {createQuote, swapHandler, switchTransactionType, clearSwap} = useSwapStore();
 
 const useUser = useUserStore()
 
@@ -97,6 +98,9 @@ const modal = (b: boolean) => {
   showModalAssetSelector.value = b
 }
 
+onUnmounted(() => {
+  clearSwap()
+})
 </script>
 
 <style scoped>

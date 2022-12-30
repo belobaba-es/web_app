@@ -10,13 +10,13 @@
         <div class="my-5 justify-content-between hidden sm:hidden md:hidden lg:flex xl:flex">
           <div>
             <span class="mb-1">{{ t('swapFrom') }}</span>
-            <div class="flex" v-if="transactionType === 'buy'">
+            <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
               <div class="flex-shrink-0 flex align-items-center mr-2">
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ usdName }}</div>
-                <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
               </div>
             </div>
             <div class="flex" v-else>
@@ -24,8 +24,8 @@
                 <img alt="logo" :src="assetIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ assetName }}</div>
-                <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
               </div>
             </div>
           </div>
@@ -36,13 +36,13 @@
           </div>
           <div>
             <span class="mb-1">{{ t('swapTo') }}</span>
-            <div class="flex" v-if="transactionType === 'buy'">
+            <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
               <div class="flex-shrink-0 flex align-items-center mr-2">
                 <img alt="logo" :src="assetIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ assetName }}</div>
-                <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
               </div>
             </div>
             <div class="flex" v-else>
@@ -50,8 +50,8 @@
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ usdName }}</div>
-                <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
               </div>
             </div>
           </div>
@@ -62,13 +62,13 @@
             <div class="col-12 flex justify-content-center flex-wrap">
               <span class="mb-1 text-from">{{ t('swapFrom') }}</span>
             </div>
-            <div class="flex" v-if="transactionType === 'buy'">
+            <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
               <div class="flex-shrink-0 flex align-items-center mr-2">
                 <img alt="logo" :src="usdIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ usdName }}</div>
-                <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.usdName }}</div>
+                <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
               </div>
             </div>
             <div class="flex" v-else>
@@ -76,8 +76,8 @@
                 <img alt="logo" :src="assetIcon" style="width: 4rem" />
               </div>
               <div class="flex-grow-1 flex-row align-items-center">
-                <div class="font-medium">{{ assetName }}</div>
-                <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.assetName }}</div>
+                <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
               </div>
             </div>
             <div class="col-12 mt-2 ">
@@ -91,13 +91,13 @@
               <div class="col-12 flex justify-content-center flex-wrap">
                 <span class="mb-1 text-from">{{ t('swapTo') }}</span>
               </div>
-              <div class="flex" v-if="transactionType === 'buy'">
+              <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
                 <div class="flex-shrink-0 flex align-items-center mr-2">
                   <img alt="logo" :src="assetIcon" style="width: 4rem" />
                 </div>
                 <div class="flex-grow-1 flex-row align-items-center">
-                  <div class="font-medium">{{ assetName }}</div>
-                  <div class="font-medium">{{ unitCount }} {{ assetName }}</div>
+                  <div class="font-medium">{{ transactionSummary.assetName }}</div>
+                  <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
                 </div>
               </div>
               <div class="flex" v-else>
@@ -105,8 +105,8 @@
                   <img alt="logo" :src="usdIcon" style="width: 4rem" />
                 </div>
                 <div class="flex-grow-1 flex-row align-items-center">
-                  <div class="font-medium">{{ usdName }}</div>
-                  <div class="font-medium">{{ totalAmount }} {{ usdName }}</div>
+                  <div class="font-medium">{{ transactionSummary.usdName }}</div>
+                  <div class="font-medium">{{ transactionSummary.totalAmount }} {{ transactionSummary.usdName }}</div>
                 </div>
               </div>
             </div>
@@ -119,10 +119,10 @@
         </p>
         <div class="text-center" v-if="quoteId">
           <span class="font-medium text-primary text-2xl">Fee:</span>
-          <span class="text-2xl font-medium">{{ feeAmount }}</span>
+          <span class="text-2xl font-medium">{{ transactionSummary.feeAmount }}</span>
           /
           <span class="font-medium text-primary text-2xl">Total:</span>
-          <span class="text-2xl font-medium">{{ totalAmount }}</span>
+          <span class="text-2xl font-medium">{{ transactionSummary.totalAmount }}</span>
         </div>
         <div class="flex justify-content-center mt-lg-2 mt-3">
           <div class="mr-4">
@@ -131,7 +131,7 @@
               icon="pi pi-angle-left"
               :label="t('swapBackButtonTitle')"
               class="font-light w-100"
-              @click="back()"
+              @click="back('/swap')"
             />
           </div>
           <div class="">
@@ -151,51 +151,27 @@
 </template>
 
 <script setup lang="ts">
-import PageLayout from '../../components/PageLayout.vue'
-import { useSwap } from '../../composables/useSwap'
-import { useI18n } from 'vue-i18n'
-import Divider from 'primevue/divider'
-import Button from 'primevue/button'
-import { useRouter } from 'vue-router'
-import { useBalanceWallet } from '../../composables/useBalanceWallet'
-import { useSwapStore } from '../../stores/swap'
-const { t } = useI18n({ useScope: 'global' })
-const {
-  successIcon,
-  swapOneArrowIcon,
-  assetIcon,
-  unitCount,
-  assetName,
-  totalAmount,
-  quoteId,
-  feeAmount,
-  transactionType,
-} = useSwap()
-const router = useRouter()
-const { getWalletByAssetCode } = useBalanceWallet()
-const usdIcon = getWalletByAssetCode('USD')?.icon
-const usdName = getWalletByAssetCode('USD')?.name
-const back = () => {
-  useSwapStore().refreshQuote()
-  useSwapStore().quoteId = undefined
-  useSwapStore().transactionType = 'buy'
-  router.push('/swap')
-}
+import PageLayout from '../../components/PageLayout.vue';
+import { useSwap } from '../../composables/useSwap';
+import { useI18n } from "vue-i18n";
+import Divider from 'primevue/divider';
+import Button from 'primevue/button';
+import { useRouter } from 'vue-router';
+import { useBalanceWallet } from '../../composables/useBalanceWallet';
+import { useSwapStore } from '../../stores/swap';
+const { t } = useI18n({ useScope: 'global' });
+const { successIcon, swapOneArrowIcon, transactionSummary } = useSwap();
+
+const router = useRouter();
+const { getWalletByAssetCode } = useBalanceWallet();
+const usdIcon = getWalletByAssetCode("USD")?.icon;
+const usdName = getWalletByAssetCode("USD")?.name;
+
 </script>
 
 <style scoped>
 .swap-circle {
-  background-color: #bfefeb;
-}
-.container-success {
-  margin: 1rem 1rem;
+    background-color: #BFEFEB;
 }
 
-.text-from {
-  margin-right: 9rem;
-}
-
-.swap-icon {
-  transform: rotate(90deg);
-}
 </style>
