@@ -6,6 +6,7 @@
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
+      
       <div class="container">
         <div
             class="flex justify-content-between align-items-center asset-item"

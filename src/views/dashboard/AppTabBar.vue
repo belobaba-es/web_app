@@ -10,7 +10,6 @@
           v-if="link.to"
           :to="link.to"
           :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }]"
-          :style="link.style"
           :target="link.target"
           :aria-label="link.label"
           exact
@@ -19,9 +18,9 @@
         >
           <div class="link-tab-bar">
             <div class="flex align-items-center justify-content-center">
-              <i class="icon" :class="link.icon"></i>
+              <i class="icon" :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }, link.icon]"></i>
             </div>
-            <div>
+            <div class="test">
               <span>{{ link.label }}</span>
             </div>
           </div>
@@ -59,12 +58,12 @@ const onMenuItemClick = (event: any) => {
   color: black;
 }
 
-.icon{
-  width: 23px;
-  padding: auto;
-}
-
 .active {
   color: #00beb0;
 }
+
+.icon {
+  height: 26px;
+  padding: 1px;
+} 
 </style>

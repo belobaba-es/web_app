@@ -1,7 +1,7 @@
 <template>
   <h2 class="font-medium">{{ t('wallet') }}</h2>
 
-  <section>
+  <section v-if="isWallet === false">
     <div v-if="submitting === true">
       <Carousel
         :value="skeleton"
@@ -76,6 +76,40 @@
       </Carousel>
     </div>
   </section>
+
+  <section v-if="isWallet === true">
+    <div class="grid col-12 wallet">
+      <div
+        class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
+        v-bind:class="getStyle(item.assetCode)"
+        v-for="item in getWallets()"
+      >
+        <div class="flex justify-content-between flex-wrap">
+          <div class="flex align-items-center justify-content-center">
+            <p>
+              <strong class="name-cripto">{{ item.name }}</strong>
+            </p>
+          </div>
+          <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-ellipsis-v"></i>
+          </div>
+        </div>
+
+        <div class="grid mt-1">
+          <div class="col-6">
+            <img class="icon-cripto" :src="item.icon" :alt="item.name" />
+          </div>
+          <div class="col-6 flex justify-content-end align-content-end flex-wrap">
+            <p class="text-balance-wallet">
+              {{ calc(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
+              <br />
+              <small>{{ item.assetCode }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton'
@@ -91,6 +125,10 @@ const { getAllWallets } = useBalanceWallet()
 const submitting = ref(true)
 
 const skeleton = ['', '', '', '', '']
+
+const route = window.location.href
+
+const isWallet = route.includes('wallet')
 
 const getWallets = () => {
   const wallets = getAllWallets()
@@ -247,5 +285,48 @@ const responsiveOptions = ref([
   }
 
   font-size: var(--responsive);
+}
+
+.text-balance-wallet {
+  font-family: KanitMedium !important;
+  margin: auto;
+  width: fit-content;
+
+  /* Set max and min font sizes in mobile view */
+  @media only screen and (max-width: 575px) {
+    --max-font: 100;
+    --min-font: 20;
+    font-size: var(--responsive);
+  }
+
+  @media only screen and (min-width: 576px) {
+    --max-font: 24;
+    --min-font: 12;
+    font-size: var(--responsive);
+  }
+
+  @media only screen and (min-width: 991px) {
+    //991
+
+    /* Set max and min font sizes */
+    --max-font: 15;
+    --min-font: 8;
+    font-size: var(--responsive);
+  }
+
+  font-size: var(--responsive);
+}
+
+.wallet {
+  @media only screen and (min-width: 576px) {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media only screen and (min-width: 992px) {
+    display: flex;
+    justify-content: start;
+  }
+  
 }
 </style>
