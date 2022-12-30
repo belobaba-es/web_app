@@ -17,7 +17,7 @@
       </div>
       <div class="w-6rem h-4rem flex justify-content-center align-items-center">
         <span>{{ t('operationDate') }}</span>
-      </div>
+      </div>  
       <div class="w-6rem h-4rem flex justify-content-center align-items-center">
         <span>{{ t('status') }}</span>
       </div>

@@ -2,14 +2,12 @@
   <div class="flex-row mb-3">
     <div class="flex justify-content-between align-items-center">
       <template v-if="type === 'fiat'">
-
         <span v-if="transactionType === 'buy'">
           {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
         </span>
         <span v-else>
           <span> {{ t('iWant') }}: </span>
         </span>
-
       </template>
       <template v-else>
         <span v-if="transactionType === 'buy'"> {{ t('iWant') }}: </span>
@@ -45,11 +43,11 @@
         <template v-if="type === 'crypto'">
           <Button
             type="button"
-            class="bg-white border-none border-round-3xl"
+            class="bg-white btn-select-crypto border-none border-round-3xl"
             @click="openModalSelector"
             :disabled="disabledBtnSelectCrypto"
           >
-            <img v-if="assetIcon" alt="logo" :src="assetIcon" style="width: 3.5rem" />
+            <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
             <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{
               assetName ? assetName : t('selectCrypto')
             }}</span>
@@ -57,7 +55,7 @@
           </Button>
         </template>
         <template v-else>
-          <img alt="logo" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
+          <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
         </template>
       </div>
     </div>
@@ -83,9 +81,17 @@ const toast = useToast()
 
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
-const { amount, assetName, assetIcon, unitCount, showModalAssetSelector, loading, transactionType, assetCode, assetId } = storeToRefs(
-  useSwapStore()
-)
+const {
+  amount,
+  assetName,
+  assetIcon,
+  unitCount,
+  showModalAssetSelector,
+  loading,
+  transactionType,
+  assetCode,
+  assetId,
+} = storeToRefs(useSwapStore())
 
 const { createQuote } = useSwapStore()
 
@@ -110,23 +116,23 @@ watch(amount, newValue => {
 })
 
 const disabledBtnSelectCrypto = computed(() => {
-    if (transactionType.value === 'buy') {
-        return amount.value === 0.0 || loading.value
-    } else if (transactionType.value === 'sell') {
-        return loading.value;
-    }
+  if (transactionType.value === 'buy') {
+    return amount.value === 0.0 || loading.value
+  } else if (transactionType.value === 'sell') {
+    return loading.value
+  }
 })
 
-watch(unitCount, async (newVal) => {
+watch(unitCount, async newVal => {
   if (transactionType.value === 'sell' && props.type === 'crypto' && newVal > 0.0 && assetId.value) {
     if (newVal > getBalanceByCode(assetCode.value)) {
       toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: t("insufficientFunds"),
-          life: 4000,
-        })
-      return;
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: t('insufficientFunds'),
+        life: 4000,
+      })
+      return
     }
     await createQuote()
   }
@@ -136,5 +142,17 @@ watch(unitCount, async (newVal) => {
 <style scoped>
 .border-round-3xl {
   border-radius: 2.5rem !important;
+}
+
+.btn-select-crypto {
+  margin-left: -130px;
+}
+
+.logo-usd {
+  margin-left: -50px;
+}
+
+.logo-cripto {
+  max-width: 25px;
 }
 </style>
