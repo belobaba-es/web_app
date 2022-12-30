@@ -37,6 +37,15 @@ export const useSwapStore = defineStore('swap', () => {
     results: [],
   })
   const successExecuted = ref(false)
+  const transactionSummary = ref({
+    feeAmount: 0.0,
+    totalAmount: 0.0,
+    assetIcon: '',
+    assetName: '',
+    unitCount: 0.0,
+    transactionType: '',
+    quoteId: ''
+  });
 
   const swapBtnText = computed(() => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
@@ -99,6 +108,15 @@ export const useSwapStore = defineStore('swap', () => {
             life: 5000,
           })
           loading.value = false
+
+          transactionSummary.value.assetIcon = assetIcon.value;
+          transactionSummary.value.assetName = assetName.value;
+          transactionSummary.value.feeAmount = feeAmount.value;
+          transactionSummary.value.totalAmount = totalAmount.value;
+          transactionSummary.value.transactionType = transactionType.value;
+          transactionSummary.value.unitCount = unitCount.value;
+          transactionSummary.value.quoteId = quoteId.value;
+
           clearTimer()
           router.push('/swap/success')
 
@@ -231,6 +249,15 @@ export const useSwapStore = defineStore('swap', () => {
     }
   }
 
+  const clearSwap = async () => {
+    refreshQuote();
+    clearTimer();
+    if (quoteId.value) {
+      await cancelQuote();
+    }
+    transactionType.value = 'buy';
+  }
+
   return {
     baseAmount,
     feeAmount,
@@ -259,5 +286,7 @@ export const useSwapStore = defineStore('swap', () => {
     refreshQuote,
     getNextPage,
     shouldRefreshQuote,
+    clearSwap,
+    transactionSummary
   }
 })
