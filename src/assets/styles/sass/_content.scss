@@ -6,6 +6,7 @@
   transition: margin-left $transitionDuration;
   background: rgb(247, 253, 253);
   overflow: auto;
+  margin-bottom: 10%;
 
   @media only screen and (max-width: 991px) {
     max-height: 90vh;
