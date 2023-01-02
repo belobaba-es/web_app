@@ -1,39 +1,3 @@
-<!-- 
-{
-    "realName": "Alejandra Altuna",
-    "accountNumber": "00000100833215",
-    "routingNumber": "UNCRITM1376",
-    "streetOne": "Via Scultori del Legno #27",
-    "streetTwo": "",
-    "postalCode": "20823",
-    "country": "IT",
-    "city": "LENTATE SUL SEVESOI",
-    "state": "Monza Brianza",
-    "typeBeneficiaryBankWithdrawal": "INTERNATIONAL",
-    "iban": "",
-    "bankName": "UniCredit",
-    "intermediaryBank": {
-        "swiftCode": "UNCRITM1376",
-        "nameBank": "UniCredit",
-        "intermediaryBankName": "",
-        "intermediaryNumber": "",
-        "intermediaryNumberType": "",
-        "intermediaryBankStreetOne": "",
-        "intermediaryBankStreetTwo": "",
-        "intermediaryBankPostalCode": "",
-        "intermediaryBankCity": "",
-        "intermediaryBankCountry": "",
-        "intermediaryBankState": "",
-        "bankStreetOne": "",
-        "bankStreetTwo": "",
-        "bankPostalCode": "",
-        "bankCity": "",
-        "bankCountry": "",
-        "bankState": ""
-    }
-}
- -->
-
 <template>
   <div class="w-75">
     <p class="text-3xl font-medium mb-4">{{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span></p>
@@ -57,7 +21,7 @@
     <div class="col-12 md:col-8">
 
       <div class="field">
-        <label>{{ t('Name on Bank Account:') }}</label>
+        <label>{{ t('depositNameOnBank') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.realName"/>
 
@@ -66,7 +30,7 @@
       </div>
 
       <div class="field">
-        <label>{{ t('Name of Bank') }}</label>
+        <label>{{ t('bankName') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.bankName"/>
 
@@ -99,12 +63,12 @@
       <div class="grid mt-4 mb-4">
         <div class="field-radiobutton col-6">
           <RadioButton inputId="ROUTING_NUMBER" value="ROUTING_NUMBER" v-model="form.intermediaryBank.intermediaryNumberType"/>
-          <label for="ROUTING_NUMBER">{{ t('Intermediary Routing Number') }}</label>
+          <label for="ROUTING_NUMBER">{{ t('intermediaryRoutingNumber') }}</label>
         </div>
 
         <div class="field-radiobutton col-6">
           <RadioButton inputId="SWIFT_CODE" value="SWIFT_CODE" v-model="form.intermediaryBank.intermediaryNumberType"/>
-          <label for="SWIFT_CODE">{{ t('Intermediary Swift Code') }}</label>
+          <label for="SWIFT_CODE">{{ t('intermediarySwiftCode') }}</label>
         </div>
 
       </div>
@@ -177,7 +141,7 @@
 
         </div>
         <div class="field col-4">
-          <label>{{ t('Postal Code') }}</label>
+          <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="form.intermediaryBank.intermediaryBankPostalCode "/>
           </div>
@@ -185,14 +149,14 @@
       </div>
 
       <div class="field">
-        <label>{{ t('Street Address') }}</label>
+        <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" required v-model="form.intermediaryBank.intermediaryBankStreetOne"/>
         </div>
       </div>
 
       <div class="field">
-        <label>{{ t('Street Address (Apt, Suite, Etc.)') }}</label>
+        <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.intermediaryBank.intermediaryBankStreetTwo"/>
         </div>
@@ -247,7 +211,7 @@
           </div>
         </div>
         <div class="field col-4">
-          <label>{{ t(' Postal Code ') }}</label>
+          <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="form.postalCode"/>
           </div>
@@ -255,14 +219,14 @@
       </div>
 
       <div class="field">
-        <label>{{ t(' Street Address') }}</label>
+        <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.streetOne" />
         </div>
       </div>
 
       <div class="field">
-        <label>{{ t(' Street Address (Apt, Suite, Etc.) ') }}</label>
+        <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.streetTwo" />
         </div>
@@ -270,7 +234,7 @@
 
       <div class="field mt-5 flex justify-content-end">
         <Button
-            :label="t('Save new beneficiary')"
+            :label="t('saveNewPayee')"
             class="px-5"
             @click="saveBeneficiary"
             iconPos="right"

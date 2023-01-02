@@ -72,9 +72,9 @@
       </div>
     </div>
 
-    <div class="col-12 m-2">
-      <span>{{ t('The wire will take 24 hours.') }}</span>
-    </div>
+<!--    <div class="col-12 m-2">-->
+<!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
+<!--    </div>-->
     <div class="col-6">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
