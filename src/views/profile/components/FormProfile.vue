@@ -179,7 +179,7 @@ onMounted(async () => {
   console.log(getPartnerToEdit.value?.country)
   let data = {
     generalData: {
-      email: getPartnerToEdit.value?.email ?? '',
+      email: getPartnerToEdit.value?.email.toLowerCase() ?? '',
       name: '',
       lastName: getPartnerToEdit.value?.lastName,
       middleName: getPartnerToEdit.value?.middleName,
