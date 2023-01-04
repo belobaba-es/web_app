@@ -36,9 +36,9 @@
         {{ formData.amount }} USD
       </p>
     </div>
-    <div class="col-12 mb-3 mt-3">
-      <span>{{ t('The wire will take 24 hours.') }}</span>
-    </div>
+<!--    <div class="col-12 mb-3 mt-3">-->
+<!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
+<!--    </div>-->
 
     <Button
         class="w-50 p-button search-btn"
