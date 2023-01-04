@@ -14,7 +14,7 @@
     <div class="col-12 md:col-8">
 
       <div class="field">
-        <label>{{ t('Name on Bank Account:') }}</label>
+        <label>{{ t('depositNameOnBank') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.realName"/>
 
@@ -23,7 +23,7 @@
       </div>
 
       <div class="field">
-        <label>{{ t('Name of Bank') }}</label>
+        <label>{{ t('bankName') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.bankName"/>
 
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="field col-4">
-          <label>{{ t(' Postal Code ') }}</label>
+          <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="form.postalCode"/>
           </div>
@@ -101,14 +101,14 @@
       </div>
 
       <div class="field">
-        <label>{{ t(' Street Address') }}</label>
+        <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.streetOne"/>
         </div>
       </div>
 
       <div class="field">
-        <label>{{ t(' Street Address (Apt, Suite, Etc.) ') }}</label>
+        <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.streetTwo"/>
         </div>
@@ -116,7 +116,7 @@
 
       <div class="field flex justify-content-end">
         <Button
-            :label="t('Save new beneficiary')"
+            :label="t('saveNewPayee')"
             class="px-5"
             @click="saveBeneficiary"
             iconPos="right"

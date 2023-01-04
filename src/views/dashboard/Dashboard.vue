@@ -20,7 +20,7 @@
 
 </template>
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 import AppFooter from './AppFooter.vue';
@@ -29,7 +29,12 @@ import AppTabBarContainer from './AppTabBarContainer.vue';
 
 import {useI18n} from "vue-i18n";
 import {useBalanceWallet} from "../../composables/useBalanceWallet";
+import {LoginService} from "../login/services/login";
 
+
+const inactiveTime = ref(0);
+const timeout = 5;
+let interval: number = 0;
 
 const {t} = useI18n({useScope: 'global'})
 const {fetchBalanceWallets} = useBalanceWallet()
@@ -50,7 +55,6 @@ const menu = [
 
 
 const mobileMenuActive = ref(false);
-const overlayMenuActive = ref(false)
 
 fetchBalanceWallets()
 
@@ -80,6 +84,47 @@ const onMenuItemClick = (event: any) => {
     // this.overlayMenuActive = false;
     // this.mobileMenuActive = false;
   }
+}
+
+onMounted(() => {
+  window.addEventListener('focus', () => {
+    inactiveTime.value = 0;
+    clearInterval(interval);
+  });
+
+  window.addEventListener('mousemove', () => {
+    inactiveTime.value = 0;
+    clearInterval(interval);
+  });
+
+  window.addEventListener('keydown', () => {
+    inactiveTime.value = 0;
+    clearInterval(interval);
+  });
+
+  window.addEventListener('blur', () => {
+    interval = setInterval(() => {
+      inactiveTime.value++;
+      if (inactiveTime.value >= timeout) {
+        clearInterval(interval);
+        closedSession()
+      }
+    }, 60000);
+  });
+
+  interval = setInterval(() => {
+    inactiveTime.value++;
+    if (inactiveTime.value >= timeout) {
+      clearInterval(interval);
+      closedSession()
+    }
+  }, 60000);
+});
+
+const closedSession = async () => {
+  const loginService = LoginService.instance()
+  await loginService.logout()
+  window.location.href = '/'
 }
 
 </script>
