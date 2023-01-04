@@ -63,7 +63,7 @@ const forgotPasswordService = ForgotPasswordService.instance()
 
 const handleSubmit = () => {
     submitting.value = true
-    forgotPasswordService.sendEmail(form.email).then((response) => {
+    forgotPasswordService.sendEmail(form.email.toLowerCase()).then((response) => {
         submitting.value = false;
         toast.add({
             severity: 'success',

@@ -80,9 +80,9 @@ onMounted(async () => {
 })
 
 const onSearch = () => {
-  console.log(search.value)
+  console.log(search.value.toLowerCase())
   accountService
-    .getAccountByEmail(search.value)
+    .getAccountByEmail(search.value.toLowerCase())
     .then(resp => {
       console.log(resp)
       beneficiaryAssets.value = [
