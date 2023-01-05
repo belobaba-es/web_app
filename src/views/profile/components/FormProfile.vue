@@ -51,11 +51,11 @@
     >
       <label>{{ t('phoneLabel') }}</label>
       <div class="field grid">
-        <div class="col-3 p-inputgroup">
-          <Dropdown v-model="form.phone.phoneCountry" :options="calling_code" />
+        <div class="col-4">
+          <Dropdown class="w-full" v-model="form.phone.phoneCountry" :options="calling_code" />
         </div>
-        <div class="col-9 p-inputgroup">
-          <InputText id="phoneNumber" type="text" class="w-full" v-model="form.phone.phoneNumber" required />
+        <div class="col-8">
+          <InputText id="phoneNumber" type="text" class="" v-model="form.phone.phoneNumber" required />
         </div>
       </div>
     </div>
@@ -233,9 +233,13 @@ watch(form.value, async newValue => {
   margin-top: 7px;
 }
 
-.btn-submit{
+.btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;
   }
+}
+
+#phoneNumber {
+  width: 97%;
 }
 </style>

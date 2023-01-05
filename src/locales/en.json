@@ -202,5 +202,6 @@
     "documentProofOfAddress4": "Vehicle Registration",
     "documentProofOfAddress5": "Copy of Real Estate Property Title",
     "documentProofOfAddress6": "Property Tax Bill",
-    "documentProofOfAddress7": "W2 or other tax return document"
+    "documentProofOfAddress7": "W2 or other tax return document", 
+    "naturalAccountTittle": "Personal Data"
 }
