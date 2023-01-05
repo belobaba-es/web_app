@@ -102,7 +102,7 @@ export const useAccount = () => {
     }
 
     if (isNaturalAccount.value) {
-      return t('partnerTitle')
+      return t('naturalAccountTittle')
     }
 
     return t('companyData')
