@@ -80,7 +80,6 @@ onMounted(async () => {
 })
 
 const onSearch = () => {
-  console.log(search.value.toLowerCase())
   accountService
     .getAccountByEmail(search.value.toLowerCase())
     .then(resp => {
