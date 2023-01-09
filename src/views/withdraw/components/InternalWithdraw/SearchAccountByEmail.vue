@@ -51,7 +51,7 @@ const onSearch = () => {
     return
   }
   submitting.value = true
-  accountService.getAccountByEmail(search.value).then(resp => {
+  accountService.getAccountByEmail(search.value.toLowerCase()).then(resp => {
     emit('listBeneficiaries', [resp])
     submitting.value = false
   }).catch(error => {

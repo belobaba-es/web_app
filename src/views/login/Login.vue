@@ -104,7 +104,7 @@ const redirectPage = () => {
 
 const handleSubmit = () => {
   submitting.value = true
-  loginService.login(form.user, form.pass).then(data => {
+  loginService.login(form.user.toLowerCase(), form.pass).then(data => {
     const { data: userPayload } = data
     userStore.setUser(userPayload)
 
