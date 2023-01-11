@@ -219,9 +219,7 @@ export const useSwapStore = defineStore('swap', () => {
       shouldRefreshQuote.value = false
     }
 
-    if (assetId.value) {
-      await createQuote()
-    }
+    await clearSwap(transactionType.value);
   }
 
   const cancelQuote = async () => {
@@ -249,13 +247,13 @@ export const useSwapStore = defineStore('swap', () => {
     }
   }
 
-  const clearSwap = async () => {
+  const clearSwap = async (typeTransaction = 'buy') => {
     refreshQuote();
     clearTimer();
     if (quoteId.value) {
       await cancelQuote();
     }
-    transactionType.value = 'buy';
+    transactionType.value = typeTransaction;
   }
 
   return {
