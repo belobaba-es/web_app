@@ -259,6 +259,7 @@ import {BeneficiaryFiatInternacional} from '../types/beneficiary.interface';
 import router from "../../../router";
 import {BeneficiaryService} from "../services/beneficiary";
 import {useToast} from "primevue/usetoast";
+import showMessage from "../../../shared/showMessageArray";
 
 const {t} = useI18n({useScope: 'global'})
 const toast = useToast();
@@ -343,12 +344,17 @@ const saveBeneficiary = () => {
     })
   }).catch(e => {
     submitting.value = false
-    toast.add({
-      severity: 'info',
-      summary: t('somethingWentWrong'),
-      detail: e.response.data.message,
-      life: 4000
-    })
+    if (e.response.data.message) {
+      toast.add({
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: e.response.data.message,
+        life: 4000,
+      })
+      return
+    }
+
+    showMessage(toast, e.response.data)
   })
 }
 

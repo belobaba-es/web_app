@@ -140,6 +140,7 @@ import {useRouter} from 'vue-router';
 import {useWorld} from '../../../composables/useWorld';
 import {BeneficiaryService} from '../services/beneficiary';
 import {BeneficiaryFiatDomestic} from '../types/beneficiary.interface';
+import showMessage from "../../../shared/showMessageArray";
 
 const router = useRouter();
 const {t} = useI18n({useScope: 'global'})
@@ -193,15 +194,17 @@ const saveBeneficiary = () => {
 
     submitting.value = false
 
-    for (const eElement of Object.values(e.response.data)) {
-      let m: any = eElement
+    if (e.response.data.message) {
       toast.add({
-        severity: 'info',
+        severity: 'error',
         summary: t('somethingWentWrong'),
-        detail: m.message,
-        life: 4000
+        detail: e.response.data.message,
+        life: 4000,
       })
+      return
     }
+
+    showMessage(toast, e.response.data)
 
   })
 }
