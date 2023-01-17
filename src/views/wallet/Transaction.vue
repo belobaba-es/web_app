@@ -297,13 +297,13 @@ const calc = (assetCode: string | undefined, balance: number | undefined, blocke
   width: fit-content;
 
   @media only screen and (max-width: 575px) {
-    --max-font: 100;
-    --min-font: 20;
+    --max-font: 40;
+    --min-font: 15;
     font-size: var(--responsive);
   }
 
   @media only screen and (min-width: 576px) {
-    --max-font: 24;
+    --max-font: 20;
     --min-font: 12;
     font-size: var(--responsive);
   }
@@ -313,7 +313,7 @@ const calc = (assetCode: string | undefined, balance: number | undefined, blocke
 
     /* Set max and min font sizes */
     --max-font: 15;
-    --min-font: 8;
+    --min-font: 10;
     font-size: var(--responsive);
   }
 }
