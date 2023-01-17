@@ -132,7 +132,6 @@ const isFiat = (nameWallet: string | undefined) => {
 }
 
 const getTransactionType = (transactionData: any) => {
-  console.log(transactionData)
   if (transactionData.assetCode === 'USD' && transactionData.isInternal === true) {
     return 'internal-fiat'
   }
