@@ -2,16 +2,16 @@ export interface HistoricTransactionsResponse {
   nextPag: string
   prevPag: string
   count: number
-  results: Result[]
+  results: LisTransaction[]
 }
 
-export interface Result {
+export interface LisTransaction {
   id: string
   createdAt: AtedAt
   status: Status
   accountId: string
   transactionType: string
-  to: string
+  to: any
   amount: number
   assetCode: string
 }
