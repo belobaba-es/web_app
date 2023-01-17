@@ -1,15 +1,15 @@
 <template>
   <div class="grid">
-    <div class="col-3">
+    <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <p class="name_to">{{ item.nameTo }}</p>
       <p class="date">
         {{ secondsToDate(item.createdAt._seconds) }}
       </p>
     </div>
-    <div class="col-3 flex align-items-center">
+    <div class="col-3 flex align-items-center data-hidden">
       <p class="reference">{{ item.reference }}</p>
     </div>
-    <div class="col-3 flex align-items-center">
+    <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">
         {{ item.amount }}
         <small>{{ item.assetCode }}</small>
@@ -18,7 +18,7 @@
         <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
       </p>
     </div>
-    <div class="col-3">
+    <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3 details-mobile">
       <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
         <h4>
           <i class="pi pi-eye"></i>
@@ -115,5 +115,17 @@ const secondsToDate = (seconds: number) => {
 
 .icon-deposit-funds {
   color: #20df40;
+}
+
+.data-hidden {
+  @media only screen and (max-width: 991px) {
+    display: none !important;
+  }
+}
+
+.details-mobile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 </style>
