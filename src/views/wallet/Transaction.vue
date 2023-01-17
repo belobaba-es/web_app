@@ -11,13 +11,13 @@
         </div>
       </div>
     </div>
-    <div class="grid col-12">
-      <div class="col-6 flex justify-content-center">
+    <div class="grid container-test">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 flex justify-content-center container-test">
         <img class="icon-cripto-historic" :src="wallet?.icon" :alt="wallet?.name" />
       </div>
-      <div class="col-6">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 container-test">
         <div>
-          <p class="text-balance-wallet-historic">
+          <p class="text-balance-wallet-historic mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
             {{ calc(wallet?.assetCode, wallet?.balance, wallet?.blockedBalance ?? 0) }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
@@ -26,7 +26,7 @@
           <hr class="line-historic" />
         </div>
         <div class="mt-3">
-          <div class="grid col-12">
+          <div class="grid">
             <div class="col-4 flex justify-content-center">
               <router-link class="link-historic" to="/deposit" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic">Deposit</h5>
@@ -244,6 +244,10 @@ const calc = (assetCode: string | undefined, balance: number | undefined, blocke
   @media only screen and (min-width: 992px) {
     max-width: 200px !important;
   }
+
+  @media only screen and (max-width: 991px) {
+    width: 20%;
+  }
 }
 
 .is-fiat {
@@ -329,5 +333,8 @@ const calc = (assetCode: string | undefined, balance: number | undefined, blocke
   --max-font: 20;
   --min-font: 15;
   font-size: var(--responsive);
+}
+.container-test{
+  padding: 0px !important;
 }
 </style>
