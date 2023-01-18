@@ -5,7 +5,7 @@
   "backButtonTitle": "Back",
   "noAccount": "Have you yet to sign in?",
   "emailLabel": "Email",
-  "emailPlaceholder": "you-email@corporate.com",
+  "emailPlaceholder": "you-emailcorporate.com",
   "passwordLabel": "Password",
   "changePassword": "Change Password",
   "rememberPassword": "Remember password",
@@ -202,5 +202,8 @@
   "documentProofOfAddress4": "Vehicle Registration",
   "documentProofOfAddress5": "Copy of Real Estate Property Title",
   "documentProofOfAddress6": "Property Tax Bill",
-  "documentProofOfAddress7": "W2 or other tax return document"
+  "documentProofOfAddress7": "W2 or other tax return document",
+  "naturalAccountTittle": "Personal Data",
+  "historicTransactionsTitle": "Transaction History",
+  "loadMore": "Load more"
 }
