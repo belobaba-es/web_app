@@ -31,7 +31,7 @@
     <div class="mt-5" v-if="nextPage.nextPage === true">
       <div class="grid flex justify-content-end">
         <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
-          <Button class="p-button wallet-btn" :label="t('loadMore')" @click="loadMoreItems" />
+          <Button class="p-button load-more-btn" :label="t('loadMore')" @click="loadMoreItems" :loading="submitting" />
         </div>
       </div>
     </div>
@@ -64,6 +64,8 @@ const props = defineProps<{
 
 const getHistoric = HistoricService.instance()
 const listTransaction = ref<LisTransaction[]>([])
+const submitting = ref(false)
+
 const nextPage = ref({
   nextPage: false,
   data: '',
@@ -120,20 +122,24 @@ const getTransactionType = (transactionData: any) => {
 }
 
 const loadMoreItems = async () => {
+  submitting.value = true
+
   await getHistoric.historicNextPage(props.assetCode, nextPage.value.data).then(data => {
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
     if (data.nextPag) {
       nextPage.value.nextPage = true
+      submitting.value = false
     } else {
       nextPage.value.nextPage = false
+      submitting.value = false
     }
   })
 }
 </script>
 <style lang="css" scoped>
-.wallet-btn {
+.load-more-btn {
   width: 100% !important;
 }
 </style>
