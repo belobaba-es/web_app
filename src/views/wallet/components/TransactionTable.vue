@@ -1,12 +1,16 @@
 <template>
   <div class="container-data">
-    <p class="title-historic">{{t('historicTransactionsTitle')}}</p>
+    <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
     <ScrollPanel style="width: 100%; height: 400px" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
+            
+            <ItemTransactionDepositFiat  :item="item" v-if="getTransactionType(item) === 'deposit-fiat'"/>
+
             <ItemTransactionFiatInternal :item="item" v-if="getTransactionType(item) === 'internal-fiat'" />
+            
 
             <ItemTransactionFiatExternalDosmestic
               :item="item"
@@ -37,13 +41,15 @@ import ItemTransactionFiatExternalDosmestic from './ItemTransactionFiatExternalD
 import ItemTransactionFiatExternalInternational from './ItemTransactionFiatExternalInternational.vue'
 import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
+import ItemTransactionDepositFiat from './ItemTransactionDepositFiat.vue'
+
 
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
 
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n({ useScope: 'global' });
+const { t } = useI18n({ useScope: 'global' })
 
 const props = defineProps<{
   assetCode: string | undefined
@@ -61,8 +67,14 @@ onMounted(async () => {
 })
 
 const getTransactionType = (transactionData: any) => {
-  console.log('TTTTT', transactionData)
+  if (transactionData.assetCode === 'USD' && transactionData.transactionType === 'deposit') {
+    console.log('deposit fiat', transactionData)
+    return 'deposit-fiat'
+  }
+
   if (transactionData.assetCode === 'USD' && transactionData.isInternal === true) {
+    console.log('internal-fiat')
+
     return 'internal-fiat'
   }
 
@@ -71,6 +83,8 @@ const getTransactionType = (transactionData: any) => {
     transactionData.assetCode === 'USD' &&
     transactionData.to.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
   ) {
+    console.log('external-fiat-domestic')
+    
     return 'external-fiat-domestic'
   }
 
@@ -79,7 +93,14 @@ const getTransactionType = (transactionData: any) => {
     transactionData.assetCode === 'USD' &&
     transactionData.to.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL'
   ) {
+    console.log('external-fiat-international')
+
     return 'external-fiat-international'
+  }
+
+  if (transactionData.transactionType === 'deposit' && transactionData.assetCode !== 'USD') {
+    console.log('deposit asset')
+    return 'deposit-asset'
   }
 
   if (transactionData.isInternal && transactionData.assetCode !== 'USD') {

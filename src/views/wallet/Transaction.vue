@@ -33,7 +33,6 @@ const toBack = () => {
 }
 
 const getAssetCode = () => {
-  console.log('XXXX', wallet.value?.assetCode)
   return wallet.value?.assetCode
 }
 </script>
