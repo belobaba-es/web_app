@@ -6,11 +6,9 @@
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
-            
-            <ItemTransactionDepositFiat  :item="item" v-if="getTransactionType(item) === 'deposit-fiat'"/>
+            <ItemTransactionDepositFiat :item="item" v-if="getTransactionType(item) === 'deposit-fiat'" />
 
             <ItemTransactionFiatInternal :item="item" v-if="getTransactionType(item) === 'internal-fiat'" />
-            
 
             <ItemTransactionFiatExternalDosmestic
               :item="item"
@@ -29,6 +27,15 @@
         </div>
       </div>
     </ScrollPanel>
+
+    <div class="mt-5">
+      <div class="grid flex justify-content-end">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3 ">
+          <Button class="p-button wallet-btn" :label="t('loadMore')" @click="" />
+        </div>
+      </div>
+      
+    </div>
   </div>
 </template>
 
@@ -43,11 +50,12 @@ import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
 import ItemTransactionDepositFiat from './ItemTransactionDepositFiat.vue'
 
-
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
 
 import { useI18n } from 'vue-i18n'
+
+import Button from 'primevue/button'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -79,7 +87,7 @@ const getTransactionType = (transactionData: any) => {
     !transactionData.isInternal &&
     transactionData.assetCode === 'USD' &&
     transactionData.to.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
-  ) {    
+  ) {
     return 'external-fiat-domestic'
   }
 
@@ -104,3 +112,8 @@ const getTransactionType = (transactionData: any) => {
   }
 }
 </script>
+<style lang="css" scoped>
+.wallet-btn {
+  width: 100% !important;
+}
+</style>

@@ -204,5 +204,6 @@
     "documentProofOfAddress6": "Property Tax Bill",
     "documentProofOfAddress7": "W2 or other tax return document", 
     "naturalAccountTittle": "Personal Data",
-    "historicTransactionsTitle": "Transaction History"
+    "historicTransactionsTitle": "Transaction History", 
+    "loadMore": "Load more"
 }
