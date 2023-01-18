@@ -203,5 +203,6 @@
     "documentProofOfAddress5": "Copy of Real Estate Property Title",
     "documentProofOfAddress6": "Property Tax Bill",
     "documentProofOfAddress7": "W2 or other tax return document", 
-    "naturalAccountTittle": "Personal Data"
+    "naturalAccountTittle": "Personal Data",
+    "historicTransactionsTitle": "Transaction History"
 }

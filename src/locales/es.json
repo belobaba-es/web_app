@@ -196,5 +196,6 @@
     "documentProofOfAddress5": "Copia del Título de Propiedad Inmobiliaria",
     "documentProofOfAddress6": " Factura del Impuesto sobre la Propiedad",
     "documentProofOfAddress7": "W2 u otro documento de declaración de impuestos", 
-    "naturalAccountTittle": "Información personal"
+    "naturalAccountTittle": "Información personal",
+    "historicTransactionsTitle": "Histórico de transacciones"
 }

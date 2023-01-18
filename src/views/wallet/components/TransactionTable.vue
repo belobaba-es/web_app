@@ -1,6 +1,6 @@
 <template>
   <div class="container-data">
-    <p class="title-historic">Historico de transacciones</p>
+    <p class="title-historic">{{t('historicTransactionsTitle')}}</p>
 
     <ScrollPanel style="width: 100%; height: 400px" class="mt-4">
       <div class="grid">
@@ -41,8 +41,12 @@ import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n({ useScope: 'global' });
+
 const props = defineProps<{
-  assetCode: string
+  assetCode: string | undefined
 }>()
 
 const getHistoric = HistoricService.instance()

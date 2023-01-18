@@ -3,7 +3,7 @@
 
   <TransactionHeaderDesktop class="transaction-header-desktop" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
 
-  <!-- <TransactionTable v-if="wallet" :assetCode=getAssetCode() /> -->
+  <TransactionTable v-if="wallet" :assetCode=getAssetCode() />
 </template>
 
 <script setup lang="ts">
