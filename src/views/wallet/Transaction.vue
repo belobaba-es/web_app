@@ -1,25 +1,24 @@
 <template>
-  <TransactionHeaderMobile v-if="wallet"
-                           :wallet=wallet
-                           @to-back="toBack()"
-  />
+  <TransactionHeaderMobile class="transaction-header-mobile" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
 
-  <TransactionTable v-if="wallet" :assetCode=getAssetCode() />
+  <TransactionHeaderDesktop class="transaction-header-desktop" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
 
+  <!-- <TransactionTable v-if="wallet" :assetCode=getAssetCode() /> -->
 </template>
 
 <script setup lang="ts">
-import {useRoute, useRouter} from 'vue-router'
-import {ref, onMounted} from 'vue'
-import {useBalanceWallet} from '../../composables/useBalanceWallet'
-import {BalanceWallet} from '../deposit/types/asset.interface'
+import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useBalanceWallet } from '../../composables/useBalanceWallet'
+import { BalanceWallet } from '../deposit/types/asset.interface'
 
-import TransactionHeaderMobile from "./components/TransactionHeaderMobile.vue";
-import TransactionTable from "./components/TransactionTable.vue";
+import TransactionHeaderMobile from './components/TransactionHeaderMobile.vue'
+import TransactionHeaderDesktop from './components/TransactionHeaderDesktop.vue'
+import TransactionTable from './components/TransactionTable.vue'
 
 const router = useRouter()
 const route = useRoute()
-const {getWalletByAssetCode} = useBalanceWallet()
+const { getWalletByAssetCode } = useBalanceWallet()
 
 const assetCode: string = route.params.assetCode.toString()
 
@@ -27,7 +26,6 @@ const wallet = ref<BalanceWallet | undefined>()
 
 onMounted(async () => {
   wallet.value = getWalletByAssetCode(assetCode)
-
 })
 
 const toBack = () => {
@@ -38,7 +36,6 @@ const getAssetCode = () => {
   console.log('XXXX', wallet.value?.assetCode)
   return wallet.value?.assetCode
 }
-
 </script>
 
 <style lang="scss">
@@ -187,14 +184,28 @@ const getAssetCode = () => {
     --max-font: 12;
     --min-font: 10;
     font-size: var(--responsive);
-  }
+  } 
 
   --max-font: 20;
   --min-font: 15;
   font-size: var(--responsive);
 }
 
-.container-test {
+.no-padding {
   padding: 0px !important;
+}
+
+.transaction-header-mobile {
+  @media only screen and (min-width: 992px) {
+    display: none;
+  }
+}
+
+.transaction-header-desktop {
+  display: none;
+
+  @media only screen and (min-width: 992px) {
+    display: block;
+  }
 }
 </style>

@@ -11,14 +11,14 @@
         </div>
       </div>
     </div>
-    <div class="grid container-test">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 flex justify-content-center container-test">
+    <div class="grid no-padding">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 flex justify-content-center no-padding">
         <img class="icon-cripto-historic" :src="wallet?.icon" :alt="wallet?.name" />
       </div>
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 container-test">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 no-padding">
         <div>
           <p class="text-balance-wallet-historic mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-            {{wallet.balance}}
+            {{ wallet.balance }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
         </div>
@@ -47,20 +47,18 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
-import {defineProps} from "vue";
-import {BalanceWallet} from "../../deposit/types/asset.interface";
+import { defineProps } from 'vue'
+import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 
 defineProps<{
   wallet: BalanceWallet
-
 }>()
 
-const emit = defineEmits(['toBack']);
+const emit = defineEmits(['toBack'])
 
 const isFiat = (nameWallet: string | undefined) => {
   if (nameWallet === 'US DOLLAR') {
