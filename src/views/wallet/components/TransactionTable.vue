@@ -68,13 +68,10 @@ onMounted(async () => {
 
 const getTransactionType = (transactionData: any) => {
   if (transactionData.assetCode === 'USD' && transactionData.transactionType === 'deposit') {
-    console.log('deposit fiat', transactionData)
     return 'deposit-fiat'
   }
 
   if (transactionData.assetCode === 'USD' && transactionData.isInternal === true) {
-    console.log('internal-fiat')
-
     return 'internal-fiat'
   }
 
@@ -82,9 +79,7 @@ const getTransactionType = (transactionData: any) => {
     !transactionData.isInternal &&
     transactionData.assetCode === 'USD' &&
     transactionData.to.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
-  ) {
-    console.log('external-fiat-domestic')
-    
+  ) {    
     return 'external-fiat-domestic'
   }
 
@@ -93,13 +88,10 @@ const getTransactionType = (transactionData: any) => {
     transactionData.assetCode === 'USD' &&
     transactionData.to.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL'
   ) {
-    console.log('external-fiat-international')
-
     return 'external-fiat-international'
   }
 
   if (transactionData.transactionType === 'deposit' && transactionData.assetCode !== 'USD') {
-    console.log('deposit asset')
     return 'deposit-asset'
   }
 
