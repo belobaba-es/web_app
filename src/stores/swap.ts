@@ -66,6 +66,8 @@ export const useSwapStore = defineStore('swap', () => {
         amountIsUnitCount: amountIsUnitCount.value,
         transactionType: transactionType.value,
         assetId: assetId.value,
+
+
       })
       .then(response => {
         assetId.value = response.data.assetId
