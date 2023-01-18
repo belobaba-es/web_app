@@ -28,13 +28,12 @@
       </div>
     </ScrollPanel>
 
-    <div class="mt-5">
+    <div class="mt-5" v-if="nextPage.nextPage === true">
       <div class="grid flex justify-content-end">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3 ">
-          <Button class="p-button wallet-btn" :label="t('loadMore')" @click="" />
+        <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+          <Button class="p-button wallet-btn" :label="t('loadMore')" @click="loadMoreItems" />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -65,12 +64,20 @@ const props = defineProps<{
 
 const getHistoric = HistoricService.instance()
 const listTransaction = ref<LisTransaction[]>([])
+const nextPage = ref({
+  nextPage: false,
+  data: '',
+})
 
 onMounted(async () => {
   await getHistoric.historic(props.assetCode).then(data => {
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
+    if (data.nextPag) {
+      nextPage.value.nextPage = true
+      nextPage.value.data = data.nextPag
+    }
   })
 })
 
@@ -110,6 +117,19 @@ const getTransactionType = (transactionData: any) => {
   if (!transactionData.isInternal && transactionData.assetCode !== 'USD') {
     return 'external-asset'
   }
+}
+
+const loadMoreItems = async () => {
+  await getHistoric.historicNextPage(props.assetCode, nextPage.value.data).then(data => {
+    data.results.forEach(element => {
+      listTransaction.value.push(element)
+    })
+    if (data.nextPag) {
+      nextPage.value.nextPage = true
+    } else {
+      nextPage.value.nextPage = false
+    }
+  })
 }
 </script>
 <style lang="css" scoped>
