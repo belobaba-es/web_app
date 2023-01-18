@@ -20,9 +20,11 @@
               v-if="getTransactionType(item) === 'external-fiat-international'"
             />
 
-            <ItemTransactionAssetExternal :item="item" v-if="getTransactionType(item) === 'external-asset'" />
-
+            <ItemTransactionDepositAsset :item="item" v-if="getTransactionType(item) === 'deposit-asset'" />
+            
             <ItemTransactionAssetInternal :item="item" v-if="getTransactionType(item) === 'internal-asset'" />
+
+            <ItemTransactionAssetExternal :item="item" v-if="getTransactionType(item) === 'external-asset'" />
           </div>
         </div>
       </div>
@@ -42,12 +44,14 @@
 import ScrollPanel from 'primevue/scrollpanel'
 import { defineProps, onMounted, ref } from 'vue'
 
+import ItemTransactionDepositFiat from './ItemTransactionDepositFiat.vue'
 import ItemTransactionFiatInternal from './ItemTransactionFiatInternal.vue'
 import ItemTransactionFiatExternalDosmestic from './ItemTransactionFiatExternalDosmestic.vue'
 import ItemTransactionFiatExternalInternational from './ItemTransactionFiatExternalInternational.vue'
+import ItemTransactionDepositAsset from './ItemTransactionDepositAsset.vue'
 import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
-import ItemTransactionDepositFiat from './ItemTransactionDepositFiat.vue'
+
 
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
