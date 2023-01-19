@@ -83,6 +83,7 @@
         class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
         v-bind:class="getStyle(item.assetCode)"
         v-for="item in getWallets()"
+        @click="goToHistoricTransactions(item.assetCode)"
       >
         <div class="flex justify-content-between flex-wrap">
           <div class="flex align-items-center justify-content-center">
@@ -111,12 +112,17 @@
     </div>
   </section>
 </template>
+
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton'
 import Carousel from 'primevue/carousel'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -146,6 +152,11 @@ const calc = (assetCode: string, balance: number, blocked: number) => {
 }
 
 const getStyle = (assetCode: string) => {}
+
+const goToHistoricTransactions = (assetCode: string) => {
+  router.push(`/wallet/transactions/${assetCode}`)
+}
+
 const responsiveOptionsCarouselSkeleton = ref([
   {
     breakpoint: '1456px',
@@ -327,6 +338,5 @@ const responsiveOptions = ref([
     display: flex;
     justify-content: start;
   }
-  
 }
 </style>
