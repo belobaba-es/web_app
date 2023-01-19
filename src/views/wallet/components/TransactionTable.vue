@@ -2,7 +2,7 @@
   <div class="container-data">
     <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
-    <ScrollPanel style="width: 100%; height: 400px" class="mt-4">
+    <ScrollPanel style="width: 100%; max-height: 600px" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
