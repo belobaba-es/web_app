@@ -32,7 +32,7 @@ export const useBalanceWallet = () => {
   }
 
   const getAllWallets = (): BalanceWallet[] => {
-    return balanceWallets.wallets.value
+    return balanceWallets.wallets.value.sort((a, b) => (a.assetCode === 'USD' ? -1 : b.assetCode === 'USD' ? 1 : 0))
   }
 
   return {
