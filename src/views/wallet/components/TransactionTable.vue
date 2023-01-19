@@ -1,8 +1,8 @@
 <template>
-  <div class="container-data">
+  <div class="container-data mb-0 pb-0">
     <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
-    <ScrollPanel style="width: 100%; max-height: 600px" class="mt-4">
+    <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
@@ -30,7 +30,7 @@
       </div>
     </ScrollPanel>
 
-    <div class="mt-5" v-if="nextPage.nextPage === true">
+    <div class="mt-2" v-if="nextPage.nextPage === true">
       <div class="grid flex justify-content-end">
         <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
           <Button class="p-button load-more-btn" :label="t('loadMore')" @click="loadMoreItems" :loading="submitting" />
