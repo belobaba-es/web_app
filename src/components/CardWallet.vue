@@ -139,7 +139,7 @@ const isWallet = route.includes('wallet')
 const getWallets = () => {
   const wallets = getAllWallets()
   submitting.value = false
-  return wallets
+  return wallets;
 }
 
 const calc = (assetCode: string, balance: number, blocked: number) => {
