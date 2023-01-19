@@ -196,5 +196,6 @@
   "documentProofOfAddress7": "W2 u otro documento de declaración de impuestos",
   "naturalAccountTittle": "Información personal",
   "historicTransactionsTitle": "Histórico de transacciones", 
-  "loadMore": "Carga más"
+  "loadMore": "Carga más",
+  "textCopySuccessful": "Copiado al portapapeles con éxito"
 }
