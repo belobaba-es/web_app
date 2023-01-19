@@ -322,3 +322,13 @@ small {
     font-size: 1.8rem;
     font-weight: bold;
 }
+
+.icon-withdraw-funds {
+    font-size: 12pt;
+    color: #ff004e;
+}
+
+.icon-deposit-funds {
+    font-size: 12pt;
+    color: #20df40;
+}

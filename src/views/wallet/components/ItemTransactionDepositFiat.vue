@@ -116,14 +116,6 @@ const secondsToDate = (seconds: number) => {
   font-size: var(--responsive);
 }
 
-.icon-withdraw-funds {
-  color: #ff004e;
-}
-
-.icon-deposit-funds {
-  color: #20df40;
-}
-
 .data-hidden {
   @media only screen and (max-width: 991px) {
     display: none !important;
