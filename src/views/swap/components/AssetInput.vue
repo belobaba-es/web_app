@@ -104,14 +104,6 @@ const openModalSelector = () => {
   showModalAssetSelector.value = true
 }
 
-watch(amount, newValue => {
-  if (!balance) return
-
-  if (!newValue) {
-    amount.value = 0.0
-  }
-})
-
 const disabledBtnSelectCrypto = computed(() => {
   if (transactionType.value === 'buy') {
     return amount.value === 0.0 || loading.value
