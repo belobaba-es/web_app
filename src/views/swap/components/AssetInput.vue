@@ -107,6 +107,9 @@ const openModalSelector = () => {
 watch(amount, newValue => {
   if (!balance) return
   if (newValue > balance) {
+    console.log('aqui newValue', newValue)
+    console.log('aqui balance', balance)
+
     amount.value = balance
   }
 
