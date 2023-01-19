@@ -47,7 +47,11 @@
         :responsiveOptions="responsiveOptions"
       >
         <template #item="slotProps">
-          <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
+          <div
+            class="card-border"
+            :class="{ 'one-wallet': oneWallet }"
+            v-bind:class="getStyle(slotProps.data.assetCode)"
+          >
             <div class="flex justify-content-between flex-wrap">
               <div class="flex align-items-center justify-content-center">
                 <p>
@@ -136,8 +140,11 @@ const route = window.location.href
 
 const isWallet = route.includes('wallet')
 
+const oneWallet = ref(false)
+
 const getWallets = () => {
   const wallets = getAllWallets()
+  oneWallet.value = wallets.length === 1
   submitting.value = false
   return wallets;
 }
@@ -338,5 +345,9 @@ const responsiveOptions = ref([
     display: flex;
     justify-content: start;
   }
+  
+.one-wallet {
+  max-width: 350px;
+}
 }
 </style>
