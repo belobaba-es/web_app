@@ -29,7 +29,7 @@
         <div class="p-inputgroup">
           <InputText readonly="true" :placeholder="t('walletAddress')" :value="paymentAddress?.address" />
           <span
-            @click="copyToClipboardWalletAddress(paymentAddress.address)"
+            @click="copyToClipboardWalletAddress(paymentAddress?.address)"
             class="p-inputgroup-addon btn-copy-to-clipboard"
           >
             <i class="pi pi-copy"></i>
@@ -58,7 +58,7 @@ defineProps<{
   visible: boolean
   walletAddress?: string
   asset: Asset | null
-  paymentAddress: PaymentAddress
+  paymentAddress: PaymentAddress | null
 }>()
 
 const emit = defineEmits(['update:visible'])
@@ -67,14 +67,16 @@ const { t } = useI18n({ useScope: 'global' })
 const value = ref('')
 const toast = useToast()
 
-const copyToClipboardWalletAddress = (walletAddress: string) => {
-  navigator.clipboard.writeText(walletAddress)
-  toast.add({
-    severity: 'success',
-    summary: t('successfulOperation'),
-    detail: t('textCopySuccessful'),
-    life: 3000,
-  })
+const copyToClipboardWalletAddress = (walletAddress: string | undefined) => {
+  if (walletAddress) {
+    navigator.clipboard.writeText(walletAddress)
+    toast.add({
+      severity: 'success',
+      summary: t('successfulOperation'),
+      detail: t('textCopySuccessful'),
+      life: 3000,
+    })
+  }
 }
 </script>
 
