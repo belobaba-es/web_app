@@ -132,12 +132,13 @@ const loadMoreItems = async () => {
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
+
+    nextPage.value.data = data.nextPag
+    nextPage.value.nextPage = false
+    submitting.value = false
+
     if (data.nextPag) {
       nextPage.value.nextPage = true
-      submitting.value = false
-    } else {
-      nextPage.value.nextPage = false
-      submitting.value = false
     }
   })
 }
