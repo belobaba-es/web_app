@@ -205,5 +205,6 @@
   "documentProofOfAddress7": "W2 or other tax return document",
   "naturalAccountTittle": "Personal Data",
   "historicTransactionsTitle": "Transaction History",
-  "loadMore": "Load more"
+  "loadMore": "Load more", 
+  "textCopySuccessful": "Copied to clipboard successfully"
 }
