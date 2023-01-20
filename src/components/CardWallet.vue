@@ -50,6 +50,7 @@
           <div
             class="card-border"
             :class="{ 'one-wallet': oneWallet }"
+            @click="goToHistoricTransactions(slotProps.data.assetCode)"
             v-bind:class="getStyle(slotProps.data.assetCode)"
           >
             <div class="flex justify-content-between flex-wrap">
@@ -146,7 +147,7 @@ const getWallets = () => {
   const wallets = getAllWallets()
   oneWallet.value = wallets.length === 1
   submitting.value = false
-  return wallets;
+  return wallets
 }
 
 const calc = (assetCode: string, balance: number, blocked: number) => {
@@ -345,9 +346,9 @@ const responsiveOptions = ref([
     display: flex;
     justify-content: start;
   }
-  
-.one-wallet {
-  max-width: 350px;
-}
+
+  .one-wallet {
+    max-width: 350px;
+  }
 }
 </style>
