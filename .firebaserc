@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "noba-prod",
+    "default": "noba-dev-360623",
     "prod": "noba-prod"
   },
   "targets": {},

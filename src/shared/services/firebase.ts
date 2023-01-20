@@ -35,7 +35,7 @@ export class FirebaseService {
   }
 
   static async initFirebase() {
-    console.log('** initFirebase')
+    console.log('** initFirebase', import.meta.env.FIREBASE_API_KEY)
     const config = {
       apiKey: import.meta.env.FIREBASE_API_KEY,
       authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
