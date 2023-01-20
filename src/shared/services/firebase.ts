@@ -1,8 +1,20 @@
 import { initializeApp } from 'firebase/app'
 import { child, getDatabase, off, onValue, push, ref, set, update } from 'firebase/database'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { WalletBalancesType } from '../types/walletBalanceType'
 
 export class FirebaseService {
   private static _instance: FirebaseService
+  $balances: BehaviorSubject<Array<WalletBalancesType>> = new BehaviorSubject<any>([])
+  private accountId: string
+
+  constructor() {
+    this.accountId = this.getAccountId()
+  }
+
+  private getAccountId() {
+    return '243d4551-7b49-4e12-af85-2ae442f4438c'
+  }
 
   static instance() {
     if (this._instance) {
@@ -12,6 +24,14 @@ export class FirebaseService {
     this._instance = new FirebaseService()
 
     return this._instance
+  }
+
+  async setBalances(balances: Array<WalletBalancesType>) {
+    this.$balances.next(balances)
+  }
+
+  async getBalances(): Promise<Observable<Array<WalletBalancesType>>> {
+    return this.$balances.asObservable()
   }
 
   static async initFirebase() {
@@ -54,19 +74,19 @@ export class FirebaseService {
     await set(ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c'), {
       usd: {
         accountId: '243d4551-7b49-4e12-af85-2ae442f4438c',
-        assetCode: 'ADA',
+        assetCode: 'USD',
         balance: 451110.22,
         blockedBalance: 0,
       },
       usdt: {
         accountId: '243d4551-7b49-4e12-af85-2ae442f4438c',
-        assetCode: 'ADA',
+        assetCode: 'USDT',
         balance: 1110.2,
         blockedBalance: 0,
       },
       eth: {
         accountId: '243d4551-7b49-4e12-af85-2ae442f4438c',
-        assetCode: 'ADA',
+        assetCode: 'ETH',
         balance: 0.11,
         blockedBalance: 0,
       },
@@ -126,20 +146,26 @@ export class FirebaseService {
     update(ref(db), updates)
   }
 
-  static async listenFirebaseChanges() {
-    console.log('listenFirebaseChanges')
+  async listenFirebaseChanges() {
     const db = await FirebaseService.initFirebase()
+    const userbalances = ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c')
 
-    // const starCountRef = ref(db, 'posts/' + postId + '/starCount')
-    // const starCountRef = ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c')
-    const starCountRef = ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c')
-    onValue(starCountRef, snapshot => {
+    onValue(userbalances, async snapshot => {
       if (snapshot.exists()) {
         const data = snapshot.val()
-        console.log('## data', data)
-        console.log('## data usd', data.usd.balance)
+        const balances: Array<WalletBalancesType> = []
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            console.log('key, data[key]')
+            console.log(key, data[key])
+            balances.push(data[key])
+          }
+        }
+
+        this.setBalances(balances)
       } else {
-        console.log(' no existe el snapshot')
+        console.log('no existe el snapshot')
+        this.setBalances([])
       }
     })
   }
