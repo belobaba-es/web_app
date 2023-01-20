@@ -37,14 +37,14 @@ export class FirebaseService {
   static async initFirebase() {
     console.log('** initFirebase')
     const config = {
-      apiKey: 'AIzaSyCN4sb1POWZMd-z4aAMpIqyyMIsPzLc-q0',
-      authDomain: 'noba-dev-360623.firebaseapp.com',
-      databaseURL: 'https://noba-dev-360623-default-rtdb.firebaseio.com',
-      projectId: 'noba-dev-360623',
-      storageBucket: 'noba-dev-360623.appspot.com',
-      messagingSenderId: '970990734888',
-      appId: '1:970990734888:web:38f2c61e7e9d60c60f2f1d',
-      measurementId: 'G-XZGG16P7C2',
+      apiKey: import.meta.env.FIREBASE_API_KEY,
+      authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
+      databaseURL: import.meta.env.FIREBASE_DATABASE_URL,
+      projectId: import.meta.env.FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.FIREBASE_MESSAGE_SENDER_ID,
+      appId: import.meta.env.FIREBASE_APP_ID,
+      measurementId: import.meta.env.FIREBASE_MEASUREMENT_ID,
     }
 
     const app = await initializeApp(config)
@@ -170,7 +170,7 @@ export class FirebaseService {
     })
   }
 
-  static async stopListenFirebase() {
+  async stopListenFirebase() {
     const db = await FirebaseService.initFirebase()
     off(ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c'))
   }
