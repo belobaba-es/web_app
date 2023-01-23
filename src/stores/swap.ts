@@ -6,6 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
 import { QuoteResponse } from '../views/swap/types/quote-response.interface'
+import {SummarySwap} from "../views/swap/types/sumary";
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -37,7 +38,7 @@ export const useSwapStore = defineStore('swap', () => {
     results: [],
   })
   const successExecuted = ref(false)
-  const transactionSummary = ref({
+  const transactionSummary = ref<SummarySwap>({
     feeAmount: 0.0,
     totalAmount: 0.0,
     assetIcon: '',
@@ -102,6 +103,9 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService
       .execute(quoteId.value)
       .then(async response => {
+        successExecuted.value = true
+        clearTimer()
+
         setTimeout(async () => {
           toast.add({
             severity: 'success',
@@ -119,11 +123,10 @@ export const useSwapStore = defineStore('swap', () => {
           transactionSummary.value.unitCount = unitCount.value;
           transactionSummary.value.quoteId = quoteId.value;
 
-          clearTimer()
+
           router.push('/swap/success')
 
-          successExecuted.value = true
-          await fetchBalanceWallets()
+
         }, 5000)
       })
       .catch(async error => {
@@ -164,6 +167,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   watch(progressBarSeconds, async newValue => {
+    console.log(newValue, quoteId.value, successExecuted.value)
     if (newValue === 10) {
       clearTimer()
       if (quoteId.value && !successExecuted.value) {
@@ -252,9 +256,10 @@ export const useSwapStore = defineStore('swap', () => {
   const clearSwap = async (typeTransaction = 'buy') => {
     refreshQuote();
     clearTimer();
-    if (quoteId.value) {
-      await cancelQuote();
-    }
+    quoteId.value = '';
+    // if (quoteId.value) {
+    //   await cancelQuote();
+    // }
     transactionType.value = typeTransaction;
   }
 
