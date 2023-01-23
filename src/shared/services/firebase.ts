@@ -8,25 +8,21 @@ export class FirebaseService {
   $balances: BehaviorSubject<Array<WalletBalancesType>> = new BehaviorSubject<any>([])
   private accountId: string
 
-  constructor() {
-    this.accountId = this.getAccountId()
+  constructor(accountId: string) {
+    this.accountId = accountId
   }
 
-  private getAccountId() {
-    return '243d4551-7b49-4e12-af85-2ae442f4438c'
-  }
-
-  static instance() {
+  static instance(accountId: string) {
     if (this._instance) {
       return this._instance
     }
 
-    this._instance = new FirebaseService()
+    this._instance = new FirebaseService(accountId)
 
     return this._instance
   }
 
-  async setBalances(balances: Array<WalletBalancesType>) {
+  private async setBalances(balances: Array<WalletBalancesType>) {
     this.$balances.next(balances)
   }
 
@@ -35,16 +31,15 @@ export class FirebaseService {
   }
 
   static async initFirebase() {
-    console.log('** initFirebase', import.meta.env.FIREBASE_API_KEY)
     const config = {
-      apiKey: import.meta.env.FIREBASE_API_KEY,
-      authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-      databaseURL: import.meta.env.FIREBASE_DATABASE_URL,
-      projectId: import.meta.env.FIREBASE_PROJECT_ID,
-      storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: import.meta.env.FIREBASE_MESSAGE_SENDER_ID,
-      appId: import.meta.env.FIREBASE_APP_ID,
-      measurementId: import.meta.env.FIREBASE_MEASUREMENT_ID,
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGE_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID,
+      measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
     }
 
     const app = await initializeApp(config)
@@ -148,7 +143,7 @@ export class FirebaseService {
 
   async listenFirebaseChanges() {
     const db = await FirebaseService.initFirebase()
-    const userbalances = ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c')
+    const userbalances = ref(db, this.accountId)
 
     onValue(userbalances, async snapshot => {
       if (snapshot.exists()) {
@@ -156,22 +151,20 @@ export class FirebaseService {
         const balances: Array<WalletBalancesType> = []
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-            console.log('key, data[key]')
-            console.log(key, data[key])
             balances.push(data[key])
           }
         }
 
-        this.setBalances(balances)
+        await this.setBalances(balances)
       } else {
         console.log('no existe el snapshot')
-        this.setBalances([])
+        await this.setBalances([])
       }
     })
   }
 
   async stopListenFirebase() {
     const db = await FirebaseService.initFirebase()
-    off(ref(db, '243d4551-7b49-4e12-af85-2ae442f4438c'))
+    off(ref(db, this.accountId))
   }
 }
