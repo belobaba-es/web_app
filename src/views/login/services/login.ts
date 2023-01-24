@@ -1,5 +1,8 @@
 import { HttpService } from '../../../shared/services/http'
 import { LoginResponse } from '../types/login.interface'
+import { FirebaseService } from '../../../shared/services/firebase'
+import { useAccount } from '../../../composables/useAccount'
+import { useUserStore } from '../../../stores/user'
 
 export class LoginService extends HttpService {
   private static _instance: LoginService
@@ -25,6 +28,8 @@ export class LoginService extends HttpService {
   }
 
   async logout(): Promise<void> {
+    const userStore = useUserStore()
     this.removeTokens()
+    await new FirebaseService(userStore.getUser.accountId).stopListenFirebase()
   }
 }
