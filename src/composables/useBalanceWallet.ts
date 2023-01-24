@@ -13,7 +13,7 @@ export const useBalanceWallet = () => {
     const firebaseService = await new FirebaseService(userStore.getUser.accountId)
     await firebaseService.listenFirebaseChanges()
     firebaseService.getBalances().then(observable => {
-      observable.subscribe((balances: any) => {
+      observable.subscribe((balances: BalanceWallet[]) => {
         balanceWalletStore.setBalanceWallet(balances)
       })
     })

@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app'
 import { getDatabase, off, onValue, ref } from 'firebase/database'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { WalletBalancesType } from '../types/walletBalanceType'
+import { BalanceWallet } from "../../views/deposit/types/asset.interface";
+import {AssetsService} from "../../views/deposit/services/assets";
 
 export class FirebaseService {
   private static _instance: FirebaseService
-  $balances: BehaviorSubject<Array<WalletBalancesType>> = new BehaviorSubject<any>([])
-  private accountId: string
+  $balances: BehaviorSubject<BalanceWallet[]> = new BehaviorSubject<any>([])
+  private readonly accountId: string
 
   constructor(accountId: string) {
     this.accountId = accountId
@@ -22,11 +23,11 @@ export class FirebaseService {
     return this._instance
   }
 
-  private async setBalances(balances: Array<WalletBalancesType>) {
+  private async setBalances(balances: BalanceWallet[]) {
     this.$balances.next(balances)
   }
 
-  async getBalances(): Promise<Observable<Array<WalletBalancesType>>> {
+  async getBalances(): Promise<Observable<BalanceWallet[]>> {
     return this.$balances.asObservable()
   }
 
@@ -44,28 +45,24 @@ export class FirebaseService {
 
     const app = await initializeApp(config)
 
-    return await getDatabase(app)
+    return getDatabase(app);
   }
 
   async listenFirebaseChanges() {
     const db = await FirebaseService.initFirebase()
-    const userbalances = ref(db, this.accountId)
+    const userBalances = ref(db, this.accountId)
 
-    onValue(userbalances, async snapshot => {
+    onValue(userBalances, async snapshot => {
       if (snapshot.exists()) {
-        const data = snapshot.val()
-        const balances: Array<WalletBalancesType> = []
-        for (let key in data) {
-          if (data.hasOwnProperty(key)) {
-            balances.push(data[key])
-          }
-        }
-
-        await this.setBalances(balances)
-      } else {
-        console.log('no existe el snapshot')
-        await this.setBalances([])
+        const data = snapshot.val() as BalanceWallet[]
+        await this.setBalances(data)
+        return
       }
+
+      const data = await AssetsService.instance().getBalanceWallets()
+
+      await this.setBalances(data)
+
     })
   }
 
