@@ -70,7 +70,7 @@
               </div>
               <div class="col-6 flex justify-content-end align-content-end flex-wrap">
                 <p class="text-balance">
-                  {{ calc(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
+                  {{ calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
                   <br />
                   <small>{{ slotProps.data.assetCode }}</small>
                 </p>
@@ -107,7 +107,7 @@
           </div>
           <div class="col-6 flex justify-content-end align-content-end flex-wrap">
             <p class="text-balance-wallet">
-              {{ calc(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
+              {{ calculateBalance(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
               <br />
               <small>{{ item.assetCode }}</small>
             </p>
@@ -131,7 +131,7 @@ const router = useRouter()
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { getAllWallets } = useBalanceWallet()
+const { getAllWallets, calculateBalance } = useBalanceWallet()
 
 const submitting = ref(true)
 
@@ -150,14 +150,6 @@ const getWallets = () => {
   return wallets
 }
 
-const calc = (assetCode: string, balance: number, blocked: number) => {
-  const total = isNaN(balance - blocked) ? 0 : balance - blocked
-  if (assetCode === 'USD' || assetCode === 'USDC') {
-    return total.toFixed(2)
-  }
-
-  return total.toFixed(8)
-}
 
 const getStyle = (assetCode: string) => {}
 
