@@ -40,7 +40,17 @@ export const useBalanceWallet = () => {
     return balanceWallets.wallets.value.sort((a, b) => (a.assetCode === 'USD' ? -1 : b.assetCode === 'USD' ? 1 : 0))
   }
 
+  const calculateBalance = (assetCode: string, balance: number, blocked: number) => {
+    const total = isNaN(balance - blocked) ? 0 : balance - blocked
+    if (assetCode === 'USD' || assetCode === 'USDC') {
+      return total.toFixed(2)
+    }
+
+    return total.toFixed(8)
+  }
+
   return {
+    calculateBalance,
     fetchBalanceWallets,
     getBalanceByCode,
     getWalletByAssetCode,
