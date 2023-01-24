@@ -1,5 +1,5 @@
 <template>
-  <div class="tap-bar-container block sm:block md:block lg:hidden xl:hidden">
+  <div class="tap-bar-container block sm:block md:block lg:hidden xl:hidden" style="z-index:5">
     <AppTabBar :items="model" ></AppTabBar>
   </div>
 </template>

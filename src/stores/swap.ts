@@ -6,6 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
 import { QuoteResponse } from '../views/swap/types/quote-response.interface'
+import {SummarySwap} from "../views/swap/types/sumary";
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -37,7 +38,7 @@ export const useSwapStore = defineStore('swap', () => {
     results: [],
   })
   const successExecuted = ref(false)
-  const transactionSummary = ref({
+  const transactionSummary = ref<SummarySwap>({
     feeAmount: 0.0,
     totalAmount: 0.0,
     assetIcon: '',
@@ -102,29 +103,27 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService
       .execute(quoteId.value)
       .then(async response => {
-        setTimeout(async () => {
-          toast.add({
-            severity: 'success',
-            summary: t('successfulOperation'),
-            detail: response.message,
-            life: 5000,
-          })
-          loading.value = false
+        successExecuted.value = true
+        clearTimer()
 
-          transactionSummary.value.assetIcon = assetIcon.value;
-          transactionSummary.value.assetName = assetName.value;
-          transactionSummary.value.feeAmount = feeAmount.value;
-          transactionSummary.value.totalAmount = totalAmount.value;
-          transactionSummary.value.transactionType = transactionType.value;
-          transactionSummary.value.unitCount = unitCount.value;
-          transactionSummary.value.quoteId = quoteId.value;
+        toast.add({
+          severity: 'success',
+          summary: t('successfulOperation'),
+          detail: response.message,
+          life: 5000,
+        })
+        loading.value = false
 
-          clearTimer()
-          router.push('/swap/success')
+        transactionSummary.value.assetIcon = assetIcon.value;
+        transactionSummary.value.assetName = assetName.value;
+        transactionSummary.value.feeAmount = feeAmount.value;
+        transactionSummary.value.totalAmount = totalAmount.value;
+        transactionSummary.value.transactionType = transactionType.value;
+        transactionSummary.value.unitCount = unitCount.value;
+        transactionSummary.value.quoteId = quoteId.value;
 
-          successExecuted.value = true
-          await fetchBalanceWallets()
-        }, 5000)
+        router.push('/swap/success')
+
       })
       .catch(async error => {
         loading.value = false
@@ -252,9 +251,10 @@ export const useSwapStore = defineStore('swap', () => {
   const clearSwap = async (typeTransaction = 'buy') => {
     refreshQuote();
     clearTimer();
-    if (quoteId.value) {
-      await cancelQuote();
-    }
+    quoteId.value = '';
+    // if (quoteId.value) {
+    //   await cancelQuote();
+    // }
     transactionType.value = typeTransaction;
   }
 

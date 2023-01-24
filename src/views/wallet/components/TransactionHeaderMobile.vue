@@ -18,7 +18,7 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 no-padding">
         <div>
           <p class="text-balance-wallet-historic mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-            {{ wallet.balance }}
+            {{ calculateBalance(wallet.assetCode, wallet.balance, wallet.blockedBalance ?? 0) }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
         </div>
@@ -53,10 +53,13 @@
 import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
+import {useBalanceWallet} from "../../../composables/useBalanceWallet";
 
 defineProps<{
   wallet: BalanceWallet
 }>()
+
+const { calculateBalance } = useBalanceWallet()
 
 const emit = defineEmits(['toBack'])
 
