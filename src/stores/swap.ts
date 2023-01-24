@@ -106,28 +106,24 @@ export const useSwapStore = defineStore('swap', () => {
         successExecuted.value = true
         clearTimer()
 
-        setTimeout(async () => {
-          toast.add({
-            severity: 'success',
-            summary: t('successfulOperation'),
-            detail: response.message,
-            life: 5000,
-          })
-          loading.value = false
+        toast.add({
+          severity: 'success',
+          summary: t('successfulOperation'),
+          detail: response.message,
+          life: 5000,
+        })
+        loading.value = false
 
-          transactionSummary.value.assetIcon = assetIcon.value;
-          transactionSummary.value.assetName = assetName.value;
-          transactionSummary.value.feeAmount = feeAmount.value;
-          transactionSummary.value.totalAmount = totalAmount.value;
-          transactionSummary.value.transactionType = transactionType.value;
-          transactionSummary.value.unitCount = unitCount.value;
-          transactionSummary.value.quoteId = quoteId.value;
+        transactionSummary.value.assetIcon = assetIcon.value;
+        transactionSummary.value.assetName = assetName.value;
+        transactionSummary.value.feeAmount = feeAmount.value;
+        transactionSummary.value.totalAmount = totalAmount.value;
+        transactionSummary.value.transactionType = transactionType.value;
+        transactionSummary.value.unitCount = unitCount.value;
+        transactionSummary.value.quoteId = quoteId.value;
 
+        router.push('/swap/success')
 
-          router.push('/swap/success')
-
-
-        }, 5000)
       })
       .catch(async error => {
         loading.value = false
@@ -167,7 +163,6 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   watch(progressBarSeconds, async newValue => {
-    console.log(newValue, quoteId.value, successExecuted.value)
     if (newValue === 10) {
       clearTimer()
       if (quoteId.value && !successExecuted.value) {
