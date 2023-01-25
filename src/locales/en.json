@@ -210,5 +210,7 @@
   "depositBankName": "Depository Bank Name", 
   "titleDespositFiat": "Deposit Instructions",
   "downloadPdf": "Download PDF File",
-  "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved."
+  "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved.",
+  "namePdfDepositFiatDomestic": "Domestic Deposit Instructions",
+  "namePdfDepositFiatInternational": "International Deposit Instructions"
 }

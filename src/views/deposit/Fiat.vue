@@ -115,16 +115,21 @@ interface tabItem {
 
 const { t } = useI18n({ useScope: 'global' })
 const fiatService = FiatService.instance()
+const userStore = useUserStore()
+
+const username = userStore.getUser.firstName
+    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+    : userStore.getUser.name
 
 const dataBank = ref<BankData[]>([])
 const bankNational = ref()
 const bankInternational = ref()
-const userStore = useUserStore()
 
 const bankNationalPdf: any = {}
 const bankInternationalPdf: any = {}
 const title = t('titleDespositFiat')
 const footerPdf = t('footerPdfFiatData')
+
 
 onMounted(async () => {
   fiatService.bankData(userStore.getUser.accountId).then(data => {
@@ -167,11 +172,13 @@ const menuItems = ref<tabItem[]>([
 ])
 
 const generatePdfNationalData = () => {
-  generatePdf(logo, title, bankNationalPdf, footerPdf)
+  const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
+  generatePdf(nameFile, logo, title, bankNationalPdf, footerPdf)
 }
 
 const generatePdfInternationalData = () => {
-  generatePdf(logo, title, bankInternationalPdf, footerPdf)
+  const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
+  generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
 }
 
 </script>

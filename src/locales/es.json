@@ -200,5 +200,8 @@
   "textCopySuccessful": "Copiado al portapapeles con éxito",
   "titleDespositFiat": "Instrucciones de depósito",
   "downloadPdf": "Descargar archivo PDF",
-  "footerPdfFiatData": "Noba.cash TM 2023 - Todos los derechos reservados."
+  "footerPdfFiatData": "Noba.cash TM 2023 - Todos los derechos reservados.",
+  "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
+  "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
+  "depositBankName": "Nombre del banco a depositar"
 }
