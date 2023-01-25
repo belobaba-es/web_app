@@ -206,5 +206,9 @@
   "naturalAccountTittle": "Personal Data",
   "historicTransactionsTitle": "Transaction History",
   "loadMore": "Load more", 
-  "textCopySuccessful": "Copied to clipboard successfully"
+  "textCopySuccessful": "Copied to clipboard successfully",
+  "depositBankName": "Depository Bank Name", 
+  "titleDespositFiat": "Deposit Instructions",
+  "downloadPdf": "Download PDF File",
+  "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved."
 }

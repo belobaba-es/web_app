@@ -197,5 +197,8 @@
   "naturalAccountTittle": "Información personal",
   "historicTransactionsTitle": "Histórico de transacciones", 
   "loadMore": "Carga más",
-  "textCopySuccessful": "Copiado al portapapeles con éxito"
+  "textCopySuccessful": "Copiado al portapapeles con éxito",
+  "titleDespositFiat": "Instrucciones de depósito",
+  "downloadPdf": "Descargar archivo PDF",
+  "footerPdfFiatData": "Noba.cash TM 2023 - Todos los derechos reservados."
 }
