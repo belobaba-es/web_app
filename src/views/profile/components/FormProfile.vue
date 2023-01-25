@@ -120,7 +120,7 @@
     </div>
   </div>
 </template>
-margin-top: 7px;
+
 <script lang="ts" setup>
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
