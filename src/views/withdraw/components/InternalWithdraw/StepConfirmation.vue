@@ -1,5 +1,5 @@
 <template>
-  <div class="formgrid grid mt-5">
+  <div class="formgrid grid mt-5 mb-5">
     <div class="col-12">
       <span class="mt-4">{{ t('Confirm wire information') }}</span>
       <Divider></Divider>
