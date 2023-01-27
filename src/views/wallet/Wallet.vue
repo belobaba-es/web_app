@@ -1,8 +1,8 @@
 <template>
+  <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
+
   <section v-show="useUser.isAccountActive()">
     <CardWallet />
-
-    <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
 
     <div class="grid container-new-wallet">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
