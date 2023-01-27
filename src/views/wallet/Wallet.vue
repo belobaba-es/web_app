@@ -4,10 +4,12 @@
 
     <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
 
-    <div class="grid m-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="text-btn-new-wallet">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+    <div class="grid container-new-wallet">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
+        <div class="container-btn-add-wallet">
+          <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+        </div>
       </div>
     </div>
   </section>
@@ -80,7 +82,39 @@ const onCreateAddress = (event: any) => {
 }
 </script>
 <style lang="scss">
+.container-new-wallet {
+  @media only screen and (min-width: 991px) {
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
 .text-btn-new-wallet {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
   font-size: 1.1rem;
+  text-align: center;
+
+  @media only screen and (min-width: 991px) {
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+    text-align: start;
+  }
+}
+
+.wallet-btn {
+  width: 100%;
+
+  @media only screen and (min-width: 991px) {
+    width: 80%;
+  }
+}
+.container-btn-add-wallet {
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (min-width: 991px) {
+    justify-content: start;
+  }
 }
 </style>
