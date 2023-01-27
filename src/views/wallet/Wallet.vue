@@ -1,20 +1,22 @@
 <template>
-  <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
 
   <section v-show="useUser.isAccountActive()">
     <CardWallet />
-
-    <div class="grid container-new-wallet">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
-        <div class="container-btn-add-wallet">
-          <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
-        </div>
-      </div>
-    </div>
   </section>
 
   <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+
+  <div class="grid container-new-wallet">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+      <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
+      <div class="container-btn-add-wallet">
+        <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+      </div>
+    </div>
+  </div>
+
+  <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
+  
 </template>
 
 <script setup lang="ts">
