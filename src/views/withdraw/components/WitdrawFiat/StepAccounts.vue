@@ -5,13 +5,13 @@
     </div>
   </div>
 
-  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-    <span class="p-input-icon-left flex p-fluid">
+  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 full-width">
+    <span class="p-input-icon-left flex ">
       <i class="pi pi-search" />
       <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
       <Button
         style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-        class="p-button search-btn w-25"
+        class="p-button w-25"
         :label="t('search')"
         @click="onSearch"
       />
@@ -82,4 +82,8 @@ const onSearch = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.full-width{
+  width: 100% !important;
+}
+</style>
