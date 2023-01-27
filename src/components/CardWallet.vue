@@ -140,7 +140,7 @@ const skeleton = ['', '', '', '', '']
 const route = window.location.href
 
 const isWallet = route.includes('wallet')
-
+console.log(isWallet)
 const oneWallet = ref(false)
 
 const getWallets = () => {
