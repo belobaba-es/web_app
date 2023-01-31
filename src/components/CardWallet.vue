@@ -1,7 +1,7 @@
 <template>
   <h2 class="font-medium">{{ t('wallet') }}</h2>
 
-  <section v-if="isWallet === false">
+  <section v-if="carousel === true">
     <div v-if="submitting === true">
       <Carousel
         :value="skeleton"
@@ -82,7 +82,7 @@
     </div>
   </section>
 
-  <section v-if="isWallet === true">
+  <section v-if="carousel === false">
     <div class="grid col-12 wallet">
       <div
         class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
@@ -122,10 +122,15 @@
 import Skeleton from 'primevue/skeleton'
 import Carousel from 'primevue/carousel'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { ref } from 'vue'
+import {defineProps, ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useRouter } from 'vue-router'
+
+interface Props {
+  carousel: boolean
+}
+const props = defineProps<Props>()
 
 const router = useRouter()
 
@@ -137,10 +142,6 @@ const submitting = ref(true)
 
 const skeleton = ['', '', '', '', '']
 
-const route = window.location.href
-
-const isWallet = route.includes('wallet')
-console.log(isWallet)
 const oneWallet = ref(false)
 
 const getWallets = () => {
