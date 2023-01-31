@@ -40,7 +40,12 @@
 
     <div class="grid mt-2">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfNationalData" />
+        <Button icon="pi pi-angle-right"
+                iconPos="right"
+                :loading="submitting"
+                class="p-button download-btn" :label="t('downloadPdf')"
+                @click="generatePdfNationalData"
+        />
       </div>
     </div>
     <Divider type="solid" />
@@ -86,7 +91,12 @@
 
     <div class="grid mt-2">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfInternationalData" />
+        <Button icon="pi pi-angle-right"
+                iconPos="right"
+                :loading="submitting"
+                class="p-button download-btn"
+                :label="t('downloadPdf')" @click="generatePdfInternationalData"
+        />
       </div>
     </div>
     <Divider type="solid" />
@@ -113,6 +123,8 @@ interface tabItem {
   to?: string
 }
 
+const submitting = ref(false)
+
 const { t } = useI18n({ useScope: 'global' })
 const fiatService = FiatService.instance()
 const userStore = useUserStore()
@@ -132,7 +144,9 @@ const footerPdf = t('footerPdfFiatData')
 
 
 onMounted(async () => {
+  submitting.value = true
   fiatService.bankData(userStore.getUser.accountId).then(data => {
+    submitting.value = false
     dataBank.value = data
     bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
     if (!bankNational.value) {
@@ -158,7 +172,7 @@ onMounted(async () => {
     bankInternationalPdf[t('accountNumber') + ':'] = bankInternational.value.accountNumber
     bankInternationalPdf[t('bankAddress') + ':'] = bankInternational.value.bankAddress
     bankInternationalPdf[t('bankPhone') + ':'] = bankInternational.value.bankPhone
-  })
+  }).catch(() => submitting.value = false)
 })
 const active = ref<number>(0)
 
