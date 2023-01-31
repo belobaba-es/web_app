@@ -1,9 +1,11 @@
 <template>
-  <section v-show="useUser.isAccountActive()">
-    <CardWallet :carousel="false" />
-  </section>
+  <section class="section-main">
+    <section v-show="useUser.isAccountActive()">
+      <CardWallet :carousel="false" />
+    </section>
 
-  <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+  </section>
 
   <div class="container-new-wallet">
     <div class="grid">
@@ -15,6 +17,7 @@
       </div>
     </div>
   </div>
+
 
   <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
 </template>
@@ -86,7 +89,12 @@ const onCreateAddress = (event: any) => {
 <style lang="scss">
 .container-new-wallet {
   background-color: #fff;
-  
+  padding: 1rem;
+  position:fixed;
+  width: 100%;
+  bottom: 3.53rem;
+
+
   @media only screen and (min-width: 991px) {
     // margin-left: 0.5rem;
     // margin-top: 0.5rem;

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 6rem 1rem 0rem 1rem;
+  // padding: 6rem 1rem 0rem 1rem;
   transition: margin-left $transitionDuration;
   background: rgb(247, 253, 253);
   overflow: auto;
@@ -21,4 +21,8 @@
 
 .layout-main {
   flex: 1 1 auto;
+}
+
+.section-main {
+  padding: 6rem 1rem 0rem 1rem;
 }
