@@ -1,22 +1,22 @@
 <template>
-
   <section v-show="useUser.isAccountActive()">
     <CardWallet :carousel="false" />
   </section>
 
   <AccountValidationProcess v-show="!useUser.isAccountActive()" />
 
-  <div class="grid container-new-wallet">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-      <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
-      <div class="container-btn-add-wallet">
-        <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+  <div class="container-new-wallet">
+    <div class="grid">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
+        <div class="container-btn-add-wallet">
+          <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+        </div>
       </div>
     </div>
   </div>
 
   <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
-  
 </template>
 
 <script setup lang="ts">
@@ -85,9 +85,11 @@ const onCreateAddress = (event: any) => {
 </script>
 <style lang="scss">
 .container-new-wallet {
+  background-color: #fff;
+  
   @media only screen and (min-width: 991px) {
-    margin-left: 0.5rem;
-    margin-top: 0.5rem;
+    // margin-left: 0.5rem;
+    // margin-top: 0.5rem;
   }
 }
 
