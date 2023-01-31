@@ -151,16 +151,17 @@ onMounted(async () => {
     bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
     if (!bankNational.value) {
       bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
-
-      bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
-      bankNationalPdf[t('routingNumber') + ':'] = bankNational.value.routingNumber
-      bankNationalPdf[t('creditTo') + ':'] = bankNational.value.creditTo
-      bankNationalPdf[t('reference') + ':'] = bankNational.value.reference
-      bankNationalPdf[t('address') + ':'] = bankNational.value.address
-      bankNationalPdf[t('accountNumber') + ':'] = bankNational.value.accountNumber
-      bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
-      bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
     }
+
+    bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
+    bankNationalPdf[t('routingNumber') + ':'] = bankNational.value.routingNumber
+    bankNationalPdf[t('creditTo') + ':'] = bankNational.value.creditTo
+    bankNationalPdf[t('reference') + ':'] = bankNational.value.reference
+    bankNationalPdf[t('address') + ':'] = bankNational.value.address
+    bankNationalPdf[t('accountNumber') + ':'] = bankNational.value.accountNumber
+    bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
+    bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
+
     bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
 
     bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
