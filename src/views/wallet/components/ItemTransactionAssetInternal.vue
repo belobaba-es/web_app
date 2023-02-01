@@ -80,6 +80,8 @@ const secondsToDate = (seconds: number) => {
 .reference {
   font-family: KanitLight !important;
   width: fit-content;
+  word-wrap: break-word;
+  overflow: hidden;
 
   /* Set max and min font sizes in mobile view */
   @media only screen and (min-width: 992px) {
@@ -108,8 +110,6 @@ const secondsToDate = (seconds: number) => {
   --min-font: 12;
   font-size: var(--responsive);
 }
-
-
 
 .data-hidden {
   @media only screen and (max-width: 991px) {
