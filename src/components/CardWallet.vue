@@ -1,99 +1,59 @@
 <template>
   <h2 class="font-medium">{{ t('wallet') }}</h2>
 
-  <section v-if="carousel === true">
-    <div v-if="submitting === true">
-      <Carousel
-        :value="skeleton"
-        :numVisible="5"
-        :showIndicators="false"
-        :showNavigators="true"
-        :numScroll="1"
-        :circular="false"
-        :responsiveOptions="responsiveOptionsCarouselSkeleton"
-      >
-        <template #item="slotProps">
-          <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
-            <div class="flex justify-content-between flex-wrap">
-              <div class="flex align-items-center justify-content-center">
-                <Skeleton width="5rem" class="mb-2"></Skeleton>
-              </div>
-              <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-ellipsis-v"></i>
-              </div>
-            </div>
 
-            <div class="grid mt-1">
-              <div class="col-6">
-                <Skeleton shape="circle" size="6rem" class="mr-2"></Skeleton>
-              </div>
-              <div class="col-6 flex justify-content-end align-content-end flex-wrap">
-                <Skeleton width="80%" class="mb-2"></Skeleton>
-              </div>
-            </div>
+  <Carousel v-if="submitting === true && carousel === true"
+    :value="skeleton"
+    :numVisible="5"
+    :showIndicators="false"
+    :showNavigators="true"
+    :numScroll="1"
+    :circular="false"
+    :responsiveOptions="responsiveOptionsCarouselSkeleton"
+  >
+    <template #item="slotProps">
+      <div class="card-border" v-bind:class="getStyle(slotProps.data.assetCode)">
+        <div class="flex justify-content-between flex-wrap">
+          <div class="flex align-items-center justify-content-center">
+            <Skeleton width="5rem" class="mb-2"></Skeleton>
           </div>
-        </template>
-      </Carousel>
-    </div>
-
-    <div class="">
-      <Carousel
-        :value="getWallets()"
-        :numVisible="5"
-        :showIndicators="false"
-        :showNavigators="true"
-        :numScroll="1"
-        :circular="false"
-        :responsiveOptions="responsiveOptions"
-      >
-        <template #item="slotProps">
-          <div
-            class="card-border"
-            :class="{ 'one-wallet': oneWallet }"
-            @click="goToHistoricTransactions(slotProps.data.assetCode)"
-            v-bind:class="getStyle(slotProps.data.assetCode)"
-          >
-            <div class="flex justify-content-between flex-wrap">
-              <div class="flex align-items-center justify-content-center">
-                <p>
-                  <strong class="name-cripto">{{ slotProps.data.name }}</strong>
-                </p>
-              </div>
-              <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-ellipsis-v"></i>
-              </div>
-            </div>
-
-            <div class="grid mt-1">
-              <div class="col-6">
-                <img class="icon-cripto" :src="slotProps.data.icon" :alt="slotProps.data.name" />
-              </div>
-              <div class="col-6 flex justify-content-end align-content-end flex-wrap">
-                <p class="text-balance">
-                  {{ calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
-                  <br />
-                  <small>{{ slotProps.data.assetCode }}</small>
-                </p>
-              </div>
-            </div>
+          <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-ellipsis-v"></i>
           </div>
-        </template>
-      </Carousel>
-    </div>
-  </section>
+        </div>
 
-  <section v-if="carousel === false">
-    <div class="grid col-12 wallet">
+        <div class="grid mt-1">
+          <div class="col-6">
+            <Skeleton shape="circle" size="6rem" class="mr-2"></Skeleton>
+          </div>
+          <div class="col-6 flex justify-content-end align-content-end flex-wrap">
+            <Skeleton width="80%" class="mb-2"></Skeleton>
+          </div>
+        </div>
+      </div>
+    </template>
+  </Carousel>
+
+  <Carousel v-if="carousel === true"
+    :value="getWallets()"
+    :numVisible="5"
+    :showIndicators="false"
+    :showNavigators="true"
+    :numScroll="1"
+    :circular="false"
+    :responsiveOptions="responsiveOptions"
+  >
+    <template #item="slotProps">
       <div
-        class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
-        v-bind:class="getStyle(item.assetCode)"
-        v-for="item in getWallets()"
-        @click="goToHistoricTransactions(item.assetCode)"
+        class="card-border"
+        :class="{ 'one-wallet': oneWallet }"
+        @click="goToHistoricTransactions(slotProps.data.assetCode)"
+        v-bind:class="getStyle(slotProps.data.assetCode)"
       >
         <div class="flex justify-content-between flex-wrap">
           <div class="flex align-items-center justify-content-center">
             <p>
-              <strong class="name-cripto">{{ item.name }}</strong>
+              <strong class="name-cripto">{{ slotProps.data.name }}</strong>
             </p>
           </div>
           <div class="flex align-items-center justify-content-center">
@@ -103,19 +63,54 @@
 
         <div class="grid mt-1">
           <div class="col-6">
-            <img class="icon-cripto" :src="item.icon" :alt="item.name" />
+            <img class="icon-cripto" :src="slotProps.data.icon" :alt="slotProps.data.name" />
           </div>
           <div class="col-6 flex justify-content-end align-content-end flex-wrap">
-            <p class="text-balance-wallet">
-              {{ calculateBalance(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
+            <p class="text-balance">
+              {{ calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
               <br />
-              <small>{{ item.assetCode }}</small>
+              <small>{{ slotProps.data.assetCode }}</small>
             </p>
           </div>
         </div>
       </div>
+    </template>
+  </Carousel>
+
+
+  <div class="grid col-12 wallet" v-if="carousel === false">
+    <div
+      class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
+      v-bind:class="getStyle(item.assetCode)"
+      v-for="item in getWallets()"
+      @click="goToHistoricTransactions(item.assetCode)"
+    >
+      <div class="flex justify-content-between flex-wrap">
+        <div class="flex align-items-center justify-content-center">
+          <p>
+            <strong class="name-cripto">{{ item.name }}</strong>
+          </p>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <i class="pi pi-ellipsis-v"></i>
+        </div>
+      </div>
+
+      <div class="grid mt-1">
+        <div class="col-6">
+          <img class="icon-cripto" :src="item.icon" :alt="item.name" />
+        </div>
+        <div class="col-6 flex justify-content-end align-content-end flex-wrap">
+          <p class="text-balance-wallet">
+            {{ calculateBalance(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
+            <br />
+            <small>{{ item.assetCode }}</small>
+          </p>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+
 </template>
 
 <script setup lang="ts">
