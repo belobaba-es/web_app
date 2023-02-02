@@ -1,9 +1,10 @@
 <template>
-  <section class="section-main" v-show="useUser.isAccountActive()">
-    <CardWallet :carousel="true" />
+  <section class="section-main" >
+    <CardWallet :carousel="true" v-show="useUser.isAccountActive()"/>
+
+    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
   </section>
 
-  <AccountValidationProcess v-show="!useUser.isAccountActive()" />
 </template>
 
 <script setup lang="ts">
