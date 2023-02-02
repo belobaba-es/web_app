@@ -39,14 +39,17 @@
       <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
       <p class="">{{ bankNational?.bankPhone }}</p>
 
-    <div class="grid mt-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button icon="pi pi-angle-right"
-                iconPos="right"
-                :loading="submitting"
-                class="p-button download-btn" :label="t('downloadPdf')"
-                @click="generatePdfNationalData"
-        />
+      <div class="grid mt-2">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <Button
+            icon="pi pi-angle-right"
+            iconPos="right"
+            :loading="submitting"
+            class="p-button download-btn"
+            :label="t('downloadPdf')"
+            @click="generatePdfNationalData"
+          />
+        </div>
       </div>
     </div>
 
@@ -88,14 +91,17 @@
       <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
       <p class="">{{ bankInternational?.bankPhone }}</p>
 
-    <div class="grid mt-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button icon="pi pi-angle-right"
-                iconPos="right"
-                :loading="submitting"
-                class="p-button download-btn"
-                :label="t('downloadPdf')" @click="generatePdfInternationalData"
-        />
+      <div class="grid mt-2">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <Button
+            icon="pi pi-angle-right"
+            iconPos="right"
+            :loading="submitting"
+            class="p-button download-btn"
+            :label="t('downloadPdf')"
+            @click="generatePdfInternationalData"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -142,35 +148,38 @@ const footerPdf = t('footerPdfFiatData')
 
 onMounted(async () => {
   submitting.value = true
-  fiatService.bankData(userStore.getUser.accountId).then(data => {
-    submitting.value = false
-    dataBank.value = data
-    bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
-    if (!bankNational.value) {
-      bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
-    }
+  fiatService
+    .bankData(userStore.getUser.accountId)
+    .then(data => {
+      submitting.value = false
+      dataBank.value = data
+      bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
+      if (!bankNational.value) {
+        bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
+      }
 
-    bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
-    bankNationalPdf[t('routingNumber') + ':'] = bankNational.value.routingNumber
-    bankNationalPdf[t('creditTo') + ':'] = bankNational.value.creditTo
-    bankNationalPdf[t('reference') + ':'] = bankNational.value.reference
-    bankNationalPdf[t('address') + ':'] = bankNational.value.address
-    bankNationalPdf[t('accountNumber') + ':'] = bankNational.value.accountNumber
-    bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
-    bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
+      bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
+      bankNationalPdf[t('routingNumber') + ':'] = bankNational.value.routingNumber
+      bankNationalPdf[t('creditTo') + ':'] = bankNational.value.creditTo
+      bankNationalPdf[t('reference') + ':'] = bankNational.value.reference
+      bankNationalPdf[t('address') + ':'] = bankNational.value.address
+      bankNationalPdf[t('accountNumber') + ':'] = bankNational.value.accountNumber
+      bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
+      bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
 
-    bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
+      bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
 
-    bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
-    bankInternationalPdf[t('routingNumber') + ':'] = bankInternational.value.routingNumber
-    bankInternationalPdf[t('swiftCode') + ':'] = bankInternational.value.swiftCode
-    bankInternationalPdf[t('creditTo') + ':'] = bankInternational.value.creditTo
-    bankInternationalPdf[t('reference') + ':'] = bankInternational.value.reference
-    bankInternationalPdf[t('address') + ':'] = bankInternational.value.address
-    bankInternationalPdf[t('accountNumber') + ':'] = bankInternational.value.accountNumber
-    bankInternationalPdf[t('bankAddress') + ':'] = bankInternational.value.bankAddress
-    bankInternationalPdf[t('bankPhone') + ':'] = bankInternational.value.bankPhone
-  }).catch(() => submitting.value = false)
+      bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
+      bankInternationalPdf[t('routingNumber') + ':'] = bankInternational.value.routingNumber
+      bankInternationalPdf[t('swiftCode') + ':'] = bankInternational.value.swiftCode
+      bankInternationalPdf[t('creditTo') + ':'] = bankInternational.value.creditTo
+      bankInternationalPdf[t('reference') + ':'] = bankInternational.value.reference
+      bankInternationalPdf[t('address') + ':'] = bankInternational.value.address
+      bankInternationalPdf[t('accountNumber') + ':'] = bankInternational.value.accountNumber
+      bankInternationalPdf[t('bankAddress') + ':'] = bankInternational.value.bankAddress
+      bankInternationalPdf[t('bankPhone') + ':'] = bankInternational.value.bankPhone
+    })
+    .catch(() => (submitting.value = false))
 })
 const active = ref<number>(0)
 
