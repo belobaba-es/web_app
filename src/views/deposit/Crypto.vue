@@ -1,58 +1,60 @@
 <template>
-  <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
-  <ViewAddress v-model:visible="display" :asset="selectViewAsset" :payment-address="selectPaymentAddress" />
+  <section class="section-main">
+    <NewWallet @create="onCreateAddress" v-model:display="displayNew" v-model:asset-select="assetSelect" />
+    <ViewAddress v-model:visible="display" :asset="selectViewAsset" :payment-address="selectPaymentAddress" />
 
-  <p class="text-3xl font-medium mb-4">
-    {{ t('deposit') }} / <span class="text-primary">{{ t('crypto') }} </span>
-  </p>
+    <p class="text-3xl font-medium mb-4">
+      {{ t('deposit') }} / <span class="text-primary">{{ t('crypto') }} </span>
+    </p>
 
-  <div class="grid">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
-      <span class="p-input-icon-left flex p-fluid">
-        <i class="pi pi-search" />
-        <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
-        <Button
-          class="p-button search-btn"
-          style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-          :label="t('search')"
-        />
-      </span>
+    <div class="grid">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
+        <span class="p-input-icon-left flex p-fluid">
+          <i class="pi pi-search" />
+          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+          <Button
+            class="p-button search-btn"
+            style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+            :label="t('search')"
+          />
+        </span>
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+      </div>
     </div>
 
-    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-      <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+    <div class="col-12 lg:col-9 xl:col-9">
+      <VirtualScroller
+        scrollHeight="500px"
+        class="test"
+        :items="paymentAddress"
+        :itemSize="75"
+        showLoader
+        :loading="lazyLoading"
+        :lazy="true"
+        @lazy-load="onLazyLoad"
+      >
+        <template v-slot:item="{ item, options }">
+          <div :class="['scroll-item pr-2', { odd: options.odd }]">
+            <AssetDetail :assets="assets" :payment-address="item" @select="viewAddressAsset($event)"></AssetDetail>
+          </div>
+        </template>
+        <template v-slot:loader="{ options }">
+          <div :class="['scroll-item p-2', { odd: options.odd }]" style="height: 50px">
+            <Skeleton :width="options.even ? '60%' : '50%'" height="1.3rem" />
+          </div>
+        </template>
+      </VirtualScroller>
     </div>
-  </div>
 
-  <div class="col-12 lg:col-9 xl:col-9">
-    <VirtualScroller
-      scrollHeight="500px"
-      class="test"
-      :items="paymentAddress"
-      :itemSize="75"
-      showLoader
-      :loading="lazyLoading"
-      :lazy="true"
-      @lazy-load="onLazyLoad"
-    >
-      <template v-slot:item="{ item, options }">
-        <div :class="['scroll-item pr-2', { odd: options.odd }]">
-          <AssetDetail :assets="assets" :payment-address="item" @select="viewAddressAsset($event)"></AssetDetail>
-        </div>
-      </template>
-      <template v-slot:loader="{ options }">
-        <div :class="['scroll-item p-2', { odd: options.odd }]" style="height: 50px">
-          <Skeleton :width="options.even ? '60%' : '50%'" height="1.3rem" />
-        </div>
-      </template>
-    </VirtualScroller>
-  </div>
-
-  <div class="grid">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-      <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+    <div class="grid">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
@@ -158,5 +160,4 @@ const onLazyLoad = (event: any) => {
 .wallet-btn {
   width: 100% !important;
 }
-
 </style>

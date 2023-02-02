@@ -1,68 +1,70 @@
 <template>
-  <PageLayout :title="t('swap')">
-    <div class="grid container-success flex justify-content-center align-items-center">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
-        <div class="flex justify-content-center mb-4">
-          <img :src="successIcon" />
-        </div>
-        <h1 class="text-center">{{ t('swapSuccessfulTitle') }}</h1>
-        <p class="text-center">{{ t('swapSuccessfulText') }}</p>
-        
-        <!-- DesktopComponent -->
-        <div class="my-5 justify-content-between hidden sm:hidden md:hidden lg:flex xl:flex">
-          <SuccessComponentDesktop
-            :summary="summary"
-            :transactionSummary="transactionSummary"
-            :usdIcon="usdIcon"
-            :usdName="usdName"
-          />
-        </div>
+  <section class="section-main">
+    <PageLayout :title="t('swap')">
+      <div class="grid container-success flex justify-content-center align-items-center">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
+          <div class="flex justify-content-center mb-4">
+            <img :src="successIcon" />
+          </div>
+          <h1 class="text-center">{{ t('swapSuccessfulTitle') }}</h1>
+          <p class="text-center">{{ t('swapSuccessfulText') }}</p>
 
-        <!-- MobileComponent -->
-        <div class="my-5 flex sm:flex md:flex lg:hidden xl:hidden">
-          <SuccessComponentMobile
-            :summary="summary"
-            :transactionSummary="transactionSummary"
-            :usdIcon="usdIcon"
-            :usdName="usdName"
-          />
-        </div>
-
-        <Divider :align="'bottom'" />
-        <p class="mt-3 mb-3 text-sm text-center">
-          {{ t('swapPriceQuote') }}
-        </p>
-        <div class="text-center" v-if="transactionSummary.quoteId">
-          <span class="font-medium text-primary text-2xl">Fee:</span>
-          <span class="text-2xl font-medium">{{ transactionSummary.feeAmount }}</span>
-          /
-          <span class="font-medium text-primary text-2xl">Total:</span>
-          <span class="text-2xl font-medium">{{ transactionSummary.totalAmount }}</span>
-        </div>
-        <div class="flex justify-content-center mt-lg-2 mt-3">
-          <div class="mr-4">
-            <Button
-              type="button"
-              icon="pi pi-angle-left"
-              :label="t('swapBackButtonTitle')"
-              class="font-light w-100"
-              @click="router.push('/swap')"
+          <!-- DesktopComponent -->
+          <div class="my-5 justify-content-between hidden sm:hidden md:hidden lg:flex xl:flex">
+            <SuccessComponentDesktop
+              :summary="summary"
+              :transactionSummary="transactionSummary"
+              :usdIcon="usdIcon"
+              :usdName="usdName"
             />
           </div>
-          <div class="">
-            <Button
-              type="button"
-              icon="pi pi-history"
-              iconPos="right"
-              :label="t('viewSwapHistory')"
-              class="font-light w-100 border-300 p-button-outlined"
-              @click="router.push('/swap/history')"
+
+          <!-- MobileComponent -->
+          <div class="my-5 flex sm:flex md:flex lg:hidden xl:hidden">
+            <SuccessComponentMobile
+              :summary="summary"
+              :transactionSummary="transactionSummary"
+              :usdIcon="usdIcon"
+              :usdName="usdName"
             />
+          </div>
+
+          <Divider :align="'bottom'" />
+          <p class="mt-3 mb-3 text-sm text-center">
+            {{ t('swapPriceQuote') }}
+          </p>
+          <div class="text-center" v-if="transactionSummary.quoteId">
+            <span class="font-medium text-primary text-2xl">Fee:</span>
+            <span class="text-2xl font-medium">{{ transactionSummary.feeAmount }}</span>
+            /
+            <span class="font-medium text-primary text-2xl">Total:</span>
+            <span class="text-2xl font-medium">{{ transactionSummary.totalAmount }}</span>
+          </div>
+          <div class="flex justify-content-center mt-lg-2 mt-3">
+            <div class="mr-4">
+              <Button
+                type="button"
+                icon="pi pi-angle-left"
+                :label="t('swapBackButtonTitle')"
+                class="font-light w-100"
+                @click="router.push('/swap')"
+              />
+            </div>
+            <div class="">
+              <Button
+                type="button"
+                icon="pi pi-history"
+                iconPos="right"
+                :label="t('viewSwapHistory')"
+                class="font-light w-100 border-300 p-button-outlined"
+                @click="router.push('/swap/history')"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </PageLayout>
+    </PageLayout>
+  </section>
 </template>
 
 <script setup lang="ts">

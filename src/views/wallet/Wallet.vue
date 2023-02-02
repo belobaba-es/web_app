@@ -1,15 +1,17 @@
 <template>
-  <section v-show="useUser.isAccountActive()">
-    <CardWallet :carousel="false" />
-  </section>
+  <section class="section-main">
+    <CardWallet :carousel="false" v-show="useUser.isAccountActive()" />
 
-  <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+  </section>
 </template>
 
 <script setup lang="ts">
 import CardWallet from '../../components/CardWallet.vue'
-import { useUserStore } from '../../stores/user'
+
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
+
+import { useUserStore } from '../../stores/user'
 
 const useUser = useUserStore()
 </script>

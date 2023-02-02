@@ -1,30 +1,31 @@
 <template>
-  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-    
-    <p class="text-3xl font-medium mb-4">
-      {{ t('withdraw') }} / <span class="text-primary"> {{ typeAsset }} </span>
-    </p>
+  <section class="section-main">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+      <p class="text-3xl font-medium mb-4">
+        {{ t('withdraw') }} / <span class="text-primary"> {{ typeAsset }} </span>
+      </p>
 
-    <div class="flex align-items-center">
-      <router-link to="/withdraw">
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
-      </router-link>
-      <span class="text-xl">Between NOBA {{ typeWallet }}</span>
+      <div class="flex align-items-center">
+        <router-link to="/withdraw">
+          <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+        </router-link>
+        <span class="text-xl">Between NOBA {{ typeWallet }}</span>
+      </div>
+
+      <Steps :model="items" :readonly="false" />
+      <router-view
+        v-slot="{ Component }"
+        :formData="formObject"
+        @prevPage="prevPage($event)"
+        @nextPage="nextPage($event)"
+        @complete="complete"
+      >
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
-
-    <Steps :model="items" :readonly="false" />
-    <router-view
-      v-slot="{ Component }"
-      :formData="formObject"
-      @prevPage="prevPage($event)"
-      @nextPage="nextPage($event)"
-      @complete="complete"
-    >
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

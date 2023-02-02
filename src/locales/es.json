@@ -203,5 +203,7 @@
   "footerPdfFiatData": "Noba.cash TM 2023 - Todos los derechos reservados.",
   "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
-  "depositBankName": "Nombre del banco a depositar"
+  "depositBankName": "Nombre del banco a depositar",
+  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado."
+
 }

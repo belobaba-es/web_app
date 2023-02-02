@@ -1,5 +1,6 @@
 .layout-footer {
+    background-color: white;
     transition: margin-left $transitionDuration;
-    padding-top: 1rem;
+    padding: 1rem;
     border-top: 1px solid var(--surface-border);
 }
