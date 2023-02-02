@@ -1,9 +1,11 @@
 <template>
-  <TransactionHeaderMobile class="transaction-header-mobile" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
+  <section class="section-main">
+    <TransactionHeaderMobile class="transaction-header-mobile" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
 
-  <TransactionHeaderDesktop class="transaction-header-desktop" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
+    <TransactionHeaderDesktop class="transaction-header-desktop" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
 
-  <TransactionTable v-if="wallet" :assetCode=getAssetCode() />
+    <TransactionTable v-if="wallet" :assetCode="getAssetCode()" />
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -183,7 +185,7 @@ const getAssetCode = () => {
     --max-font: 12;
     --min-font: 10;
     font-size: var(--responsive);
-  } 
+  }
 
   --max-font: 20;
   --min-font: 15;

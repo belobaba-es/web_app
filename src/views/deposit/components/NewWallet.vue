@@ -54,7 +54,6 @@ const {t} = useI18n({useScope: 'global'})
 const assetsService = AssetsService.instance();
 
 const onCreate = () => {
-
   submitting.value = true
   assetsService.paymentAddress({label: label.value, assetCode: assetSelect.value?.code}).then(resp => {
     submitting.value = false
