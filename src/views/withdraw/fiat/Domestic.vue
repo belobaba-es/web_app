@@ -1,30 +1,32 @@
 <template>
-  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-    <p class="text-3xl font-medium mb-4">
-      {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
-    </p>
-    <div class="flex align-items-center">
-      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
-      <span class="text-xl"> {{ type }} Wire</span>
-    </div>
-    <Steps class="stepper" :model="items" :readonly="false" />
-    <!-- <div class="mt-4 mb-4">
+  <section class="section-main">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+      <p class="text-3xl font-medium mb-4">
+        {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
+      </p>
+      <div class="flex align-items-center">
+        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
+        <span class="text-xl"> {{ type }} Wire</span>
+      </div>
+      <Steps class="stepper" :model="items" :readonly="false" />
+      <!-- <div class="mt-4 mb-4">
         <Button class="p-button search-btn" :label="t('newBeneficiary')" @click="newBeneficiary"/>
     </div> -->
-    <router-view
-      v-slot="{ Component }"
-      :list="listBeneficiary"
-      :toNew="newBeneficiary"
-      :formData="formObject"
-      @prevPage="prevStepPage($event)"
-      @nextPage="nextStepPage($event)"
-      @complete="stepComplete"
-    >
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
-  </div>
+      <router-view
+        v-slot="{ Component }"
+        :list="listBeneficiary"
+        :toNew="newBeneficiary"
+        :formData="formObject"
+        @prevPage="prevStepPage($event)"
+        @nextPage="nextStepPage($event)"
+        @complete="stepComplete"
+      >
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -123,5 +125,4 @@ const onSearch = () => {
 .search-btn {
   width: 30% !important;
 }
-
 </style>

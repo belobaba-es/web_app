@@ -1,33 +1,33 @@
 <template>
-  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+  <section class="section-main">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+      <p class="text-3xl font-medium mb-4">
+        {{ t('withdraw') }} / <span class="text-primary"> {{ t('crypto') }} </span>
+      </p>
 
-    <p class="text-3xl font-medium mb-4">
-      {{ t('withdraw') }} / <span class="text-primary"> {{ t('crypto') }} </span>
-    </p>
+      <div class="flex align-items-center">
+        <router-link to="/withdraw">
+          <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+        </router-link>
+        <span class="text-xl">{{ t('otherPlatformCrypto') }}</span>
+      </div>
 
-    <div class="flex align-items-center">
-      <router-link to="/withdraw">
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
-      </router-link>
-      <span class="text-xl">{{ t('otherPlatformCrypto') }}</span>
+      <Steps class="mt-2" :model="items" :readonly="false" />
+      <router-view
+        v-slot="{ Component }"
+        :list="listBeneficiary"
+        :toNew="newBeneficiary"
+        :formData="formObject"
+        @prevPage="prevStepPage($event)"
+        @nextPage="nextStepPage($event)"
+        @complete="stepComplete"
+      >
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
-
-    
-    <Steps class="mt-2" :model="items" :readonly="false" />
-    <router-view
-      v-slot="{ Component }"
-      :list="listBeneficiary"
-      :toNew="newBeneficiary"
-      :formData="formObject"
-      @prevPage="prevStepPage($event)"
-      @nextPage="nextStepPage($event)"
-      @complete="stepComplete"
-    >
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

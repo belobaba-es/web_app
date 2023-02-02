@@ -1,96 +1,98 @@
 <template>
-  <p class="text-3xl font-medium mb-4">
-    {{ t('deposit') }} / <span class="text-primary">{{ t('fiat') }} </span>
-  </p>
-  <TabMenu :model="menuItems" v-model:activeIndex="active" />
+  <section class="section-main">
+    <p class="text-3xl font-medium mb-4">
+      {{ t('deposit') }} / <span class="text-primary">{{ t('fiat') }} </span>
+    </p>
+    <TabMenu :model="menuItems" v-model:activeIndex="active" />
 
-  <div v-if="active == 0" class="mt-2">
-    <p class="">{{ t('depositAccountUSD') }}</p>
+    <div v-if="active == 0" class="mt-2">
+      <p class="">{{ t('depositAccountUSD') }}</p>
 
-    <p class="font-medium text-sm">{{ t('depositBankName') }}</p>
-    <p class="">{{ bankNational?.bankName }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('depositBankName') }}</p>
+      <p class="">{{ bankNational?.bankName }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('routingNumber') }}</p>
-    <p class="">{{ bankNational?.routingNumber }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('routingNumber') }}</p>
+      <p class="">{{ bankNational?.routingNumber }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('creditTo') }}</p>
-    <p class="">{{ bankNational?.creditTo }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('creditTo') }}</p>
+      <p class="">{{ bankNational?.creditTo }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('reference') }}</p>
-    <p class="">{{ bankNational?.reference }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('reference') }}</p>
+      <p class="">{{ bankNational?.reference }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('address') }}</p>
-    <p class="">{{ bankNational?.address }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('address') }}</p>
+      <p class="">{{ bankNational?.address }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
-    <p class="">{{ bankNational?.accountNumber }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
+      <p class="">{{ bankNational?.accountNumber }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('bankAddress') }}</p>
-    <p class="">{{ bankNational?.bankAddress }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('bankAddress') }}</p>
+      <p class="">{{ bankNational?.bankAddress }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
-    <p class="">{{ bankNational?.bankPhone }}</p>
+      <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
+      <p class="">{{ bankNational?.bankPhone }}</p>
 
-    <div class="grid mt-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfNationalData" />
+      <div class="grid mt-2">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfNationalData" />
+        </div>
       </div>
+      <Divider type="solid" />
     </div>
-    <Divider type="solid" />
-  </div>
 
-  <div v-if="active == 1" class="mt-2">
-    <p>{{ t('depositAccountOther') }}</p>
+    <div v-if="active == 1" class="mt-2">
+      <p>{{ t('depositAccountOther') }}</p>
 
-    <p class="font-medium text-sm">{{ t('depositBankName') }}</p>
-    <p class="">{{ bankInternational?.bankName }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('depositBankName') }}</p>
+      <p class="">{{ bankInternational?.bankName }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('routingNumber') }}</p>
-    <p class="">{{ bankInternational?.routingNumber }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('routingNumber') }}</p>
+      <p class="">{{ bankInternational?.routingNumber }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('swiftCode') }}</p>
-    <p class="">{{ bankInternational?.swiftCode }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('swiftCode') }}</p>
+      <p class="">{{ bankInternational?.swiftCode }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('creditTo') }}</p>
-    <p class="">{{ bankInternational?.creditTo }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('creditTo') }}</p>
+      <p class="">{{ bankInternational?.creditTo }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('reference') }}</p>
-    <p class="">{{ bankInternational?.reference }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('reference') }}</p>
+      <p class="">{{ bankInternational?.reference }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('address') }}</p>
-    <p class="">{{ bankInternational?.address }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('address') }}</p>
+      <p class="">{{ bankInternational?.address }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
-    <p class="">{{ bankInternational?.accountNumber }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
+      <p class="">{{ bankInternational?.accountNumber }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('bankAddress') }}</p>
-    <p class="">{{ bankInternational?.bankAddress }}</p>
-    <Divider type="solid" />
+      <p class="font-medium text-sm">{{ t('bankAddress') }}</p>
+      <p class="">{{ bankInternational?.bankAddress }}</p>
+      <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
-    <p class="">{{ bankInternational?.bankPhone }}</p>
+      <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
+      <p class="">{{ bankInternational?.bankPhone }}</p>
 
-    <div class="grid mt-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfInternationalData" />
+      <div class="grid mt-2">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <Button class="p-button download-btn" :label="t('downloadPdf')" @click="generatePdfInternationalData" />
+        </div>
       </div>
+      <Divider type="solid" />
     </div>
-    <Divider type="solid" />
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -118,8 +120,8 @@ const fiatService = FiatService.instance()
 const userStore = useUserStore()
 
 const username = userStore.getUser.firstName
-    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-    : userStore.getUser.name
+  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+  : userStore.getUser.name
 
 const dataBank = ref<BankData[]>([])
 const bankNational = ref()
@@ -129,7 +131,6 @@ const bankNationalPdf: any = {}
 const bankInternationalPdf: any = {}
 const title = t('titleDespositFiat')
 const footerPdf = t('footerPdfFiatData')
-
 
 onMounted(async () => {
   fiatService.bankData(userStore.getUser.accountId).then(data => {
@@ -180,7 +181,6 @@ const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
   generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
 }
-
 </script>
 
 <style lang="css">
@@ -214,5 +214,4 @@ p {
 .download-btn {
   width: 100% !important;
 }
-
 </style>

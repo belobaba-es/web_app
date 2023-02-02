@@ -1,29 +1,31 @@
 <template>
-  <div>
-    <p class="text-3xl font-medium mb-4">
-      {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
-    </p>
-    <div class="flex align-items-center">
-      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
-      <span class="text-xl"> International Wire</span>
+  <section class="section-main">
+    <div>
+      <p class="text-3xl font-medium mb-4">
+        {{ t('withdraw') }} / <span class="text-primary">{{ t('fiat') }} </span>
+      </p>
+      <div class="flex align-items-center">
+        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+        <span class="text-xl"> International Wire</span>
+      </div>
+
+      <Steps class="w-100" :model="items" :readonly="false" />
+
+      <router-view
+        v-slot="{ Component }"
+        :list="listBeneficiary"
+        :formData="formObject"
+        toNew="/withdraw/fiat/international/new"
+        @prevPage="prevStepPage($event)"
+        @nextPage="nextStepPage($event)"
+        @complete="stepComplete"
+      >
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
-
-    <Steps class="w-100" :model="items" :readonly="false" />
-
-    <router-view
-      v-slot="{ Component }"
-      :list="listBeneficiary"
-      :formData="formObject"
-      toNew="/withdraw/fiat/international/new"
-      @prevPage="prevStepPage($event)"
-      @nextPage="nextStepPage($event)"
-      @complete="stepComplete"
-    >
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
