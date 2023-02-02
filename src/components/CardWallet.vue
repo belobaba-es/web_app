@@ -340,7 +340,7 @@ const responsiveOptions = ref([
   }
 
   @media only screen and (max-width: 991px) {
-    margin-bottom: 15%;
+    margin-bottom: 50%;
   }
 }
 </style>
