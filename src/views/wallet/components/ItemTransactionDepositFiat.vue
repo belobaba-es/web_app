@@ -87,6 +87,8 @@ const secondsToDate = (seconds: number) => {
 .reference {
   font-family: KanitLight !important;
   width: fit-content;
+  word-wrap: break-word;
+  overflow: hidden;
 
   /* Set max and min font sizes in mobile view */
   @media only screen and (min-width: 992px) {

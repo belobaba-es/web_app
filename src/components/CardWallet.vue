@@ -118,7 +118,7 @@
 import Skeleton from 'primevue/skeleton'
 import Carousel from 'primevue/carousel'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { defineProps, ref } from 'vue'
+import { defineProps, ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useRouter } from 'vue-router'
