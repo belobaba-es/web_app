@@ -1,8 +1,8 @@
 <template>
   <h2 class="font-medium">{{ t('wallet') }}</h2>
 
-
-  <Carousel v-if="submitting === true && carousel === true"
+  <Carousel
+    v-if="submitting === true && carousel === true"
     :value="skeleton"
     :numVisible="5"
     :showIndicators="false"
@@ -34,7 +34,8 @@
     </template>
   </Carousel>
 
-  <Carousel v-if="carousel === true"
+  <Carousel
+    v-if="carousel === true"
     :value="getWallets()"
     :numVisible="5"
     :showIndicators="false"
@@ -67,7 +68,9 @@
           </div>
           <div class="col-6 flex justify-content-end align-content-end flex-wrap">
             <p class="text-balance">
-              {{ calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0) }}
+              {{
+                calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0)
+              }}
               <br />
               <small>{{ slotProps.data.assetCode }}</small>
             </p>
@@ -76,7 +79,6 @@
       </div>
     </template>
   </Carousel>
-
 
   <div class="grid col-12 wallet" v-if="carousel === false">
     <div
@@ -110,14 +112,13 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
 import Skeleton from 'primevue/skeleton'
 import Carousel from 'primevue/carousel'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import {defineProps, ref} from 'vue'
+import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useRouter } from 'vue-router'
@@ -145,7 +146,6 @@ const getWallets = () => {
   submitting.value = false
   return wallets
 }
-
 
 const getStyle = (assetCode: string) => {}
 
@@ -337,6 +337,10 @@ const responsiveOptions = ref([
 
   .one-wallet {
     max-width: 350px;
+  }
+
+  @media only screen and (max-width: 991px) {
+    margin-bottom: 15%;
   }
 }
 </style>

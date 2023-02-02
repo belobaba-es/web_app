@@ -17,7 +17,7 @@ defineProps<{
 <style lang="scss">
 
 .tap-bar-container {
-    background-color: #f9f9f9;
+    background-color: #fff;
     border: 1px solid #e7e6e7;
     padding: 10px;
     position: fixed;
