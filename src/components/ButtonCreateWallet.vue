@@ -76,7 +76,8 @@ const onCreateAddress = (event: any) => {
   background-color: #fff;
   padding: 1rem;
   width: 100%;
-  
+  border-top: 1px solid var(--surface-border);
+    
   @media only screen and (max-width: 991px) {
       position: fixed;
       bottom: 4.50rem;

@@ -5,76 +5,75 @@
         <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="router.push('/swap')" />
         <span class="text-xl"> {{ t('swapHistory') }}</span>
       </div>
-      <div class="flex justify-content-between align-items-center px-2 mb-2 surface-100">
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('swap') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('moveDone') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center"></div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('toYourBalanceIn') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('operationDate') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('status') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('quotePrice') }}</span>
-        </div>
-        <div class="w-6rem h-4rem flex justify-content-center align-items-center">
-          <span>{{ t('numberOfOrder') }}</span>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="px-2 mb-2 surface-100">
+            <tr>
+              <th class="icons-container font-medium p-3">{{ t('swap') }}</th>
+              <th class="total-amount-container font-medium p-3">{{ t('moveDone') }}</th>
+              <th class="swap-icon-container font-medium p-3"></th>
+              <th class="balance-in-container font-medium p-3">{{ t('toYourBalanceIn') }}</th>
+              <th class="operation-date-container font-medium p-3">{{ t('operationDate') }}</th>
+              <th class="status-container font-medium p-3">{{ t('status') }}</th>
+              <th class="fee-amount-container font-medium p-3">{{ t('quotePrice') }}</th>
+              <th class="number-of-order-container font-medium p-3">{{ t('numberOfOrder') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in quotes.results">
+              <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">
+                <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">
+                <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
+              </td>
+
+              <td class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              </td>
+
+              <td class="swap-icon-container">
+                <img :src="swapIcon" />
+              </td>
+
+              <td class="balance-in-container">
+                <h3 class="text-center">{{ item.unitCount }}</h3>
+              </td>
+
+              <td class="operation-date-container">
+                <h3 class="text-center">{{ secondsToDate(item.createdAt._seconds) }}</h3>
+              </td>
+
+              <td class="status-container">
+                <h3 class="text-center" :class="statusClass(item.status)">{{ item.status }}</h3>
+              </td>
+
+              <td class="fee-amount-container">
+                <h3 class="text-center"><small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}</h3>
+              </td>
+
+              <td class="number-of-order-container">
+                <h3 class="text-center">{{ item.quoteId }}</h3>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid flex justify-content-end">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+          <Button
+            class="p-button load-more-btn"
+            :label="t('loadMore')"
+            @click="getNextPage"
+            :loading="useSwapStore().loading"
+          />
         </div>
       </div>
-      <VirtualScroller
-        scrollHeight="370px"
-        :items="quotes.results"
-        :itemSize="70"
-        :showLoader="false"
-        :loading="useSwapStore().loading"
-        :lazy="true"
-        :delay="250"
-        @lazy-load="getNextPage"
-      >
-        <template v-slot:item="{ item, options }">
-          <div :class="['scroll-item flex justify-content-between pr-2', { odd: options.odd }]">
-            <div class="h-5rem w-6rem relative">
-              <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
-              <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              <span class="font-medium">{{ item.totalAmount }}</span>
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              <img :src="swapIcon" />
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              <span class="font-medium">{{ item.unitCount }}</span>
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              {{ secondsToDate(item.createdAt._seconds) }}
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              <span class="font-medium" :class="statusClass(item.status)">{{ item.status }}</span>
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              {{ item.feeAmount }}
-            </div>
-            <div class="h-5rem w-6rem flex align-items-center justify-content-center">
-              {{ item.quoteId }}
-            </div>
-          </div>
-          <Divider />
-        </template>
-        <template v-slot:loader="{ options }">
-          <div :class="['scroll-item p-2', { odd: options.odd }]" style="height: 70px">
-            <Skeleton :width="'100%'" height="1.3rem" />
-          </div>
-        </template>
-      </VirtualScroller>
     </PageLayout>
   </section>
 </template>
@@ -88,9 +87,7 @@ import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
-import VirtualScroller from 'primevue/virtualscroller'
-import Divider from 'primevue/divider'
-import Skeleton from 'primevue/skeleton'
+
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
 const { fetchQuotes, getNextPage } = useSwapStore()
@@ -105,6 +102,7 @@ const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
 const iconAsset = (assetCode: string) => {
   return `https://storage.googleapis.com/noba-dev/${assetCode}.svg`
 }
+
 const secondsToDate = (seconds: number) => {
   const locale = localStorage.getItem('noba@lang')
   const date = new Date(seconds * 1000)
@@ -118,6 +116,80 @@ const statusClass = (status: string) => {
     'text-red-500': status === 'cancel',
   }
 }
+
+const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: string) => {
+  const price = totalAmount / unitCount
+
+  return price.toFixed(2)
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th,
+.table td {
+  padding: 0.2rem;
+  margin: 12rem;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: top;
+}
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.table .table {
+  background-color: #fff;
+}
+
+.icons-container {
+  min-width: 75px;
+}
+.total-amount-container {
+  min-width: 100px;
+}
+.swap-icon-container {
+  text-align: center !important;
+  vertical-align: middle !important;
+  min-width: 25px;
+}
+.balance-in-container {
+  min-width: 135px;
+}
+.operation-date-container {
+  min-width: 150px;
+}
+.status-container {
+  min-width: 80px;
+}
+.fee-amount-container {
+  min-width: 110px;
+}
+
+.number-of-order-container {
+  min-width: 300px;
+}
+
+.load-more-btn {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100% !important;
+}
+
+small{
+  font-size: 7.5pt;
+}
+</style>
