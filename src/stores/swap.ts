@@ -6,7 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
 import { QuoteResponse } from '../views/swap/types/quote-response.interface'
-import {SummarySwap} from "../views/swap/types/sumary";
+import { SummarySwap } from '../views/swap/types/sumary'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -45,8 +45,8 @@ export const useSwapStore = defineStore('swap', () => {
     assetName: '',
     unitCount: 0.0,
     transactionType: '',
-    quoteId: ''
-  });
+    quoteId: '',
+  })
 
   const swapBtnText = computed(() => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
@@ -67,8 +67,6 @@ export const useSwapStore = defineStore('swap', () => {
         amountIsUnitCount: amountIsUnitCount.value,
         transactionType: transactionType.value,
         assetId: assetId.value,
-
-
       })
       .then(response => {
         assetId.value = response.data.assetId
@@ -114,16 +112,15 @@ export const useSwapStore = defineStore('swap', () => {
         })
         loading.value = false
 
-        transactionSummary.value.assetIcon = assetIcon.value;
-        transactionSummary.value.assetName = assetName.value;
-        transactionSummary.value.feeAmount = feeAmount.value;
-        transactionSummary.value.totalAmount = totalAmount.value;
-        transactionSummary.value.transactionType = transactionType.value;
-        transactionSummary.value.unitCount = unitCount.value;
-        transactionSummary.value.quoteId = quoteId.value;
+        transactionSummary.value.assetIcon = assetIcon.value
+        transactionSummary.value.assetName = assetName.value
+        transactionSummary.value.feeAmount = feeAmount.value
+        transactionSummary.value.totalAmount = totalAmount.value
+        transactionSummary.value.transactionType = transactionType.value
+        transactionSummary.value.unitCount = unitCount.value
+        transactionSummary.value.quoteId = quoteId.value
 
         router.push('/swap/success')
-
       })
       .catch(async error => {
         loading.value = false
@@ -220,7 +217,7 @@ export const useSwapStore = defineStore('swap', () => {
       shouldRefreshQuote.value = false
     }
 
-    await clearSwap(transactionType.value);
+    await clearSwap(transactionType.value)
   }
 
   const cancelQuote = async () => {
@@ -228,34 +225,31 @@ export const useSwapStore = defineStore('swap', () => {
     await swapService.cancelQuote(quoteId.value).then(() => (quoteId.value = undefined))
   }
 
-  const getNextPage = async (event: any) => {
-    const { last } = event
-    if (last === quotes.value.results.length && quotes.value.nextPag !== '' && !loading.value) {
-      loading.value = true
-      const swapService = SwapService.instance()
-      await swapService
-        .nextQuotes(quotes.value.nextPag)
-        .then(response => {
-          response.results.forEach(result => {
-            const existInResults = quotes.value.results.find(item => item.id === result.id)
-            if (!existInResults) quotes.value.results.push(result)
-          })
-          quotes.value.nextPag = response.nextPag
+  const getNextPage = async () => {
+    loading.value = true
+    const swapService = SwapService.instance()
+    await swapService
+      .nextQuotes(quotes.value.nextPag)
+      .then(response => {
+        response.results.forEach(result => {
+          const existInResults = quotes.value.results.find(item => item.id === result.id)
+          if (!existInResults) quotes.value.results.push(result)
         })
-        .finally(() => {
-          loading.value = false
-        })
-    }
+        quotes.value.nextPag = response.nextPag
+      })
+      .finally(() => {
+        loading.value = false
+      })
   }
 
   const clearSwap = async (typeTransaction = 'buy') => {
-    refreshQuote();
-    clearTimer();
-    quoteId.value = '';
+    refreshQuote()
+    clearTimer()
+    quoteId.value = ''
     // if (quoteId.value) {
     //   await cancelQuote();
     // }
-    transactionType.value = typeTransaction;
+    transactionType.value = typeTransaction
   }
 
   return {
@@ -287,6 +281,6 @@ export const useSwapStore = defineStore('swap', () => {
     getNextPage,
     shouldRefreshQuote,
     clearSwap,
-    transactionSummary
+    transactionSummary,
   }
 })
