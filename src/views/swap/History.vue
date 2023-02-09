@@ -53,7 +53,7 @@
               </td>
 
               <td class="fee-amount-container">
-                <h3 class="text-center">{{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType)    }}</h3>
+                <h3 class="text-center"><small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}</h3>
               </td>
 
               <td class="number-of-order-container">
@@ -117,14 +117,10 @@ const statusClass = (status: string) => {
   }
 }
 
-const getPriceQuote = (totalAmount:number, unitCount:number, transactionType:string) => {
+const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: string) => {
   const price = totalAmount / unitCount
 
-  if(transactionType === "sell"){
-    return price.toFixed(2)
-  }
-  
-  return price.toFixed(8);
+  return price.toFixed(2)
 }
 </script>
 
@@ -191,5 +187,9 @@ const getPriceQuote = (totalAmount:number, unitCount:number, transactionType:str
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100% !important;
+}
+
+small{
+  font-size: 7.5pt;
 }
 </style>
