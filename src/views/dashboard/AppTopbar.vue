@@ -64,7 +64,7 @@ const items = ref([
     class: 'icon-headset',
     label: t('contact'),
     command: () => {
-      window.open('https://api.whatsapp.com/send?phone=17863814293/', '_blank')
+      window.open('https://api.whatsapp.com/send?phone=17863814293', '_blank')
     },
   },
   {
@@ -72,7 +72,7 @@ const items = ref([
     icon: 'pi ',
     class: 'icon-help',
     command: () => {
-      window.open('https://noba.cash/faq/', '_blank')
+      window.open('https://noba.cash/faq', '_blank')
     },
   },
   {
