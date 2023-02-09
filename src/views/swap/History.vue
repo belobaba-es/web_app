@@ -22,9 +22,14 @@
           </thead>
           <tbody>
             <tr v-for="item in quotes.results">
-              <td class="h-5rem w-6rem relative icons-container">
+              <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">
+                <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
               <td class="total-amount-container">
@@ -69,7 +74,6 @@
           />
         </div>
       </div>
-      
     </PageLayout>
   </section>
 </template>
@@ -91,7 +95,6 @@ const router = useRouter()
 
 onMounted(async () => {
   await fetchQuotes()
-  console.log(quotes.value.results)
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
