@@ -1,6 +1,6 @@
 <template>
   <div class="container-center">
-    <img :src="logo" alt="logo" />
+    <img class="logo-noba" :src="logo" alt="logo" />
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
@@ -147,5 +147,10 @@ const handleSubmit = () => {
 
 .with-buttons {
   width: 100% !important;
+}
+
+.logo-noba{
+  width: 142px;
+  height: 64px;
 }
 </style>
