@@ -10,14 +10,14 @@
         <table class="table">
           <thead class="px-2 mb-2 surface-100">
             <tr>
-              <th class="icons-container p-3">{{ t('swap') }}</th>
-              <th class="total-amount-container p-3">{{ t('moveDone') }}</th>
-              <th class="swap-icon-container p-3"></th>
-              <th class="balance-in-container p-3">{{ t('toYourBalanceIn') }}</th>
-              <th class="operation-date-container p-3">{{ t('operationDate') }}</th>
-              <th class="status-container p-3">{{ t('status') }}</th>
-              <th class="fee-amount-container p-3">{{ t('quotePrice') }}</th>
-              <th class="number-of-order-container p-3">{{ t('numberOfOrder') }}</th>
+              <th class="icons-container font-medium p-3">{{ t('swap') }}</th>
+              <th class="total-amount-container font-medium p-3">{{ t('moveDone') }}</th>
+              <th class="swap-icon-container font-medium p-3"></th>
+              <th class="balance-in-container font-medium p-3">{{ t('toYourBalanceIn') }}</th>
+              <th class="operation-date-container font-medium p-3">{{ t('operationDate') }}</th>
+              <th class="status-container font-medium p-3">{{ t('status') }}</th>
+              <th class="fee-amount-container font-medium p-3">{{ t('quotePrice') }}</th>
+              <th class="number-of-order-container font-medium p-3">{{ t('numberOfOrder') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +28,7 @@
               </td>
 
               <td class="total-amount-container">
-                <h3 class="font-medium text-center">{{ item.totalAmount }}</h3>
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
               </td>
 
               <td class="swap-icon-container">
@@ -36,23 +36,23 @@
               </td>
 
               <td class="balance-in-container">
-                <h3 class="font-medium text-center">{{ item.unitCount }}</h3>
+                <h3 class="text-center">{{ item.unitCount }}</h3>
               </td>
 
               <td class="operation-date-container">
-                <h3 class="font-medium text-center">{{ secondsToDate(item.createdAt._seconds) }}</h3>
+                <h3 class="text-center">{{ secondsToDate(item.createdAt._seconds) }}</h3>
               </td>
 
               <td class="status-container">
-                <h3 class="font-medium text-center" :class="statusClass(item.status)">{{ item.status }}</h3>
+                <h3 class="text-center" :class="statusClass(item.status)">{{ item.status }}</h3>
               </td>
 
               <td class="fee-amount-container">
-                <h3 class="font-medium text-center">{{ item.feeAmount }}</h3>
+                <h3 class="text-center">{{ item.feeAmount }}</h3>
               </td>
 
               <td class="number-of-order-container">
-                <h3 class="font-medium text-center">{{ item.quoteId }}</h3>
+                <h3 class="text-center">{{ item.quoteId }}</h3>
               </td>
             </tr>
           </tbody>
@@ -91,6 +91,7 @@ const router = useRouter()
 
 onMounted(async () => {
   await fetchQuotes()
+  console.log(quotes.value.results)
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
