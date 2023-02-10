@@ -33,13 +33,15 @@
 
     <div v-if="showAmount" class="grid col-12 flex w-full">
       <div class="flex w-full">
-        <InputText
+        <InputNumber
           id="amount"
-          type="number"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
           :placeholder="t('amount')"
+          :minFractionDigits="2"
+          :maxFractionDigits="10"
         />
+
         <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
       </div>
     </div>
@@ -72,9 +74,9 @@
       </div>
     </div>
 
-<!--    <div class="col-12 m-2">-->
-<!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-<!--    </div>-->
+    <!--    <div class="col-12 m-2">-->
+    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
+    <!--    </div>-->
     <div class="col-6">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
@@ -84,6 +86,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -107,7 +110,7 @@ const props = defineProps<{
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 
 const emit = defineEmits(['nextPage'])
-const amount = ref('')
+const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')
 const assetId = ref('')
@@ -129,7 +132,7 @@ const events = ref<any>([
 ])
 
 const amountFee = computed(() => {
-  const t = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+  const t = isNaN(amount.value - fee.value) ? 0 : amount.value - fee.value
   if (t > balance.value) {
     toast.add({
       severity: 'warn',
@@ -138,7 +141,7 @@ const amountFee = computed(() => {
       life: 4000,
     })
 
-    amount.value = '0'
+    amount.value = 0
 
     total.value = 0
   }
@@ -153,7 +156,7 @@ const amountFee = computed(() => {
 })
 
 const validateField = (): boolean => {
-  if (amount.value.trim().length === 0) {
+  if (amount.value === 0) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',
@@ -177,7 +180,11 @@ const validateField = (): boolean => {
 
   return true
 }
-
+const onInput = (event: any) => {
+  if (event.target.value.startsWith('00')) {
+    amount.value = 0
+  }
+}
 const nextPage = () => {
   if (!validateField()) {
     return
