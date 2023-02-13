@@ -108,7 +108,7 @@
   "depositAccountUSD": "Deposits in this account must be made in US Dollars",
   "depositAccountOther": "Deposits into this account can be made in currencies other than US dollars.",
   "depositNameOnBank": "Name on Bank Account",
-  "bankName": "",
+  "bankName": "Bank Name",
   "helpTextDepositBankName": "Make sure the bank name is exactly as it appears on your bank account",
   "routingNumber": "Routing Number",
   "creditTo": "Credit To",
