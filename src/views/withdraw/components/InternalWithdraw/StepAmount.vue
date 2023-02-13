@@ -39,7 +39,7 @@
           v-model="amount"
           :placeholder="t('amount')"
           :minFractionDigits="2"
-          :maxFractionDigits="10"
+          :maxFractionDigits="8"
         />
 
         <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
@@ -73,10 +73,7 @@
         />
       </div>
     </div>
-
-    <!--    <div class="col-12 m-2">-->
-    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-    <!--    </div>-->
+  
     <div class="col-6">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
