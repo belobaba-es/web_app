@@ -1,6 +1,6 @@
 <template>
     <div class="container-center">
-        <img :src="logo" alt="logo" />
+        <img class="logo-noba" :src="logo" alt="logo" />
     </div>
     <div class="container-main">
         <div class="lg:bg-contain container">
@@ -91,6 +91,11 @@ const handleSubmit = () => {
     border-radius: 20px;
     padding: 2.5rem;
     box-shadow: 0px 0px 60px rgb(0 0 0 / 5%);
+}
+
+.logo-noba{
+  width: 142px;
+  height: 64px;
 }
 </style>
   
