@@ -197,7 +197,7 @@ const saveBeneficiary = () => {
     .catch(e => {
       submitting.value = false
 
-      if (e.response.data.data.warning) {
+      if (e.response.data.data?.warning) {
         showErrorsArray(e.response.data.data.warning)
         return
       }
