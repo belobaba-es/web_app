@@ -335,6 +335,19 @@ const saveBeneficiary = () => {
     })
     .catch(e => {
       submitting.value = false
+
+      if (e.response.data.data.warning) {
+        e.response.data.data.warning.forEach((element: any) => {
+          toast.add({
+            severity: 'error',
+            summary: t('somethingWentWrong'),
+            detail: `${element.field} ${element.message}`,
+            life: 4000,
+          })
+        })
+        return
+      }
+
       if (e.response.data.message) {
         toast.add({
           severity: 'error',
