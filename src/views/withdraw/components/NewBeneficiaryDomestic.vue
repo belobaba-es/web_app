@@ -131,6 +131,7 @@ import { useWorld } from '../../../composables/useWorld'
 import { BeneficiaryService } from '../services/beneficiary'
 import { BeneficiaryFiatDomestic } from '../types/beneficiary.interface'
 import showMessage from '../../../shared/showMessageArray'
+import { exceptionError } from '../types/exceptionError'
 
 const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })
@@ -168,6 +169,17 @@ const form = ref<BeneficiaryFiatDomestic>({
   typeBeneficiaryBankWithdrawal: 'DOMESTIC',
 })
 
+const showErrorsArray = (data: exceptionError[]) => {
+  data.forEach((element: any) => {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: `${element.field} ${element.message}`,
+      life: 4000,
+    })
+  })
+}
+
 const saveBeneficiary = () => {
   submitting.value = true
   const beneficiaryService = BeneficiaryService.instance()
@@ -184,6 +196,11 @@ const saveBeneficiary = () => {
     })
     .catch(e => {
       submitting.value = false
+
+      if (e.response.data.data.warning) {
+        showErrorsArray(e.response.data.data.warning)
+        return
+      }
 
       if (e.response.data.message) {
         toast.add({
