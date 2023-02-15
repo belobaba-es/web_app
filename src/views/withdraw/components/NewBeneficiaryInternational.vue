@@ -249,6 +249,7 @@ import router from '../../../router'
 import { BeneficiaryService } from '../services/beneficiary'
 import { useToast } from 'primevue/usetoast'
 import showMessage from '../../../shared/showMessageArray'
+import showExceptionError from '../../../shared/showExceptionError'
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
@@ -335,13 +336,16 @@ const saveBeneficiary = () => {
     })
     .catch(e => {
       submitting.value = false
-      if (e.response.data.message) {
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: e.response.data.message,
-          life: 4000,
+
+      if (e.response.data.data?.warning) {
+        e.response.data.data.warning.forEach((element: any) => {
+          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
         })
+        return
+      }
+
+      if (e.response.data.message) {
+        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
         return
       }
 
