@@ -32,16 +32,24 @@
                 <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
-              <td class="total-amount-container">
+              <td v-if="item.transactionType === 'buy'" class="total-amount-container">
                 <h3 class="text-center">{{ item.totalAmount }}</h3>
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="balance-in-container">
+                <h3 class="text-center">{{ item.unitCount }}</h3>
               </td>
 
               <td class="swap-icon-container">
                 <img :src="swapIcon" />
               </td>
 
-              <td class="balance-in-container">
+              <td v-if="item.transactionType === 'buy'" class="balance-in-container">
                 <h3 class="text-center">{{ item.unitCount }}</h3>
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
               </td>
 
               <td class="operation-date-container">
@@ -53,7 +61,9 @@
               </td>
 
               <td class="fee-amount-container">
-                <h3 class="text-center"><small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}</h3>
+                <h3 class="text-center">
+                  <small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}
+                </h3>
               </td>
 
               <td class="number-of-order-container">
@@ -189,7 +199,7 @@ const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: 
   width: 100% !important;
 }
 
-small{
+small {
   font-size: 7.5pt;
 }
 </style>
