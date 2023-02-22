@@ -15,6 +15,7 @@ export const useSwapStore = defineStore('swap', () => {
   const toast = useToast()
   const baseAmount = ref(0.0)
   const feeAmount = ref(0.0)
+  const feeNoba = ref(0.0)
   const totalAmount = ref(0.0)
   const unitCount = ref(0.0)
   const amount = ref(0.0)
@@ -74,6 +75,7 @@ export const useSwapStore = defineStore('swap', () => {
         baseAmount.value = response.data.baseAmount
         feeAmount.value = response.data.feeAmount
         totalAmount.value = response.data.totalAmount
+        feeNoba.value = response.data.feeNoba
         if (transactionType.value === 'buy') {
           unitCount.value = response.data.unitCount
         }
@@ -282,5 +284,6 @@ export const useSwapStore = defineStore('swap', () => {
     shouldRefreshQuote,
     clearSwap,
     transactionSummary,
+    feeNoba
   }
 })
