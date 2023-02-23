@@ -33,13 +33,21 @@
           <p class="mt-3 mb-3 text-sm text-center">
             {{ t('swapPriceQuote') }}
           </p>
-          <div class="text-center" v-if="transactionSummary.quoteId">
-            <span class="font-medium text-primary text-2xl">Fee:</span>
-            <span class="text-2xl font-medium">{{ transactionSummary.feeAmount }}</span>
-            /
-            <span class="font-medium text-primary text-2xl">Total:</span>
-            <span class="text-2xl font-medium">{{ transactionSummary.totalAmount }}</span>
-          </div>
+
+          <ShowFeeBuy
+              :feeAmount=summary.feeAmount
+              :totalAmount=summary.totalAmount
+              :feeNoba=summary.feeNoba
+              v-if="summary.quoteId && summary.transactionType === 'buy'"
+          />
+
+          <ShowFeeSell
+              :feeAmount=summary.feeAmount
+              :totalAmount=summary.totalAmount
+              :feeNoba=summary.feeNoba
+              v-if="summary.quoteId && summary.transactionType !== 'buy'"
+          />
+
           <div class="flex justify-content-center mt-lg-2 mt-3">
             <div class="mr-4">
               <Button
@@ -78,6 +86,8 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { SummarySwap } from './types/sumary'
 import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
+import ShowFeeBuy from "./components/ShowFeeBuy.vue";
+import ShowFeeSell from "./components/ShowFeeSell.vue";
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()
@@ -87,5 +97,6 @@ const { getWalletByAssetCode } = useBalanceWallet()
 const usdIcon = getWalletByAssetCode('USD')?.icon
 const usdName = getWalletByAssetCode('USD')?.name
 
-const summary: SummarySwap = transactionSummary.value as SummarySwap
+const summary = transactionSummary.value as SummarySwap
+console.log(summary)
 </script>

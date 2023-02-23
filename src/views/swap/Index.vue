@@ -43,13 +43,15 @@
                 :feeAmount=feeAmount
                 :totalAmount=totalAmount
                 :feeNoba=feeNoba
-                v-if="quoteId && transactionType === 'buy'"/>
+                v-if="quoteId && transactionType === 'buy'"
+            />
 
             <ShowFeeSell
                 :feeAmount=feeAmount
                 :totalAmount=totalAmount
                 :feeNoba=feeNoba
-                v-if="quoteId && transactionType !== 'buy'"/>
+                v-if="quoteId && transactionType !== 'buy'"
+            />
 
             <div class="mb-2">
               <Button
