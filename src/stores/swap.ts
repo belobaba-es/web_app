@@ -47,6 +47,7 @@ export const useSwapStore = defineStore('swap', () => {
     unitCount: 0.0,
     transactionType: '',
     quoteId: '',
+    feeNoba: 0
   })
 
   const swapBtnText = computed(() => {
@@ -121,6 +122,7 @@ export const useSwapStore = defineStore('swap', () => {
         transactionSummary.value.transactionType = transactionType.value
         transactionSummary.value.unitCount = unitCount.value
         transactionSummary.value.quoteId = quoteId.value
+        transactionSummary.value.feeNoba = feeNoba.value
 
         router.push('/swap/success')
       })
