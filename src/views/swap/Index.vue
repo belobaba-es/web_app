@@ -3,7 +3,7 @@
     <AccountValidationProcess v-show="!useUser.isAccountActive()"/>
     <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
       <div class="grid flex justify-content-center">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
           <div class="flex justify-content-end mb-4">
             <Button
                 type="button"
