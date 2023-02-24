@@ -35,7 +35,7 @@
   </Carousel>
 
   <Carousel
-    v-if="carousel === true"
+    v-if="carousel === true && !oneWallet"
     :value="getWallets()"
     :numVisible="5"
     :showIndicators="false"
@@ -80,7 +80,7 @@
     </template>
   </Carousel>
 
-  <div class="grid col-12 wallet" v-if="carousel === false">
+  <div class="grid col-12 wallet" v-if="carousel === false || oneWallet">
     <div
       class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
       v-bind:class="getStyle(item.assetCode)"
