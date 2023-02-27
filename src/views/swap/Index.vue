@@ -3,7 +3,7 @@
     <AccountValidationProcess v-show="!useUser.isAccountActive()" />
     <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
       <div class="grid flex justify-content-center">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-3">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
           <div class="flex justify-content-end mb-4">
             <Button
               type="button"
@@ -133,5 +133,11 @@ onUnmounted(() => {
 .swap-circle > img {
   transform: rotate(90deg);
   width: 2rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .xl\:col-4 {
+    width: 28.3333%;
+  }
 }
 </style>
