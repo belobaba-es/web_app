@@ -2,7 +2,7 @@
   <section class="section-main">
     <PageLayout :title="t('swap')">
       <div class="grid container-success flex justify-content-center align-items-center">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6 mb-5">
           <div class="flex justify-content-center mb-4">
             <img :src="successIcon" />
           </div>
@@ -34,19 +34,7 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFeeBuy
-              :feeAmount=summary.feeAmount
-              :totalAmount=summary.totalAmount
-              :feeNoba=summary.feeNoba
-              v-if="summary.quoteId && summary.transactionType === 'buy'"
-          />
-
-          <ShowFeeSell
-              :feeAmount=summary.feeAmount
-              :totalAmount=summary.totalAmount
-              :feeNoba=summary.feeNoba
-              v-if="summary.quoteId && summary.transactionType !== 'buy'"
-          />
+          <ShowFee v-if="summary.quoteId" />
 
           <div class="flex justify-content-center mt-lg-2 mt-3">
             <div class="mr-4">
@@ -86,8 +74,7 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { SummarySwap } from './types/sumary'
 import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
-import ShowFeeBuy from "./components/ShowFeeBuy.vue";
-import ShowFeeSell from "./components/ShowFeeSell.vue";
+import ShowFee from './components/ShowFee.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()
@@ -98,5 +85,4 @@ const usdIcon = getWalletByAssetCode('USD')?.icon
 const usdName = getWalletByAssetCode('USD')?.name
 
 const summary = transactionSummary.value as SummarySwap
-console.log(summary)
 </script>
