@@ -34,14 +34,7 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFeeBuy
-              :feeAmount=summary.feeAmount
-              :totalAmount=summary.totalAmount
-              :feeNoba=summary.feeNoba
-              v-if="summary.quoteId && summary.transactionType === 'buy'"
-          />
-
-          <ShowFeeSell
+          <ShowFee
               :feeAmount=summary.feeAmount
               :totalAmount=summary.totalAmount
               :feeNoba=summary.feeNoba
@@ -86,8 +79,7 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { SummarySwap } from './types/sumary'
 import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
-import ShowFeeBuy from "./components/ShowFeeBuy.vue";
-import ShowFeeSell from "./components/ShowFeeSell.vue";
+import ShowFee from "./components/ShowFee.vue";
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()

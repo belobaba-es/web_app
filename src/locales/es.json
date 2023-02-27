@@ -168,6 +168,8 @@
   "swapSuccessfulTitle": "Intercambio exitoso",
   "swapSuccessfulText": "La transacción se ha procesado con éxito. La transferencia puede estar todavía en proceso; compruebe el registro de transacciones más tarde.",
   "swapFrom": "de",
+  "from": "De",
+  "top": "Para",
   "swapTo": "a",
   "swapPriceQuote": "Presupuesto / Precio",
   "swapBackButtonTitle": "Volver al intercambio",

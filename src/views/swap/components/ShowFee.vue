@@ -34,6 +34,7 @@ import {defineProps} from "vue";
 interface Props {
   feeAmount: number,
   totalAmount: number,
+  feeTradeDesk: number,
   feeNoba: number
 }
 
