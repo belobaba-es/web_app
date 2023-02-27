@@ -202,7 +202,7 @@ export const useSwapStore = defineStore('swap', () => {
     amount.value = 0.0
     // progressBarSeconds.value = 10
     // progressBarPercent.value = 0
-    shouldRefreshQuote.value = true
+    shouldRefreshQuote.value = false
   }
 
   const fetchQuotes = async () => {
