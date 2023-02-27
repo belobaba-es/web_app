@@ -204,8 +204,6 @@
   "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
   "depositBankName": "Nombre del banco a depositar",
-  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
-  "from": "Desde",
-  "to": "Para"
+  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado."
 
 }
