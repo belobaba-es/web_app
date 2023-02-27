@@ -29,7 +29,7 @@ export const useSwapStore = defineStore('swap', () => {
   const progressBarPercent = ref(0)
   const progressBarSeconds = ref(10)
   const loading = ref(false)
-  const timer = ref()
+  let timer:number
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
   const quotes = ref<QuoteResponse>({
@@ -124,7 +124,7 @@ export const useSwapStore = defineStore('swap', () => {
       .execute(quoteId.value)
       .then(async response => {
         successExecuted.value = true
-        clearTimer()
+        // clearTimer()
 
         toast.add({
           severity: 'success',
@@ -156,7 +156,7 @@ export const useSwapStore = defineStore('swap', () => {
           life: 4000,
         })
         await cancelQuote()
-        clearTimer()
+        // clearTimer()
         refreshQuote()
       })
   }
@@ -170,7 +170,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const startTimer = () => {
-    timer.value = setInterval(() => {
+    timer = setInterval(() => {
       if (progressBarSeconds.value > 0) {
         progressBarSeconds.value = progressBarSeconds.value - 1
         progressBarPercent.value = progressBarSeconds.value * 10
@@ -178,15 +178,15 @@ export const useSwapStore = defineStore('swap', () => {
     }, 1000)
   }
   const clearTimer = () => {
-    clearInterval(timer.value)
-    timer.value = undefined
+    clearInterval(timer)
+    timer = 0
     progressBarSeconds.value = 10
     progressBarPercent.value = 0
   }
 
   watch(progressBarSeconds, async newValue => {
     if (newValue === 0) {
-      clearTimer()
+
       if (quoteId.value && !successExecuted.value) {
         shouldRefreshQuote.value = true
         await cancelQuote()
@@ -200,9 +200,9 @@ export const useSwapStore = defineStore('swap', () => {
     totalAmount.value = 0.0
     unitCount.value = 0.0
     amount.value = 0.0
-    progressBarSeconds.value = 10
-    progressBarPercent.value = 0
-    shouldRefreshQuote.value = false
+    // progressBarSeconds.value = 10
+    // progressBarPercent.value = 0
+    shouldRefreshQuote.value = true
   }
 
   const fetchQuotes = async () => {
@@ -230,7 +230,7 @@ export const useSwapStore = defineStore('swap', () => {
     }
 
     if (quoteId.value) {
-      clearTimer()
+      // clearTimer()
       await cancelQuote()
     }
 
@@ -265,7 +265,7 @@ export const useSwapStore = defineStore('swap', () => {
 
   const clearSwap = async (typeTransaction = 'buy') => {
     refreshQuote()
-    clearTimer()
+    // clearTimer()
     quoteId.value = ''
     // if (quoteId.value) {
     //   await cancelQuote();
