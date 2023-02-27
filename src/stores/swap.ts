@@ -185,7 +185,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   watch(progressBarSeconds, async newValue => {
-    if (newValue === 10) {
+    if (newValue === 0) {
       clearTimer()
       if (quoteId.value && !successExecuted.value) {
         shouldRefreshQuote.value = true

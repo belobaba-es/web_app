@@ -166,6 +166,12 @@ watch(unitCount, async newVal => {
   }
 })
 
+watch(amount, async newVal => {
+  if (typeof(assetCode.value) === 'string') {
+    await createQuote()
+  }
+})
+
 const maxCountInput = (typeCode: string) => {
   if (typeCode === 'USD') {
     amount.value = getBalanceByCode('USD')
@@ -224,7 +230,7 @@ const maxCountInput = (typeCode: string) => {
   margin-left: -10px;
 }
 
-.icon-down-cripto{
+.icon-down-cripto {
   margin-top: 4px;
 }
 </style>
