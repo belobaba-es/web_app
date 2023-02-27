@@ -19,26 +19,6 @@
     <div
       class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100 flex align-items-center justify-content-between"
     >
-      <div>
-        <template v-if="type === 'crypto'">
-          <Button
-            type="button"
-            class="bg-white btn-select-crypto border-none border-round-3xl"
-            @click="openModalSelector"
-            :disabled="disabledBtnSelectCrypto"
-          >
-            <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
-            <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{
-              assetName ? assetName : t('selectCrypto')
-            }}</span>
-            <i class="pi pi-caret-down text-primary"></i>
-          </Button>
-        </template>
-        <template v-else>
-          <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
-        </template>
-      </div>
-
       <div class="input-mount">
         <template v-if="type === 'fiat'">
           <InputNumber
@@ -59,17 +39,25 @@
           />
         </template>
       </div>
-
       <div>
         <template v-if="type === 'crypto'">
-          max
+          <Button
+            type="button"
+            class="bg-white btn-select-crypto border-none border-round-3xl"
+            @click="openModalSelector"
+            :disabled="disabledBtnSelectCrypto"
+          >
+            <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
+            <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{
+              assetName ? assetName : t('selectCrypto')
+            }}</span>
+            <i class="pi pi-caret-down text-primary"></i>
+          </Button>
         </template>
         <template v-else>
-          max
+          <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
         </template>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -140,21 +128,17 @@ watch(unitCount, async newVal => {
 })
 </script>
 
-<style lang="scss">
+<style scoped>
 .border-round-3xl {
   border-radius: 2.5rem !important;
 }
 
-.input-mount .p-inputtext {
-  @media only screen and (max-width: 480px) {
-    font-size: 1.2rem;
-  }
+.btn-select-crypto {
+  margin-left: -130px;
+}
 
-  @media only screen and (min-width: 480px) {
-    font-size: 1.8rem;
-  }
-
-
+.logo-usd {
+  margin-left: -50px;
 }
 
 .logo-cripto {
