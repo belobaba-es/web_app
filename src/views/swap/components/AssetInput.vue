@@ -191,7 +191,7 @@ const maxCountInput = (typeCode: string) => {
   }
 
   @media only screen and (min-width: 480px) {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 }
 
