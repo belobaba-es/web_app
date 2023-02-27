@@ -22,7 +22,7 @@
 
     <div class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100">
       <div class="grid">
-        <div class="col-4 flex align-items-center">
+        <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">
             <Button
               type="button"
@@ -34,7 +34,7 @@
               <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">{{
                 assetName ? assetName : t('selectCrypto')
               }}</span>
-              <i class="pi pi-caret-down text-primary"></i>
+              <i class="pi pi-caret-down text-primary icon-down-cripto"></i>
             </Button>
           </template>
           <template v-else>
@@ -63,19 +63,23 @@
           </template>
         </div>
 
-        <div class="col-3 flex align-items-center">
+        <div class="col-2 flex align-items-center">
           <template v-if="type === 'fiat'">
             <div v-if="transactionType === 'buy'">
-              <Button type="button" class="bg-white border-none border-round-3xl" @click="maxCountInput('USD')">
-                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">MÁX</span>
+              <Button type="button" class="bg-white border-none border-round-3xl max-btn" @click="maxCountInput('USD')">
+                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span-max">MÁX</span>
               </Button>
             </div>
           </template>
 
           <template v-else>
             <div v-if="transactionType === 'sell'">
-              <Button type="button" class="bg-white border-none border-round-3xl" @click="maxCountInput('Cripto')">
-                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">MÁX</span>
+              <Button
+                type="button"
+                class="bg-white border-none border-round-3xl max-btn"
+                @click="maxCountInput('Cripto')"
+              >
+                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span-max">MÁX</span>
               </Button>
             </div>
           </template>
@@ -195,17 +199,32 @@ const maxCountInput = (typeCode: string) => {
   max-width: 25px;
 }
 
-.text-span {
+.text-span-max {
   margin: 0 !important;
+}
+
+.text-span {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 3px !important;
+  margin-right: 5px !important;
 }
 
 .btn-select-crypto {
   @media only screen and (max-width: 480px) {
-    padding: 3px;
+    padding: 7px;
   }
 }
 .text-max {
   font-family: KanitMedium !important;
   color: #000;
+}
+
+.max-btn {
+  margin-left: -10px;
+}
+
+.icon-down-cripto{
+  margin-top: 4px;
 }
 </style>
