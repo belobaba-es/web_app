@@ -39,13 +39,7 @@
               </div>
             </div>
 
-            <ShowFee
-                :feeAmount=feeAmount
-                :totalAmount=totalAmount
-                :feeNoba=feeNoba
-                :feeTradeDesk=feeNoba
-                v-if="quoteId"
-            />
+            <ShowFee v-if="quoteId" />
 
             <div class="mb-2">
               <Button
@@ -98,12 +92,9 @@ const {
   swapBtnText,
   loading,
   quoteId,
-  feeAmount,
-  totalAmount,
   transactionType,
   assetCode,
   shouldRefreshQuote,
-  feeNoba,
 } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
@@ -143,10 +134,4 @@ onUnmounted(() => {
   transform: rotate(90deg);
   width: 2rem;
 }
-@media screen and (min-width: 1200px) {
- .xl\:col-6 {
-   width: 30%;
- }
-}
-
 </style>

@@ -171,6 +171,8 @@
   "from": "De",
   "top": "Para",
   "swapTo": "a",
+  "swapSpend": "Total a gastar",
+  "swapReceive": "Total que va a recibir",
   "swapPriceQuote": "Presupuesto / Precio",
   "swapBackButtonTitle": "Volver al intercambio",
   "swapExchangeServiceText": "Los servicios de intercambio están disponibles a través de proveedores de API de terceros",
@@ -206,8 +208,6 @@
   "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
   "depositBankName": "Nombre del banco a depositar",
-  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
-  "from": "Desde",
-  "to": "Para"
+  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado."
 
 }

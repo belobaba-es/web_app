@@ -34,13 +34,7 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFee
-            :feeAmount="summary.feeAmount"
-            :totalAmount="summary.totalAmount"
-            :feeNoba="summary.feeNoba"
-            :feeTradeDesk="summary.feeNoba"
-            v-if="summary.quoteId && summary.transactionType !== 'buy'"
-          />
+          <ShowFee v-if="summary.quoteId" />
 
           <div class="flex justify-content-center mt-lg-2 mt-3">
             <div class="mr-4">
@@ -91,5 +85,4 @@ const usdIcon = getWalletByAssetCode('USD')?.icon
 const usdName = getWalletByAssetCode('USD')?.name
 
 const summary = transactionSummary.value as SummarySwap
-console.log(summary)
 </script>
