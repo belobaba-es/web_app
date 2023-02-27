@@ -159,7 +159,7 @@ export const useSwapStore = defineStore('swap', () => {
   const clearTimer = () => {
     clearInterval(timer.value)
     timer.value = undefined
-    progressBarSeconds.value = 0
+    progressBarSeconds.value = 10
     progressBarPercent.value = 0
   }
 
