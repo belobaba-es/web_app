@@ -3,74 +3,97 @@
     <div class="flex justify-content-between align-items-center">
       <template v-if="type === 'fiat'">
         <span v-if="transactionType === 'buy'">
-          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
+          <span>{{ t('from') }}</span>
         </span>
         <span v-else>
-          <span> {{ t('iWant') }}: </span>
+          <span>{{ t('to') }}</span>
         </span>
       </template>
+
       <template v-else>
-        <span v-if="transactionType === 'buy'"> {{ t('iWant') }}: </span>
+        <span v-if="transactionType === 'buy'">
+          <span>{{ t('to') }}</span>
+        </span>
         <span v-else>
-          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
+          <span>{{ t('from') }}</span>
         </span>
       </template>
     </div>
-    <div
-      class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100 flex align-items-center justify-content-between"
-    >
-      <div>
-        <template v-if="type === 'crypto'">
-          <Button
-            type="button"
-            class="bg-white btn-select-crypto border-none border-round-3xl"
-            @click="openModalSelector"
-            :disabled="disabledBtnSelectCrypto"
-          >
-            <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
-            <span class="ml-2 font-medium text-black-alpha-70 mx-3">{{
-              assetName ? assetName : t('selectCrypto')
-            }}</span>
-            <i class="pi pi-caret-down text-primary"></i>
-          </Button>
-        </template>
-        <template v-else>
-          <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
-        </template>
+
+    <div class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100">
+      <div class="grid">
+        <div class="col-4 flex align-items-center">
+          <template v-if="type === 'crypto'">
+            <Button
+              type="button"
+              class="bg-white btn-select-crypto border-none border-round-3xl"
+              @click="openModalSelector"
+              :disabled="disabledBtnSelectCrypto"
+            >
+              <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
+              <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">{{
+                assetName ? assetName : t('selectCrypto')
+              }}</span>
+              <i class="pi pi-caret-down text-primary"></i>
+            </Button>
+          </template>
+          <template v-else>
+            <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
+          </template>
+        </div>
+
+        <div class="input-mount col-5 flex align-items-center">
+          <template v-if="type === 'fiat'">
+            <InputNumber
+              v-model="amount"
+              mode="decimal"
+              :max-fraction-digits="2"
+              :min-fraction-digits="2"
+              :readonly="transactionType === 'sell'"
+            />
+          </template>
+          <template v-else>
+            <InputNumber
+              v-model="unitCount"
+              mode="decimal"
+              :max-fraction-digits="8"
+              :min-fraction-digits="8"
+              :readonly="transactionType === 'buy'"
+            />
+          </template>
+        </div>
+
+        <div class="col-3 flex align-items-center">
+          <template v-if="type === 'fiat'">
+            <div v-if="transactionType === 'buy'">
+              <Button type="button" class="bg-white border-none border-round-3xl" @click="maxCountInput('USD')">
+                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">MÁX</span>
+              </Button>
+            </div>
+          </template>
+
+          <template v-else>
+            <div v-if="transactionType === 'sell'">
+              <Button type="button" class="bg-white border-none border-round-3xl" @click="maxCountInput('Cripto')">
+                <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">MÁX</span>
+              </Button>
+            </div>
+          </template>
+        </div>
       </div>
-
-      <div class="input-mount">
-        <template v-if="type === 'fiat'">
-          <InputNumber
-            v-model="amount"
-            mode="decimal"
-            :max-fraction-digits="2"
-            :min-fraction-digits="2"
-            :readonly="transactionType === 'sell'"
-          />
-        </template>
-        <template v-else>
-          <InputNumber
-            v-model="unitCount"
-            mode="decimal"
-            :max-fraction-digits="8"
-            :min-fraction-digits="8"
-            :readonly="transactionType === 'buy'"
-          />
-        </template>
-      </div>
-
-      <div>
-        <template v-if="type === 'crypto'">
-          max
-        </template>
-        <template v-else>
-          max
-        </template>
-      </div>
-
-
     </div>
+
+    <template v-if="type === 'fiat'">
+      <span v-if="transactionType === 'buy'">
+        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
+      </span>
+    </template>
+
+    <template v-else>
+      <span v-if="transactionType === 'sell'">
+        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
+      </span>
+    </template>
   </div>
 </template>
 
@@ -138,9 +161,22 @@ watch(unitCount, async newVal => {
     await createQuote()
   }
 })
+
+const maxCountInput = (typeCode: string) => {
+  if (typeCode === 'USD') {
+    amount.value = getBalanceByCode('USD')
+  } else {
+    unitCount.value = getBalanceByCode(assetCode.value)
+  }
+}
 </script>
 
 <style lang="scss">
+.logo-usd {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
 .border-round-3xl {
   border-radius: 2.5rem !important;
 }
@@ -153,11 +189,23 @@ watch(unitCount, async newVal => {
   @media only screen and (min-width: 480px) {
     font-size: 1.8rem;
   }
-
-
 }
 
 .logo-cripto {
   max-width: 25px;
+}
+
+.text-span {
+  margin: 0 !important;
+}
+
+.btn-select-crypto {
+  @media only screen and (max-width: 480px) {
+    padding: 3px;
+  }
+}
+.text-max {
+  font-family: KanitMedium !important;
+  color: #000;
 }
 </style>

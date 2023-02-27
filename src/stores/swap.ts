@@ -27,7 +27,7 @@ export const useSwapStore = defineStore('swap', () => {
   const quoteId = ref()
   const showModalAssetSelector = ref(false)
   const progressBarPercent = ref(0)
-  const progressBarSeconds = ref(0)
+  const progressBarSeconds = ref(10)
   const loading = ref(false)
   const timer = ref()
   const shouldRefreshQuote = ref(false)
@@ -150,8 +150,8 @@ export const useSwapStore = defineStore('swap', () => {
 
   const startTimer = () => {
     timer.value = setInterval(() => {
-      if (progressBarSeconds.value < 10) {
-        progressBarSeconds.value = progressBarSeconds.value + 1
+      if (progressBarSeconds.value > 0) {
+        progressBarSeconds.value = progressBarSeconds.value - 1
         progressBarPercent.value = progressBarSeconds.value * 10
       }
     }, 1000)
@@ -164,7 +164,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   watch(progressBarSeconds, async newValue => {
-    if (newValue === 10) {
+    if (newValue === 0) {
       clearTimer()
       if (quoteId.value && !successExecuted.value) {
         shouldRefreshQuote.value = true
@@ -174,18 +174,14 @@ export const useSwapStore = defineStore('swap', () => {
   })
 
   const refreshQuote = async () => {
-    assetId.value = undefined
     baseAmount.value = 0.0
     feeAmount.value = 0.0
     totalAmount.value = 0.0
     unitCount.value = 0.0
     amount.value = 0.0
-    progressBarSeconds.value = 0
+    progressBarSeconds.value = 10
     progressBarPercent.value = 0
-    assetIcon.value = undefined
-    assetName.value = undefined
     shouldRefreshQuote.value = false
-    assetCode.value = undefined
   }
 
   const fetchQuotes = async () => {
