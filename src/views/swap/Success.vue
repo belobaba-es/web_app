@@ -34,18 +34,11 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFeeBuy
+          <ShowFee
               :feeAmount=summary.feeAmount
               :totalAmount=summary.totalAmount
               :feeNoba=summary.feeNoba
-              v-if="summary.quoteId && summary.transactionType === 'buy'"
-          />
-
-          <ShowFeeSell
-              :feeAmount=summary.feeAmount
-              :totalAmount=summary.totalAmount
-              :feeNoba=summary.feeNoba
-              v-if="summary.quoteId && summary.transactionType !== 'buy'"
+              v-if="summary.quoteId"
           />
 
           <div class="flex justify-content-center mt-lg-2 mt-3">
@@ -86,8 +79,7 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { SummarySwap } from './types/sumary'
 import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
-import ShowFeeBuy from "./components/ShowFeeBuy.vue";
-import ShowFeeSell from "./components/ShowFeeSell.vue";
+import ShowFee from "./components/ShowFee.vue";
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()
@@ -98,5 +90,5 @@ const usdIcon = getWalletByAssetCode('USD')?.icon
 const usdName = getWalletByAssetCode('USD')?.name
 
 const summary = transactionSummary.value as SummarySwap
-console.log(summary)
+
 </script>

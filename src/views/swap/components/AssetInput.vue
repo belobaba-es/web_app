@@ -3,16 +3,16 @@
     <div class="flex justify-content-between align-items-center">
       <template v-if="type === 'fiat'">
         <span v-if="transactionType === 'buy'">
-          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
+          {{ t('from') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
         </span>
         <span v-else>
-          <span> {{ t('iWant') }}: </span>
+          <span> {{ t('to') }}: </span>
         </span>
       </template>
       <template v-else>
-        <span v-if="transactionType === 'buy'"> {{ t('iWant') }}: </span>
+        <span v-if="transactionType === 'buy'"> {{ t('to') }}: </span>
         <span v-else>
-          {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
+          {{ t('from') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
         </span>
       </template>
     </div>
@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ref, watch, computed, toRef } from 'vue'
+import {  watch, computed } from 'vue'
 import { defineProps } from 'vue'
 import Button from 'primevue/button'
 import { useSwapStore } from '../../../stores/swap'

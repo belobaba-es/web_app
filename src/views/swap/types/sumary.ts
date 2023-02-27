@@ -7,4 +7,6 @@ export type SummarySwap = {
     transactionType: string,
     feeNoba:number
     quoteId: string
+    feeTradeDesk: number
+    totalSpend: number
 }

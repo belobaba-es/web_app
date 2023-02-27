@@ -39,19 +39,7 @@
               </div>
             </div>
 
-            <ShowFeeBuy
-                :feeAmount=feeAmount
-                :totalAmount=totalAmount
-                :feeNoba=feeNoba
-                v-if="quoteId && transactionType === 'buy'"
-            />
-
-            <ShowFeeSell
-                :feeAmount=feeAmount
-                :totalAmount=totalAmount
-                :feeNoba=feeNoba
-                v-if="quoteId && transactionType !== 'buy'"
-            />
+            <ShowFee v-if="quoteId" />
 
             <div class="mb-2">
               <Button
@@ -92,8 +80,7 @@ import {useSwapStore} from '../../stores/swap'
 import {storeToRefs} from 'pinia'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import {onUnmounted} from 'vue'
-import ShowFeeBuy from "./components/ShowFeeBuy.vue";
-import ShowFeeSell from "./components/ShowFeeSell.vue";
+import ShowFee from "./components/ShowFee.vue";
 
 const {
   assetIcon,
@@ -105,12 +92,9 @@ const {
   swapBtnText,
   loading,
   quoteId,
-  feeAmount,
-  totalAmount,
   transactionType,
   assetCode,
   shouldRefreshQuote,
-  feeNoba
 } = storeToRefs(useSwapStore())
 const {t} = useI18n({useScope: 'global'})
 const router = useRouter()
@@ -150,4 +134,10 @@ onUnmounted(() => {
   transform: rotate(90deg);
   width: 2rem;
 }
+@media screen and (min-width: 1200px) {
+ .xl\:col-6 {
+   width: 30%;
+ }
+}
+
 </style>
