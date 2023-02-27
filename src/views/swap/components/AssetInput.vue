@@ -49,6 +49,7 @@
                 mode="decimal"
                 :max-fraction-digits="2"
                 :min-fraction-digits="2"
+                @blur="verifyAmountForCreateQoute()"
                 :readonly="transactionType === 'sell'"
             />
           </template>
@@ -166,12 +167,16 @@ watch(unitCount, async newVal => {
   }
 })
 
-watch(amount, async newVal => {
-  if (transactionType.value === 'buy' && assetCode.value !== '' && newVal > 0 && assetId.value && loading.value == false) {
-    await clearTimer()
-    await createQuote()
-  }
-})
+const verifyAmountForCreateQoute = () => {
+  //TODO el setTimeout es porque primevue tarda alguno milisegundo en actualizar la variable reactiva.
+  setTimeout(async () => {
+    if (transactionType.value === 'buy' && assetCode.value && amount.value > 0 && assetId.value && !loading.value) {
+      await clearTimer()
+      await createQuote()
+    }
+  }, 100);
+
+}
 
 const maxCountInput = (typeCode: string) => {
   if (typeCode === 'USD') {
