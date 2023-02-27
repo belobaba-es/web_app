@@ -107,6 +107,7 @@ export const useSwapStore = defineStore('swap', () => {
       })
       .catch(error => {
         loading.value = false
+        shouldRefreshQuote.value = true
         toast.add({
           severity: 'error',
           summary: t('somethingWentWrong'),
@@ -124,7 +125,7 @@ export const useSwapStore = defineStore('swap', () => {
       .execute(quoteId.value)
       .then(async response => {
         successExecuted.value = true
-        // clearTimer()
+        clearTimer()
 
         toast.add({
           severity: 'success',
@@ -156,7 +157,7 @@ export const useSwapStore = defineStore('swap', () => {
           life: 4000,
         })
         await cancelQuote()
-        // clearTimer()
+        clearTimer()
         refreshQuote()
       })
   }

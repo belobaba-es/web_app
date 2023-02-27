@@ -174,7 +174,7 @@ const verifyAmountForCreateQoute = () => {
       await clearTimer()
       await createQuote()
     }
-  }, 100);
+  }, 1000);
 
 }
 
