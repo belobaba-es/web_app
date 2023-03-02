@@ -38,7 +38,10 @@ import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/
 import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
 import WalletIndex from './views/wallet/Wallet.vue'
-import TransactionHistory from './views/wallet/Transaction.vue'
+import TransactionHistoryWallet from './views/wallet/Transaction.vue'
+
+import TransactionHistory from './views/transaction-history/Index.vue'
+
 
 
 
@@ -245,8 +248,17 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'transactions/:assetCode',
-            component: TransactionHistory,
+            component: TransactionHistoryWallet,
           }
+        ]
+      },
+      {
+        path: '/transaction-history',
+        children: [
+          {
+            path: '',
+            component: TransactionHistory,
+          },
         ]
       },
     ],
