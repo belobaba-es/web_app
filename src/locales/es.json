@@ -210,6 +210,6 @@
   "proofOfAddress2": "Si usted es extranjero, por favor cargue un documento que compruebe su dirección de domicilio.",
   "labelSelectProofOfAddress": "Seleccione el tipo de documento que está enviando",
   "dropdownSelectProofOfAddress": "Seleccione el tipo de documento",
-  "userDataSuccessSend": "Datos personales enviados correctamente"
-
+  "userDataSuccessSend": "Datos personales enviados correctamente",
+  "companyIncorporationFile": "Documentos constitutivo de la empresa"
 }
