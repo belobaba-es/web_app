@@ -1,38 +1,36 @@
 <template>
   <FileUpload v-if="doc" :label="doc?.name" @click="editEnable" />
 
-  <div v-if="!doc"
-      class="flex justify-content-between align-items-center p-3 border-round bg-primary cursor-pointer"
-      @click="handleClick">
-      <span>
-          {{ t('filePlaceholder') }}
-      </span>
+  <div
+    v-if="!doc"
+    class="flex justify-content-between align-items-center p-3 border-round bg-primary cursor-pointer"
+    @click="handleClick"
+  >
+    <span>
+      {{ t('filePlaceholder') }}
+    </span>
     <span>
       <i class="pi" :class="icon"></i>
-      <input
-          :id="getIdInput()"
-          type="file"
-          hidden
-          @change="handleUpload($event)"
-      />
+      <input :id="getIdInput()" type="file" hidden @change="handleUpload($event)" />
     </span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {useI18n} from 'vue-i18n';
-import {defineProps, ref, computed} from 'vue';
-import {ProfileService} from '../services/profile';
-import {useToast} from 'primevue/usetoast';
+import { useI18n } from 'vue-i18n'
+import { defineProps, ref, computed } from 'vue'
+import { ProfileService } from '../services/profile'
+import { useToast } from 'primevue/usetoast'
 import FileUpload from './FileUploaded.vue'
 
-const toast = useToast();
+const toast = useToast()
 
-const {t} = useI18n({useScope: 'global'});
+const { t } = useI18n({ useScope: 'global' })
+
 const props = defineProps({
   label: {
     type: String,
-    required: true,
+    required: false,
   },
   type: {
     type: String,
@@ -40,99 +38,127 @@ const props = defineProps({
   },
   side: {
     type: String,
-    required: true,
+    required: false,
+    default: () => 'front',
   },
   accountId: {
     type: String,
-    required: true
+    required: true,
   },
   taxId: {
     type: String,
-    required: true
+    required: true,
   },
   documentCountry: {
     type: String,
-    required: true
+    required: true,
   },
   isCompany: {
     type: Boolean,
-    default: () => false
+    default: () => false,
   },
-});
+  isAccountBusiness: {
+    type: Boolean,
+    default: () => true,
+  },
+  isProofOfAddress: {
+    type: Boolean,
+    default: () => false,
+  },
+})
 
-const loading = ref(false);
+const loading = ref(false)
 const doc = ref<File>()
 
 const setLoading = (value: boolean) => {
-  loading.value = value;
+  loading.value = value
 }
 
 const handleClick = () => {
-  const input = document.getElementById(getIdInput());
-  input?.click();
+  const input = document.getElementById(getIdInput())
+  input?.click()
 }
 
 const getIdInput = () => {
-  return `${props.label}${props.side}${props.isCompany ? 'yes': 'no'}`
+  return `${props.label}${props.side}${props.isCompany ? 'yes' : 'no'}`
 }
 
 const icon = computed(() => {
-  return loading.value ? "pi-spin pi-spinner" : "pi-upload"
-});
+  return loading.value ? 'pi-spin pi-spinner' : 'pi-upload'
+})
 
 const handleUpload = async (event: any) => {
-  const file = event.target.files[0];
+  const file = event.target.files[0]
   doc.value = file
-  setLoading(true);
+  setLoading(true)
 
-  let formData = new FormData();
+  let formData = new FormData()
 
-  formData.append("file", file);
-  formData.append("accountId", props.accountId);
-  formData.append("isBusinessMember", props.isCompany ? "false" : "true");
-  formData.append("isAccountBusiness", "true");
-  formData.append("documentSide", props.side);
-  formData.append("taxId", props.taxId);
-  formData.append("documentCountry", props.documentCountry);
-  formData.append("documentType", props.type);
+  if (props.isProofOfAddress === true) {
+    formData.append('file', file)
+    formData.append('taxId', props.taxId)
+    formData.append('accountId', props.accountId)
+    formData.append('isBusinessMember', 'false')
+    formData.append('documentCountry', props.documentCountry)
+    formData.append('documentType', props.type)
+    formData.append('isAccountBusiness', props.isAccountBusiness.toString())
+  } else {
+    formData.append('file', file)
+    formData.append('taxId', props.taxId)
+    formData.append('accountId', props.accountId)
+    formData.append('isBusinessMember', props.isCompany ? 'false' : 'true')
+    formData.append('isAccountBusiness', props.isAccountBusiness.toString())
+    formData.append('documentSide', props.side)
+    formData.append('documentCountry', props.documentCountry)
+    formData.append('documentType', props.type)
+  }
 
   const newDocumentObject = {
-    documentId: "",
+    documentId: '',
     documentSide: props.side,
     label: props.label,
     taxId: props.taxId,
     documentType: props.type,
-    file: "",
-    isBusinessMember: "true",
+    file: '',
+    isBusinessMember: 'true',
     description: props.label,
-    documentCountry: props.documentCountry
+    documentCountry: props.documentCountry,
   }
 
-  const profileService = ProfileService.instance();
-  await profileService.updateDocuments(formData)
-      .then(response => {
-        setLoading(false);
+  const profileService = ProfileService.instance()
+  await profileService
+    .updateDocuments(formData)
+    .then(response => {
+      setLoading(false)
+      if (props.isProofOfAddress === true) {
+        toast.add({
+          severity: 'success',
+          summary: t('successfulOperation'),
+          detail: t('userDataSuccessSend'),
+          life: 3000,
+        })
+      } else {
         toast.add({
           severity: 'success',
           summary: t('successfulOperation'),
           detail: t('shareholderDataSuccessSend'),
           life: 3000,
-        });
-
-      })
-      .catch(error => {
-        setLoading(false);
-        formData.forEach((value, key) => {
-          if (error.response.data[key]) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: error.response.data[key].message,
-              life: 4000,
-            })
-          }
         })
-      });
+      }
+    })
+    .catch(error => {
+      setLoading(false)
+      formData.forEach((value, key) => {
+        if (error.response.data[key]) {
+          toast.add({
+            severity: 'error',
+            summary: t('somethingWentWrong'),
+            detail: error.response.data[key].message,
+            life: 4000,
+          })
+        }
+      })
+    })
 }
 
 const editEnable = () => {
