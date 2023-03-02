@@ -195,7 +195,7 @@
   "documentProofOfAddress6": " Factura del Impuesto sobre la Propiedad",
   "documentProofOfAddress7": "W2 u otro documento de declaración de impuestos",
   "naturalAccountTittle": "Información personal",
-  "historicTransactionsTitle": "Histórico de transacciones", 
+  "historicTransactionsTitle": "Histórico de transacciones",
   "loadMore": "Carga más",
   "textCopySuccessful": "Copiado al portapapeles con éxito",
   "titleDespositFiat": "Instrucciones de depósito",
@@ -204,6 +204,6 @@
   "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
   "depositBankName": "Nombre del banco a depositar",
-  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado."
-
+  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
+  "transactionHistory": "Histórico de transacciones"
 }
