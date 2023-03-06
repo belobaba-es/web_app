@@ -59,7 +59,8 @@
 }
 
 
-html, body {
+html,
+body {
     font-family: KanitLight;
 }
 
@@ -83,7 +84,6 @@ html, body {
 
 *:focus {
     outline: 0
-
 }
 
 .icon-home .pi::before,
@@ -123,12 +123,12 @@ html, body {
     content: url(/src/assets/icons/help.svg);
 }
 
-.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
-.p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
+.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover,
+.p-tieredmenu .p-menuitem>.p-menuitem-content .p-menuitem-link .p-menuitem-icon {
     color: #00BEB0;
 }
 
-.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-ico {
+.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover .p-menuitem-link .p-menuitem-ico {
     color: #00BEB0;
     background: #e9ecef;
 }
@@ -141,20 +141,27 @@ html, body {
     padding: 3rem 0 3rem 0;
 }
 
-.p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-dropdown.p-component.p-inputwrapper {
+.p-inputgroup input:first-child,
+.p-inputgroup>.p-inputwrapper:last-child>.p-inputtext,
+.p-dropdown.p-component.p-inputwrapper {
     border-radius: 0;
 }
 
-.p-inputtext, .p-dropdown.p-component.p-inputwrapper {
+.p-inputtext,
+.p-dropdown.p-component.p-inputwrapper {
     border-radius: 0;
 }
 
-.p-inputgroup input:hover, .p-inputgroup input:focus, .p-dropdown.p-component.p-inputwrapper:hover, .p-dropdown.p-component.p-inputwrapper:focus {
+.p-inputgroup input:hover,
+.p-inputgroup input:focus,
+.p-dropdown.p-component.p-inputwrapper:hover,
+.p-dropdown.p-component.p-inputwrapper:focus {
     border: 1px solid #00BEB0 !important;
     outline: none;
 }
 
-.p-inputtext, .p-dropdown.p-component.p-inputwrapper {
+.p-inputtext,
+.p-dropdown.p-component.p-inputwrapper {
     border: 1px solid #ECECEC;
     box-sizing: initial;
     font-family: KanitLight;
@@ -232,7 +239,7 @@ button.p-button.p-component.p-button.edit-document-button {
     background-color: var(--primary-color);
 }
 
-.shareholders-panel > .p-toggleable-content > .p-panel-content {
+.shareholders-panel>.p-toggleable-content>.p-panel-content {
     padding: 0px;
 }
 
@@ -252,7 +259,8 @@ button.p-button.p-component.p-button.edit-document-button {
     padding: 0px;
 }
 
-.profile .router-link-exact-active.p-button.profile-navigation, .profile .router-link-exact-active.p-button.profile-navigation:hover {
+.profile .router-link-exact-active.p-button.profile-navigation,
+.profile .router-link-exact-active.p-button.profile-navigation:hover {
     background-color: #1B1B19;
     border-color: #1B1B19;
     color: #FFFFFF;
@@ -274,7 +282,8 @@ button.p-button.p-component.p-button.edit-document-button {
 }
 
 
-.p-selectbutton .p-button.p-highlight:hover, .p-selectbutton .p-button.p-highlight {
+.p-selectbutton .p-button.p-highlight:hover,
+.p-selectbutton .p-button.p-highlight {
     background: #d7dadd;
     border-color: #cbcbcb;
     color: #1B1B19;
@@ -304,6 +313,7 @@ button.p-button.p-component.p-button.edit-document-button {
 small {
     font-size: 10pt;
 }
+
 .symbol {
     background: #8CE2DB;
     padding: 2px 20px;
@@ -312,7 +322,7 @@ small {
     border-radius: 0;
 }
 
-.p-progressbar.p-component.p-progressbar-determinate.swap > .p-progressbar-value.p-progressbar-value-animate {
+.p-progressbar.p-component.p-progressbar-determinate.swap>.p-progressbar-value.p-progressbar-value-animate {
     background: #00beb0;
 }
 
@@ -331,4 +341,31 @@ small {
 .icon-deposit-funds {
     font-size: 12pt;
     color: #20df40;
+}
+
+.p-tabview .p-tabview-nav {
+    background: transparent !important;
+}
+
+.p-tabview-panels {
+    background: transparent !important;
+}
+
+.p-tabview-panel {
+    background: transparent !important;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: transparent !important;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    background: transparent !important;
+}
+
+.p-dropdown:not(.p-disabled).p-focus{
+    box-shadow: 0 0 0 0 0.2rem var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
 }
