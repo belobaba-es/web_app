@@ -205,13 +205,20 @@
   "documentProofOfAddress7": "W2 or other tax return document",
   "naturalAccountTittle": "Personal Data",
   "historicTransactionsTitle": "Transaction History",
-  "loadMore": "Load more", 
+  "loadMore": "Load more",
   "textCopySuccessful": "Copied to clipboard successfully",
-  "depositBankName": "Depository Bank Name", 
+  "depositBankName": "Depository Bank Name",
   "titleDespositFiat": "Deposit Instructions",
   "downloadPdf": "Download PDF File",
   "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved.",
   "namePdfDepositFiatDomestic": "Domestic Deposit Instructions",
   "namePdfDepositFiatInternational": "International Deposit Instructions",
-  "textNewWalletAddress": "In Noba you can only have one wallet per associated asset."
+  "textNewWalletAddress": "In Noba you can only have one wallet per associated asset.",
+  "warningProofOfAddress": "If you are an American citizen, and the uploaded document has the address you registered for the signing process, please press continue to finish.",
+  "proofOfAddress1": "If the address in your ID does not match the address you registered for the signing process, please upload proof of address USA territories.",
+  "proofOfAddress2": "If you are a foreign citizen and used your Passport for the signing process, please upload proof of address in USA territories.",
+  "labelSelectProofOfAddress": "Select the type of document you are sending",
+  "dropdownSelectProofOfAddress": "Select the type of document",
+  "userDataSuccessSend": "Personal data sent correctly",
+  "companyIncorporationFile": "Documents of Incorporation of the company"
 }
