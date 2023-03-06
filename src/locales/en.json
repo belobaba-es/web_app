@@ -213,5 +213,6 @@
   "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved.",
   "namePdfDepositFiatDomestic": "Domestic Deposit Instructions",
   "namePdfDepositFiatInternational": "International Deposit Instructions",
-  "textNewWalletAddress": "In Noba you can only have one wallet per associated asset."
+  "textNewWalletAddress": "In Noba you can only have one wallet per associated asset.",
+  "selectAnAsset": "Select an asset"
 }

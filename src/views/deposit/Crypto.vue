@@ -17,7 +17,7 @@
             :options="assets"
             optionLabel="name"
             optionValue="code"
-            placeholder="Select a asset"
+            :placeholder="t('selectAnAsset')"
           />
 
           <Button
@@ -104,10 +104,7 @@ const findAssetByName = () => {
     assetsService
       .listPaymentAddress(nextPag.value, assetCode.value)
       .then(data => {
-        console.log('== data', data)
-        // todo check why it is used paymentAddress.value
-        console.log('paymentAddress', paymentAddress.value)
-        paymentAddress.value = [...paymentAddress.value, ...data.results]
+        paymentAddress.value = [...data.results]
         nextPag.value = data.nextPag
       })
       .finally(() => {
@@ -129,7 +126,8 @@ const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddress[]>([])
 
 onMounted(async () => {
-  assetsService.list().then(data => (assets.value = data))
+  await assetsService.list().then(data => (assets.value = data))
+  console.log('assets', assets.value)
   await searchWallets()
 })
 
