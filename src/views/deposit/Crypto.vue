@@ -11,11 +11,12 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
         <span class="p-input-icon-left flex p-fluid">
           <i class="pi pi-search" />
-          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" v-model="assetName" />
           <Button
             class="p-button search-btn"
             style="border-top-left-radius: 0; border-bottom-left-radius: 0"
             :label="t('search')"
+            @click="findAsseByName"
           />
         </span>
       </div>
@@ -70,6 +71,7 @@ import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
 
 const { t } = useI18n({ useScope: 'global' })
+const assetName = ref('')
 const nextPag = ref('')
 const display = ref(false)
 const displayNew = ref(false)
@@ -84,6 +86,19 @@ const findAsset = (assetId: string) => {
   if (assetSelect) {
     return assetSelect
   }
+  return null
+}
+
+
+const findAsseByName = () => {
+  console.log('findAsseByName',assetName.value)
+  assets.value.map(asset => {
+    console.log('--> asset', asset.name, asset.code)
+  })
+  // const assetSelect = assets.value.find(asset => asset.assetId == assetId)
+  // if (assetSelect) {
+  //   return assetSelect
+  // }
   return null
 }
 
