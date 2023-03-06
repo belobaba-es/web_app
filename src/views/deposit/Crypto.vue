@@ -11,7 +11,15 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
         <span class="p-input-icon-left flex p-fluid">
           <i class="pi pi-search" />
-          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" v-model="assetCode" />
+          <Dropdown
+            class="select-asset"
+            v-model="assetCode"
+            :options="assets"
+            optionLabel="name"
+            optionValue="code"
+            placeholder="Select a asset"
+          />
+
           <Button
             class="p-button search-btn"
             style="border-top-left-radius: 0; border-bottom-left-radius: 0"
@@ -60,7 +68,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import VirtualScroller from 'primevue/virtualscroller'
 import { Asset, PaymentAddress } from './types/asset.interface'
@@ -69,8 +76,10 @@ import ViewAddress from './components/ViewAddress.vue'
 import { AssetsService } from './services/assets'
 import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
+import Dropdown from 'primevue/dropdown'
 
 const { t } = useI18n({ useScope: 'global' })
+
 const assetCode = ref('')
 const nextPag = ref('')
 const display = ref(false)
@@ -89,9 +98,9 @@ const findAsset = (assetId: string) => {
   return null
 }
 
-
 const findAssetByName = () => {
-  if(assetCode.value) {
+  console.log(assets.value)
+  if (assetCode.value) {
     assetsService
       .listPaymentAddress(nextPag.value, assetCode.value)
       .then(data => {
@@ -105,7 +114,6 @@ const findAssetByName = () => {
         lazyLoading.value = false
       })
   }
-
 }
 
 const viewAddressAsset = (item: PaymentAddress) => {
@@ -180,5 +188,9 @@ const onLazyLoad = (event: any) => {
 
 .wallet-btn {
   width: 100% !important;
+}
+
+.select-asset {
+  width: 100%;
 }
 </style>
