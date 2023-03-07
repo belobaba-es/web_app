@@ -204,8 +204,7 @@
   "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
   "depositBankName": "Nombre del banco a depositar",
-  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
-  "selectAnAsset": "Selecciona un asset"
+  "selectAnAsset": "Selecciona un asset",
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
   "warningProofOfAddress": "Si usted es ciudadano o residente americano y su documento de identidad contiene la dirección que colocó en el registro, presione el botón de continuar para finalizar el procesos.",
   "proofOfAddress1": "Si su dirección no coincide, debe cargar una prueba de dirección.",
