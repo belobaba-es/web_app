@@ -18,6 +18,7 @@
             optionLabel="name"
             optionValue="code"
             :placeholder="t('selectAnAsset')"
+            :showClear="true"
           />
 
           <Button
@@ -25,6 +26,7 @@
             style="border-top-left-radius: 0; border-bottom-left-radius: 0"
             :label="t('search')"
             @click="findAssetByName"
+            :loading="submitting"
           />
         </span>
       </div>
@@ -89,6 +91,7 @@ const lazyLoading = ref(false)
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddress | null>(null)
+const submitting = ref(false)
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -99,6 +102,7 @@ const findAsset = (assetId: string) => {
 }
 
 const findAssetByName = () => {
+  submitting.value = true;
   console.log(assets.value)
   if (assetCode.value) {
     assetsService
@@ -106,11 +110,19 @@ const findAssetByName = () => {
       .then(data => {
         paymentAddress.value = [...data.results]
         nextPag.value = data.nextPag
+        submitting.value = false;
       })
       .finally(() => {
+        submitting.value = false;
         lazyLoading.value = false
       })
   }
+}
+
+function onChange(e:any) {
+  console.log('onChange e', e)
+  console.log('onChange e', e.target.innerHTML)
+  console.log('onChange e', e.target.outerText)
 }
 
 const viewAddressAsset = (item: PaymentAddress) => {
