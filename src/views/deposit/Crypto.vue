@@ -19,6 +19,7 @@
             optionValue="code"
             :placeholder="t('selectAnAsset')"
             :showClear="true"
+            @change="onChange"
           />
 
           <Button
@@ -103,7 +104,7 @@ const findAsset = (assetId: string) => {
 
 const findAssetByName = () => {
   submitting.value = true;
-  console.log(assets.value)
+  lazyLoading.value = true
   if (assetCode.value) {
     assetsService
       .listPaymentAddress(nextPag.value, assetCode.value)
@@ -111,18 +112,19 @@ const findAssetByName = () => {
         paymentAddress.value = [...data.results]
         nextPag.value = data.nextPag
         submitting.value = false;
+        lazyLoading.value = false;
       })
       .finally(() => {
-        submitting.value = false;
-        lazyLoading.value = false
+        submitting.value = false
+        lazyLoading.value = false;
       })
   }
 }
 
 function onChange(e:any) {
-  console.log('onChange e', e)
-  console.log('onChange e', e.target.innerHTML)
-  console.log('onChange e', e.target.outerText)
+  if (e.value === null) {
+    searchWallets()
+  }
 }
 
 const viewAddressAsset = (item: PaymentAddress) => {
@@ -139,7 +141,6 @@ const paymentAddress = ref<PaymentAddress[]>([])
 
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
-  console.log('assets', assets.value)
   await searchWallets()
 })
 
