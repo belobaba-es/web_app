@@ -206,4 +206,12 @@
   "depositBankName": "Nombre del banco a depositar",
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
   "selectAnAsset": "Selecciona un asset"
+  "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
+  "warningProofOfAddress": "Si usted es ciudadano o residente americano y su documento de identidad contiene la dirección que colocó en el registro, presione el botón de continuar para finalizar el procesos.",
+  "proofOfAddress1": "Si su dirección no coincide, debe cargar una prueba de dirección.",
+  "proofOfAddress2": "Si usted es extranjero, por favor cargue un documento que compruebe su dirección de domicilio.",
+  "labelSelectProofOfAddress": "Seleccione el tipo de documento que está enviando",
+  "dropdownSelectProofOfAddress": "Seleccione el tipo de documento",
+  "userDataSuccessSend": "Datos personales enviados correctamente",
+  "companyIncorporationFile": "Documentos constitutivo de la empresa"
 }
