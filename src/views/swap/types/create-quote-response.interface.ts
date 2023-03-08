@@ -17,4 +17,5 @@ export interface Data {
     feeAmount:         number;
     totalAmount:       number;
     unitCount:         number;
+    feeNoba: number
 }
