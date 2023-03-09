@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 
 import Button from 'primevue/button';
-import {BeneficiaryFiat, BeneficiaryType} from '../../types/beneficiary.interface';
-import {defineProps, onMounted} from "vue";
+import {BeneficiaryType} from '../../types/beneficiary.interface';
+import {onMounted} from "vue";
 import {useI18n} from "vue-i18n";
 import {useRoute} from "vue-router";
 import {useBeneficiary} from "../../composables/useBeneficiary";
