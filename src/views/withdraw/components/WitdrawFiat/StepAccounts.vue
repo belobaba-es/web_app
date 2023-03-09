@@ -22,7 +22,7 @@
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
-      <ListBeneficiary :list="list" @select="onSelect($event)" />
+      <ListBeneficiary @select="onSelect($event)" />
     </div>
   </div>
 </template>
@@ -43,7 +43,6 @@ const router = useRouter()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
-  list: Array<any>
   formData: any
   toNew: any
 }>()
