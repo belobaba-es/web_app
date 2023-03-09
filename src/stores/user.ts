@@ -26,13 +26,23 @@ interface User {
     city:         string;
     region:       string;
     account:      Account;
+    kyc: {
+        cipChecks: string;
+        kycRequiredActions: { [key: string]: string };
+    }
     vip: boolean
 }
 
 interface Account {
     accountId: string;
-    kyc: any[];
     status:    string;
+    kycMembers: {
+        contactId: string,
+        kyc:{
+            cipChecks: string;
+            kycRequiredActions: { [key: string]: string };
+        }[]
+    }
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -51,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
         return user.account.status === 'opened'
     }
 
-    const isVIP = (): boolean => {
+    const swapModuleIsActive = (): boolean => {
         const storageUser = sessionStorage.getItem('user');
 
         if (!storageUser) return false;
@@ -61,12 +71,19 @@ export const useUserStore = defineStore('user', () => {
         return user.vip ?? false
     }
 
-    const getWarningKYC = () =>{
+    const getWarningKYC = (contactId?: string):{
+        cipChecks: string;
+        kycRequiredActions: { [key: string]: string };
+    }|null =>{
         const storageUser = sessionStorage.getItem('user');
+        if (!storageUser) return null;
 
-        if (!storageUser) return;
+        if(!contactId) {
+            return JSON.parse(new CryptoService().decrypt(storageUser)).kyc
+        }
 
-        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kyc
+        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kycMembers[contactId]
+
     }
 
     const getUser = computed(() => {
@@ -80,5 +97,5 @@ export const useUserStore = defineStore('user', () => {
         );
     })
 
-    return { setUser, getUser, isAccountActive, isVIP, getWarningKYC }
+    return { setUser, getUser, isAccountActive, swapModuleIsActive, getWarningKYC }
 });

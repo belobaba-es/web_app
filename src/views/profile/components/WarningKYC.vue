@@ -14,19 +14,28 @@ const userStore = useUserStore()
 
 const messages = ref<any>([])
 
+import { toRefs } from 'vue';
+import router from "../../../router";
+
+
 onMounted(() => {
-  const kyc = userStore.getWarningKYC()
-  if (kyc) {
-    for (const kycElement of kyc) {
-      if (kycElement.kyc_required_actions) {
-        kycElement.kyc_required_actions.forEach((e: any) => {
-          for (const eKey in e) {
-            messages.value.push({ content: e[eKey] })
-          }
-        })
-      }
-    }
+  const { contactId } = toRefs(router.currentRoute.value.params);
+
+  const kyc = userStore.getWarningKYC(
+      contactId === undefined ? undefined : String(contactId.value)
+  )
+  if (!kyc) {
+    return
   }
+
+  for (let kycRequiredActionsKey in kyc.kycRequiredActions) {
+    messages.value.push({ content: kyc.kycRequiredActions[kycRequiredActionsKey] })
+  }
+
+  if (kyc.cipChecks !== "") {
+    messages.value.push({ content: kyc.cipChecks })
+  }
+
 })
 </script>
 
