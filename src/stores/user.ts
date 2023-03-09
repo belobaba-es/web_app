@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue';
 import { CryptoService } from '../shared/services/crypto';
+import { Account } from '../views/login/types/login.interface';
 
 interface User {
     active:       boolean;
@@ -29,19 +30,6 @@ interface User {
     kyc: {
         cipChecks: string;
         kycRequiredActions: { [key: string]: string };
-    }
-    vip: boolean
-}
-
-interface Account {
-    accountId: string;
-    status:    string;
-    kycMembers: {
-        contactId: string,
-        kyc:{
-            cipChecks: string;
-            kycRequiredActions: { [key: string]: string };
-        }[]
     }
 }
 

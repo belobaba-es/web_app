@@ -9,20 +9,17 @@
 import Message from 'primevue/message'
 import { useUserStore } from '../../../stores/user'
 import { onMounted, ref } from 'vue'
+import {useRoute} from "vue-router";
+const route = useRoute()
 
 const userStore = useUserStore()
 
 const messages = ref<any>([])
 
-import { toRefs } from 'vue';
-import router from "../../../router";
-
-
 onMounted(() => {
-  const { contactId } = toRefs(router.currentRoute.value.params);
 
   const kyc = userStore.getWarningKYC(
-      contactId === undefined ? undefined : String(contactId.value)
+      route.params.contactId === undefined ? undefined : String(route.params.contactId)
   )
   if (!kyc) {
     return
