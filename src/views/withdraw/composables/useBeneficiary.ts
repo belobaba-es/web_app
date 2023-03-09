@@ -14,7 +14,6 @@ export const useBeneficiary = () => {
         const beneficiaryService = BeneficiaryService.instance()
         await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
             resp.results.forEach(element => {
-                console.log(element)
                 listBeneficiary.value.push(element)
             })
             submitting.value = false
@@ -22,7 +21,20 @@ export const useBeneficiary = () => {
         })
     }
 
+    const fetchBeneficiariesAssets = async () => {
+        const beneficiaryService = BeneficiaryService.instance()
+        await beneficiaryService.listBeneficiaryAssets(listNextPag.value).then(resp => {
+            resp.results.forEach(element => {
+                listBeneficiary.value.push(element)
+            })
+            listBeneficiary.value = resp.results
+            submitting.value = false
+            listNextPag.value = resp.nextPag.replace("?", "")
+        })
+    }
+
     return {
+        fetchBeneficiariesAssets,
         submitting,
         listNextPag,
         listBeneficiary,

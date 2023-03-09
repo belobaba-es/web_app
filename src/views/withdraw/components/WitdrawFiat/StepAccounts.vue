@@ -5,17 +5,20 @@
     </div>
   </div>
 
-  <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 full-width">
-    <span class="p-input-icon-left flex ">
-      <i class="pi pi-search" />
-      <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
-      <Button
-        style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-        class="p-button w-25"
-        :label="t('search')"
-        @click="onSearch"
-      />
-    </span>
+  <div class="grid col-12">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <span class="p-input-icon-left flex p-fluid">
+          <i class="pi pi-search"/>
+          <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
+          <Button
+              style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+              class="p-button search-btn w-25"
+              :label="t('search')"
+              @click="onSearch"
+              :loading="submitting"
+          />
+        </span>
+    </div>
   </div>
 
   <div class="grid">
@@ -38,6 +41,8 @@ import { useRouter } from 'vue-router'
 
 import { useToast } from 'primevue/usetoast'
 import { Beneficiary } from '../../types/beneficiary.interface'
+
+const submitting = ref(false)
 
 const router = useRouter()
 const toast = useToast()
