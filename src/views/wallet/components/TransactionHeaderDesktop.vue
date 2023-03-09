@@ -2,7 +2,7 @@
   <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.name === 'US DOLLAR' }">
     <div class="flex justify-content-start flex-wrap container-name-cripto">
       <h1 class="text-header name-cripto">
-        Wallet / {{ isFiat(wallet?.name) }} / <strong>{{ wallet?.name }}</strong>
+        Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
       </h1>
       <div>
         <div class="flex align-items-center mt-3">
@@ -70,12 +70,14 @@ const { calculateBalance } = useBalanceWallet()
 
 const emit = defineEmits(['toBack'])
 
-const isFiat = (nameWallet: string | undefined) => {
-  if (nameWallet === 'US DOLLAR') {
+const isFiat = (wallet: BalanceWallet | undefined) => {
+  // todo
+  console.log('wallet',wallet)
+  if (wallet?.name === 'US DOLLAR') {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
-    depositURL = '/deposit/crypto'
+    depositURL = '/deposit/crypto/'+ wallet?.assetCode
     return 'Crypto'
   }
 }

@@ -62,12 +62,13 @@ import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import VirtualScroller from 'primevue/virtualscroller'
-import { Asset, PaymentAddress } from './types/asset.interface'
+import {Asset, PaymentAddress} from './types/asset.interface'
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue'
 import { AssetsService } from './services/assets'
 import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
+import {useRoute} from "vue-router";
 
 const { t } = useI18n({ useScope: 'global' })
 const nextPag = ref('')
@@ -78,6 +79,7 @@ const lazyLoading = ref(false)
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddress | null>(null)
+const route = useRoute();
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -100,7 +102,17 @@ const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddress[]>([])
 
 onMounted(async () => {
-  assetsService.list().then(data => (assets.value = data))
+  await assetsService.list().then(data => (assets.value = data))
+
+  const assetCode = route.params.assetCode as string ?? ''
+
+  if(assetCode) {
+    const currentAsset = assets.value.find(asset => asset.code === assetCode)
+    if (currentAsset) await searchWallet(currentAsset?.assetId)
+
+    return
+  }
+
   await searchWallets()
 })
 
@@ -110,6 +122,17 @@ const searchWallets = () => {
   assetsService.listPaymentAddress().then(data => {
     lazyLoading.value = false
     paymentAddress.value = data.results
+    nextPag.value = data.nextPag
+    console.log('end data.results', data.results)
+  })
+}
+
+const searchWallet = (assetId: string) => {
+  lazyLoading.value = true
+  assetsService.list().then(data => (assets.value = data))
+  assetsService.listPaymentAddress().then((data) => {
+    lazyLoading.value = false
+    paymentAddress.value = data.results.filter((res:PaymentAddress) => res.assetsId === assetId)
     nextPag.value = data.nextPag
   })
 }
