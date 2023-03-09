@@ -57,8 +57,8 @@
             <InputNumber
                 v-model="unitCount"
                 mode="decimal"
-                :max-fraction-digits="8"
-                :min-fraction-digits="8"
+                :max-fraction-digits="6"
+                :min-fraction-digits="6"
                 :readonly="transactionType === 'buy'"
             />
           </template>
