@@ -31,7 +31,7 @@
         <div class="mt-3">
           <div class="grid flex justify-content-start flex-column">
             <div class="col-4 flex justify-content-start container-link-historic-desktop">
-              <router-link class="link-historic-desktop" to="/deposit" exact role="menuitem" v-ripple>
+              <router-link class="link-historic-desktop" :to="depositURL" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic-desktop">Deposit</h5>
               </router-link>
             </div>
@@ -64,6 +64,7 @@ import {useBalanceWallet} from "../../../composables/useBalanceWallet";
 defineProps<{
   wallet: BalanceWallet
 }>()
+let depositURL = ""
 
 const { calculateBalance } = useBalanceWallet()
 
@@ -71,8 +72,10 @@ const emit = defineEmits(['toBack'])
 
 const isFiat = (nameWallet: string | undefined) => {
   if (nameWallet === 'US DOLLAR') {
+    depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
+    depositURL = '/deposit/crypto'
     return 'Crypto'
   }
 }
