@@ -14,7 +14,7 @@
 
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in listAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in filteredListAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="26" :src="item.icon" />
           </div>
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import Dialog from 'primevue/dialog'
-import { defineProps, ref, onMounted } from 'vue'
+import {defineProps, ref, onMounted, watch} from 'vue'
 import { AssetsService } from '../views/deposit/services/assets'
 import { Asset } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
@@ -45,24 +45,42 @@ const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
 
 const listAsset = ref<Asset[]>([])
+const filteredListAsset = ref<Asset[]>([])
 const search = ref('')
 const assetService = AssetsService.instance()
 
 onMounted(async () => {
   await assetService.list().then(data => {
     listAsset.value = data
+    filteredListAsset.value = data
   })
+
+  watchSearchChange()
 })
 
 const selectedAsset = (asset: Asset) => {
   emit('selectedAsset', asset)
 }
 
+const watchSearchChange = () => {
+  watch(
+      search,
+      (newVal) => {
+        newVal.trim().length === 0 ? filteredListAsset.value = listAsset.value : null;
+      }
+  );
+}
+
 const onSearch = () => {
-  const newArray = listAsset.value.find(asset => asset.name.toLowerCase === search.value.toLowerCase)
-  listAsset.value = []
+  const searchAsset = search.value.trim().toLowerCase();
+  if (searchAsset.length === 0) {
+    filteredListAsset.value = listAsset.value
+    return;
+  }
+  const newArray:Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
+  filteredListAsset.value = []
   if (!newArray) return
-  listAsset.value.push(newArray)
+  filteredListAsset.value = newArray
 }
 </script>
 
