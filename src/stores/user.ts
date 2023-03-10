@@ -56,7 +56,7 @@ export const useUserStore = defineStore('user', () => {
 
         const user = JSON.parse(new CryptoService().decrypt(storageUser))
 
-        return user.vip ?? false
+        return user.account.swapEnable ?? false
     }
 
     const getWarningKYC = (contactId?: string):{
