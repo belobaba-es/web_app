@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue';
 import { CryptoService } from '../shared/services/crypto';
+import { Account } from '../views/login/types/login.interface';
 
 interface User {
     active:       boolean;
@@ -26,13 +27,10 @@ interface User {
     city:         string;
     region:       string;
     account:      Account;
-    vip: boolean
-}
-
-interface Account {
-    accountId: string;
-    kyc: any[];
-    status:    string;
+    kyc: {
+        cipChecks: string;
+        kycRequiredActions: { [key: string]: string };
+    }
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -51,22 +49,29 @@ export const useUserStore = defineStore('user', () => {
         return user.account.status === 'opened'
     }
 
-    const isVIP = (): boolean => {
+    const swapModuleIsActive = (): boolean => {
         const storageUser = sessionStorage.getItem('user');
 
         if (!storageUser) return false;
 
         const user = JSON.parse(new CryptoService().decrypt(storageUser))
 
-        return user.vip ?? false
+        return user.account.swapEnable ?? false
     }
 
-    const getWarningKYC = () =>{
+    const getWarningKYC = (contactId?: string):{
+        cipChecks: string;
+        kycRequiredActions: { [key: string]: string };
+    }|null =>{
         const storageUser = sessionStorage.getItem('user');
+        if (!storageUser) return null;
 
-        if (!storageUser) return;
+        if(!contactId) {
+            return JSON.parse(new CryptoService().decrypt(storageUser)).kyc
+        }
 
-        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kyc
+        return JSON.parse(new CryptoService().decrypt(storageUser)).account.kycMembers[contactId]
+
     }
 
     const getUser = computed(() => {
@@ -80,5 +85,5 @@ export const useUserStore = defineStore('user', () => {
         );
     })
 
-    return { setUser, getUser, isAccountActive, isVIP, getWarningKYC }
+    return { setUser, getUser, isAccountActive, swapModuleIsActive, getWarningKYC }
 });

@@ -66,7 +66,7 @@ export const useWorld = () => {
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
     const country = countries.value.find(country => country.country_code === event.value)
-    console.log('bank', country, event, countries)
+
     if (!country) return
     setCountry(country)
     await fetchStates()
