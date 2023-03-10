@@ -71,8 +71,6 @@ const { calculateBalance } = useBalanceWallet()
 const emit = defineEmits(['toBack'])
 
 const isFiat = (wallet: BalanceWallet | undefined) => {
-  // todo
-  console.log('wallet',wallet)
   if (wallet?.name === 'US DOLLAR') {
     depositURL = '/deposit/fiat'
     return 'Fiat'

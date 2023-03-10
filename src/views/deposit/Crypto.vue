@@ -123,7 +123,6 @@ const searchWallets = () => {
     lazyLoading.value = false
     paymentAddress.value = data.results
     nextPag.value = data.nextPag
-    console.log('end data.results', data.results)
   })
 }
 
