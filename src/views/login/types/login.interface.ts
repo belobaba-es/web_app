@@ -28,11 +28,21 @@ export interface LoginData {
     taxCountry:   string;
     streetTwo:    string;
     account:      Account;
-    vip: boolean
+    kyc: {
+        cipChecks: string;
+        kycRequiredActions: { [key: string]: string };
+    }
 }
 
 export interface Account {
-    kyc: any[];
     accountId: string;
+    swapEnable: boolean
     status:    string;
+    kycMembers: {
+        contactId: string,
+        kyc:{
+            cipChecks: string;
+            kycRequiredActions: { [key: string]: string };
+        }[]
+    }
 }
