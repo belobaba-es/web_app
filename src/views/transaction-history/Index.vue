@@ -18,9 +18,16 @@
     </div>
 
     <div class="grid">
+      <div class="col-12">
+        <div class="grid">
+          <div class="col-3"> asdf</div>
+          <div class="col-3"> xcvb</div>
+          <div class="col-6"> Date</div>
+        </div>
+      </div>
       <div class="col-6">
         <div class="grid">
-          <div class="col-4">
+          <div class="col-6">
             <Dropdown
                 class="dropdown-full"
                 v-model="selectedTypeTransaction"
@@ -30,7 +37,7 @@
                 :placeholder="t('allTransactions')"
             />
           </div>
-          <div class="col-4">
+          <div class="col-6">
             <Dropdown
                 class="dropdown-full"
                 v-model="assetCode"
@@ -44,15 +51,15 @@
       </div>
 
       <div class="col-6">
-        <div class="mt-4">
-          <div class="flex align-items-center">
-            <p class="text-2xl">{{ t('chooseDate') }}</p>
+        <div class="grid">
+          <div class="col-3">
+            <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
+          </div>
+
+          <div class="col-3">
+            <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
           </div>
         </div>
-        <label for="start-date">Date</label>
-        <Calendar v-model="startDate" id="start-date" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
-
-        <Calendar v-model="endDate" id="end-date" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
 
         <!--      -->
         <div v-if="!isValidDates">
@@ -203,5 +210,8 @@ const loadMoreItems = async () => {
 <style lang="scss">
 .dropdown-full {
   width: 100% !important;
+}
+.container-data{
+ margin: 0;
 }
 </style>
