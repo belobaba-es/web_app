@@ -82,10 +82,18 @@
           <div class="col-12">
             <div class="grid">
               <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-                <p class="name_to">test</p>
-                <p class="date">
-                  {{ item.createdAt }}
-                </p>
+                <div class="grid">
+                  <div class="col-3 flex align-items-center data-hidden">
+<!--                    <p class="reference">{{ item.reference }}</p>-->
+                    <img class="icon-cripto" :src="asssetImg(item.assetCode)" />
+                  </div>
+                  <div class="col-9">
+                    <p class="name_to">test</p>
+                    <p class="date">
+                      {{ item.createdAt }}
+                    </p>
+                  </div>
+                </div>
               </div>
               <div class="col-3 flex align-items-center data-hidden">
                 <p class="reference">{{ item.reference }}</p>
@@ -266,6 +274,10 @@ watch(selectedTypeTransaction, async newValue => {
     filtersChange("transactionType", newValue)
   }
 })
+
+const asssetImg = (assetCode: string) => {
+  return assets.value.find(asset => asset.code.toLowerCase() == assetCode.toLowerCase())?.icon
+}
 
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
