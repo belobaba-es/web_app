@@ -20,9 +20,9 @@
     <div class="grid">
       <div class="col-12">
         <div class="grid">
-          <div class="col-3"> asdf</div>
-          <div class="col-3"> xcvb</div>
-          <div class="col-6"> Date</div>
+          <div class="col-3"> {{ t('transactionType') }}</div>
+          <div class="col-3"> {{ t('assetType') }}</div>
+          <div class="col-6"> {{ t('datePicker') }}</div>
         </div>
       </div>
       <div class="col-6">
@@ -128,7 +128,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineProps, onMounted, ref} from 'vue'
+import {computed, defineProps, onMounted, ref, watch} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -140,7 +140,7 @@ import { Asset } from '../deposit/types/asset.interface'
 
 import Calendar from 'primevue/calendar';
 import {HistoricService} from "./services/transaction-history";
-import {ListTransactionPgType} from "./types/transaction-history-response.interface";
+import {ListTransactionPgType, TransactionFiltersQueryType} from "./types/transaction-history-response.interface";
 
 const router = useRouter()
 const route = useRoute()
@@ -151,6 +151,17 @@ const selectedTypeTransaction = ref()
 const assetCode = ref('')
 const startDate = ref(null);
 const endDate = ref(null);
+const filters: TransactionFiltersQueryType = {
+  accountId: "",
+  assetCode: "",
+  assetType: "",
+  initDoc: "",
+  nameTo: "",
+  startDate: "",
+  next: "",
+  endDate: "",
+  transactionType: "",
+};
 
 const transactionTypes = ref([
   { name: t('depositTransactionName'), code: 'deposit' },
@@ -185,6 +196,14 @@ onMounted(async () => {
 })
 
 const isValidDates = computed(() => {
+  if(startDate.value && endDate.value && startDate.value < endDate.value) {
+    filtersChange("startDate", startDate.value)
+    filtersChange("endDate", endDate.value)
+  } else {
+    console.log('date filters clear')
+    filtersChange("startDate", "")
+    filtersChange("endDate", "")
+  }
   return startDate.value && endDate.value && startDate.value < endDate.value;
 });
 
@@ -202,6 +221,36 @@ const loadMoreItems = async () => {
 
     if (data.nextPag) {
       nextPage.value.nextPage = true
+    }
+  })
+}
+
+watch(assetCode, async newValue => {
+  if (assetCode) {
+    console.log('newValue', newValue)
+    filtersChange("assetCode", newValue)
+  }
+})
+
+watch(selectedTypeTransaction, async newValue => {
+  if (assetCode) {
+    console.log('newValue', newValue)
+    filtersChange("transactionType", newValue)
+  }
+})
+
+const filtersChange = async(key: string, value: any) => {
+  filters[key] = value
+  console.log('filtersChange filters', filters)
+  await getHistoric.getHistoric(filters).then(data => {
+    console.log('--- data', data)
+    listTransaction.value = [];
+    data.results.forEach(element => {
+      listTransaction.value.push(element)
+    })
+    if (data.nextPag) {
+      nextPage.value.nextPage = true
+      nextPage.value.data = data.nextPag
     }
   })
 }

@@ -52,3 +52,15 @@ export enum Status {
   Pending = 'pending',
   Process = 'process',
 }
+
+export type TransactionFiltersQueryType = {
+  accountId: string
+  assetCode?: string
+  assetType?: 'FIAT' | 'ASSET' | ''
+  initDoc?: string
+  nameTo?: string
+  startDate?: string
+  next?: string
+  endDate?: string
+  transactionType?: TransactionTypeEnum | ''
+}

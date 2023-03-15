@@ -19,14 +19,12 @@ export class HistoricService extends HttpService {
     return this._instance
   }
 
-  async getHistoric() {
-    const resp = await this.get<HistoricTransactionsResponse>(`transactionHistory`, [], true)
-    return resp;
+  async getHistoric(payload = {}) {
+    return await this.get<HistoricTransactionsResponse>(`transactionHistory`, payload, true)
   }
 
-  async getHistoricNextPage(nextPag: string) {
-    const resp = await this.get<HistoricTransactionsResponse>(`transactionHistory/?next=${nextPag}`, [], true)
-    return resp;
+  async getHistoricNextPage(nextPag: string, payload = {}) {
+    return await this.get<HistoricTransactionsResponse>(`transactionHistory/?next=${nextPag}`, payload, true)
   }
 
   // async historic(assetCode:any) {
@@ -38,5 +36,4 @@ export class HistoricService extends HttpService {
   //   const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}/${nextPag}`, [], true)
   //   return resp;
   // }
-  
 }

@@ -2,6 +2,9 @@ import axios, { AxiosInstance } from 'axios'
 import router from '../../router'
 import { CryptoService } from './crypto'
 
+export interface payloadInterface {
+  [key: string]: string | number | null | undefined
+}
 export abstract class HttpService {
   private client: AxiosInstance
   private cryptoService
@@ -72,21 +75,47 @@ export abstract class HttpService {
     return response.data ?? ('' as T)
   }
 
-  public async get<T>(url: string, payload = [], isPrivate = true): Promise<T> {
+  // public async get<T>(url: string, payload = [], isPrivate = true): Promise<T> {
+  //   let data: any
+  //   let header: any
+  //   if (isPrivate) {
+  //     header = await this.getHeader()
+  //   } else {
+  //     header = {}
+  //   }
+  //
+  //   if (payload.length > 0) {
+  //     const params = new URLSearchParams(payload).toString()
+  //     url = `${url}?${params}`
+  //   }
+  //
+  //   data = await this.client.get(url, header)
+  //
+  //   return data.data.data
+  // }
+
+  public async get<T>(url: string, payload: payloadInterface = {}, isPrivate = true): Promise<T> {
     let data: any
     let header: any
+    let params: any
     if (isPrivate) {
       header = await this.getHeader()
     } else {
       header = {}
     }
 
-    if (payload.length > 0) {
-      const params = new URLSearchParams(payload).toString()
-      url = `${url}?${params}`
+    if (Object.keys(payload).length > 0) {
+      params = Object.entries(payload)
+        .filter(([key, value]) => ![0, '', null, undefined].includes(value))
+        .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {})
+
+      console.log(params)
+
+      // const params = new URLSearchParams(payload).toString()
+      // console.log('URLSearchParams', new URLSearchParams(payload))
     }
 
-    data = await this.client.get(url, header)
+    data = await this.client.get(url, { headers: header.headers, params })
 
     return data.data.data
   }
