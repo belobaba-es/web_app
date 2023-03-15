@@ -40,8 +40,6 @@ import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 import WalletIndex from './views/wallet/Wallet.vue'
 import TransactionHistory from './views/wallet/Transaction.vue'
 
-
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -113,7 +111,7 @@ const routes: RouteRecordRaw[] = [
             component: DepositFiat,
           },
           {
-            path: 'crypto',
+            path: 'crypto/:assetCode?',
             component: DepositCrypto,
           },
         ],
@@ -216,7 +214,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'crypto/other/add-beneficiary',
             component: AddBeneficiary,
-          }
+          },
         ],
       },
       {
@@ -224,17 +222,17 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: SwapIndexVue
+            component: SwapIndexVue,
           },
           {
             path: 'history',
-            component: SwapHistory
+            component: SwapHistory,
           },
           {
             path: 'success',
-            component: SwapSuccess
-          }
-        ]
+            component: SwapSuccess,
+          },
+        ],
       },
       {
         path: '/wallet',
@@ -246,8 +244,8 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'transactions/:assetCode',
             component: TransactionHistory,
-          }
-        ]
+          },
+        ],
       },
     ],
   },

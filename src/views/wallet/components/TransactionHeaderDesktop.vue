@@ -2,7 +2,7 @@
   <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.name === 'US DOLLAR' }">
     <div class="flex justify-content-start flex-wrap container-name-cripto">
       <h1 class="text-header name-cripto">
-        Wallet / {{ isFiat(wallet?.name) }} / <strong>{{ wallet?.name }}</strong>
+        Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
       </h1>
       <div>
         <div class="flex align-items-center mt-3">
@@ -31,7 +31,7 @@
         <div class="mt-3">
           <div class="grid flex justify-content-start flex-column">
             <div class="col-4 flex justify-content-start container-link-historic-desktop">
-              <router-link class="link-historic-desktop" to="/deposit" exact role="menuitem" v-ripple>
+              <router-link class="link-historic-desktop" :to="depositURL" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic-desktop">Deposit</h5>
               </router-link>
             </div>
@@ -64,15 +64,18 @@ import {useBalanceWallet} from "../../../composables/useBalanceWallet";
 defineProps<{
   wallet: BalanceWallet
 }>()
+let depositURL = ""
 
 const { calculateBalance } = useBalanceWallet()
 
 const emit = defineEmits(['toBack'])
 
-const isFiat = (nameWallet: string | undefined) => {
-  if (nameWallet === 'US DOLLAR') {
+const isFiat = (wallet: BalanceWallet | undefined) => {
+  if (wallet?.name === 'US DOLLAR') {
+    depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
+    depositURL = '/deposit/crypto/'+ wallet?.assetCode
     return 'Crypto'
   }
 }

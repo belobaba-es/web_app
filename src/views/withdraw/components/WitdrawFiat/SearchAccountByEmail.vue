@@ -5,12 +5,12 @@
       <i class="pi pi-search"/>
       <InputText
           type="text"
-          class="b-gray w-75"
+          class="b-gray"
           v-model="search"
           :placeholder="t('nobaBeneficiaryEmail')"
       />
       <Button
-          class="p-button search-btn w-25"
+          class="p-button search-btn"
           :label="t('search')"
           @click="onSearch"
           :loading="submitting"

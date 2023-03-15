@@ -1,5 +1,10 @@
 import { Pagination } from '../../../shared/types/pagination'
 
+
+export enum BeneficiaryType {
+  INTERNATIONAL="INTERNATIONAL",
+  DOMESTIC="DOMESTIC"
+}
 export interface Beneficiary {
   name: string
   email: string

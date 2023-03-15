@@ -9,7 +9,7 @@
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ usdName }}</div>
-        <div class="font-medium">{{ summary.totalAmount }} {{ usdName }}</div>
+        <div class="font-medium">{{ totalBuy()  }} {{ usdName }}</div>
       </div>
     </div>
     <div class="flex" v-else>
@@ -47,7 +47,7 @@
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
           <div class="font-medium">{{ usdName }}</div>
-          <div class="font-medium">{{ transactionSummary.totalAmount }} {{ usdName }}</div>
+          <div class="font-medium">{{ totalSell()  }} {{ usdName }}</div>
         </div>
       </div>
     </div>
@@ -63,12 +63,22 @@ import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
 
 const { t } = useI18n({ useScope: 'global' })
 
-defineProps<{
+interface Props {
   summary: SummarySwap
   transactionSummary: SummarySwap
-  usdIcon: string | undefined
-  usdName: string | undefined
-}>()
+  usdIcon?: string
+  usdName?: string
+}
+
+const props =  defineProps<Props>()
+
+const totalBuy = () => {
+  return (props.summary.totalAmount + props.summary.feeNoba).toFixed(2)
+}
+
+const totalSell = () => {
+  return (props.summary.totalAmount - props.summary.feeNoba).toFixed(2)
+}
 </script>
 
 <style scoped>
