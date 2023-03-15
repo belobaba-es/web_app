@@ -260,17 +260,14 @@ const isValidDates = computed(() => {
   return startDate.value && endDate.value && startDate.value < endDate.value;
 });
 
-watch(assetCode, async (newValue, oldValue) => {
+watch(assetCode, async (newValue) => {
   if (assetCode) {
-    console.log('newValue', newValue)
-    console.log('=> oldValue', oldValue)
     filtersChange("assetCode", newValue)
   }
 })
 
 watch(selectedTypeTransaction, async newValue => {
   if (assetCode) {
-    console.log('newValue', newValue)
     filtersChange("transactionType", newValue)
   }
 })
@@ -281,20 +278,7 @@ const asssetImg = (assetCode: string) => {
 
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
-  console.log('filtersChange key', key)
-  console.log('filtersChange filters', filters)
   await getTransactions(filters)
-  // await getHistoric.getHistoric(filters).then(data => {
-  //   console.log('--- data', data)
-  //   listTransaction.value = [];
-  //   data.results.forEach(element => {
-  //     listTransaction.value.push(element)
-  //   })
-  //   if (data.nextPag) {
-  //     nextPage.value.nextPage = true
-  //     nextPage.value.data = data.nextPag
-  //   }
-  // })
 }
 
 </script>
