@@ -27,8 +27,13 @@ export class AssetsService extends HttpService {
     return await this.get<Asset[]>(`assets/`)
   }
 
-  async listPaymentAddress(next = ''): Promise<PaymentAddressResponse> {
-    return await this.get<PaymentAddressResponse>(`assets/payment-address${next}`)
+  async listPaymentAddress(next = '', assetCode: string = ''): Promise<PaymentAddressResponse> {
+    let queryParams = next ? `next=${next}` : ''
+    if (assetCode) {
+      queryParams = next ? `?${queryParams}/&assetCode=${assetCode}` : `?assetCode=${assetCode}`
+    }
+
+    return await this.get<PaymentAddressResponse>(`assets/payment-address${queryParams}`)
   }
 
   async paymentAddress(data: CreatePaymentAddress): Promise<CreatePaymentAddressResponse> {
