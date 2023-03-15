@@ -205,5 +205,14 @@
   "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
   "depositBankName": "Nombre del banco a depositar",
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
-  "transactionHistory": "Histórico de transacciones"
+  "transactionHistory": "Histórico de transacciones",
+  "extractGenerated": "Extracto Generado",
+  "chooseExtract": "Seleccion el extracto que quiere consultar",
+  "transactionType": "Tipo de transaccion",
+  "assetType": "Tipo de asset",
+  "datePicker": "Fecha",
+  "allTransactions": "Todas las transacciones",
+  "selectAnAsset": "Selecciona un asset",
+  "invalidDatePeriod": "Por favor selecciona un fecha de inicio que anteceda la fecha final",
+  "downloadExtract": "Descargar extracto"
 }

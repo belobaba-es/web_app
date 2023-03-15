@@ -214,5 +214,14 @@
   "namePdfDepositFiatDomestic": "Domestic Deposit Instructions",
   "namePdfDepositFiatInternational": "International Deposit Instructions",
   "textNewWalletAddress": "In Noba you can only have one wallet per associated asset.",
-  "transactionHistory": "Transaction history"
+  "transactionHistory": "Transaction history",
+  "extractGenerated": "Extracted Generated",
+  "chooseExtract": "Choose the extract you want to see",
+  "transactionType": "Transaction type",
+  "assetType": "Asset type",
+  "datePicker": "Date",
+  "allTransactions": "All transactions",
+  "selectAnAsset": "Select an asset",
+  "invalidDatePeriod": "Please select a start date that is before the end date",
+  "downloadExtract": "Download extract"
 }

@@ -63,9 +63,13 @@
 
         <!--      -->
         <div v-if="!isValidDates">
-          <p>Please select a start date that is before the end date.</p>
+          <p>{{ t('invalidDatePeriod') }}.</p>
         </div>
         <!--      -->
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <Button class="p-button wallet-btn" :label="t('downloadExtract')" @click="displayNew = !displayNew" />
       </div>
 
     </div>
