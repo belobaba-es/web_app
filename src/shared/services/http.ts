@@ -108,11 +108,6 @@ export abstract class HttpService {
       params = Object.entries(payload)
         .filter(([key, value]) => ![0, '', null, undefined].includes(value))
         .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {})
-
-      console.log(params)
-
-      // const params = new URLSearchParams(payload).toString()
-      // console.log('URLSearchParams', new URLSearchParams(payload))
     }
 
     data = await this.client.get(url, { headers: header.headers, params })

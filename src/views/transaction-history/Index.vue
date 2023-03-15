@@ -52,11 +52,11 @@
 
       <div class="col-6">
         <div class="grid">
-          <div class="col-3">
+          <div class="col-6">
             <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
           </div>
 
-          <div class="col-3">
+          <div class="col-6">
             <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
           </div>
         </div>
@@ -113,6 +113,15 @@
             </div>
           </div>
         </div>
+
+        <template v-if="isLoading">
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+        </template>
       </div>
 
       <div class="mt-2" v-if="nextPage.nextPage === true">
@@ -137,12 +146,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import Dropdown from 'primevue/dropdown'
-
-import { AssetsService } from '../deposit/services/assets'
-import { Asset } from '../deposit/types/asset.interface'
-
 import Calendar from 'primevue/calendar';
+import Skeleton from 'primevue/skeleton';
+
+import Dropdown from 'primevue/dropdown'
+import { AssetsService } from '../deposit/services/assets'
+
+import { Asset } from '../deposit/types/asset.interface'
 import {HistoricService} from "./services/transaction-history";
 import {ListTransactionPgType, TransactionFiltersQueryType} from "./types/transaction-history-response.interface";
 
@@ -155,6 +165,8 @@ const selectedTypeTransaction = ref()
 const assetCode = ref('')
 const startDate = ref(null);
 const endDate = ref(null);
+const isLoading = ref(true);
+const isFirstLoad = ref(true);
 const filters: TransactionFiltersQueryType = {
   accountId: "",
   assetCode: "",
@@ -188,7 +200,15 @@ const nextPage = ref({
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
 
-  await getHistoric.getHistoric().then(data => {
+  await getTransactions()
+})
+
+const getTransactions = async(filters: any = {}) => {
+  isLoading.value = true;
+  listTransaction.value = [];
+  await getHistoric.getHistoric(filters).then(data => {
+    console.log('--- data', data)
+    isLoading.value = false;
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
@@ -197,19 +217,7 @@ onMounted(async () => {
       nextPage.value.data = data.nextPag
     }
   })
-})
-
-const isValidDates = computed(() => {
-  if(startDate.value && endDate.value && startDate.value < endDate.value) {
-    filtersChange("startDate", startDate.value)
-    filtersChange("endDate", endDate.value)
-  } else {
-    console.log('date filters clear')
-    filtersChange("startDate", "")
-    filtersChange("endDate", "")
-  }
-  return startDate.value && endDate.value && startDate.value < endDate.value;
-});
+}
 
 const loadMoreItems = async () => {
   submitting.value = true
@@ -229,9 +237,25 @@ const loadMoreItems = async () => {
   })
 }
 
-watch(assetCode, async newValue => {
+const isValidDates = computed(() => {
+  if(isFirstLoad.value) {
+    isFirstLoad.value = false
+    return;
+  }
+  if(startDate.value && endDate.value && startDate.value < endDate.value) {
+    filtersChange("startDate", startDate.value)
+    filtersChange("endDate", endDate.value)
+  } else {
+    filtersChange("startDate", "")
+    filtersChange("endDate", "")
+  }
+  return startDate.value && endDate.value && startDate.value < endDate.value;
+});
+
+watch(assetCode, async (newValue, oldValue) => {
   if (assetCode) {
     console.log('newValue', newValue)
+    console.log('=> oldValue', oldValue)
     filtersChange("assetCode", newValue)
   }
 })
@@ -245,18 +269,20 @@ watch(selectedTypeTransaction, async newValue => {
 
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
+  console.log('filtersChange key', key)
   console.log('filtersChange filters', filters)
-  await getHistoric.getHistoric(filters).then(data => {
-    console.log('--- data', data)
-    listTransaction.value = [];
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
-    })
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
-      nextPage.value.data = data.nextPag
-    }
-  })
+  await getTransactions(filters)
+  // await getHistoric.getHistoric(filters).then(data => {
+  //   console.log('--- data', data)
+  //   listTransaction.value = [];
+  //   data.results.forEach(element => {
+  //     listTransaction.value.push(element)
+  //   })
+  //   if (data.nextPag) {
+  //     nextPage.value.nextPage = true
+  //     nextPage.value.data = data.nextPag
+  //   }
+  // })
 }
 
 </script>
@@ -265,6 +291,7 @@ const filtersChange = async(key: string, value: any) => {
   width: 100% !important;
 }
 .container-data{
- margin: 0;
+ margin: -14px;
+  margin-top: 30px;
 }
 </style>
