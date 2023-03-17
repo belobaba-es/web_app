@@ -22,7 +22,7 @@
         <div class="grid">
           <div class="col-3"> {{ t('transactionType') }}</div>
           <div class="col-3"> {{ t('assetType') }}</div>
-          <div class="col-6"> {{ t('datePicker') }}</div>
+          <div class="col-3"> {{ t('datePicker') }}</div>
         </div>
       </div>
       <div class="col-6">
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-3">
         <div class="grid">
           <div class="col-6">
             <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
@@ -62,10 +62,23 @@
         </div>
 
         <!--      -->
-        <div v-if="!isValidDates">
-          <p>{{ t('invalidDatePeriod') }}.</p>
-        </div>
+<!--        <div v-if="!isValidDates">-->
+<!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
+<!--        </div>-->
         <!--      -->
+      </div>
+
+      <div class="3">
+        <span class="p-input-icon-left flex p-fluid">
+          <i class="pi pi-search" />
+          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+          <Button
+              class="p-button search-btn"
+              style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+              :label="t('search')"
+              @click="search"
+          />
+        </span>
       </div>
 
 <!--      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">-->
@@ -266,7 +279,7 @@ const isValidDates = computed(() => {
     filtersChange("endDate", "")
   }
   return startDate.value && endDate.value && startDate.value < endDate.value;
-});
+})
 
 watch(assetCode, async (newValue) => {
   if (assetCode) {
@@ -286,7 +299,7 @@ const asssetImg = (assetCode: string) => {
 
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
-  await getTransactions(filters)
+  // await getTransactions(filters)
 }
 
 const userStore = useUserStore()
@@ -307,6 +320,10 @@ const downloadExtract = ()=>{
     })
     generatePDFTable(nameFile, logo, title, extractPDFInfo, footerPdf, jsPDFOptionsOrientationEnum.LANDSCAPE)
   }, 2000)
+}
+
+const search = async()=> {
+  await getTransactions(filters)
 }
 
 </script>
