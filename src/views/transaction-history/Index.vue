@@ -68,9 +68,9 @@
         <!--      -->
       </div>
 
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <Button class="p-button wallet-btn" :label="t('downloadExtract')" @click="displayNew = !displayNew" />
-      </div>
+<!--      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">-->
+<!--        <Button class="p-button wallet-btn" :loading="isLoadingPDF" :label="t('downloadExtract')" @click="downloadExtract" />-->
+<!--      </div>-->
 
     </div>
 
@@ -163,6 +163,9 @@ import { AssetsService } from '../deposit/services/assets'
 import { Asset } from '../deposit/types/asset.interface'
 import {HistoricService} from "./services/transaction-history";
 import {ListTransactionPgType, TransactionFiltersQueryType} from "./types/transaction-history-response.interface";
+import generatePdf, {generatePDFTable, jsPDFOptionsOrientationEnum} from "../../shared/generatePdf";
+import logo from "../../assets/img/logo.png";
+import {useUserStore} from "../../stores/user";
 
 const router = useRouter()
 const route = useRoute()
@@ -175,6 +178,7 @@ const startDate = ref(null);
 const endDate = ref(null);
 const isLoading = ref(true);
 const isFirstLoad = ref(true);
+const isLoadingPDF = ref(true);
 const filters: TransactionFiltersQueryType = {
   accountId: "",
   assetCode: "",
@@ -213,10 +217,12 @@ onMounted(async () => {
 
 const getTransactions = async(filters: any = {}) => {
   isLoading.value = true;
+  isLoadingPDF.value = true;
   listTransaction.value = [];
   await getHistoric.getHistoric(filters).then(data => {
     console.log('--- data', data)
     isLoading.value = false;
+    isLoadingPDF.value = false;
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
@@ -229,6 +235,7 @@ const getTransactions = async(filters: any = {}) => {
 
 const loadMoreItems = async () => {
   submitting.value = true
+  isLoadingPDF.value = true
 
   await getHistoric.getHistoricNextPage(nextPage.value.data).then(data => {
     data.results.forEach(element => {
@@ -238,6 +245,7 @@ const loadMoreItems = async () => {
     nextPage.value.data = data.nextPag
     nextPage.value.nextPage = false
     submitting.value = false
+    isLoadingPDF.value = false
 
     if (data.nextPag) {
       nextPage.value.nextPage = true
@@ -279,6 +287,26 @@ const asssetImg = (assetCode: string) => {
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
   await getTransactions(filters)
+}
+
+const userStore = useUserStore()
+const title = t('transactionHistory')
+const footerPdf = t('footerPdfNobaData')
+const username = userStore.getUser.firstName
+    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+    : userStore.getUser.name
+let extractPDFInfo:any = {}
+const downloadExtract = ()=>{
+  isLoadingPDF.value = true;
+  setTimeout(()=>{
+    extractPDFInfo = {};
+    isLoadingPDF.value = false;
+    const nameFile = `${username} ${t('namePdfTransactionHistory')}`
+    listTransaction.value.forEach((transaction, i) => {
+      extractPDFInfo[i]  = `${transaction.assetCode} ${transaction.reference} ${transaction.createdAt.toString().substr(0, 10)} ${transaction.createdAt.toString().substr(11, 8)}  ${transaction.amount} ${ transaction.assetCode}`
+    })
+    generatePDFTable(nameFile, logo, title, extractPDFInfo, footerPdf, jsPDFOptionsOrientationEnum.LANDSCAPE)
+  }, 2000)
 }
 
 </script>
