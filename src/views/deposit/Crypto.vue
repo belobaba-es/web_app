@@ -11,11 +11,23 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
         <span class="p-input-icon-left flex p-fluid">
           <i class="pi pi-search" />
-          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+          <Dropdown
+            class="select-asset"
+            v-model="assetCode"
+            :options="assets"
+            optionLabel="name"
+            optionValue="code"
+            :placeholder="t('selectAnAsset')"
+            :showClear="true"
+            @change="onChange"
+          />
+
           <Button
             class="p-button search-btn"
             style="border-top-left-radius: 0; border-bottom-left-radius: 0"
             :label="t('search')"
+            @click="findAssetByName"
+            :loading="submitting"
           />
         </span>
       </div>
@@ -68,8 +80,12 @@ import ViewAddress from './components/ViewAddress.vue'
 import { AssetsService } from './services/assets'
 import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
+import Dropdown from 'primevue/dropdown'
+import {useRoute} from "vue-router";
 
 const { t } = useI18n({ useScope: 'global' })
+
+const assetCode = ref('')
 const nextPag = ref('')
 const display = ref(false)
 const displayNew = ref(false)
@@ -78,6 +94,8 @@ const lazyLoading = ref(false)
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddress | null>(null)
+const submitting = ref(false)
+const route = useRoute();
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -85,6 +103,31 @@ const findAsset = (assetId: string) => {
     return assetSelect
   }
   return null
+}
+
+const findAssetByName = () => {
+  submitting.value = true;
+  lazyLoading.value = true
+  if (assetCode.value) {
+    assetsService
+      .listPaymentAddress(nextPag.value, assetCode.value)
+      .then(data => {
+        paymentAddress.value = [...data.results]
+        nextPag.value = data.nextPag
+        submitting.value = false;
+        lazyLoading.value = false;
+      })
+      .finally(() => {
+        submitting.value = false
+        lazyLoading.value = false;
+      })
+  }
+}
+
+function onChange(e:any) {
+  if (e.value === null) {
+    searchWallets()
+  }
 }
 
 const viewAddressAsset = (item: PaymentAddress) => {
@@ -100,7 +143,17 @@ const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddress[]>([])
 
 onMounted(async () => {
-  assetsService.list().then(data => (assets.value = data))
+  await assetsService.list().then(data => (assets.value = data))
+
+  const assetCode = route.params.assetCode as string ?? ''
+
+  if(assetCode) {
+    const currentAsset = assets.value.find(asset => asset.code === assetCode)
+    if (currentAsset) await searchWallet(currentAsset?.assetId)
+
+    return
+  }
+
   await searchWallets()
 })
 
@@ -110,6 +163,16 @@ const searchWallets = () => {
   assetsService.listPaymentAddress().then(data => {
     lazyLoading.value = false
     paymentAddress.value = data.results
+    nextPag.value = data.nextPag
+  })
+}
+
+const searchWallet = (assetId: string) => {
+  lazyLoading.value = true
+  assetsService.list().then(data => (assets.value = data))
+  assetsService.listPaymentAddress().then((data) => {
+    lazyLoading.value = false
+    paymentAddress.value = data.results.filter((res:PaymentAddress) => res.assetsId === assetId)
     nextPag.value = data.nextPag
   })
 }
@@ -159,5 +222,9 @@ const onLazyLoad = (event: any) => {
 
 .wallet-btn {
   width: 100% !important;
+}
+
+.select-asset {
+  width: 100%;
 }
 </style>

@@ -116,7 +116,7 @@ const routes: RouteRecordRaw[] = [
             component: DepositFiat,
           },
           {
-            path: 'crypto',
+            path: 'crypto/:assetCode?',
             component: DepositCrypto,
           },
         ],

@@ -1,9 +1,9 @@
 <template>
   <section class="section-main">
     <AccountValidationProcess v-show="!useUser.isAccountActive()" />
-    <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.isVIP()">
+    <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.swapModuleIsActive()">
       <div class="grid flex justify-content-center">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
           <div class="flex justify-content-end mb-4">
             <Button
               type="button"
@@ -34,17 +34,13 @@
             <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
               <div class="grid">
                 <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 mx-auto mb-3 mt-3">
-                  <ProgressBar :value="progressBarPercent" class="swap"> {{ progressBarSeconds }} Seg </ProgressBar>
+                  <ProgressBar :value="progressBarPercent" class="swap"> {{ progressBarSeconds }} Seg</ProgressBar>
                 </div>
               </div>
             </div>
-            <div class="text-center mt-3 mb-3" v-if="quoteId">
-              <span class="font-medium text-primary text-2xl">Fee:</span>
-              <span class="text-2xl font-medium">{{ feeAmount }}</span>
-              /
-              <span class="font-medium text-primary text-2xl">Total:</span>
-              <span class="text-2xl font-medium">{{ totalAmount }}</span>
-            </div>
+
+            <ShowFee v-if="quoteId" />
+
             <div class="mb-2">
               <Button
                 :label="swapBtnText"
@@ -84,6 +80,7 @@ import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import { onUnmounted } from 'vue'
+import ShowFee from './components/ShowFee.vue'
 
 const {
   assetIcon,
@@ -95,8 +92,6 @@ const {
   swapBtnText,
   loading,
   quoteId,
-  feeAmount,
-  totalAmount,
   transactionType,
   assetCode,
   shouldRefreshQuote,
@@ -138,5 +133,11 @@ onUnmounted(() => {
 .swap-circle > img {
   transform: rotate(90deg);
   width: 2rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .xl\:col-4 {
+    width: 40rem;
+  }
 }
 </style>
