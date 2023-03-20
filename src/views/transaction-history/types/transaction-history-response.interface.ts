@@ -64,3 +64,5 @@ export type TransactionFiltersQueryType = {
   endDate?: string
   transactionType?: TransactionTypeEnum | ''
 }
+
+export type TransactionFiltersQueryTypeKeys = keyof TransactionFiltersQueryType

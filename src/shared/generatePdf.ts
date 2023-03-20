@@ -6,7 +6,7 @@ export enum jsPDFOptionsOrientationEnum {
   LANDSCAPE = 'l',
 }
 
-const setHeader = (pdf, logo, title) => {
+const setHeader = (pdf: any, logo: string, title: string) => {
   pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
   pdf.value.setFontSize(18)
   pdf.value.text(title, 75, 40)

@@ -176,7 +176,11 @@ import { AssetsService } from '../deposit/services/assets'
 
 import { Asset } from '../deposit/types/asset.interface'
 import {HistoricService} from "./services/transaction-history";
-import {ListTransactionPgType, TransactionFiltersQueryType} from "./types/transaction-history-response.interface";
+import {
+  ListTransactionPgType,
+  TransactionFiltersQueryType,
+  TransactionFiltersQueryTypeKeys
+} from "./types/transaction-history-response.interface";
 import generatePdf, {generatePDFTable, jsPDFOptionsOrientationEnum} from "../../shared/generatePdf";
 import logo from "../../assets/img/logo.png";
 import {useUserStore} from "../../stores/user";
@@ -188,8 +192,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const selectedTypeTransaction = ref()
 const assetCode = ref('')
-const startDate = ref(null);
-const endDate = ref(null);
+const startDate = ref();
+const endDate = ref();
 const isLoading = ref(true);
 const isFirstLoad = ref(true);
 const isLoadingPDF = ref(true);
@@ -316,7 +320,7 @@ const asssetImg = (assetCode: string) => {
   return assets.value.find(asset => asset.code.toLowerCase() == assetCode.toLowerCase())?.icon
 }
 
-const filtersChange = async(key: string, value: any) => {
+const filtersChange = async(key: TransactionFiltersQueryTypeKeys, value: any) => {
   filters[key] = value
 }
 
@@ -364,7 +368,7 @@ const search = async()=> {
   margin-left: 0.5rem !important;;
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 950px) {
   .search-btn {
     border-radius: 5px !important;
   }
