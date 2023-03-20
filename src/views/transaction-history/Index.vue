@@ -11,64 +11,62 @@
       </div>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-4 mb-15">
       <div class="flex align-items-center">
         <p class="text-2xl">{{ t('chooseExtract') }}</p>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="col-12">
-        <div class="grid">
-          <div class="col-3"> {{ t('transactionType') }}</div>
-          <div class="col-3"> {{ t('assetType') }}</div>
-          <div class="col-6"> {{ t('datePicker') }}</div>
-        </div>
-      </div>
-      <div :class="{'p-col-3 p-md-col-6': true}">
-        <div class="grid">
-          <div class="col-6">
-            <Dropdown
-                class="dropdown-full"
-                v-model="selectedTypeTransaction"
-                :options="transactionTypes"
-                optionLabel="name"
-                optionValue="code"
-                :placeholder="t('allTransactions')"
-            />
-          </div>
-          <div class="col-6">
-            <Dropdown
-                class="dropdown-full"
-                v-model="assetCode"
-                :options="assets"
-                optionLabel="name"
-                optionValue="code"
-                :placeholder="t('selectAnAsset')"
-            />
-          </div>
-        </div>
-      </div>
+    <div class="col-12">
+      <div class="grid">
 
-      <div :class="{'p-col-3 p-md-col-6': true}">
-        <div class="grid">
-          <div class="col-6">
-            <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
-          </div>
-
-          <div class="col-6">
-            <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
+        <div :class="{'p-col-3 p-md-col-6': true}">
+          <div class="grid">
+            <div class="col-6">
+              <label class="label-search">{{ t('transactionType') }}</label>
+              <Dropdown
+                  class="dropdown-full"
+                  v-model="selectedTypeTransaction"
+                  :options="transactionTypes"
+                  optionLabel="name"
+                  optionValue="code"
+                  :placeholder="t('allTransactions')"
+              />
+            </div>
+            <div class="col-6">
+              <label class="label-search">{{ t('assetType') }}</label>
+              <Dropdown
+                  class="dropdown-full"
+                  v-model="assetCode"
+                  :options="assets"
+                  optionLabel="name"
+                  optionValue="code"
+                  :placeholder="t('selectAnAsset')"
+              />
+            </div>
           </div>
         </div>
 
-<!--        <div v-if="!isValidDates">-->
-<!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
-<!--        </div>-->
-      </div>
+        <div :class="{'p-col-3 p-md-col-6': true}">
+          <label class="label-search">{{ t('datePicker') }}</label>
+          <div class="grid">
+            <div class="col-6">
+              <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
+            </div>
 
-      <div class="3 padding-5-rem" >
-        <div class="grid">
-          <div class="col-12">
+            <div class="col-6">
+              <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
+            </div>
+          </div>
+
+          <!--        <div v-if="!isValidDates">-->
+          <!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
+          <!--        </div>-->
+        </div>
+
+        <div class="3 padding-5-rem" >
+          <div class="grid">
+            <div class="col-12">
             <span class="p-input-icon-left flex p-fluid">
               <i class="pi pi-search" />
               <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
@@ -79,6 +77,7 @@
                   @click="search"
               />
             </span>
+            </div>
           </div>
         </div>
       </div>
@@ -356,6 +355,13 @@ const search = async()=> {
   margin-top: 30px;
 }
 .padding-5-rem {
-  padding: 0.5rem !important;
+  padding-top: 1.5rem !important;
+  padding-left: 0.5rem;
+}
+.mb-15 {
+  margin-bottom: 1.5rem;
+}
+.label-search {
+  margin-left: 0.5rem !important;;
 }
 </style>
