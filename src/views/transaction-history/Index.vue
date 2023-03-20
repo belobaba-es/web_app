@@ -98,7 +98,7 @@
               <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
-                    <img class="icon-cripto" :src="asssetImg(item.assetCode)" />
+                    <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="asssetImg(item.assetCode)" />
                   </div>
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
@@ -362,5 +362,11 @@ const search = async()=> {
 }
 .label-search {
   margin-left: 0.5rem !important;;
+}
+
+@media (max-width: 1250px) {
+  .search-btn {
+    border-radius: 5px !important;
+  }
 }
 </style>
