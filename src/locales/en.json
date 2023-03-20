@@ -224,5 +224,8 @@
   "allTransactions": "All transactions",
   "selectAnAsset": "Select an asset",
   "invalidDatePeriod": "Please select a start date that is before the end date",
-  "downloadExtract": "Download extract"
+  "downloadExtract": "Download extract",
+  "depositTransactionName": "Deposit",
+  "withdrawTransactionName": "Withdraw",
+  "revertTransactionName": "Revered"
 }
