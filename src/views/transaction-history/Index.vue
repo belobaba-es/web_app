@@ -25,7 +25,7 @@
           <div class="col-6"> {{ t('datePicker') }}</div>
         </div>
       </div>
-      <div class="col-6">
+      <div :class="{'p-col-3 p-md-col-6': true}">
         <div class="grid">
           <div class="col-6">
             <Dropdown
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="col-3">
+      <div :class="{'p-col-3 p-md-col-6': true}">
         <div class="grid">
           <div class="col-6">
             <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
