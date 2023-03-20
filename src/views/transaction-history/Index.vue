@@ -22,7 +22,7 @@
         <div class="grid">
           <div class="col-3"> {{ t('transactionType') }}</div>
           <div class="col-3"> {{ t('assetType') }}</div>
-          <div class="col-3"> {{ t('datePicker') }}</div>
+          <div class="col-6"> {{ t('datePicker') }}</div>
         </div>
       </div>
       <div class="col-6">
@@ -61,24 +61,26 @@
           </div>
         </div>
 
-        <!--      -->
-<!--        <div v-if="!isValidDates">-->
-<!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
-<!--        </div>-->
-        <!--      -->
+        <div v-if="!isValidDates">
+          <p>{{ t('invalidDatePeriod') }}.</p>
+        </div>
       </div>
 
-      <div class="3">
-        <span class="p-input-icon-left flex p-fluid">
-          <i class="pi pi-search" />
-          <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
-          <Button
-              class="p-button search-btn"
-              style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-              :label="t('search')"
-              @click="search"
-          />
-        </span>
+      <div class="3 padding-5-rem" >
+        <div class="grid">
+          <div class="col-12">
+            <span class="p-input-icon-left flex p-fluid">
+              <i class="pi pi-search" />
+              <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+              <Button
+                  class="p-button search-btn"
+                  style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+                  :label="t('search')"
+                  @click="search"
+              />
+            </span>
+          </div>
+        </div>
       </div>
 
 <!--      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">-->
@@ -101,7 +103,7 @@
                     <img class="icon-cripto" :src="asssetImg(item.assetCode)" />
                   </div>
                   <div class="col-9">
-                    <p class="name_to">test</p>
+                    <p class="name_to">{{ item.nameTo }}</p>
                     <p class="date">
                       {{ item.createdAt }}
                     </p>
@@ -149,6 +151,7 @@
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
+                v-if="nextPage.nextPage"
                 class="p-button load-more-btn"
                 :label="t('loadMore')"
                 @click="loadMoreItems"
@@ -224,13 +227,13 @@ const nextPage = ref({
 
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
-
   await getTransactions()
 })
 
 const getTransactions = async(filters: any = {}) => {
   isLoading.value = true;
   isLoadingPDF.value = true;
+  submitting.value = true
   listTransaction.value = [];
   await getHistoric.getHistoric(filters).then(data => {
     console.log('--- data', data)
@@ -247,8 +250,10 @@ const getTransactions = async(filters: any = {}) => {
 }
 
 const loadMoreItems = async () => {
+  isLoading.value = true;
+  isLoadingPDF.value = true;
   submitting.value = true
-  isLoadingPDF.value = true
+  listTransaction.value = [];
 
   await getHistoric.getHistoricNextPage(nextPage.value.data).then(data => {
     data.results.forEach(element => {
@@ -294,12 +299,13 @@ watch(selectedTypeTransaction, async newValue => {
 })
 
 const asssetImg = (assetCode: string) => {
+  console.log('assets ', assets.value)
+  // if(assetCode.toLowerCase() === "USD".toLowerCase()) return "icons/deposit-assets/wallet.svg"
   return assets.value.find(asset => asset.code.toLowerCase() == assetCode.toLowerCase())?.icon
 }
 
 const filtersChange = async(key: string, value: any) => {
   filters[key] = value
-  // await getTransactions(filters)
 }
 
 const userStore = useUserStore()
@@ -334,5 +340,8 @@ const search = async()=> {
 .container-data{
  margin: -14px;
   margin-top: 30px;
+}
+.padding-5-rem {
+  padding: 0.5rem !important;
 }
 </style>
