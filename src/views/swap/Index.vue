@@ -137,7 +137,7 @@ onUnmounted(() => {
 
 @media screen and (min-width: 1200px) {
   .xl\:col-4 {
-    width: 28.3333%;
+    width: 40rem;
   }
 }
 </style>
