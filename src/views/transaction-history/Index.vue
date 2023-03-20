@@ -237,11 +237,17 @@ const getTransactions = async(filters: any = {}) => {
   listTransaction.value = [];
   await getHistoric.getHistoric(filters).then(data => {
     console.log('--- data', data)
+    submitting.value = false
     isLoading.value = false;
     isLoadingPDF.value = false;
+
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
+
+    nextPage.value.data = data.nextPag
+    nextPage.value.nextPage = false
+
     if (data.nextPag) {
       nextPage.value.nextPage = true
       nextPage.value.data = data.nextPag
@@ -255,20 +261,8 @@ const loadMoreItems = async () => {
   submitting.value = true
   listTransaction.value = [];
 
-  await getHistoric.getHistoricNextPage(nextPage.value.data).then(data => {
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
-    })
-
-    nextPage.value.data = data.nextPag
-    nextPage.value.nextPage = false
-    submitting.value = false
-    isLoadingPDF.value = false
-
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
-    }
-  })
+  filtersChange("initDoc", nextPage.value.data)
+  await getTransactions(filters)
 }
 
 const isValidDates = computed(() => {
