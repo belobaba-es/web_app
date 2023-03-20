@@ -98,7 +98,6 @@
               <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
-<!--                    <p class="reference">{{ item.reference }}</p>-->
                     <img class="icon-cripto" :src="asssetImg(item.assetCode)" />
                   </div>
                   <div class="col-9">
