@@ -169,7 +169,7 @@
   "swapSuccessfulText": "La transacción se ha procesado con éxito. La transferencia puede estar todavía en proceso; compruebe el registro de transacciones más tarde.",
   "swapFrom": "de",
   "from": "De",
-  "top": "Para",
+  "to": "Para",
   "swapTo": "a",
   "swapSpend": "Total a gastar",
   "swapReceive": "Total que va a recibir",
