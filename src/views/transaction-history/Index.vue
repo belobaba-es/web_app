@@ -61,9 +61,9 @@
           </div>
         </div>
 
-        <div v-if="!isValidDates">
-          <p>{{ t('invalidDatePeriod') }}.</p>
-        </div>
+<!--        <div v-if="!isValidDates">-->
+<!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
+<!--        </div>-->
       </div>
 
       <div class="3 padding-5-rem" >
@@ -227,8 +227,28 @@ const nextPage = ref({
 
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
+  addUSDToAssets()
+
   await getTransactions()
 })
+
+const addUSDToAssets = () => {
+  const usdAsset = {
+    "id": "usd id",
+    "minimumWithdrawal": 0,
+    "code": "USD",
+    "assetId": "",
+    "fee": 0,
+    "name": "USD",
+    "icon": "https://storage.googleapis.com/noba-dev/USD.svg",
+    "active": true,
+    "updatedAt": '',
+    "createdAt": '',
+    "paymentAddress": ''
+  }
+
+  assets.value.unshift(usdAsset)
+}
 
 const getTransactions = async(filters: any = {}) => {
   isLoading.value = true;
