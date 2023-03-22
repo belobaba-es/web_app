@@ -176,6 +176,28 @@
               />
             </div>
           </div>
+
+          <div class="field col-12">
+            <label>{{ t('streetAddress') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.streetOne" />
+            </div>
+          </div>
+
+          <div class="field col-12">
+            <label>{{ t('streetAddressTwo') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.streetTwo" />
+            </div>
+          </div>
+
+          <div class="field col-4">
+            <label>{{ t('cityLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.city" class="w-full" required />
+            </div>
+          </div>
+
           <div class="field col-4">
             <label>{{ t('stateLabel') }}</label>
             <div class="p-inputgroup">
@@ -193,31 +215,12 @@
               />
             </div>
           </div>
-          <div class="field col-4">
-            <label>{{ t('cityLabel') }}</label>
-            <div class="p-inputgroup">
-              <InputText type="text" v-model="form.city" class="w-full" required />
-            </div>
-          </div>
+
           <div class="field col-4">
             <label>{{ t('postalCodeLabel') }}</label>
             <div class="p-inputgroup">
               <InputText type="text" v-model="form.postalCode" />
             </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>{{ t('streetAddress') }}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="form.streetOne" />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>{{ t('streetAddressTwo') }}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="form.streetTwo" />
           </div>
         </div>
 
