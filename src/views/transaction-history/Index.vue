@@ -136,12 +136,12 @@
         </div>
 
         <template v-if="isLoading">
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="90%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
         </template>
       </div>
 
