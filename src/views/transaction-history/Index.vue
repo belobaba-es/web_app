@@ -91,7 +91,7 @@
     <div class="container-data mb-0 pb-0">
       <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
-      <div class="grid">
+      <div class="grid mt-4">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
             <div class="grid">
