@@ -212,7 +212,7 @@ const filters: TransactionFiltersQueryType = {
 const transactionTypes = ref([
   { name: t('depositTransactionName'), code: 'deposit' },
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
-  { name: t('revertTransactionName'), code: 'revert' },
+  { name: t('allTransactions'), code: '' },
 ])
 
 const assetsService = AssetsService.instance()
@@ -315,7 +315,6 @@ watch(selectedTypeTransaction, async newValue => {
 })
 
 const asssetImg = (assetCode: string) => {
-  console.log('assets ', assets.value)
   // if(assetCode.toLowerCase() === "USD".toLowerCase()) return "icons/deposit-assets/wallet.svg"
   return assets.value.find(asset => asset.code.toLowerCase() == assetCode.toLowerCase())?.icon
 }
