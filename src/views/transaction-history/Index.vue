@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="mt-4 mb-15">
+    <div class="mt-4 mb-25">
       <div class="flex align-items-center">
         <p class="text-2xl">{{ t('chooseExtract') }}</p>
       </div>
@@ -64,7 +64,7 @@
           <!--        </div>-->
         </div>
 
-        <div class="3 padding-5-rem" >
+        <div class="3 padding-search-div" >
           <div class="grid">
             <div class="col-12">
             <span class="p-input-icon-left flex p-fluid">
@@ -357,8 +357,8 @@ const search = async()=> {
  margin: -14px;
   margin-top: 30px;
 }
-.padding-5-rem {
-  padding-top: 1.5rem !important;
+.padding-search-div {
+  padding-top: 1.62rem !important;
   padding-left: 0.5rem;
 }
 .mb-15 {
@@ -369,6 +369,9 @@ const search = async()=> {
 }
 .p-button {
   width: 100%;
+}
+.mb-25 {
+  margin-bottom: 2.5rem;
 }
 
 @media (max-width: 950px) {
