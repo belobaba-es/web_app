@@ -367,6 +367,9 @@ const search = async()=> {
 .label-search {
   margin-left: 0.5rem !important;;
 }
+.p-button {
+  width: 100%;
+}
 
 @media (max-width: 950px) {
   .search-btn {
