@@ -142,4 +142,10 @@ onUnmounted(() => {
     width: 40rem;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .btn-historic {
+    width: 90%;
+  }
+}
 </style>
