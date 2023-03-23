@@ -8,7 +8,7 @@
             <Button
               type="button"
               :label="t('viewSwapHistory')"
-              class="font-light mt-lg-5 border-300 bg-white text-black-alpha-80"
+              class="font-light mt-lg-5 border-300 bg-white text-black-alpha-80 btn-historic"
               icon="pi pi-history"
               icon-pos="right"
               @click="router.push('/swap/history')"
@@ -134,7 +134,9 @@ onUnmounted(() => {
   transform: rotate(90deg);
   width: 2rem;
 }
-
+.btn-historic {
+  width: 40%;
+}
 @media screen and (min-width: 1200px) {
   .xl\:col-4 {
     width: 40rem;
