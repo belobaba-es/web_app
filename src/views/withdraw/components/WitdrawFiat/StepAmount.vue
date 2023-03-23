@@ -109,28 +109,20 @@ const events = ref<any>([
   { amount: '2,5', label: 'Fee', name: false },
   { amount: '2,5', label: `You send to `, name: true },
 ])
-const type = ref('Domestic')
+const typeTransaction = ref('domestic')
 
 
 onMounted(async () => {
-  console.log(props.formData, 'amount')
-  console.log('props.formData',props.formData.value)
-  console.log('getUserFeeWire', userStore.getUserFeeWire())
-  console.log('route.params.type', route.params.type)
-  console.log('step view', route.params.type)
-  if (route.params.type !== 'domestic') {
-    type.value = 'International'
+  if (props.formData.typeTransaction.toLowerCase() !== 'domestic') {
+    typeTransaction.value = 'international'
   }
   getUserFee()
 })
 
 const getUserFee = () => {
-  const wireType = route.params.type
-  fee.value = wireType === "domestic" ? userStore.getUserFeeWire()?.domestic.out : userStore.getUserFeeWire()?.international.out
-  console.log('fee.value', fee.value)
+  fee.value = typeTransaction.value === "domestic" ? userStore.getUserFeeWire()?.domestic.out : userStore.getUserFeeWire()?.international.out
 }
 const amountFee = computed(() => {
-  console.log('amountFee', fee.value)
   const total = isNaN(parseFloat(amount.value) + fee.value) ? 0 : parseFloat(amount.value) + fee.value
   if (total > balance.value) {
     toast.add({
