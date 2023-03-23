@@ -48,7 +48,9 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ formData.beneficiary?.realName }}</span>
 
-          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>
+<!--          todo -->
+          <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>USD</small></p>
+<!--          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>-->
           <p v-else>
             <small>{{ fee }}</small>
           </p>
@@ -85,6 +87,7 @@ import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
+import {useUserStore} from "../../../../stores/user";
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -98,6 +101,7 @@ const amount = ref('')
 const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
+const userStore = useUserStore()
 
 balance.value = getBalanceByCode('USD')
 
@@ -105,12 +109,29 @@ const events = ref<any>([
   { amount: '2,5', label: 'Fee', name: false },
   { amount: '2,5', label: `You send to `, name: true },
 ])
+const type = ref('Domestic')
+
 
 onMounted(async () => {
   console.log(props.formData, 'amount')
+  console.log('props.formData',props.formData.value)
+  console.log('getUserFeeWire', userStore.getUserFeeWire())
+  console.log('route.params.type', route.params.type)
+  console.log('step view', route.params.type)
+  if (route.params.type !== 'domestic') {
+    type.value = 'International'
+  }
+  getUserFee()
 })
+
+const getUserFee = () => {
+  const wireType = route.params.type
+  fee.value = wireType === "domestic" ? userStore.getUserFeeWire()?.domestic.out : userStore.getUserFeeWire()?.international.out
+  console.log('fee.value', fee.value)
+}
 const amountFee = computed(() => {
-  const total = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
+  console.log('amountFee', fee.value)
+  const total = isNaN(parseFloat(amount.value) + fee.value) ? 0 : parseFloat(amount.value) + fee.value
   if (total > balance.value) {
     toast.add({
       severity: 'warn',
