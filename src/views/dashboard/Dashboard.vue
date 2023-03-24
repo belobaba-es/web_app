@@ -2,7 +2,7 @@
   <div :class="containerClass" @click="onWrapperClick">
     <AppTopBar @menu-toggle="onMenuToggle" />
     <div class="layout-sidebar" @click="onSidebarClick">
-      <AppMenu :model="menu" @menuitem-click="onMenuItemClick" />
+      <AppMenu :model="menuDesktop" @menuitem-click="onMenuItemClick" />
     </div>
 
     <div class="layout-main-container">
@@ -12,7 +12,7 @@
       <ButtonCreateWallet v-if="isCurrentRouteWallet" />
       <AppFooter />
 
-      <AppTabBarContainer :model="menu"></AppTabBarContainer>
+      <AppTabBarContainer :model="menuMobile"></AppTabBarContainer>
     </div>
 
     <transition name="layout-mask">
@@ -41,7 +41,21 @@ let interval: number = 0
 const { t } = useI18n({ useScope: 'global' })
 const { fetchBalanceWallets } = useBalanceWallet()
 
-const menu = [
+const menuDesktop = [
+  {
+    label: '',
+    items: [
+      { label: t('home'), class: 'icon-home', icon: 'pi', to: '/dashboard' },
+      { label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit' },
+      { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
+      { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
+      { label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/swap' },
+      { label: t('transactionHistory'), class: 'icon-history', icon: 'pi', to: '/transaction-history' },
+    ],
+  },
+]
+
+const menuMobile = [
   {
     label: '',
     items: [
@@ -53,6 +67,7 @@ const menu = [
     ],
   },
 ]
+
 
 const mobileMenuActive = ref(false)
 
