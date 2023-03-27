@@ -21,26 +21,26 @@ export class SwapService extends HttpService {
   }
   async createQuote(payload: any): Promise<CreateQuoteResponse> {
     const resp = await this.post<CreateQuoteResponse>(`swap/quotes/create`, payload, true)
-    return resp
+    return resp;
   }
 
   async execute(quoteId: string): Promise<any> {
     const resp = await this.post<any>(`swap/quotes/execute`, { quoteId }, true)
-    return resp
+    return resp;
   }
 
   async quotes() {
-    const resp = await this.get<any>(`swap/quotes`, {}, true)
-    return resp
+    const resp = await this.get<any>(`swap/quotes`, [], true)
+    return resp;
   }
 
   async nextQuotes(nextPag: string): Promise<QuoteResponse> {
-    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, {}, true)
-    return resp
+    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, [], true)
+    return resp;
   }
 
   async cancelQuote(quiteId: string) {
-    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, {}, true)
-    return resp
+    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, [], true)
+    return resp;
   }
 }
