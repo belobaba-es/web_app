@@ -19,14 +19,13 @@ export class HistoricService extends HttpService {
     return this._instance
   }
 
-  async historic(assetCode:any) {
-    const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}`, [], true)
-    return resp;
+  async historic(assetCode: any) {
+    const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}`, {}, true)
+    return resp
   }
 
-  async historicNextPage(assetCode:any, nextPag: string) {
-    const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}/${nextPag}`, [], true)
-    return resp;
+  async historicNextPage(assetCode: any, nextPag: string) {
+    const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}/${nextPag}`, {}, true)
+    return resp
   }
-  
 }
