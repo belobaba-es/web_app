@@ -144,7 +144,7 @@ const bankInternational = ref()
 const bankNationalPdf: any = {}
 const bankInternationalPdf: any = {}
 const title = t('titleDespositFiat')
-const footerPdf = t('footerPdfNobaData')
+const footerPdf = t('footerPdfFiatData')
 
 onMounted(async () => {
   submitting.value = true
