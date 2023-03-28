@@ -50,7 +50,7 @@ const menuDesktop = [
       { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
       { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
       { label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/swap' },
-      { label: t('transactionHistory'), class: 'icon-history', icon: 'pi', to: '/transaction-history' },
+      // { label: t('transactionHistory'), class: 'icon-history', icon: 'pi', to: '/transaction-history' },
     ],
   },
 ]
