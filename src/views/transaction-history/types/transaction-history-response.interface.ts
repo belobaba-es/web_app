@@ -24,8 +24,8 @@ export type ListTransactionPgType = {
   transactionType: TransactionTypeEnum
   transactionId: string
   status: WithdrawalStatusEnum
-  createdAt: Date
-  updatedAt?: Date
+  createdAt: any
+  updatedAt?: any
 }
 
 export enum TransactionTypeEnum {
