@@ -216,6 +216,7 @@
   "assetType": "Tipo de asset",
   "datePicker": "Fecha",
   "allTransactions": "Todas las transacciones",
+  "allItems": "Todos los assets",
   "selectAnAsset": "Selecciona un asset",
   "invalidDatePeriod": "Por favor selecciona un fecha de inicio que anteceda la fecha final",
   "downloadExtract": "Descargar extracto",
@@ -227,5 +228,6 @@
   "labelSelectProofOfAddress": "Seleccione el tipo de documento que está enviando",
   "dropdownSelectProofOfAddress": "Seleccione el tipo de documento",
   "userDataSuccessSend": "Datos personales enviados correctamente",
-  "companyIncorporationFile": "Documentos constitutivo de la empresa"
+  "companyIncorporationFile": "Documentos constitutivo de la empresa",
+  "endDateGreaterStartDate": "Fecha final debe ser mayor que fecha inicio"
 }
