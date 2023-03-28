@@ -224,6 +224,7 @@
   "assetType": "Asset type",
   "datePicker": "Date",
   "allTransactions": "All transactions",
+  "allItems": "All assets",
   "invalidDatePeriod": "Please select a start date that is before the end date",
   "downloadExtract": "Download extract",
   "depositTransactionName": "Deposit",
@@ -236,5 +237,6 @@
   "labelSelectProofOfAddress": "Select the type of document you are sending",
   "dropdownSelectProofOfAddress": "Select the type of document",
   "userDataSuccessSend": "Personal data sent correctly",
-  "companyIncorporationFile": "Documents of Incorporation of the company"
+  "companyIncorporationFile": "Documents of Incorporation of the company",
+  "endDateGreaterStartDate": "End date must be greater than start date"
 }

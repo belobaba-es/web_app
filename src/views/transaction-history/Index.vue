@@ -58,10 +58,6 @@
               <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
             </div>
           </div>
-
-          <!--        <div v-if="!isValidDates">-->
-          <!--          <p>{{ t('invalidDatePeriod') }}.</p>-->
-          <!--        </div>-->
         </div>
 
         <div class="3 padding-search-div" >
@@ -82,10 +78,6 @@
         </div>
       </div>
 
-<!--      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">-->
-<!--        <Button class="p-button wallet-btn" :loading="isLoadingPDF" :label="t('downloadExtract')" @click="downloadExtract" />-->
-<!--      </div>-->
-
     </div>
 
     <div class="container-data mb-0 pb-0">
@@ -95,24 +87,24 @@
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
             <div class="grid">
-              <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+              <div class="sm:col-1 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
-                    <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="asssetImg(item.assetCode)" />
+                    <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="iconAsset(item.assetCode)" />
                   </div>
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
                     <p class="date">
-                      {{ item.createdAt }}
+                      {{ secondsToDate(item.createdAt._seconds) }}
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="col-3 flex align-items-center data-hidden">
+              <div class="col-3 data-hidden">
                 <p class="reference">{{ item.reference }}</p>
               </div>
-              <div class="col-3 flex align-items-center data-hidden">
-                <p class="amount">
+              <div class="col sm:col-6 lg:col-4">
+                <p class="amount-x font-semi-bold">
                   {{ item.amount }}
                   <small>{{ item.assetCode }}</small>
                   &nbsp;
@@ -123,7 +115,7 @@
                   <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
                 </p>
               </div>
-              <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3 details-mobile">
+              <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
                 <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
                   <h4>
                     <i class="pi pi-eye"></i>
@@ -163,7 +155,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineProps, onMounted, ref, watch} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -181,9 +173,12 @@ import {
   TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys
 } from "./types/transaction-history-response.interface";
-import generatePdf, {generatePDFTable, jsPDFOptionsOrientationEnum} from "../../shared/generatePdf";
+import {generatePDFTable, jsPDFOptionsOrientationEnum} from "../../shared/generatePdf";
 import logo from "../../assets/img/logo.png";
 import {useUserStore} from "../../stores/user";
+import {secondsToDate} from "../../shared/secondsToDate";
+import {iconAsset} from "../../shared/iconAsset";
+import {useToast} from "primevue/usetoast";
 
 const router = useRouter()
 const route = useRoute()
@@ -202,7 +197,6 @@ const filters: TransactionFiltersQueryType = {
   assetCode: "",
   assetType: "",
   initDoc: "",
-  nameTo: "",
   startDate: "",
   next: "",
   endDate: "",
@@ -210,13 +204,16 @@ const filters: TransactionFiltersQueryType = {
 };
 
 const transactionTypes = ref([
+  { name: t('allTransactions'), code: '' },
   { name: t('depositTransactionName'), code: 'deposit' },
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
-  { name: t('allTransactions'), code: '' },
+
 ])
 
+const toast = useToast()
+
 const assetsService = AssetsService.instance()
-const assets = ref<Asset[]>([])
+const assets = ref<{name: string, code: string}[]>([])
 
 const getHistoric = HistoricService.instance()
 const listTransaction = ref<ListTransactionPgType[]>([])
@@ -228,29 +225,25 @@ const nextPage = ref({
 })
 
 onMounted(async () => {
-  await assetsService.list().then(data => (assets.value = data))
-  addUSDToAssets()
+  await assetsService.list().then(data =>{
+    let a = [{
+      name: t('allItems'),
+      code: ""
+    }]
+
+
+    data.forEach(d => {
+      a.push({
+        name: d.name,
+        code: d.code
+      })
+    })
+
+    assets.value = a
+  })
 
   await getTransactions()
 })
-
-const addUSDToAssets = () => {
-  const usdAsset = {
-    "id": "usd id",
-    "minimumWithdrawal": 0,
-    "code": "USD",
-    "assetId": "",
-    "fee": 0,
-    "name": "USD",
-    "icon": "https://storage.googleapis.com/noba-dev/USD.svg",
-    "active": true,
-    "updatedAt": '',
-    "createdAt": '',
-    "paymentAddress": ''
-  }
-
-  assets.value.unshift(usdAsset)
-}
 
 const getTransactions = async(filters: any = {}) => {
   isLoading.value = true;
@@ -258,7 +251,7 @@ const getTransactions = async(filters: any = {}) => {
   submitting.value = true
   listTransaction.value = [];
   await getHistoric.getHistoric(filters).then(data => {
-    console.log('--- data', data)
+
     submitting.value = false
     isLoading.value = false;
     isLoadingPDF.value = false;
@@ -283,15 +276,15 @@ const loadMoreItems = async () => {
   submitting.value = true
   listTransaction.value = [];
 
-  filtersChange("initDoc", nextPage.value.data)
+  await filtersChange("initDoc", nextPage.value.data)
   await getTransactions(filters)
 }
 
-const isValidDates = computed(() => {
-  if(isFirstLoad.value) {
-    isFirstLoad.value = false
-    return;
+const isValidDates = (): boolean => {
+  if (!startDate.value) {
+    return true
   }
+
   if(startDate.value && endDate.value && startDate.value < endDate.value) {
     filtersChange("startDate", startDate.value)
     filtersChange("endDate", endDate.value)
@@ -299,25 +292,29 @@ const isValidDates = computed(() => {
     filtersChange("startDate", "")
     filtersChange("endDate", "")
   }
-  return startDate.value && endDate.value && startDate.value < endDate.value;
+
+  return startDate.value && endDate.value && startDate.value <= endDate.value;
+}
+
+watch(startDate, async (newValue) => {
+  if (startDate) {
+    await filtersChange("startDate", newValue)
+  }
 })
 
-watch(assetCode, async (newValue) => {
-  if (assetCode) {
-    filtersChange("assetCode", newValue)
+watch(endDate, async (newValue) => {
+  if (startDate) {
+
+    await filtersChange("endDate", newValue)
   }
 })
 
 watch(selectedTypeTransaction, async newValue => {
   if (assetCode) {
-    filtersChange("transactionType", newValue)
+
+    await filtersChange("transactionType", newValue)
   }
 })
-
-const asssetImg = (assetCode: string) => {
-  // if(assetCode.toLowerCase() === "USD".toLowerCase()) return "icons/deposit-assets/wallet.svg"
-  return assets.value.find(asset => asset.code.toLowerCase() == assetCode.toLowerCase())?.icon
-}
 
 const filtersChange = async(key: TransactionFiltersQueryTypeKeys, value: any) => {
   filters[key] = value
@@ -344,7 +341,17 @@ const downloadExtract = ()=>{
 }
 
 const search = async()=> {
+  if (!isValidDates()) {
+    toast.add({
+      severity: 'info',
+      summary: t('somethingWentWrong'),
+      detail: t('endDateGreaterStartDate'),
+      life: 4000
+    })
+  }
+
   await getTransactions(filters)
+
 }
 
 </script>
@@ -373,7 +380,21 @@ const search = async()=> {
   margin-bottom: 2.5rem;
 }
 
+.icon-cripto {
+  width: 60%;
+}
+
+.amount-x {
+  font-size:14pt
+}
+.details-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 950px) {
+
   .search-btn {
     border-radius: 5px !important;
   }
