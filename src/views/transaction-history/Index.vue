@@ -47,14 +47,14 @@
           </div>
         </div>
 
-        <div :class="{'p-col-3 p-md-col-6': true}">
+        <div :class="{'p-col-3 p-md-col-6 lg:ml-4': true}">
           <label class="label-search">{{ t('datePicker') }}</label>
           <div class="grid">
-            <div class="col-6">
+            <div class="col-6 m-0">
               <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
             </div>
 
-            <div class="col-6">
+            <div class="col-6 m-0">
               <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
             </div>
           </div>
