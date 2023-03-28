@@ -229,6 +229,9 @@ onMounted(async () => {
     let a = [{
       name: t('allItems'),
       code: ""
+    },{
+      name: "US DOLLAR",
+      code: "USD"
     }]
 
 
@@ -310,9 +313,16 @@ watch(endDate, async (newValue) => {
 })
 
 watch(selectedTypeTransaction, async newValue => {
-  if (assetCode) {
+  if (selectedTypeTransaction) {
 
     await filtersChange("transactionType", newValue)
+  }
+})
+
+watch(assetCode, async newValue => {
+  if (assetCode) {
+
+    await filtersChange("assetCode", newValue)
   }
 })
 
