@@ -87,7 +87,7 @@
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
             <div class="grid">
-              <div class="sm:col-1 md:col-6 lg:col-3 xl:col-3">
+              <div class="col sm:col-1 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
                     <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="iconAsset(item.assetCode)" />
@@ -100,10 +100,10 @@
                   </div>
                 </div>
               </div>
-              <div class="col-3 data-hidden">
+              <div class="col-4 data-hidden">
                 <p class="reference">{{ item.reference }}</p>
               </div>
-              <div class="col sm:col-6 lg:col-4">
+              <div class="col sm:col-6 lg:col-3">
                 <p class="amount-x font-semi-bold">
                   {{ item.amount }}
                   <small>{{ item.assetCode }}</small>
