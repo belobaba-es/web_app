@@ -123,8 +123,13 @@ body {
     content: url(/src/assets/icons/help.svg);
 }
 
-.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover,
-.p-tieredmenu .p-menuitem>.p-menuitem-content .p-menuitem-link .p-menuitem-icon {
+.icon-history .pi::before {
+    content: url(/src/assets/icons/history.svg);
+}
+
+
+.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
+.p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
     color: #00BEB0;
 }
 
