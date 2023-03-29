@@ -30,17 +30,17 @@ export class SwapService extends HttpService {
   }
 
   async quotes() {
-    const resp = await this.get<any>(`swap/quotes`, [], true)
+    const resp = await this.get<any>(`swap/quotes`, {}, true)
     return resp
   }
 
   async nextQuotes(nextPag: string): Promise<QuoteResponse> {
-    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, [], true)
+    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, {}, true)
     return resp
   }
 
   async cancelQuote(quiteId: string) {
-    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, [], true)
+    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, {}, true)
     return resp
   }
 }

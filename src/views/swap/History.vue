@@ -97,6 +97,8 @@ import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
+import { secondsToDate } from '../../shared/secondsToDate'
+import { iconAsset } from '../../shared/iconAsset'
 
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
@@ -108,16 +110,6 @@ onMounted(async () => {
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
-
-const iconAsset = (assetCode: string) => {
-  return `https://storage.googleapis.com/noba-dev/${assetCode}.svg`
-}
-
-const secondsToDate = (seconds: number) => {
-  const locale = localStorage.getItem('noba@lang')
-  const date = new Date(seconds * 1000)
-  return date.toLocaleString(locale!)
-}
 
 const statusClass = (status: string) => {
   return {
