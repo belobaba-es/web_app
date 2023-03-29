@@ -33,12 +33,7 @@
           </div>
         </div>
         <div class="field flex justify-content-end">
-          <Button 
-            :label="t('save')" 
-            class="px-5"
-            @click="submitUpdatePassword"
-            :loading="submitting"
-          />
+          <Button :label="t('save')" class="px-5" @click="submitUpdatePassword" :loading="submitting" />
         </div>
       </div>
     </div>
@@ -51,32 +46,30 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import Lang from "../../components/Lang.vue";
-import { useAccount } from '../../composables/useAccount';
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Lang from '../../components/Lang.vue'
+import { useAccount } from '../../composables/useAccount'
 
 const { t } = useI18n({
-  useScope: 'global'
+  useScope: 'global',
 })
 
-const { submitUpdatePassword, submitting, newPassword, confirmNewPassword, currentPassword } = useAccount();
+const { submitUpdatePassword, submitting, newPassword, confirmNewPassword, currentPassword } = useAccount()
 
-const showPassword = ref<boolean>(false);
+const showPassword = ref<boolean>(false)
 
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value
 }
 
-const eyeIconState = computed(() => showPassword.value ? 'pi pi-eye-slash' : 'pi pi-eye');
-const inputPasswordType = computed(() => showPassword.value ? 'text' : 'password');
-
+const eyeIconState = computed(() => (showPassword.value ? 'pi pi-eye-slash' : 'pi pi-eye'))
+const inputPasswordType = computed(() => (showPassword.value ? 'text' : 'password'))
 </script>
 
 <style lang="css" scoped>
@@ -87,16 +80,16 @@ const inputPasswordType = computed(() => showPassword.value ? 'text' : 'password
 }
 
 .p-selectbutton .p-button.p-highlight {
-  background: #E7E6E7;
-  border-color: #E7E6E7;
-  color: #1B1B19;
+  background: #e7e6e7;
+  border-color: #e7e6e7;
+  color: #1b1b19;
   font-weight: 600;
 }
 
 .p-selectbutton .p-button.p-highlight:hover {
-  background: #E7E6E7;
-  border-color: #E7E6E7;
-  color: #1B1B19;
+  background: #e7e6e7;
+  border-color: #e7e6e7;
+  color: #1b1b19;
   font-weight: 600;
 }
 </style>

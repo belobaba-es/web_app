@@ -9,7 +9,7 @@
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ usdName }}</div>
-        <div class="font-medium">{{ totalBuy()  }} {{ usdName }}</div>
+        <div class="font-medium">{{ totalBuy() }} {{ usdName }}</div>
       </div>
     </div>
     <div class="flex" v-else>
@@ -47,7 +47,7 @@
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
           <div class="font-medium">{{ usdName }}</div>
-          <div class="font-medium">{{ totalSell()  }} {{ usdName }}</div>
+          <div class="font-medium">{{ totalSell() }} {{ usdName }}</div>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ interface Props {
   usdName?: string
 }
 
-const props =  defineProps<Props>()
+const props = defineProps<Props>()
 
 const totalBuy = () => {
   return (props.summary.totalAmount + props.summary.feeNoba).toFixed(2)

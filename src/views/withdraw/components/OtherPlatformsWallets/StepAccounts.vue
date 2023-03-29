@@ -1,22 +1,19 @@
 <template>
   <div class="my-3">
     <SearchAccount />
-
   </div>
 
-
-  <div class="grid" style="margin-top:1rem">
+  <div class="grid" style="margin-top: 1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
-
       <div class="container">
         <div
-            class="flex justify-content-between align-items-center asset-item"
-            v-for="(item) in listBeneficiary"
-            @click="onSelect(item)"
+          class="flex justify-content-between align-items-center asset-item"
+          v-for="item in listBeneficiary"
+          @click="onSelect(item)"
         >
-          <img :src="getIcon(item.assetCode)" alt="">
+          <img :src="getIcon(item.assetCode)" alt="" />
           <span class="ml-4 mt-2 mb-2">{{ item.label }}</span>
           <div class="flex align-items-center">
             {{ t('withdraw') }}
@@ -25,49 +22,43 @@
         </div>
       </div>
 
-
-      <div class="mt-4" v-if="listNextPag !==''">
+      <div class="mt-4" v-if="listNextPag !== ''">
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
-                icon="pi pi-angle-right"
-                iconPos="right"
-                class="p-button load-more-btn  w-100"
-                :label="t('loadMore')" @click="loadMore" :loading="submitting" />
+              icon="pi pi-angle-right"
+              iconPos="right"
+              class="p-button load-more-btn w-100"
+              :label="t('loadMore')"
+              @click="loadMore"
+              :loading="submitting"
+            />
           </div>
         </div>
       </div>
-
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
-
-import {useI18n} from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 import Divider from 'primevue/divider'
-import {useRouter} from "vue-router"
+import { useRouter } from 'vue-router'
 import SearchAccount from './SearchAccount.vue'
-import {useToast} from 'primevue/usetoast'
-import {BeneficiaryInternal} from "../../types/beneficiary.interface";
-import {useBeneficiary} from "../../composables/useBeneficiary";
-import {onMounted} from "vue";
+import { useToast } from 'primevue/usetoast'
+import { BeneficiaryInternal } from '../../types/beneficiary.interface'
+import { useBeneficiary } from '../../composables/useBeneficiary'
+import { onMounted } from 'vue'
 import Button from 'primevue/button'
 
 const router = useRouter()
 const toast = useToast()
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 
-const {
-  submitting,
-  listNextPag,
-  listBeneficiary,
-  fetchBeneficiariesAssets
-} = useBeneficiary()
+const { submitting, listNextPag, listBeneficiary, fetchBeneficiariesAssets } = useBeneficiary()
 
 const props = defineProps<{
-  formData: any,
+  formData: any
   toNew: any
 }>()
 
@@ -76,11 +67,11 @@ const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:b
 const onSelect = (item: BeneficiaryInternal) => {
   const page = 0
   const formData = {
-    beneficiary: item
+    beneficiary: item,
   }
   emit('nextPage', {
     pageIndex: page,
-    formData: formData
+    formData: formData,
   })
 }
 
@@ -93,11 +84,9 @@ onMounted(async () => {
   await loadMore()
 })
 
-
 const loadMore = async () => {
   await fetchBeneficiariesAssets()
 }
-
 </script>
 
 <style scoped>
@@ -107,7 +96,7 @@ const loadMore = async () => {
 }
 
 .asset-item:hover {
-  color: #00BEB0;
-  background: #FBFBFB;
+  color: #00beb0;
+  background: #fbfbfb;
 }
 </style>

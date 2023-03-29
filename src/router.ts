@@ -42,9 +42,6 @@ import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 
 import TransactionHistory from './views/transaction-history/Index.vue'
 
-
-
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -219,7 +216,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'crypto/other/add-beneficiary',
             component: AddBeneficiary,
-          }
+          },
         ],
       },
       {
@@ -227,17 +224,17 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: SwapIndexVue
+            component: SwapIndexVue,
           },
           {
             path: 'history',
-            component: SwapHistory
+            component: SwapHistory,
           },
           {
             path: 'success',
-            component: SwapSuccess
-          }
-        ]
+            component: SwapSuccess,
+          },
+        ],
       },
       {
         path: '/wallet',
@@ -249,8 +246,8 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'transactions/:assetCode',
             component: TransactionHistoryWallet,
-          }
-        ]
+          },
+        ],
       },
       {
         path: '/transaction-history',
@@ -259,7 +256,7 @@ const routes: RouteRecordRaw[] = [
             path: '',
             component: TransactionHistory,
           },
-        ]
+        ],
       },
     ],
   },

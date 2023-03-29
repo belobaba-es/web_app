@@ -7,17 +7,17 @@
 
   <div class="grid col-12">
     <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <span class="p-input-icon-left flex p-fluid">
-          <i class="pi pi-search"/>
-          <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
-          <Button
-              style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-              class="p-button search-btn w-25"
-              :label="t('search')"
-              @click="onSearch"
-              :loading="submitting"
-          />
-        </span>
+      <span class="p-input-icon-left flex p-fluid">
+        <i class="pi pi-search" />
+        <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
+        <Button
+          style="border-top-left-radius: 0; border-bottom-left-radius: 0"
+          class="p-button search-btn w-25"
+          :label="t('search')"
+          @click="onSearch"
+          :loading="submitting"
+        />
+      </span>
     </div>
   </div>
 
@@ -37,7 +37,7 @@ import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import ListBeneficiary from './ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
-import {useRoute, useRouter} from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useToast } from 'primevue/usetoast'
 import { Beneficiary } from '../../types/beneficiary.interface'
@@ -91,7 +91,7 @@ const onSearch = () => {
 </script>
 
 <style scoped>
-.full-width{
+.full-width {
   width: 100% !important;
 }
 </style>

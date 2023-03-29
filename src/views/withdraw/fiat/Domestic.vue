@@ -27,17 +27,17 @@
 </template>
 
 <script setup lang="ts">
-import {useI18n} from 'vue-i18n'
-import {onMounted, ref} from 'vue'
+import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
-import {useRoute, useRouter} from 'vue-router'
-import {AccountService} from '../services/account'
-import {useToast} from 'primevue/usetoast'
+import { useRoute, useRouter } from 'vue-router'
+import { AccountService } from '../services/account'
+import { useToast } from 'primevue/usetoast'
 
-import {useWithdraw} from '../composables/useWithdraw'
-import {useBeneficiary} from "../composables/useBeneficiary";
+import { useWithdraw } from '../composables/useWithdraw'
+import { useBeneficiary } from '../composables/useBeneficiary'
 
 const router = useRouter()
 const route = useRoute()
@@ -73,10 +73,7 @@ const {
   toBack,
 } = useWithdraw(items)
 
-const {
-  fetchBeneficiaries,
-  listBeneficiary,
-} = useBeneficiary()
+const { fetchBeneficiaries, listBeneficiary } = useBeneficiary()
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)
@@ -88,7 +85,6 @@ onMounted(async () => {
     type.value = 'International'
   }
 })
-
 </script>
 
 <style scoped>

@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import Dialog from 'primevue/dialog'
-import {defineProps, ref, onMounted, watch} from 'vue'
+import { defineProps, ref, onMounted, watch } from 'vue'
 import { AssetsService } from '../views/deposit/services/assets'
 import { Asset } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
@@ -63,21 +63,18 @@ const selectedAsset = (asset: Asset) => {
 }
 
 const watchSearchChange = () => {
-  watch(
-      search,
-      (newVal) => {
-        newVal.trim().length === 0 ? filteredListAsset.value = listAsset.value : null;
-      }
-  );
+  watch(search, newVal => {
+    newVal.trim().length === 0 ? (filteredListAsset.value = listAsset.value) : null
+  })
 }
 
 const onSearch = () => {
-  const searchAsset = search.value.trim().toLowerCase();
+  const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
     filteredListAsset.value = listAsset.value
-    return;
+    return
   }
-  const newArray:Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
+  const newArray: Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
   filteredListAsset.value = []
   if (!newArray) return
   filteredListAsset.value = newArray

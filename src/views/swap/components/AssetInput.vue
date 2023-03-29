@@ -25,41 +25,41 @@
         <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">
             <Button
-                type="button"
-                class="bg-white btn-select-crypto border-none border-round-3xl"
-                @click="openModalSelector"
-                :disabled="disabledBtnSelectCrypto"
+              type="button"
+              class="bg-white btn-select-crypto border-none border-round-3xl"
+              @click="openModalSelector"
+              :disabled="disabledBtnSelectCrypto"
             >
-              <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon"/>
+              <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
               <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">{{
-                  assetName ? assetName : t('selectCrypto')
-                }}</span>
+                assetName ? assetName : t('selectCrypto')
+              }}</span>
               <i class="pi pi-caret-down text-primary icon-down-cripto"></i>
             </Button>
           </template>
           <template v-else>
-            <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem"/>
+            <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
           </template>
         </div>
 
         <div class="input-mount col-5 flex align-items-center">
           <template v-if="type === 'fiat'">
             <InputNumber
-                v-model="amount"
-                mode="decimal"
-                :max-fraction-digits="2"
-                :min-fraction-digits="2"
-                @blur="verifyAmountForCreateQoute()"
-                :readonly="transactionType === 'sell'"
+              v-model="amount"
+              mode="decimal"
+              :max-fraction-digits="2"
+              :min-fraction-digits="2"
+              @blur="verifyAmountForCreateQoute()"
+              :readonly="transactionType === 'sell'"
             />
           </template>
           <template v-else>
             <InputNumber
-                v-model="unitCount"
-                mode="decimal"
-                :max-fraction-digits="6"
-                :min-fraction-digits="6"
-                :readonly="transactionType === 'buy'"
+              v-model="unitCount"
+              mode="decimal"
+              :max-fraction-digits="6"
+              :min-fraction-digits="6"
+              :readonly="transactionType === 'buy'"
             />
           </template>
         </div>
@@ -76,9 +76,9 @@
           <template v-else>
             <div v-if="transactionType === 'sell'">
               <Button
-                  type="button"
-                  class="bg-white border-none border-round-3xl max-btn"
-                  @click="maxCountInput('Cripto')"
+                type="button"
+                class="bg-white border-none border-round-3xl max-btn"
+                @click="maxCountInput('Cripto')"
               >
                 <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span-max">MÁX</span>
               </Button>
@@ -103,15 +103,15 @@
 </template>
 
 <script setup lang="ts">
-import {useI18n} from 'vue-i18n'
-import {ref, watch, computed, toRef} from 'vue'
-import {defineProps} from 'vue'
+import { useI18n } from 'vue-i18n'
+import { ref, watch, computed, toRef } from 'vue'
+import { defineProps } from 'vue'
 import Button from 'primevue/button'
-import {useSwapStore} from '../../../stores/swap'
-import {useBalanceWallet} from '../../../composables/useBalanceWallet'
+import { useSwapStore } from '../../../stores/swap'
+import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import InputNumber from 'primevue/inputnumber'
-import {storeToRefs} from 'pinia'
-import {useToast} from 'primevue/usetoast'
+import { storeToRefs } from 'pinia'
+import { useToast } from 'primevue/usetoast'
 
 interface Props {
   type: string
@@ -119,7 +119,7 @@ interface Props {
 
 const toast = useToast()
 
-const {getWalletByAssetCode, getBalanceByCode} = useBalanceWallet()
+const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
 const {
   amount,
@@ -130,12 +130,12 @@ const {
   loading,
   transactionType,
   assetCode,
-  assetId
+  assetId,
 } = storeToRefs(useSwapStore())
 
-const {createQuote, clearTimer} = useSwapStore()
+const { createQuote, clearTimer } = useSwapStore()
 
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 
 const props = defineProps<Props>()
 const balance = getBalanceByCode('USD')
@@ -174,8 +174,7 @@ const verifyAmountForCreateQoute = () => {
       await clearTimer()
       await createQuote()
     }
-  }, 1000);
-
+  }, 1000)
 }
 
 const maxCountInput = (typeCode: string) => {

@@ -19,65 +19,63 @@
 
     <div class="col-12">
       <div class="grid">
-
-        <div :class="{'p-col-3 p-md-col-6': true}">
+        <div :class="{ 'p-col-3 p-md-col-6': true }">
           <div class="grid">
             <div class="col-6">
               <label class="label-search">{{ t('transactionType') }}</label>
               <Dropdown
-                  class="dropdown-full"
-                  v-model="selectedTypeTransaction"
-                  :options="transactionTypes"
-                  optionLabel="name"
-                  optionValue="code"
-                  :placeholder="t('allTransactions')"
+                class="dropdown-full"
+                v-model="selectedTypeTransaction"
+                :options="transactionTypes"
+                optionLabel="name"
+                optionValue="code"
+                :placeholder="t('allTransactions')"
               />
             </div>
             <div class="col-6">
               <label class="label-search">{{ t('assetType') }}</label>
               <Dropdown
-                  class="dropdown-full"
-                  v-model="assetCode"
-                  :options="assets"
-                  optionLabel="name"
-                  optionValue="code"
-                  :placeholder="t('selectAnAsset')"
+                class="dropdown-full"
+                v-model="assetCode"
+                :options="assets"
+                optionLabel="name"
+                optionValue="code"
+                :placeholder="t('selectAnAsset')"
               />
             </div>
           </div>
         </div>
 
-        <div :class="{'p-col-3 p-md-col-6 lg:ml-4': true}">
+        <div :class="{ 'p-col-3 p-md-col-6 lg:ml-4': true }">
           <label class="label-search">{{ t('datePicker') }}</label>
           <div class="grid">
             <div class="col-6 m-0">
-              <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" />
+              <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy" hourFormat="24" />
             </div>
 
             <div class="col-6 m-0">
-              <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy"  hourFormat="24" showIcon/>
+              <Calendar v-model="endDate" showTime dateFormat="dd/mm/yy" hourFormat="24" showIcon />
             </div>
           </div>
         </div>
 
-        <div class="3 padding-search-div" >
+        <div class="3 padding-search-div">
           <div class="grid">
             <div class="col-12">
-            <span class="p-input-icon-left flex p-fluid">
-              <i class="pi pi-search" />
-              <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
-              <Button
+              <span class="p-input-icon-left flex p-fluid">
+                <i class="pi pi-search" />
+                <InputText type="text" class="b-gray" :placeholder="t('searchWallet')" />
+                <Button
                   class="p-button search-btn"
                   style="border-top-left-radius: 0; border-bottom-left-radius: 0"
                   :label="t('search')"
                   @click="search"
-              />
-            </span>
+                />
+              </span>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="container-data mb-0 pb-0">
@@ -109,8 +107,8 @@
                   <small>{{ item.assetCode }}</small>
                   &nbsp;
                   <i
-                      v-if="item.transactionType === 'withdraw-funds'"
-                      class="pi pi-arrow-circle-up icon-withdraw-funds"
+                    v-if="item.transactionType === 'withdraw-funds'"
+                    class="pi pi-arrow-circle-up icon-withdraw-funds"
                   ></i>
                   <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
                 </p>
@@ -128,12 +126,12 @@
         </div>
 
         <template v-if="isLoading">
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
-          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px;" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+          <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
         </template>
       </div>
 
@@ -141,11 +139,11 @@
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
-                v-if="nextPage.nextPage"
-                class="p-button load-more-btn"
-                :label="t('loadMore')"
-                @click="loadMoreItems"
-                :loading="submitting"
+              v-if="nextPage.nextPage"
+              class="p-button load-more-btn"
+              :label="t('loadMore')"
+              @click="loadMoreItems"
+              :loading="submitting"
             />
           </div>
         </div>
@@ -155,30 +153,30 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, ref, watch} from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import Calendar from 'primevue/calendar';
-import Skeleton from 'primevue/skeleton';
+import Calendar from 'primevue/calendar'
+import Skeleton from 'primevue/skeleton'
 
 import Dropdown from 'primevue/dropdown'
 import { AssetsService } from '../deposit/services/assets'
 
 import { Asset } from '../deposit/types/asset.interface'
-import {HistoricService} from "./services/transaction-history";
+import { HistoricService } from './services/transaction-history'
 import {
   ListTransactionPgType,
   TransactionFiltersQueryType,
-  TransactionFiltersQueryTypeKeys
-} from "./types/transaction-history-response.interface";
-import {generatePDFTable, jsPDFOptionsOrientationEnum} from "../../shared/generatePdf";
-import logo from "../../assets/img/logo.png";
-import {useUserStore} from "../../stores/user";
-import {secondsToDate} from "../../shared/secondsToDate";
-import {iconAsset} from "../../shared/iconAsset";
-import {useToast} from "primevue/usetoast";
+  TransactionFiltersQueryTypeKeys,
+} from './types/transaction-history-response.interface'
+import { generatePDFTable, jsPDFOptionsOrientationEnum } from '../../shared/generatePdf'
+import logo from '../../assets/img/logo.png'
+import { useUserStore } from '../../stores/user'
+import { secondsToDate } from '../../shared/secondsToDate'
+import { iconAsset } from '../../shared/iconAsset'
+import { useToast } from 'primevue/usetoast'
 
 const router = useRouter()
 const route = useRoute()
@@ -187,33 +185,32 @@ const { t } = useI18n({ useScope: 'global' })
 
 const selectedTypeTransaction = ref()
 const assetCode = ref('')
-const startDate = ref();
-const endDate = ref();
-const isLoading = ref(true);
-const isFirstLoad = ref(true);
-const isLoadingPDF = ref(true);
+const startDate = ref()
+const endDate = ref()
+const isLoading = ref(true)
+const isFirstLoad = ref(true)
+const isLoadingPDF = ref(true)
 const filters: TransactionFiltersQueryType = {
-  accountId: "",
-  assetCode: "",
-  assetType: "",
-  initDoc: "",
-  startDate: "",
-  next: "",
-  endDate: "",
-  transactionType: "",
-};
+  accountId: '',
+  assetCode: '',
+  assetType: '',
+  initDoc: '',
+  startDate: '',
+  next: '',
+  endDate: '',
+  transactionType: '',
+}
 
 const transactionTypes = ref([
   { name: t('allTransactions'), code: '' },
   { name: t('depositTransactionName'), code: 'deposit' },
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
-
 ])
 
 const toast = useToast()
 
 const assetsService = AssetsService.instance()
-const assets = ref<{name: string, code: string}[]>([])
+const assets = ref<{ name: string; code: string }[]>([])
 
 const getHistoric = HistoricService.instance()
 const listTransaction = ref<ListTransactionPgType[]>([])
@@ -225,20 +222,22 @@ const nextPage = ref({
 })
 
 onMounted(async () => {
-  await assetsService.list().then(data =>{
-    let a = [{
-      name: t('allItems'),
-      code: ""
-    },{
-      name: "US DOLLAR",
-      code: "USD"
-    }]
-
+  await assetsService.list().then(data => {
+    let a = [
+      {
+        name: t('allItems'),
+        code: '',
+      },
+      {
+        name: 'US DOLLAR',
+        code: 'USD',
+      },
+    ]
 
     data.forEach(d => {
       a.push({
         name: d.name,
-        code: d.code
+        code: d.code,
       })
     })
 
@@ -248,16 +247,15 @@ onMounted(async () => {
   await getTransactions()
 })
 
-const getTransactions = async(filters: any = {}) => {
-  isLoading.value = true;
-  isLoadingPDF.value = true;
+const getTransactions = async (filters: any = {}) => {
+  isLoading.value = true
+  isLoadingPDF.value = true
   submitting.value = true
-  listTransaction.value = [];
+  listTransaction.value = []
   await getHistoric.getHistoric(filters).then(data => {
-
     submitting.value = false
-    isLoading.value = false;
-    isLoadingPDF.value = false;
+    isLoading.value = false
+    isLoadingPDF.value = false
 
     data.results.forEach(element => {
       listTransaction.value.push(element)
@@ -274,12 +272,12 @@ const getTransactions = async(filters: any = {}) => {
 }
 
 const loadMoreItems = async () => {
-  isLoading.value = true;
-  isLoadingPDF.value = true;
+  isLoading.value = true
+  isLoadingPDF.value = true
   submitting.value = true
-  listTransaction.value = [];
+  listTransaction.value = []
 
-  await filtersChange("initDoc", nextPage.value.data)
+  await filtersChange('initDoc', nextPage.value.data)
   await getTransactions(filters)
 }
 
@@ -288,45 +286,42 @@ const isValidDates = (): boolean => {
     return true
   }
 
-  if(startDate.value && endDate.value && startDate.value < endDate.value) {
-    filtersChange("startDate", startDate.value)
-    filtersChange("endDate", endDate.value)
+  if (startDate.value && endDate.value && startDate.value < endDate.value) {
+    filtersChange('startDate', startDate.value)
+    filtersChange('endDate', endDate.value)
   } else {
-    filtersChange("startDate", "")
-    filtersChange("endDate", "")
+    filtersChange('startDate', '')
+    filtersChange('endDate', '')
   }
 
-  return startDate.value && endDate.value && startDate.value <= endDate.value;
+  return startDate.value && endDate.value && startDate.value <= endDate.value
 }
 
-watch(startDate, async (newValue) => {
+watch(startDate, async newValue => {
   if (startDate) {
-    await filtersChange("startDate", newValue)
+    await filtersChange('startDate', newValue)
   }
 })
 
-watch(endDate, async (newValue) => {
+watch(endDate, async newValue => {
   if (startDate) {
-
-    await filtersChange("endDate", newValue)
+    await filtersChange('endDate', newValue)
   }
 })
 
 watch(selectedTypeTransaction, async newValue => {
   if (selectedTypeTransaction) {
-
-    await filtersChange("transactionType", newValue)
+    await filtersChange('transactionType', newValue)
   }
 })
 
 watch(assetCode, async newValue => {
   if (assetCode) {
-
-    await filtersChange("assetCode", newValue)
+    await filtersChange('assetCode', newValue)
   }
 })
 
-const filtersChange = async(key: TransactionFiltersQueryTypeKeys, value: any) => {
+const filtersChange = async (key: TransactionFiltersQueryTypeKeys, value: any) => {
   filters[key] = value
 }
 
@@ -334,43 +329,45 @@ const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
 const username = userStore.getUser.firstName
-    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-    : userStore.getUser.name
-let extractPDFInfo:any = {}
-const downloadExtract = ()=>{
-  isLoadingPDF.value = true;
-  setTimeout(()=>{
-    extractPDFInfo = {};
-    isLoadingPDF.value = false;
+  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+  : userStore.getUser.name
+let extractPDFInfo: any = {}
+const downloadExtract = () => {
+  isLoadingPDF.value = true
+  setTimeout(() => {
+    extractPDFInfo = {}
+    isLoadingPDF.value = false
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
     listTransaction.value.forEach((transaction, i) => {
-      extractPDFInfo[i]  = `${transaction.assetCode} ${transaction.reference} ${transaction.createdAt.toString().substr(0, 10)} ${transaction.createdAt.toString().substr(11, 8)}  ${transaction.amount} ${ transaction.assetCode}`
+      extractPDFInfo[i] = `${transaction.assetCode} ${transaction.reference} ${transaction.createdAt
+        .toString()
+        .substr(0, 10)} ${transaction.createdAt.toString().substr(11, 8)}  ${transaction.amount} ${
+        transaction.assetCode
+      }`
     })
     generatePDFTable(nameFile, logo, title, extractPDFInfo, footerPdf, jsPDFOptionsOrientationEnum.LANDSCAPE)
   }, 2000)
 }
 
-const search = async()=> {
+const search = async () => {
   if (!isValidDates()) {
     toast.add({
       severity: 'info',
       summary: t('somethingWentWrong'),
       detail: t('endDateGreaterStartDate'),
-      life: 4000
+      life: 4000,
     })
   }
 
   await getTransactions(filters)
-
 }
-
 </script>
 <style lang="scss">
 .dropdown-full {
   width: 100% !important;
 }
-.container-data{
- margin: -14px;
+.container-data {
+  margin: -14px;
   margin-top: 30px;
 }
 .padding-search-div {
@@ -381,7 +378,7 @@ const search = async()=> {
   margin-bottom: 1.5rem;
 }
 .label-search {
-  margin-left: 0.5rem !important;;
+  margin-left: 0.5rem !important;
 }
 .p-button {
   width: 100%;
@@ -395,7 +392,7 @@ const search = async()=> {
 }
 
 .amount-x {
-  font-size:14pt
+  font-size: 14pt;
 }
 .details-mobile {
   display: flex;
@@ -404,7 +401,6 @@ const search = async()=> {
 }
 
 @media (max-width: 950px) {
-
   .search-btn {
     border-radius: 5px !important;
   }

@@ -21,7 +21,7 @@
             />
 
             <ItemTransactionDepositAsset :item="item" v-if="getTransactionType(item) === 'deposit-asset'" />
-            
+
             <ItemTransactionAssetInternal :item="item" v-if="getTransactionType(item) === 'internal-asset'" />
 
             <ItemTransactionAssetExternal :item="item" v-if="getTransactionType(item) === 'external-asset'" />
@@ -51,7 +51,6 @@ import ItemTransactionFiatExternalInternational from './ItemTransactionFiatExter
 import ItemTransactionDepositAsset from './ItemTransactionDepositAsset.vue'
 import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
-
 
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'

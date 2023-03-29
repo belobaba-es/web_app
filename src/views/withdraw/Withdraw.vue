@@ -52,7 +52,7 @@ const active = ref<number>(1)
   }
 }
 
-.crypto{
+.crypto {
   margin-top: 35px !important;
 }
 </style>

@@ -37,20 +37,20 @@
           <div class="container-flex">
             <div class="float-left w-100 with-buttons">
               <Button
-                  type="button"
-                  :label="t('noAccount')"
-                  class="font-light mt-lg-5 with-buttons p-button-outlined border-300"
-                  @click="redirectSignin"
+                type="button"
+                :label="t('noAccount')"
+                class="font-light mt-lg-5 with-buttons p-button-outlined border-300"
+                @click="redirectSignin"
               />
             </div>
             <div class="float-right mt-3 w-100 with-buttons">
               <Button
-                  type="submit"
-                  icon="pi pi-angle-right"
-                  iconPos="right"
-                  label="Login"
-                  class="font-light with-buttons"
-                  :loading="submitting"
+                type="submit"
+                icon="pi pi-angle-right"
+                iconPos="right"
+                label="Login"
+                class="font-light with-buttons"
+                :loading="submitting"
               />
             </div>
           </div>
@@ -104,27 +104,29 @@ const redirectPage = () => {
 
 const handleSubmit = () => {
   submitting.value = true
-  loginService.login(form.user.toLowerCase(), form.pass).then(data => {
-    const { data: userPayload } = data
-    userStore.setUser(userPayload)
+  loginService
+    .login(form.user.toLowerCase(), form.pass)
+    .then(data => {
+      const { data: userPayload } = data
+      userStore.setUser(userPayload)
 
-    submitting.value = false
+      submitting.value = false
 
-    if (userPayload.account.status !== 'pending') {
-      window.location.href = '/dashboard'
-    } else {
-      window.location.href = `/profile/${userPayload.accountId}`
-    }
-
-  }).catch(e => {
-    submitting.value = false
-    toast.add({
-      severity: 'info',
-      summary: t('somethingWentWrong'),
-      detail: e.response.data.message,
-      life: 4000
+      if (userPayload.account.status !== 'pending') {
+        window.location.href = '/dashboard'
+      } else {
+        window.location.href = `/profile/${userPayload.accountId}`
+      }
     })
-  })
+    .catch(e => {
+      submitting.value = false
+      toast.add({
+        severity: 'info',
+        summary: t('somethingWentWrong'),
+        detail: e.response.data.message,
+        life: 4000,
+      })
+    })
 }
 </script>
 
@@ -149,7 +151,7 @@ const handleSubmit = () => {
   width: 100% !important;
 }
 
-.logo-noba{
+.logo-noba {
   width: 142px;
   height: 64px;
 }
