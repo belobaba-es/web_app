@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development vite --host",
     "build": "vue-tsc && vite build --mode production",
     "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.vue\" ",
     "build-dev": "vue-tsc && vite build --mode development"
   },
   "dependencies": {

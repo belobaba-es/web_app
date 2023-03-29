@@ -29,7 +29,7 @@ export const useSwapStore = defineStore('swap', () => {
   const progressBarPercent = ref(0)
   const progressBarSeconds = ref(10)
   const loading = ref(false)
-  let timer:number
+  let timer: number
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
   const quotes = ref<QuoteResponse>({
@@ -48,15 +48,15 @@ export const useSwapStore = defineStore('swap', () => {
     transactionType: '',
     quoteId: '',
     feeNoba: 0,
-    feeTradeDesk: 0, totalSpend:0
+    feeTradeDesk: 0,
+    totalSpend: 0,
   })
-  const feeTradeDesk= ref(0.0)
-  const totalSpend= ref(0.0)
+  const feeTradeDesk = ref(0.0)
+  const totalSpend = ref(0.0)
 
   const setFeeTradeDesk = () => {
-
     if (transactionType.value === 'buy') {
-      if (assetCode.value === "USDT") {
+      if (assetCode.value === 'USDT') {
         feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
       } else {
         feeTradeDesk.value = Number((totalAmount.value - amount.value).toFixed(2))
@@ -66,7 +66,7 @@ export const useSwapStore = defineStore('swap', () => {
       return
     }
 
-    if (assetCode.value === "USDT") {
+    if (assetCode.value === 'USDT') {
       feeTradeDesk.value = Number((amount.value - totalAmount.value).toFixed(2))
     } else {
       feeTradeDesk.value = Number((baseAmount.value - totalAmount.value).toFixed(2))
@@ -198,7 +198,6 @@ export const useSwapStore = defineStore('swap', () => {
 
   watch(progressBarSeconds, async newValue => {
     if (newValue === 0) {
-
       if (quoteId.value && !successExecuted.value) {
         shouldRefreshQuote.value = true
         await cancelQuote()
@@ -317,6 +316,6 @@ export const useSwapStore = defineStore('swap', () => {
     transactionSummary,
     feeNoba,
     feeTradeDesk,
-    totalSpend
+    totalSpend,
   }
 })

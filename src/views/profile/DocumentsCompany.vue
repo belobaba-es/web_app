@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-content-between align-items-center">
+  <div class="flex justify-content-between align-items-center">
     <h1 class="text-2xl">{{ t('documents') }}</h1>
   </div>
   <div class="mb-4">
@@ -17,9 +17,7 @@
       <Panel :header="t('uploadFileDocumentShareHolderText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
           <div v-for="(partner, idx) in getMembers()">
-            <DocumentPartnersEditForm
-              :tax-id="partner.taxId"
-              :key="idx" />
+            <DocumentPartnersEditForm :tax-id="partner.taxId" :key="idx" />
           </div>
         </ScrollPanel>
       </Panel>
@@ -28,17 +26,15 @@
 </template>
 
 <script setup lang="ts">
-import Panel from 'primevue/panel';
-import ScrollPanel from 'primevue/scrollpanel';
-import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue';
-import DocumentCompanyEditForm from './components/DocumentCompanyEditForm.vue';
-import { useAccount } from '../../composables/useAccount';
-import { useI18n } from 'vue-i18n';
+import Panel from 'primevue/panel'
+import ScrollPanel from 'primevue/scrollpanel'
+import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue'
+import DocumentCompanyEditForm from './components/DocumentCompanyEditForm.vue'
+import { useAccount } from '../../composables/useAccount'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n({ useScope: 'global' });
-const { getMembers } = useAccount();
-
-
+const { t } = useI18n({ useScope: 'global' })
+const { getMembers } = useAccount()
 </script>
 
 <style scoped lang="scss">

@@ -86,16 +86,16 @@
             <label>{{ t('stateLabel') }}</label>
             <div class="p-inputgroup">
               <Dropdown
-                  v-model="form.state"
-                  :options="states"
-                  optionLabel="name"
-                  option-value="name"
-                  :loading="loadingStatesField"
-                  :placeholder="t('statePlaceHolder')"
-                  :disabled="statesInputIsEmpty"
-                  class="w-full"
-                  @change="onChangeStateHandler"
-                  required
+                v-model="form.state"
+                :options="states"
+                optionLabel="name"
+                option-value="name"
+                :loading="loadingStatesField"
+                :placeholder="t('statePlaceHolder')"
+                :disabled="statesInputIsEmpty"
+                class="w-full"
+                @change="onChangeStateHandler"
+                required
               />
             </div>
           </div>

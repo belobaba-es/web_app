@@ -121,5 +121,5 @@ const secondsToDate = (seconds: number) => {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-} 
+}
 </style>

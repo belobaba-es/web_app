@@ -5,7 +5,7 @@
         <span class="font-regular text-primary text-1xl">Fee trade desk:</span>
       </div>
       <div class="col-7">
-        <span class="text-1xl font-light  text-lg-left"><small>US$</small> {{feeTradeDesk}}</span>
+        <span class="text-1xl font-light text-lg-left"><small>US$</small> {{ feeTradeDesk }}</span>
       </div>
     </div>
 
@@ -14,37 +14,35 @@
         <span class="font-regular text-primary text-1xl">Fee Noba:</span>
       </div>
       <div class="col-7 pt-0 pb-0">
-        <span class="text-1xl font-light  text-lg-right"><small>US$</small> {{feeNoba}}</span>
+        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ feeNoba }}</span>
       </div>
     </div>
 
     <div class="col-12 grid">
       <div class="col-5 pt-0 pb-0">
-        <span class="font-regular text-primary text-1xl">{{getLabelTotal()}}:</span>
+        <span class="font-regular text-primary text-1xl">{{ getLabelTotal() }}:</span>
       </div>
       <div class="col-7 pt-0 pb-0">
-        <span class="text-1xl font-light  text-lg-right"><small>US$</small> {{totalSpend}}</span>
+        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ totalSpend }}</span>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import {useSwap} from "../../../composables/useSwap";
-import {useI18n} from "vue-i18n";
+import { useSwap } from '../../../composables/useSwap'
+import { useI18n } from 'vue-i18n'
 
-const {t} = useI18n({useScope: 'global'})
-const {feeTradeDesk, feeNoba, totalSpend, transactionType} = useSwap()
+const { t } = useI18n({ useScope: 'global' })
+const { feeTradeDesk, feeNoba, totalSpend, transactionType } = useSwap()
 
-const getLabelTotal =()=> {
+const getLabelTotal = () => {
   if (transactionType.value === 'buy') {
     return t('swapSpend')
   }
 
   return t('swapReceive')
 }
-
 </script>
 
 <style>

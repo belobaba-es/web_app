@@ -1,5 +1,5 @@
-import {defineStore} from 'pinia'
-import {BalanceWallet} from '../views/deposit/types/asset.interface'
+import { defineStore } from 'pinia'
+import { BalanceWallet } from '../views/deposit/types/asset.interface'
 
 interface BalanceWalletsState {
   wallets: BalanceWallet[]

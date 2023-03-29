@@ -9,7 +9,7 @@
 import Message from 'primevue/message'
 import { useUserStore } from '../../../stores/user'
 import { onMounted, ref } from 'vue'
-import {useRoute} from "vue-router";
+import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const userStore = useUserStore()
@@ -17,10 +17,7 @@ const userStore = useUserStore()
 const messages = ref<any>([])
 
 onMounted(() => {
-
-  const kyc = userStore.getWarningKYC(
-      route.params.contactId === undefined ? undefined : String(route.params.contactId)
-  )
+  const kyc = userStore.getWarningKYC(route.params.contactId === undefined ? undefined : String(route.params.contactId))
   if (!kyc) {
     return
   }
@@ -29,10 +26,9 @@ onMounted(() => {
     messages.value.push({ content: kyc.kycRequiredActions[kycRequiredActionsKey] })
   }
 
-  if (kyc.cipChecks !== "") {
+  if (kyc.cipChecks !== '') {
     messages.value.push({ content: kyc.cipChecks })
   }
-
 })
 </script>
 

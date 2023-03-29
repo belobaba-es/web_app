@@ -69,7 +69,7 @@ interface Props {
   usdName?: string
 }
 
-const props =  defineProps<Props>()
+const props = defineProps<Props>()
 
 const totalBuy = () => {
   return (props.summary.totalAmount + props.summary.feeNoba).toFixed(2)
@@ -78,7 +78,6 @@ const totalBuy = () => {
 const totalSell = () => {
   return (props.summary.totalAmount - props.summary.feeNoba).toFixed(2)
 }
-
 </script>
 
 <style scoped>

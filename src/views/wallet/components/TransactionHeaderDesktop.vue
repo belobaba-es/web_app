@@ -59,12 +59,12 @@
 import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
-import {useBalanceWallet} from "../../../composables/useBalanceWallet";
+import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 
 defineProps<{
   wallet: BalanceWallet
 }>()
-let depositURL = ""
+let depositURL = ''
 
 const { calculateBalance } = useBalanceWallet()
 
@@ -75,7 +75,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
-    depositURL = '/deposit/crypto/'+ wallet?.assetCode
+    depositURL = '/deposit/crypto/' + wallet?.assetCode
     return 'Crypto'
   }
 }
