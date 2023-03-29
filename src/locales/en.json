@@ -243,5 +243,6 @@
   "ourFee": "Our fee",
   "hasReceived": "Has received",
   "transactionNumber": "Transaction number",
-  "newTransfer": "New transfer"
+  "newTransfer": "New transfer",
+  "youSend": "You send"
 }

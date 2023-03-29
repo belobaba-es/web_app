@@ -15,15 +15,15 @@
     <Divider type="dashed"></Divider>
 
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('emailLabel') }}</p>
+      <p class="font-medium text-sm">{{ t('youSend') }}</p>
       <p class="font-medium text-sm">{{ t('ourFee') }}</p>
       <p class="font-medium text-sm">{{ props.realName }} {{ t('hasReceived') }}</p>
     </div>
 
     <div class="col-6">
-      <p>{{ props.amount }}</p>
-      <p>{{ props.amountFee }} USD</p>
-      <p>{{ t('Amount') }}</p>
+      <p>{{ props.amount }} {{ props.assetCode }}</p>
+      <p>{{ props.amountFee }} {{ props.assetCode }}</p>
+      <p>{{ props.amount }} {{ props.assetCode }}</p>
     </div>
 
     <Divider type="dashed"></Divider>
@@ -71,8 +71,6 @@ const props = defineProps({
 })
 const { t } = useI18n({ useScope: 'global' })
 
-console.log('my first component')
-console.log('my first component props', props)
 </script>
 
 <style lang="scss">

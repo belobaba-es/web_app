@@ -98,13 +98,15 @@
 <!--        <p>{{ transactionId }}</p>-->
 <!--      </div>-->
 <!--    </div>-->
+
     <InternationalTransferDetail
-      :realName="'Alberto perez'"
-      :email="'alb erto@gmail.com'"
-      :account="'hajsdfhas hasjdfhas'"
-      :amount="'12340'"
-      :amountFee="'25'"
-      :transactionId="'7814574hf478fh2948'"
+      :realName="props.formData.beneficiary.realName"
+      :email="props.formData.beneficiary.email"
+      :account="props.formData.beneficiary.accountNumber"
+      :amount="props.formData.amount"
+      :amountFee="props.formData.amountFee"
+      :transactionId="transactionId"
+      :assetCode="props.formData.assetCode"
     ></InternationalTransferDetail>
 
     <div class="col-12 btn-container">
@@ -162,7 +164,7 @@ function makeTransaction() {
   submitting.value = true
 
   console.log("isCompleted", isCompleted.value)
-  console.log("isCompleted", props.formData)
+  console.log("-- isCompleted", props.formData.beneficiary)
   // return;
 
   withdraw.makeFiatExternalTransfer({
