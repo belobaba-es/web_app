@@ -13,7 +13,7 @@
     <div class="col-12 field p-fluid">
 
       <div class="field col-12">
-        <label for="name1">1234 {{ t('Amount') }}</label>
+        <label for="name1">{{ t('Amount') }}</label>
         <p class="green-color">{{ formData.amountFee }} USD</p>
       </div>
 
@@ -51,45 +51,55 @@
 
   <!-- Completed transfer resume and download PDF Receipt -->
   <div v-if="isCompleted" class="formgrid grid mt-5 mb-5">
+    <p class="text-3xl font-medium mb-4">
+      <span class="text-primary">Your transfer has been successful</span>
+    </p>
+
     <div class="col-12">
-<!--      <span class="mt-4">asdf {{ t('Confirm wire information') }}</span>-->
-      <Divider></Divider>
-    </div>
-    <div>
-<!--      <p class="title-beneficiary">zxcv{{ formData?.beneficiary?.realName }}</p>-->
-<!--      <p class="font-ligth text-base">{{ formData?.beneficiary?.accountNumber }}</p>-->
-    </div>
+<!--      transaction summary-->
+      <span class="mt-4">transaction summary</span>
     <Divider></Divider>
-
-    <div class="col-12 field p-fluid">
-
-      <div class="field col-12">
-        <label for="name1">1234 {{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amountFee }} USD</p>
-      </div>
-
-      <div class="field col-12">
-        <small>{{ t('fee') }}</small>
-        <p class="green-color mt-0">
-          <small>{{ formData.fee }} USD</small>
-        </p>
-      </div>
     </div>
 
-
-    <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to {{ formData?.beneficiary?.realName }}</p>
-
+    <div class="col-6">
+      <p class="font-medium text-sm">Bank account holder</p>
+      <p class="font-medium text-sm">Email</p>
+      <p class="font-medium text-sm">Wallet address</p>
     </div>
 
-    <div class="col-12 mb-2">
-      <p class="font-medium green-color">
-        {{ formData.amount }} USD
-      </p>
+    <div class="col-6">
+      <p>Alberto Rodriguez</p>
+      <p>albertorodriguez@gmail.com</p>
+      <p>asdfjasdkfyads^*3HD893459&HD*$</p>
     </div>
+
+    <Divider type="dashed"></Divider>
+
+    <div class="col-6">
+      <p class="font-medium text-sm">Enviaste</p>
+      <p class="font-medium text-sm">Email</p>
+      <p class="font-medium text-sm">Wallet address</p>
+    </div>
+
+    <div class="col-6">
+      <p>{{ t('Amount') }}</p>
+      <p>Nuestra comision</p>
+      <p>{{ formData.amountFee }} USD</p>
+    </div>
+
+    <Divider type="dashed"></Divider>
+
+    <div class="col-6">
+      <p class="font-medium text-sm">Numero de Transacion</p>
+    </div>
+
+    <div class="col-6">
+      <p>adf</p>
+    </div>
+
 
     <Button
-        class="w-50 p-button search-btn"
+        class="w-50 p-button mt-10"
         iconPos="right"
         :label="t('downloadTransferReceipPDF')"
         @click="makeTransaction()"
@@ -127,18 +137,18 @@ function makeTransaction() {
   submitting.value = true
 
   console.log("isCompleted", isCompleted.value)
-  return;
+  // return;
 
   withdraw.makeFiatExternalTransfer({
     amount: props.formData.amount,
     beneficiaryId: props.formData.beneficiary.id,
     reference: props.formData.reference,
-  }).then(() => {
-    console.log('confirmation')
+  }).then((res) => {
+    console.log('confirmation res', res)
     submitting.value = false
     // updateBlockedBalanceWalletByCode('USD', props.formData.amount)
     //
-    emit('complete')
+    // emit('complete')
   }).catch(e => {
     submitting.value = false
 
@@ -159,5 +169,13 @@ function makeTransaction() {
 
 .green-color {
   color: var(--primary-color);
+}
+
+.p-divider-dashed.p-divider-horizontal:before {
+  border-color: var(--primary-color);
+}
+
+.mt-10 {
+  margin-top: 42px;
 }
 </style>
