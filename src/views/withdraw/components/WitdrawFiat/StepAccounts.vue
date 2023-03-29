@@ -37,7 +37,7 @@ import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import ListBeneficiary from './ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
-import { useRouter } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 
 import { useToast } from 'primevue/usetoast'
 import { Beneficiary } from '../../types/beneficiary.interface'
@@ -54,6 +54,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const search = ref('')
+const route = useRoute()
 
 const onSelect = (item: Beneficiary) => {
   const page = 0
@@ -68,7 +69,9 @@ const onSelect = (item: Beneficiary) => {
 }
 // const beneficiaryAssets = ref<BeneficiaryFiat[]>([])
 
-onMounted(async () => {})
+onMounted(async () => {
+  props.formData.typeTransaction = route.params.type
+})
 
 const onSearch = () => {
   console.log('===========OOOOOOOOOO', search.value)
