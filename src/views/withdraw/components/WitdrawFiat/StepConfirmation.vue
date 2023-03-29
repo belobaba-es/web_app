@@ -61,49 +61,57 @@
     <Divider></Divider>
     </div>
 
-    <div class="col-12">
-      <div class="col-6">
-        <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
-        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>
-        <p class="font-medium text-sm">{{ t('walletAddress') }}</p>
-      </div>
+<!--    <div class="col-12">-->
+<!--      <div class="col-6">-->
+<!--        <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>-->
+<!--        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>-->
+<!--        <p class="font-medium text-sm">{{ t('walletAddress') }}</p>-->
+<!--      </div>-->
 
-      <div class="col-6">
-        <p>Alberto Rodriguez</p>
-        <p>albertorodriguez@gmail.com</p>
-        <p>asdfjasdkfyads^*3HD893459&HD*$</p>
-      </div>
+<!--      <div class="col-6">-->
+<!--        <p>Alberto Rodriguez</p>-->
+<!--        <p>albertorodriguez@gmail.com</p>-->
+<!--        <p>asdfjasdkfyads^*3HD893459&HD*$</p>-->
+<!--      </div>-->
 
-      <Divider type="dashed"></Divider>
+<!--      <Divider type="dashed"></Divider>-->
 
-      <div class="col-6">
-        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>
-        <p class="font-medium text-sm">{{ t('ourFee') }}</p>
-        <p class="font-medium text-sm">{{ props.formData.realName }} {{ t('hasReceived') }}</p>
-      </div>
+<!--      <div class="col-6">-->
+<!--        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>-->
+<!--        <p class="font-medium text-sm">{{ t('ourFee') }}</p>-->
+<!--        <p class="font-medium text-sm">{{ props.formData.realName }} {{ t('hasReceived') }}</p>-->
+<!--      </div>-->
 
-      <div class="col-6">
-        <p>{{ props.formData.amount }}</p>
-        <p>{{ props.formData.amountFee }} USD</p>
-        <p>{{ t('Amount') }}</p>
-      </div>
+<!--      <div class="col-6">-->
+<!--        <p>{{ props.formData.amount }}</p>-->
+<!--        <p>{{ props.formData.amountFee }} USD</p>-->
+<!--        <p>{{ t('Amount') }}</p>-->
+<!--      </div>-->
 
-      <Divider type="dashed"></Divider>
+<!--      <Divider type="dashed"></Divider>-->
 
-      <div class="col-6">
-        <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>
-      </div>
+<!--      <div class="col-6">-->
+<!--        <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>-->
+<!--      </div>-->
 
-      <div class="col-6">
-        <p>{{ transactionId }}</p>
-      </div>
-    </div>
+<!--      <div class="col-6">-->
+<!--        <p>{{ transactionId }}</p>-->
+<!--      </div>-->
+<!--    </div>-->
+    <InternationalTransferDetail
+      :realName="'Alberto perez'"
+      :email="'alb erto@gmail.com'"
+      :account="'hajsdfhas hasjdfhas'"
+      :amount="'12340'"
+      :amountFee="'25'"
+      :transactionId="'7814574hf478fh2948'"
+    ></InternationalTransferDetail>
 
     <div class="col-12 btn-container">
       <Button
         class="w-50 p-button mt-5 btn-routing"
         :label="t('newTransfer')"
-        @click="makeTransaction()"
+        @click="goToWithdrawIndex()"
       />
 
       <Button
@@ -120,10 +128,11 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider';
 import {useI18n} from 'vue-i18n';
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import Button from 'primevue/button';
 import {ref} from "vue";
 import {WithdrawService} from "../../services/withdraw";
+import InternationalTransferDetail from "../../../../components/InternationalTransferDetail.vue";
 import {useBalanceWallet} from "../../../../composables/useBalanceWallet";
 import {useToast} from "primevue/usetoast";
 
@@ -135,11 +144,16 @@ const isGeneratingTransactionPDF = ref(false);
 const transactionId = ref(null);
 const {t} = useI18n({useScope: 'global'})
 const route = useRoute();
+const router = useRouter();
 const props = defineProps<{
   formData: any
 }>()
 
 const emit = defineEmits(['complete']);
+
+const goToWithdrawIndex = () => {
+  router.push(`/withdraw`)
+}
 
 function makeTransaction() {
   isCompleted.value = true;
@@ -176,15 +190,6 @@ function makeTransaction() {
 </script>
 
 <style scoped>
-
-.green-color {
-  color: var(--primary-color);
-}
-
-.p-divider-dashed.p-divider-horizontal:before {
-  border-color: var(--primary-color);
-}
-
 .mt-5 {
   margin-top: 22px!important;
 }
