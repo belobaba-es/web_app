@@ -48,9 +48,9 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ formData.beneficiary?.realName }}</span>
 
-<!--          todo -->
+          <!--          todo -->
           <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>USD</small></p>
-<!--          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>-->
+          <!--          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>-->
           <p v-else>
             <small>{{ fee }}</small>
           </p>
@@ -68,9 +68,9 @@
         />
       </div>
     </div>
-<!--    <div class="col-12 m-2">-->
-<!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-<!--    </div>-->
+    <!--    <div class="col-12 m-2">-->
+    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
+    <!--    </div>-->
     <div class="col-6">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
@@ -87,7 +87,7 @@ import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
-import {useUserStore} from "../../../../stores/user";
+import { useUserStore } from '../../../../stores/user'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -111,7 +111,6 @@ const events = ref<any>([
 ])
 const typeTransaction = ref('domestic')
 
-
 onMounted(async () => {
   if (props.formData.typeTransaction.toLowerCase() !== 'domestic') {
     typeTransaction.value = 'international'
@@ -120,7 +119,10 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
-  fee.value = typeTransaction.value === "domestic" ? userStore.getUserFeeWire()?.domestic.out : userStore.getUserFeeWire()?.international.out
+  fee.value =
+    typeTransaction.value === 'domestic'
+      ? userStore.getUserFeeWire()?.domestic.out
+      : userStore.getUserFeeWire()?.international.out
 }
 const amountFee = computed(() => {
   const total = isNaN(parseFloat(amount.value) + fee.value) ? 0 : parseFloat(amount.value) + fee.value

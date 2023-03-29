@@ -81,7 +81,7 @@ import { AssetsService } from './services/assets'
 import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
 import Dropdown from 'primevue/dropdown'
-import {useRoute} from "vue-router";
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -95,7 +95,7 @@ const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddress | null>(null)
 const submitting = ref(false)
-const route = useRoute();
+const route = useRoute()
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -106,7 +106,7 @@ const findAsset = (assetId: string) => {
 }
 
 const findAssetByName = () => {
-  submitting.value = true;
+  submitting.value = true
   lazyLoading.value = true
   if (assetCode.value) {
     assetsService
@@ -114,17 +114,17 @@ const findAssetByName = () => {
       .then(data => {
         paymentAddress.value = [...data.results]
         nextPag.value = data.nextPag
-        submitting.value = false;
-        lazyLoading.value = false;
+        submitting.value = false
+        lazyLoading.value = false
       })
       .finally(() => {
         submitting.value = false
-        lazyLoading.value = false;
+        lazyLoading.value = false
       })
   }
 }
 
-function onChange(e:any) {
+function onChange(e: any) {
   if (e.value === null) {
     searchWallets()
   }
@@ -145,9 +145,9 @@ const paymentAddress = ref<PaymentAddress[]>([])
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
 
-  const assetCode = route.params.assetCode as string ?? ''
+  const assetCode = (route.params.assetCode as string) ?? ''
 
-  if(assetCode) {
+  if (assetCode) {
     const currentAsset = assets.value.find(asset => asset.code === assetCode)
     if (currentAsset) await searchWallet(currentAsset?.assetId)
 
@@ -170,9 +170,9 @@ const searchWallets = () => {
 const searchWallet = (assetId: string) => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then((data) => {
+  assetsService.listPaymentAddress().then(data => {
     lazyLoading.value = false
-    paymentAddress.value = data.results.filter((res:PaymentAddress) => res.assetsId === assetId)
+    paymentAddress.value = data.results.filter((res: PaymentAddress) => res.assetsId === assetId)
     nextPag.value = data.nextPag
   })
 }

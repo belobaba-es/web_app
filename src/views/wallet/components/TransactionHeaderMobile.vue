@@ -53,7 +53,7 @@
 import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
-import {useBalanceWallet} from "../../../composables/useBalanceWallet";
+import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 
 defineProps<{
   wallet: BalanceWallet

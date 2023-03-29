@@ -125,7 +125,6 @@ const closedSession = async () => {
 const isCurrentRouteWallet = computed(() => {
   return router.currentRoute.value.path === '/wallet'
 })
-
 </script>
 
 <style></style>

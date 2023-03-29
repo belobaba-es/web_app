@@ -65,15 +65,11 @@ const items = ref([
   },
 ])
 
-const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } =
-  useWithdraw(items)
-
-
+const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
 
 const newBeneficiary = () => {
   return router.push(`/`)
 }
-
 
 // const onSearch = () => {
 //   accountService

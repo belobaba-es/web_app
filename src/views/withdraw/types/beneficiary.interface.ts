@@ -1,9 +1,8 @@
 import { Pagination } from '../../../shared/types/pagination'
 
-
 export enum BeneficiaryType {
-  INTERNATIONAL="INTERNATIONAL",
-  DOMESTIC="DOMESTIC"
+  INTERNATIONAL = 'INTERNATIONAL',
+  DOMESTIC = 'DOMESTIC',
 }
 export interface Beneficiary {
   name: string
@@ -89,7 +88,7 @@ export interface BeneficiaryFiatInternacionalResp extends Pagination<Beneficiary
 export interface BeneficiaryFiatDomesticResp extends Pagination<BeneficiaryFiatDomestic> {}
 
 export interface BeneficiaryAsset {
-  assetId: string;
-  walletAddress: string;
-  label: string;
+  assetId: string
+  walletAddress: string
+  label: string
 }

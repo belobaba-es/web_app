@@ -1,5 +1,4 @@
 <template>
-
   <section class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 mb-4 p-0">
     <label>{{ t('selectCrypto') }}</label>
     <div class="grid selectCypto mt-3" @click="modal(true)">
@@ -16,18 +15,18 @@
   </section>
 
   <ModalAssetSelector
-      :show-modal="showModal"
-      @update:visible="modal($event)"
-      closeIcon="pi pi-times-circle"
-      @selected-asset="selectedAsset"
+    :show-modal="showModal"
+    @update:visible="modal($event)"
+    closeIcon="pi pi-times-circle"
+    @selected-asset="selectedAsset"
   />
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue"
-import {Asset} from "../views/deposit/types/asset.interface"
-import {useI18n} from "vue-i18n"
-import ModalAssetSelector from "./ModalAssetSelector.vue";
+import { ref } from 'vue'
+import { Asset } from '../views/deposit/types/asset.interface'
+import { useI18n } from 'vue-i18n'
+import ModalAssetSelector from './ModalAssetSelector.vue'
 
 const showModal = ref(false)
 const nameAsset = ref('')
@@ -36,7 +35,7 @@ const iconAsset = ref('')
 
 const { t } = useI18n({ useScope: 'global' })
 
-const emit = defineEmits(['selectedAsset']);
+const emit = defineEmits(['selectedAsset'])
 
 const modal = (b: boolean) => {
   showModal.value = b
@@ -49,7 +48,6 @@ const selectedAsset = (asset: Asset) => {
 
   showModal.value = false
 }
-
 </script>
 
 <style scoped>
@@ -58,7 +56,7 @@ const selectedAsset = (asset: Asset) => {
   border: 1px solid #ccc;
   margin-left: 0.1rem;
   padding: 6px;
-  background: #F9F9F9 0% 0% no-repeat padding-box;
-  border: 1px solid #ECECEC;
+  background: #f9f9f9 0% 0% no-repeat padding-box;
+  border: 1px solid #ececec;
 }
 </style>

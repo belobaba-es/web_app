@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getDatabase, off, onValue, ref } from 'firebase/database'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { BalanceWallet } from "../../views/deposit/types/asset.interface";
-import {AssetsService} from "../../views/deposit/services/assets";
+import { BalanceWallet } from '../../views/deposit/types/asset.interface'
+import { AssetsService } from '../../views/deposit/services/assets'
 
 export class FirebaseService {
   private static _instance: FirebaseService
@@ -45,7 +45,7 @@ export class FirebaseService {
 
     const app = await initializeApp(config)
 
-    return getDatabase(app);
+    return getDatabase(app)
   }
 
   async listenFirebaseChanges() {
@@ -62,7 +62,6 @@ export class FirebaseService {
       const data = await AssetsService.instance().getBalanceWallets()
 
       await this.setBalances(data)
-
     })
   }
 

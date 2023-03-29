@@ -39,8 +39,8 @@ export const useWorld = () => {
     await worldService.getCountries().then((resp: Country[]) => {
       countries.value = resp
 
-      const arrayCallingCode = resp.map(c=>c.calling_code).sort()
-      calling_code.value = [...new Set(arrayCallingCode)];
+      const arrayCallingCode = resp.map(c => c.calling_code).sort()
+      calling_code.value = [...new Set(arrayCallingCode)]
 
       loadingCountiesField.value = false
     })

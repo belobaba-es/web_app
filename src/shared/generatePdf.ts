@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import jsPDF from 'jspdf'
 
-export default (nameFile: string, logo: string, title: string, data: any, footer:string) => {
+export default (nameFile: string, logo: string, title: string, data: any, footer: string) => {
   const pdf = ref(new jsPDF())
   pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
 
@@ -26,6 +26,6 @@ export default (nameFile: string, logo: string, title: string, data: any, footer
   pdf.value.setFontSize(12)
   pdf.value.setTextColor(0, 0, 0)
   pdf.value.text(footer, 15, 285)
-  
+
   pdf.value.save(`${nameFile}.pdf`)
 }
