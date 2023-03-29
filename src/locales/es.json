@@ -229,5 +229,10 @@
   "dropdownSelectProofOfAddress": "Seleccione el tipo de documento",
   "userDataSuccessSend": "Datos personales enviados correctamente",
   "companyIncorporationFile": "Documentos constitutivo de la empresa",
-  "endDateGreaterStartDate": "Fecha final debe ser mayor que fecha inicio"
+  "endDateGreaterStartDate": "Fecha final debe ser mayor que fecha inicio",
+  "bankAccountHolder": "Beneficiario",
+  "ourFee": "Nuestra comisión",
+  "hasReceived": "Ha recibido",
+  "transactionNumber": "Número de transacción",
+  "newTransfer": "Nueva transacción"
 }
