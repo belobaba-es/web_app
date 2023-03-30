@@ -2,12 +2,12 @@
   <div class="col-12 content">
     <div class="col-6">
       <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
-      <p class="font-medium text-sm">{{ t('wallet') }}</p>
+      <p class="font-medium text-sm">{{ t('email') }}</p>
     </div>
 
     <div class="col-6">
       <p>{{ props.realName }}</p>
-      <p>{{ props.wallet }}</p>
+      <p>{{ props.email }}</p>
     </div>
 
     <Divider type="dashed"></Divider>
@@ -36,7 +36,6 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { defineProps } from 'vue';
@@ -47,11 +46,11 @@ const props = defineProps({
     type: String,
     required: true
   },
-  wallet: {
+  account: {
     type: String,
     required: true
   },
-  amount: {
+  email: {
     type: String,
     required: true
   },

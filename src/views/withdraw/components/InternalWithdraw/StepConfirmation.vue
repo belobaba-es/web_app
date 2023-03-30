@@ -55,24 +55,23 @@
       <Divider></Divider>
     </div>
 
-    <CryptoTransferDetail
+    <InternalFiatDetails
       v-if="route.params.type === 'fiat'"
-      :realName="props.formData.beneficiary.name"
-      :email="props.formData.beneficiary.email"
+      :realName="beneficiary.name"
+      :email="beneficiary.email"
       :account="props.formData.beneficiary.accountNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
       :transactionId="transactionId"
       :assetCode="props.formData.assetCode"
-    ></CryptoTransferDetail>
+    ></InternalFiatDetails>
 
-<!--    todo-->
     <CryptoTransferDetail
       v-if="route.params.type === 'crypto'"
       :realName="props.formData.beneficiary.name"
       :email="props.formData.beneficiary.email"
-      :account="props.formData.beneficiary.accountNumber"
+      :wallet="props.formData.symbol"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
@@ -100,7 +99,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import Button from 'primevue/button'
 import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { WithdrawService } from '../../services/withdraw'
@@ -108,27 +107,27 @@ import {onMounted, ref} from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
+import InternalFiatDetails from "../../../../components/InternalFiatDetails.vue";
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
-
+const transactionId = ref(null);
 const submitting = ref(false)
 const isCompleted = ref(false);
 const props = defineProps<{
   formData: any
 }>()
-
 const assetSymbol = props.formData.symbol
-
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
-
 const emit = defineEmits(['complete'])
+const router = useRouter();
 
-onMounted(async () => {
-  console.log('internall step confirmation', props.formData)
-})
+
+const goToWithdrawIndex = () => {
+  router.push(`/withdraw`)
+}
 function makeTransaction() {
   const withDrawService = WithdrawService.instance()
 
@@ -142,7 +141,8 @@ function makeTransaction() {
           accountDestination: props.formData.beneficiary.accountId,
           reference: props.formData.reference,
         })
-        .then(() => {
+        .then((res: any) => {
+          transactionId.value = res.data.transactionId
           submitting.value = false
           isCompleted.value = true;
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
@@ -160,16 +160,30 @@ function makeTransaction() {
         })
       break
     case 'crypto':
-      withDrawService.makeAssetInternalTransfer({
-        amount: props.formData.amount,
-        accountDestination: props.formData.beneficiary.accountId,
-        reference: props.formData.reference,
-        assetId: props.formData.assetId,
-      })
+      withDrawService
+        .makeAssetInternalTransfer({
+          amount: props.formData.amount,
+          accountDestination: props.formData.beneficiary.accountId,
+          reference: props.formData.reference,
+          assetId: props.formData.assetId,
+        })
+          .then((res:any)=> {
+            transactionId.value = res.data.transactionId
+            submitting.value = false
+            isCompleted.value = true;
+            updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
+            // emit('complete')
+          })
+          .catch(e => {
+            submitting.value = false
 
-      updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
-
-      emit('complete')
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
+              life: 4000,
+            })
+          })
       break
     default:
       submitting.value = false
