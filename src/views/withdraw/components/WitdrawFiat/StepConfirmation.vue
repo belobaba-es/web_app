@@ -25,10 +25,8 @@
       </div>
     </div>
 
-
     <div class="col-12 mb-2">
       <p class="text-base">Your are sending to {{ formData?.beneficiary?.realName }}</p>
-
     </div>
 
     <div class="col-12 mb-2">
@@ -58,56 +56,32 @@
     <!--      transaction summary-->
     <div class="col-12">
       <span class="mt-4">transaction summary</span>
-    <Divider></Divider>
+      <Divider></Divider>
     </div>
 
-<!--    <div class="col-12">-->
-<!--      <div class="col-6">-->
-<!--        <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>-->
-<!--        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>-->
-<!--        <p class="font-medium text-sm">{{ t('walletAddress') }}</p>-->
-<!--      </div>-->
-
-<!--      <div class="col-6">-->
-<!--        <p>Alberto Rodriguez</p>-->
-<!--        <p>albertorodriguez@gmail.com</p>-->
-<!--        <p>asdfjasdkfyads^*3HD893459&HD*$</p>-->
-<!--      </div>-->
-
-<!--      <Divider type="dashed"></Divider>-->
-
-<!--      <div class="col-6">-->
-<!--        <p class="font-medium text-sm">{{ t('emailLabel') }}</p>-->
-<!--        <p class="font-medium text-sm">{{ t('ourFee') }}</p>-->
-<!--        <p class="font-medium text-sm">{{ props.formData.realName }} {{ t('hasReceived') }}</p>-->
-<!--      </div>-->
-
-<!--      <div class="col-6">-->
-<!--        <p>{{ props.formData.amount }}</p>-->
-<!--        <p>{{ props.formData.amountFee }} USD</p>-->
-<!--        <p>{{ t('Amount') }}</p>-->
-<!--      </div>-->
-
-<!--      <Divider type="dashed"></Divider>-->
-
-<!--      <div class="col-6">-->
-<!--        <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>-->
-<!--      </div>-->
-
-<!--      <div class="col-6">-->
-<!--        <p>{{ transactionId }}</p>-->
-<!--      </div>-->
-<!--    </div>-->
-
     <InternationalTransferDetail
+      v-if="props.formData.typeTransaction === 'international'"
       :realName="props.formData.beneficiary.realName"
       :email="props.formData.beneficiary.email"
       :account="props.formData.beneficiary.accountNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
+      :fee="props.formData.fee"
       :transactionId="transactionId"
       :assetCode="props.formData.assetCode"
     ></InternationalTransferDetail>
+
+    <DomesticTransferDetail
+      v-if="props.formData.typeTransaction === 'domestic'"
+      :realName="props.formData.beneficiary.realName"
+      :email="props.formData.beneficiary.email"
+      :account="props.formData.beneficiary.accountNumber"
+      :amount="props.formData.amount"
+      :amountFee="props.formData.amountFee"
+      :fee="props.formData.fee"
+      :transactionId="transactionId"
+      :assetCode="props.formData.assetCode"
+    ></DomesticTransferDetail>
 
     <div class="col-12 btn-container">
       <Button
@@ -132,11 +106,12 @@ import Divider from 'primevue/divider';
 import {useI18n} from 'vue-i18n';
 import {useRoute, useRouter} from "vue-router";
 import Button from 'primevue/button';
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {WithdrawService} from "../../services/withdraw";
 import InternationalTransferDetail from "../../../../components/InternationalTransferDetail.vue";
 import {useBalanceWallet} from "../../../../composables/useBalanceWallet";
 import {useToast} from "primevue/usetoast";
+import DomesticTransferDetail from "../../../../components/DomesticTransferDetail.vue";
 
 const toast = useToast()
 const {updateBlockedBalanceWalletByCode} = useBalanceWallet()
@@ -151,6 +126,9 @@ const props = defineProps<{
   formData: any
 }>()
 
+onMounted(async () => {
+})
+
 const emit = defineEmits(['complete']);
 
 const goToWithdrawIndex = () => {
@@ -158,24 +136,17 @@ const goToWithdrawIndex = () => {
 }
 
 function makeTransaction() {
-  isCompleted.value = true;
   const withdraw = WithdrawService.instance()
-
   submitting.value = true
-
-  console.log("isCompleted", isCompleted.value)
-  console.log("-- isCompleted", props.formData.beneficiary)
-  // return;
 
   withdraw.makeFiatExternalTransfer({
     amount: props.formData.amount,
     beneficiaryId: props.formData.beneficiary.id,
     reference: props.formData.reference,
   }).then((res: any) => {
-    console.log('confirmation res', res.data.transactionId)
+    isCompleted.value = true;
+    transactionId.value = res.data.transactionId
     submitting.value = false
-    // updateBlockedBalanceWalletByCode('USD', props.formData.amount)
-    //
     // emit('complete')
   }).catch(e => {
     submitting.value = false
@@ -194,6 +165,8 @@ function makeTransaction() {
 <style scoped>
 .green-color {
   color: var(--primary-color);
+}
+
 .mt-5 {
   margin-top: 22px!important;
 }
