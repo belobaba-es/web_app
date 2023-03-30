@@ -81,7 +81,6 @@ const emit = defineEmits(['complete'])
 
 onMounted(async () => {
   const data = props.formData
-  console.log('confirmation', data)
 })
 
 const amountFee = computed(() => {

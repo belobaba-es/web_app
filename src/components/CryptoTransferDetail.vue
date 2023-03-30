@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { defineProps } from 'vue';
+import {defineProps, onMounted} from 'vue';
 import Divider from 'primevue/divider';
 
 const props = defineProps({
@@ -69,6 +69,7 @@ const props = defineProps({
   }
 })
 const { t } = useI18n({ useScope: 'global' })
+
 
 </script>
 
