@@ -97,7 +97,6 @@
         :loading="isGeneratingTransactionPDF"
       />
     </div>
-
   </div>
 </template>
 
@@ -147,6 +146,7 @@ function makeTransaction() {
     isCompleted.value = true;
     transactionId.value = res.data.transactionId
     submitting.value = false
+    updateBlockedBalanceWalletByCode('USD', props.formData.amount)
     // emit('complete')
   }).catch(e => {
     submitting.value = false

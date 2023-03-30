@@ -1,5 +1,5 @@
 <template>
-  <div class="formgrid grid mt-5 mb-5">
+  <div v-if="!isCompleted" class="formgrid grid mt-5 mb-5">
     <div class="col-12">
       <span class="mt-4">{{ t('Confirm wire information') }}</span>
       <Divider></Divider>
@@ -42,6 +42,59 @@
       :loading="submitting"
     />
   </div>
+
+  <!-- Completed transfer resume and download PDF Receipt -->
+  <div v-if="isCompleted" class="formgrid grid mt-5 mb-5">
+    <p class="text-3xl font-medium mb-4">
+      <span class="text-primary">Your transfer has been successful</span>
+    </p>
+
+    <!--      transaction summary-->
+    <div class="col-12">
+      <span class="mt-4">transaction summary</span>
+      <Divider></Divider>
+    </div>
+
+    <CryptoTransferDetail
+      v-if="route.params.type === 'fiat'"
+      :realName="props.formData.beneficiary.name"
+      :email="props.formData.beneficiary.email"
+      :account="props.formData.beneficiary.accountNumber"
+      :amount="props.formData.amount"
+      :amountFee="props.formData.amountFee"
+      :fee="props.formData.fee"
+      :transactionId="transactionId"
+      :assetCode="props.formData.assetCode"
+    ></CryptoTransferDetail>
+
+<!--    todo-->
+    <CryptoTransferDetail
+      v-if="route.params.type === 'crypto'"
+      :realName="props.formData.beneficiary.name"
+      :email="props.formData.beneficiary.email"
+      :account="props.formData.beneficiary.accountNumber"
+      :amount="props.formData.amount"
+      :amountFee="props.formData.amountFee"
+      :fee="props.formData.fee"
+      :transactionId="transactionId"
+      :assetCode="props.formData.assetCode"
+    ></CryptoTransferDetail>
+
+    <div class="col-12 btn-container">
+      <Button
+        class="w-50 p-button mt-5 btn-routing"
+        :label="t('newTransfer')"
+        @click="goToWithdrawIndex()"
+      />
+
+      <Button
+        class="w-50 p-button mt-5"
+        :label="t('downloadPdf')"
+        @click="makeTransaction()"
+        :loading="isGeneratingTransactionPDF"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -51,9 +104,10 @@ import { useRoute } from 'vue-router'
 import Button from 'primevue/button'
 import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { WithdrawService } from '../../services/withdraw'
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
+import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -61,6 +115,7 @@ const route = useRoute()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
 
 const submitting = ref(false)
+const isCompleted = ref(false);
 const props = defineProps<{
   formData: any
 }>()
@@ -71,6 +126,9 @@ const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 
 const emit = defineEmits(['complete'])
 
+onMounted(async () => {
+  console.log('internall step confirmation', props.formData)
+})
 function makeTransaction() {
   const withDrawService = WithdrawService.instance()
 
@@ -86,10 +144,9 @@ function makeTransaction() {
         })
         .then(() => {
           submitting.value = false
-
+          isCompleted.value = true;
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
-
-          emit('complete')
+          // emit('complete')
         })
         .catch(e => {
           submitting.value = false
@@ -127,5 +184,13 @@ function makeTransaction() {
 
 .green-color {
   color: var(--primary-color);
+}
+
+.btn-routing {
+  background-color: white;
+  color: black;
+  border: 1px solid #E7E6E7;
+  border-radius: 5px;
+  opacity: 1;
 }
 </style>
