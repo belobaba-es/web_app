@@ -405,4 +405,9 @@ const search = async () => {
     border-radius: 5px !important;
   }
 }
+.reference {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
