@@ -44,4 +44,16 @@ export interface Account {
       kycRequiredActions: { [key: string]: string }
     }[]
   }
+  feeWire?: FeeWireContent
+}
+
+export type FeeWireContent = {
+  domestic: {
+    in: number
+    out: number
+  }
+  international: {
+    in: number
+    out: number
+  }
 }

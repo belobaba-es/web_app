@@ -12,7 +12,9 @@
 
     <div class="col-12 field p-fluid">
       <div class="field col-12">
-        <label for="name1">{{ t('Amount') }}</label>
+        <!--        todo -->
+        <!--        <label for="name1">{{ t('Amount') }}</label>-->
+        <label for="name1">{{ t('total') }}</label>
         <p class="green-color">{{ formData.amountFee }} USD</p>
       </div>
 

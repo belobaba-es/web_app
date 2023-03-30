@@ -84,5 +84,13 @@ export const useUserStore = defineStore('user', () => {
     return JSON.parse(cryptoService.decrypt(storageUser))
   })
 
-  return { setUser, getUser, isAccountActive, swapModuleIsActive, getWarningKYC }
+  const getUserFeeWire = () => {
+    const storageUser = sessionStorage.getItem('user')
+
+    if (!storageUser) return
+
+    return JSON.parse(new CryptoService().decrypt(storageUser)).account.feeWire
+  }
+
+  return { setUser, getUser, isAccountActive, swapModuleIsActive, getWarningKYC, getUserFeeWire }
 })
