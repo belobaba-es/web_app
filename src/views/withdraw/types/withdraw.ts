@@ -4,6 +4,7 @@ export interface WithdrawForm {
   amount: string
   reference: string
   accountId: string
+  typeTransaction: string
   [key: string]: string
 }
 

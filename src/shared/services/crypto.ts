@@ -1,5 +1,5 @@
 // @ts-ignore
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js'
 
 export class CryptoService {
   private secret =

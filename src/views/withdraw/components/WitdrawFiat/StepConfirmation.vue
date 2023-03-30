@@ -192,6 +192,8 @@ function makeTransaction() {
 </script>
 
 <style scoped>
+.green-color {
+  color: var(--primary-color);
 .mt-5 {
   margin-top: 22px!important;
 }

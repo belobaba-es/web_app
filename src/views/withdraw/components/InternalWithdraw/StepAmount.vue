@@ -73,7 +73,7 @@
         />
       </div>
     </div>
-  
+
     <div class="col-6">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>

@@ -77,11 +77,10 @@ const onCreateAddress = (event: any) => {
   padding: 1rem;
   width: 100%;
   border-top: 1px solid var(--surface-border);
-    
+
   @media only screen and (max-width: 991px) {
-      position: fixed;
-      bottom: 4.50rem;
-     
+    position: fixed;
+    bottom: 4.5rem;
   }
 }
 

@@ -97,8 +97,8 @@ import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
-import {secondsToDate} from "../../shared/secondsToDate";
-import {iconAsset} from "../../shared/iconAsset";
+import { secondsToDate } from '../../shared/secondsToDate'
+import { iconAsset } from '../../shared/iconAsset'
 
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()

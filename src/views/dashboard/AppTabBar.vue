@@ -65,5 +65,5 @@ const onMenuItemClick = (event: any) => {
 .icon {
   height: 26px;
   padding: 1px;
-} 
+}
 </style>

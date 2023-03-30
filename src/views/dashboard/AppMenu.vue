@@ -1,26 +1,21 @@
 <template>
-	<div class="layout-menu-container">
-		<AppSubmenu 
-			:items="model" 
-			class="layout-menu" 
-			:root="true" 
-			@menuitem-click="onMenuItemClick" />
-	</div>
+  <div class="layout-menu-container">
+    <AppSubmenu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick" />
+  </div>
 </template>
 
 <script lang="ts" setup>
-import AppSubmenu from './AppSubmenu.vue';
-import { defineProps } from 'vue';
+import AppSubmenu from './AppSubmenu.vue'
+import { defineProps } from 'vue'
 
 defineProps<{
-	model: Array<any>,
+  model: Array<any>
 }>()
 
-const emit = defineEmits(['menuitem-click']);
-
+const emit = defineEmits(['menuitem-click'])
 
 const onMenuItemClick = (payload: any) => {
-	emit('menuitem-click', payload);
+  emit('menuitem-click', payload)
 }
 
 // const onKeyDown = (event: Event) =>{
@@ -30,6 +25,4 @@ const onMenuItemClick = (payload: any) => {
 // 		event.preventDefault();
 // 	}
 // }
-
-
 </script>

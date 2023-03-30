@@ -1,4 +1,4 @@
-import {Pagination} from '../../../shared/types/pagination'
+import { Pagination } from '../../../shared/types/pagination'
 
 export interface Asset {
   id: string

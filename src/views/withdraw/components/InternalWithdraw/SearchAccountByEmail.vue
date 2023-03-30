@@ -69,8 +69,7 @@ const onSearch = () => {
   border-bottom-left-radius: 0;
 }
 
-.full-width{
+.full-width {
   width: 100% !important;
 }
-
 </style>
