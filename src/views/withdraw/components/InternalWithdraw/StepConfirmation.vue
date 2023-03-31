@@ -106,6 +106,7 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
 import InternalFiatDetails from "../../../../components/InternalFiatDetails.vue";
 import {generateTransactionReceipt} from "../../../../shared/generatePdf";
+import logo from "../../../../assets/img/logo.png";
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -122,7 +123,6 @@ const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 const emit = defineEmits(['complete'])
 const router = useRouter();
-import logo from "../../../../assets/img/logo.png";
 
 
 const goToWithdrawIndex = () => {
@@ -191,7 +191,7 @@ function makeTransaction() {
 }
 
 const generatePDFTransactionReceipt = () => {
-  console.log('generatePDFTransactionReceipt')
+  console.log('internal withdraw generatePDFTransactionReceipt', props.formData)
   isGeneratingTransactionPDF.value = true
 
   const transactionPDF: any = {}

@@ -164,10 +164,9 @@ function makeTransaction() {
 }
 
 const generatePDFTransactionReceipt = () => {
-  console.log('generatePDFTransactionReceipt props.formData', props.formData)
+  console.log('withdraw fiat generatePDFTransactionReceipt props.formData', props.formData)
   isGeneratingTransactionPDF.value = true
   // todo
-  const isInternal = false
   const userAccountNumber = "45523452352345235"
 
   const transactionPDF: any = {}
@@ -180,13 +179,8 @@ const generatePDFTransactionReceipt = () => {
   const formattedDate = formatter.format(date);
 
   transactionPDF[t('datePicker')] = `${formattedDate}`
-  // internal
-  if (isInternal) {
-    transactionPDF[t('bankAccountHolder')] = `${props.formData.beneficiary.label}`
-  } else {
-    transactionPDF[t('senderAccount')] = `${userAccountNumber.substr(-4)}`
-    transactionPDF[t('receiverAccount')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
-  }
+  transactionPDF[t('senderAccount')] = `${userAccountNumber.substr(-4)}`
+  transactionPDF[t('receiverAccount')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
   transactionPDF[t('amount')] = `${props.formData.amount} USD`
   transactionPDF[t('transactionNumber')] = transactionId.value
 
