@@ -144,7 +144,7 @@ export const generateTransactionReceipt = (
     i = i + 0.1
   })
 
-  pdf.value.setFontSize(32)
+  pdf.value.setFontSize(13)
   pdf.value.setTextColor(0, 0, 0)
   pdf.value.text(footer, 15, 285)
 

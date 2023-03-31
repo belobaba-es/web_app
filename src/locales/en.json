@@ -244,5 +244,6 @@
   "hasReceived": "Has received",
   "transactionNumber": "Transaction number",
   "newTransfer": "New transfer",
-  "youSend": "You send"
+  "youSend": "You send",
+  "transactionReceipt": "Transaction receipt"
 }

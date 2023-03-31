@@ -86,7 +86,7 @@
       <Button
         class="w-50 p-button mt-5"
         :label="t('downloadPdf')"
-        @click="makeTransaction()"
+        @click="generatePDFTransactionReceipt()"
         :loading="isGeneratingTransactionPDF"
       />
     </div>
@@ -105,6 +105,7 @@ import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
 import InternalFiatDetails from "../../../../components/InternalFiatDetails.vue";
+import {generateTransactionReceipt} from "../../../../shared/generatePdf";
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -121,6 +122,7 @@ const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 const emit = defineEmits(['complete'])
 const router = useRouter();
+import logo from "../../../../assets/img/logo.png";
 
 
 const goToWithdrawIndex = () => {
@@ -187,6 +189,23 @@ function makeTransaction() {
       submitting.value = false
   }
 }
+
+const generatePDFTransactionReceipt = () => {
+  console.log('generatePDFTransactionReceipt')
+  isGeneratingTransactionPDF.value = true
+
+  const transactionPDF: any = {}
+  const title = t('transactionReceipt')
+  const footerPdf = t('footerPdfFiatData')
+  const fileName = `${t('transactionReceipt')}-${transactionId.value}`
+  transactionPDF[t('datePicker')] = `${new Date()}`
+  transactionPDF[t('assetType')] = props.formData.symbol
+  transactionPDF[t('amount')] = `${props.formData.total}`
+  transactionPDF[t('transactionNumber')] = transactionId.value
+
+  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  isGeneratingTransactionPDF.value = false;
+}
 </script>
 
 <style scoped>
@@ -198,6 +217,10 @@ function makeTransaction() {
   color: var(--primary-color);
 }
 
+.btn-container {
+  display: flex;
+  flex-direction: column;
+}
 
 .btn-routing {
   background-color: white;

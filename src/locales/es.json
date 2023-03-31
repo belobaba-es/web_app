@@ -235,5 +235,7 @@
   "hasReceived": "Ha recibido",
   "transactionNumber": "Número de transacción",
   "newTransfer": "Nueva transacción",
-  "youSend": "Enviaste"
+  "youSend": "Enviaste",
+  "amount": "Monto",
+  "transactionReceipt": "Comprobante de transacción"
 }
