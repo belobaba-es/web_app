@@ -191,7 +191,6 @@ function makeTransaction() {
 }
 
 const generatePDFTransactionReceipt = () => {
-  console.log('internal withdraw generatePDFTransactionReceipt', props.formData)
   isGeneratingTransactionPDF.value = true
 
   const transactionPDF: any = {}

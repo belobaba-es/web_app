@@ -153,7 +153,6 @@ async function makeTransaction() {
 }
 
 const generatePDFTransactionReceipt = () => {
-  console.log('other platforms generatePDFTransactionReceipt')
   isGeneratingTransactionPDF.value = true
 
   const transactionPDF: any = {}

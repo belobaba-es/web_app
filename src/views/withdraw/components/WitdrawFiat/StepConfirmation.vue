@@ -113,6 +113,9 @@ import {useToast} from "primevue/usetoast";
 import DomesticTransferDetail from "../../../../components/DomesticTransferDetail.vue";
 import {generateTransactionReceipt} from "../../../../shared/generatePdf";
 import logo from "../../../../assets/img/logo.png";
+import {useUserStore} from "../../../../stores/user";
+import {FiatService} from "../../../deposit/services/fiat";
+import {BankData} from "../../../deposit/types/fiat.interface";
 
 const toast = useToast()
 const {updateBlockedBalanceWalletByCode} = useBalanceWallet()
@@ -123,9 +126,11 @@ const transactionId = ref('');
 const {t} = useI18n({useScope: 'global'})
 const route = useRoute();
 const router = useRouter();
+const userStore = useUserStore()
 const props = defineProps<{
   formData: any
 }>()
+const fiatService = FiatService.instance()
 
 onMounted(async () => {
 })
@@ -163,11 +168,27 @@ function makeTransaction() {
   })
 }
 
-const generatePDFTransactionReceipt = () => {
-  console.log('withdraw fiat generatePDFTransactionReceipt props.formData', props.formData)
+const generatePDFTransactionReceipt = async() => {
   isGeneratingTransactionPDF.value = true
-  // todo
-  const userAccountNumber = "45523452352345235"
+  let userAccountNumber = ""
+
+  await fiatService
+      .bankData(userStore.getUser.accountId)
+      .then((data: BankData[]) => {
+        console.log('data', data)
+        if (props.formData.typeTransaction === 'domestic' && data[0].typeBankingData === "DOMESTIC") {
+          userAccountNumber = data[0].accountNumber
+        } else {
+          userAccountNumber = data[1].accountNumber
+        }
+
+        submitting.value = false
+        isGeneratingTransactionPDF.value = false
+      })
+      .catch(() => {
+        submitting.value = false
+        isGeneratingTransactionPDF.value = false
+      })
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
