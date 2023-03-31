@@ -110,9 +110,10 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
-const transactionId = ref(null);
+const transactionId = ref('');
 const submitting = ref(false)
 const isCompleted = ref(false);
+const isGeneratingTransactionPDF = ref(false);
 const props = defineProps<{
   formData: any
 }>()

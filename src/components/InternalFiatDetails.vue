@@ -65,6 +65,12 @@ const props = defineProps({
   transactionId: {
     type: String,
     required: true
+  },
+  assetCode: {
+    type: String,
+  },
+  amount: {
+    type: String,
   }
 })
 const { t } = useI18n({ useScope: 'global' })

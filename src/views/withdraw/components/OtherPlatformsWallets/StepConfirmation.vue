@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import Button from 'primevue/button'
 import { WithdrawService } from '../../services/withdraw'
 import {onMounted, ref} from 'vue'
@@ -98,6 +98,7 @@ import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vu
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
+const router = useRouter()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
 const submitting = ref(false)
 const props = defineProps<{
@@ -107,8 +108,12 @@ const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary
 const emit = defineEmits(['complete'])
 const isCompleted = ref(false);
-const transactionId = ref(null);
+const isGeneratingTransactionPDF = ref(false);
+const transactionId = ref('');
 
+const goToWithdrawIndex = () => {
+  router.push(`/withdraw`)
+}
 
 async function makeTransaction() {
   const withDrawService = WithdrawService.instance()
