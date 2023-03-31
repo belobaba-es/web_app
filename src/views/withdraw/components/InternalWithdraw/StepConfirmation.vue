@@ -198,7 +198,12 @@ const generatePDFTransactionReceipt = () => {
   const title = t('transactionReceipt')
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transactionId.value}`
-  transactionPDF[t('datePicker')] = `${new Date()}`
+
+  const date = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const formattedDate = formatter.format(date);
+
+  transactionPDF[t('datePicker')] = `${formattedDate}`
   transactionPDF[t('assetType')] = props.formData.symbol
   transactionPDF[t('amount')] = `${props.formData.total}`
   transactionPDF[t('transactionNumber')] = transactionId.value

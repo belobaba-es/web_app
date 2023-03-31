@@ -237,5 +237,7 @@
   "newTransfer": "Nueva transacción",
   "youSend": "Enviaste",
   "amount": "Monto",
-  "transactionReceipt": "Comprobante de transacción"
+  "transactionReceipt": "Comprobante de transacción",
+  "receiverAccount": "Cuenta receptora",
+  "senderAccount": "Cuenta emisora"
 }

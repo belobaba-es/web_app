@@ -245,5 +245,7 @@
   "transactionNumber": "Transaction number",
   "newTransfer": "New transfer",
   "youSend": "You send",
-  "transactionReceipt": "Transaction receipt"
+  "transactionReceipt": "Transaction receipt",
+  "receiverAccount": "Receiver account",
+  "senderAccount": "Sender account"
 }

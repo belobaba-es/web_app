@@ -93,7 +93,7 @@
       <Button
         class="w-50 p-button mt-5"
         :label="t('downloadPdf')"
-        @click="makeTransaction()"
+        @click="generatePDFTransactionReceipt()"
         :loading="isGeneratingTransactionPDF"
       />
     </div>
@@ -111,6 +111,8 @@ import InternationalTransferDetail from "../../../../components/InternationalTra
 import {useBalanceWallet} from "../../../../composables/useBalanceWallet";
 import {useToast} from "primevue/usetoast";
 import DomesticTransferDetail from "../../../../components/DomesticTransferDetail.vue";
+import {generateTransactionReceipt} from "../../../../shared/generatePdf";
+import logo from "../../../../assets/img/logo.png";
 
 const toast = useToast()
 const {updateBlockedBalanceWalletByCode} = useBalanceWallet()
@@ -159,6 +161,37 @@ function makeTransaction() {
     })
 
   })
+}
+
+const generatePDFTransactionReceipt = () => {
+  console.log('generatePDFTransactionReceipt props.formData', props.formData)
+  isGeneratingTransactionPDF.value = true
+  // todo
+  const isInternal = false
+  const userAccountNumber = "45523452352345235"
+
+  const transactionPDF: any = {}
+  const title = t('transactionReceipt')
+  const footerPdf = t('footerPdfFiatData')
+  const fileName = `${t('transactionReceipt')}-${transactionId.value}`
+
+  const date = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const formattedDate = formatter.format(date);
+
+  transactionPDF[t('datePicker')] = `${formattedDate}`
+  // internal
+  if (isInternal) {
+    transactionPDF[t('bankAccountHolder')] = `${props.formData.beneficiary.label}`
+  } else {
+    transactionPDF[t('senderAccount')] = `${userAccountNumber.substr(-4)}`
+    transactionPDF[t('receiverAccount')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
+  }
+  transactionPDF[t('amount')] = `${props.formData.amount} USD`
+  transactionPDF[t('transactionNumber')] = transactionId.value
+
+  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  isGeneratingTransactionPDF.value = false;
 }
 </script>
 
