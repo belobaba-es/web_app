@@ -76,6 +76,7 @@ const nextPage = ref({
 
 onMounted(async () => {
   await getHistoric.historic(props.assetCode).then(data => {
+    console.log('data', data)
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
