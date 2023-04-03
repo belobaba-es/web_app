@@ -5,7 +5,8 @@
     <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
-          <div class="col-12">
+          <div class="col-12" @click="modal(true)">
+            adf
             <ItemTransactionDepositFiat :item="item" v-if="getTransactionType(item) === 'deposit-fiat'" />
 
             <ItemTransactionFiatInternal :item="item" v-if="getTransactionType(item) === 'internal-fiat'" />
@@ -38,12 +39,14 @@
       </div>
     </div>
   </div>
+
+  <ModalTransactionDetails v-model:display="displayNew">
+  </ModalTransactionDetails>
 </template>
 
 <script setup lang="ts">
 import ScrollPanel from 'primevue/scrollpanel'
 import { defineProps, onMounted, ref } from 'vue'
-
 import ItemTransactionDepositFiat from './ItemTransactionDepositFiat.vue'
 import ItemTransactionFiatInternal from './ItemTransactionFiatInternal.vue'
 import ItemTransactionFiatExternalDosmestic from './ItemTransactionFiatExternalDosmestic.vue'
@@ -51,32 +54,33 @@ import ItemTransactionFiatExternalInternational from './ItemTransactionFiatExter
 import ItemTransactionDepositAsset from './ItemTransactionDepositAsset.vue'
 import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
-
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
 
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
+import ModalTransactionDetails from "../../../components/ModalTransactionDetails.vue";
 
+const displayNew = ref(false)
 const { t } = useI18n({ useScope: 'global' })
-
 const props = defineProps<{
   assetCode: string | undefined
 }>()
-
 const getHistoric = HistoricService.instance()
 const listTransaction = ref<LisTransaction[]>([])
 const submitting = ref(false)
-
 const nextPage = ref({
   nextPage: false,
   data: '',
 })
+const showModal = ref(false)
+const modal = (b: boolean) => {
+  showModal.value = b
+}
 
 onMounted(async () => {
   await getHistoric.historic(props.assetCode).then(data => {
-    console.log('data', data)
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
@@ -88,6 +92,7 @@ onMounted(async () => {
 })
 
 const getTransactionType = (transactionData: any) => {
+  console.log('==== getTransactionType', transactionData)
   if (transactionData.assetCode === 'USD' && transactionData.transactionType === 'deposit') {
     return 'deposit-fiat'
   }

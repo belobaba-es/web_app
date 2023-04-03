@@ -1,7 +1,6 @@
 <template>
   <Dialog
     :visible="display"
-    @update:visible="emit('update:display', $event)"
     :modal="true"
     closeIcon="pi pi-times-circle"
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
@@ -27,7 +26,12 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, ref } from 'vue'
+import Dialog from 'primevue/dialog'
 
+defineProps<{
+  display: boolean
+}>()
 </script>
 
 <style lang="css"></style>
