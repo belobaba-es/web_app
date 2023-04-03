@@ -239,5 +239,8 @@
   "amount": "Monto",
   "transactionReceipt": "Comprobante de transacción",
   "receiverAccount": "Cuenta receptora",
-  "senderAccount": "Cuenta emisora"
+  "senderAccount": "Cuenta emisora",
+  "senderAccountId": "Id de la cuenta emisora",
+  "beneficiaryName": "Nombre del beneficiario",
+  "userName": "Nombre del emisor"
 }

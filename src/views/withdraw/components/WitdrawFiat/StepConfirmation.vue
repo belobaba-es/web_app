@@ -115,7 +115,7 @@ import {generateTransactionReceipt} from "../../../../shared/generatePdf";
 import logo from "../../../../assets/img/logo.png";
 import {useUserStore} from "../../../../stores/user";
 import {FiatService} from "../../../deposit/services/fiat";
-import {BankData} from "../../../deposit/types/fiat.interface";
+import transformCharactersIntoAsterics from "../../../../shared/transformCharactersIntoAsterics";
 
 const toast = useToast()
 const {updateBlockedBalanceWalletByCode} = useBalanceWallet()
@@ -127,6 +127,9 @@ const {t} = useI18n({useScope: 'global'})
 const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore()
+const username = userStore.getUser.firstName
+    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+    : userStore.getUser.name
 const props = defineProps<{
   formData: any
 }>()
@@ -170,25 +173,9 @@ function makeTransaction() {
 
 const generatePDFTransactionReceipt = async() => {
   isGeneratingTransactionPDF.value = true
-  let userAccountNumber = ""
+  const user = userStore.getUser
+  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
 
-  await fiatService
-      .bankData(userStore.getUser.accountId)
-      .then((data: BankData[]) => {
-        console.log('data', data)
-        if (props.formData.typeTransaction === 'domestic' && data[0].typeBankingData === "DOMESTIC") {
-          userAccountNumber = data[0].accountNumber
-        } else {
-          userAccountNumber = data[1].accountNumber
-        }
-
-        submitting.value = false
-        isGeneratingTransactionPDF.value = false
-      })
-      .catch(() => {
-        submitting.value = false
-        isGeneratingTransactionPDF.value = false
-      })
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
@@ -199,11 +186,14 @@ const generatePDFTransactionReceipt = async() => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const formattedDate = formatter.format(date);
 
-  transactionPDF[t('datePicker')] = `${formattedDate}`
-  transactionPDF[t('senderAccount')] = `${userAccountNumber.substr(-4)}`
-  transactionPDF[t('receiverAccount')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
+  transactionPDF[t('userName')] = `${username}`
+  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
   transactionPDF[t('amount')] = `${props.formData.amount} USD`
   transactionPDF[t('transactionNumber')] = transactionId.value
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.realName}`
+  transactionPDF[t('reference')] = `${props.formData.reference}`
+  transactionPDF[t('datePicker')] = `${formattedDate}`
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false;
@@ -217,10 +207,6 @@ const generatePDFTransactionReceipt = async() => {
 
 .mt-5 {
   margin-top: 22px!important;
-}
-
-.mt-10 {
-  margin-top: 42px;
 }
 
 .btn-container {

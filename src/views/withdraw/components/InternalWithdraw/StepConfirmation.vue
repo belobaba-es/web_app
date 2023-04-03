@@ -100,13 +100,15 @@ import {useRoute, useRouter} from 'vue-router'
 import Button from 'primevue/button'
 import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { WithdrawService } from '../../services/withdraw'
-import {onMounted, ref} from 'vue'
+import {ref} from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
 import InternalFiatDetails from "../../../../components/InternalFiatDetails.vue";
 import {generateTransactionReceipt} from "../../../../shared/generatePdf";
 import logo from "../../../../assets/img/logo.png";
+import transformCharactersIntoAsterics from "../../../../shared/transformCharactersIntoAsterics";
+import {useUserStore} from "../../../../stores/user";
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -123,7 +125,10 @@ const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary as BeneficiaryInternal
 const emit = defineEmits(['complete'])
 const router = useRouter();
-
+const userStore = useUserStore()
+const username = userStore.getUser.firstName
+    ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+    : userStore.getUser.name
 
 const goToWithdrawIndex = () => {
   router.push(`/withdraw`)
@@ -192,6 +197,8 @@ function makeTransaction() {
 
 const generatePDFTransactionReceipt = () => {
   isGeneratingTransactionPDF.value = true
+  const user = userStore.getUser
+  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
@@ -202,10 +209,14 @@ const generatePDFTransactionReceipt = () => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const formattedDate = formatter.format(date);
 
-  transactionPDF[t('datePicker')] = `${formattedDate}`
+  transactionPDF[t('userName')] = `${username}`
+  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.label}`
   transactionPDF[t('assetType')] = props.formData.symbol
   transactionPDF[t('amount')] = `${props.formData.total}`
   transactionPDF[t('transactionNumber')] = transactionId.value
+  transactionPDF[t('reference')] = `${props.formData.reference}`
+  transactionPDF[t('datePicker')] = `${formattedDate}`
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false;
