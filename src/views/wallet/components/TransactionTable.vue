@@ -121,7 +121,7 @@ const getTransactionType = (transactionData: any) => {
     return 'deposit-fiat'
   }
 
-  if (transactionData.assetCode === 'USD' && transactionData.isInternal === true) {
+  if (transactionData.assetCode === 'USD' && transactionData.isInternal) {
     return 'internal-fiat'
   }
 
@@ -177,29 +177,24 @@ const openModalTransactionDetails = (event: any, tx: any) => {
   console.log('openModalTransactionDetails', tx)
   const txType = getTransactionType(tx)
   console.log('txType', txType)
-  setTimeout(()=>{
-    displayModalTransactionDetail.value = true;
-  }, 3000)
-  setTimeout(()=> {
-    console.log(' -- deativating')
-    isLoadingTransactionDetails.value = false
 
-  //
-   loadTransactionDetail(tx, getTransactionType(tx))
-  //
-  }, 3000)
+  if (tx.status === "in_process") {
+    console.log('-- avoid loading more info ---')
+    displayModalTransactionDetail.value = true;
+    isLoadingTransactionDetails.value = false
+    return
+  }
+
+  loadTransactionDetail(tx, getTransactionType(tx))
 }
 
-const loadTransactionDetail = (transaction:any, type: string | undefined) => {
+const loadTransactionDetail = async(transaction:any, type: string | undefined) => {
   console.log('------------ loadTransactionDetail', type, transaction)
-  console.log('------------ loadTransactionDetail', type, transaction.assetCode)
-  if (transaction.isInternal) {
-
-  }
-
-  if (!transaction.isInternal) {
-    // transactionData.to.typeBeneficiaryBankWithdrawal
-  }
+  await getHistoric.findTransactionByTransactionId(transaction.transactionId, transaction.isInternal).then(data => {
+    console.log('-- loadTransactionDetail data', data)
+    displayModalTransactionDetail.value = true;
+    isLoadingTransactionDetails.value = false
+  })
 }
 </script>
 <style lang="css" scoped>
