@@ -191,6 +191,7 @@ const nextPage = () => {
   const formData = {
     ...props.formData.value,
     amount: amount.value,
+    amountFee: amount.value + fee.value,
     fee: fee.value,
     reference: reference.value,
     asset: asset.value,

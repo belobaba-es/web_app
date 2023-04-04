@@ -105,3 +105,52 @@ export const generatePDFTable = (
 
   pdf.value.save(`${nameFile}.pdf`)
 }
+
+export const generateTransactionReceipt = (
+  nameFile: string,
+  logo: string,
+  title: string,
+  data: any,
+  footer: string
+) => {
+  const pdf = ref(new jsPDF())
+  pdf.value.addImage(logo, 'PNG', 85, 10, 40, 20)
+  pdf.value.setFontSize(28)
+  pdf.value.text(title, 65, 45)
+
+  let i = 1
+  let index = 0
+
+  const keys = Object.keys(data)
+
+  keys.forEach(element => {
+    index++
+
+    const backgroundRowHeigthPosition = 60 * i + 2.7
+    const textHeigthPosition = backgroundRowHeigthPosition + 9
+
+    pdf.value.setFillColor(
+      getRowALternateBackgroundColor(index)[0],
+      getRowALternateBackgroundColor(index)[1],
+      getRowALternateBackgroundColor(index)[2]
+    )
+    pdf.value.rect(10, backgroundRowHeigthPosition, 190, 15, 'F')
+    pdf.value.setFontSize(16)
+    pdf.value.setTextColor(0, 0, 0)
+    pdf.value.text(element, 15, textHeigthPosition)
+    pdf.value.text(data[element], 100, textHeigthPosition)
+
+    i = i + 0.17
+    i = i + 0.1
+  })
+
+  pdf.value.setFontSize(13)
+  pdf.value.setTextColor(0, 0, 0)
+  pdf.value.text(footer, 15, 285)
+
+  pdf.value.save(`${nameFile}.pdf`)
+}
+
+const getRowALternateBackgroundColor = (i: number) => {
+  return i % 2 !== 0 ? [200, 200, 200] : [240, 240, 240]
+}
