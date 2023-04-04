@@ -2,30 +2,54 @@
   <div class="container-data mb-0 pb-0">
     <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
+    <ProgressSpinner v-if="isLoadingTransactionDetails" />
+
     <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12" @click="modal(true)">
-            adf
-            <ItemTransactionDepositFiat :item="item" v-if="getTransactionType(item) === 'deposit-fiat'" />
+            <ItemTransactionDepositFiat
+              @click="openModalTransactionDetails($event, item)"
+              :item="item"
+              v-if="getTransactionType(item) === 'deposit-fiat'"
+            />
 
-            <ItemTransactionFiatInternal :item="item" v-if="getTransactionType(item) === 'internal-fiat'" />
+            <ItemTransactionFiatInternal
+              :loading="isLoadingTransactionDetails"
+              @click="openModalTransactionDetails($event, item)"
+              :item="item"
+              v-if="getTransactionType(item) === 'internal-fiat'"
+            />
 
             <ItemTransactionFiatExternalDosmestic
+              @click="openModalTransactionDetails($event, item)"
               :item="item"
               v-if="getTransactionType(item) === 'external-fiat-domestic'"
             />
 
             <ItemTransactionFiatExternalInternational
+              @click="openModalTransactionDetails($event, item)"
               :item="item"
               v-if="getTransactionType(item) === 'external-fiat-international'"
             />
 
-            <ItemTransactionDepositAsset :item="item" v-if="getTransactionType(item) === 'deposit-asset'" />
+            <ItemTransactionDepositAsset
+              @click="openModalTransactionDetails($event, item)"
+              :item="item"
+              v-if="getTransactionType(item) === 'deposit-asset'"
+            />
 
-            <ItemTransactionAssetInternal :item="item" v-if="getTransactionType(item) === 'internal-asset'" />
+            <ItemTransactionAssetInternal
+              @click="openModalTransactionDetails($event, item)"
+              :item="item"
+              v-if="getTransactionType(item) === 'internal-asset'"
+            />
 
-            <ItemTransactionAssetExternal :item="item" v-if="getTransactionType(item) === 'external-asset'" />
+            <ItemTransactionAssetExternal
+              @click="openModalTransactionDetails($event, item)"
+              :item="item"
+              v-if="getTransactionType(item) === 'external-asset'"
+            />
           </div>
         </div>
       </div>
@@ -40,8 +64,7 @@
     </div>
   </div>
 
-  <ModalTransactionDetails v-model:display="displayNew">
-  </ModalTransactionDetails>
+  <ModalTransactionDetails v-model:display="displayModalTransactionDetail"> </ModalTransactionDetails>
 </template>
 
 <script setup lang="ts">
@@ -56,13 +79,15 @@ import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
-
+import ProgressSpinner from 'primevue/progressspinner';
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import ModalTransactionDetails from "../../../components/ModalTransactionDetails.vue";
+import ModalTransactionDetails from '../../../components/ModalTransactionDetails.vue'
 
-const displayNew = ref(false)
+const emit = defineEmits(['modal-transaction-detail-load-data'])
+const displayModalTransactionDetail = ref(false)
+const isLoadingTransactionDetails = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   assetCode: string | undefined
@@ -92,7 +117,6 @@ onMounted(async () => {
 })
 
 const getTransactionType = (transactionData: any) => {
-  console.log('==== getTransactionType', transactionData)
   if (transactionData.assetCode === 'USD' && transactionData.transactionType === 'deposit') {
     return 'deposit-fiat'
   }
@@ -146,9 +170,44 @@ const loadMoreItems = async () => {
       nextPage.value.nextPage = true
     }
   })
+
+}
+const openModalTransactionDetails = (event: any, tx: any) => {
+  isLoadingTransactionDetails.value = true;
+  console.log('openModalTransactionDetails', tx)
+  const txType = getTransactionType(tx)
+  console.log('txType', txType)
+  setTimeout(()=>{
+    displayModalTransactionDetail.value = true;
+  }, 3000)
+  setTimeout(()=> {
+    console.log(' -- deativating')
+    isLoadingTransactionDetails.value = false
+
+  //
+   loadTransactionDetail(tx, getTransactionType(tx))
+  //
+  }, 3000)
+}
+
+const loadTransactionDetail = (transaction:any, type: string | undefined) => {
+  console.log('------------ loadTransactionDetail', type, transaction)
+  console.log('------------ loadTransactionDetail', type, transaction.assetCode)
+  if (transaction.isInternal) {
+
+  }
+
+  if (!transaction.isInternal) {
+    // transactionData.to.typeBeneficiaryBankWithdrawal
+  }
 }
 </script>
 <style lang="css" scoped>
+.p-progress-spinner {
+  position: fixed;
+  margin-left: 33%;
+  z-index: 999;
+}
 .load-more-btn {
   width: 100% !important;
 }
