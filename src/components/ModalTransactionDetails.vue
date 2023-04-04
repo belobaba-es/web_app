@@ -8,53 +8,50 @@
     :style="{ width: '35vw' }"
   >
     <template #header> </template>
-<!--    <div class="formgrid grid mt-3">-->
-<!--      <div class="col-12">-->
-<!--        <span class="text-xl txt-border-bottom mb-2">Some span</span>-->
-<!--      </div>-->
-<!--      <div class="field col-12 mt-4"></div>-->
-<!--      <div class="field col-12" style="display: grid">-->
-<!--        <label for="name">Some info</label>-->
-<!--      </div>-->
-<!--    </div>-->
 
     <div class="col-12 content">
-      <div class="col-6">
-        <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
-        <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
-      </div>
+      <div class="inner-row-flex">
+        <div class="col-6">
+          <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
+          <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('accountNumber') }}</p>
+        </div>
 
-      <div class="col-6">
-        <p>name</p>
-        <p>amount</p>
-      </div>
-
-      <Divider type="dashed"></Divider>
-
-      <div class="col-6">
-        <p class="font-medium text-sm">1</p>
-        <p class="font-medium text-sm">2</p>
-        <p class="font-medium text-sm">3</p>
-      </div>
-
-      <div class="col-6">
-        <p>asdf}</p>
-        <p>qwer}</p>
-        <p>zxcv</p>
+        <div class="col-6 pt-1">
+          <p>{{ props.transaction.nameTo }}</p>
+          <p v-if="props.transaction.assetCode === 'USD'"></p>
+        </div>
       </div>
 
       <Divider type="dashed"></Divider>
 
-      <div class="col-6">
-        <p class="font-medium text-sm">number</p>
+      <div class="inner-row-flex">
+        <div class="col-6">
+          <p class="font-medium text-sm">{{ t('amount') }}</p>
+          <p v-if="!props.transaction.isInternal" class="font-medium text-sm">{{ t('ourFee') }}</p>
+          <p class="font-medium text-sm"></p>
+        </div>
+
+        <div class="col-6 pt-1">
+          <p>{{ props.transaction.amount }} {{ props.transaction.assetCode }}</p>
+          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>
+          <p></p>
+        </div>
       </div>
 
-      <div class="col-6">
-        <p>asdf-2345234-sadfa-23c2-234c234</p>
+      <Divider type="dashed"></Divider>
+
+      <div class="inner-row-flex">
+        <div class="col-6">
+          <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>
+          <p class="font-medium text-sm">{{ t('datePicker') }}</p>
+        </div>
+
+        <div class="col-6 pt-1">
+          <p>{{ transaction.id }}</p>
+          <p>{{ transaction.formatedDate }}</p>
+        </div>
       </div>
     </div>
-
-<!--    -->
 
     <template #footer>
       <div class="col-12 btn-container">
@@ -63,7 +60,8 @@
           :label="'PDF'"
           @click="generatePDFTransactionReceipt()"
           :loading="isGeneratingTransactionPDF"
-          icon="pi pi-angle-right"
+          icon="pi pi-file-pdf"
+          iconPos="right"
         />
       </div>
     </template>
@@ -75,17 +73,49 @@ import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import Divider from 'primevue/divider';
+import Divider from 'primevue/divider'
+import transformCharactersIntoAsterics from '../shared/transformCharactersIntoAsterics'
+import { generateTransactionReceipt } from '../shared/generatePdf'
+import logo from '../assets/img/logo.png'
+import { useUserStore } from '../stores/user'
 
+const userStore = useUserStore()
+const username = userStore.getUser.firstName
+  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
+  : userStore.getUser.name
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
-defineProps<{
+const props = defineProps<{
   display: boolean
+  transaction: {
+    type: Object
+  }
 }>()
 const isGeneratingTransactionPDF = ref(false)
 
 const generatePDFTransactionReceipt = () => {
-  console.log('downloadPDF')
+  const transaction: any = props.transaction
+
+  isGeneratingTransactionPDF.value = true
+  const user = userStore.getUser
+  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+
+  const transactionPDF: any = {}
+  const title = t('transactionReceipt')
+  const footerPdf = t('footerPdfFiatData')
+  const fileName = `${t('transactionReceipt')}-${transaction.id}`
+
+  transactionPDF[t('userName')] = `${username}`
+  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
+  transactionPDF[t('beneficiaryName')] = `${transaction.beneficiary?.name ?? transaction.nameTo}`
+  transactionPDF[t('assetType')] = transaction.assetCode
+  transactionPDF[t('amount')] = `${transaction.amount}`
+  transactionPDF[t('transactionNumber')] = transaction.id
+  transactionPDF[t('reference')] = `${transaction.reference}`
+  transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
+
+  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  isGeneratingTransactionPDF.value = false
 }
 </script>
 
@@ -93,10 +123,30 @@ const generatePDFTransactionReceipt = () => {
 .content {
   display: contents;
 }
+.inner-row-flex {
+  display: flex;
+  padding: 0;
+}
 .green-color {
   color: var(--primary-color);
 }
 .p-divider-dashed.p-divider-horizontal:before {
   border-color: var(--primary-color);
+}
+
+.content {
+  display: contents;
+}
+
+.green-color {
+  color: var(--primary-color);
+}
+
+.p-divider-dashed.p-divider-horizontal:before {
+  border-color: var(--primary-color);
+}
+
+.pt-1 {
+  padding-top: 1%;
 }
 </style>

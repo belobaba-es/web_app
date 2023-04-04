@@ -64,7 +64,10 @@
     </div>
   </div>
 
-  <ModalTransactionDetails v-model:display="displayModalTransactionDetail"> </ModalTransactionDetails>
+  <ModalTransactionDetails
+    v-model:display="displayModalTransactionDetail"
+    :transaction="modalTransactionDetail"
+  ></ModalTransactionDetails>
 </template>
 
 <script setup lang="ts">
@@ -79,7 +82,7 @@ import ItemTransactionAssetInternal from './ItemTransactionAssetInternal.vue'
 import ItemTransactionAssetExternal from './ItemTransactionAssetExternal.vue'
 import { HistoricService } from '../services/historic'
 import { LisTransaction } from '../types/historic-transactions-response.interface'
-import ProgressSpinner from 'primevue/progressspinner';
+import ProgressSpinner from 'primevue/progressspinner'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
@@ -88,6 +91,7 @@ import ModalTransactionDetails from '../../../components/ModalTransactionDetails
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
+const modalTransactionDetail = ref({})
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   assetCode: string | undefined
@@ -170,31 +174,35 @@ const loadMoreItems = async () => {
       nextPage.value.nextPage = true
     }
   })
-
 }
-const openModalTransactionDetails = (event: any, tx: any) => {
-  isLoadingTransactionDetails.value = true;
-  console.log('openModalTransactionDetails', tx)
-  const txType = getTransactionType(tx)
-  console.log('txType', txType)
+const openModalTransactionDetails = (event: any, transaction: any) => {
+  isLoadingTransactionDetails.value = true
 
-  if (tx.status === "in_process") {
-    console.log('-- avoid loading more info ---')
-    displayModalTransactionDetail.value = true;
+  transaction.specificType = getTransactionType(transaction)
+
+  const txDate = new Date(transaction.createdAt._seconds * 1000)
+  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  transaction.formatedDate = formatter.format(txDate)
+
+  modalTransactionDetail.value = transaction
+
+  if (transaction.status === 'in_process') {
+    displayModalTransactionDetail.value = true
     isLoadingTransactionDetails.value = false
     return
   }
 
-  loadTransactionDetail(tx, getTransactionType(tx))
+  loadTransactionDetail(transaction)
 }
 
-const loadTransactionDetail = async(transaction:any, type: string | undefined) => {
-  console.log('------------ loadTransactionDetail', type, transaction)
-  await getHistoric.findTransactionByTransactionId(transaction.transactionId, transaction.isInternal).then(data => {
-    console.log('-- loadTransactionDetail data', data)
-    displayModalTransactionDetail.value = true;
-    isLoadingTransactionDetails.value = false
-  })
+const loadTransactionDetail = async (transaction: any) => {
+  await getHistoric
+    .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+    .then(data => {
+      displayModalTransactionDetail.value = true
+      isLoadingTransactionDetails.value = false
+      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as Object) }
+    })
 }
 </script>
 <style lang="css" scoped>

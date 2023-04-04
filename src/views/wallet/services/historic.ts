@@ -19,8 +19,8 @@ export class HistoricService extends HttpService {
     return this._instance
   }
 
-  async findTransactionByTransactionId(transactionId: string, isInternal: boolean) {
-    return await this.get(`transaction/${transactionId}/${isInternal}`, {}, true)
+  async findTransactionByTransactionId(transactionId: string, isInternal: boolean, assetCode: any) {
+    return await this.get(`transaction/${transactionId}/${isInternal}/${assetCode}`, {}, true)
   }
 
   async historic(assetCode: any) {
