@@ -119,6 +119,7 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
+  console.log('userStore.getUserFeeWire()', userStore.getUserFeeWire())
   fee.value =
     typeTransaction.value === 'domestic'
       ? userStore.getUserFeeWire()?.domestic.out
@@ -179,7 +180,7 @@ const nextPage = () => {
     amount: amount.value,
     fee: fee.value,
     reference: reference.value,
-    amountFee: amountFee,
+    amountFee: amountFee.value,
   }
   emit('nextPage', {
     pageIndex: page,
