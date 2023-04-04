@@ -240,7 +240,7 @@
   "transactionReceipt": "Comprobante de transacción",
   "receiverAccount": "Cuenta receptora",
   "senderAccount": "Cuenta emisora",
-  "senderAccountId": "Id de la cuenta emisora",
+  "senderAccountId": "Cuenta emisora",
   "beneficiaryName": "Nombre del beneficiario",
   "userName": "Nombre del emisor"
 }

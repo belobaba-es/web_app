@@ -248,7 +248,7 @@
   "transactionReceipt": "Transaction receipt",
   "receiverAccount": "Receiver account",
   "senderAccount": "Sender account",
-  "senderAccountId": "Sender account id",
+  "senderAccountId": "Sender account",
   "beneficiaryName": "Beneficiary name",
   "userName": "Sender name"
 }
