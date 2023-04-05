@@ -106,8 +106,8 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import CryptoTransferDetail from "../../../../components/CryptoTransferDetail.vue";
 import InternalFiatDetails from "../../../../components/InternalFiatDetails.vue";
 import {generateTransactionReceipt} from "../../../../shared/generatePdf";
+import transformCharactersIntoAsterics from "../../../../shared/transformCharactersIntoAsterics"
 import logo from "../../../../assets/img/logo.png";
-import transformCharactersIntoAsterics from "../../../../shared/transformCharactersIntoAsterics";
 import {useUserStore} from "../../../../stores/user";
 
 const toast = useToast()
