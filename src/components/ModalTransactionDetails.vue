@@ -79,6 +79,18 @@ import { generateTransactionReceipt } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
 import { useUserStore } from '../stores/user'
 
+export interface TransactionModalPayload {
+  id?: any;
+  formatedDate?: any;
+  feeWire?: any;
+  isInternal?: any;
+  amount?: any;
+  assetCode? : string;
+  nameTo? : any;
+  reference? : any;
+  beneficiary? : any;
+}
+
 const userStore = useUserStore()
 const username = userStore.getUser.firstName
   ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
@@ -88,7 +100,7 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
   transaction: {
-    type: Object
+    type: TransactionModalPayload
   }
 }>()
 const isGeneratingTransactionPDF = ref(false)

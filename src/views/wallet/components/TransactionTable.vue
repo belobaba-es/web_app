@@ -86,12 +86,12 @@ import ProgressSpinner from 'primevue/progressspinner'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import ModalTransactionDetails from '../../../components/ModalTransactionDetails.vue'
+import ModalTransactionDetails, {TransactionModalPayload} from '../../../components/ModalTransactionDetails.vue'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
-const modalTransactionDetail = ref({})
+const modalTransactionDetail: any = ref({})
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   assetCode: string | undefined
@@ -201,7 +201,7 @@ const loadTransactionDetail = async (transaction: any) => {
     .then(data => {
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as Object) }
+      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload) } as TransactionModalPayload
     })
 }
 </script>
