@@ -83,7 +83,7 @@ export interface TransactionModalPayload {
   id?: any;
   formatedDate?: any;
   feeWire?: any;
-  isInternal?: any;
+  isInternal?: boolean;
   amount?: any;
   assetCode? : string;
   nameTo? : any;
@@ -99,9 +99,7 @@ const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
-  transaction: {
-    type: TransactionModalPayload
-  }
+  transaction: TransactionModalPayload
 }>()
 const isGeneratingTransactionPDF = ref(false)
 
