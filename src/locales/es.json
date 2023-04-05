@@ -229,18 +229,5 @@
   "dropdownSelectProofOfAddress": "Seleccione el tipo de documento",
   "userDataSuccessSend": "Datos personales enviados correctamente",
   "companyIncorporationFile": "Documentos constitutivo de la empresa",
-  "endDateGreaterStartDate": "Fecha final debe ser mayor que fecha inicio",
-  "bankAccountHolder": "Beneficiario",
-  "ourFee": "Nuestra comisión",
-  "hasReceived": "Ha recibido",
-  "transactionNumber": "Número de transacción",
-  "newTransfer": "Nueva transacción",
-  "youSend": "Enviaste",
-  "amount": "Monto",
-  "transactionReceipt": "Comprobante de transacción",
-  "receiverAccount": "Cuenta receptora",
-  "senderAccount": "Cuenta emisora",
-  "senderAccountId": "Cuenta emisora",
-  "beneficiaryName": "Nombre del beneficiario",
-  "userName": "Nombre del emisor"
+  "endDateGreaterStartDate": "Fecha final debe ser mayor que fecha inicio"
 }
