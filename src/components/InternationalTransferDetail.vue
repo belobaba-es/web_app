@@ -13,7 +13,7 @@
     <Divider type="dashed"></Divider>
 
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('youSend') }}</p>
+      <p class="font-medium text-sm">{{ t('amount') }}</p>
       <p class="font-medium text-sm">{{ t('ourFee') }}</p>
       <p class="font-medium text-sm">{{ props.realName }} {{ t('hasReceived') }}</p>
     </div>

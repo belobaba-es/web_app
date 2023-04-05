@@ -135,8 +135,6 @@ const goToWithdrawIndex = () => {
 }
 function makeTransaction() {
   const withDrawService = WithdrawService.instance()
-  console.log('-- route.params.type',route.params.type)
-  console.log('-- props.formData.assetCode', props.formData.assetCode)
 
   submitting.value = true
 

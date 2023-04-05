@@ -68,7 +68,7 @@
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
       :transactionId="transactionId"
-      :assetCode="props.formData.assetCode"
+      :assetCode="props.formData.assetCode ?? 'USD'"
     ></InternationalTransferDetail>
 
     <DomesticTransferDetail
@@ -80,7 +80,7 @@
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
       :transactionId="transactionId"
-      :assetCode="props.formData.assetCode"
+      :assetCode="props.formData.assetCode ?? 'USD'"
     ></DomesticTransferDetail>
 
     <div class="col-12 btn-container">

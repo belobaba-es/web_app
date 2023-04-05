@@ -13,7 +13,7 @@
     <Divider type="dashed"></Divider>
 
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('youSend') }}</p>
+      <p class="font-medium text-sm">{{ t('amount') }}</p>
       <p class="font-medium text-sm">{{ t('ourFee') }}</p>
       <p class="font-medium text-sm">{{ props.realName }} {{ t('hasReceived') }}</p>
     </div>
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import {defineProps, onMounted} from 'vue';
+import {defineProps} from 'vue';
 import Divider from 'primevue/divider';
 
 const props = defineProps({

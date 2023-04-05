@@ -119,7 +119,6 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
-  console.log('userStore.getUserFeeWire()', userStore.getUserFeeWire())
   fee.value =
     typeTransaction.value === 'domestic'
       ? userStore.getUserFeeWire()?.domestic.out
