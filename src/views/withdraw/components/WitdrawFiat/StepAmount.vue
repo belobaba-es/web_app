@@ -31,9 +31,10 @@
 
     <div class="grid col-12 flex w-full">
       <div class="flex w-full">
-        <InputText
+        <InputNumber
           id="amount"
           type="number"
+          :minFractionDigits="2" :maxFractionDigits="2"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
           :placeholder="t('amount')"
@@ -80,6 +81,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -97,7 +99,7 @@ const props = defineProps<{
   formData: any
 }>()
 const emit = defineEmits(['nextPage'])
-const amount = ref('')
+const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
@@ -119,14 +121,13 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
-  console.log('userStore.getUserFeeWire()', userStore.getUserFeeWire())
   fee.value =
     typeTransaction.value === 'domestic'
       ? userStore.getUserFeeWire()?.domestic.out
       : userStore.getUserFeeWire()?.international.out
 }
 const amountFee = computed(() => {
-  const total = isNaN(parseFloat(amount.value) + fee.value) ? 0 : parseFloat(amount.value) + fee.value
+  const total = isNaN(amount.value + fee.value) ? 0 : amount.value + fee.value
   if (total > balance.value) {
     toast.add({
       severity: 'warn',
@@ -135,7 +136,7 @@ const amountFee = computed(() => {
       life: 4000,
     })
 
-    amount.value = '0'
+    amount.value = 0
 
     return 0
   }
@@ -144,7 +145,7 @@ const amountFee = computed(() => {
 })
 
 const validateField = (): boolean => {
-  if (amount.value.trim().length === 0) {
+  if (amount.value == 0) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',
@@ -180,7 +181,7 @@ const nextPage = () => {
     amount: amount.value,
     fee: fee.value,
     reference: reference.value,
-    amountFee: amountFee.value,
+    amountFee: amountFee,
   }
   emit('nextPage', {
     pageIndex: page,

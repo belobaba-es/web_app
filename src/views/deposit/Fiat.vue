@@ -170,7 +170,6 @@ onMounted(async () => {
       bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
 
       bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
-      bankInternationalPdf[t('routingNumber') + ':'] = bankInternational.value.routingNumber
       bankInternationalPdf[t('swiftCode') + ':'] = bankInternational.value.swiftCode
       bankInternationalPdf[t('creditTo') + ':'] = bankInternational.value.creditTo
       bankInternationalPdf[t('reference') + ':'] = bankInternational.value.reference
