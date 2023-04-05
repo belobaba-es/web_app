@@ -362,7 +362,7 @@ const search = async () => {
   await getTransactions(filters)
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .dropdown-full {
   width: 100% !important;
 }
