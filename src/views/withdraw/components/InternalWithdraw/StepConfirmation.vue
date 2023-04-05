@@ -12,7 +12,7 @@
     <div class="col-12 field p-fluid">
       <div class="field col-12">
         <label for="name1">{{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amount }}</p>
+        <p class="green-color">{{ formData.amount }} {{ formData.symbol }}</p>
       </div>
       <div class="field col-12">
         <small>{{ t('fee') }}</small>
@@ -61,7 +61,7 @@
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
       :transactionId="transactionId"
-      :assetCode="props.formData.assetCode"
+      :assetCode="props.formData.assetCode ?? 'USD'"
     ></InternalFiatDetails>
 
     <CryptoTransferDetail
@@ -135,6 +135,8 @@ const goToWithdrawIndex = () => {
 }
 function makeTransaction() {
   const withDrawService = WithdrawService.instance()
+  console.log('-- route.params.type',route.params.type)
+  console.log('-- props.formData.assetCode', props.formData.assetCode)
 
   submitting.value = true
 
