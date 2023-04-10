@@ -12,8 +12,10 @@
     <div class="col-12 content">
       <div class="inner-row-flex">
         <div class="col-6">
-          <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
+          <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
           <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('accountNumber') }}</p>
+
+          <p v-if="props.transaction.assetCode !== 'USD'" class="font-medium text-sm">{{ t('beneficiaryName') }}</p>
         </div>
 
         <div class="col-6 pt-1">

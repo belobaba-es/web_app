@@ -242,5 +242,6 @@
   "senderAccount": "Cuenta emisora",
   "senderAccountId": "Cuenta emisora",
   "beneficiaryName": "Nombre del beneficiario",
-  "userName": "Nombre del emisor"
+  "userName": "Nombre del emisor",
+  "viewDetails": "Ver detalles"
 }

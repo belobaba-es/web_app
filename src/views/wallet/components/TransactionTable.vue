@@ -2,7 +2,11 @@
   <div class="container-data mb-0 pb-0">
     <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
 
-    <ProgressSpinner v-if="isLoadingTransactionDetails" />
+    <ProgressSpinner
+      v-if="isLoadingTransactionDetails"
+     style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+     animationDuration=".5s" aria-label="Custom ProgressSpinner"
+    />
 
     <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
       <div class="grid">
@@ -177,7 +181,6 @@ const loadMoreItems = async () => {
 }
 const openModalTransactionDetails = (event: any, transaction: any) => {
   isLoadingTransactionDetails.value = true
-
   transaction.specificType = getTransactionType(transaction)
 
   const txDate = new Date(transaction.createdAt._seconds * 1000)
@@ -185,6 +188,7 @@ const openModalTransactionDetails = (event: any, transaction: any) => {
   transaction.formatedDate = formatter.format(txDate)
 
   modalTransactionDetail.value = transaction
+  console.log('-- transaction', transaction)
 
   loadTransactionDetail(transaction)
 }
@@ -193,9 +197,12 @@ const loadTransactionDetail = async (transaction: any) => {
   await getHistoric
     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
     .then(data => {
+      const nameTo = `${(transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label)}`
+
+      console.log('other tx ', transaction)
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload) } as TransactionModalPayload
+      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload), nameTo } as TransactionModalPayload
     })
 }
 </script>
