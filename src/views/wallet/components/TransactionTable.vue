@@ -186,12 +186,6 @@ const openModalTransactionDetails = (event: any, transaction: any) => {
 
   modalTransactionDetail.value = transaction
 
-  if (transaction.status === 'in_process') {
-    displayModalTransactionDetail.value = true
-    isLoadingTransactionDetails.value = false
-    return
-  }
-
   loadTransactionDetail(transaction)
 }
 

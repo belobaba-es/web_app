@@ -115,9 +115,11 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
+  const beneficiaryName = `${(transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label)}`
+
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
-  transactionPDF[t('beneficiaryName')] = `${transaction.beneficiary?.name ?? transaction.nameTo}`
+  transactionPDF[t('beneficiaryName')] = beneficiaryName
   transactionPDF[t('assetType')] = transaction.assetCode
   transactionPDF[t('amount')] = `${transaction.amount}`
   transactionPDF[t('transactionNumber')] = transaction.id
