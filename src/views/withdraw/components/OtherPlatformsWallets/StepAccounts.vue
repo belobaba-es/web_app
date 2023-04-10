@@ -76,7 +76,6 @@ const onSelect = (item: BeneficiaryInternal) => {
 }
 
 const getIcon = (assetCode: string) => {
-  console.log(assetCode)
   return `https://storage.googleapis.com/noba-dev/${assetCode}.svg`
 }
 

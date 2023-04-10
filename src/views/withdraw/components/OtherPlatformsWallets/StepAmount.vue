@@ -145,7 +145,6 @@ const amountFee = computed(() => {
   }
 
   total.value = Number(t.toFixed(8))
-  console.log(fee.value)
   return Number(t.toFixed(8))
 })
 
