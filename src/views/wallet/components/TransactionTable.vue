@@ -188,7 +188,6 @@ const openModalTransactionDetails = (event: any, transaction: any) => {
   transaction.formatedDate = formatter.format(txDate)
 
   modalTransactionDetail.value = transaction
-  console.log('-- transaction', transaction)
 
   loadTransactionDetail(transaction)
 }
@@ -199,7 +198,6 @@ const loadTransactionDetail = async (transaction: any) => {
     .then(data => {
       const nameTo = `${(transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label)}`
 
-      console.log('other tx ', transaction)
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
       modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload), nameTo } as TransactionModalPayload
