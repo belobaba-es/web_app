@@ -13,7 +13,7 @@
     <Divider type="dashed"></Divider>
 
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('youSend') }}</p>
+      <p class="font-medium text-sm">{{ t('amount') }}</p>
       <p class="font-medium text-sm">{{ t('ourFee') }}</p>
       <p class="font-medium text-sm">{{ props.realName }} {{ t('hasReceived') }}</p>
     </div>
@@ -38,39 +38,40 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { defineProps } from 'vue'
-import Divider from 'primevue/divider'
+import { defineProps } from 'vue';
+import Divider from 'primevue/divider';
 
 const props = defineProps({
   realName: {
     type: String,
-    required: true,
+    required: true
   },
   account: {
     type: String,
-    required: true,
+    required: true
   },
   amount: {
     type: String,
-    required: true,
+    required: true
   },
   amountFee: {
     type: String,
-    required: true,
+    required: true
   },
   fee: {
     type: String,
-    required: true,
+    required: true
   },
   transactionId: {
     type: String,
-    required: true,
+    required: true
   },
   assetCode: {
     type: String,
-  },
+  }
 })
 const { t } = useI18n({ useScope: 'global' })
+
 </script>
 
 <style lang="scss">
