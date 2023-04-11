@@ -9,14 +9,13 @@
   >
 
     <template #header>
-      <img src="../../../assets/icons/ewallet.svg" alt="" height="50" />
+      <div class="white-div"></div>
     </template>
 
     <div class="col-12 content">
-      <div class="inner-row-flex">
+      <div class="inner-row-flex mt-20">
         <div class="col-6">
           <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
-<!--          <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('accountNumber') }}</p>-->
 
           <p v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0" class="font-medium text-sm">{{ t('beneficiaryName') }}</p>
         </div>
@@ -165,5 +164,14 @@ const generatePDFTransactionReceipt = () => {
 
 .pt-1 {
   padding-top: 1%;
+}
+
+.white-div {
+  width: 40px;
+  background: #fff;
+}
+
+.mt-20 {
+  margin-top: 20px;
 }
 </style>
