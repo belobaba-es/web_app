@@ -7,7 +7,10 @@
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '35vw' }"
   >
-    <template #header> </template>
+
+    <template #header>
+      <img src="../../../assets/icons/ewallet.svg" alt="" height="50" />
+    </template>
 
     <div class="col-12 content">
       <div class="inner-row-flex">
