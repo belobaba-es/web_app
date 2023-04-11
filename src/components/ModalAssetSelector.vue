@@ -16,7 +16,7 @@
       <div class="grid py-3 mt-2">
         <div v-for="item in filteredListAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
-            <img width="26" :src="item.icon" />
+            <img width="30" :src="item.icon" />
           </div>
           <div class="col-10 text-uppercase">
             <strong class="font-medium">{{ item.code }}</strong> {{ item.name }}
