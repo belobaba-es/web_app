@@ -12,7 +12,7 @@
     </template>
     <div class="grid" style="padding: 0 3rem">
       <div class="col-6 mt-3">
-        <img :src="asset?.icon" alt="" />
+        <img width="140" :src="asset?.icon" alt="" />
         <p class="text-base mt-3">{{ asset?.name }}</p>
         <p class="text-base font-bold">{{ paymentAddress?.label }}</p>
         <small class="font-medium">{{ asset?.code }}</small>
