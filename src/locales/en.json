@@ -250,5 +250,6 @@
   "senderAccount": "Sender account",
   "senderAccountId": "Sender account",
   "beneficiaryName": "Beneficiary name",
-  "userName": "Sender name"
+  "userName": "Sender name",
+  "warningAssetNetwork": "Make sure to select ERC20 network when sending tokens to this address"
 }

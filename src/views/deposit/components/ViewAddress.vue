@@ -23,6 +23,7 @@
       <div class="col-12">
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
+          {{ t('warningAssetNetwork') }}
         </Message>
       </div>
       <div class="col-12">
