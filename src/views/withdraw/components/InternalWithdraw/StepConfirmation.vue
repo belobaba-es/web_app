@@ -152,6 +152,7 @@ function makeTransaction() {
           submitting.value = false
           isCompleted.value = true;
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
+          showSuccessMessage()
           // emit('complete')
         })
         .catch(e => {
@@ -176,8 +177,9 @@ function makeTransaction() {
           .then((res:any)=> {
             transactionId.value = res.data.transactionId
             submitting.value = false
-            isCompleted.value = true;
+            isCompleted.value = true
             updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
+            showSuccessMessage()
             // emit('complete')
           })
           .catch(e => {
@@ -221,6 +223,15 @@ const generatePDFTransactionReceipt = () => {
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false;
+}
+
+const showSuccessMessage = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Order submitted',
+    detail: 'Your order completed.',
+    life: 4000,
+  })
 }
 </script>
 
