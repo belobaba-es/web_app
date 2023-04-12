@@ -64,6 +64,14 @@ body {
     font-family: KanitLight;
 }
 
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 23px;
+}
+
 :root {
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
