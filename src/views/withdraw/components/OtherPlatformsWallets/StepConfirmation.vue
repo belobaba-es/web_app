@@ -175,7 +175,8 @@ const showSuccessMessage = () => {
   toast.add({
     severity: 'success',
     summary: 'Order submitted',
-    detail: 'Your order completed.',
+    detail: t('withdrawEmailConfirmation'),
+    // detail: 'Your order completed.',
     life: 4000,
   })
 }
