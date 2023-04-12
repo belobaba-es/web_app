@@ -205,7 +205,6 @@ const showSuccessMessage = () => {
     severity: 'success',
     summary: 'Order submitted',
     detail: t('withdrawEmailConfirmation'),
-    // detail: 'Your order completed.',
     life: 4000,
   })
 }

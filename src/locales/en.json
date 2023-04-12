@@ -251,5 +251,6 @@
   "senderAccountId": "Sender account",
   "beneficiaryName": "Beneficiary name",
   "userName": "Sender name",
-  "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw"
+  "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
+  "orderCompleted": "Order completed"
 }

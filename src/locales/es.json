@@ -243,5 +243,6 @@
   "senderAccountId": "Cuenta emisora",
   "beneficiaryName": "Nombre del beneficiario",
   "userName": "Nombre del emisor",
-  "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro"
+  "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
+  "orderCompleted": "Orden completada"
 }
