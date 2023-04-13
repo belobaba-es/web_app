@@ -22,7 +22,7 @@
       <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
         <h4>
           <i class="pi pi-eye"></i>
-          Ver Detalle
+          {{ t('viewDetails') }}
         </h4>
       </router-link>
     </div>
@@ -31,7 +31,9 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import {useI18n} from "vue-i18n";
 
+const { t } = useI18n({ useScope: 'global' })
 defineProps<{
   item: any
 }>()
