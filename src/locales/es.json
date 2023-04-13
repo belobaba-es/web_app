@@ -244,5 +244,6 @@
   "beneficiaryName": "Nombre del beneficiario",
   "userName": "Nombre del emisor",
   "warningAssetNetwork": "Asegurese de seleccionar la red {networkName} para el momento de enviar monedas a esta address",
-  "viewAddress": "Ver address"
+  "viewAddress": "Ver address",
+  "viewDetails": "Ver detalles"
 }

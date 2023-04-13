@@ -2,6 +2,12 @@
   <section class="section-main">
     <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
 
+    <ProgressSpinner
+      v-if="isLoadingTransactionDetails"
+      style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s" aria-label="Custom ProgressSpinner"
+    />
+
     <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
       <div class="flex align-items-center">
         <router-link to="/dashboard">
@@ -114,10 +120,14 @@
                 </p>
               </div>
               <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
-                <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
+                <router-link
+                  class="link-modal-data-transaction"
+                  to="#" exact role="menuitem" v-ripple
+                  @click="openModalTransactionDetails($event, item)"
+                >
                   <h4>
                     <i class="pi pi-eye"></i>
-                    Ver Detalle
+                    {{ t('viewDetails') }}
                   </h4>
                 </router-link>
               </div>
@@ -150,22 +160,24 @@
       </div>
     </div>
   </section>
+
+  <ModalTransactionDetails
+      v-model:display="displayModalTransactionDetail"
+      :transaction="modalTransactionDetail"
+  ></ModalTransactionDetails>
 </template>
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-
+import ProgressSpinner from 'primevue/progressspinner'
 import Button from 'primevue/button'
 import Calendar from 'primevue/calendar'
 import Skeleton from 'primevue/skeleton'
 
 import Dropdown from 'primevue/dropdown'
 import { AssetsService } from '../deposit/services/assets'
-
-import { Asset } from '../deposit/types/asset.interface'
-import { HistoricService } from './services/transaction-history'
 import {
   ListTransactionPgType,
   TransactionFiltersQueryType,
@@ -177,6 +189,9 @@ import { useUserStore } from '../../stores/user'
 import { secondsToDate } from '../../shared/secondsToDate'
 import { iconAsset } from '../../shared/iconAsset'
 import { useToast } from 'primevue/usetoast'
+import {TransactionHistoricService} from "./services/transaction-history";
+import {HistoricService} from "../wallet/services/historic";
+import ModalTransactionDetails, {TransactionModalPayload} from "../../components/ModalTransactionDetails.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -212,10 +227,13 @@ const toast = useToast()
 const assetsService = AssetsService.instance()
 const assets = ref<{ name: string; code: string }[]>([])
 
-const getHistoric = HistoricService.instance()
+const getHistoric = TransactionHistoricService.instance()
+const getTransactonHistoric = HistoricService.instance()
 const listTransaction = ref<ListTransactionPgType[]>([])
 const submitting = ref(false)
-
+const displayModalTransactionDetail = ref(false)
+const isLoadingTransactionDetails = ref(false)
+const modalTransactionDetail: any = ref({})
 const nextPage = ref({
   nextPage: false,
   data: '',
@@ -361,6 +379,31 @@ const search = async () => {
 
   await getTransactions(filters)
 }
+
+const openModalTransactionDetails = (event: any, transaction: any) => {
+  isLoadingTransactionDetails.value = true
+
+  const txDate = new Date(transaction.createdAt._seconds * 1000)
+  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  transaction.formatedDate = formatter.format(txDate)
+
+  modalTransactionDetail.value = transaction
+
+  loadTransactionDetail(transaction)
+}
+
+const loadTransactionDetail = async (transaction: any) => {
+  await getTransactonHistoric
+      .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+      .then(data => {
+        const nameTo = `${(transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label) ?? ''}`
+
+        displayModalTransactionDetail.value = true
+        isLoadingTransactionDetails.value = false
+        modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload), nameTo } as TransactionModalPayload
+      })
+}
+
 </script>
 <style lang="scss" scoped>
 .dropdown-full {
@@ -409,5 +452,12 @@ const search = async () => {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.p-progress-spinner {
+  position: fixed;
+  margin-left: 33%;
+  z-index: 999;
+  margin-top: 30%;
 }
 </style>

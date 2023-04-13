@@ -65,9 +65,7 @@ defineProps<{
   wallet: BalanceWallet
 }>()
 let depositURL = ''
-
 const { calculateBalance } = useBalanceWallet()
-
 const emit = defineEmits(['toBack'])
 
 const isFiat = (wallet: BalanceWallet | undefined) => {
