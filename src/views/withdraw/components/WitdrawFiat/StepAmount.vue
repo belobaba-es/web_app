@@ -49,9 +49,7 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ formData.beneficiary?.realName }}</span>
 
-          <!--          todo -->
           <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>USD</small></p>
-          <!--          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>-->
           <p v-else>
             <small>{{ fee }}</small>
           </p>
