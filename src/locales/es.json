@@ -243,5 +243,5 @@
   "senderAccountId": "Cuenta emisora",
   "beneficiaryName": "Nombre del beneficiario",
   "userName": "Nombre del emisor",
-  "warningAssetNetwork": "Asegurese de seleccionar la red ERC20 para el momento de enviar monedas a esta address"
+  "warningAssetNetwork": "Asegurese de seleccionar la red {networkName} para el momento de enviar monedas a esta address"
 }

@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { Asset, PaymentAddress } from '../types/asset.interface'
+import {onMounted} from "vue";
 
 const props = defineProps<{
   assets: Array<Asset>
@@ -38,6 +39,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['select'])
+
 
 const asssetImg = (assetId: string) => {
   return props.assets.find(asset => asset.assetId == assetId)?.icon

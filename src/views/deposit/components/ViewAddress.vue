@@ -24,7 +24,7 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
-        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork') }}</p>
+        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork', {networkName: paymentAddress?.networkName}) }}</p>
       </div>
       <div class="col-12">
         <div class="p-inputgroup">
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
@@ -54,8 +54,9 @@ import Dialog from 'primevue/dialog'
 import Message from 'primevue/message'
 import { useToast } from 'primevue/usetoast'
 import { Asset, PaymentAddress } from '../types/asset.interface'
+import {AccountService} from "../../withdraw/services/account";
 
-defineProps<{
+const props = defineProps<{
   visible: boolean
   walletAddress?: string
   asset: Asset | null
