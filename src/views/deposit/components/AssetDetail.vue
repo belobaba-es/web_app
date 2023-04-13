@@ -5,7 +5,7 @@
     >
       <div class="col-4 align-items-start flex align-items-center justify-content-start">
         <div class="asset-icon">
-          <img class="icon-cripto" :src="asssetImg(paymentAddress.assetsId)" />
+          <img class="icon-cripto" :src="asssetImg(paymentAddress.assetsId)" :alt="'icon-' + assetName(paymentAddress.assetsId)"/>
           <div class="font-semi-bold text-uppercase pl-3 text-center name-cripto-wallet">
             {{ assetName(paymentAddress.assetsId) }}
           </div>
@@ -20,7 +20,7 @@
         <Button
           icon="pi pi-eye"
           class="p-button-text btn-view-address"
-          label="Ver direccion"
+          :label="t('viewAddress')"
           @click="emit('select', paymentAddress)"
         />
       </div>
@@ -31,15 +31,14 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { Asset, PaymentAddress } from '../types/asset.interface'
-import {onMounted} from "vue";
+import {useI18n} from "vue-i18n";
 
 const props = defineProps<{
   assets: Array<Asset>
   paymentAddress: PaymentAddress
 }>()
-
+const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['select'])
-
 
 const asssetImg = (assetId: string) => {
   return props.assets.find(asset => asset.assetId == assetId)?.icon
