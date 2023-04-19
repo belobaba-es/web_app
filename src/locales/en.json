@@ -253,5 +253,14 @@
   "userName": "Sender name",
   "viewDetails": "View details",
   "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
-  "orderCompleted": "Order completed"
+  "orderCompleted": "Order completed",
+  "twoFactor": "Two factor authentication",
+  "enableTwoFactor": "Enable two-factor authentication (2FA)",
+  "authenticatorApp": "Setup authenticator app",
+  "downloadYourRecoveryCodes": "Download your recovery codes",
+  "textDownloadRecoveryCodes": "You can use recovery codes as a second factor to authentication in case you lose access to your device. We recommend saving them a secure password manager such as 1PAssword, Authy or Keeper",
+  "alertRecoveryCodes": "Keep your recovery codes in a safe spot",
+  "alertDetailRecoveryCodes": "If you lose your device and can't find your recovery codes, you will lose access to your account.",
+  "btnSavedRecoveryCodes": "I hava saved my recovery codes",
+  "download": "Download"
 }

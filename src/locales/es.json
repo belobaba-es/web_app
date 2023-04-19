@@ -245,5 +245,14 @@
   "userName": "Nombre del emisor",
   "viewDetails": "Ver detalles",
   "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
-  "orderCompleted": "Orden completada"
+  "orderCompleted": "Orden completada",
+  "twoFactor": "Autenticación en dos (2) pasos",
+  "enableTwoFactor": "Habilia la autenticación en dos (2) pasos (2FA)",
+  "authenticatorApp": "Setup authenticator app",
+  "downloadYourRecoveryCodes": "Descarga tus códigos de recuperación",
+  "textDownloadRecoveryCodes": "Puede usar códigos de recuperación como un segundo factor de autenticación en caso de que pierda el acceso a su dispositivo. nosotros recomendamos guardarlos en un administrador de contraseñas seguro como 1Password, Authy o Keeper",
+  "alertRecoveryCodes": "Mantenga sus códigos de recuperación en un lugar seguro",
+  "alertDetailRecoveryCodes": "Si pierde su dispositivo y no puede encontrar sus códigos de recuperación, perderá el acceso a su cuenta",
+  "btnSavedRecoveryCodes": "He guardado mis códigos de recuperación.",
+  "download": "Descargar"
 }
