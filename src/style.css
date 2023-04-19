@@ -382,3 +382,11 @@ small {
     box-shadow: 0 0 0 0 0.2rem var(--primary-color) !important;
     border-color: var(--primary-color) !important;
 }
+
+
+.p-progress-spinner-circle {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: 0;
+    stroke: var(--primary-color) !important;
+    stroke-linecap: round;
+}

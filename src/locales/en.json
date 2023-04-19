@@ -252,4 +252,7 @@
   "beneficiaryName": "Beneficiary name",
   "userName": "Sender name",
   "warningAssetNetwork": "Make sure to select ERC20 network when sending tokens to this address"
+  "viewDetails": "View details",
+  "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
+  "orderCompleted": "Order completed"
 }

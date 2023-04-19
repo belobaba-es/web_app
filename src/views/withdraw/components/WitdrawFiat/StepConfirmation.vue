@@ -157,6 +157,7 @@ function makeTransaction() {
     transactionId.value = res.data.transactionId
     submitting.value = false
     updateBlockedBalanceWalletByCode('USD', props.formData.amount)
+    showSuccessMessage()
     // emit('complete')
   }).catch(e => {
     submitting.value = false
@@ -197,6 +198,15 @@ const generatePDFTransactionReceipt = async() => {
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false;
+}
+
+const showSuccessMessage = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Order submitted',
+    detail: t('withdrawEmailConfirmation'),
+    life: 4000,
+  })
 }
 </script>
 

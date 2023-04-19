@@ -1,8 +1,8 @@
 import { HttpService } from '../../../shared/services/http'
 import { HistoricTransactionsResponse } from '../types/transaction-history-response.interface'
 
-export class HistoricService extends HttpService {
-  private static _instance: HistoricService
+export class TransactionHistoricService extends HttpService {
+  private static _instance: TransactionHistoricService
 
   constructor() {
     // @ts-ignore
@@ -14,7 +14,7 @@ export class HistoricService extends HttpService {
       return this._instance
     }
 
-    this._instance = new HistoricService()
+    this._instance = new TransactionHistoricService()
 
     return this._instance
   }
