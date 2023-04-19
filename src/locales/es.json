@@ -245,5 +245,6 @@
   "userName": "Nombre del emisor",
   "viewDetails": "Ver detalles",
   "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
-  "orderCompleted": "Orden completada"
+  "orderCompleted": "Orden completada",
+  "businessPartners": "Aliados de negocios"
 }
