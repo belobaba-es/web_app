@@ -89,7 +89,7 @@
   "partnerTitle": "Datos accionista",
   "contact": "Contacto",
   "loginTitle": "Usuarios Registrados",
-  "loginSubtitle": "Bienvenido ¡Por favor ingrese sus datos!",
+  "loginSubtitle": "Hola, bienvenido, Por favor ingrese su información",
   "write": "Write",
   "labelCurrentPassword": "Escribe tu contraseña actual",
   "labelNewPassword": "Nueva contraseña",
@@ -245,5 +245,8 @@
   "userName": "Nombre del emisor",
   "warningAssetNetwork": "Asegurese de seleccionar la red {networkName} para el momento de enviar monedas a esta address",
   "viewAddress": "Ver address",
-  "viewDetails": "Ver detalles"
+  "viewDetails": "Ver detalles",
+  "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
+  "orderCompleted": "Orden completada",
+  "passwordHelpText": "Introduce tu clave de acceso"
 }

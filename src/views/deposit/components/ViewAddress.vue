@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
@@ -54,9 +54,8 @@ import Dialog from 'primevue/dialog'
 import Message from 'primevue/message'
 import { useToast } from 'primevue/usetoast'
 import { Asset, PaymentAddress } from '../types/asset.interface'
-import {AccountService} from "../../withdraw/services/account";
 
-const props = defineProps<{
+defineProps<{
   visible: boolean
   walletAddress?: string
   asset: Asset | null

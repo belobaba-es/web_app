@@ -134,6 +134,7 @@ async function makeTransaction() {
         updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.total)
         isCompleted.value = true;
         submitting.value = false
+        showSuccessMessage();
         // emit('complete')
       })
       .catch(e => {
@@ -168,6 +169,15 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('datePicker')] = `${formattedDate}`
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false;
+}
+
+const showSuccessMessage = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Order submitted',
+    detail: t('withdrawEmailConfirmation'),
+    life: 4000,
+  })
 }
 </script>
 

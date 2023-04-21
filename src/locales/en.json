@@ -91,7 +91,7 @@
   "partnerTitle": "Shareholder data",
   "contact": "Contact",
   "loginTitle": "Registered users",
-  "loginSubtitle": "Welcome Please enter your details!",
+  "loginSubtitle": "Hello, welcome, please enter your information",
   "write": "Write",
   "labelCurrentPassword": "Type your current password",
   "labelNewPassword": "New password",
@@ -253,5 +253,8 @@
   "userName": "Sender name",
   "warningAssetNetwork": "Make sure to select {networkName} network when sending tokens to this address",
   "viewAddress": "View address",
-  "viewDetails": "View details"
+  "viewDetails": "View details",
+  "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
+  "orderCompleted": "Order completed",
+  "passwordHelpText": "Enter your password"
 }

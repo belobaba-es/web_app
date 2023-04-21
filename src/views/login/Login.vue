@@ -19,6 +19,9 @@
             <div class="p-inputgroup">
               <Password v-model="form.pass" toggleMask :feedback="false" placeholder="**********" />
             </div>
+            <div>
+              <span class="help-text">{{ t('passwordHelpText') }}</span>
+            </div>
           </div>
           <div class="flex justify-content-between align-items-center">
             <div class="field-checkbox mt-2">
@@ -154,5 +157,10 @@ const handleSubmit = () => {
 .logo-noba {
   width: 142px;
   height: 64px;
+}
+
+.help-text {
+  color: rgb(135, 135, 135);
+  font-size: 0.7rem;
 }
 </style>
