@@ -5,7 +5,7 @@
   <div class="container-main">
     <div class="lg:bg-contain container">
       <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
-      <p class="font-extra-light text-center">{{ t('loginSubtitle') }}</p>
+      <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
@@ -18,6 +18,9 @@
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
               <Password v-model="form.pass" toggleMask :feedback="false" placeholder="**********" />
+            </div>
+            <div>
+              <span class="help-text">{{ t('passwordHelpText') }}</span>
             </div>
           </div>
           <div class="flex justify-content-between align-items-center">
@@ -154,5 +157,10 @@ const handleSubmit = () => {
 .logo-noba {
   width: 142px;
   height: 64px;
+}
+
+.help-text {
+  color: rgb(135, 135, 135);
+  font-size: 0.7rem;
 }
 </style>
