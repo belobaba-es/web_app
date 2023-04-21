@@ -89,7 +89,7 @@
   "partnerTitle": "Datos accionista",
   "contact": "Contacto",
   "loginTitle": "Usuarios Registrados",
-  "loginSubtitle": "Bienvenido ¡Por favor ingrese sus datos!",
+  "loginSubtitle": "Hola, bienvenido, Por favor ingrese su información",
   "write": "Write",
   "labelCurrentPassword": "Escribe tu contraseña actual",
   "labelNewPassword": "Nueva contraseña",
@@ -246,5 +246,6 @@
   "warningAssetNetwork": "Asegurese de seleccionar la red ERC20 para el momento de enviar monedas a esta address",
   "viewDetails": "Ver detalles",
   "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
-  "orderCompleted": "Orden completada"
+  "orderCompleted": "Orden completada",
+  "passwordHelpText": "Introduce tu clave de acceso"
 }
