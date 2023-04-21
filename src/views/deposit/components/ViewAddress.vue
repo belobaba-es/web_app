@@ -24,7 +24,6 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
-        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork') }}</p>
       </div>
       <div class="col-12">
         <div class="p-inputgroup">
