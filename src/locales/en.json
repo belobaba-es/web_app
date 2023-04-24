@@ -251,8 +251,10 @@
   "senderAccountId": "Sender account",
   "beneficiaryName": "Beneficiary name",
   "userName": "Sender name",
+  "warningAssetNetwork": "Make sure to select {networkName} network when sending tokens to this address",
+  "viewAddress": "View address",
   "viewDetails": "View details",
   "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
   "orderCompleted": "Order completed",
-  "passwordHelpText": "Introduce your password"
+  "passwordHelpText": "Enter your password"
 }
