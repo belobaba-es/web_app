@@ -36,6 +36,8 @@ export const useTwoFactorAuth = () => {
       .then((r: TwoFactor) => {
         twoFactorData.value = r
 
+        console.log(twoFactorData.value)
+
         isShowView.value = true
       })
       .catch(e => {
@@ -62,11 +64,49 @@ export const useTwoFactorAuth = () => {
   })
 
   const getCodeRecovery = (): string[] => {
+    console.log('======CODIGOS')
+    console.log(twoFactorData.value?.code_recovery)
+    console.log('*****CODIGOS')
     if (twoFactorData.value?.code_recovery != undefined) {
       return twoFactorData.value.code_recovery
     }
 
     return []
+  }
+
+  const verifyCode = (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        accountId: accountId.value,
+        code: codeForVerify.value,
+      }
+
+      submitting.value = true
+
+      TwoFactorService.instance()
+        .active(payload)
+        .then(r => {
+          submitting.value = false
+
+          resolve(true)
+        })
+        .catch(e => {
+          console.log(e)
+          submitting.value = false
+
+          resolve(false)
+
+          if (e.response.data.message) {
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
+              life: 4000,
+            })
+            return
+          }
+        })
+    })
   }
 
   const activeTwoFactor = async (): Promise<void> => {
@@ -90,7 +130,7 @@ export const useTwoFactorAuth = () => {
 
         setTwoFactorActive()
 
-        isShowViewDownloadCodeRecovery.value = true
+        // isShowViewDownloadCodeRecovery.value = true
       })
       .catch(e => {
         console.log(e)
@@ -121,12 +161,24 @@ export const useTwoFactorAuth = () => {
     return user.account.twoFactorActive === true
   }
 
+  const downloadCodeRecoveryTxtFile = (codes: string[]) => {
+    const text = codes.join('\n')
+    const blob = new Blob([text], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.download = 'archivo.txt'
+    link.href = url
+    link.click()
+  }
+
   return {
     getQR,
     getSecret,
     isShowView,
     submitting,
     codeForVerify,
+    downloadCodeRecoveryTxtFile,
+    verifyCode,
     getCodeRecovery,
     twoFactorIsActive,
     activeTwoFactor,

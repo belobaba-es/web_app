@@ -3,7 +3,7 @@
     <TabPanel :header="t('twoFactor')">
       <TwoFactorSettings v-if="!twoFactorIsActive()" />
 
-      <TwoFactorDownloadCodeRecovery />
+      <TwoFactorActiveSuccess v-if="twoFactorIsActive()" />
     </TabPanel>
     <TabPanel :header="t('changePassword')">
       <ChangePassword />
@@ -30,7 +30,7 @@ import ChangePassword from './ChangePassword.vue'
 import Lang from '../../../components/Lang.vue'
 import TwoFactorSettings from './twofactor/TwoFactorSettings.vue'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
-import TwoFactorDownloadCodeRecovery from './twofactor/TwoFactorDownloadCodeRecovery.vue'
+import TwoFactorActiveSuccess from './twofactor/TwoFactorActiveSuccess.vue'
 
 const { t } = useI18n({
   useScope: 'global',

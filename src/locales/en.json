@@ -261,6 +261,10 @@
   "textDownloadRecoveryCodes": "You can use recovery codes as a second factor to authentication in case you lose access to your device. We recommend saving them a secure password manager such as 1PAssword, Authy or Keeper",
   "alertRecoveryCodes": "Keep your recovery codes in a safe spot",
   "alertDetailRecoveryCodes": "If you lose your device and can't find your recovery codes, you will lose access to your account.",
-  "btnSavedRecoveryCodes": "I hava saved my recovery codes",
-  "download": "Download"
+  "savedRecoveryCodes": "You have saved your recovery codes.",
+  "download": "Download",
+  "activeTwoFactor": "Enable two-factor authentication",
+  "yes": "Yes",
+  "no": "No",
+  "recommendationSaveCodeRecovery": "To activate two-factor authentication, please confirm that you have saved the recovery codes."
 }

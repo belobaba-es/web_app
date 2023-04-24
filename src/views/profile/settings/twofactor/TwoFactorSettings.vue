@@ -1,7 +1,7 @@
 <template>
   <TwoFactorSkeleton v-show="!isShowView" />
 
-  <div v-show="isShowView" class="container-center mt-5">
+  <div v-show="isShowView && !visibleRecoveryCodes" class="container-center mt-5">
     <div class="border-2 border-green-200" style="border-radius: 10px">
       <h2 class="text-center">{{ t('enableTwoFactor') }}</h2>
       <div class="p-5">
@@ -27,7 +27,7 @@
             <Button
               class="w-50 p-button mt-5"
               :label="'Active'"
-              @click="activeTwoFactor()"
+              @click="nextStep()"
               :loading="submitting"
               icon="pi pi-check"
               iconPos="right"
@@ -37,6 +37,8 @@
       </div>
     </div>
   </div>
+
+  <TwoFactorDownloadCodeRecovery />
 
   <Dialog v-model:visible="visible" modal header="Your two-factor secret" :style="{ width: '30vw' }">
     <Divider />
@@ -59,14 +61,16 @@ import { useToast } from 'primevue/usetoast'
 import TwoFactorSkeleton from './TwoFactorSkeleton.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { onMounted, ref } from 'vue'
+import TwoFactorDownloadCodeRecovery from "./TwoFactorDownloadCodeRecovery.vue";
 
 const { t } = useI18n({
   useScope: 'global',
 })
 
-const { submitting, activeTwoFactor, lookQRTwoFactor, isShowView, getQR, getSecret, codeForVerify } = useTwoFactorAuth()
+const { submitting, lookQRTwoFactor, isShowView, getQR, getSecret, codeForVerify, verifyCode, getCodeRecovery } = useTwoFactorAuth()
 
 const visible = ref(false)
+const visibleRecoveryCodes = ref(false)
 
 const toast = useToast()
 
@@ -81,8 +85,17 @@ const copyToClipboard = () => {
     severity: 'success',
     summary: t('successfulOperation'),
     detail: t('textCopySuccessful'),
-    life: 3000,
+    life: 6000,
   })
+}
+
+const nextStep = async () => {
+  const codeValid = await verifyCode()
+
+  if (codeValid) {
+    visibleRecoveryCodes.value = true
+  }
+
 }
 </script>
 

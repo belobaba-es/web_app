@@ -28,4 +28,8 @@ export class TwoFactorService extends HttpService {
   async active(payload: any): Promise<any> {
     return await this.post<any>('active', payload, false)
   }
+
+  async verifyCode(payload: any): Promise<any> {
+    return await this.post<any>('verify', payload, false)
+  }
 }

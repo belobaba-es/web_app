@@ -191,7 +191,7 @@ export const useAccount = () => {
           severity: 'info',
           summary: t('successfulOperation'),
           detail: t('shareholderDataSuccessSend'),
-          life: 3000,
+          life: 6000,
         })
       })
       .catch(error => {
@@ -254,7 +254,7 @@ export const useAccount = () => {
           severity: 'info',
           summary: t('successfulOperation'),
           detail: t('updatePasswordSuccessMessage'),
-          life: 3000,
+          life: 6000,
         })
       })
       .catch(error => {
