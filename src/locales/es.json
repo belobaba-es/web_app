@@ -243,6 +243,8 @@
   "senderAccountId": "Cuenta emisora",
   "beneficiaryName": "Nombre del beneficiario",
   "userName": "Nombre del emisor",
+  "warningAssetNetwork": "Asegurese de seleccionar la red {networkName} para el momento de enviar monedas a esta address",
+  "viewAddress": "Ver address",
   "viewDetails": "Ver detalles",
   "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
   "orderCompleted": "Orden completada",

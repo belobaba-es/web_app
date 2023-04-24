@@ -13,6 +13,7 @@ export interface Asset {
   fee: number
   qr?: string
   paymentAddress: string
+  networkName?: string
 }
 
 export interface EventCreatePaymentAddress extends CreatePaymentAddress {
@@ -38,6 +39,7 @@ export interface PaymentAddress {
   address: string
   assetsId: string
   qr?: string
+  networkName?: string
 }
 
 export type BalanceWallet = {

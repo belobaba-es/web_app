@@ -90,54 +90,11 @@ const nextPag = ref('')
 const display = ref(false)
 const displayNew = ref(false)
 const lazyLoading = ref(false)
-
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddress | null>(null)
 const submitting = ref(false)
 const route = useRoute()
-
-const findAsset = (assetId: string) => {
-  const assetSelect = assets.value.find(asset => asset.assetId == assetId)
-  if (assetSelect) {
-    return assetSelect
-  }
-  return null
-}
-
-const findAssetByName = () => {
-  submitting.value = true
-  lazyLoading.value = true
-  if (assetCode.value) {
-    assetsService
-      .listPaymentAddress(nextPag.value, assetCode.value)
-      .then(data => {
-        paymentAddress.value = [...data.results]
-        nextPag.value = data.nextPag
-        submitting.value = false
-        lazyLoading.value = false
-      })
-      .finally(() => {
-        submitting.value = false
-        lazyLoading.value = false
-      })
-  }
-}
-
-function onChange(e: any) {
-  if (e.value === null) {
-    searchWallets()
-  }
-}
-
-const viewAddressAsset = (item: PaymentAddress) => {
-  display.value = !display.value
-  display.value = true
-
-  selectPaymentAddress.value = item
-  selectViewAsset.value = findAsset(item.assetsId)
-}
-
 const assetsService = AssetsService.instance()
 const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddress[]>([])
@@ -157,14 +114,64 @@ onMounted(async () => {
   await searchWallets()
 })
 
+const findAsset = (assetId: string) => {
+  const assetSelect = assets.value.find(asset => asset.assetId == assetId)
+  if (assetSelect) {
+    return assetSelect
+  }
+  return null
+}
+
+const findAssetByName = () => {
+  submitting.value = true
+  lazyLoading.value = true
+  if (assetCode.value) {
+    assetsService
+        .listPaymentAddress(nextPag.value, assetCode.value)
+        .then(data => {
+          paymentAddress.value = [...data.results]
+          nextPag.value = data.nextPag
+          submitting.value = false
+          lazyLoading.value = false
+        })
+        .finally(() => {
+          submitting.value = false
+          lazyLoading.value = false
+        })
+  }
+}
+
+function onChange(e: any) {
+  if (e.value === null) {
+    searchWallets()
+  }
+}
+
+const viewAddressAsset = (item: PaymentAddress) => {
+  display.value = !display.value
+  display.value = true
+
+  selectPaymentAddress.value = item
+  selectViewAsset.value = findAsset(item.assetsId)
+}
+
 const searchWallets = () => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
   assetsService.listPaymentAddress().then(data => {
+    paymentAddress.value = getPaymentAddressAssetNetworkName(data.results);
     lazyLoading.value = false
-    paymentAddress.value = data.results
     nextPag.value = data.nextPag
   })
+}
+
+const getPaymentAddressAssetNetworkName = (paymentAddress: PaymentAddress[]) => {
+  paymentAddress = paymentAddress.map(address => {
+    const asset = assets.value.filter(asset => asset.assetId === address.assetsId)
+    const networkName = asset[0].networkName
+    return {...address, networkName}
+  })
+  return paymentAddress
 }
 
 const searchWallet = (assetId: string) => {
