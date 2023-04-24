@@ -266,6 +266,7 @@
   "twoFactorActionOne": "Ingresar en tu cuenta noba.cash",
   "twoFactorActionTwo": "Confirmar retiros desde tu cuenta noba.cash",
   "validVerifyCode":"código de verificación no puede estar vacío",
-  "passwordHelpText": "Introduce tu clave de acceso"
-
+  "passwordHelpText": "Introduce tu clave de acceso",
+  "verifyCode": "Verify code",
+  "enterCode": ""
 }

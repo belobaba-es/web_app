@@ -390,3 +390,8 @@ small {
     stroke: var(--primary-color) !important;
     stroke-linecap: round;
 }
+
+.help-text {
+    color: rgb(135, 135, 135);
+    font-size: 0.7rem;
+}

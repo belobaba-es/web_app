@@ -13,7 +13,7 @@ export const useTwoFactorAuth = () => {
   const isShowViewDownloadCodeRecovery = ref(false)
   const submitting = ref(false)
   const twoFactorData = ref<TwoFactor>()
-  const codeForVerify = ref<string>('')
+  const codeForVerify = ref<number>()
   const userStore = useUserStore()
 
   const { fullName, email, accountId } = useAccount()
@@ -76,7 +76,7 @@ export const useTwoFactorAuth = () => {
 
   const verifyCode = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (codeForVerify.value === '') {
+      if (String(codeForVerify.value).length < 6) {
         toast.add({
           severity: 'warn',
           detail: t('validVerifyCode'),
@@ -95,24 +95,23 @@ export const useTwoFactorAuth = () => {
       submitting.value = true
 
       TwoFactorService.instance()
-        .active(payload)
+        .verifyCode(payload)
         .then(r => {
           submitting.value = false
 
           resolve(true)
         })
         .catch(e => {
-          console.log(e)
           submitting.value = false
 
           resolve(false)
 
-          if (e.response.data.message) {
+          if (e.response.data.error) {
             toast.add({
               severity: 'error',
               summary: t('somethingWentWrong'),
-              detail: e.response.data.message,
-              life: 4000,
+              detail: e.response.data.error,
+              life: 6000,
             })
             return
           }
@@ -146,7 +145,6 @@ export const useTwoFactorAuth = () => {
         })
         .catch(e => {
           resolve(false)
-          console.log(e)
           submitting.value = false
 
           if (e.response.data.message) {
