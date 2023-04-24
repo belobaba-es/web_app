@@ -1,5 +1,5 @@
 <template>
-  <div class="container-center mt-5">
+  <div v-if="!twoFactorIsActive" class="container-center mt-5">
     <div class="border-2 border-green-200" style="border-radius: 10px">
       <h2 class="text-center">{{ t('downloadYourRecoveryCodes') }}</h2>
       <div class="p-5">
@@ -49,6 +49,8 @@
       </div>
     </div>
   </div>
+
+  <TwoFactorActiveSuccess v-if="twoFactorIsActive" />
 </template>
 <script setup lang="ts">
 import Message from 'primevue/message'
@@ -57,21 +59,22 @@ import Divider from 'primevue/divider'
 import ConfirmPopup from 'primevue/confirmpopup'
 import { useI18n } from 'vue-i18n'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import {onUnmounted} from "vue";
+import {onUnmounted, ref} from "vue";
 import {Asset, PaymentAddress} from "../../../deposit/types/asset.interface";
 import {useRouter} from "vue-router";
 import {useConfirm} from "primevue/useconfirm";
 import {useToast} from "primevue/usetoast";
-//
-// const props = defineProps<{
-//   code_recovery: string[]
-// }>()
+import TwoFactorActiveSuccess from "./TwoFactorActiveSuccess.vue";
+
+const props = defineProps<{
+  code_recovery: string[]
+}>()
 
 const router = useRouter();
 
-const code_recovery = ["asdas" , 'asdasd', '34535345', '435fdsdfgf']
-
 const { submitting, activeTwoFactor, downloadCodeRecoveryTxtFile } = useTwoFactorAuth()
+
+const twoFactorIsActive  = ref(false)
 
 const { t } = useI18n({
   useScope: 'global',
@@ -92,8 +95,8 @@ const showTemplate = (event: any) => {
     icon: 'pi pi-question-circle',
     acceptIcon: 'pi pi-check',
     rejectIcon: 'pi pi-times',
-    accept: () => {
-      activeTwoFactor()
+    accept: async() => {
+      twoFactorIsActive.value = await activeTwoFactor()
     },
     reject: () => {
       toast.add({severity:'warn', detail: t('recommendationSaveCodeRecovery'), life: 6000});

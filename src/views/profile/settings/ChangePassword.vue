@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mb-4">
+    <div class="mb-4 mt-5">
         <h1 class="text-2xl">{{ t('changePassword') }}</h1>
     </div>
     <div class="grid">

@@ -258,5 +258,10 @@
   "activeTwoFactor": "Activar la autenticación de doble factor",
   "yes": "Si",
   "no": "No",
-  "recommendationSaveCodeRecovery": "Para activar el doble factor de autenticacion, por favor confirme que ha guardado los codigos de recuperacion."
+  "recommendationSaveCodeRecovery": "Para activar el doble factor de autenticacion, por favor confirme que ha guardado los codigos de recuperacion.",
+  "twoFactorMessage": "La autenticación de dos factores (2FA) ahora está habilitada para su cuenta noba.cash",
+  "twoFactorSecondMessage": "Has activado el doble factor de autenticación. Ahora utilizaras el código de tu aplicación de administración de contraseñas, en los siguientes momentos:",
+  "twoFactorActionOne": "Ingresar en tu cuenta noba.cash",
+  "twoFactorActionTwo": "Confirmar retiros desde tu cuenta noba.cash",
+  "validVerifyCode":"código de verificación no puede estar vacío"
 }

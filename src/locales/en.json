@@ -266,5 +266,10 @@
   "activeTwoFactor": "Enable two-factor authentication",
   "yes": "Yes",
   "no": "No",
-  "recommendationSaveCodeRecovery": "To activate two-factor authentication, please confirm that you have saved the recovery codes."
+  "recommendationSaveCodeRecovery": "To activate two-factor authentication, please confirm that you have saved the recovery codes.",
+  "twoFactorMessage": "Two-factor authentication (2FA) is now enabled for your account noba.cash",
+  "twoFactorSecondMessage": "You have activated the double authentication factor. We now use the code from your password manager application, at the following times:",
+  "twoFactorActionOne": "Login in noba.cash",
+  "twoFactorActionTwo": "Confirm withdrawals from your noba.cash account",
+  "validVerifyCode" : "verification code cannot be empty"
 }

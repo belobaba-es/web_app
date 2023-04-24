@@ -14,8 +14,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "types": [
-      "@intlify/vite-plugin-vue-i18n/client",
-      "vue-confetti.d.ts"
+      "@intlify/vite-plugin-vue-i18n/client"
     ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

@@ -76,6 +76,17 @@ export const useTwoFactorAuth = () => {
 
   const verifyCode = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
+      if (codeForVerify.value === '') {
+        toast.add({
+          severity: 'warn',
+          detail: t('validVerifyCode'),
+          life: 6000,
+        })
+
+        resolve(false)
+        return
+      }
+
       const payload = {
         accountId: accountId.value,
         code: codeForVerify.value,
@@ -109,43 +120,46 @@ export const useTwoFactorAuth = () => {
     })
   }
 
-  const activeTwoFactor = async (): Promise<void> => {
-    const payload = {
-      accountId: accountId.value,
-      code: codeForVerify.value,
-    }
+  const activeTwoFactor = async (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        accountId: accountId.value,
+        code: codeForVerify.value,
+      }
 
-    submitting.value = true
+      submitting.value = true
 
-    TwoFactorService.instance()
-      .active(payload)
-      .then(r => {
-        submitting.value = false
+      TwoFactorService.instance()
+        .active(payload)
+        .then(r => {
+          submitting.value = false
 
-        toast.add({
-          severity: 'info',
-          detail: r.message,
-          life: 4000,
-        })
-
-        setTwoFactorActive()
-
-        // isShowViewDownloadCodeRecovery.value = true
-      })
-      .catch(e => {
-        console.log(e)
-        submitting.value = false
-
-        if (e.response.data.message) {
           toast.add({
-            severity: 'error',
-            summary: t('somethingWentWrong'),
-            detail: e.response.data.message,
+            severity: 'info',
+            detail: r.message,
             life: 4000,
           })
-          return
-        }
-      })
+
+          setTwoFactorActive()
+
+          resolve(true)
+        })
+        .catch(e => {
+          resolve(false)
+          console.log(e)
+          submitting.value = false
+
+          if (e.response.data.message) {
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
+              life: 4000,
+            })
+            return
+          }
+        })
+    })
   }
 
   const setTwoFactorActive = () => {

@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <TwoFactorDownloadCodeRecovery />
+  <TwoFactorDownloadCodeRecovery :code_recovery="getCodeRecovery()" v-if="visibleRecoveryCodes" />
 
   <Dialog v-model:visible="visible" modal header="Your two-factor secret" :style="{ width: '30vw' }">
     <Divider />

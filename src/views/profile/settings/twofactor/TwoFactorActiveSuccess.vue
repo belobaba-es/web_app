@@ -1,12 +1,24 @@
 <template>
-  <ConfettiExplosion :particleCount="300" :force="0.3" />
-  <ConfettiExplosion :particleCount="1000" :force="3.3" />
+
+  <h1 class="font-bold text-center mt-5">{{t('twoFactorMessage')}}</h1>
 
   <section class="container-center mt-5">
-    <h1 class="font-bold">Two-factor authentication (2FA) is now enabled for your account noba.cash</h1>
+    <Message :closable="false" class="left-0">{{t('twoFactorSecondMessage')}}
+
+      <ul>
+        <li>{{t('twoFactorActionOne')}}</li>
+        <li>{{t('twoFactorActionTwo')}}</li>
+      </ul>
+    </Message>
+
   </section>
 </template>
 
 <script setup lang="ts">
-  import ConfettiExplosion from "vue-confetti-explosion"
+  import Message from 'primevue/message'
+  import {useI18n} from "vue-i18n";
+
+  const { t } = useI18n({
+    useScope: 'global',
+  })
 </script>
