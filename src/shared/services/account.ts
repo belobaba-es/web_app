@@ -1,5 +1,5 @@
-import { HttpService } from '../../../shared/services/http'
-import { UserAccount } from '../types/account'
+import { HttpService } from './http'
+import { UserAccount } from '../../views/withdraw/types/account'
 
 export class AccountService extends HttpService {
   private static _instance: AccountService
@@ -20,5 +20,9 @@ export class AccountService extends HttpService {
 
   async getAccountByEmail(email: string | string[]): Promise<UserAccount> {
     return await this.get<UserAccount>(`/account/owner-email/${email}`)
+  }
+
+  async enableTwoFactorAuthentication(): Promise<void> {
+    return await this.patch('account/two-factor-auth/enable', {}, true)
   }
 }

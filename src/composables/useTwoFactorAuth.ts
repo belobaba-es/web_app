@@ -7,6 +7,7 @@ import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
 import showMessage from '../shared/showMessageArray'
 import { useUserStore } from '../stores/user'
+import { AccountService } from '../shared/services/account'
 
 export const useTwoFactorAuth = () => {
   const isShowView = ref(false)
@@ -64,9 +65,7 @@ export const useTwoFactorAuth = () => {
   })
 
   const getCodeRecovery = (): string[] => {
-    console.log('======CODIGOS')
     console.log(twoFactorData.value?.code_recovery)
-    console.log('*****CODIGOS')
     if (twoFactorData.value?.code_recovery != undefined) {
       return twoFactorData.value.code_recovery
     }
@@ -144,14 +143,16 @@ export const useTwoFactorAuth = () => {
 
       TwoFactorService.instance()
         .active(payload)
-        .then(r => {
-          submitting.value = false
-
+        .then(async r => {
           toast.add({
             severity: 'info',
             detail: r.message,
             life: 4000,
           })
+
+          await AccountService.instance().enableTwoFactorAuthentication()
+
+          submitting.value = false
 
           setTwoFactorActive()
 
