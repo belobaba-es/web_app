@@ -74,7 +74,11 @@ export const useTwoFactorAuth = () => {
     return []
   }
 
-  const verifyCode = (): Promise<boolean> => {
+  /**
+   *
+   * @param account Es el accountId
+   */
+  const verifyCode = (account?: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       if (String(codeForVerify.value).length < 6) {
         toast.add({
@@ -88,8 +92,8 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: accountId.value,
-        code: codeForVerify.value,
+        accountId: account ?? accountId.value,
+        code: String(codeForVerify.value),
       }
 
       submitting.value = true
@@ -111,6 +115,16 @@ export const useTwoFactorAuth = () => {
               severity: 'error',
               summary: t('somethingWentWrong'),
               detail: e.response.data.error,
+              life: 6000,
+            })
+            return
+          }
+
+          if (e.response.data.message) {
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
               life: 6000,
             })
             return
@@ -178,7 +192,7 @@ export const useTwoFactorAuth = () => {
     const blob = new Blob([text], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.download = 'archivo.txt'
+    link.download = 'codesRecoveryTwoFactorAuth-NOBACASH.txt'
     link.href = url
     link.click()
   }

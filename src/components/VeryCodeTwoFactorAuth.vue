@@ -37,7 +37,11 @@ import Button from 'primevue/button'
 import {useTwoFactorAuth} from "../composables/useTwoFactorAuth";
 import {useI18n} from "vue-i18n";
 
+interface Props {
+  accountId?: string
+}
 
+const props = defineProps<Props>()
 
 const {verifyCode, codeForVerify, submitting} = useTwoFactorAuth()
 
@@ -46,7 +50,7 @@ const { t } = useI18n({ useScope: 'global' })
 const codeIsValidEmit  = defineEmits(['codeIsValid'])
 
 const makeVerifyCode = async () => {
-  const isValid = await verifyCode();
+  const isValid = await verifyCode(props.accountId);
 
   codeIsValidEmit('codeIsValid', isValid)
 }

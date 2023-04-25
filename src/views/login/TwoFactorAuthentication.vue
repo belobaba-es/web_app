@@ -4,7 +4,7 @@
   </div>
 
   <div class="container-main">
-    <VeryCodeTwoFactorAuth />
+    <VeryCodeTwoFactorAuth :account-id="props.loginData.accountId" @code-is-valid="isTwoFactorAuthCodeIsValid" />
 
     <Lang />
   </div>
@@ -15,6 +15,28 @@
 import logo from '../../assets/img/logo.svg'
 import VeryCodeTwoFactorAuth from "../../components/VeryCodeTwoFactorAuth.vue";
 import Lang from "../../components/Lang.vue";
+import {LoginData} from "./types/login.interface";
+import {useUserStore} from "../../stores/user";
+
+const userStore = useUserStore()
+
+interface Props {
+  loginData: LoginData
+}
+
+const props = defineProps<Props>()
+
+const isTwoFactorAuthCodeIsValid = (isValid: boolean) =>{
+  if(isValid) {
+    userStore.setUser(props.loginData)
+
+    if (props.loginData.account.status !== 'pending') {
+      window.location.href = '/dashboard'
+    } else {
+      window.location.href = `/profile/${props.loginData.accountId}`
+    }
+  }
+}
 
 </script>
 

@@ -1,8 +1,8 @@
 <template>
 
-  <Login v-if="!isNotTwoFactorActive" @accessIsValid="accessMade" />
+  <Login v-if="!isNotTwoFactorActive" @did-login="didLogin" />
 
-  <TwoFactorAuthentication v-if="isNotTwoFactorActive" />
+  <TwoFactorAuthentication v-if="isNotTwoFactorActive" :login-data="userPayload" />
 
 </template>
 
@@ -10,15 +10,32 @@
 import Login from "./Login.vue";
 import TwoFactorAuthentication from "./TwoFactorAuthentication.vue";
 import {ref} from "vue";
-import {useTwoFactorAuth} from "../../composables/useTwoFactorAuth";
+import {LoginData} from "./types/login.interface";
+import {useUserStore} from "../../stores/user";
 
 
 const isNotTwoFactorActive = ref<boolean>(false)
-const {twoFactorIsActive} = useTwoFactorAuth()
 
-const accessMade = (r: boolean) => {
-  if (r && !twoFactorIsActive()) {
+const userStore = useUserStore()
+
+const  userPayload = ref<LoginData>();
+
+const didLogin = (payload: LoginData) => {
+  userPayload.value = payload
+
+  console.log(userPayload.value)
+
+  if (userPayload.value.account.twoFactorActive) {
     isNotTwoFactorActive.value = true
+    return
+  }
+
+  userStore.setUser(userPayload.value)
+
+  if (userPayload.value.account.status !== 'pending') {
+    window.location.href = '/dashboard'
+  } else {
+    window.location.href = `/profile/${userPayload.value.accountId}`
   }
 }
 
