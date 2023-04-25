@@ -163,7 +163,7 @@ const {
 
 const { t } = useI18n({ useScope: 'global' })
 
-const route = useRoute()
+// const route = useRoute()
 
 onMounted(async () => {
   await fetchCountries()
@@ -175,8 +175,7 @@ onMounted(async () => {
     setFormInitialInfo()
     setIsAccountBusiness(isAccountBusinessComputed.value)
   }
-  console.log(getPartnerToEdit.value?.region)
-  console.log(getPartnerToEdit.value?.country)
+
   let data = {
     generalData: {
       email: getPartnerToEdit.value?.email.toLowerCase() ?? '',

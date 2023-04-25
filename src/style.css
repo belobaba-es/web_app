@@ -396,3 +396,10 @@ small {
     color: rgb(135, 135, 135);
     font-size: 0.7rem;
 }
+
+.p-progress-spinner {
+    position: fixed;
+    margin-left: 33%;
+    z-index: 999;
+    margin-top: 30%;
+}

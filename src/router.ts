@@ -41,6 +41,7 @@ import WalletIndex from './views/wallet/Wallet.vue'
 import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 
 import TransactionHistory from './views/transaction-history/Index.vue'
+import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -51,6 +52,11 @@ const routes: RouteRecordRaw[] = [
     path: '/forgot-password',
     component: ForgotPassword,
   },
+  {
+    path: '/recovery-two-factor-auth',
+    component: RecoveryTwoFactorAuth,
+  },
+
   {
     path: '/dashboard',
     component: Dashboard,
@@ -269,8 +275,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-
-  if (to.path !== '/' && to.path !== '/forgot-password' && !userStore.getUser) {
+  console.log(to.path)
+  if (
+    to.path !== '/' &&
+    to.path !== '/forgot-password' &&
+    to.path !== '/recovery-two-factor-auth/' &&
+    !userStore.getUser
+  ) {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser) {
     next({ path: '/dashboard' })

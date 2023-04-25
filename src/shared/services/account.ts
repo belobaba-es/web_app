@@ -25,4 +25,11 @@ export class AccountService extends HttpService {
   async enableTwoFactorAuthentication(): Promise<void> {
     return await this.patch('account/two-factor-auth/enable', {}, true)
   }
+
+  async disableTwoFactorAuthentication(account: string): Promise<void> {
+    const payload = {
+      accountId: account,
+    }
+    return await this.patch('account/two-factor-auth/disabled', payload, false)
+  }
 }

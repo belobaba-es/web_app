@@ -1,5 +1,5 @@
-import { HttpService } from '../../../shared/services/http'
-import { TwoFactor } from '../types/TwoFactorReponse'
+import { HttpService } from './http'
+import { TwoFactor } from '../../views/profile/types/TwoFactorReponse'
 
 export class TwoFactorService extends HttpService {
   private static _instance: TwoFactorService
@@ -31,5 +31,13 @@ export class TwoFactorService extends HttpService {
 
   async verifyCode(payload: any): Promise<any> {
     return await this.post<any>('verify', payload, false)
+  }
+
+  async verifyTokenToRecoveryTwoFactorAuth(accountId: string): Promise<any> {
+    const payload = {
+      accountId: accountId,
+    }
+
+    return await this.post<any>('verify-request-recovery-two-factor-auth', payload, false)
   }
 }

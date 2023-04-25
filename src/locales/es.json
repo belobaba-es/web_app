@@ -268,5 +268,13 @@
   "validVerifyCode":"código de verificación no puede estar vacío",
   "passwordHelpText": "Introduce tu clave de acceso",
   "verifyCode": "Verify code",
-  "enterCode": ""
+  "enterCode": "Introduce el código de verificación",
+  "verificationToken": "Verificando el token de solicitud de recuperación de la autenticación de doble factor",
+  "verificationTokenForRecoveryTwoFactorSuccess": "La solicitud fue procesada con exito",
+  "verificationTokenForRecoveryTwoFactorSuccessMessage": "Ahora podras ingresar a tu cuenta noba.cash. Una vez que ingreses sigue los siguentes pasos:",
+  "verificationTokenForRecoveryTwoFactorStep1": "Has click en el boton de login",
+  "verificationTokenForRecoveryTwoFactorStep2": "Ingresa a tu cuenta noba.cash.",
+  "verificationTokenForRecoveryTwoFactorStep3": "Abre a tu perfil, en el apartado configuración.",
+  "verificationTokenForRecoveryTwoFactorStep4": "Realiza el proceso de activación de la autenticación de dos factores.",
+  "verificationTokenForRecoveryTwoFactorFail": "La verificación de la solicitud de recuperación de la autenticación de dos factores fallo.",
 }

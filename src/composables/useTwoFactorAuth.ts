@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { CryptoService } from '../shared/services/crypto'
 import { useAccount } from './useAccount'
-import { TwoFactorService } from '../views/profile/services/twoFactor'
+import { TwoFactorService } from '../shared/services/twoFactor'
 import { useToast } from 'primevue/usetoast'
 import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
