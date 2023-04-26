@@ -288,5 +288,8 @@
   "requestRecoveryTwoFactorAuthTitle": "Request for Two-Factor Authentication Recovery.",
   "requestRecoveryTwoFactorAuthRequirements": "To request the recovery of the two-factor authentication, you must enter the recovery codes",
   "requestRecoveryTwoFactorAuthMessageSuccess": "An email was sent to recover the two-factor authentication. Don't forget to check your spam folder.",
-  "requestRecoveryTwoFactorAuthBtn": "Make the request"
+  "requestRecoveryTwoFactorAuthBtn": "Make the request",
+  "twoFactorAuthText": "Enter the code from your two-factor authenticator app. If you've lost your device, you can enter one of your recovery codes.",
+  "twoFactorAuthRecoveryText": "Recover two-factor authentication",
+  "twoFactorAuthCodeLabel": "Enter verification code"
 }

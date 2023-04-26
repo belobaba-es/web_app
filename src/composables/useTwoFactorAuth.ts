@@ -24,7 +24,7 @@ export const useTwoFactorAuth = () => {
 
   const lookQRTwoFactor = async (): Promise<void> => {
     const payload = {
-      accountId: accountId.value,
+      accountId: userStore.getUser.account.accountId,
       email: email.value,
       name: fullName.value,
     }
@@ -88,7 +88,7 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: account ?? accountId.value,
+        accountId: account ?? userStore.getUser.account.accountId,
         code: String(codeForVerify.value),
       }
 
