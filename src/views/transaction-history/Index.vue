@@ -4,8 +4,11 @@
 
     <ProgressSpinner
       v-if="isLoadingTransactionDetails"
-      style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-      animationDuration=".5s" aria-label="Custom ProgressSpinner"
+      style="width: 50px; height: 50px"
+      strokeWidth="8"
+      fill="var(--surface-ground)"
+      animationDuration=".5s"
+      aria-label="Custom ProgressSpinner"
     />
 
     <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
@@ -94,7 +97,11 @@
               <div class="col sm:col-1 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
-                    <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="iconAsset(item.assetCode)" />
+                    <img
+                      class="icon-cripto"
+                      alt="icon-{{ item.assetCode }}"
+                      :src="iconAsset(item.assetCode, listAssets)"
+                    />
                   </div>
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
@@ -122,7 +129,10 @@
               <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
                 <router-link
                   class="link-modal-data-transaction"
-                  to="#" exact role="menuitem" v-ripple
+                  to="#"
+                  exact
+                  role="menuitem"
+                  v-ripple
                   @click="openModalTransactionDetails($event, item)"
                 >
                   <h4>
@@ -162,8 +172,8 @@
   </section>
 
   <ModalTransactionDetails
-      v-model:display="displayModalTransactionDetail"
-      :transaction="modalTransactionDetail"
+    v-model:display="displayModalTransactionDetail"
+    :transaction="modalTransactionDetail"
   ></ModalTransactionDetails>
 </template>
 
@@ -189,9 +199,10 @@ import { useUserStore } from '../../stores/user'
 import { secondsToDate } from '../../shared/secondsToDate'
 import { iconAsset } from '../../shared/iconAsset'
 import { useToast } from 'primevue/usetoast'
-import {TransactionHistoricService} from "./services/transaction-history";
-import {HistoricService} from "../wallet/services/historic";
-import ModalTransactionDetails, {TransactionModalPayload} from "../../components/ModalTransactionDetails.vue";
+import { TransactionHistoricService } from './services/transaction-history'
+import { HistoricService } from '../wallet/services/historic'
+import ModalTransactionDetails, { TransactionModalPayload } from '../../components/ModalTransactionDetails.vue'
+import { Asset } from '../deposit/types/asset.interface'
 
 const router = useRouter()
 const route = useRoute()
@@ -226,6 +237,7 @@ const toast = useToast()
 
 const assetsService = AssetsService.instance()
 const assets = ref<{ name: string; code: string }[]>([])
+const listAssets = ref<Asset[]>([])
 
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
@@ -241,6 +253,8 @@ const nextPage = ref({
 
 onMounted(async () => {
   await assetsService.list().then(data => {
+    listAssets.value = data
+
     let a = [
       {
         name: t('allItems'),
@@ -394,16 +408,19 @@ const openModalTransactionDetails = (event: any, transaction: any) => {
 
 const loadTransactionDetail = async (transaction: any) => {
   await getTransactonHistoric
-      .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
-      .then(data => {
-        const nameTo = `${(transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label) ?? ''}`
+    .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+    .then(data => {
+      const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
 
-        displayModalTransactionDetail.value = true
-        isLoadingTransactionDetails.value = false
-        modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload), nameTo } as TransactionModalPayload
-      })
+      displayModalTransactionDetail.value = true
+      isLoadingTransactionDetails.value = false
+      modalTransactionDetail.value = {
+        ...modalTransactionDetail.value,
+        ...(data as TransactionModalPayload),
+        nameTo,
+      } as TransactionModalPayload
+    })
 }
-
 </script>
 <style lang="scss" scoped>
 .dropdown-full {
