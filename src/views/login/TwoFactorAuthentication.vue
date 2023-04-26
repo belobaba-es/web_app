@@ -1,16 +1,22 @@
 <template>
-  <div v-if="!recoveryTwoFactorAuth">
+  <div v-if="!isRecoveryTwoFactorAuth">
     <div class="container-center">
       <img class="logo-noba" :src="logo" alt="logo" />
     </div>
 
     <div class="container-main">
-      <VeryCodeTwoFactorAuth :account-id="props.loginData.accountId" @code-is-valid="isTwoFactorAuthCodeIsValid" />
+      <VeryCodeTwoFactorAuth
+        :account-id="props.loginData.accountId"
+        :recover-link="true"
+        @code-is-valid="isTwoFactorAuthCodeIsValid"
+        @recovery-two-factor-auth="recoveryTwoFactorAuth"
+      />
+
       <Lang />
     </div>
   </div>
 
-  <TwoFactorAuthRecovery v-if="recoveryTwoFactorAuth" :account-id="props.loginData.accountId" />
+  <TwoFactorAuthRecovery v-if="isRecoveryTwoFactorAuth" :account-id="props.loginData.accountId" />
 </template>
 <script setup lang="ts">
 import logo from '../../assets/img/logo.svg'
@@ -20,9 +26,14 @@ import { LoginData } from './types/login.interface'
 import { useUserStore } from '../../stores/user'
 import { ref } from 'vue'
 import TwoFactorAuthRecovery from './TwoFactorAuthRecovery.vue'
+import { useI18n } from 'vue-i18n'
 
 const userStore = useUserStore()
-const recoveryTwoFactorAuth = ref(true)
+const isRecoveryTwoFactorAuth = ref(false)
+
+const { t } = useI18n({
+  useScope: 'global',
+})
 
 interface Props {
   loginData: LoginData
@@ -39,6 +50,12 @@ const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
     } else {
       window.location.href = `/profile/${props.loginData.accountId}`
     }
+  }
+}
+
+const recoveryTwoFactorAuth = (res: boolean) => {
+  if (res) {
+    isRecoveryTwoFactorAuth.value = true
   }
 }
 </script>
