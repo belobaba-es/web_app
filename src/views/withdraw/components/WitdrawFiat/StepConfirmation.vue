@@ -89,6 +89,7 @@ const props = defineProps<{
 
 const verifyCodeTwoFactorAuth = (res: boolean) => {
   if (res) {
+    visibleModalVeryCodeTwoFactor.value = false
     makeTransaction()
   }
 }
