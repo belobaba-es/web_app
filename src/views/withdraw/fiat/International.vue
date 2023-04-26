@@ -33,7 +33,7 @@ import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
-import { AccountService } from '../services/account'
+import { AccountService } from '../../../shared/services/account'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'

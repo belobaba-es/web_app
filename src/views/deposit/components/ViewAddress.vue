@@ -75,7 +75,7 @@ const copyToClipboardWalletAddress = (walletAddress: string | undefined) => {
       severity: 'success',
       summary: t('successfulOperation'),
       detail: t('textCopySuccessful'),
-      life: 3000,
+      life: 6000,
     })
   }
 }
