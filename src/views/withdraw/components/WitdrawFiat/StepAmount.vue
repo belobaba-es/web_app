@@ -34,7 +34,8 @@
         <InputNumber
           id="amount"
           type="number"
-          :minFractionDigits="2" :maxFractionDigits="2"
+          :minFractionDigits="2"
+          :maxFractionDigits="2"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
           :placeholder="t('amount')"
@@ -67,10 +68,10 @@
         />
       </div>
     </div>
-    <!--    <div class="col-12 m-2">-->
-    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-    <!--    </div>-->
-    <div class="col-6">
+
+    <MessageAlertActiveTwoFactorAuth v-if="!twoFactorIsActive()" />
+
+    <div class="col-6" v-if="twoFactorIsActive()">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
@@ -88,6 +89,8 @@ import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '../../../../stores/user'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -102,6 +105,7 @@ const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
 const userStore = useUserStore()
+const { twoFactorIsActive } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')
 
