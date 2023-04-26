@@ -40,30 +40,30 @@
           <div class="container-flex mt-lg-2">
             <div class="float-left w-25">
               <Button
-                  type="button"
-                  icon="pi pi-angle-left"
-                  :label="t('backButtonTitle')"
-                  class="font-light w-100 border-300 p-button-outlined"
-                  @click="redirectPage"
+                type="button"
+                icon="pi pi-angle-left"
+                :label="t('backButtonTitle')"
+                class="font-light w-100 border-300 p-button-outlined"
+                @click="redirectPage"
               />
             </div>
             <div class="float-right w-25">
               <Button
-                  type="submit"
-                  icon="pi pi-angle-right"
-                  iconPos="right"
-                  label="Login"
-                  class="font-light w-100"
-                  :loading="submitting"
+                type="submit"
+                icon="pi pi-angle-right"
+                iconPos="right"
+                label="Login"
+                class="font-light w-100"
+                :loading="submitting"
               />
             </div>
           </div>
 
           <Button
-              type="button"
-              :label="t('noAccount')"
-              class="font-light mt-lg-5 with-buttons p-button-outlined border-300"
-              @click="redirectSignin"
+            type="button"
+            :label="t('noAccount')"
+            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
+            @click="redirectSignin"
           />
         </form>
       </div>
@@ -86,7 +86,6 @@ import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { LoginService } from './services/login'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../../stores/user'
 import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
 
@@ -94,7 +93,7 @@ const submitting = ref(false)
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const didLoginEmit  = defineEmits(['didLogin'])
+const didLoginEmit = defineEmits(['didLogin'])
 
 const loginService = LoginService.instance()
 const form = reactive({
@@ -116,27 +115,25 @@ const redirectPage = () => {
 const handleSubmit = () => {
   submitting.value = true
   loginService
-      .login(form.user.toLowerCase(), form.pass)
-      .then(data => {
-        const { data: userPayload } = data
+    .login(form.user.toLowerCase(), form.pass)
+    .then(data => {
+      const { data: userPayload } = data
 
-        submitting.value = false
+      submitting.value = false
 
-        didLoginEmit('didLogin', userPayload);
-
+      didLoginEmit('didLogin', userPayload)
+    })
+    .catch(e => {
+      submitting.value = false
+      toast.add({
+        severity: 'info',
+        summary: t('somethingWentWrong'),
+        detail: e.response.data.message,
+        life: 4000,
       })
-      .catch(e => {
-        submitting.value = false
-        toast.add({
-          severity: 'info',
-          summary: t('somethingWentWrong'),
-          detail: e.response.data.message,
-          life: 4000,
-        })
-      })
+    })
 }
 </script>
-
 
 <style lang="css" scoped>
 .container-main {
@@ -163,6 +160,4 @@ const handleSubmit = () => {
   width: 142px;
   height: 64px;
 }
-
-
 </style>

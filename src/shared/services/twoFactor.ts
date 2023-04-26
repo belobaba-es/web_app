@@ -40,4 +40,13 @@ export class TwoFactorService extends HttpService {
 
     return await this.post<any>('verify-request-recovery-two-factor-auth', payload, false)
   }
+
+  async requestRecoveryTwoFactorAuth(codes: string[], accountId: string) {
+    const payload = {
+      accountId: accountId,
+      codeRecovery: codes,
+    }
+
+    return await this.post('recovery', payload, false)
+  }
 }

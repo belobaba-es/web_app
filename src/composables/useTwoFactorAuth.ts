@@ -1,17 +1,14 @@
 import { computed, ref } from 'vue'
-import { CryptoService } from '../shared/services/crypto'
 import { useAccount } from './useAccount'
 import { TwoFactorService } from '../shared/services/twoFactor'
 import { useToast } from 'primevue/usetoast'
 import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
-import showMessage from '../shared/showMessageArray'
 import { useUserStore } from '../stores/user'
 import { AccountService } from '../shared/services/account'
 
 export const useTwoFactorAuth = () => {
   const isShowView = ref(false)
-  const isShowViewDownloadCodeRecovery = ref(false)
   const submitting = ref(false)
   const twoFactorData = ref<TwoFactor>()
   const codeForVerify = ref<number>()

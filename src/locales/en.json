@@ -284,5 +284,9 @@
   "verificationTokenForRecoveryTwoFactorStep2": "Access your noba.cash account.",
   "verificationTokenForRecoveryTwoFactorStep3": "Go to your profile, in the configuration section.",
   "verificationTokenForRecoveryTwoFactorStep4": "Complete the two-factor authentication activation process.",
-  "verificationTokenForRecoveryTwoFactorFail": "The verification of the two-factor authentication recovery request failed."
+  "verificationTokenForRecoveryTwoFactorFail": "The verification of the two-factor authentication recovery request failed.",
+  "requestRecoveryTwoFactorAuthTitle": "Request for Two-Factor Authentication Recovery.",
+  "requestRecoveryTwoFactorAuthRequirements": "To request the recovery of the two-factor authentication, you must enter the recovery codes",
+  "requestRecoveryTwoFactorAuthMessageSuccess": "An email was sent to recover the two-factor authentication. Don't forget to check your spam folder.",
+  "requestRecoveryTwoFactorAuthBtn": "Make the request"
 }

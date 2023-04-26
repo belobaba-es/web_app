@@ -1,24 +1,28 @@
 <template>
-  <div class="container-center">
-    <img class="logo-noba" :src="logo" alt="logo" />
+  <div v-if="!recoveryTwoFactorAuth">
+    <div class="container-center">
+      <img class="logo-noba" :src="logo" alt="logo" />
+    </div>
+
+    <div class="container-main">
+      <VeryCodeTwoFactorAuth :account-id="props.loginData.accountId" @code-is-valid="isTwoFactorAuthCodeIsValid" />
+      <Lang />
+    </div>
   </div>
 
-  <div class="container-main">
-    <VeryCodeTwoFactorAuth :account-id="props.loginData.accountId" @code-is-valid="isTwoFactorAuthCodeIsValid" />
-
-    <Lang />
-  </div>
-
-
+  <TwoFactorAuthRecovery v-if="recoveryTwoFactorAuth" :account-id="props.loginData.accountId" />
 </template>
 <script setup lang="ts">
 import logo from '../../assets/img/logo.svg'
-import VeryCodeTwoFactorAuth from "../../components/VeryCodeTwoFactorAuth.vue";
-import Lang from "../../components/Lang.vue";
-import {LoginData} from "./types/login.interface";
-import {useUserStore} from "../../stores/user";
+import VeryCodeTwoFactorAuth from '../../components/VeryCodeTwoFactorAuth.vue'
+import Lang from '../../components/Lang.vue'
+import { LoginData } from './types/login.interface'
+import { useUserStore } from '../../stores/user'
+import { ref } from 'vue'
+import TwoFactorAuthRecovery from './TwoFactorAuthRecovery.vue'
 
 const userStore = useUserStore()
+const recoveryTwoFactorAuth = ref(true)
 
 interface Props {
   loginData: LoginData
@@ -26,8 +30,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const isTwoFactorAuthCodeIsValid = (isValid: boolean) =>{
-  if(isValid) {
+const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
+  if (isValid) {
     userStore.setUser(props.loginData)
 
     if (props.loginData.account.status !== 'pending') {
@@ -37,9 +41,7 @@ const isTwoFactorAuthCodeIsValid = (isValid: boolean) =>{
     }
   }
 }
-
 </script>
-
 
 <style lang="css" scoped>
 .container-main {

@@ -277,4 +277,8 @@
   "verificationTokenForRecoveryTwoFactorStep3": "Abre a tu perfil, en el apartado configuración.",
   "verificationTokenForRecoveryTwoFactorStep4": "Realiza el proceso de activación de la autenticación de dos factores.",
   "verificationTokenForRecoveryTwoFactorFail": "La verificación de la solicitud de recuperación de la autenticación de dos factores fallo.",
+  "requestRecoveryTwoFactorAuthTitle": "Solicitud de recuperación del doble factor de autenticación",
+  "requestRecoveryTwoFactorAuthRequirements": "Para solicitar la recuperación del doble factor de autenticación debe ingresar los código de recuperación",
+  "requestRecoveryTwoFactorAuthMessageSuccess": "Se envió un correo electrónico para recuperar el factor de doble autenticación. No olvide revisar su bandeja de spam",
+  "requestRecoveryTwoFactorAuthBtn": "Hacer la solicitud"
 }
