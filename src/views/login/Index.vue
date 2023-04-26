@@ -1,7 +1,9 @@
 <template>
   <Login v-if="!isNotTwoFactorActive" @did-login="didLogin" />
 
-  <TwoFactorAuthentication v-if="isNotTwoFactorActive" :login-data="userPayload" />
+  <div v-if="userPayload !== undefined">
+    <TwoFactorAuthentication v-if="isNotTwoFactorActive" :login-data="userPayload" />
+  </div>
 </template>
 
 <script setup lang="ts">
