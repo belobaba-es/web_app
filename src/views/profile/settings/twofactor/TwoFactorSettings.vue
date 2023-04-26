@@ -21,7 +21,7 @@
         <div class="md:col-4">
           <Label>Verify the code from the app</Label>
           <div class="p-inputgroup">
-            <InputText placeholder="Write code" v-model="codeForVerify" />
+            <InputNumber placeholder="Write code" v-model="codeForVerify" />
           </div>
           <div class="p-inputgroup">
             <Button
@@ -55,19 +55,20 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import Image from 'primevue/image'
-import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import TwoFactorSkeleton from './TwoFactorSkeleton.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { onMounted, ref } from 'vue'
-import TwoFactorDownloadCodeRecovery from "./TwoFactorDownloadCodeRecovery.vue";
+import TwoFactorDownloadCodeRecovery from './TwoFactorDownloadCodeRecovery.vue'
 
 const { t } = useI18n({
   useScope: 'global',
 })
 
-const { submitting, lookQRTwoFactor, isShowView, getQR, getSecret, codeForVerify, verifyCode, getCodeRecovery } = useTwoFactorAuth()
+const { submitting, lookQRTwoFactor, isShowView, getQR, getSecret, codeForVerify, verifyCode, getCodeRecovery } =
+  useTwoFactorAuth()
 
 const visible = ref(false)
 const visibleRecoveryCodes = ref(false)
@@ -95,7 +96,6 @@ const nextStep = async () => {
   if (codeValid) {
     visibleRecoveryCodes.value = true
   }
-
 }
 </script>
 
