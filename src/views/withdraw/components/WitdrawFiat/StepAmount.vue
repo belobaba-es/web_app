@@ -69,9 +69,9 @@
       </div>
     </div>
 
-    <MessageAlertActiveTwoFactorAuth v-if="!twoFactorIsActive()" />
+    <MessageAlertActiveTwoFactorAuth />
 
-    <div class="col-6" v-if="twoFactorIsActive()">
+    <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
@@ -91,6 +91,7 @@ import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '../../../../stores/user'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
+import { twoFactorAuthenticationIsActiveRemotely } from '../../../../shared/services/remoteConfig'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -105,7 +106,7 @@ const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
 const userStore = useUserStore()
-const { twoFactorIsActive } = useTwoFactorAuth()
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')
 
@@ -116,7 +117,7 @@ const events = ref<any>([
 const typeTransaction = ref('domestic')
 
 onMounted(async () => {
-  if (props.formData.typeTransaction.toLowerCase() !== 'domestic') {
+  if (props.formData.typeTransaction && props.formData.typeTransaction.toLowerCase() !== 'domestic') {
     typeTransaction.value = 'international'
   }
   getUserFee()
