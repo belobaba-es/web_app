@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import Dialog from 'primevue/Dialog'
+import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
