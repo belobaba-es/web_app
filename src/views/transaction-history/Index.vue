@@ -97,7 +97,11 @@
               <div class="col sm:col-1 md:col-6 lg:col-3 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
-                    <img class="icon-cripto" alt="icon-{{ item.assetCode }}" :src="iconAsset(item.assetCode)" />
+                    <img
+                      class="icon-cripto"
+                      alt="icon-{{ item.assetCode }}"
+                      :src="iconAsset(item.assetCode, listAssets)"
+                    />
                   </div>
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
@@ -198,6 +202,7 @@ import { useToast } from 'primevue/usetoast'
 import { TransactionHistoricService } from './services/transaction-history'
 import { HistoricService } from '../wallet/services/historic'
 import ModalTransactionDetails, { TransactionModalPayload } from '../../components/ModalTransactionDetails.vue'
+import { Asset } from '../deposit/types/asset.interface'
 
 const router = useRouter()
 const route = useRoute()
@@ -232,6 +237,7 @@ const toast = useToast()
 
 const assetsService = AssetsService.instance()
 const assets = ref<{ name: string; code: string }[]>([])
+const listAssets = ref<Asset[]>([])
 
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
@@ -247,6 +253,8 @@ const nextPage = ref({
 
 onMounted(async () => {
   await assetsService.list().then(data => {
+    listAssets.value = data
+
     let a = [
       {
         name: t('allItems'),
@@ -461,5 +469,12 @@ const loadTransactionDetail = async (transaction: any) => {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.p-progress-spinner {
+  position: fixed;
+  margin-left: 33%;
+  z-index: 999;
+  margin-top: 30%;
 }
 </style>

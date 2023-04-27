@@ -24,11 +24,11 @@
             <tr v-for="item in quotes.results">
               <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
-                <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute bottom-0 right-0" />
+                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
               <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">
-                <img :src="iconAsset(item.code)" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
@@ -99,13 +99,23 @@ import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
 import { secondsToDate } from '../../shared/secondsToDate'
 import { iconAsset } from '../../shared/iconAsset'
+import { Asset } from '../deposit/types/asset.interface'
+import { AssetsService } from '../deposit/services/assets'
 
 const { t } = useI18n({ useScope: 'global' })
 const { quotes } = useSwap()
 const { fetchQuotes, getNextPage } = useSwapStore()
 const router = useRouter()
 
+const listAssets = ref<Asset[]>([])
+
+const assetsService = AssetsService.instance()
+
 onMounted(async () => {
+  await assetsService.list().then(data => {
+    listAssets.value = data
+  })
+
   await fetchQuotes()
 })
 
