@@ -50,7 +50,7 @@
       class="w-50 p-button search-btn"
       iconPos="right"
       :label="t('confirmWithdraw')"
-      @click="() => (visibleModalVeryCodeTwoFactor = true)"
+      @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
       :loading="submitting"
     />
   </div>
@@ -74,8 +74,10 @@ import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import ConfirmationCompletedWithOtherPlatformsWallet from './ConfirmationCompletedWithOtherPlatformsWallet.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const router = useRouter()
@@ -97,6 +99,14 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
   if (res) {
     visibleModalVeryCodeTwoFactor.value = false
     makeTransaction()
+  }
+}
+
+const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    makeTransaction()
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
   }
 }
 

@@ -26,6 +26,10 @@ export const useTwoFactorAuth = () => {
 
   onMounted(async () => {
     const isActiveRemotely = await twoFactorAuthenticationIsActiveRemotely()
+
+    console.log('FFFFFFFFFFFFF XXXXXX', isActiveRemotely)
+    console.log('XXXXXXXXXXXXX FFFFFFF', twoFactorIsActive())
+
     if (isActiveRemotely && !twoFactorIsActive()) {
       isEnabledButtonToProceedWithdrawal.value = false
     }

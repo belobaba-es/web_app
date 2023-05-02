@@ -36,7 +36,7 @@
       class="w-50 p-button search-btn"
       iconPos="right"
       :label="t('continue')"
-      @click="() => (visibleModalVeryCodeTwoFactor = true)"
+      @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
       :loading="submitting"
     />
 
@@ -67,9 +67,11 @@ import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '../../../../stores/user'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
+const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const submitting = ref(false)
 const isCompleted = ref(false)
 
@@ -86,6 +88,19 @@ const username = userStore.getUser.firstName
 const props = defineProps<{
   formData: any
 }>()
+
+const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    console.log('OOOOOOJJJJJJJJJJ', twoFactorIsActive())
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
+    } else {
+      makeTransaction()
+    }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
+  }
+}
 
 const verifyCodeTwoFactorAuth = (res: boolean) => {
   if (res) {
@@ -140,18 +155,5 @@ const showSuccessMessage = () => {
 
 .mt-5 {
   margin-top: 22px !important;
-}
-
-.btn-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-routing {
-  background-color: white;
-  color: black;
-  border: 1px solid #e7e6e7;
-  border-radius: 5px;
-  opacity: 1;
 }
 </style>

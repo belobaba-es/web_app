@@ -35,7 +35,7 @@
       class="w-50 p-button search-btn"
       iconPos="right"
       :label="t('confirmWithdraw')"
-      @click="() => (visibleModalVeryCodeTwoFactor = true)"
+      @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
       :loading="submitting"
     />
   </div>
@@ -72,10 +72,12 @@ import { useUserStore } from '../../../../stores/user'
 import ConfirmationCompletedWithdrawInternal from './ConfirmationCompletedWithdrawInternal.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
 const toast = useToast()
+const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
@@ -98,6 +100,19 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
   if (res) {
     visibleModalVeryCodeTwoFactor.value = false
     makeTransaction()
+  }
+}
+
+const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    console.log('OOOOOOJJJJJJJJJJ', twoFactorIsActive())
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
+    } else {
+      makeTransaction()
+    }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
   }
 }
 

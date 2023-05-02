@@ -80,7 +80,7 @@
 
     <MessageAlertActiveTwoFactorAuth />
 
-    <div class="col-6" v-if="enabledButtonToProceedWithdrawal()">
+    <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
@@ -104,7 +104,7 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
-const { enabledButtonToProceedWithdrawal } = useTwoFactorAuth()
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 const props = defineProps<{
   formData: any
