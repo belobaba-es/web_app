@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app'
-import { getRemoteConfig } from 'firebase/remote-config'
+import { fetchConfig, getAll, getBoolean, getRemoteConfig } from 'firebase/remote-config'
 import { RemoteConfig } from '@firebase/remote-config'
 import { getValue } from 'firebase/remote-config'
+import { FirebaseService } from './firebase'
+import { onValue, ref } from 'firebase/database'
 
 const initRemoteConfig = async (): Promise<RemoteConfig> => {
   const config = {
@@ -19,15 +21,32 @@ const initRemoteConfig = async (): Promise<RemoteConfig> => {
 
   const remoteConfig = getRemoteConfig(app)
 
-  remoteConfig.settings.minimumFetchIntervalMillis = 3600000
+  // remoteConfig.settings.minimumFetchIntervalMillis = 36000
+  remoteConfig.settings.minimumFetchIntervalMillis = 300
 
   return remoteConfig
 }
 
-const twoFactorAuthenticationIsActiveRemotely = async (): Promise<boolean> => {
-  const remoteConfig = await initRemoteConfig()
+export const twoFactorAuthenticationIsActiveRemotely = async (): Promise<boolean> => {
+  // const remoteConfig = await initRemoteConfig()
+  //
+  // await fetchConfig(remoteConfig)
+  // // await getAll(remoteConfig)
+  // const f = getBoolean(remoteConfig, 'twoFactorAuth')
+  //
+  // console.log('RERRRRR', f)
 
-  const val = getValue(remoteConfig, 'twoFactorAuth')
+  return new Promise(async resolve => {
+    const db = await FirebaseService.initFirebase()
+    const collection = ref(db, 'twoFactorAuth')
 
-  return false
+    onValue(collection, async snapshot => {
+      if (snapshot.exists()) {
+        console.log('RESSS', snapshot.val())
+        resolve(snapshot.val() as boolean)
+      } else {
+        resolve(false)
+      }
+    })
+  })
 }

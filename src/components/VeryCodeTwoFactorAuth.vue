@@ -1,20 +1,17 @@
 <template>
   <div class="lg:bg-contain container">
-    <div class="pt-5">
+    <div class="pt-3">
       <div class="field">
-        <label class="font-light">Enter verification code</label>
+        <label class="font-light">{{ t('twoFactorAuthCodeLabel') }}</label>
         <div class="p-inputgroup">
           <InputNumber :useGrouping="false" :disabled="submitting" v-model="codeForVerify" />
         </div>
         <div class="help-text">
-          <span
-            >Enter the code from your two-factor authenticator app. If you've lost your device, you can enter one of
-            your recovery codes.</span
-          >
+          <span>{{ t('twoFactorAuthText') }}</span>
         </div>
       </div>
       <div class="container-flex mt-lg-2">
-        <div class="float-left w-25">
+        <div class="float-left w-30">
           <Button
             type="submit"
             class="mt-4"
@@ -26,9 +23,9 @@
           />
         </div>
 
-        <div class="float-right w-25">
+        <div class="float-right w-25" v-if="recoveryLink">
           <p class="green-color cursor-pointer" style="padding-top: 2rem !important" @click="recoveryTwoFactorAuth">
-            Recuperar doble factor
+            {{ t('twoFactorAuthRecoveryText') }}
           </p>
         </div>
       </div>

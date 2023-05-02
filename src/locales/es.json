@@ -267,7 +267,7 @@
   "twoFactorActionTwo": "Confirmar retiros desde tu cuenta noba.cash",
   "validVerifyCode":"código de verificación no puede estar vacío",
   "passwordHelpText": "Introduce tu clave de acceso",
-  "verifyCode": "Verify code",
+  "verifyCode": "Verificar el código",
   "enterCode": "Introduce el código de verificación",
   "verificationToken": "Verificando el token de solicitud de recuperación de la autenticación de doble factor",
   "verificationTokenForRecoveryTwoFactorSuccess": "La solicitud fue procesada con exito",
@@ -280,5 +280,9 @@
   "requestRecoveryTwoFactorAuthTitle": "Solicitud de recuperación del doble factor de autenticación",
   "requestRecoveryTwoFactorAuthRequirements": "Para solicitar la recuperación del doble factor de autenticación debe ingresar los código de recuperación",
   "requestRecoveryTwoFactorAuthMessageSuccess": "Se envió un correo electrónico para recuperar el factor de doble autenticación. No olvide revisar su bandeja de spam",
-  "requestRecoveryTwoFactorAuthBtn": "Hacer la solicitud"
+  "requestRecoveryTwoFactorAuthBtn": "Hacer la solicitud",
+  "twoFactorAuthText": "Ingrese el código de su aplicación de autenticación de dos factores. Si ha perdido su dispositivo, puede ingresar uno de sus códigos de recuperación.",
+  "twoFactorAuthRecoveryText": "Recuperar autenticación de dos factores",
+  "twoFactorAuthCodeLabel": "Introduce el código de verificación",
+  "addNewBeneficiary": "Agregar nueva billetera de beneficiario"
 }

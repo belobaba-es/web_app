@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAccount } from './useAccount'
 import { TwoFactorService } from '../shared/services/twoFactor'
 import { useToast } from 'primevue/usetoast'
@@ -6,9 +6,11 @@ import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '../stores/user'
 import { AccountService } from '../shared/services/account'
+import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
 
 export const useTwoFactorAuth = () => {
   const isShowView = ref(false)
+  const isEnabledButtonToProceedWithdrawal = ref(true)
   const submitting = ref(false)
   const twoFactorData = ref<TwoFactor>()
   const codeForVerify = ref<number>()
@@ -22,9 +24,24 @@ export const useTwoFactorAuth = () => {
     useScope: 'global',
   })
 
+  onMounted(async () => {
+    const isActiveRemotely = await twoFactorAuthenticationIsActiveRemotely()
+
+    console.log('FFFFFFFFFFFFF XXXXXX', isActiveRemotely)
+    console.log('XXXXXXXXXXXXX FFFFFFF', twoFactorIsActive())
+
+    if (isActiveRemotely && !twoFactorIsActive()) {
+      isEnabledButtonToProceedWithdrawal.value = false
+    }
+
+    if (isActiveRemotely && twoFactorIsActive()) {
+      isEnabledButtonToProceedWithdrawal.value = true
+    }
+  })
+
   const lookQRTwoFactor = async (): Promise<void> => {
     const payload = {
-      accountId: accountId.value,
+      accountId: userStore.getUser.account.accountId,
       email: email.value,
       name: fullName.value,
     }
@@ -33,8 +50,6 @@ export const useTwoFactorAuth = () => {
       .request(payload)
       .then((r: TwoFactor) => {
         twoFactorData.value = r
-
-        console.log(twoFactorData.value)
 
         isShowView.value = true
       })
@@ -88,7 +103,7 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: account ?? accountId.value,
+        accountId: account ?? userStore.getUser.account.accountId,
         code: String(codeForVerify.value),
       }
 
@@ -182,6 +197,7 @@ export const useTwoFactorAuth = () => {
 
   const twoFactorIsActive = (): boolean => {
     const user = userStore.getUser
+    console.log(user.account.twoFactorActive === true)
     return user.account.twoFactorActive === true
   }
 
@@ -201,6 +217,7 @@ export const useTwoFactorAuth = () => {
     isShowView,
     submitting,
     codeForVerify,
+    isEnabledButtonToProceedWithdrawal,
     downloadCodeRecoveryTxtFile,
     verifyCode,
     getCodeRecovery,
