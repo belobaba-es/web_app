@@ -11,7 +11,7 @@ import Login from './Login.vue'
 import TwoFactorAuthentication from './TwoFactorAuthentication.vue'
 import { ref } from 'vue'
 import { LoginData } from './types/login.interface'
-import { useUserStore } from '../../stores/user'
+import {User, useUserStore} from '../../stores/user'
 import { twoFactorAuthenticationIsActiveRemotely } from '../../shared/services/remoteConfig'
 
 const isNotTwoFactorActive = ref<boolean>(false)
@@ -24,13 +24,13 @@ const didLogin = async (payload: LoginData) => {
   userPayload.value = payload
 
   if (await twoFactorAuthenticationIsActiveRemotely()) {
-    if (userPayload.value.account.twoFactorActive) {
+    if (userPayload.value?.account.twoFactorActive) {
       isNotTwoFactorActive.value = true
       return
     }
   }
 
-  userStore.setUser(userPayload.value)
+  userStore.setUser(userPayload.value as User)
 
   if (userPayload.value.account.status !== 'pending') {
     window.location.href = '/dashboard'

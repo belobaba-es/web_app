@@ -6,6 +6,7 @@ export interface LoginResponse {
 export interface LoginData {
   active: boolean
   accountId: string
+  name: string
   email: string
   token: string
   country: string
