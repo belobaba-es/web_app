@@ -21,9 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAccount } from '../../../composables/useAccount'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import ChangePassword from './ChangePassword.vue'
@@ -38,16 +36,6 @@ const { t } = useI18n({
 
 const { twoFactorIsActive } = useTwoFactorAuth()
 
-const { submitUpdatePassword, submitting, newPassword, confirmNewPassword, currentPassword } = useAccount()
-
-const showPassword = ref<boolean>(false)
-
-const toggleShowPassword = () => {
-  showPassword.value = !showPassword.value
-}
-
-const eyeIconState = computed(() => (showPassword.value ? 'pi pi-eye-slash' : 'pi pi-eye'))
-const inputPasswordType = computed(() => (showPassword.value ? 'text' : 'password'))
 </script>
 
 <style lang="css" scoped></style>
