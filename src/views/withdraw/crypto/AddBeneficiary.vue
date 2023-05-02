@@ -79,6 +79,16 @@ const saveBeneficiary = () => {
       detail: resp.message,
       life: 4000,
     })
+  }).catch(error => {
+      if (error.response.data.message) {
+          toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: error.response.data.message,
+              life: 4000,
+          })
+          return
+      }
   })
 }
 </script>
