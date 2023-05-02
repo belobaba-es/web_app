@@ -4,7 +4,7 @@ import { TwoFactorService } from '../shared/services/twoFactor'
 import { useToast } from 'primevue/usetoast'
 import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
-import { useUserStore } from '../stores/user'
+import {User, useUserStore} from '../stores/user'
 import { AccountService } from '../shared/services/account'
 import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
 
@@ -27,9 +27,6 @@ export const useTwoFactorAuth = () => {
   onMounted(async () => {
     const isActiveRemotely = await twoFactorAuthenticationIsActiveRemotely()
 
-    console.log('FFFFFFFFFFFFF XXXXXX', isActiveRemotely)
-    console.log('XXXXXXXXXXXXX FFFFFFF', twoFactorIsActive())
-
     if (isActiveRemotely && !twoFactorIsActive()) {
       isEnabledButtonToProceedWithdrawal.value = false
     }
@@ -40,10 +37,17 @@ export const useTwoFactorAuth = () => {
   })
 
   const lookQRTwoFactor = async (): Promise<void> => {
+    const user = userStore.getUser as User
+
+    const naturalAccount = `${user.firstName} ${user.middleName} ${user.lastName}`
+    const accountType = user.contactType
+    const companyAccount = user.name
+
+
     const payload = {
-      accountId: userStore.getUser.account.accountId,
-      email: email.value,
-      name: fullName.value,
+      accountId: user.account.accountId,
+      email: user.email,
+      name: accountType === 'company' ? companyAccount : naturalAccount,
     }
 
     TwoFactorService.instance()
