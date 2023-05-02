@@ -133,7 +133,7 @@ function makeTransaction() {
           submitting.value = false
           isCompleted.value = true
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
-          showSuccessMessage()
+          
         })
         .catch(e => {
           submitting.value = false
