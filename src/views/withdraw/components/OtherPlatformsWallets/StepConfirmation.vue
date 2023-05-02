@@ -77,7 +77,7 @@ import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
-const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
+const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const router = useRouter()
@@ -103,11 +103,15 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
-  if (isEnabledButtonToProceedWithdrawal.value) {
-    makeTransaction()
-  } else {
-    visibleModalVeryCodeTwoFactor.value = true
-  }
+    if (isEnabledButtonToProceedWithdrawal.value) {
+        if (twoFactorIsActive()) {
+            visibleModalVeryCodeTwoFactor.value = true
+        } else {
+            makeTransaction()
+        }
+    } else {
+        visibleModalVeryCodeTwoFactor.value = true
+    }
 }
 
 async function makeTransaction() {
@@ -124,7 +128,7 @@ async function makeTransaction() {
       updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.total)
       isCompleted.value = true
       submitting.value = false
-      showSuccessMessage()
+
     })
     .catch(e => {
       submitting.value = false
@@ -137,14 +141,6 @@ async function makeTransaction() {
     })
 }
 
-const showSuccessMessage = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Order submitted',
-    detail: t('withdrawEmailConfirmation'),
-    life: 4000,
-  })
-}
 </script>
 
 <style scoped>

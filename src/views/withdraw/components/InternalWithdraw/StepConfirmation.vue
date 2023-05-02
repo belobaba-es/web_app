@@ -104,16 +104,15 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
-  if (isEnabledButtonToProceedWithdrawal.value) {
-    console.log('OOOOOOJJJJJJJJJJ', twoFactorIsActive())
-    if (twoFactorIsActive()) {
-      visibleModalVeryCodeTwoFactor.value = true
+    if (isEnabledButtonToProceedWithdrawal.value) {
+        if (twoFactorIsActive()) {
+            visibleModalVeryCodeTwoFactor.value = true
+        } else {
+            makeTransaction()
+        }
     } else {
-      makeTransaction()
+        visibleModalVeryCodeTwoFactor.value = true
     }
-  } else {
-    visibleModalVeryCodeTwoFactor.value = true
-  }
 }
 
 function makeTransaction() {
@@ -160,7 +159,6 @@ function makeTransaction() {
           submitting.value = false
           isCompleted.value = true
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
-          showSuccessMessage()
         })
         .catch(e => {
           submitting.value = false
@@ -178,14 +176,7 @@ function makeTransaction() {
   }
 }
 
-const showSuccessMessage = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Order submitted',
-    detail: t('orderCompleted'),
-    life: 4000,
-  })
-}
+
 </script>
 
 <style scoped>

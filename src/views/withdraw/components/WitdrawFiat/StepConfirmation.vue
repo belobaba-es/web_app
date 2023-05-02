@@ -91,7 +91,6 @@ const props = defineProps<{
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
-    console.log('OOOOOOJJJJJJJJJJ', twoFactorIsActive())
     if (twoFactorIsActive()) {
       visibleModalVeryCodeTwoFactor.value = true
     } else {
@@ -124,7 +123,7 @@ function makeTransaction() {
       transactionId.value = res.data.transactionId
       submitting.value = false
       updateBlockedBalanceWalletByCode('USD', props.formData.amount)
-      showSuccessMessage()
+
     })
     .catch(e => {
       submitting.value = false
@@ -138,14 +137,6 @@ function makeTransaction() {
     })
 }
 
-const showSuccessMessage = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Order submitted',
-    detail: t('withdrawEmailConfirmation'),
-    life: 4000,
-  })
-}
 </script>
 
 <style scoped>
