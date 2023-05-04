@@ -3,9 +3,10 @@ import { computed, ref } from 'vue'
 import { CryptoService } from '../shared/services/crypto'
 import { Account } from '../views/login/types/login.interface'
 
-interface User {
+export interface User {
   active: boolean
   accountId: string
+  name: string
   country: string
   email: string
   token: string
