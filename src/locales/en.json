@@ -275,7 +275,7 @@
   "twoFactorActionTwo": "Confirm withdrawals from your noba.cash account",
   "validVerifyCode" : "verification code cannot be empty",
   "passwordHelpText": "Enter your password",
-  "verifyCode": "Verificar código",
+  "verifyCode": "Check code",
   "enterCode": "Enter verification code",
   "verificationToken": "Performing Two-Factor Authentication Retrieval Request Token Verification",
   "verificationTokenForRecoveryTwoFactorSuccess": "The request has been processed successfully",
