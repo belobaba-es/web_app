@@ -7,7 +7,7 @@
     <div class="container-main">
       <VeryCodeTwoFactorAuth
         :account-id="props.loginData.accountId"
-        :recover-link="true"
+        :recovery-link="true"
         @code-is-valid="isTwoFactorAuthCodeIsValid"
         @recovery-two-factor-auth="recoveryTwoFactorAuth"
       />

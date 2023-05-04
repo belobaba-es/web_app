@@ -25,15 +25,20 @@ export const useTwoFactorAuth = () => {
   })
 
   onMounted(async () => {
-    const isActiveRemotely = await twoFactorAuthenticationIsActiveRemotely()
+    try {
+      const isActiveRemotely = await twoFactorAuthenticationIsActiveRemotely()
 
-    if (isActiveRemotely && !twoFactorIsActive()) {
-      isEnabledButtonToProceedWithdrawal.value = false
+      if (isActiveRemotely && !twoFactorIsActive()) {
+        isEnabledButtonToProceedWithdrawal.value = false
+      }
+
+      if (isActiveRemotely && twoFactorIsActive()) {
+        isEnabledButtonToProceedWithdrawal.value = true
+      }
+    } catch (e) {
+
     }
 
-    if (isActiveRemotely && twoFactorIsActive()) {
-      isEnabledButtonToProceedWithdrawal.value = true
-    }
   })
 
   const lookQRTwoFactor = async (): Promise<void> => {
