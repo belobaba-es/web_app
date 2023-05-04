@@ -67,6 +67,8 @@
         <label for="">{{ t('Reference') }}</label>
         <InputText
           type="text"
+          minlength="3"
+          maxlength="60"
           class="p-inputtext p-component b-gray"
           v-model="reference"
           :placeholder="t('reference')"

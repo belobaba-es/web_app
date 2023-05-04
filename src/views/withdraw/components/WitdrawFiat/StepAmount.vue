@@ -60,6 +60,8 @@
       <div class="col-6">
         <label for="">{{ t('Reference') }}</label>
         <InputText
+          minlength="3"
+          maxlength="60"
           type="text"
           class="p-inputtext p-component b-gray"
           v-model="reference"
