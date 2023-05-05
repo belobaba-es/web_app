@@ -78,7 +78,6 @@
 
     <MessageAlertActiveTwoFactorAuth />
 
-    d
     <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
