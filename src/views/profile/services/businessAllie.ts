@@ -5,7 +5,7 @@ export class BusinessAllie extends HttpService {
 
   constructor() {
     // @ts-ignore
-    super(import.meta.env.VITE_BASE_ENDPOINT)
+    super(import.meta.env.VITE_BUSINESS_ALLIE_ENDPOINT)
   }
 
   static instance() {
@@ -18,5 +18,14 @@ export class BusinessAllie extends HttpService {
     return this._instance
   }
 
-  async getBusinessAllieStatus(accountId: string) {}
+  async getBusinessAllieStatus(): Promise<any> {
+    return await this.get('/businessAllies')
+  }
+
+  async getBusinessOpportunities(): Promise<any> {
+    return this.get('/businessOpportunities')
+  }
+  async saveBusinessOpportunity(payload: any): Promise<any> {
+    return this.post('/businessOpportunities', payload)
+  }
 }

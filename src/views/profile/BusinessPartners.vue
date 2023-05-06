@@ -36,7 +36,7 @@
           @click="showDetails(member)"
       >
         <div class="mb-2">
-          <img src="../../assets/icons/icon-user.svg" />
+          <img src="../../assets/icons/icon-user.svg" alt="show-beneficiary" />
         </div>
         <div>
           <p class="text-lg">{{ getFullName(member) }}</p>
@@ -59,18 +59,26 @@ import { useAccount } from '../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { Member } from './types/account.interface'
 import { useI18n } from 'vue-i18n'
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import ModalNewBusinessPartner from './components/ModalNewBusinessPartner.vue'
 import InputText from 'primevue/inputtext'
+import {BusinessAllie} from "./services/businessAllie";
+import {useUserStore} from "../../stores/user";
 
+const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
 const displayModal = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const { members, getFullName } = useAccount()
 const router = useRouter()
-
+const userStore = useUserStore()
 const isAprovedAsBusinessPartner = ref(false)
 const referredBy = ref("")
+
+onMounted(()=> {
+  console.log('mount')
+  getBusinessAllieStatus()
+})
 const onCreateNewBusinessPartner = () => {
   displayModal.value = true
 }
@@ -80,8 +88,20 @@ const showDetails = (member: Member) => {
 
 const getBusinessAllieStatus = () => {
   // getBusinessAllieStatus
+  console.log('userStore.getUser.accountId', userStore.getUser.accountId)
+  businessAllieService.getBusinessAllieStatus().then(res => {
+    console.log(res)
+    getBusinessOpportunities()
+  }).catch(e =>{
+    console.log(e)
+  })
 }
 
+const getBusinessOpportunities = ()=> {
+  businessAllieService.getBusinessOpportunities().then(res => {
+    console.log('getBusinessOpportunities',res)
+  })
+}
 const signUpAsBusinesPartner = () => {
   console.log('signUpAsBusinesPartner')
 }
