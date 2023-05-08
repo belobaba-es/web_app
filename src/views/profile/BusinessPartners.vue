@@ -9,13 +9,18 @@
   <!-- not yet registerd as business partner -->
   <div v-if="businessAllieStatus === ''" class="grid">
     <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
+<!--      <img-->
+<!--        class="business-allie-image"-->
+<!--        src="https://online.hbs.edu/Style%20Library/api/resize.aspx?imgpath=/PublishingImages/overhead-view-of-business-strategy-meeting.jpg&w=1200&h=630"-->
+<!--        alt="business-alli-image"-->
+<!--        height="50"-->
+<!--      />-->
       <img
         class="business-allie-image"
-        src="https://online.hbs.edu/Style%20Library/api/resize.aspx?imgpath=/PublishingImages/overhead-view-of-business-strategy-meeting.jpg&w=1200&h=630"
         alt="business-alli-image"
         height="50"
+        src="/src/assets/img/be_business_partner.png"
       />
-      <!--      <img src="/src/assets/icons/save-money.svg" alt="" height="50" />-->
     </div>
     <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
       <h3 class="business-allie">
@@ -35,7 +40,7 @@
     <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
       <img
         class="business-allie-image"
-        src="https://online.hbs.edu/Style%20Library/api/resize.aspx?imgpath=/PublishingImages/overhead-view-of-business-strategy-meeting.jpg&w=1200&h=630"
+        src="/src/assets/img/business_opportunities.png"
         alt="business-alli-image"
         height="50"
       />
