@@ -1,36 +1,29 @@
 <template>
   <Dialog
-      :visible="display"
-      @update:visible="emit('update:display', $event)"
-      :modal="true"
-      closeIcon="pi pi-times-circle"
-      :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-      :style="{ width: '35vw' }"
+    :visible="display"
+    @update:visible="emit('update:display', $event)"
+    :modal="true"
+    closeIcon="pi pi-times-circle"
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+    :style="{ width: '35vw' }"
   >
-
     <template #header>
       <div class="white-div">{{ t('createBusisnesPartner') }}</div>
     </template>
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6">
-          create busisness partners
-        </div>
+        <div class="col-6">create busisness partners</div>
 
-        <div class="col-6 pt-1">
-        </div>
+        <div class="col-6 pt-1"></div>
       </div>
 
       <Divider type="dashed"></Divider>
 
       <div class="inner-row-flex">
-        <div class="col-6">
-
-        </div>
+        <div class="col-6"></div>
 
         <div class="col-6 pt-1">
-
           <p></p>
         </div>
       </div>
@@ -38,22 +31,20 @@
       <Divider type="dashed"></Divider>
 
       <div class="inner-row-flex">
-        <div class="col-6">
-        </div>
+        <div class="col-6"></div>
 
-        <div class="col-6 pt-1">
-        </div>
+        <div class="col-6 pt-1"></div>
       </div>
     </div>
 
     <template #footer>
       <div class="col-12 btn-container">
         <Button
-            class="w-50 p-button mt-5"
-            :label="'save'"
-            :loading="isSendingRequest"
-            icon="pi pi-file-pdf"
-            iconPos="right"
+          class="w-50 p-button mt-5"
+          :label="'save'"
+          :loading="isSendingRequest"
+          icon="pi pi-file-pdf"
+          iconPos="right"
         />
       </div>
     </template>
@@ -73,7 +64,6 @@ const props = defineProps<{
   display: boolean
 }>()
 const isSendingRequest = ref(false)
-
 </script>
 
 <style lang="css" scoped>

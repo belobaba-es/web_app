@@ -253,5 +253,10 @@
   "referringName": "Nombre de quien te refiere",
   "businessOpportunities1": "Oportunindades de",
   "businessOpportunities2": "Negocios",
-  "id": "Id"
+  "id": "Id",
+  "awaitingForAdminApproval": "Aguardando aprovación de un admin",
+  "send": "Enviar",
+  "registeredOpportunity" : "Oportunindad registrada",
+  "opportunityWithRegisteredAccount" : "Oportunindad creo su cuenta",
+  "opportunityWithActiveAccount" : "Oportunindades con cuenta activa"
 }

@@ -7,7 +7,6 @@
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '35vw' }"
   >
-
     <template #header>
       <div class="white-div"></div>
     </template>
@@ -17,7 +16,12 @@
         <div class="col-6">
           <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
 
-          <p v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0" class="font-medium text-sm">{{ t('beneficiaryName') }}</p>
+          <p
+            v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0"
+            class="font-medium text-sm"
+          >
+            {{ t('beneficiaryName') }}
+          </p>
         </div>
 
         <div class="col-6 pt-1">
@@ -84,15 +88,15 @@ import logo from '../assets/img/logo.png'
 import { useUserStore } from '../stores/user'
 
 export interface TransactionModalPayload {
-  id?: any;
-  formatedDate?: any;
-  feeWire?: any;
-  isInternal?: boolean;
-  amount?: any;
-  assetCode? : string;
-  nameTo? : any;
-  reference? : any;
-  beneficiary? : any;
+  id?: any
+  formatedDate?: any
+  feeWire?: any
+  isInternal?: boolean
+  amount?: any
+  assetCode?: string
+  nameTo?: any
+  reference?: any
+  beneficiary?: any
 }
 
 const userStore = useUserStore()
@@ -119,7 +123,7 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${(transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label)}`
+  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
 
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`

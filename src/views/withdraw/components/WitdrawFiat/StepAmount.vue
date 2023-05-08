@@ -34,7 +34,8 @@
         <InputNumber
           id="amount"
           type="number"
-          :minFractionDigits="2" :maxFractionDigits="2"
+          :minFractionDigits="2"
+          :maxFractionDigits="2"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
           :placeholder="t('amount')"

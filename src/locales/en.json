@@ -261,5 +261,10 @@
   "referringName": "Referring name",
   "businessOpportunities1": "Business",
   "businessOpportunities2": "Opportunities",
-  "id": "Id"
+  "id": "Id",
+  "awaitingForAdminApproval": "Awaiting for admin approval",
+  "send": "Send",
+  "registeredOpportunity" : "Opportunity registered",
+  "opportunityWithRegisteredAccount" : "Opportunity has created an account",
+  "opportunityWithActiveAccount" : "Opportunity has an active account"
 }
