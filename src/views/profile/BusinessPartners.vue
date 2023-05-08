@@ -1,7 +1,7 @@
 <template>
   <!-- awaiting for approval -->
   <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="grid">
-    <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+    <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
       {{ t('awaitingForAdminApproval') }}
     </div>
   </div>
@@ -299,5 +299,12 @@ h3.business-allie {
 
 .j-c-c {
  justify-content: center;
+}
+
+.awaiting-approval {
+  display: flex;
+  align-items: center;
+  height: 200px;
+  border: 1px solid var(--primary-color);
 }
 </style>
