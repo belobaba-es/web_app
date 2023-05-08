@@ -28,4 +28,8 @@ export class BusinessAllie extends HttpService {
   async saveBusinessOpportunity(payload: any): Promise<any> {
     return this.post('/businessOpportunities', payload)
   }
+
+  async registerAsBusinessPartner(payload: any) {
+    return this.post('/businessAllies', payload)
+  }
 }

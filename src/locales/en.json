@@ -254,5 +254,12 @@
   "viewDetails": "View details",
   "withdrawEmailConfirmation": "You will receive an email to confirm the withdraw",
   "orderCompleted": "Order completed",
-  "businessPartners": "Business partners"
+  "businessPartners": "Business partners",
+  "beABusinessAllie1": "Be a business",
+  "beABusinessAllie2": "partner",
+  "requiredInformation": "Required information",
+  "referringName": "Referring name",
+  "businessOpportunities1": "Business",
+  "businessOpportunities2": "Opportunities",
+  "id": "Id"
 }

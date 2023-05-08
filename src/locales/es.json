@@ -246,5 +246,12 @@
   "viewDetails": "Ver detalles",
   "withdrawEmailConfirmation": "Enviaremos un email para confirmar el retiro",
   "orderCompleted": "Orden completada",
-  "businessPartners": "Aliados de negocios"
+  "businessPartners": "Aliados de negocios",
+  "beABusinessAllie1": "Convierte en aliado de",
+  "beABusinessAllie2": "negocios",
+  "requiredInformation": "Información requerida",
+  "referringName": "Nombre de quien te refiere",
+  "businessOpportunities1": "Oportunindades de",
+  "businessOpportunities2": "Negocios",
+  "id": "Id"
 }
