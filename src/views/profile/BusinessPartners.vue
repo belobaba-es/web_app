@@ -6,15 +6,9 @@
     </div>
   </div>
 
-  <!-- not yet registerd as business partner -->
-  <div v-if="businessAllieStatus === ''" class="grid">
-    <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
-<!--      <img-->
-<!--        class="business-allie-image"-->
-<!--        src="https://online.hbs.edu/Style%20Library/api/resize.aspx?imgpath=/PublishingImages/overhead-view-of-business-strategy-meeting.jpg&w=1200&h=630"-->
-<!--        alt="business-alli-image"-->
-<!--        height="50"-->
-<!--      />-->
+  <!-- register as business partner -->
+  <div v-if="businessAllieStatus === ''" class="grid j-c-c">
+    <div class="img-container 6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
       <img
         class="business-allie-image"
         alt="business-alli-image"
@@ -22,7 +16,8 @@
         src="/src/assets/img/be_business_partner.png"
       />
     </div>
-    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
+
+    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6 padd-4 ">
       <h3 class="business-allie">
         {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
       </h3>
@@ -253,9 +248,10 @@ const getBusinessOpportunityStatus = (status: string) => {
 
 }
 </script>
+
 <style scoped>
 .business-allie-image {
-  width: 100%;
+  max-width: 100%;
   height: 55%;
   vertical-align: middle;
 }
@@ -295,5 +291,13 @@ h3.business-allie {
 
 .input-allie input {
   width: 100%;
+}
+
+.padd-4 {
+  padding: 4%
+}
+
+.j-c-c {
+ justify-content: center;
 }
 </style>
