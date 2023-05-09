@@ -130,7 +130,6 @@ const businessOpportunityPayload = ref<{ name: string; email: string; taxId: str
 const businsnessOpportunities = ref([])
 
 onMounted(() => {
-  console.log('mount')
   getBusinessAllieStatus()
 })
 const onCreateNewBusinessPartner = () => {
@@ -162,7 +161,6 @@ const getBusinessAllieStatus = async () => {
 
 const getBusinessOpportunities = () => {
   businessAllieService.getBusinessOpportunities().then(res => {
-    console.log('getBusinessOpportunities', res)
     businsnessOpportunities.value = res
   })
 }
@@ -190,27 +188,23 @@ const signUpAsBusinessPartner = () => {
 
 const saveBusinessOpportunity = () => {
   submitting.value = true
-  console.log('isValidBusinessOpportunityPayload', isValidBusinessOpportunityPayload)
   if (!isValidBusinessOpportunityPayload()) {
     submitting.value = false
     return
   }
-  console.log('businessOpportunityPayload', businessOpportunityPayload.value)
   businessAllieService
     .saveBusinessOpportunity(businessOpportunityPayload.value)
     .then(res => {
-      console.log('-- saveBusinessOpportunity-- ', res)
-      console.log('res', res.businessOpportunities)
       showSucessMessage('Business opportunity saved')
+      businsnessOpportunities.value = res.businessOpportunities
       submitting.value = false
     })
     .catch(e => {
-      console.log(e)
       submitting.value = false
       toast.add({
-        severity: 'warning',
+        severity: 'error',
         summary: 'Something went wrong',
-        detail: 'Try again.',
+        detail: e.response.data.message,
         life: 4000,
       })
     })
