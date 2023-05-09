@@ -258,5 +258,6 @@
   "send": "Enviar",
   "registeredOpportunity" : "Oportunindad registrada",
   "opportunityWithRegisteredAccount" : "Oportunindad creo su cuenta",
-  "opportunityWithActiveAccount" : "Oportunindades con cuenta activa"
+  "opportunityWithActiveAccount" : "Oportunindades con cuenta activa",
+  "affiliateLink": "Tu link de afiliado"
 }

@@ -65,8 +65,8 @@
     </div>
 
     <!-- Referral link -->
-    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
-      <label class="required-label">{{ t('requiredInformation') }}</label>
+    <div class="padd-4 input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
+      <label class="required-label">{{ t('affiliateLink') }}</label>
       <div class="p-inputgroup">
         <InputText readonly="true" :placeholder="t('walletAddress')" :value="referralLink" />
         <span

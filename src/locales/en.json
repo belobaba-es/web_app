@@ -266,5 +266,6 @@
   "send": "Send",
   "registeredOpportunity" : "Opportunity registered",
   "opportunityWithRegisteredAccount" : "Opportunity has created an account",
-  "opportunityWithActiveAccount" : "Opportunity has an active account"
+  "opportunityWithActiveAccount" : "Opportunity has an active account",
+  "affiliateLink": "Your affiliate link"
 }
