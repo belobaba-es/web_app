@@ -4,7 +4,7 @@
       <div class="field">
         <label class="font-light">{{ t('twoFactorAuthCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputNumber :useGrouping="false" :disabled="submitting" v-model="codeForVerify" />
+          <InputMask placeholder="Write code" :disabled="submitting" v-model="codeForVerify" mask="999-999" />
         </div>
         <div class="help-text">
           <span>{{ t('twoFactorAuthText') }}</span>
@@ -30,28 +30,25 @@
         </div>
       </div>
 
-        <div class="w-50 mt-5" style="margin: 0 auto">
-            <Button
-                    type="button"
-                    icon="pi pi-angle-left"
-                    :label="t('backButtonTitle')"
-                    class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5 w-100"
-                    @click="redirectToLogin()"
-            />
-        </div>
-
-
+      <div class="w-50 mt-5" style="margin: 0 auto" v-if="recoveryLink">
+        <Button
+          type="button"
+          icon="pi pi-angle-left"
+          :label="t('backButtonTitle')"
+          class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5 w-100"
+          @click="redirectToLogin()"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import InputNumber from 'primevue/inputnumber'
 import Button from 'primevue/button'
 import { useTwoFactorAuth } from '../composables/useTwoFactorAuth'
 import { useI18n } from 'vue-i18n'
-import {useRouter} from "vue-router";
-
+import { useRouter } from 'vue-router'
+import InputMask from 'primevue/inputmask'
 
 interface Props {
   accountId?: string
@@ -78,6 +75,6 @@ const recoveryTwoFactorAuth = () => {
 }
 
 const redirectToLogin = () => {
-    window.location.href = '/'
+  window.location.href = '/'
 }
 </script>
