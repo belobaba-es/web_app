@@ -12,6 +12,7 @@ export const useBeneficiary = () => {
   const listNextPag = ref('')
   const submitting = ref(false)
   const nextPag = ref(0)
+  const listBeneficiariesInternal = ref<BeneficiaryInternal[]>()
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
@@ -38,7 +39,7 @@ export const useBeneficiary = () => {
     })
   }
 
-  const fetchBeneficiariesInternal = async (type: TypeBeneficiaryInternal): Promise<BeneficiaryInternal[]> => {
+  const fetchBeneficiariesInternal = async (type: TypeBeneficiaryInternal): Promise<void> => {
     submitting.value = true
 
     const result = await BeneficiaryService.instance().listBeneficiaryInternal(type, nextPag.value)
@@ -47,7 +48,7 @@ export const useBeneficiary = () => {
 
     submitting.value = false
 
-    return result.results
+    listBeneficiariesInternal.value = result.results
   }
 
   return {
@@ -57,6 +58,7 @@ export const useBeneficiary = () => {
     submitting,
     listNextPag,
     listBeneficiary,
+    listBeneficiariesInternal,
     fetchBeneficiaries,
   }
 }
