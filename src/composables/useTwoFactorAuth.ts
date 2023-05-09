@@ -13,7 +13,7 @@ export const useTwoFactorAuth = () => {
   const isEnabledButtonToProceedWithdrawal = ref(true)
   const submitting = ref(false)
   const twoFactorData = ref<TwoFactor>()
-  const codeForVerify = ref<number>()
+  const codeForVerify = ref<string>('')
   const userStore = useUserStore()
 
   const { fullName, email, accountId } = useAccount()
@@ -96,7 +96,7 @@ export const useTwoFactorAuth = () => {
    */
   const verifyCode = (account?: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (String(codeForVerify.value).length < 6) {
+      if (codeForVerify.value.length < 6) {
         toast.add({
           severity: 'warn',
           detail: t('validVerifyCode'),
@@ -109,7 +109,7 @@ export const useTwoFactorAuth = () => {
 
       const payload = {
         accountId: account ?? userStore.getUser.account.accountId,
-        code: String(codeForVerify.value).replace('-', ''),
+        code: codeForVerify.value.replace('-', ''),
       }
 
       submitting.value = true
