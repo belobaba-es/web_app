@@ -28,13 +28,10 @@ const listBeneficiaries = ref<BeneficiaryInternal[]>([])
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
 const setListBeneficiaries = (list: BeneficiaryInternal[]) => {
-  console.log(list)
   listBeneficiaries.value = list
 }
 
 const nextStep = (item: BeneficiaryInternal) => {
-  console.log('ITEM PAI', item)
-  console.log(item)
   const page = 0
   const formData = {
     beneficiary: item,

@@ -42,7 +42,7 @@ export const useBeneficiary = () => {
     submitting.value = true
 
     const result = await BeneficiaryService.instance().listBeneficiaryInternal(type, nextPag.value)
-    console.log('NET', result)
+
     nextPag.value = Number(result.nextPag === null ? 0 : result.nextPag)
 
     submitting.value = false

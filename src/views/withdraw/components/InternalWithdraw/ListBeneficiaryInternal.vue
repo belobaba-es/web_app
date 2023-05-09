@@ -64,7 +64,6 @@ onMounted(async () => {
 })
 
 const onSelect = (item: BeneficiaryInternal) => {
-  console.log('ITEM', item)
   emit('selectedBeneficiary', { ...item, accountId: item.accountTo })
 }
 
