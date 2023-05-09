@@ -64,6 +64,20 @@
       <Button :label="t('send')" class="px-5" :loading="submitting" @click="saveBusinessOpportunity()" />
     </div>
 
+    <!-- Referral link -->
+    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
+      <label class="required-label">{{ t('requiredInformation') }}</label>
+      <div class="p-inputgroup">
+        <InputText readonly="true" :placeholder="t('walletAddress')" :value="referralLink" />
+        <span
+            @click="copyToClipboardReferralLink()"
+            class="p-inputgroup-addon btn-copy-to-clipboard"
+        >
+            <i class="pi pi-copy"></i>
+          </span>
+      </div>
+    </div>
+
     <!--  List  -->
     <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
   </div>
@@ -93,9 +107,11 @@ const toast = useToast()
 const referredBy = ref('')
 const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({})
 const businessOpportunities = ref([])
+const referralLink = ref("")
 
 onMounted(() => {
   getBusinessAllieStatus()
+  generateReferralLink(userStore.getUser.account.accountId)
 })
 
 const getBusinessAllieStatus = async () => {
@@ -188,6 +204,21 @@ const showSucessMessage = (msg: string) => {
     detail: msg,
     life: 4000,
   })
+}
+
+const generateReferralLink = (accountId: string) => {
+  referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}register/${btoa(accountId)}`
+}
+const copyToClipboardReferralLink = () =>{
+  if (referralLink.value) {
+    navigator.clipboard.writeText(referralLink.value)
+    toast.add({
+      severity: 'success',
+      summary: t('successfulOperation'),
+      detail: t('textCopySuccessful'),
+      life: 3000,
+    })
+  }
 }
 </script>
 
