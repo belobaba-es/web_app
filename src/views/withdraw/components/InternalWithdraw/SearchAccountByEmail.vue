@@ -1,7 +1,7 @@
 <template>
-  <div class="grid">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 full-width">
-      <span class="p-input-icon-left flex">
+    <div class="grid col-12">
+      <div class="col-12 w-100">
+      <span class="p-input-icon-left flex p-fluid">
         <i class="pi pi-search" />
         <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
         <Button

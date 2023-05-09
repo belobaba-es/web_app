@@ -1,11 +1,17 @@
 import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
-import { BeneficiaryType } from '../types/beneficiary.interface'
+import { BeneficiaryInternal, BeneficiaryType } from '../types/beneficiary.interface'
+
+export enum TypeBeneficiaryInternal {
+  ASSET = 'ASSET',
+  FIAT = 'USD',
+}
 
 export const useBeneficiary = () => {
   const listBeneficiary = ref<any[]>([])
   const listNextPag = ref('')
   const submitting = ref(false)
+  const nextPag = ref(0)
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
@@ -32,8 +38,22 @@ export const useBeneficiary = () => {
     })
   }
 
+  const fetchBeneficiariesInternal = async (type: TypeBeneficiaryInternal): Promise<BeneficiaryInternal[]> => {
+    submitting.value = true
+
+    const result = await BeneficiaryService.instance().listBeneficiaryInternal(type, nextPag.value)
+    console.log('NET', result)
+    nextPag.value = Number(result.nextPag === null ? 0 : result.nextPag)
+
+    submitting.value = false
+
+    return result.results
+  }
+
   return {
+    fetchBeneficiariesInternal,
     fetchBeneficiariesAssets,
+    nextPag,
     submitting,
     listNextPag,
     listBeneficiary,

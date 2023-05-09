@@ -4,19 +4,8 @@
   <div class="grid" style="margin-top: 1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
-    <div class="col-10">
-      <div class="container">
-        <div
-          class="flex justify-content-between align-items-center asset-item"
-          v-for="item in listBeneficiaries"
-          @click="onSelect(item)"
-        >
-          <span class="ml-4 mt-2 mb-2">{{ item.name }}</span>
-          <span class="ml-4 mt-2 mb-2">{{ item.email }}</span>
-          <i class="pi pi-angle-right"></i>
-        </div>
-      </div>
-    </div>
+
+    <ListBeneficiaryInternal :list-beneficiaries="listBeneficiaries" @selected-beneficiary="nextStep" />
   </div>
 </template>
 
@@ -29,6 +18,7 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import SearchAccountByEmail from './SearchAccountByEmail.vue'
 import { BeneficiaryInternal } from '../../types/beneficiary.interface'
+import ListBeneficiaryInternal from './ListBeneficiaryInternal.vue'
 
 const router = useRouter()
 const toast = useToast()
@@ -41,27 +31,15 @@ const setListBeneficiaries = (list: BeneficiaryInternal[]) => {
   listBeneficiaries.value = list
 }
 
-const onSelect = (item: BeneficiaryInternal) => {
+const nextStep = (item: BeneficiaryInternal) => {
   const page = 0
   const formData = {
     beneficiary: item,
   }
-  console.log(formData)
+
   emit('nextPage', {
     pageIndex: page,
     formData: formData,
   })
 }
 </script>
-
-<style scoped>
-.asset-item {
-  cursor: pointer;
-  padding: 10px;
-}
-
-.asset-item:hover {
-  color: #00beb0;
-  background: #fbfbfb;
-}
-</style>

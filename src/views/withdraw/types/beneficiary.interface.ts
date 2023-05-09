@@ -35,6 +35,8 @@ export interface Beneficiary {
 
 export interface BeneficiaryAssetsResponse extends Pagination<Beneficiary> {}
 
+export interface BeneficiariesInternalResponse extends Pagination<BeneficiaryInternal> {}
+
 interface IntermediaryBank {
   bankCity: string
   intermediaryBankCountry: string

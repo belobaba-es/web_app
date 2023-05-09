@@ -1,5 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
 import {
+  BeneficiariesInternalResponse,
   Beneficiary,
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
@@ -7,8 +8,10 @@ import {
   BeneficiaryFiatDomesticResp,
   BeneficiaryFiatInternacional,
   BeneficiaryFiatInternacionalResp,
+  BeneficiaryInternal,
   BeneficiaryType,
 } from '../types/beneficiary.interface'
+import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
 
 export class BeneficiaryService extends HttpService {
   private static _instance: BeneficiaryService
@@ -36,6 +39,10 @@ export class BeneficiaryService extends HttpService {
     return await this.get<BeneficiaryFiatInternacionalResp | BeneficiaryFiatInternacionalResp>(
       `beneficiary?typeBeneficiaryTransfer=${beneficiaryType}&${nextPag}`
     )
+  }
+
+  async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
+    return await this.get<BeneficiariesInternalResponse>(`beneficiary/internal/${type}/${nextPag === 0 ? 1 : nextPag}`)
   }
 
   async saveBeneficiaryDomestic(payload: BeneficiaryFiatDomestic): Promise<any> {
