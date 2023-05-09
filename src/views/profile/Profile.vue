@@ -81,6 +81,8 @@ const setMenuItems = () => {
       label: t('businessPartners'),
       to: `/profile/${accountId.value}/business-partners`,
       canSee: checkCanSee('company', 'natural_person'),
+      // todo
+      // canSee: checkCanSee('company'),
     },
   ].filter(item => item.canSee)
 }

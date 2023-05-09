@@ -34,12 +34,11 @@
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
     <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
       <img
-        class="business-allie-image"
-        src="/src/assets/img/business_opportunities.png"
-        alt="business-alli-image"
-        height="50"
+          class="business-allie-image"
+          src="/src/assets/img/business_opportunities.png"
+          alt="business-alli-image"
+          height="50"
       />
-      <!--      <img src="/src/assets/icons/save-money.svg" alt="" height="50" />-->
     </div>
 
     <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
@@ -65,43 +64,10 @@
       <Button :label="t('send')" class="px-5" :loading="submitting" @click="saveBusinessOpportunity()" />
     </div>
 
-    <!--        <div class="col-5 sm:col-5 md:col-5 lg:col-3 xl:col-3">-->
-    <!--          <div-->
-    <!--              class="p-3 border-1 border-cyan-500 border-round-2xl flex-column bg-gray-100 cursor-pointer"-->
-    <!--              @click="onCreateNewBusinessPartner"-->
-    <!--          >-->
-    <!--            <div>-->
-    <!--              <p class="text-lg">{{ t('addNewShareHolder') }}</p>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </div>-->
-
     <!--  List  -->
-    <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-      <div class="grid">
-        <div v-for="(opportunity, idx) in businsnessOpportunities" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
-          list
-          <div
-              class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
-              @click="showDetails(opportunity)"
-          >
-            <div class="mb-2">
-              <img src="../../assets/icons/icon-user.svg" alt="show-beneficiary" />
-            </div>
-            <div>
-              <p class="text-lg">{{ opportunity.name }}</p>
-              <p class="text-lg">{{ getBusinessOpportunityStatus(opportunity.status) }}</p>
-            </div>
-            <div class="flex justify-content-between align-items-center">
-              <!-- <Button label="Remove" class="p-button-text" icon="pi pi-trash" icon-pos="right" />-->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
   </div>
 
-  <ModalNewBusinessPartner v-model:display="displayModal"></ModalNewBusinessPartner>
 </template>
 <script setup lang="ts">
 import Button from 'primevue/button'
@@ -109,15 +75,14 @@ import { useAccount } from '../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
-import ModalNewBusinessPartner from './components/ModalNewBusinessPartner.vue'
 import InputText from 'primevue/inputtext'
 import { BusinessAllie } from './services/businessAllie'
 import { useUserStore } from '../../stores/user'
 import { useToast } from 'primevue/usetoast'
+import ListBusinessPartners from "./components/ListBusinessPartners.vue";
 
 const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
-const displayModal = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const { getFullName } = useAccount()
 const router = useRouter()
@@ -127,17 +92,11 @@ const businessAllieStatus = ref('initialState')
 const toast = useToast()
 const referredBy = ref('')
 const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({})
-const businsnessOpportunities = ref([])
+const businessOpportunities = ref([])
 
 onMounted(() => {
   getBusinessAllieStatus()
 })
-const onCreateNewBusinessPartner = () => {
-  displayModal.value = true
-}
-const showDetails = (member: any) => {
-  router.push(`partners/show/${member.contactId}`)
-}
 
 const getBusinessAllieStatus = async () => {
   businessAllieService
@@ -151,7 +110,8 @@ const getBusinessAllieStatus = async () => {
       businessAllieStatus.value = res.status ?? ''
       if (res.status === 'APPROVED') {
         isAprovedAsBusinessPartner.value = true
-        getBusinessOpportunities()
+        console.log('res',res.businessOpportunities)
+        businessOpportunities.value = res.businessOpportunities
       }
     })
     .catch(e => {
@@ -159,11 +119,6 @@ const getBusinessAllieStatus = async () => {
     })
 }
 
-const getBusinessOpportunities = () => {
-  businessAllieService.getBusinessOpportunities().then(res => {
-    businsnessOpportunities.value = res
-  })
-}
 const signUpAsBusinessPartner = () => {
   submitting.value = true
 
@@ -196,7 +151,7 @@ const saveBusinessOpportunity = () => {
     .saveBusinessOpportunity(businessOpportunityPayload.value)
     .then(res => {
       showSucessMessage('Business opportunity saved')
-      businsnessOpportunities.value = res.businessOpportunities
+      businessOpportunities.value = res.businessOpportunities
       submitting.value = false
     })
     .catch(e => {
@@ -233,13 +188,6 @@ const showSucessMessage = (msg: string) => {
     detail: msg,
     life: 4000,
   })
-}
-
-const getBusinessOpportunityStatus = (status: string) => {
-  if (status === "REGISTERED_OPPORTUNITY") return t('registeredOpportunity')
-  if (status === "OPPORTUNITY_WITH_REGISTERED_ACCOUNT") return t('opportunityWithRegisteredAccount')
-  if (status === "OPPORTUNITY_WITH_ACTIVE_ACCOUNT") return t('opportunityWithActiveAccount')
-
 }
 </script>
 
