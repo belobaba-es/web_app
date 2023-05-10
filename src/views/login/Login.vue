@@ -5,19 +5,22 @@
   <div class="container-main">
     <div class="lg:bg-contain container">
       <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
-      <p class="font-extra-light text-center">{{ t('loginSubtitle') }}</p>
+      <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" v-model="form.user" :placeholder="t('emailPlaceholder')" />
+              <InputText type="text" v-model="form.user" required :placeholder="t('emailPlaceholder')" />
             </div>
           </div>
           <div class="field">
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
-              <Password v-model="form.pass" toggleMask :feedback="false" placeholder="**********" />
+              <Password v-model="form.pass" toggleMask required :feedback="false" placeholder="**********" />
+            </div>
+            <div>
+              <span class="help-text">{{ t('passwordHelpText') }}</span>
             </div>
           </div>
           <div class="flex justify-content-between align-items-center">
@@ -34,26 +37,34 @@
             </div>
           </div>
 
-          <div class="container-flex">
-            <div class="float-left w-100 with-buttons">
+          <div class="container-flex mt-lg-2">
+            <div class="float-left w-25">
               <Button
                 type="button"
-                :label="t('noAccount')"
-                class="font-light mt-lg-5 with-buttons p-button-outlined border-300"
-                @click="redirectSignin"
+                icon="pi pi-angle-left"
+                :label="t('backButtonTitle')"
+                class="font-light w-100 border-300 p-button-outlined"
+                @click="redirectPage"
               />
             </div>
-            <div class="float-right mt-3 w-100 with-buttons">
+            <div class="float-right w-25">
               <Button
                 type="submit"
                 icon="pi pi-angle-right"
                 iconPos="right"
                 label="Login"
-                class="font-light with-buttons"
+                class="font-light w-100"
                 :loading="submitting"
               />
             </div>
           </div>
+
+          <Button
+            type="button"
+            :label="t('noAccount')"
+            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
+            @click="redirectSignin"
+          />
         </form>
       </div>
     </div>
@@ -75,13 +86,14 @@ import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { LoginService } from './services/login'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../../stores/user'
 import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
 
 const submitting = ref(false)
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
+
+const didLoginEmit = defineEmits(['didLogin'])
 
 const loginService = LoginService.instance()
 const form = reactive({
@@ -91,8 +103,6 @@ const form = reactive({
 })
 
 const router = useRouter()
-
-const userStore = useUserStore()
 
 const redirectSignin = () => {
   window.location.href = import.meta.env.VITE_NOBA_SIGNIN
@@ -108,15 +118,10 @@ const handleSubmit = () => {
     .login(form.user.toLowerCase(), form.pass)
     .then(data => {
       const { data: userPayload } = data
-      userStore.setUser(userPayload)
 
       submitting.value = false
 
-      if (userPayload.account.status !== 'pending') {
-        window.location.href = '/dashboard'
-      } else {
-        window.location.href = `/profile/${userPayload.accountId}`
-      }
+      didLoginEmit('didLogin', userPayload)
     })
     .catch(e => {
       submitting.value = false

@@ -124,7 +124,6 @@
                 :disabled="bankStatesInputIsEmpty"
                 class="w-full"
                 @change="onBankChangeStateHandler"
-                required
               />
             </div>
           </div>
@@ -211,7 +210,6 @@
                 :disabled="statesInputIsEmpty"
                 class="w-full"
                 @change="onChangeStateHandler"
-                required
               />
             </div>
           </div>

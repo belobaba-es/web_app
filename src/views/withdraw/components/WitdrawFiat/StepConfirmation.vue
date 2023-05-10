@@ -31,90 +31,52 @@
     <div class="col-12 mb-2">
       <p class="font-medium green-color">{{ formData.amount }} USD</p>
     </div>
-    <!--    <div class="col-12 mb-3 mt-3">-->
-    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-    <!--    </div>-->
 
     <Button
       class="w-50 p-button search-btn"
       iconPos="right"
       :label="t('continue')"
-      @click="makeTransaction()"
+      @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
       :loading="submitting"
     />
+
+    <Dialog
+      v-model:visible="visibleModalVeryCodeTwoFactor"
+      :header="t('twoFactor')"
+      position="bottom"
+      :modal="true"
+      :draggable="false"
+    >
+      <VeryCodeTwoFactorAuth @codeIsValid="verifyCodeTwoFactorAuth" />
+    </Dialog>
   </div>
 
-  <!-- Completed transfer resume and download PDF Receipt -->
-  <div v-if="isCompleted" class="formgrid grid mt-5 mb-5">
-    <p class="text-3xl font-medium mb-4">
-      <span class="text-primary">Your transfer has been successful</span>
-    </p>
-
-    <!--      transaction summary-->
-    <div class="col-12">
-      <span class="mt-4">transaction summary</span>
-      <Divider></Divider>
-    </div>
-
-    <InternationalTransferDetail
-      v-if="props.formData.typeTransaction === 'international'"
-      :realName="props.formData.beneficiary.realName"
-      :email="props.formData.beneficiary.email"
-      :account="props.formData.beneficiary.accountNumber"
-      :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
-      :fee="props.formData.fee"
-      :transactionId="transactionId"
-      :assetCode="props.formData.assetCode ?? 'USD'"
-    ></InternationalTransferDetail>
-
-    <DomesticTransferDetail
-      v-if="props.formData.typeTransaction === 'domestic'"
-      :realName="props.formData.beneficiary.realName"
-      :email="props.formData.beneficiary.email"
-      :account="props.formData.beneficiary.accountNumber"
-      :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
-      :fee="props.formData.fee"
-      :transactionId="transactionId"
-      :assetCode="props.formData.assetCode ?? 'USD'"
-    ></DomesticTransferDetail>
-
-    <div class="col-12 btn-container">
-      <Button class="w-50 p-button mt-5 btn-routing" :label="t('newTransfer')" @click="goToWithdrawIndex()" />
-
-      <Button
-        class="w-50 p-button mt-5"
-        :label="t('downloadPdf')"
-        @click="generatePDFTransactionReceipt()"
-        :loading="isGeneratingTransactionPDF"
-      />
-    </div>
-  </div>
+  <ConfirmationCompletedWithdrawFiat v-if="isCompleted" :form-data="props.formData" :transaction-id="transactionId" />
 </template>
 
 <script setup lang="ts">
 import Divider from 'primevue/divider'
+import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { WithdrawService } from '../../services/withdraw'
-import InternationalTransferDetail from '../../../../components/InternationalTransferDetail.vue'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
-import DomesticTransferDetail from '../../../../components/DomesticTransferDetail.vue'
-import { generateTransactionReceipt } from '../../../../shared/generatePdf'
-import logo from '../../../../assets/img/logo.png'
 import { useUserStore } from '../../../../stores/user'
-import { FiatService } from '../../../deposit/services/fiat'
-import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
+import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
+import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
+const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const submitting = ref(false)
 const isCompleted = ref(false)
-const isGeneratingTransactionPDF = ref(false)
+
+const visibleModalVeryCodeTwoFactor = ref(false)
+
 const transactionId = ref('')
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
@@ -126,14 +88,24 @@ const username = userStore.getUser.firstName
 const props = defineProps<{
   formData: any
 }>()
-const fiatService = FiatService.instance()
 
-onMounted(async () => {})
+const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
+    } else {
+      makeTransaction()
+    }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
+  }
+}
 
-const emit = defineEmits(['complete'])
-
-const goToWithdrawIndex = () => {
-  router.push(`/withdraw`)
+const verifyCodeTwoFactorAuth = (res: boolean) => {
+  if (res) {
+    visibleModalVeryCodeTwoFactor.value = false
+    makeTransaction()
+  }
 }
 
 function makeTransaction() {
@@ -151,8 +123,7 @@ function makeTransaction() {
       transactionId.value = res.data.transactionId
       submitting.value = false
       updateBlockedBalanceWalletByCode('USD', props.formData.amount)
-      showSuccessMessage()
-      // emit('complete')
+
     })
     .catch(e => {
       submitting.value = false
@@ -166,41 +137,6 @@ function makeTransaction() {
     })
 }
 
-const generatePDFTransactionReceipt = async () => {
-  isGeneratingTransactionPDF.value = true
-  const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
-
-  const transactionPDF: any = {}
-  const title = t('transactionReceipt')
-  const footerPdf = t('footerPdfFiatData')
-  const fileName = `${t('transactionReceipt')}-${transactionId.value}`
-
-  const date = new Date()
-  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  const formattedDate = formatter.format(date)
-
-  transactionPDF[t('userName')] = `${username}`
-  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
-  transactionPDF[t('amount')] = `${props.formData.amount} USD`
-  transactionPDF[t('transactionNumber')] = transactionId.value
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.realName}`
-  transactionPDF[t('reference')] = `${props.formData.reference}`
-  transactionPDF[t('datePicker')] = `${formattedDate}`
-
-  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
-  isGeneratingTransactionPDF.value = false
-}
-
-const showSuccessMessage = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Order submitted',
-    detail: t('withdrawEmailConfirmation'),
-    life: 4000,
-  })
-}
 </script>
 
 <style scoped>
@@ -210,18 +146,5 @@ const showSuccessMessage = () => {
 
 .mt-5 {
   margin-top: 22px !important;
-}
-
-.btn-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-routing {
-  background-color: white;
-  color: black;
-  border: 1px solid #e7e6e7;
-  border-radius: 5px;
-  opacity: 1;
 }
 </style>

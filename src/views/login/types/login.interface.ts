@@ -6,6 +6,7 @@ export interface LoginResponse {
 export interface LoginData {
   active: boolean
   accountId: string
+  name: string
   email: string
   token: string
   country: string
@@ -36,6 +37,7 @@ export interface LoginData {
 export interface Account {
   accountId: string
   swapEnable: boolean
+  twoFactorActive: boolean
   status: string
   kycMembers: {
     contactId: string

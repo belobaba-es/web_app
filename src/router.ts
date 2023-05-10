@@ -3,12 +3,12 @@ import Dashboard from './views/dashboard/Dashboard.vue'
 import Profile from './views/profile/Profile.vue'
 import ProfileIndex from './views/profile/Index.vue'
 import Partners from './views/profile/Partners.vue'
-import Settings from './views/profile/Settings.vue'
+import Settings from './views/profile/settings/Index.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
 import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
-import Login from './views/login/Login.vue'
+import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
 import { useUserStore } from './stores/user'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
@@ -41,6 +41,7 @@ import WalletIndex from './views/wallet/Wallet.vue'
 import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 
 import TransactionHistory from './views/transaction-history/Index.vue'
+import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners.vue'
 
 const routes: RouteRecordRaw[] = [
@@ -52,6 +53,11 @@ const routes: RouteRecordRaw[] = [
     path: '/forgot-password',
     component: ForgotPassword,
   },
+  {
+    path: '/recovery-two-factor-auth',
+    component: RecoveryTwoFactorAuth,
+  },
+
   {
     path: '/dashboard',
     component: Dashboard,
@@ -223,6 +229,9 @@ const routes: RouteRecordRaw[] = [
             component: AddBeneficiary,
           },
         ],
+        meta: {
+          noCache: true,
+        },
       },
       {
         path: '/swap',
@@ -274,8 +283,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-
-  if (to.path !== '/' && to.path !== '/forgot-password' && !userStore.getUser) {
+  console.log(to.path)
+  if (
+    to.path !== '/' &&
+    to.path !== '/forgot-password' &&
+    to.path !== '/recovery-two-factor-auth/' &&
+    !userStore.getUser
+  ) {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser) {
     next({ path: '/dashboard' })

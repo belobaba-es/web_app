@@ -15,12 +15,14 @@ import StyleClass from 'primevue/styleclass'
 import Ripple from 'primevue/ripple'
 import { createPinia } from 'pinia'
 import Tooltip from 'primevue/tooltip'
+import ConfirmationService from 'primevue/confirmationservice'
 import i18n from './i18n'
 import ToastService from 'primevue/toastservice'
 const pinia = createPinia()
 
 createApp(App)
   .use(pinia)
+  .use(ConfirmationService)
   .use(Router)
   .use(PrimeVue)
   .use(i18n)

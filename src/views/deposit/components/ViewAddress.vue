@@ -24,6 +24,7 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
+        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork', {networkName: paymentAddress?.networkName}) }}</p>
       </div>
       <div class="col-12">
         <div class="p-inputgroup">
@@ -74,7 +75,7 @@ const copyToClipboardWalletAddress = (walletAddress: string | undefined) => {
       severity: 'success',
       summary: t('successfulOperation'),
       detail: t('textCopySuccessful'),
-      life: 3000,
+      life: 6000,
     })
   }
 }

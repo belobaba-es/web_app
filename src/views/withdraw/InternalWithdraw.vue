@@ -58,6 +58,8 @@ const items = ref([
   },
 ])
 
+route.meta.noCache = true
+
 const formObject = ref<WithdrawForm | any>({})
 
 const nextPage = (event: any) => {

@@ -50,9 +50,7 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.name">{{ formData.beneficiary?.realName }}</span>
 
-          <!--          todo -->
           <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>USD</small></p>
-          <!--          <p class="font-medium" v-if="slotProps.item.name">{{ amountFee }} <small>USD</small></p>-->
           <p v-else>
             <small>{{ fee }}</small>
           </p>
@@ -63,6 +61,8 @@
       <div class="col-6">
         <label for="">{{ t('Reference') }}</label>
         <InputText
+          minlength="3"
+          maxlength="60"
           type="text"
           class="p-inputtext p-component b-gray"
           v-model="reference"
@@ -70,10 +70,10 @@
         />
       </div>
     </div>
-    <!--    <div class="col-12 m-2">-->
-    <!--      <span>{{ t('The wire will take 24 hours.') }}</span>-->
-    <!--    </div>-->
-    <div class="col-6">
+
+    <MessageAlertActiveTwoFactorAuth />
+
+    <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
@@ -91,6 +91,9 @@ import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '../../../../stores/user'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
+import { twoFactorAuthenticationIsActiveRemotely } from '../../../../shared/services/remoteConfig'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -105,6 +108,7 @@ const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
 const userStore = useUserStore()
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')
 
@@ -115,7 +119,7 @@ const events = ref<any>([
 const typeTransaction = ref('domestic')
 
 onMounted(async () => {
-  if (props.formData.typeTransaction.toLowerCase() !== 'domestic') {
+  if (props.formData.typeTransaction && props.formData.typeTransaction.toLowerCase() !== 'domestic') {
     typeTransaction.value = 'international'
   }
   getUserFee()
