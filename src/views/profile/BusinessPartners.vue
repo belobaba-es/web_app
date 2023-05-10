@@ -105,8 +105,8 @@ const isAprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()
 const referredBy = ref('')
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({})
-const businessOpportunities = ref([])
+const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({ name: "", email: "", taxId: "" })
+const businessOpportunities = ref<{name: string; status: string}[]>([])
 const referralLink = ref("")
 
 onMounted(() => {
@@ -126,8 +126,7 @@ const getBusinessAllieStatus = async () => {
       businessAllieStatus.value = res.status ?? ''
       if (res.status === 'APPROVED') {
         isAprovedAsBusinessPartner.value = true
-        console.log('res',res.businessOpportunities)
-        businessOpportunities.value = res.businessOpportunities
+        businessOpportunities.value = res.businessOpportunities ?? []
       }
     })
     .catch(e => {
@@ -145,7 +144,6 @@ const signUpAsBusinessPartner = () => {
       showSucessMessage('You have registered successfully, now wait fo an admin to approve you')
     })
     .catch(e => {
-      console.log(e)
       submitting.value = false
       toast.add({
         severity: 'warning',
@@ -166,7 +164,7 @@ const saveBusinessOpportunity = () => {
     .saveBusinessOpportunity(businessOpportunityPayload.value)
     .then(res => {
       showSucessMessage('Business opportunity saved')
-      businessOpportunities.value = res.businessOpportunities
+      businessOpportunities.value = res.businessOpportunities ?? []
       submitting.value = false
     })
     .catch(e => {

@@ -24,7 +24,7 @@ import {useI18n} from "vue-i18n";
 import {defineProps} from "vue";
 
 const props = defineProps<{
-  businessOpportunities: []
+  businessOpportunities: {name: string; status: string}[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 
