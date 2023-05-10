@@ -20,6 +20,7 @@ export interface BeneficiaryAssets {
 
 export type BeneficiaryInternal = {
   accountId: string
+  accountTo: string
   email: string
   name: string
 }
@@ -34,6 +35,8 @@ export interface Beneficiary {
 }
 
 export interface BeneficiaryAssetsResponse extends Pagination<Beneficiary> {}
+
+export interface BeneficiariesInternalResponse extends Pagination<BeneficiaryInternal> {}
 
 interface IntermediaryBank {
   bankCity: string

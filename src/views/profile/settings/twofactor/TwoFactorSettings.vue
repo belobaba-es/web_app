@@ -21,7 +21,7 @@
         <div class="md:col-4">
           <Label>Verify the code from the app</Label>
           <div class="p-inputgroup">
-            <InputNumber placeholder="Write code" v-model="codeForVerify" />
+            <InputMask placeholder="Write code" v-model="codeForVerify" mask="999-999" />
           </div>
           <div class="p-inputgroup">
             <Button
@@ -55,7 +55,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import Image from 'primevue/image'
-import InputNumber from 'primevue/inputnumber'
+import InputMask from 'primevue/inputmask'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import TwoFactorSkeleton from './TwoFactorSkeleton.vue'
