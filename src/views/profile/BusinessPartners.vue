@@ -131,7 +131,6 @@ const getBusinessAllieStatus = async () => {
       }
     })
     .catch(e => {
-      console.log(e)
     })
 }
 
