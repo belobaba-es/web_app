@@ -75,7 +75,7 @@ onMounted(async () => {
 const nextStep = (item: BeneficiaryInternal) => {
   const page = 0
   const formData = {
-    beneficiary: { ...item, accountId: item.accountTo },
+    beneficiary: { ...item, accountId: !item.accountTo ? item.accountId : item.accountTo },
   }
 
   console.log(formData)
