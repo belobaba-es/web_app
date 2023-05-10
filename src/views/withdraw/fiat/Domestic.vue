@@ -49,6 +49,8 @@ const type = ref('Domestic')
 
 const accountService = AccountService.instance()
 
+route.meta.noCache = true
+
 const items = ref([
   {
     label: 'Accounts',

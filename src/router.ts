@@ -224,6 +224,9 @@ const routes: RouteRecordRaw[] = [
             component: AddBeneficiary,
           },
         ],
+        meta: {
+          noCache: true,
+        },
       },
       {
         path: '/swap',
