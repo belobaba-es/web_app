@@ -2,7 +2,9 @@
   <!-- awaiting for approval -->
   <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="grid">
     <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
-      {{ t('awaitingForAdminApproval') }}
+      <h2>
+        {{ t('awaitingForAdminApproval') }}
+      </h2>
     </div>
   </div>
 
@@ -17,9 +19,9 @@
 
       <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
         <div class="w-100">
-          <h3 class="text-center">
+          <h1 class="text-center">
             {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
-          </h3>
+          </h1>
 
           <div class="field">
             <label class="required-label">{{ t('requiredInformation') }}</label>
@@ -28,7 +30,7 @@
             </div>
           </div>
 
-          <div class="d-flex text-center justify-content-end">
+          <div class="mt-6 d-flex text-center justify-content-end">
             <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
           </div>
 
@@ -207,7 +209,7 @@ const showSucessMessage = (msg: string) => {
 }
 
 const generateReferralLink = (accountId: string) => {
-  referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}register/${btoa(accountId)}`
+  referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}${btoa(accountId)}`
 }
 const copyToClipboardReferralLink = () => {
   if (referralLink.value) {
