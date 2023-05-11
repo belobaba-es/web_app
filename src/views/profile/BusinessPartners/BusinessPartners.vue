@@ -7,38 +7,37 @@
   </div>
 
   <!-- register as business partner -->
-  <div v-if="businessAllieStatus === ''" class="grid j-c-c">
-    <div class="img-container 6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-      <img
-        class="business-allie-image"
-        alt="business-alli-image"
-        height="50"
-        src="/src/assets/img/be_business_partner.png"
-      />
-    </div>
-
-    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6 padd-4 ">
-      <h3 class="business-allie">
-        {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
-      </h3>
-      <label class="required-label">{{ t('requiredInformation') }}</label>
-      <div class="p-inputgroup input-allie">
-        <InputText type="text" v-model="referredBy" :placeholder="t('referringName')" />
+  <div class="container-center pb-5" v-if="businessAllieStatus === ''">
+    <div class="grid mt-6 pt-6 w-75 sm:w-100">
+      <div class="lg:col-6 sm:col-12">
+        <div class="flex justify-content-center align-content-center w-100">
+          <img class="business-allie-image" alt="business-alli-image" :src="BusinessPartnersImg" />
+        </div>
       </div>
 
-      <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
+      <div class="lg:col-6 sm:col-12">
+        <div class="w-100">
+          <h3 class="text-center">
+            {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
+          </h3>
+
+          <div class="field">
+            <label class="required-label">{{ t('requiredInformation') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="referredBy" :placeholder="t('referringName')" />
+            </div>
+          </div>
+
+          <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Business partners -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
     <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
-      <img
-          class="business-allie-image"
-          src="/src/assets/img/business_opportunities.png"
-          alt="business-alli-image"
-          height="50"
-      />
+      <img class="business-allie-image" :src="BusinessOpportunitiesImg" alt="business-alli-image" height="50" />
     </div>
 
     <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
@@ -69,31 +68,29 @@
       <label class="required-label">{{ t('affiliateLink') }}</label>
       <div class="p-inputgroup">
         <InputText readonly="true" :placeholder="t('walletAddress')" :value="referralLink" />
-        <span
-            @click="copyToClipboardReferralLink()"
-            class="p-inputgroup-addon btn-copy-to-clipboard"
-        >
-            <i class="pi pi-copy"></i>
-          </span>
+        <span @click="copyToClipboardReferralLink()" class="p-inputgroup-addon btn-copy-to-clipboard">
+          <i class="pi pi-copy"></i>
+        </span>
       </div>
     </div>
 
     <!--  List  -->
     <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
   </div>
-
 </template>
 <script setup lang="ts">
 import Button from 'primevue/button'
-import { useAccount } from '../../composables/useAccount'
+import { useAccount } from '../../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import InputText from 'primevue/inputtext'
-import { BusinessAllie } from './services/businessAllie'
-import { useUserStore } from '../../stores/user'
+import { BusinessAllie } from '../services/businessAllie'
+import { useUserStore } from '../../../stores/user'
 import { useToast } from 'primevue/usetoast'
-import ListBusinessPartners from "./components/ListBusinessPartners.vue";
+import ListBusinessPartners from '../components/ListBusinessPartners.vue'
+import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
+import BusinessOpportunitiesImg from '../../../assets/img/business_opportunities.png'
 
 const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
@@ -105,9 +102,13 @@ const isAprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()
 const referredBy = ref('')
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({ name: "", email: "", taxId: "" })
-const businessOpportunities = ref<{name: string; status: string}[]>([])
-const referralLink = ref("")
+const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({
+  name: '',
+  email: '',
+  taxId: '',
+})
+const businessOpportunities = ref<{ name: string; status: string }[]>([])
+const referralLink = ref('')
 
 onMounted(() => {
   getBusinessAllieStatus()
@@ -129,8 +130,7 @@ const getBusinessAllieStatus = async () => {
         businessOpportunities.value = res.businessOpportunities ?? []
       }
     })
-    .catch(e => {
-    })
+    .catch(e => {})
 }
 
 const signUpAsBusinessPartner = () => {
@@ -206,7 +206,7 @@ const showSucessMessage = (msg: string) => {
 const generateReferralLink = (accountId: string) => {
   referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}register/${btoa(accountId)}`
 }
-const copyToClipboardReferralLink = () =>{
+const copyToClipboardReferralLink = () => {
   if (referralLink.value) {
     navigator.clipboard.writeText(referralLink.value)
     toast.add({
@@ -237,11 +237,6 @@ span.partner {
   color: turquoise;
 }
 
-h3.business-allie {
-  font-size: 21px;
-  margin-bottom: 1px;
-}
-
 .required-label {
   font-size: 1rem;
 }
@@ -261,14 +256,6 @@ h3.business-allie {
 
 .input-allie input {
   width: 100%;
-}
-
-.padd-4 {
-  padding: 4%
-}
-
-.j-c-c {
- justify-content: center;
 }
 
 .awaiting-approval {
