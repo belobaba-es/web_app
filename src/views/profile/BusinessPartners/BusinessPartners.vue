@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="lg:col-6 sm:col-12">
+      <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
         <div class="w-100">
           <h3 class="text-center">
             {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
@@ -28,7 +28,10 @@
             </div>
           </div>
 
-          <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
+          <div class="d-flex text-center justify-content-end">
+            <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
+          </div>
+
         </div>
       </div>
     </div>
@@ -264,4 +267,15 @@ span.partner {
   height: 200px;
   border: 1px solid var(--primary-color);
 }
+
+@media only screen and (max-width: 600px) {
+  .xs-allie-container {
+    padding: 10px;
+    width: 100%;
+  }
+  .d-flex{
+    display:flex;
+  }
+}
+
 </style>
