@@ -1,6 +1,6 @@
 <template>
   <!--  List  -->
-  <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+  <div class="input-allie-container align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
     <div class="grid">
       <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
         <div

@@ -1,14 +1,33 @@
 <template>
   <!-- awaiting for approval -->
-  <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="grid">
-    <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
-      <h2>
-        {{ t('awaitingForAdminApproval') }}
-      </h2>
+  <ProgressSpinner
+      v-if="isLoadingData"
+      style="width: 50px; height: 50px"
+      strokeWidth="8"
+      fill="var(--surface-ground)"
+      animationDuration=".5s"
+      aria-label="Custom ProgressSpinner"
+  />
+
+  <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="container-center pb-5">
+    <div class="grid mt-6 pt-6 w-75 sm:w-100" style="#f9f9f9">
+      <div class="lg:col-6 sm:col-12">
+        <div class="flex justify-content-center align-content-center w-100">
+          <img class="business-allie-image" alt="business-alli-image" :src="AwaitingApprovalImg" />
+        </div>
+      </div>
+
+      <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
+        <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
+          <h2>
+            {{ t('awaitingForAdminApproval') }}
+          </h2>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- register as business partner -->
+  <!-- register as business allie -->
   <div class="container-center pb-5" v-if="businessAllieStatus === ''">
     <div class="grid mt-6 pt-6 w-75 sm:w-100">
       <div class="lg:col-6 sm:col-12">
@@ -33,55 +52,52 @@
           <div class="mt-6 d-flex text-center justify-content-end">
             <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Business partners -->
+  <!-- Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
-    <div class="img-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
-      <img class="business-allie-image" :src="BusinessOpportunitiesImg" alt="business-alli-image" height="50" />
-    </div>
-
-    <div class="input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
-      <h3 class="business-allie">
-        {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
-      </h3>
-      <label class="required-label">{{ t('requiredInformation') }}</label>
-      <div class="p-inputgroup input-allie">
-        <label>{{ t('fullName') }}</label>
-        <InputText type="text" v-model="businessOpportunityPayload.name" :placeholder="t('fullName')" />
-      </div>
-
-      <div class="p-inputgroup input-allie">
-        <label>{{ t('emailLabel') }}</label>
-        <InputText type="text" v-model="businessOpportunityPayload.email" :placeholder="t('emailLabel')" />
-      </div>
-
-      <div class="p-inputgroup input-allie">
-        <label>{{ t('id') }}</label>
-        <InputText type="text" v-model="businessOpportunityPayload.taxId" :placeholder="t('id')" />
-      </div>
-
-      <Button :label="t('send')" class="px-5" :loading="submitting" @click="saveBusinessOpportunity()" />
-    </div>
-
     <!-- Referral link -->
-    <div class="padd-4 input-allie-container col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3">
+    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3" >
       <label class="required-label">{{ t('affiliateLink') }}</label>
       <div class="p-inputgroup">
-        <InputText readonly="true" :placeholder="t('walletAddress')" :value="referralLink" />
-        <span @click="copyToClipboardReferralLink()" class="p-inputgroup-addon btn-copy-to-clipboard">
+        <InputText
+          readonly="true"
+          :placeholder="t('walletAddress')"
+          :value="referralLink"
+        />
+        <span
+          @click="copyToClipboardReferralLink()"
+          class="p-inputgroup-addon btn-copy-to-clipboard"
+        >
           <i class="pi pi-copy"></i>
         </span>
       </div>
     </div>
 
+    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6" >
+      <Button
+        :label="t('addNewOpportunity')"
+        class="p-button p-component w-50 p-button mt-4"
+        :loading="submitting"
+        @click="displayNewOpportunity = !displayNewOpportunity"
+      />
+    </div>
+
     <!--  List  -->
     <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
   </div>
+
+  <ModalNewBusinessOpportunity
+    v-model:display="displayNewOpportunity"
+    @modalClosed="handleModalClosed"
+    @hide="handleModalClosed"
+    @create="onCreateAddress"
+  >
+
+  </ModalNewBusinessOpportunity>
 </template>
 <script setup lang="ts">
 import Button from 'primevue/button'
@@ -93,9 +109,12 @@ import InputText from 'primevue/inputtext'
 import { BusinessAllie } from '../services/businessAllie'
 import { useUserStore } from '../../../stores/user'
 import { useToast } from 'primevue/usetoast'
+import ProgressSpinner from 'primevue/progressspinner'
 import ListBusinessPartners from '../components/ListBusinessPartners.vue'
 import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
 import BusinessOpportunitiesImg from '../../../assets/img/business_opportunities.png'
+import AwaitingApprovalImg from '../../../assets/img/awaiting_approval.png'
+import ModalNewBusinessOpportunity  from '../components/ModalNewBusinessOpportunity.vue'
 
 const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
@@ -114,6 +133,8 @@ const businessOpportunityPayload = ref<{ name: string; email: string; taxId: str
 })
 const businessOpportunities = ref<{ name: string; status: string }[]>([])
 const referralLink = ref('')
+const isLoadingData = ref(false)
+const displayNewOpportunity = ref(false)
 
 onMounted(() => {
   getBusinessAllieStatus()
@@ -121,42 +142,46 @@ onMounted(() => {
 })
 
 const getBusinessAllieStatus = async () => {
+  isLoadingData.value = true
   businessAllieService
-    .getBusinessAllieStatus()
-    .then(res => {
-      if (!res) {
-        businessAllieStatus.value = ''
-        return
-      }
+      .getBusinessAllieStatus()
+      .then(res => {
+        isLoadingData.value = false
+        if (!res) {
+          businessAllieStatus.value = ''
+          return
+        }
 
-      businessAllieStatus.value = res.status ?? ''
-      if (res.status === 'APPROVED') {
-        isAprovedAsBusinessPartner.value = true
-        businessOpportunities.value = res.businessOpportunities ?? []
-      }
-    })
-    .catch(e => {})
+        businessAllieStatus.value = res.status ?? ''
+        if (res.status === 'APPROVED') {
+          isAprovedAsBusinessPartner.value = true
+          businessOpportunities.value = res.businessOpportunities ?? []
+        }
+      })
+      .catch(e => {
+        isLoadingData.value = false
+      })
 }
 
 const signUpAsBusinessPartner = () => {
   submitting.value = true
 
   businessAllieService
-    .registerAsBusinessPartner({ referredBy: referredBy.value })
-    .then(() => {
-      submitting.value = false
-      businessAllieStatus.value = 'PENDING_REVISION'
-      showSucessMessage('You have registered successfully, now wait fo an admin to approve you')
-    })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'warning',
-        summary: 'Something went wrong',
-        detail: 'Try again.',
-        life: 4000,
+      .registerAsBusinessPartner({ referredBy: referredBy.value })
+      .then(() => {
+        submitting.value = false
+        businessAllieStatus.value = 'PENDING_REVISION'
+        showSucessMessage('You have registered successfully, now wait fo an admin to approve you')
       })
-    })
+      .catch(e => {
+        submitting.value = false
+        toast.add({
+          severity: 'warning',
+          summary: 'Something went wrong',
+          detail: 'Try again.',
+          life: 4000,
+        })
+      })
 }
 
 const saveBusinessOpportunity = () => {
@@ -166,28 +191,29 @@ const saveBusinessOpportunity = () => {
     return
   }
   businessAllieService
-    .saveBusinessOpportunity(businessOpportunityPayload.value)
-    .then(res => {
-      showSucessMessage('Business opportunity saved')
-      businessOpportunities.value = res.businessOpportunities ?? []
-      submitting.value = false
-    })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: 'Something went wrong',
-        detail: e.response.data.message,
-        life: 4000,
+      .saveBusinessOpportunity(businessOpportunityPayload.value)
+      .then(res => {
+        showSucessMessage('Business opportunity saved')
+        businessOpportunities.value = res.businessOpportunities ?? []
+        submitting.value = false
+        cleanPartnerForm()
       })
-    })
+      .catch(e => {
+        submitting.value = false
+        toast.add({
+          severity: 'error',
+          summary: 'Something went wrong',
+          detail: e.response.data.message,
+          life: 4000,
+        })
+      })
 }
 
 const isValidBusinessOpportunityPayload = (): boolean => {
   const { name, email, taxId } = businessOpportunityPayload.value
   if (!name || !email || !taxId || name.length < 1 || email.length < 1 || taxId.length < 1) {
     toast.add({
-      severity: 'warning',
+      severity: 'error',
       summary: 'Something went wrong',
       detail: 'All fields are required.',
       life: 4000,
@@ -208,6 +234,12 @@ const showSucessMessage = (msg: string) => {
   })
 }
 
+const cleanPartnerForm = () => {
+  businessOpportunityPayload.value.name = ''
+  businessOpportunityPayload.value.email = ''
+  businessOpportunityPayload.value.taxId = ''
+}
+
 const generateReferralLink = (accountId: string) => {
   referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}${btoa(accountId)}`
 }
@@ -222,6 +254,19 @@ const copyToClipboardReferralLink = () => {
     })
   }
 }
+
+const handleModalClosed = (data: any) => {
+  // this.modalData = data; // Retrieve the data from the closed modal
+  // Do something with the modalData
+  console.log('-- handleModalClosed',data);
+  // this.showModal = false; // Close the modal
+}
+
+const onCreateAddress = (event: any) => {
+  console.log('-- event', event)
+  businessOpportunities.value = event
+}
+
 </script>
 
 <style scoped>
@@ -270,14 +315,24 @@ span.partner {
   border: 1px solid var(--primary-color);
 }
 
+.p-progress-spinner {
+  position: fixed;
+  margin-left: 33%;
+  z-index: 999;
+  margin-top: 10%;
+}
+
+.align-right {
+  align-items: start;
+}
+
 @media only screen and (max-width: 600px) {
   .xs-allie-container {
     padding: 10px;
     width: 100%;
   }
-  .d-flex{
-    display:flex;
+  .d-flex {
+    display: flex;
   }
 }
-
 </style>
