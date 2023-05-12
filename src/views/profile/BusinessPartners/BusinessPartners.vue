@@ -92,8 +92,6 @@
 
   <ModalNewBusinessOpportunity
     v-model:display="displayNewOpportunity"
-    @modalClosed="handleModalClosed"
-    @hide="handleModalClosed"
     @create="onCreateAddress"
   >
 
@@ -255,12 +253,6 @@ const copyToClipboardReferralLink = () => {
   }
 }
 
-const handleModalClosed = (data: any) => {
-  // this.modalData = data; // Retrieve the data from the closed modal
-  // Do something with the modalData
-  console.log('-- handleModalClosed',data);
-  // this.showModal = false; // Close the modal
-}
 
 const onCreateAddress = (event: any) => {
   console.log('-- event', event)
@@ -295,12 +287,6 @@ span.partner {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-}
-
-.input-allie {
-  margin: 10px;
-  display: flex;
   flex-direction: column;
 }
 

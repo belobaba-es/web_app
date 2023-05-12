@@ -8,18 +8,14 @@
     :style="{ width: '65vw' }"
 
   >
-    <template #header>
-      <div class="white-div">{{ t('createBusisnesPartner') }}</div>
-    </template>
-
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
         <div class="col-6">
           <img
-              class="business-allie-image"
-              :src="BusinessOpportunitiesImg"
-              alt="business-alli-image"
-              height="50"
+            class="business-allie-image"
+            :src="BusinessOpportunitiesImg"
+            alt="business-alli-image"
+            style="width: 100%; height: 100%"
           />
         </div>
 
@@ -32,27 +28,36 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('fullName') }}</label>
             <InputText
-                type="text"
-                v-model="businessOpportunityPayload.name"
-                :placeholder="t('fullName')"
+              type="text"
+              v-model="businessOpportunityPayload.name"
+              :placeholder="t('fullName')"
             />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('emailLabel') }}</label>
             <InputText
-                type="text"
-                v-model="businessOpportunityPayload.email"
-                :placeholder="t('emailLabel')"
+              type="text"
+              v-model="businessOpportunityPayload.email"
+              :placeholder="t('emailLabel')"
             />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('id') }}</label>
             <InputText
-                type="text"
-                v-model="businessOpportunityPayload.taxId"
-                :placeholder="t('id')"
+              type="text"
+              v-model="businessOpportunityPayload.taxId"
+              :placeholder="t('id')"
+            />
+          </div>
+
+          <div class="p-inputgroup input-allie">
+            <label>{{ t('fee') }}</label>
+            <InputText
+              type="number"
+              v-model="businessOpportunityPayload.fee"
+              :placeholder="t('id')"
             />
           </div>
         </div>
@@ -88,10 +93,11 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({
+const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string , fee: number}>({
   name: '',
   email: '',
   taxId: '',
+  fee: 0,
 })
 const isSendingRequest = ref(false)
 const businessAllieService = new BusinessAllie()
@@ -196,4 +202,28 @@ const cleanPartnerForm = () => {
   margin-top: 20px;
 }
 
+.required-label {
+  font-size: 1rem;
+}
+
+.business-allie {
+  font-size: 25px;
+}
+
+.required-label {
+  font-size: 1rem;
+}
+.input-allie {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-allie input {
+  width: 90%;
+}
+
+span.partner {
+  color: turquoise;
+}
 </style>

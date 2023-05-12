@@ -1,8 +1,8 @@
 <template>
   <!--  List  -->
   <div class="input-allie-container align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-    <div class="grid">
-      <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
+<!--    <div class="grid">-->
+      <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-12 sm:col-4 md:col-6 lg:col-6 xl:col-4" :key="idx">
         <div
             class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
         >
@@ -11,11 +11,13 @@
           </div>
           <div>
             <p class="text-lg">{{ opportunity.name }}</p>
+            <p class="text-lg">{{ opportunity.email }}</p>
+            <p class="text-lg">{{ opportunity.fee }} %</p>
             <p class="text-lg">{{ getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
       </div>
-    </div>
+<!--    </div>-->
   </div>
 </template>
 
@@ -24,7 +26,7 @@ import {useI18n} from "vue-i18n";
 import {defineProps} from "vue";
 
 const props = defineProps<{
-  businessOpportunities: {name: string; status: string}[]
+  businessOpportunities: {name: string; email: string; fee:number; status: string}[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 
