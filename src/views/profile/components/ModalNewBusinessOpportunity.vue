@@ -57,7 +57,7 @@
             <InputText
               type="text"
               v-model="businessOpportunityPayload.feeSwap"
-              :placeholder="t('id')"
+              :placeholder="t('fee')"
             />
           </div>
         </div>
@@ -159,6 +159,7 @@ const cleanPartnerForm = () => {
   businessOpportunityPayload.value.name = ''
   businessOpportunityPayload.value.email = ''
   businessOpportunityPayload.value.taxId = ''
+  businessOpportunityPayload.value.feeSwap = ''
 }
 
 </script>
