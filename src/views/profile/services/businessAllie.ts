@@ -32,4 +32,10 @@ export class BusinessAllie extends HttpService {
   async registerAsBusinessPartner(payload: any): Promise<any> {
     return this.post('/businessAllies', payload)
   }
+
+  async updateOpportunityFeeSwap(taxId: string, feeSwap: number): Promise<any> {
+    return await this.patch(`businessAllies/${taxId}`, {
+      feeSwap,
+    })
+  }
 }
