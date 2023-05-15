@@ -129,7 +129,7 @@ const businessOpportunityPayload = ref<{ name: string; email: string; taxId: str
   email: '',
   taxId: '',
 })
-const businessOpportunities = ref<{ name: string; status: string }[]>([])
+const businessOpportunities = ref<{ name: string; email: string; taxId: string;  feeSwap: number; status: string; }[]>([])
 const referralLink = ref('')
 const isLoadingData = ref(false)
 const displayNewOpportunity = ref(false)

@@ -55,7 +55,7 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }}</label>
             <InputText
-              type="number"
+              type="text"
               v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('id')"
             />
@@ -93,11 +93,12 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string , feeSwap: number}>({
+const businessOpportunityPayload = ref<{ name?: string, email?: string, taxId?: string, feeSwap?: string, status?: string}>({
   name: '',
   email: '',
   taxId: '',
-  feeSwap: 0,
+  status: '',
+  feeSwap: '',
 })
 const isSendingRequest = ref(false)
 const businessAllieService = new BusinessAllie()

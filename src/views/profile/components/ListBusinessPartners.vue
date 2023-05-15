@@ -13,7 +13,8 @@
             <p class="text-lg">{{ opportunity.name }}</p>
             <p class="text-lg">{{ opportunity.email }}</p>
             <p class="text-lg">{{ opportunity.feeSwap }} %</p>
-            <p class="text-lg">{{ getBusinessOpportunityStatus(opportunity.status) }}</p>
+            <p class="text-lg">{{ opportunity?.status }}</p>
+<!--            <p class="text-lg">{{  getBusinessOpportunityStatus(opportunity?.status) ?? 'pending' }}</p>-->
           </div>
         </div>
       </div>
@@ -26,15 +27,18 @@ import {useI18n} from "vue-i18n";
 import {defineProps} from "vue";
 
 const props = defineProps<{
-  businessOpportunities: {name: string; email: string; feeSwap:number; status: string}[]
+  businessOpportunities: {name?: string; email?: string; taxId?: string; feeSwap?:number; status?: string}[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 
 
 const getBusinessOpportunityStatus = (status: string) => {
-  if (status === "REGISTERED_OPPORTUNITY") return t('registeredOpportunity')
-  if (status === "OPPORTUNITY_WITH_REGISTERED_ACCOUNT") return t('opportunityWithRegisteredAccount')
-  if (status === "OPPORTUNITY_WITH_ACTIVE_ACCOUNT") return t('opportunityWithActiveAccount')
+  let opportunityStatus = t('registeredOpportunity')
+  if (status === "REGISTERED_OPPORTUNITY") opportunityStatus = t('registeredOpportunity')
+  if (status === "OPPORTUNITY_WITH_REGISTERED_ACCOUNT") opportunityStatus = t('opportunityWithRegisteredAccount')
+  if (status === "OPPORTUNITY_WITH_ACTIVE_ACCOUNT") opportunityStatus = t('opportunityWithActiveAccount')
+
+  return opportunityStatus
 }
 </script>
 
