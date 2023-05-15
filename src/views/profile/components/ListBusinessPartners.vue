@@ -12,7 +12,7 @@
           <div>
             <p class="text-lg">{{ opportunity.name }}</p>
             <p class="text-lg">{{ opportunity.email }}</p>
-            <p class="text-lg">{{ opportunity.fee }} %</p>
+            <p class="text-lg">{{ opportunity.feeSwap }} %</p>
             <p class="text-lg">{{ getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
@@ -26,7 +26,7 @@ import {useI18n} from "vue-i18n";
 import {defineProps} from "vue";
 
 const props = defineProps<{
-  businessOpportunities: {name: string; email: string; fee:number; status: string}[]
+  businessOpportunities: {name: string; email: string; feeSwap:number; status: string}[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 

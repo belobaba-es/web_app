@@ -56,7 +56,7 @@
             <label>{{ t('fee') }}</label>
             <InputText
               type="number"
-              v-model="businessOpportunityPayload.fee"
+              v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('id')"
             />
           </div>
@@ -93,11 +93,11 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string , fee: number}>({
+const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string , feeSwap: number}>({
   name: '',
   email: '',
   taxId: '',
-  fee: 0,
+  feeSwap: 0,
 })
 const isSendingRequest = ref(false)
 const businessAllieService = new BusinessAllie()
