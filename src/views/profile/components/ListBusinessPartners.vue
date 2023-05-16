@@ -15,8 +15,8 @@
             <p class="text-lg">{{ opportunity.name }}</p>
             <p class="text-lg">{{ opportunity.email }}</p>
             <p class="text-lg">{{ opportunity.feeSwap }} %</p>
-            <p class="text-lg" >{{ opportunity?.status }}</p>
-<!--            <p class="text-lg">{{  getBusinessOpportunityStatus(opportunity?.status) ?? 'pending' }}</p>-->
+<!--            <p class="text-lg" >{{ opportunity?.status }}</p>-->
+            <p class="text-lg">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ import {defineProps, ref} from "vue";
 import ModalEditBusinessOpportunity from "./ModalEditBusinessOpportunity.vue";
 
 const props = defineProps<{
-  businessOpportunities: {name?: string; email?: string; taxId?: string; feeSwap:number; status?: string}[]
+  businessOpportunities: {name: string; email: string; taxId: string; feeSwap:number; status: string}[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 const displayEditOpportunity = ref(false)

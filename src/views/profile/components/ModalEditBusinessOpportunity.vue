@@ -15,12 +15,11 @@
       closeIcon="pi pi-times-circle"
       :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
       :style="{ width: '65vw' }"
-
   >
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6">
+        <div class="col-6 md:6 lg:6 xl:6 should-hide" >
           <img
               class="business-allie-image"
               :src="BusinessOpportunitiesImg"
@@ -29,7 +28,7 @@
           />
         </div>
 
-        <div class="col-6 pt-1">
+        <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
           <h3 class="business-allie">
             {{ t('beABusinessAllie1') }}
             <span class="partner">{{ t('beABusinessAllie2') }}</span>
@@ -68,7 +67,7 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }} %</label>
             <InputText
-              type="text"
+              type="number"
               v-model="props.businessOpportunityEdit.feeSwap"
               :placeholder="t('fee')"
             />
@@ -122,6 +121,7 @@ const updateBusinessOpportunity = () => {
     .then(res => {
       isSendingRequest.value = false
       showSucessMessage('You have updated successfully')
+      cleanOpportunityForm()
     }).catch(e => {
     isSendingRequest.value = false
     toast.add({
@@ -142,7 +142,7 @@ const showSucessMessage = (msg: string) => {
   })
 }
 
-const cleanPartnerForm = () => {
+const cleanOpportunityForm = () => {
   props.businessOpportunityEdit.name = ''
   props.businessOpportunityEdit.email = ''
   props.businessOpportunityEdit.taxId = ''
@@ -214,5 +214,11 @@ const cleanPartnerForm = () => {
 
 span.partner {
   color: turquoise;
+}
+
+@media (max-width: 508px) {
+  .should-hide {
+    display: none !important;
+  }
 }
 </style>

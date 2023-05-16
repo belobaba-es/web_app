@@ -10,7 +10,7 @@
   >
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6">
+        <div class="col-6 should-hide">
           <img
             class="business-allie-image"
             :src="BusinessOpportunitiesImg"
@@ -19,7 +19,7 @@
           />
         </div>
 
-        <div class="col-6 pt-1">
+        <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
           <h3 class="business-allie">
             {{ t('beABusinessAllie1') }}
             <span class="partner">{{ t('beABusinessAllie2') }}</span>
@@ -55,7 +55,7 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }}</label>
             <InputText
-              type="text"
+              type="number"
               v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('fee')"
             />
@@ -93,12 +93,12 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{ name?: string, email?: string, taxId?: string, feeSwap?: string, status?: string}>({
+const businessOpportunityPayload = ref<{ name?: string, email?: string, taxId?: string, feeSwap: number, status: string}>({
   name: '',
   email: '',
   taxId: '',
   status: '',
-  feeSwap: '',
+  feeSwap: 0,
 })
 const isSendingRequest = ref(false)
 const businessAllieService = new BusinessAllie()
@@ -159,7 +159,7 @@ const cleanPartnerForm = () => {
   businessOpportunityPayload.value.name = ''
   businessOpportunityPayload.value.email = ''
   businessOpportunityPayload.value.taxId = ''
-  businessOpportunityPayload.value.feeSwap = ''
+  businessOpportunityPayload.value.feeSwap = 0
 }
 
 </script>
@@ -227,5 +227,11 @@ const cleanPartnerForm = () => {
 
 span.partner {
   color: turquoise;
+}
+
+@media (max-width: 508px) {
+  .should-hide {
+    display: none !important;
+  }
 }
 </style>
