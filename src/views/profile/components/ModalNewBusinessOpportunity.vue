@@ -49,7 +49,6 @@
               style="width: 200px"
               :minFractionDigits="2"
               :maxFractionDigits="2"
-              class="p-invalid"
               mode="decimal"
               v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('fee')"
