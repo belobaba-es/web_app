@@ -30,38 +30,27 @@
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('dni') }}</label>
-            <InputText
-                type="text"
-                v-model="businessOpportunityPayload.taxId"
-                :placeholder="t('dni')"
-            />
+            <InputText type="text" v-model="businessOpportunityPayload.taxId" :placeholder="t('dni')" />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('fullName') }}</label>
-            <InputText
-              type="text"
-              v-model="businessOpportunityPayload.name"
-              :placeholder="t('fullName')"
-            />
+            <InputText type="text" v-model="businessOpportunityPayload.name" :placeholder="t('fullName')" />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('emailLabel') }}</label>
-            <InputText
-              type="text"
-              v-model="businessOpportunityPayload.email"
-              :placeholder="t('emailLabel')"
-            />
+            <InputText type="text" v-model="businessOpportunityPayload.email" :placeholder="t('emailLabel')" />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }}</label>
             <InputNumber
-                style="width: 200px"
-              :min="0" :max="100"
-              :minFractionDigits="2" :maxFractionDigits="2"
-              class="p-invalid" mode="decimal"
+              style="width: 200px"
+              :minFractionDigits="2"
+              :maxFractionDigits="2"
+              class="p-invalid"
+              mode="decimal"
               v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('fee')"
             />
@@ -92,7 +81,7 @@ import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.pn
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import { useToast } from 'primevue/usetoast'
-import {BusinessAllie} from "../services/businessAllie";
+import { BusinessAllie } from '../services/businessAllie'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -100,7 +89,13 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{ name?: string, email?: string, taxId?: string, feeSwap: number, status: string}>({
+const businessOpportunityPayload = ref<{
+  name?: string
+  email?: string
+  taxId?: string
+  feeSwap: number
+  status: string
+}>({
   name: '',
   email: '',
   taxId: '',
@@ -116,25 +111,32 @@ const saveBusinessOpportunity = () => {
     isSendingRequest.value = false
     return
   }
+
+  if (!validasteFee()) {
+    showErrorMessage('Fee must have a value between 0 or 100')
+    isSendingRequest.value = false
+    return
+  }
+
   businessAllieService
-      .saveBusinessOpportunity(businessOpportunityPayload.value)
-      .then((res: any) => {
-        showSucessMessage('Business opportunity saved')
-        emit('create', {
-          ...res.businessOpportunities
-        })
-        isSendingRequest.value = false
-        cleanPartnerForm()
+    .saveBusinessOpportunity(businessOpportunityPayload.value)
+    .then((res: any) => {
+      showSucessMessage('Business opportunity saved')
+      emit('create', {
+        ...res.businessOpportunities,
       })
-      .catch((e : any) => {
-        isSendingRequest.value = false
-        toast.add({
-          severity: 'error',
-          summary: 'Something went wrong',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+      isSendingRequest.value = false
+      cleanPartnerForm()
+    })
+    .catch((e: any) => {
+      isSendingRequest.value = false
+      toast.add({
+        severity: 'error',
+        summary: 'Something went wrong',
+        detail: e.response.data.message,
+        life: 4000,
       })
+    })
 }
 
 const isValidBusinessOpportunityPayload = (): boolean => {
@@ -169,6 +171,23 @@ const cleanPartnerForm = () => {
   businessOpportunityPayload.value.feeSwap = 0
 }
 
+const validasteFee = (): boolean => {
+  let isValid = true
+  if (businessOpportunityPayload.value.feeSwap < 0 || businessOpportunityPayload.value.feeSwap > 100) {
+    isValid = false
+  }
+
+  return isValid
+}
+
+const showErrorMessage = (msg: string) => {
+  toast.add({
+    severity: 'error',
+    summary: 'Error',
+    detail: msg,
+    life: 4000,
+  })
+}
 </script>
 
 <style lang="css" scoped>

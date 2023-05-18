@@ -17,10 +17,9 @@
     :style="{ width: '65vw' }"
     header=" "
   >
-
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6 md:6 lg:6 xl:6 should-hide" >
+        <div class="col-6 md:6 lg:6 xl:6 should-hide">
           <img
             class="business-allie-image"
             :src="BusinessOpportunitiesImg"
@@ -38,22 +37,12 @@
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('dni') }}</label>
-            <InputText
-              type="text"
-              v-model="props.businessOpportunityEdit.taxId"
-              :placeholder="t('dni')"
-              readonly
-            />
+            <InputText type="text" v-model="props.businessOpportunityEdit.taxId" :placeholder="t('dni')" readonly />
           </div>
 
           <div class="p-inputgroup input-allie">
             <label>{{ t('fullName') }}</label>
-            <InputText
-              type="text"
-              v-model="props.businessOpportunityEdit.name"
-              :placeholder="t('fullName')"
-              readonly
-            />
+            <InputText type="text" v-model="props.businessOpportunityEdit.name" :placeholder="t('fullName')" readonly />
           </div>
 
           <div class="p-inputgroup input-allie">
@@ -69,8 +58,9 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }} %</label>
             <InputNumber
-              :min="0" :max="100"
-              :minFractionDigits="2" :maxFractionDigits="2"
+              style="width: 200px"
+              :minFractionDigits="2"
+              :maxFractionDigits="2"
               v-model="props.businessOpportunityEdit.feeSwap"
               :placeholder="t('fee')"
             />
@@ -89,7 +79,6 @@
         />
       </div>
     </template>
-
   </Dialog>
 </template>
 
@@ -103,15 +92,15 @@ import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
-import {BusinessAllie} from "../services/businessAllie";
+import { BusinessAllie } from '../services/businessAllie'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 
 const props = defineProps<{
-  display: boolean,
-  businessOpportunityEdit: {name?: string; email?: string; taxId: string; feeSwap:number; status?: string}
+  display: boolean
+  businessOpportunityEdit: { name?: string; email?: string; taxId: string; feeSwap: number; status?: string }
 }>()
 const displayEditOpportunity = ref(false)
 const isSendingRequest = ref(false)
@@ -120,21 +109,37 @@ const businessAllieService = new BusinessAllie()
 const updateBusinessOpportunity = () => {
   isSendingRequest.value = true
 
+  if (!validasteFee()) {
+    showErrorMessage('Fee must have a value between 0 or 100')
+    isSendingRequest.value = false
+    return
+  }
+
   businessAllieService
     .updateOpportunityFeeSwap(props.businessOpportunityEdit.taxId, props.businessOpportunityEdit.feeSwap)
     .then(res => {
       isSendingRequest.value = false
       showSucessMessage('You have updated successfully')
       cleanOpportunityForm()
-    }).catch(e => {
-    isSendingRequest.value = false
-    toast.add({
-      severity: 'warning',
-      summary: 'Something went wrong',
-      detail: 'Try again.',
-      life: 4000,
     })
-  })
+    .catch(e => {
+      isSendingRequest.value = false
+      toast.add({
+        severity: 'warning',
+        summary: 'Something went wrong',
+        detail: 'Try again.',
+        life: 4000,
+      })
+    })
+}
+
+const validasteFee = (): boolean => {
+  let isValid = true
+  if (props.businessOpportunityEdit.feeSwap < 0 || props.businessOpportunityEdit.feeSwap > 100) {
+    isValid = false
+  }
+
+  return isValid
 }
 
 const showSucessMessage = (msg: string) => {
@@ -146,13 +151,21 @@ const showSucessMessage = (msg: string) => {
   })
 }
 
+const showErrorMessage = (msg: string) => {
+  toast.add({
+    severity: 'error',
+    summary: 'Error',
+    detail: msg,
+    life: 4000,
+  })
+}
+
 const cleanOpportunityForm = () => {
   props.businessOpportunityEdit.name = ''
   props.businessOpportunityEdit.email = ''
   props.businessOpportunityEdit.taxId = ''
   props.businessOpportunityEdit.feeSwap = 0
 }
-
 </script>
 
 <style lang="css" scoped>
