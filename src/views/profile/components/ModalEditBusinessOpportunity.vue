@@ -96,7 +96,7 @@ import { BusinessAllie } from '../services/businessAllie'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
-const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
+const emit = defineEmits(['update:asset-select', 'update:display', 'create', 'update'])
 
 const props = defineProps<{
   display: boolean
@@ -115,9 +115,13 @@ const updateBusinessOpportunity = () => {
     return
   }
 
+  const updatedOpportunity = props.businessOpportunityEdit
   businessAllieService
     .updateOpportunityFeeSwap(props.businessOpportunityEdit.taxId, props.businessOpportunityEdit.feeSwap)
     .then(res => {
+      emit('update', {
+        ...updatedOpportunity,
+      })
       isSendingRequest.value = false
       showSucessMessage('You have updated successfully')
       cleanOpportunityForm()

@@ -34,7 +34,7 @@ export class BusinessAllie extends HttpService {
   }
 
   async updateOpportunityFeeSwap(taxId: string, feeSwap: number): Promise<any> {
-    return await this.patch(`businessAllies/${taxId}`, {
+    return await this.patch(`businessOpportunities/${taxId}`, {
       feeSwap,
     })
   }
