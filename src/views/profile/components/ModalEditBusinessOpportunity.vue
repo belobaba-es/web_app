@@ -1,31 +1,31 @@
 <template>
   <ProgressSpinner
-      v-if="displayEditOpportunity"
-      style="width: 50px; height: 50px"
-      strokeWidth="8"
-      fill="var(--surface-ground)"
-      animationDuration=".5s"
-      aria-label="Custom ProgressSpinner"
+    v-if="displayEditOpportunity"
+    style="width: 50px; height: 50px"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".5s"
+    aria-label="Custom ProgressSpinner"
   />
 
   <Dialog
-      :visible="display"
-      @update:visible="emit('update:display', $event)"
-      :modal="true"
-      closeIcon="pi pi-times-circle"
-      :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-      :style="{ width: '65vw' }"
-      header=" "
+    :visible="display"
+    @update:visible="emit('update:display', $event)"
+    :modal="true"
+    closeIcon="pi pi-times-circle"
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+    :style="{ width: '65vw' }"
+    header=" "
   >
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
         <div class="col-6 md:6 lg:6 xl:6 should-hide" >
           <img
-              class="business-allie-image"
-              :src="BusinessOpportunitiesImg"
-              alt="business-alli-image"
-              style="width: 100%; height: 80%"
+            class="business-allie-image"
+            :src="BusinessOpportunitiesImg"
+            alt="business-alli-image"
+            style="width: 100%; height: 80%"
           />
         </div>
 
@@ -39,10 +39,10 @@
           <div class="p-inputgroup input-allie">
             <label>{{ t('dni') }}</label>
             <InputText
-                type="text"
-                v-model="props.businessOpportunityEdit.taxId"
-                :placeholder="t('dni')"
-                readonly
+              type="text"
+              v-model="props.businessOpportunityEdit.taxId"
+              :placeholder="t('dni')"
+              readonly
             />
           </div>
 

@@ -17,6 +17,7 @@
           </div>
           <div class="opportunity-footer ">
             <p>{{ opportunity.name }}</p>
+            <p>{{ opportunity.feeSwap }} %</p>
             <small>{{ getBusinessOpportunityStatus(opportunity.status) }}</small>
           </div>
         </div>
