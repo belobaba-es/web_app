@@ -60,34 +60,71 @@
   <!-- Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
     <!-- Referral link -->
-    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3" >
-      <label class="required-label">{{ t('affiliateLink') }}</label>
-      <div class="p-inputgroup">
-        <InputText
-          readonly="true"
-          :placeholder="t('walletAddress')"
-          :value="referralLink"
-        />
-        <span
-          @click="copyToClipboardReferralLink()"
-          class="p-inputgroup-addon btn-copy-to-clipboard"
+<!--    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" >-->
+<!--      <label class="required-label">{{ t('affiliateLink') }}</label>-->
+<!--      <div class="p-inputgroup">-->
+<!--        <InputText-->
+<!--          readonly="true"-->
+<!--          :placeholder="t('walletAddress')"-->
+<!--          :value="referralLink"-->
+<!--        />-->
+<!--        <span-->
+<!--          @click="copyToClipboardReferralLink()"-->
+<!--          class="p-inputgroup-addon btn-copy-to-clipboard"-->
+<!--        >-->
+<!--          <i class="pi pi-copy"></i>-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <h1>List of <span class="partner">Business Partners</span></h1>-->
+<!--    <br>-->
+
+    <div class="padd-4 align-right col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4"
+      style="
+          display: flex;
+      justify-content: center;
+      padding-top: 20px;
+        "
+    >
+      <div
+        @click="displayNewOpportunity = !displayNewOpportunity"
+        style="border: 1px solid var(--primary-color);
+          width: 126px;
+          cursor: pointer;
+          border-radius: 1rem; height: 150px;
+          display: flex;
+          flex-direction: column
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: flex-start;
+            padding: 15px;
+          "
         >
-          <i class="pi pi-copy"></i>
-        </span>
+          <img src="../../../assets/icons/user-add.svg" alt="add-beneficiary"
+               style="height: 50px"
+          />
+        </div>
+
+        <div style="
+          font-weight: 900;
+          height: 100px;
+          padding: 14px;
+          text-align: center
+        ">
+            {{ t('addNewOpportunity') }}
+        </div>
+
       </div>
     </div>
 
-    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6" >
-      <Button
-        :label="t('addNewOpportunity')"
-        class="p-button p-component w-50 p-button mt-4"
-        :loading="submitting"
-        @click="displayNewOpportunity = !displayNewOpportunity"
-      />
+    <div class="input-allie-container align-right col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
+      <!--  List  -->
+      <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
     </div>
-
-    <!--  List  -->
-    <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
   </div>
 
   <ModalNewBusinessOpportunity

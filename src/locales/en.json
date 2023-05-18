@@ -305,5 +305,6 @@
   "requestRecoveryTwoFactorAuthBtn": "Make the request",
   "twoFactorAuthText": "Enter the code from your two-factor authenticator app. If you've lost your device, you can enter one of your recovery codes.",
   "twoFactorAuthRecoveryText": "Recover two-factor authentication",
-  "twoFactorAuthCodeLabel": "Enter verification code"
+  "twoFactorAuthCodeLabel": "Enter verification code",
+  "addNewOpportunity": "Add new business partner"
 }
