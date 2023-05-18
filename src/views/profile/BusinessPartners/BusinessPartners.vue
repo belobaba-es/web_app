@@ -9,7 +9,7 @@
       aria-label="Custom ProgressSpinner"
   />
 
-  <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="container-center pb-5">
+  <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="container-center pb-5 gray-container">
     <div class="grid mt-6 pt-6 w-75 sm:w-100" style="#f9f9f9">
       <div class="lg:col-6 sm:col-12">
         <div class="flex justify-content-center align-content-center w-100">
