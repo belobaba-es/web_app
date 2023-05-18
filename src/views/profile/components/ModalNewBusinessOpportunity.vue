@@ -226,7 +226,7 @@ const cleanPartnerForm = () => {
 }
 
 span.partner {
-  color: turquoise;
+  color: var(--primary-color);
 }
 
 @media (max-width: 508px) {

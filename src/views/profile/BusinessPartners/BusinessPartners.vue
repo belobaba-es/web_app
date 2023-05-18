@@ -17,10 +17,12 @@
         </div>
       </div>
 
-      <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
+      <div class="allie-container xs:col-12 lg:col-6 sm:col-12">
         <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
           <h2>
-            {{ t('awaitingForAdminApproval') }}
+            <span class="partner">{{ t('thankYou') }}</span>
+            {{ t('forYourInterest') }}
+            <span class="partner"> {{ t('yourRequest') }}</span>
           </h2>
         </div>
       </div>
@@ -304,7 +306,7 @@ const onCreateAddress = (event: any) => {
 }
 
 span.partner {
-  color: turquoise;
+  color: var(--primary-color);
 }
 
 .required-label {
@@ -326,7 +328,7 @@ span.partner {
   display: flex;
   align-items: center;
   height: 200px;
-  border: 1px solid var(--primary-color);
+  text-align: center;
 }
 
 .p-progress-spinner {
@@ -340,8 +342,14 @@ span.partner {
   align-items: start;
 }
 
+.allie-container {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
 @media only screen and (max-width: 600px) {
-  .xs-allie-container {
+  .allie-container {
     padding: 10px;
     width: 100%;
   }
