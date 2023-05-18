@@ -5,22 +5,19 @@
     <div class="grid">
       <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6" :key="idx">
         <div
-            class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
+            class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer white-bg "
             :class="getClass(opportunity.status)"
-            style="background: #fff"
         >
-          <div class="mb-2"
-               style="display:flex; justify-content: space-between;"
-          >
+          <div class="mb-2 opportunity-header">
             <img src="../../../assets/icons/icon-user.svg" alt="show-beneficiary" />
-            <div style="color:var(--primary-color);" @click="editOpportunity(opportunity)">
+            <div class="opportunity-header-edit" @click="editOpportunity(opportunity)">
               <span class="pi pi-file-edit"></span>
-              edit
+              {{ t('edit') }}
             </div>
           </div>
-          <div style="margin-top: 10px; height: 50px;">
-            <p class="" style="margin-bottom: 0; font-size: 0.9rem;">{{ opportunity.name }}</p>
-            <p class="" style="font-size: 0.7rem">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
+          <div class="opportunity-footer ">
+            <p>{{ opportunity.name }}</p>
+            <small>{{ getBusinessOpportunityStatus(opportunity.status) }}</small>
           </div>
         </div>
       </div>
@@ -73,6 +70,36 @@ const getBusinessOpportunityStatus = (status: string) => {
 <style scoped>
 .min-w-150{
   min-width: 150px;
+}
+
+.white-bg {
+  background: #fff
+}
+
+.opportunity-header {
+  display:flex;
+  justify-content: space-between;
+}
+
+.opportunity-header-edit {
+  color:var(--primary-color);
+}
+
+.opportunity-footer {
+  margin-top: 10px;
+  height: 50px;
+  padding-top: 10px;
+}
+
+.opportunity-footer p {
+  margin-top: -5px;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.opportunity-footer small {
+  margin-bottom: 0;
+  font-size: 0.7rem
 }
 
 .registered-opportunity {
