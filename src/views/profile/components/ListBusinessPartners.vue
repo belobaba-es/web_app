@@ -102,6 +102,7 @@ const getBusinessOpportunityStatus = (status: string) => {
   font-size: 0.7rem
 }
 
+/* se usan mediante una funcion getClass */
 .registered-opportunity {
   border: 1px solid #8d8891!important;
 }
@@ -116,9 +117,4 @@ const getBusinessOpportunityStatus = (status: string) => {
   border: 1px solid var(--primary-color)!important;
 
 }
-
-.bold {
-  font-weight: bold;
-}
-
 </style>

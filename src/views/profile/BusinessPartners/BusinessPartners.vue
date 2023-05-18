@@ -59,23 +59,6 @@
 
   <!-- Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
-    <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-      <label class="required-label">{{ t('affiliateLink') }}</label>
-        <div class="p-inputgroup">
-          <InputText
-            readonly="true"
-            :placeholder="t('walletAddress')"
-            :value="referralLink"
-          />
-          <span
-            @click="copyToClipboardReferralLink()"
-            class="p-inputgroup-addon btn-copy-to-clipboard"
-          >
-            <i class="pi pi-copy"></i>
-          </span>
-        </div>
-    </div>
-
     <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
       <h1 class="partner">{{ t('listOf') }}  <span class="partner">{{ t('businessPartners') }}</span></h1>
     </div>
@@ -124,7 +107,6 @@ import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
 import ListBusinessPartners from '../components/ListBusinessPartners.vue'
 import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
-import BusinessOpportunitiesImg from '../../../assets/img/business_opportunities.png'
 import AwaitingApprovalImg from '../../../assets/img/awaiting_approval.png'
 import ModalNewBusinessOpportunity  from '../components/ModalNewBusinessOpportunity.vue'
 
@@ -255,18 +237,6 @@ const cleanPartnerForm = () => {
 const generateReferralLink = (accountId: string) => {
   referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}${btoa(accountId)}`
 }
-const copyToClipboardReferralLink = () => {
-  if (referralLink.value) {
-    navigator.clipboard.writeText(referralLink.value)
-    toast.add({
-      severity: 'success',
-      summary: t('successfulOperation'),
-      detail: t('textCopySuccessful'),
-      life: 3000,
-    })
-  }
-}
-
 
 const onCreateAddress = (event: any) => {
   console.log('-- event', event)

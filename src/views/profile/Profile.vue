@@ -17,6 +17,7 @@
                 {{ item.label }}
               </RouterLink>
             </div>
+            <AffiliateLink class="affiliate-link"></AffiliateLink>
           </div>
         </template>
       </template>
@@ -32,6 +33,7 @@ import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
 import { TypeAccount } from './types/account.interface'
+import AffiliateLink from "./components/AffiliateLink.vue";
 
 const { t } = useI18n({ useScope: 'global' })
 const { natureAccount, accountId, fetchAccount, loading } = useAccount()
@@ -91,5 +93,9 @@ const setMenuItems = () => {
 <style lang="scss" scoped>
 ::v-deep(.p-tabmenuitem) {
   font-size: 14pt;
+}
+
+.affiliate-link {
+  margin-top: -24px;
 }
 </style>
