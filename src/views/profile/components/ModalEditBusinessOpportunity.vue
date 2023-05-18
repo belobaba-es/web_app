@@ -30,8 +30,8 @@
 
         <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
           <h3 class="business-allie">
-            {{ t('beABusinessAllie1') }}
-            <span class="partner">{{ t('beABusinessAllie2') }}</span>
+            {{ t('edit') }}
+            <span class="partner">{{ t('businessPartner') }}</span>
           </h3>
           <label class="required-label">{{ t('requiredInformation') }}</label>
           <div class="p-inputgroup input-allie">
