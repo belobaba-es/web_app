@@ -59,26 +59,26 @@
 
   <!-- Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
-    <!-- Referral link -->
-<!--    <div class="padd-4 input-allie-container align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" >-->
-<!--      <label class="required-label">{{ t('affiliateLink') }}</label>-->
-<!--      <div class="p-inputgroup">-->
-<!--        <InputText-->
-<!--          readonly="true"-->
-<!--          :placeholder="t('walletAddress')"-->
-<!--          :value="referralLink"-->
-<!--        />-->
-<!--        <span-->
-<!--          @click="copyToClipboardReferralLink()"-->
-<!--          class="p-inputgroup-addon btn-copy-to-clipboard"-->
-<!--        >-->
-<!--          <i class="pi pi-copy"></i>-->
-<!--        </span>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <label class="required-label">{{ t('affiliateLink') }}</label>
+        <div class="p-inputgroup">
+          <InputText
+            readonly="true"
+            :placeholder="t('walletAddress')"
+            :value="referralLink"
+          />
+          <span
+            @click="copyToClipboardReferralLink()"
+            class="p-inputgroup-addon btn-copy-to-clipboard"
+          >
+            <i class="pi pi-copy"></i>
+          </span>
+        </div>
+    </div>
 
-<!--    <h1>List of <span class="partner">Business Partners</span></h1>-->
-<!--    <br>-->
+    <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
+      <h1 class="partner">{{ t('listOf') }}  <span class="partner">{{ t('businessPartners') }}</span></h1>
+    </div>
 
     <div class="padd-4 align-right col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4"
       style="
@@ -112,10 +112,12 @@
         <div style="
           font-weight: 900;
           height: 100px;
-          padding: 14px;
+          padding: 12px;
           text-align: center
         ">
+          <p style="font-weight: 900">
             {{ t('addNewOpportunity') }}
+          </p>
         </div>
 
       </div>

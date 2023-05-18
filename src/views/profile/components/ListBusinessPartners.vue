@@ -1,8 +1,9 @@
 <template>
   <!--  List  -->
-  <div class="input-allie-container align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+  <div class="input-allie-container align-right col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
 <!--    <div class="grid">-->
-      <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-12 sm:col-4 md:col-6 lg:col-6 xl:col-4" :key="idx">
+    <div class="grid">
+      <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6" :key="idx">
         <div
             class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
             :class="getClass(opportunity.status)"
@@ -10,17 +11,20 @@
         >
           <div class="mb-2">
             <img src="../../../assets/icons/icon-user.svg" alt="show-beneficiary" />
+            <div>
+              <span class="pi pi-file-edit"></span>
+              edit
+            </div>
           </div>
           <div>
-            <p class="text-lg">{{ opportunity.name }}</p>
-            <p class="text-lg">{{ opportunity.email }}</p>
-            <p class="text-lg">{{ opportunity.feeSwap }} %</p>
-<!--            <p class="text-lg" >{{ opportunity?.status }}</p>-->
-            <p class="text-lg">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
+            <p class="">{{ opportunity.name }}</p>
+<!--            <p class="text-lg">{{ opportunity.email }}</p>-->
+            <p class="">{{ opportunity.feeSwap }} %</p>
+            <p class="">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
       </div>
-<!--    </div>-->
+    </div>
   </div>
 
   <ModalEditBusinessOpportunity
