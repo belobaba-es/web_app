@@ -4,9 +4,9 @@
     @update:visible="emit('update:display', $event)"
     :modal="true"
     closeIcon="pi pi-times-circle"
+    header=" "
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '65vw' }"
-
   >
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
@@ -20,11 +20,23 @@
         </div>
 
         <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
-          <h3 class="business-allie">
-            {{ t('save') }}
-            <span class="partner">{{ t('businessPartner') }}</span>
-          </h3>
-          <label class="required-label">{{ t('requiredInformation') }}</label>
+          <div class="form-header">
+            <h3 class="business-allie">
+              {{ t('save') }}
+              <span class="partner">{{ t('businessPartner') }}</span>
+            </h3>
+            <label class="required-label">{{ t('requiredInformation') }}</label>
+          </div>
+
+          <div class="p-inputgroup input-allie">
+            <label>{{ t('dni') }}</label>
+            <InputText
+                type="text"
+                v-model="businessOpportunityPayload.taxId"
+                :placeholder="t('dni')"
+            />
+          </div>
+
           <div class="p-inputgroup input-allie">
             <label>{{ t('fullName') }}</label>
             <InputText
@@ -44,18 +56,12 @@
           </div>
 
           <div class="p-inputgroup input-allie">
-            <label>{{ t('id') }}</label>
-            <InputText
-              type="text"
-              v-model="businessOpportunityPayload.taxId"
-              :placeholder="t('id')"
-            />
-          </div>
-
-          <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }}</label>
-            <InputText
-              type="number"
+            <InputNumber
+                style="width: 200px"
+              :min="0" :max="100"
+              :minFractionDigits="2" :maxFractionDigits="2"
+              class="p-invalid" mode="decimal"
               v-model="businessOpportunityPayload.feeSwap"
               :placeholder="t('fee')"
             />
@@ -84,6 +90,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import { useToast } from 'primevue/usetoast'
 import {BusinessAllie} from "../services/businessAllie";
 
@@ -227,6 +234,14 @@ const cleanPartnerForm = () => {
 
 span.partner {
   color: var(--primary-color);
+}
+
+.form-header {
+  text-align: center;
+}
+
+.form-header h3 {
+  margin-bottom: 0;
 }
 
 @media (max-width: 508px) {

@@ -15,6 +15,7 @@
       closeIcon="pi pi-times-circle"
       :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
       :style="{ width: '65vw' }"
+      header=" "
   >
 
     <div class="col-12 content">
@@ -24,7 +25,7 @@
               class="business-allie-image"
               :src="BusinessOpportunitiesImg"
               alt="business-alli-image"
-              style="width: 100%; height: 100%"
+              style="width: 100%; height: 80%"
           />
         </div>
 
@@ -34,6 +35,17 @@
             <span class="partner">{{ t('businessPartner') }}</span>
           </h3>
           <label class="required-label">{{ t('requiredInformation') }}</label>
+
+          <div class="p-inputgroup input-allie">
+            <label>{{ t('dni') }}</label>
+            <InputText
+                type="text"
+                v-model="props.businessOpportunityEdit.taxId"
+                :placeholder="t('dni')"
+                readonly
+            />
+          </div>
+
           <div class="p-inputgroup input-allie">
             <label>{{ t('fullName') }}</label>
             <InputText
@@ -55,19 +67,10 @@
           </div>
 
           <div class="p-inputgroup input-allie">
-            <label>{{ t('id') }}</label>
-            <InputText
-              type="text"
-              v-model="props.businessOpportunityEdit.taxId"
-              :placeholder="t('id')"
-              readonly
-            />
-          </div>
-
-          <div class="p-inputgroup input-allie">
             <label>{{ t('fee') }} %</label>
-            <InputText
-              type="number"
+            <InputNumber
+              :min="0" :max="100"
+              :minFractionDigits="2" :maxFractionDigits="2"
               v-model="props.businessOpportunityEdit.feeSwap"
               :placeholder="t('fee')"
             />
@@ -79,10 +82,10 @@
     <template #footer>
       <div class="col-12 btn-container">
         <Button
-            class="w-50 p-button mt-5"
-            :label="'update'"
-            :loading="isSendingRequest"
-            @click="updateBusinessOpportunity()"
+          class="w-50 p-button mt-5"
+          :label="'update'"
+          :loading="isSendingRequest"
+          @click="updateBusinessOpportunity()"
         />
       </div>
     </template>
@@ -97,6 +100,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
 import {BusinessAllie} from "../services/businessAllie";
