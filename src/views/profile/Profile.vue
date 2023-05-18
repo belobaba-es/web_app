@@ -80,13 +80,10 @@ const setMenuItems = () => {
       to: `/profile/${accountId.value}/settings`,
       canSee: checkCanSee('company', 'natural_person'),
     },
-    // todo verificar la restriccion para quien se mostraran los business partners
     {
       label: t('businessPartners'),
       to: `/profile/${accountId.value}/business-partners`,
       canSee: checkCanSee('company', 'natural_person'),
-      // todo
-      // canSee: checkCanSee('company'),
     },
   ].filter(item => item.canSee)
 }

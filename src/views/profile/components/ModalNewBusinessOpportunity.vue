@@ -82,7 +82,7 @@ import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import BusinessOpportunitiesImg from '../../../assets/img/business_opportunities.png'
+import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
 import {BusinessAllie} from "../services/businessAllie";

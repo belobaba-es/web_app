@@ -97,7 +97,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import InputText from 'primevue/inputtext'
-import BusinessOpportunitiesImg from '../../../assets/img/business_opportunities.png'
+import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
 import {BusinessAllie} from "../services/businessAllie";
 
