@@ -80,7 +80,7 @@
       <h1 class="partner">{{ t('listOf') }}  <span class="partner">{{ t('businessPartners') }}</span></h1>
     </div>
 
-    <div class="padd-4 align-right col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4"
+    <div class="padd-4 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3"
       style="
           display: flex;
       justify-content: center;
@@ -90,6 +90,7 @@
       <div
         @click="displayNewOpportunity = !displayNewOpportunity"
         style="border: 1px solid var(--primary-color);
+          background-color: var(--surface-overlay);
           width: 126px;
           cursor: pointer;
           border-radius: 1rem; height: 150px;
@@ -123,8 +124,8 @@
       </div>
     </div>
 
-    <div class="input-allie-container align-right col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
-      <!--  List  -->
+    <!--  List  -->
+    <div class="input-allie-container align-right col-8 sm:col-8 md:col-9 lg:col-9 xl:col-9">
       <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
     </div>
   </div>

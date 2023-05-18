@@ -1,12 +1,13 @@
 <template>
   <!--  List  -->
-  <div class="input-allie-container align-right col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
+  <div class="input-allie-container align-right col-9 sm:col- md:col-9 lg:col-9 xl:col-9">
 <!--    <div class="grid">-->
     <div class="grid">
       <div v-for="(opportunity, idx) in businessOpportunities" class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6" :key="idx">
         <div
             class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
             :class="getClass(opportunity.status)"
+            style="background: #fff"
         >
           <div class="mb-2"
                style="display:flex; justify-content: space-between;"
