@@ -80,43 +80,17 @@
       <h1 class="partner">{{ t('listOf') }}  <span class="partner">{{ t('businessPartners') }}</span></h1>
     </div>
 
-    <div class="padd-4 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3"
-      style="
-          display: flex;
-      justify-content: center;
-      padding-top: 20px;
-        "
-    >
+    <div class="padd-4 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3 add-opportunity-container">
       <div
         @click="displayNewOpportunity = !displayNewOpportunity"
-        style="border: 1px solid var(--primary-color);
-          background-color: var(--surface-overlay);
-          width: 126px;
-          cursor: pointer;
-          border-radius: 1rem; height: 150px;
-          display: flex;
-          flex-direction: column
-        "
+        class="add-opportunity-button"
       >
-        <div
-          style="
-            display: flex;
-            justify-content: flex-start;
-            padding: 15px;
-          "
-        >
-          <img src="../../../assets/icons/user-add.svg" alt="add-beneficiary"
-               style="height: 50px"
-          />
+        <div class="add-opportunity-button-icon">
+          <img src="../../../assets/icons/user-add.svg" alt="add-beneficiary"/>
         </div>
 
-        <div style="
-          font-weight: 900;
-          height: 100px;
-          padding: 12px;
-          text-align: center
-        ">
-          <p style="font-weight: 900">
+        <div class="add-opportunity-button-text">
+          <p>
             {{ t('addNewOpportunity') }}
           </p>
         </div>
@@ -307,6 +281,43 @@ const onCreateAddress = (event: any) => {
   padding: 10px;
   border-radius: 8px;
   background-color: #ededed;
+}
+
+.add-opportunity-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.add-opportunity-button {
+  border: 1px solid var(--primary-color);
+  background-color: var(--surface-overlay);
+  width: 126px;
+  cursor: pointer;
+  border-radius: 1rem; height: 150px;
+  display: flex;
+  flex-direction: column
+}
+
+.add-opportunity-button-icon {
+
+  display: flex;
+  justify-content: flex-start;
+  padding: 15px;
+}
+.add-opportunity-button-icon img {
+  height: 50px
+}
+
+.add-opportunity-button-text {
+  font-weight: 900;
+  height: 100px;
+  padding: 12px;
+  text-align: center
+}
+
+.add-opportunity-button-text p {
+  font-weight: 900
 }
 
 .business-allie-image {
