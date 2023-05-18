@@ -7,20 +7,21 @@
         <div
             class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
             :class="getClass(opportunity.status)"
-            @click="editOpportunity(opportunity)"
         >
-          <div class="mb-2">
+          <div class="mb-2"
+               style="display:flex; justify-content: space-between;"
+          >
             <img src="../../../assets/icons/icon-user.svg" alt="show-beneficiary" />
-            <div>
+            <div style="color:var(--primary-color);" @click="editOpportunity(opportunity)">
               <span class="pi pi-file-edit"></span>
               edit
             </div>
           </div>
-          <div>
-            <p class="">{{ opportunity.name }}</p>
+          <div style="margin-top: 10px; height: 50px;">
+            <p class="" style="margin-bottom: 0; font-size: 0.9rem;">{{ opportunity.name }}</p>
 <!--            <p class="text-lg">{{ opportunity.email }}</p>-->
-            <p class="">{{ opportunity.feeSwap }} %</p>
-            <p class="">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
+<!--            <p class="">{{ opportunity.feeSwap }} %</p>-->
+            <p class="" style="font-size: 0.7rem">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
       </div>
