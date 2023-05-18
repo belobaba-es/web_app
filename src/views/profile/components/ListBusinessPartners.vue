@@ -78,6 +78,7 @@ const onUpdateOpportunity = (event: any) => {
       props.businessOpportunities[i] = { ...props.businessOpportunities[i], ...event }
     }
   }
+  displayEditOpportunity.value = false
 }
 </script>
 

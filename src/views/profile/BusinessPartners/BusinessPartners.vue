@@ -235,6 +235,7 @@ const generateReferralLink = (accountId: string) => {
 
 const onCreateOpportunity = (event: any) => {
   businessOpportunities.value = event
+  displayNewOpportunity.value = false
 }
 </script>
 
