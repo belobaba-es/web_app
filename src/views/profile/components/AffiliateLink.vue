@@ -59,3 +59,7 @@ const copyToClipboardReferralLink = () => {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

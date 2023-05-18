@@ -17,7 +17,9 @@
                 {{ item.label }}
               </RouterLink>
             </div>
-            <AffiliateLink class="affiliate-link"></AffiliateLink>
+            <div  class="affiliate-link-container">
+              <AffiliateLink ></AffiliateLink>
+            </div>
           </div>
         </template>
       </template>
@@ -95,7 +97,14 @@ const setMenuItems = () => {
   font-size: 14pt;
 }
 
-.affiliate-link {
+.affiliate-link-container {
   margin-top: -24px;
 }
+
+@media only screen and (max-width: 680px) {
+  .affiliate-link-container {
+    margin-top: 4px;
+  }
+}
+
 </style>
