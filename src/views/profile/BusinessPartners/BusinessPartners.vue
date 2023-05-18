@@ -58,7 +58,7 @@
   </div>
 
   <!-- Business Opportunities -->
-  <div v-if="businessAllieStatus === 'APPROVED'" class="grid">
+  <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
     <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
       <label class="required-label">{{ t('affiliateLink') }}</label>
         <div class="p-inputgroup">
@@ -301,6 +301,13 @@ const onCreateAddress = (event: any) => {
 </script>
 
 <style scoped>
+.gray-container {
+  margin: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ededed;
+}
+
 .business-allie-image {
   max-width: 100%;
   height: 55%;

@@ -19,8 +19,6 @@
           </div>
           <div style="margin-top: 10px; height: 50px;">
             <p class="" style="margin-bottom: 0; font-size: 0.9rem;">{{ opportunity.name }}</p>
-<!--            <p class="text-lg">{{ opportunity.email }}</p>-->
-<!--            <p class="">{{ opportunity.feeSwap }} %</p>-->
             <p class="" style="font-size: 0.7rem">{{  getBusinessOpportunityStatus(opportunity.status) }}</p>
           </div>
         </div>
