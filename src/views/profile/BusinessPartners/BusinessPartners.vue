@@ -7,6 +7,7 @@
     animationDuration=".5s"
     aria-label="Custom ProgressSpinner"
   />
+
   <!-- register as business allie -->
   <div class="container-center pb-5 gray-container" v-if="businessAllieStatus === ''">
     <div class="grid mt-6 pt-6 w-75 sm:w-100">
@@ -30,7 +31,7 @@
           </div>
 
           <div class="mt-6 d-flex text-center justify-content-end">
-            <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessPartner()" />
+            <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessAllie()" />
           </div>
         </div>
       </div>
@@ -69,7 +70,7 @@
     <div class="padd-4 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3 add-opportunity-container">
       <div @click="displayNewOpportunity = !displayNewOpportunity" class="add-opportunity-button">
         <div class="add-opportunity-button-icon">
-          <img src="../../../assets/icons/user-add.svg" alt="add-beneficiary" />
+          <img :src="UserAddIcon" alt="add-beneficiary" />
         </div>
 
         <div class="add-opportunity-button-text">
@@ -104,6 +105,7 @@ import ListBusinessPartners from '../components/ListBusinessPartners.vue'
 import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
 import AwaitingApprovalImg from '../../../assets/img/awaiting_approval.png'
 import ModalNewBusinessOpportunity from '../components/ModalNewBusinessOpportunity.vue'
+import UserAddIcon from '../../../assets/icons/user-add.svg'
 
 const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
@@ -115,19 +117,12 @@ const isAprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()
 const referredBy = ref('')
-const businessOpportunityPayload = ref<{ name: string; email: string; taxId: string }>({
-  name: '',
-  email: '',
-  taxId: '',
-})
 const businessOpportunities = ref<{ name: string; email: string; taxId: string; feeSwap: number; status: string }[]>([])
-const referralLink = ref('')
 const isLoadingData = ref(false)
 const displayNewOpportunity = ref(false)
 
 onMounted(() => {
   getBusinessAllieStatus()
-  generateReferralLink(userStore.getUser.account.accountId)
 })
 
 const getBusinessAllieStatus = async () => {
@@ -152,7 +147,7 @@ const getBusinessAllieStatus = async () => {
     })
 }
 
-const signUpAsBusinessPartner = () => {
+const signUpAsBusinessAllie = () => {
   submitting.value = true
 
   businessAllieService
@@ -160,7 +155,7 @@ const signUpAsBusinessPartner = () => {
     .then(() => {
       submitting.value = false
       businessAllieStatus.value = 'PENDING_REVISION'
-      showSucessMessage('You have registered successfully, now wait fo an admin to approve you')
+      showSuccessMessage(t('registeredSuccessfully'))
     })
     .catch(e => {
       submitting.value = false
@@ -173,64 +168,13 @@ const signUpAsBusinessPartner = () => {
     })
 }
 
-const saveBusinessOpportunity = () => {
-  submitting.value = true
-  if (!isValidBusinessOpportunityPayload()) {
-    submitting.value = false
-    return
-  }
-  businessAllieService
-    .saveBusinessOpportunity(businessOpportunityPayload.value)
-    .then(res => {
-      showSucessMessage('Business opportunity saved')
-      businessOpportunities.value = res.businessOpportunities ?? []
-      submitting.value = false
-      cleanPartnerForm()
-    })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: 'Something went wrong',
-        detail: e.response.data.message,
-        life: 4000,
-      })
-    })
-}
-
-const isValidBusinessOpportunityPayload = (): boolean => {
-  const { name, email, taxId } = businessOpportunityPayload.value
-  if (!name || !email || !taxId || name.length < 1 || email.length < 1 || taxId.length < 1) {
-    toast.add({
-      severity: 'error',
-      summary: 'Something went wrong',
-      detail: 'All fields are required.',
-      life: 4000,
-    })
-
-    return false
-  }
-
-  return true
-}
-
-const showSucessMessage = (msg: string) => {
+const showSuccessMessage = (msg: string) => {
   toast.add({
     severity: 'success',
     summary: 'Success',
     detail: msg,
     life: 4000,
   })
-}
-
-const cleanPartnerForm = () => {
-  businessOpportunityPayload.value.name = ''
-  businessOpportunityPayload.value.email = ''
-  businessOpportunityPayload.value.taxId = ''
-}
-
-const generateReferralLink = (accountId: string) => {
-  referralLink.value = `${import.meta.env.VITE_NOBA_SIGNIN}${btoa(accountId)}`
 }
 
 const onCreateOpportunity = (event: any) => {

@@ -311,5 +311,6 @@
   "listOf": "List of",
   "thankYou": "Thank you",
   "forYourInterest": "for your interest in the business partner program",
-  "yourRequest" : "Your request is in  process"
+  "yourRequest" : "Your request is in  process",
+  "registeredSuccessfully": "Se ha registrado correctamente, espera la aprobación de un admin"
 }

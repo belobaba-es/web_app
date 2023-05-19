@@ -304,5 +304,6 @@
   "listOf": "Listado de",
   "thankYou": "Gracias",
   "forYourInterest": "por tu interes en el programa de opportunidades de negocios",
-  "yourRequest" : "Tu solicitud esta en proceso"
+  "yourRequest" : "Tu solicitud esta en proceso",
+  "registeredSuccessfully": "You have registered successfully, now wait fo an admin to approve you"
 }
