@@ -10,7 +10,7 @@
       <div class="container-center xs:col-12 lg:col-6 sm:col-12">
         <div class="w-75">
           <h1 class="text-center mb-0">
-            {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
+            {{ t('beABusinessAllie1') }} <span class="span-partner">{{ t('beABusinessAllie2') }}</span>
           </h1>
 
           <div class="field text-center">

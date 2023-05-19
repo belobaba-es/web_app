@@ -1,7 +1,5 @@
 <template>
-  <!--  List  -->
-  <div class="input-allie-container align-right col-9 sm:col- md:col-9 lg:col-9 xl:col-9">
-    <!--    <div class="grid">-->
+  <div class="align-right col-9 sm:col- md:col-9 lg:col-9 xl:col-9">
     <div class="grid">
       <div
         v-for="(opportunity, idx) in businessOpportunities"
@@ -119,7 +117,7 @@ const onUpdateOpportunity = (event: any) => {
   font-size: 0.7rem;
 }
 
-/* se usan mediante una funcion getClass */
+/* se usan mediante la funcion getClass */
 .registered-opportunity {
   border: 1px solid #8d8891 !important;
 }

@@ -19,7 +19,7 @@
   >
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6 md:6 lg:6 xl:6 should-hide">
+        <div class="col-6 md:6 lg:6 xl:6 p-hide-xs p-hide-sm">
           <img
             class="business-allie-image"
             :src="BusinessOpportunitiesImg"
@@ -29,7 +29,7 @@
         </div>
 
         <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
-          <h3 class="business-allie">
+          <h3 class="business-allie text-center">
             {{ t('edit') }}
             <span class="partner">{{ t('businessPartner') }}</span>
           </h3>

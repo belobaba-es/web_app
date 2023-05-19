@@ -8,22 +8,17 @@
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '65vw' }"
   >
-    <div class="col-12 content">
+    <div class="col-12">
       <div class="inner-row-flex mt-20">
         <div class="col-6 should-hide">
-          <img
-            class="business-allie-image"
-            :src="BusinessOpportunitiesImg"
-            alt="business-alli-image"
-            style="width: 100%; height: 100%"
-          />
+          <img class="" :src="BusinessOpportunitiesImg" alt="business-alli-image" />
         </div>
 
         <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
           <div class="form-header">
             <h3 class="business-allie">
               {{ t('save') }}
-              <span class="partner">{{ t('businessPartner') }}</span>
+              <span class="span-partner">{{ t('businessPartner') }}</span>
             </h3>
             <label class="required-label">{{ t('requiredInformation') }}</label>
           </div>

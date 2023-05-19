@@ -37,7 +37,7 @@
     </div>
 
     <!--  List  -->
-    <div class="input-allie-container align-right col-8 sm:col-8 md:col-9 lg:col-9 xl:col-9">
+    <div class="align-right col-8 sm:col-8 md:col-9 lg:col-9 xl:col-9">
       <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
     </div>
   </div>
@@ -152,58 +152,10 @@ const onCreateOpportunity = (event: any) => {
   font-weight: 900;
 }
 
-.business-allie-image {
-  max-width: 100%;
-  height: 55%;
-  vertical-align: middle;
-}
-
-.img-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Optional: horizontally center the image */
-  max-height: 300px; /* Set a fixed height for the container */
-}
-
-.required-label {
-  font-size: 1rem;
-}
-
-.input-allie-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.input-allie input {
-  width: 100%;
-}
-
 .p-progress-spinner {
   position: fixed;
   margin-left: 33%;
   z-index: 999;
   margin-top: 10%;
-}
-
-.align-right {
-  align-items: start;
-}
-
-.allie-container {
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-}
-
-@media only screen and (max-width: 600px) {
-  .allie-container {
-    padding: 10px;
-    width: 100%;
-  }
-  .d-flex {
-    display: flex;
-  }
 }
 </style>
