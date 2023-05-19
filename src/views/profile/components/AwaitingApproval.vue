@@ -10,9 +10,9 @@
       <div class="allie-container xs:col-12 lg:col-6 sm:col-12">
         <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
           <h2>
-            <span class="partner">{{ t('thankYou') }}</span>
+            <span class="span-partner">{{ t('thankYou') }}</span>
             {{ t('forYourInterest') }}
-            <span class="partner"> {{ t('yourRequest') }}</span>
+            <span class="span-partner"> {{ t('yourRequest') }}</span>
           </h2>
         </div>
       </div>

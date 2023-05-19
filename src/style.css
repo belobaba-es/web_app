@@ -408,6 +408,10 @@ small {
   }
 }
 
+span.span-partner {
+  color: var(--primary-color);
+}
+
 @media (min-width: 600px) and (max-width: 959px) {
   .p-hide-sm {
     display: none;

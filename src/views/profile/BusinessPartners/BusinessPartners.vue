@@ -18,7 +18,7 @@
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
     <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
       <h1 class="partner">
-        {{ t('listOf') }} <span class="partner">{{ t('businessPartners') }}</span>
+        {{ t('listOf') }} <span class="span-partner">{{ t('businessPartners') }}</span>
       </h1>
     </div>
 
@@ -163,10 +163,6 @@ const onCreateOpportunity = (event: any) => {
   align-items: center;
   justify-content: center; /* Optional: horizontally center the image */
   max-height: 300px; /* Set a fixed height for the container */
-}
-
-span.partner {
-  color: var(--primary-color);
 }
 
 .required-label {
