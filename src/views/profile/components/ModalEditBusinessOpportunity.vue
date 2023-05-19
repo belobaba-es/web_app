@@ -93,6 +93,7 @@ import InputNumber from 'primevue/inputnumber'
 import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
 import { BusinessAllie } from '../services/businessAllie'
+import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -100,7 +101,7 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create', 'up
 
 const props = defineProps<{
   display: boolean
-  businessOpportunityEdit: { name?: string; email?: string; taxId: string; feeSwap: number; status?: string }
+  businessOpportunityEdit: BusinessOpportunity
 }>()
 const displayEditOpportunity = ref(false)
 const isSendingRequest = ref(false)

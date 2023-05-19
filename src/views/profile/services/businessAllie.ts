@@ -1,4 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
+import { BusinessOpportunity } from '../types/businessOpportunity'
+import { BusinessAllieType } from '../types/businessAllie'
 
 export class BusinessAllie extends HttpService {
   private static _instance: BusinessAllie
@@ -18,22 +20,22 @@ export class BusinessAllie extends HttpService {
     return this._instance
   }
 
-  async getBusinessAllieStatus(): Promise<any> {
+  async getBusinessAllieStatus(): Promise<BusinessAllieType> {
     return await this.get('/businessAllies')
   }
 
-  async getBusinessOpportunities(): Promise<any> {
+  async getBusinessOpportunities(): Promise<BusinessOpportunity[]> {
     return this.get('/businessOpportunities')
   }
-  async saveBusinessOpportunity(payload: any): Promise<any> {
+  async saveBusinessOpportunity(payload: any): Promise<void> {
     return this.post('/businessOpportunities', payload)
   }
 
-  async registerAsBusinessPartner(payload: any): Promise<any> {
+  async registerAsBusinessPartner(payload: any): Promise<BusinessAllieType> {
     return this.post('/businessAllies', payload)
   }
 
-  async updateOpportunityFeeSwap(taxId: string, feeSwap: number): Promise<any> {
+  async updateOpportunityFeeSwap(taxId: string, feeSwap: number): Promise<void> {
     return await this.patch(`businessOpportunities/${taxId}`, {
       feeSwap,
     })

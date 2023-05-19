@@ -9,55 +9,10 @@
   />
 
   <!-- register as business allie -->
-  <div class="container-center pb-5 gray-container" v-if="businessAllieStatus === ''">
-    <div class="grid mt-6 pt-6 w-75 sm:w-100">
-      <div class="lg:col-6 sm:col-12">
-        <div class="flex justify-content-center align-content-center w-100">
-          <img class="business-allie-image" alt="business-alli-image" :src="BusinessPartnersImg" />
-        </div>
-      </div>
-
-      <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
-        <div class="w-100">
-          <h1 class="text-center">
-            {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
-          </h1>
-
-          <div class="field">
-            <label class="required-label">{{ t('requiredInformation') }}</label>
-            <div class="p-inputgroup">
-              <InputText type="text" v-model="referredBy" :placeholder="t('referringName')" />
-            </div>
-          </div>
-
-          <div class="mt-6 d-flex text-center justify-content-end">
-            <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessAllie()" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <RegisterAsBusinessAllie v-if="businessAllieStatus === ''" @create="onUpdateAllieStatus"></RegisterAsBusinessAllie>
 
   <!-- awaiting for approval -->
-  <div v-if="businessAllieStatus === 'PENDING_REVISION'" class="container-center pb-5 gray-container">
-    <div class="grid mt-6 pt-6 w-75 sm:w-100" style="#f9f9f9">
-      <div class="lg:col-6 sm:col-12">
-        <div class="flex justify-content-center align-content-center w-100">
-          <img class="business-allie-image" alt="business-alli-image" :src="AwaitingApprovalImg" />
-        </div>
-      </div>
-
-      <div class="allie-container xs:col-12 lg:col-6 sm:col-12">
-        <div class="input-allie-container col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 awaiting-approval">
-          <h2>
-            <span class="partner">{{ t('thankYou') }}</span>
-            {{ t('forYourInterest') }}
-            <span class="partner"> {{ t('yourRequest') }}</span>
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
+  <AwaitingApproval v-if="businessAllieStatus === 'PENDING_REVISION'"> </AwaitingApproval>
 
   <!-- Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
@@ -91,21 +46,20 @@
   </ModalNewBusinessOpportunity>
 </template>
 <script setup lang="ts">
-import Button from 'primevue/button'
 import { useAccount } from '../../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
-import InputText from 'primevue/inputtext'
 import { BusinessAllie } from '../services/businessAllie'
 import { useUserStore } from '../../../stores/user'
 import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
 import ListBusinessPartners from '../components/ListBusinessPartners.vue'
-import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
-import AwaitingApprovalImg from '../../../assets/img/awaiting_approval.png'
 import ModalNewBusinessOpportunity from '../components/ModalNewBusinessOpportunity.vue'
 import UserAddIcon from '../../../assets/icons/user-add.svg'
+import RegisterAsBusinessAllie from '../components/RegisterAsBusinessAllie.vue'
+import AwaitingApproval from '../components/AwaitingApproval.vue'
+import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const businessAllieService = new BusinessAllie()
 const submitting = ref(false)
@@ -116,8 +70,7 @@ const userStore = useUserStore()
 const isAprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()
-const referredBy = ref('')
-const businessOpportunities = ref<{ name: string; email: string; taxId: string; feeSwap: number; status: string }[]>([])
+const businessOpportunities = ref<BusinessOpportunity[]>([])
 const isLoadingData = ref(false)
 const displayNewOpportunity = ref(false)
 
@@ -147,34 +100,8 @@ const getBusinessAllieStatus = async () => {
     })
 }
 
-const signUpAsBusinessAllie = () => {
-  submitting.value = true
-
-  businessAllieService
-    .registerAsBusinessPartner({ referredBy: referredBy.value })
-    .then(() => {
-      submitting.value = false
-      businessAllieStatus.value = 'PENDING_REVISION'
-      showSuccessMessage(t('registeredSuccessfully'))
-    })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'warning',
-        summary: 'Something went wrong',
-        detail: 'Try again.',
-        life: 4000,
-      })
-    })
-}
-
-const showSuccessMessage = (msg: string) => {
-  toast.add({
-    severity: 'success',
-    summary: 'Success',
-    detail: msg,
-    life: 4000,
-  })
+const onUpdateAllieStatus = (event: any) => {
+  businessAllieStatus.value = 'PENDING_REVISION'
 }
 
 const onCreateOpportunity = (event: any) => {
@@ -212,9 +139,6 @@ const onCreateOpportunity = (event: any) => {
   display: flex;
   justify-content: flex-start;
   padding: 15px;
-}
-.add-opportunity-button-icon img {
-  height: 50px;
 }
 
 .add-opportunity-button-text {
@@ -258,13 +182,6 @@ span.partner {
 
 .input-allie input {
   width: 100%;
-}
-
-.awaiting-approval {
-  display: flex;
-  align-items: center;
-  height: 200px;
-  text-align: center;
 }
 
 .p-progress-spinner {

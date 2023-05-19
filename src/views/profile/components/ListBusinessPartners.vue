@@ -5,7 +5,7 @@
     <div class="grid">
       <div
         v-for="(opportunity, idx) in businessOpportunities"
-        class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6"
+        class="min-w-150 col-6 sm:col-6 md:col-6 lg:col-6 xl:col-4"
         :key="idx"
       >
         <div
@@ -13,7 +13,7 @@
           :class="getClass(opportunity.status)"
         >
           <div class="mb-2 opportunity-header">
-            <img src="../../../assets/icons/icon-user.svg" alt="show-beneficiary" />
+            <img :src="UserIconImg" alt="show-beneficiary" />
             <div class="opportunity-header-edit" @click="editOpportunity(opportunity)">
               <span class="pi pi-file-edit"></span>
               {{ t('edit') }}
@@ -22,7 +22,7 @@
           <div class="opportunity-footer">
             <p>{{ opportunity.name }}</p>
             <p>{{ opportunity.feeSwap }} %</p>
-            <small>{{ getBusinessOpportunityStatus(opportunity.status) }}</small>
+            <small>{{ getBusinessOpportunityStatus(opportunity?.status) }}</small>
           </div>
         </div>
       </div>
@@ -41,9 +41,11 @@
 import { useI18n } from 'vue-i18n'
 import { defineProps, ref } from 'vue'
 import ModalEditBusinessOpportunity from './ModalEditBusinessOpportunity.vue'
+import UserIconImg from '../../../assets/icons/icon-user.svg'
+import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const props = defineProps<{
-  businessOpportunities: { name: string; email: string; taxId: string; feeSwap: number; status: string }[]
+  businessOpportunities: BusinessOpportunity[]
 }>()
 const { t } = useI18n({ useScope: 'global' })
 const displayEditOpportunity = ref(false)

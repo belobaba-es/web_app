@@ -81,6 +81,7 @@ import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import { useToast } from 'primevue/usetoast'
 import { BusinessAllie } from '../services/businessAllie'
+import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -88,13 +89,7 @@ const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
 }>()
-const businessOpportunityPayload = ref<{
-  name?: string
-  email?: string
-  taxId?: string
-  feeSwap: number
-  status: string
-}>({
+const businessOpportunityPayload = ref<BusinessOpportunity>({
   name: '',
   email: '',
   taxId: '',
