@@ -129,9 +129,9 @@ const updateBusinessOpportunity = () => {
     .catch(e => {
       isSendingRequest.value = false
       toast.add({
-        severity: 'warning',
+        severity: 'error',
         summary: 'Something went wrong',
-        detail: 'Try again.',
+        detail: e.response.data.message,
         life: 4000,
       })
     })
