@@ -67,7 +67,7 @@ const { t } = useI18n({ useScope: 'global' })
 const { getFullName } = useAccount()
 const router = useRouter()
 const userStore = useUserStore()
-const isAprovedAsBusinessPartner = ref(false)
+const isApprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()
 const businessOpportunities = ref<BusinessOpportunity[]>([])
@@ -91,7 +91,7 @@ const getBusinessAllieStatus = async () => {
 
       businessAllieStatus.value = res.status ?? ''
       if (res.status === 'APPROVED') {
-        isAprovedAsBusinessPartner.value = true
+        isApprovedAsBusinessPartner.value = true
         businessOpportunities.value = res.businessOpportunities ?? []
       }
     })

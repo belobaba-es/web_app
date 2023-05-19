@@ -1,26 +1,26 @@
 <template>
   <div class="container-center pb-5 gray-container">
     <div class="grid mt-6 pt-6 w-75 sm:w-100">
-      <div class="lg:col-6 sm:col-12">
+      <div class="lg:col-6 sm:col-12 p-hide-xs p-hide-sm">
         <div class="flex justify-content-center align-content-center w-100">
-          <img class="business-allie-image" alt="business-alli-image" :src="BusinessPartnersImg" />
+          <img class="" alt="business-alli-image" :src="BusinessPartnersImg" />
         </div>
       </div>
 
-      <div class="xs-allie-container xs:col-12 lg:col-6 sm:col-12">
-        <div class="w-100">
-          <h1 class="text-center">
+      <div class="container-center xs:col-12 lg:col-6 sm:col-12">
+        <div class="w-75">
+          <h1 class="text-center mb-0">
             {{ t('beABusinessAllie1') }} <span class="partner">{{ t('beABusinessAllie2') }}</span>
           </h1>
 
-          <div class="field">
-            <label class="required-label">{{ t('requiredInformation') }}</label>
+          <div class="field text-center">
+            <label class="required-label text-center mt-1 mb-5">{{ t('requiredInformation') }}</label>
             <div class="p-inputgroup">
               <InputText type="text" v-model="referredBy" :placeholder="t('referringName')" />
             </div>
           </div>
 
-          <div class="mt-6 d-flex text-center justify-content-end">
+          <div class="mt-6 text-center justify-content-end">
             <Button :label="t('send')" class="px-5" :loading="submitting" @click="signUpAsBusinessAllie()" />
           </div>
         </div>
