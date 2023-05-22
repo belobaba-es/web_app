@@ -8,7 +8,7 @@
       >
         <div
           class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer bg-white"
-          :class="getClass(opportunity.status)"
+          :class="getStatusClass(opportunity.status)"
         >
           <div class="flex justify-content-between">
             <img :src="UserIconImg" alt="show-beneficiary" />
@@ -58,7 +58,7 @@ const getBusinessOpportunityStatus = (status: string) => {
   return opportunityStatus
 }
 
-const getClass = (status: any) => {
+const getStatusClass = (status: any) => {
   let cssClass
   if (status === 'REGISTERED_OPPORTUNITY') cssClass = 'registered-opportunity'
   if (status === 'OPPORTUNITY_WITH_REGISTERED_ACCOUNT') cssClass = 'opportunity-with-account'
