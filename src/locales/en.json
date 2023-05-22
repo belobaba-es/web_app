@@ -242,6 +242,7 @@
   "bankAccountHolder": "Bank account holder",
   "ourFee": "Our fee",
   "hasReceived": "Has received",
+  "willReceive": "WIll receive",
   "transactionNumber": "Transaction number",
   "newTransfer": "New transfer",
   "youSend": "You send",
