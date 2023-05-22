@@ -7,12 +7,12 @@
         :key="idx"
       >
         <div
-          class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer white-bg"
+          class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer bg-white"
           :class="getClass(opportunity.status)"
         >
-          <div class="mb-2 opportunity-header">
+          <div class="flex justify-content-between">
             <img :src="UserIconImg" alt="show-beneficiary" />
-            <div class="opportunity-header-edit" @click="editOpportunity(opportunity)">
+            <div class="text-primary" @click="editOpportunity(opportunity)">
               <span class="pi pi-file-edit"></span>
               {{ t('edit') }}
             </div>
@@ -86,46 +86,27 @@ const onUpdateOpportunity = (event: any) => {
 .min-w-150 {
   min-width: 150px;
 }
-
-.white-bg {
-  background: #fff;
-}
-
-.opportunity-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.opportunity-header-edit {
-  color: var(--primary-color);
-}
-
 .opportunity-footer {
   margin-top: 10px;
   height: 50px;
   padding-top: 10px;
 }
-
 .opportunity-footer p {
   margin-top: -5px;
   margin-bottom: 0;
   font-size: 0.9rem;
 }
-
 .opportunity-footer small {
   margin-bottom: 0;
   font-size: 0.7rem;
 }
-
 /* se usan mediante la funcion getClass */
 .registered-opportunity {
   border: 1px solid #8d8891 !important;
 }
-
 .opportunity-with-account {
   border: 1px solid #ffc400 !important;
 }
-
 .opportunity-active-account {
   border: 1px solid var(--primary-color) !important;
 }
