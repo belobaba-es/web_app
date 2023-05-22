@@ -9,18 +9,18 @@
     :style="{ width: '65vw' }"
   >
     <div class="col-12">
-      <div class="inner-row-flex mt-20">
-        <div class="col-6 should-hide">
+      <div class="flex justify-content-center">
+        <div class="col-6 inner-row-flex p-hide-xs p-hide-sm">
           <img class="" :src="BusinessOpportunitiesImg" alt="business-alli-image" />
         </div>
 
-        <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5 pt-1">
-          <div class="form-header">
-            <h3 class="business-allie">
+        <div class="col-12 sm:col-5 md:col-5 lg:col-5 xl:col-5">
+          <div class="text-center">
+            <h3 class="text-5xl mb-0">
               {{ t('save') }}
-              <span class="span-partner">{{ t('businessPartner') }}</span>
+              <span class="text-primary">{{ t('businessPartner') }}</span>
             </h3>
-            <label class="required-label">{{ t('requiredInformation') }}</label>
+            <label class="text-base">{{ t('requiredInformation') }}</label>
           </div>
 
           <div class="p-inputgroup input-allie">
@@ -180,81 +180,12 @@ const showErrorMessage = (msg: string) => {
 </script>
 
 <style lang="css" scoped>
-.content {
-  display: contents;
-}
-.inner-row-flex {
-  display: flex;
-  padding: 0;
-}
-.green-color {
-  color: var(--primary-color);
-}
-.p-divider-dashed.p-divider-horizontal:before {
-  border-color: var(--primary-color);
-}
-
-.content {
-  display: contents;
-}
-
-.green-color {
-  color: var(--primary-color);
-}
-
-.p-divider-dashed.p-divider-horizontal:before {
-  border-color: var(--primary-color);
-}
-
-.pt-1 {
-  padding-top: 1%;
-}
-
-.white-div {
-  width: 40px;
-  background: #fff;
-}
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.required-label {
-  font-size: 1rem;
-}
-
-.business-allie {
-  font-size: 25px;
-}
-
-.required-label {
-  font-size: 1rem;
-}
 .input-allie {
   margin: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .input-allie input {
   width: 90%;
-}
-
-span.partner {
-  color: var(--primary-color);
-}
-
-.form-header {
-  text-align: center;
-}
-
-.form-header h3 {
-  margin-bottom: 0;
-}
-
-@media (max-width: 508px) {
-  .should-hide {
-    display: none !important;
-  }
 }
 </style>

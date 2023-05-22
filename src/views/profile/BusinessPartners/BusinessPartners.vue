@@ -14,22 +14,22 @@
   <!-- awaiting for approval -->
   <AwaitingApproval v-if="businessAllieStatus === 'PENDING_REVISION'"> </AwaitingApproval>
 
-  <!-- Business Opportunities -->
+  <!--List of Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
     <div class="padd-4 align-right col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 text-center">
       <h1 class="partner">
-        {{ t('listOf') }} <span class="span-partner">{{ t('businessPartners') }}</span>
+        {{ t('listOf') }} <span class="text-primary">{{ t('businessPartners') }}</span>
       </h1>
     </div>
 
-    <div class="padd-4 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3 add-opportunity-container">
+    <div class="flex justify-content-center pt-10 align-right col-4 sm:col-4 md:col-3 lg:col-3 xl:col-3">
       <div @click="displayNewOpportunity = !displayNewOpportunity" class="add-opportunity-button">
-        <div class="add-opportunity-button-icon">
+        <div class="flex justify-content-start p-3">
           <img :src="UserAddIcon" alt="add-beneficiary" />
         </div>
 
-        <div class="add-opportunity-button-text">
-          <p>
+        <div class="add-opportunity-button-footer font-semibold text-center p-2">
+          <p class="font-semibold">
             {{ t('addNewOpportunity') }}
           </p>
         </div>
@@ -95,7 +95,7 @@ const getBusinessAllieStatus = async () => {
         businessOpportunities.value = res.businessOpportunities ?? []
       }
     })
-    .catch(e => {
+    .catch(() => {
       isLoadingData.value = false
     })
 }
@@ -117,13 +117,6 @@ const onCreateOpportunity = (event: any) => {
   border-radius: 8px;
   background-color: #ededed;
 }
-
-.add-opportunity-container {
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-}
-
 .add-opportunity-button {
   border: 1px solid var(--primary-color);
   background-color: var(--surface-overlay);
@@ -134,24 +127,9 @@ const onCreateOpportunity = (event: any) => {
   display: flex;
   flex-direction: column;
 }
-
-.add-opportunity-button-icon {
-  display: flex;
-  justify-content: flex-start;
-  padding: 15px;
-}
-
-.add-opportunity-button-text {
-  font-weight: 900;
+.add-opportunity-button-footer {
   height: 100px;
-  padding: 12px;
-  text-align: center;
 }
-
-.add-opportunity-button-text p {
-  font-weight: 900;
-}
-
 .p-progress-spinner {
   position: fixed;
   margin-left: 33%;
