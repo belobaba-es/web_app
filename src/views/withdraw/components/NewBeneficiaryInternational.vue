@@ -18,7 +18,7 @@
         <div class="field">
           <label>{{ t('depositNameOnBank') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="form.realName" />
+            <InputText type="text" v-model="form.realName" readonly />
           </div>
           <small>Make sure it exactly as it appears on your bank account</small>
         </div>
@@ -251,11 +251,13 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { useToast } from 'primevue/usetoast'
 import showMessage from '../../../shared/showMessageArray'
 import showExceptionError from '../../../shared/showExceptionError'
+import { useUserStore } from '../../../stores/user'
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const submitting = ref(false)
 
+const { getUserName } = useUserStore()
 const {
   countries,
   fetchCountries,
@@ -278,7 +280,7 @@ const {
 } = useWorld()
 
 const form = ref<BeneficiaryFiatInternacional>({
-  realName: '',
+  realName: getUserName(),
   accountNumber: '',
   routingNumber: '',
   streetOne: '',

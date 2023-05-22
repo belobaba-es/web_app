@@ -1,6 +1,7 @@
 import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
 import { BeneficiaryInternal, BeneficiaryType } from '../types/beneficiary.interface'
+import { useUserStore } from '../../../stores/user'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -14,13 +15,19 @@ export const useBeneficiary = () => {
   const nextPag = ref(0)
   const listBeneficiariesInternal = ref<BeneficiaryInternal[]>()
 
+  const { getUserName } = useUserStore()
+
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
 
     const beneficiaryService = BeneficiaryService.instance()
     await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
+      const userName = getUserName()
+
       resp.results.forEach(element => {
-        listBeneficiary.value.push(element)
+        if (userName === element.realName) {
+          listBeneficiary.value.push(element)
+        }
       })
       submitting.value = false
       listNextPag.value = resp.nextPag.replace('?', '')
