@@ -233,6 +233,7 @@
   "bankAccountHolder": "Beneficiario",
   "ourFee": "Nuestra comisión",
   "hasReceived": "Ha recibido",
+  "willReceive": "Recibirá",
   "transactionNumber": "Número de transacción",
   "newTransfer": "Nueva transacción",
   "youSend": "Enviaste",
