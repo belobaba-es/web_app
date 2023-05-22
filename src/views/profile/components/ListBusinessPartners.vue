@@ -17,10 +17,10 @@
               {{ t('edit') }}
             </div>
           </div>
-          <div class="opportunity-footer">
-            <p>{{ opportunity.name }}</p>
-            <p>{{ opportunity.feeSwap }} %</p>
-            <small>{{ getBusinessOpportunityStatus(opportunity?.status) }}</small>
+          <div class="opportunity-footer mt-4 pt-3">
+            <p class="text-base mb-0 -mt-1">{{ opportunity.name }}</p>
+            <p class="text-base mb-0 -mt-1">{{ opportunity.feeSwap }} %</p>
+            <small class="mb-0 text-xs">{{ getBusinessOpportunityStatus(opportunity?.status) }}</small>
           </div>
         </div>
       </div>
@@ -87,18 +87,7 @@ const onUpdateOpportunity = (event: any) => {
   min-width: 150px;
 }
 .opportunity-footer {
-  margin-top: 10px;
-  height: 50px;
-  padding-top: 10px;
-}
-.opportunity-footer p {
-  margin-top: -5px;
-  margin-bottom: 0;
-  font-size: 0.9rem;
-}
-.opportunity-footer small {
-  margin-bottom: 0;
-  font-size: 0.7rem;
+  height: 60px;
 }
 /* se usan mediante la funcion getClass */
 .registered-opportunity {
