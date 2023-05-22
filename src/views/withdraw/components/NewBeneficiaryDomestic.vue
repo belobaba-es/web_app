@@ -17,7 +17,7 @@
         <div class="field">
           <label>{{ t('depositNameOnBank') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="form.realName" />
+            <InputText type="text" v-model="form.realName" readonly />
           </div>
           <small>Make sure it exactly as it appears on your bank account</small>
         </div>
@@ -135,6 +135,7 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { BeneficiaryFiatDomestic } from '../types/beneficiary.interface'
 import showMessage from '../../../shared/showMessageArray'
 import showExceptionError from '../../../shared/showExceptionError'
+import { useUserStore } from '../../../stores/user'
 
 const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })
@@ -142,6 +143,20 @@ const toast = useToast()
 
 const submitting = ref(false)
 
+const { getUserName } = useUserStore()
+const form = ref<BeneficiaryFiatDomestic>({
+  bankName: '',
+  realName: getUserName(),
+  accountNumber: '',
+  routingNumber: '',
+  streetOne: '',
+  streetTwo: '',
+  postalCode: '',
+  country: '',
+  city: '',
+  state: '',
+  typeBeneficiaryBankWithdrawal: 'DOMESTIC',
+})
 const {
   countries,
   fetchCountries,
@@ -156,20 +171,6 @@ const {
 
 onMounted(async () => {
   await fetchCountries()
-})
-
-const form = ref<BeneficiaryFiatDomestic>({
-  bankName: '',
-  realName: '',
-  accountNumber: '',
-  routingNumber: '',
-  streetOne: '',
-  streetTwo: '',
-  postalCode: '',
-  country: '',
-  city: '',
-  state: '',
-  typeBeneficiaryBankWithdrawal: 'DOMESTIC',
 })
 
 const saveBeneficiary = () => {
