@@ -4,8 +4,11 @@
 
     <ProgressSpinner
       v-if="isLoadingTransactionDetails"
-     style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-     animationDuration=".5s" aria-label="Custom ProgressSpinner"
+      style="width: 50px; height: 50px"
+      strokeWidth="8"
+      fill="var(--surface-ground)"
+      animationDuration=".5s"
+      aria-label="Custom ProgressSpinner"
     />
 
     <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
@@ -90,7 +93,7 @@ import ProgressSpinner from 'primevue/progressspinner'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import ModalTransactionDetails, {TransactionModalPayload} from '../../../components/ModalTransactionDetails.vue'
+import ModalTransactionDetails, { TransactionModalPayload } from '../../../components/ModalTransactionDetails.vue'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
@@ -196,11 +199,15 @@ const loadTransactionDetail = async (transaction: any) => {
   await getHistoric
     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
     .then(data => {
-      const nameTo = `${(transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label)}`
+      const nameTo = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
 
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = { ...modalTransactionDetail.value, ...(data as TransactionModalPayload), nameTo } as TransactionModalPayload
+      modalTransactionDetail.value = {
+        ...modalTransactionDetail.value,
+        ...(data as TransactionModalPayload),
+        nameTo,
+      } as TransactionModalPayload
     })
 }
 </script>

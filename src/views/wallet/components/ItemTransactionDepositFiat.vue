@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import { useUserStore } from '../../../stores/user'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   item: any
