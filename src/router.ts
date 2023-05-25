@@ -42,6 +42,7 @@ import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 
 import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
+import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -104,6 +105,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'settings',
             component: Settings,
+          },
+          {
+            path: 'business-partners',
+            component: BusinessPartners,
           },
         ],
       },

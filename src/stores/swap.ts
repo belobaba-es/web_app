@@ -90,7 +90,7 @@ export const useSwapStore = defineStore('swap', () => {
     const swapService = SwapService.instance()
     await swapService
       .createQuote({
-        amount: amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6  : amount.value,
+        amount: amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value,
         amountIsUnitCount: amountIsUnitCount.value,
         transactionType: transactionType.value,
         assetId: assetId.value,

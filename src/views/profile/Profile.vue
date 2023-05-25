@@ -17,6 +17,9 @@
                 {{ item.label }}
               </RouterLink>
             </div>
+            <div  class="affiliate-link-container">
+              <AffiliateLink ></AffiliateLink>
+            </div>
           </div>
         </template>
       </template>
@@ -32,6 +35,7 @@ import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
 import { TypeAccount } from './types/account.interface'
+import AffiliateLink from "./components/AffiliateLink.vue";
 
 const { t } = useI18n({ useScope: 'global' })
 const { natureAccount, accountId, fetchAccount, loading } = useAccount()
@@ -76,6 +80,11 @@ const setMenuItems = () => {
       to: `/profile/${accountId.value}/settings`,
       canSee: checkCanSee('company', 'natural_person'),
     },
+    {
+      label: t('businessPartners'),
+      to: `/profile/${accountId.value}/business-partners`,
+      canSee: checkCanSee('company', 'natural_person'),
+    },
   ].filter(item => item.canSee)
 }
 </script>
@@ -84,4 +93,15 @@ const setMenuItems = () => {
 ::v-deep(.p-tabmenuitem) {
   font-size: 14pt;
 }
+
+.affiliate-link-container {
+  margin-top: -24px;
+}
+
+@media only screen and (max-width: 680px) {
+  .affiliate-link-container {
+    margin-top: 4px;
+  }
+}
+
 </style>

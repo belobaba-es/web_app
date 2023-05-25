@@ -1,405 +1,415 @@
 @font-face {
-    font-family: KanitLight;
-    src: url('/src/assets/fonts/Kanit-Light.ttf');
+  font-family: KanitLight;
+  src: url('/src/assets/fonts/Kanit-Light.ttf');
 }
 
 @font-face {
-    font-family: KanitExtraLight;
-    src: url('/src/assets/fonts/Kanit-ExtraLight.ttf');
+  font-family: KanitExtraLight;
+  src: url('/src/assets/fonts/Kanit-ExtraLight.ttf');
 }
 
 @font-face {
-    font-family: KanitRegular;
-    src: url('/src/assets/fonts/Kanit-Regular.ttf');
+  font-family: KanitRegular;
+  src: url('/src/assets/fonts/Kanit-Regular.ttf');
 }
 
 @font-face {
-    font-family: KanitMedium;
-    src: url('/src/assets/fonts/Kanit-Medium.ttf');
+  font-family: KanitMedium;
+  src: url('/src/assets/fonts/Kanit-Medium.ttf');
 }
 
 @font-face {
-    font-family: KanitSemiBold;
-    src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
+  font-family: KanitSemiBold;
+  src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
 }
 
 @font-face {
-    font-family: KanitBold;
-    src: url('/src/assets/fonts/Kanit-Bold.ttf');
+  font-family: KanitBold;
+  src: url('/src/assets/fonts/Kanit-Bold.ttf');
 }
 
 .font-light {
-    font-family: KanitLight !important;
-    font-weight: 0 !important;
+  font-family: KanitLight !important;
+  font-weight: 0 !important;
 }
 
 .font-extra-light {
-    font-family: KanitExtraLight !important;
-    font-weight: 0 !important;
+  font-family: KanitExtraLight !important;
+  font-weight: 0 !important;
 }
 
 .font-regular {
-    font-family: KanitRegular !important;
-    font-weight: 0 !important;
+  font-family: KanitRegular !important;
+  font-weight: 0 !important;
 }
 
 .font-medium {
-    font-family: KanitMedium !important;
-    font-weight: 0 !important;
+  font-family: KanitMedium !important;
+  font-weight: 0 !important;
 }
 
 .font-semi-bold {
-    font-weight: 0 !important;
-    font-family: KanitSemiBold !important;
+  font-weight: 0 !important;
+  font-family: KanitSemiBold !important;
 }
 
 .font-bold {
-    font-weight: 0 !important;
-    font-family: KanitBold !important;
+  font-weight: 0 !important;
+  font-family: KanitBold !important;
 }
-
 
 html,
 body {
-    font-family: KanitLight;
-    font-size: 10pt;
+  font-family: KanitLight;
+  font-size: 10pt;
 }
 
 h1 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 h2 {
-    font-size: 23px;
+  font-size: 23px;
 }
 
 :root {
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 
-    --surface-overlay: #f9f9f9;
-    --surface-ground: #f9f9f9;
-    --primary-color: #00BEB0;
-    --text-color: #1B1B19;
-
+  --surface-overlay: #f9f9f9;
+  --surface-ground: #f9f9f9;
+  --primary-color: #00beb0;
+  --text-color: #1b1b19;
 }
 
 *:focus {
-    outline: 0
+  outline: 0;
 }
 
 .icon-home .pi::before,
 .icon-home .p-menuitem-icon::before {
-    content: url(/src/assets/icons/home.svg);
+  content: url(/src/assets/icons/home.svg);
 }
 
 .icon-piggy-bank .pi::before {
-    content: url(/src/assets/icons/piggy-bank.svg);
+  content: url(/src/assets/icons/piggy-bank.svg);
 }
 
 .icon-swap .pi::before {
-    content: url(/src/assets/icons/swap.svg);
+  content: url(/src/assets/icons/swap.svg);
 }
 
 .icon-bank .pi::before {
-    content: url(/src/assets/icons/bank.svg);
+  content: url(/src/assets/icons/bank.svg);
 }
 
 .icon-wallet .pi::before {
-    content: url(/src/assets/icons/wallet.svg);
+  content: url(/src/assets/icons/wallet.svg);
 }
 
 .icon-profile-user .pi::before {
-    content: url(/src/assets/icons/icon-user.svg);
+  content: url(/src/assets/icons/icon-user.svg);
 }
 
 .icon-document-file .pi::before {
-    content: url(/src/assets/icons/icon-document.svg);
+  content: url(/src/assets/icons/icon-document.svg);
 }
 
 .icon-headset .pi::before {
-    content: url(/src/assets/icons/headset.svg);
+  content: url(/src/assets/icons/headset.svg);
 }
 
 .icon-help .pi::before {
-    content: url(/src/assets/icons/help.svg);
+  content: url(/src/assets/icons/help.svg);
 }
 
 .icon-history .pi::before {
-    content: url(/src/assets/icons/history.svg);
+  content: url(/src/assets/icons/history.svg);
 }
-
 
 .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
 .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
-    color: #00BEB0;
+  color: #00beb0;
 }
 
-.p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover .p-menuitem-link .p-menuitem-ico {
-    color: #00BEB0;
-    background: #e9ecef;
+.p-tieredmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-menuitem-ico {
+  color: #00beb0;
+  background: #e9ecef;
 }
-
 
 .container-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 0 3rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0 3rem 0;
 }
 
 .p-inputgroup input:first-child,
-.p-inputgroup>.p-inputwrapper:last-child>.p-inputtext,
+.p-inputgroup > .p-inputwrapper:last-child > .p-inputtext,
 .p-dropdown.p-component.p-inputwrapper {
-    border-radius: 0;
+  border-radius: 0;
 }
 
 .p-inputtext,
 .p-dropdown.p-component.p-inputwrapper {
-    border-radius: 0;
+  border-radius: 0;
 }
 
 .p-inputgroup input:hover,
 .p-inputgroup input:focus,
 .p-dropdown.p-component.p-inputwrapper:hover,
 .p-dropdown.p-component.p-inputwrapper:focus {
-    border: 1px solid #00BEB0 !important;
-    outline: none;
+  border: 1px solid #00beb0 !important;
+  outline: none;
 }
 
 .p-inputtext,
 .p-dropdown.p-component.p-inputwrapper {
-    border: 1px solid #ECECEC;
-    box-sizing: initial;
-    font-family: KanitLight;
-    font-size: 1.1rem;
+  border: 1px solid #ececec;
+  box-sizing: initial;
+  font-family: KanitLight;
+  font-size: 1.1rem;
 }
 
 label {
-    font-size: 1.1rem;
-    font-family: KanitLight;
+  font-size: 1.1rem;
+  font-family: KanitLight;
 }
 
 .container-end {
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    text-align: end;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  text-align: end;
 }
 
 .container-start {
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    text-align: start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: start;
 }
 
 .container-flex {
-    -webkit-box-flex: 1;
+  -webkit-box-flex: 1;
 }
 
 .float-right {
-    float: right;
+  float: right;
 }
 
 .float-left {
-    float: left;
+  float: left;
 }
 
 span.p-button.p-component.p-fileupload-choose {
-    border-radius: 3px;
-    padding: 10px 9px;
+  border-radius: 3px;
+  padding: 10px 9px;
 }
 
 .edit-document-chip.p-chip {
-    border-radius: 3px;
-    padding: 10px 9px;
+  border-radius: 3px;
+  padding: 10px 9px;
 }
 
 .p-inputtext:enabled:focus,
 .p-dropdown.p-component.p-inputwrapper:focus,
 .p-dropdown.p-component.p-inputwrapper:hover {
-    outline: 0 none;
-    outline-offset: 0;
-    box-shadow: none;
-    border-color: var(--primary-color);
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+  border-color: var(--primary-color);
 }
 
 button.p-button.p-component.p-button.edit-document-button {
-    background-color: #fff;
-    border: solid 0.2rem #E7E6E7;
-    border-radius: 5px;
-    color: #1B1B19;
+  background-color: #fff;
+  border: solid 0.2rem #e7e6e7;
+  border-radius: 5px;
+  color: #1b1b19;
 }
 
 .custom .p-scrollpanel-wrapper {
-    border-right: 9px solid #f4f4f4;
+  border-right: 9px solid #f4f4f4;
 }
 
 .custom .p-scrollpanel-bar {
-    background-color: var(--primary-color);
-    opacity: 1;
-    transition: background-color .3s;
+  background-color: var(--primary-color);
+  opacity: 1;
+  transition: background-color 0.3s;
 }
 
 .custom .p-scrollpanel-bar:hover {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 
-.shareholders-panel>.p-toggleable-content>.p-panel-content {
-    padding: 0px;
+.shareholders-panel > .p-toggleable-content > .p-panel-content {
+  padding: 0px;
 }
 
 .p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
-    outline: 0 none;
-    outline-offset: 0;
-    box-shadow: none;
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
 }
 
 .p-tabmenu.tab-menu-profile .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
-    background: #ffffff;
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+  background: #ffffff;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .profile .container-center {
-    padding: 0px;
+  padding: 0px;
 }
 
 .profile .router-link-exact-active.p-button.profile-navigation,
 .profile .router-link-exact-active.p-button.profile-navigation:hover {
-    background-color: #1B1B19;
-    border-color: #1B1B19;
-    color: #FFFFFF;
+  background-color: #1b1b19;
+  border-color: #1b1b19;
+  color: #ffffff;
 }
 
 .profile .p-button.profile-navigation {
-    background-color: #F9F9F9;
-    border: solid 1px #E7E6E7;
-    color: #1B1B19
+  background-color: #f9f9f9;
+  border: solid 1px #e7e6e7;
+  color: #1b1b19;
 }
 
 .profile .p-button.edit-document-button:hover {
-    background-color: #E7E6E7;
-    border: solid 1px #E7E6E7;
+  background-color: #e7e6e7;
+  border: solid 1px #e7e6e7;
 }
 
 .profile .p-button:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
-
 
 .p-selectbutton .p-button.p-highlight:hover,
 .p-selectbutton .p-button.p-highlight {
-    background: #d7dadd;
-    border-color: #cbcbcb;
-    color: #1B1B19;
-    font-weight: bold;
+  background: #d7dadd;
+  border-color: #cbcbcb;
+  color: #1b1b19;
+  font-weight: bold;
 }
 
 .bg-primary {
-    background: var(--primary-color);
+  background: var(--primary-color);
 }
 
 .p-timeline-event-opposite {
-    display: none !important;
+  display: none !important;
 }
 
 .p-timeline-event {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .p-timeline .p-timeline-event-marker {
-    border: 1px solid transparent;
-    /*border-radius: 50%;*/
-    /*width: 1rem;*/
-    /*height: 1rem;*/
-    background-color: var(--primary-color);
+  border: 1px solid transparent;
+  /*border-radius: 50%;*/
+  /*width: 1rem;*/
+  /*height: 1rem;*/
+  background-color: var(--primary-color);
 }
 
 small {
-    font-size: 10pt;
+  font-size: 10pt;
 }
 
 .symbol {
-    background: #8CE2DB;
-    padding: 2px 20px;
-    color: #0F655D;
-    font-size: 1.4rem;
-    border-radius: 0;
+  background: #8ce2db;
+  padding: 2px 20px;
+  color: #0f655d;
+  font-size: 1.4rem;
+  border-radius: 0;
 }
 
-.p-progressbar.p-component.p-progressbar-determinate.swap>.p-progressbar-value.p-progressbar-value-animate {
-    background: #00beb0;
+.p-progressbar.p-component.p-progressbar-determinate.swap > .p-progressbar-value.p-progressbar-value-animate {
+  background: #00beb0;
 }
 
 .input-mount .p-inputtext {
-    background: transparent;
-    border: none;
-    font-size: 1.8rem;
-    font-weight: bold;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .icon-withdraw-funds {
-    font-size: 12pt;
-    color: #ff004e;
+  font-size: 12pt;
+  color: #ff004e;
 }
 
 .icon-deposit-funds {
-    font-size: 12pt;
-    color: #20df40;
+  font-size: 12pt;
+  color: #20df40;
 }
 
 .p-tabview .p-tabview-nav {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 .p-tabview-panels {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 .p-tabview-panel {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-    background: transparent !important;
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+  background: transparent !important;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background: transparent !important;
+  background: transparent !important;
 }
 
-.p-dropdown:not(.p-disabled).p-focus{
-    box-shadow: 0 0 0 0 0.2rem var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
+.p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: 0 0 0 0 0.2rem var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
-
 
 .p-progress-spinner-circle {
-    stroke-dasharray: 89, 200;
-    stroke-dashoffset: 0;
-    stroke: var(--primary-color) !important;
-    stroke-linecap: round;
+  stroke-dasharray: 89, 200;
+  stroke-dashoffset: 0;
+  stroke: var(--primary-color) !important;
+  stroke-linecap: round;
 }
 
 .help-text {
-    color: rgb(135, 135, 135);
-    font-size: 0.7rem;
+  color: rgb(135, 135, 135);
+  font-size: 0.7rem;
 }
 
 .p-progress-spinner {
-    position: fixed;
-    margin-left: 33%;
-    z-index: 999;
-    margin-top: 30%;
+  position: fixed;
+  margin-left: 33%;
+  z-index: 999;
+  margin-top: 30%;
+}
+
+@media (max-width: 599px) {
+  .p-hide-xs {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+  .p-hide-sm {
+    display: none;
+  }
 }
