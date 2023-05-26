@@ -1,6 +1,7 @@
 import { WorldService } from '../shared/services/world'
 import { computed, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
+import deletedCountries from '../assets/jsons/deletedCountries'
 
 export interface Country {
   country_code: string
@@ -37,9 +38,10 @@ export const useWorld = () => {
     loadingCountiesField.value = true
     const worldService = WorldService.instance()
     await worldService.getCountries().then((resp: Country[]) => {
-      countries.value = resp
+      const preparedCountries = deleteUnavailableCountries(resp)
+      countries.value = preparedCountries
 
-      const arrayCallingCode = resp.map(c => c.calling_code).sort()
+      const arrayCallingCode = preparedCountries.map(c => c.calling_code).sort()
       calling_code.value = [...new Set(arrayCallingCode)]
 
       loadingCountiesField.value = false
@@ -76,6 +78,10 @@ export const useWorld = () => {
     const state = states.value.find(state => state.name === event.value)
     if (!state) return
     setState(state)
+  }
+
+  const deleteUnavailableCountries = (countries: Country[]): Country[] => {
+    return countries.filter(country => !deletedCountries().includes(country.name.toUpperCase().trim()))
   }
 
   return {
