@@ -314,7 +314,7 @@ const form = ref<BeneficiaryFiatInternacional>({
 })
 
 onMounted(() => {
-  fetchCountries().then(() => {
+  fetchCountries(true).then(() => {
     bankCountries.value = countries.value
   })
 })
