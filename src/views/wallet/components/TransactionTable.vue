@@ -199,7 +199,7 @@ const loadTransactionDetail = async (transaction: any) => {
   await getHistoric
     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
     .then(data => {
-      const nameTo = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
+      const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
 
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
