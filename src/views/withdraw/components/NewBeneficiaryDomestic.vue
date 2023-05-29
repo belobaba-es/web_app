@@ -170,7 +170,7 @@ const {
 } = useWorld()
 
 onMounted(async () => {
-  await fetchCountries()
+  await fetchCountries(true)
 })
 
 const saveBeneficiary = () => {

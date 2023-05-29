@@ -1,7 +1,7 @@
 import { WorldService } from '../shared/services/world'
 import { computed, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
-import deletedCountries from '../assets/jsons/deletedCountries'
+import { deletedCountries } from '../shared/jsons/deletedCountries'
 
 export interface Country {
   country_code: string
@@ -34,14 +34,16 @@ export const useWorld = () => {
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
   const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
 
-  const fetchCountries = async () => {
+  const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
     loadingCountiesField.value = true
     const worldService = WorldService.instance()
     await worldService.getCountries().then((resp: Country[]) => {
-      const preparedCountries = deleteUnavailableCountries(resp)
-      countries.value = preparedCountries
+      countries.value = resp
+      if (shouldDeleteBannedCountries) {
+        countries.value = deleteUnavailableCountries(resp)
+      }
 
-      const arrayCallingCode = preparedCountries.map(c => c.calling_code).sort()
+      const arrayCallingCode = resp.map(c => c.calling_code).sort()
       calling_code.value = [...new Set(arrayCallingCode)]
 
       loadingCountiesField.value = false
@@ -81,7 +83,7 @@ export const useWorld = () => {
   }
 
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
-    return countries.filter(country => !deletedCountries().includes(country.name.toUpperCase().trim()))
+    return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
   }
 
   return {
