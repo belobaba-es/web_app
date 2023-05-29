@@ -15,7 +15,12 @@
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
         <div class="col-6">
-          <p v-if="props.transaction.assetCode === 'USD'" class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
+          <p
+            v-if="props.transaction.assetCode === 'USD' && props.transaction.nameTo.length > 0"
+            class="font-medium text-sm"
+          >
+            {{ t('bankAccountHolder') }}
+          </p>
 
           <p
             v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0"
