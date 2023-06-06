@@ -15,7 +15,8 @@ export const useBeneficiary = () => {
   const nextPag = ref(0)
   const listBeneficiariesInternal = ref<BeneficiaryInternal[]>([
     {
-      accountTo: 'ca0c9b43-a997-4cee-b769-5c659301b237',
+      accountId: '',
+      accountTo: import.meta.env.VITE_PINTTOSOFT_ACCOUNT,
       email: 'pinttosoft@gmail.com',
       name: 'Pinttosoft LLC ',
     },
