@@ -13,7 +13,13 @@ export const useBeneficiary = () => {
   const listNextPag = ref('')
   const submitting = ref(false)
   const nextPag = ref(0)
-  const listBeneficiariesInternal = ref<BeneficiaryInternal[]>()
+  const listBeneficiariesInternal = ref<BeneficiaryInternal[]>([
+    {
+      accountTo: 'ca0c9b43-a997-4cee-b769-5c659301b237',
+      email: 'pinttosoft@gmail.com',
+      name: 'Pinttosoft LLC ',
+    },
+  ])
 
   const { getUserName } = useUserStore()
 
