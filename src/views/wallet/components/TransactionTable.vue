@@ -54,7 +54,7 @@
 
             <ItemTransactionAssetExternal
               @click="openModalTransactionDetails($event, item)"
-              :item="item"
+              :item="prepareTransactionName(item)"
               v-if="getTransactionType(item) === 'external-asset'"
             />
           </div>
@@ -182,9 +182,17 @@ const loadMoreItems = async () => {
     }
   })
 }
+
+const prepareTransactionName = (transaction: any) => {
+  return {
+    ...transaction,
+    nameTo: `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`,
+  }
+}
 const openModalTransactionDetails = (event: any, transaction: any) => {
   isLoadingTransactionDetails.value = true
   transaction.specificType = getTransactionType(transaction)
+  console.log('--transaction.specificType', transaction.specificType)
 
   const txDate = new Date(transaction.createdAt._seconds * 1000)
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -199,8 +207,7 @@ const loadTransactionDetail = async (transaction: any) => {
   await getHistoric
     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
     .then(data => {
-      const nameTo = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
-
+      const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
       displayModalTransactionDetail.value = true
       isLoadingTransactionDetails.value = false
       modalTransactionDetail.value = {
