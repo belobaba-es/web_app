@@ -1,5 +1,5 @@
 <template>
-  <!--  <SearchAccountByEmail style="margin-top: 3rem" @listBeneficiaries="setListBeneficiaries" />-->
+  <SearchAccountByEmail style="margin-top: 3rem" @listBeneficiaries="setListBeneficiaries" />
 
   <div class="grid" style="margin-top: 1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
@@ -64,19 +64,21 @@ const setListBeneficiaries = (list: BeneficiaryInternal[]) => {
   listBeneficiariesInternal.value = list
 }
 
-// onMounted(async () => {
-//   if (route.params.type === 'crypto') {
-//     type.value = TypeBeneficiaryInternal.ASSET
-//   }
-//
-//   await loadMore()
-// })
+onMounted(async () => {
+  if (route.params.type === 'crypto') {
+    type.value = TypeBeneficiaryInternal.ASSET
+  }
+
+  await loadMore()
+})
 
 const nextStep = (item: BeneficiaryInternal) => {
   const page = 0
   const formData = {
     beneficiary: { ...item, accountId: !item.accountTo ? item.accountId : item.accountTo },
   }
+
+  console.log(formData)
 
   emit('nextPage', {
     pageIndex: page,

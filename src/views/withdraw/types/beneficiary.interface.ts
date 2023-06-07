@@ -19,6 +19,7 @@ export interface BeneficiaryAssets {
 }
 
 export type BeneficiaryInternal = {
+  accountId: string
   accountTo: string
   email: string
   name: string
