@@ -313,5 +313,6 @@
   "thankYou": "Thank you",
   "forYourInterest": "for your interest in the business partner program",
   "yourRequest" : "Your request is in  process",
-  "registeredSuccessfully": "Se ha registrado correctamente, espera la aprobación de un admin"
+  "registeredSuccessfully": "ou have registered successfully, now wait fo an admin to approve you",
+  "temporaryBlockedTransfer": "Transfers to other users are temporarily not allowed"
 }
