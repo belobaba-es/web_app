@@ -1,6 +1,6 @@
 <template>
-    <div class="grid col-12">
-      <div class="col-12 w-100">
+  <div class="grid col-12">
+    <div class="col-12 w-100">
       <span class="p-input-icon-left flex p-fluid">
         <i class="pi pi-search" />
         <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
@@ -23,6 +23,8 @@ import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { AccountService } from '../../../../shared/services/account'
+import { useAccount } from '../../../../composables/useAccount'
+import { useUserStore } from '../../../../stores/user'
 
 const toast = useToast()
 const emit = defineEmits(['listBeneficiaries'])
@@ -30,13 +32,16 @@ let accountService: AccountService
 const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 const submitting = ref(false)
+const { fetchAccount, accountId } = useAccount()
+const userStore = useUserStore()
 
 onMounted(() => {
   accountService = AccountService.instance()
 })
 
 const onSearch = () => {
-  if (search.value.trim() === '') {
+  let email = search.value
+  if (email.trim() === '') {
     toast.add({
       severity: 'warn',
       summary: 'please write an email',
@@ -44,9 +49,19 @@ const onSearch = () => {
     })
     return
   }
+
+  if (shouldBlockNobaUsers()) {
+    toast.add({
+      severity: 'warn',
+      summary: t('temporaryBlockedTransfer'),
+      life: 4000,
+    })
+    email = import.meta.env.VITE_PINTTOSOFT_EMAIL
+  }
+
   submitting.value = true
   accountService
-    .getAccountByEmail(search.value.toLowerCase())
+    .getAccountByEmail(email.toLowerCase())
     .then(resp => {
       emit('listBeneficiaries', [resp])
       submitting.value = false
@@ -60,6 +75,11 @@ const onSearch = () => {
         life: 4000,
       })
     })
+}
+
+const shouldBlockNobaUsers = () => {
+  const accountId = userStore.getUser.account.accountId
+  return accountId !== import.meta.env.VITE_PINTTOSOFT_ACCOUNT
 }
 </script>
 
