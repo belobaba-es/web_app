@@ -10,15 +10,16 @@ jobs:
   push-changes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Merge into dev
-        uses: everlytic/branch-merge@1.1.2
-        with:
-          github_token: ${{ github.token }}
-          source_ref: ${{ github.ref }}
-          target_branch: 'dev'
-          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+      - name: Merge to Dev branch
+        run: |
+          git config user.name "pinttosoft"
+          git config user.email "it@pinttosoft.com"
+          git checkout dev
+          git merge main
+          git push origin dev
 
   build_and_deploy:
     runs-on: ubuntu-latest
