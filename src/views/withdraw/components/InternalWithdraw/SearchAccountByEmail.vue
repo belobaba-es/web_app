@@ -1,7 +1,7 @@
 <template>
   <div class="grid col-12">
     <div class="col-12 w-100">
-      <span class="p-input-icon-left flex p-fluid">
+      <span v-if="shouldSearchUsers" class="p-input-icon-left flex p-fluid">
         <i class="pi pi-search" />
         <InputText type="text" class="b-gray" v-model="search" :placeholder="t('nobaBeneficiaryEmail')" />
         <Button
@@ -34,9 +34,11 @@ const search = ref('')
 const submitting = ref(false)
 const { fetchAccount, accountId } = useAccount()
 const userStore = useUserStore()
+const shouldSearchUsers = ref(true)
 
 onMounted(() => {
   accountService = AccountService.instance()
+  shouldSearchUsers.value = !shouldBlockNobaUsers()
 })
 
 const onSearch = () => {
@@ -48,15 +50,6 @@ const onSearch = () => {
       life: 4000,
     })
     return
-  }
-
-  if (shouldBlockNobaUsers()) {
-    toast.add({
-      severity: 'warn',
-      summary: t('temporaryBlockedTransfer'),
-      life: 4000,
-    })
-    email = import.meta.env.VITE_PINTTOSOFT_EMAIL
   }
 
   submitting.value = true
