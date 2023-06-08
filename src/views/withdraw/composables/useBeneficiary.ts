@@ -2,6 +2,7 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
 import { BeneficiaryInternal, BeneficiaryType } from '../types/beneficiary.interface'
 import { useUserStore } from '../../../stores/user'
+import { AccountService } from '../../../shared/services/account'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -15,7 +16,7 @@ export const useBeneficiary = () => {
   const nextPag = ref(0)
   const listBeneficiariesInternal = ref<BeneficiaryInternal[]>()
 
-  const { getUserName } = useUserStore()
+  const { getUserName, getUser } = useUserStore()
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
@@ -48,6 +49,17 @@ export const useBeneficiary = () => {
 
   const fetchBeneficiariesInternal = async (type: TypeBeneficiaryInternal): Promise<void> => {
     submitting.value = true
+    // load just pintosoft account
+    if (getUser.accountId !== import.meta.env.VITE_PINTTOSOFT_ACCOUNT) {
+      const accountService = AccountService.instance()
+      listBeneficiariesInternal.value = []
+      await accountService.getAccountByEmail(import.meta.env.VITE_PINTTOSOFT_EMAIL).then(resp => {
+        listBeneficiariesInternal.value = [resp as BeneficiaryInternal]
+      })
+      submitting.value = false
+
+      return
+    }
 
     const result = await BeneficiaryService.instance().listBeneficiaryInternal(type, nextPag.value)
 
