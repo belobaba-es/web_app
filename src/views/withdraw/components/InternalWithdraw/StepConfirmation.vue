@@ -73,6 +73,7 @@ import ConfirmationCompletedWithdrawInternal from './ConfirmationCompletedWithdr
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import showMessage from "../../../../shared/showMessageArray";
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
@@ -163,12 +164,17 @@ function makeTransaction() {
         .catch(e => {
           submitting.value = false
 
-          toast.add({
-            severity: 'error',
-            summary: t('somethingWentWrong'),
-            detail: e.response.data.message,
-            life: 4000,
-          })
+          if (e.response.data.message) {
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
+              life: 4000,
+            })
+            return
+          }
+
+          showMessage(toast, e.response.data)
         })
       break
     default:
