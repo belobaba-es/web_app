@@ -42,7 +42,7 @@ export const useBalanceWallet = () => {
 
   const calculateBalance = (assetCode: string, balance: number, blocked: number) => {
     const total = isNaN(balance - blocked) ? 0 : balance - blocked
-    if (assetCode === 'USD' || assetCode === 'USDC') {
+    if (assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT') {
       return total.toFixed(2)
     }
 
