@@ -75,6 +75,7 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import ConfirmationCompletedWithOtherPlatformsWallet from './ConfirmationCompletedWithOtherPlatformsWallet.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import showMessage from "../../../../shared/showMessageArray";
 
 const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
@@ -132,12 +133,17 @@ async function makeTransaction() {
     })
     .catch(e => {
       submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
+      if (e.response.data.message) {
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: e.response.data.message,
+          life: 4000,
+        })
+        return
+      }
+
+      showMessage(toast, e.response.data)
     })
 }
 
