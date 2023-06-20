@@ -3,8 +3,10 @@ import { storeToRefs } from 'pinia'
 import { BalanceWallet } from '../views/deposit/types/asset.interface'
 import { FirebaseService } from '../shared/services/firebase'
 import { useUserStore } from '../stores/user'
+import { useI18n } from 'vue-i18n'
 
 export const useBalanceWallet = () => {
+  const { locale } = useI18n()
   const balanceWalletStore = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
 
@@ -42,11 +44,19 @@ export const useBalanceWallet = () => {
 
   const calculateBalance = (assetCode: string, balance: number, blocked: number) => {
     const total = isNaN(balance - blocked) ? 0 : balance - blocked
-    if (assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT') {
-      return total.toFixed(2)
+
+    const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT'
+    const decimalSeparator = locale.value === 'en' ? '.' : ','
+    const thousandSeparator = locale.value === 'en' ? ',' : '.'
+
+    if (isUSD) {
+      return total
+        .toFixed(2)
+        .replace('.', decimalSeparator)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator)
     }
 
-    return total.toFixed(8)
+    return total.toFixed(8).replace('.', decimalSeparator)
   }
 
   return {
