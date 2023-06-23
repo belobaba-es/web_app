@@ -314,5 +314,6 @@
   "forYourInterest": "for your interest in the business partner program",
   "yourRequest" : "Your request is in  process",
   "registeredSuccessfully": "ou have registered successfully, now wait fo an admin to approve you",
-  "temporaryBlockedTransfer": "Transfers to other users are temporarily not allowed"
+  "temporaryBlockedTransfer": "Transfers to other users are temporarily not allowed",
+  "viewAllTransactions": "View all transactions"
 }
