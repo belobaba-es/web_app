@@ -91,12 +91,14 @@
 
     <div class="container-data mb-0 pb-0">
       <div class="grid">
-        <div class="col-6">
-          <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
+        <div class="col-6 flex justify-content-start align-items-center">
+          <span class="text-xl">{{ t('historicTransactionsTitle') }}</span>
         </div>
-        <div v-if="props.isDashboard" class="col-6 flex justify-content-end mb-4">
-          <p class="title-historic">{{ t('viewAllTransactions') }}</p>
-          <i class="pi pi-chevron-right"></i>
+        <div v-if="props.isDashboard" class="col-6 flex justify-content-end align-items-center">
+          <span class="text-xl">{{ t('viewAllTransactions') }}</span>
+          <router-link to="/transaction-history">
+            <Button label="" icon="pi pi-angle-right" iconPos="left" class="p-button-text" />
+          </router-link>
         </div>
       </div>
 
@@ -469,6 +471,10 @@ const loadTransactionDetail = async (transaction: any) => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.pi-chevron-right {
+  color: var(--primary-color);
 }
 
 @media (max-width: 950px) {
