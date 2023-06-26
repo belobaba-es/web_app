@@ -87,6 +87,20 @@
           </div>
         </div>
       </div>
+
+      <div class="col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3 mt-3 pl-0">
+        <div class="flex align-items-center">
+          <Button
+            class="p-button"
+            :label="t('extractGenerated')"
+            @click="downloadExtract()"
+            :loading="isLoadingPDF"
+            icon="pi pi-download"
+            iconPos="right"
+          />
+        </div>
+      </div>
+      <!--          -->
     </section>
 
     <div class="container-data mb-0 pb-0">
@@ -225,8 +239,7 @@ const assetCode = ref('')
 const startDate = ref()
 const endDate = ref()
 const isLoading = ref(true)
-const isFirstLoad = ref(true)
-const isLoadingPDF = ref(true)
+const isLoadingPDF = ref(false)
 const filters: TransactionFiltersQueryType = {
   accountId: '',
   assetCode: '',
@@ -475,6 +488,10 @@ const loadTransactionDetail = async (transaction: any) => {
 
 .pi-chevron-right {
   color: var(--primary-color);
+}
+
+.pl-0 {
+  padding-left: 0;
 }
 
 @media (max-width: 950px) {
