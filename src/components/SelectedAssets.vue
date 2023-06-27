@@ -1,6 +1,6 @@
 <template>
   <section class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 mb-4 p-0">
-    <label>{{ t('selectCrypto') }}</label>
+    <label class="black-bold-text">{{ t('selectCrypto') }}</label>
     <div class="grid selectCypto mt-3" @click="modal(true)">
       <div class="col-2">
         <img width="26" :src="iconAsset" />
@@ -58,5 +58,10 @@ const selectedAsset = (asset: Asset) => {
   padding: 6px;
   background: #f9f9f9 0% 0% no-repeat padding-box;
   border: 1px solid #ececec;
+}
+
+.black-bold-text {
+  font-weight: 800;
+  color: black;
 }
 </style>
