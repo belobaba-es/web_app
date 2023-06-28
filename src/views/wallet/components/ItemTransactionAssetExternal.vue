@@ -4,7 +4,7 @@
       <p class="name_to">{{ item.nameTo }}</p>
       <p class="name_to">{{ item.reference }}</p>
       <p class="date">
-        {{ secondsToDate(item.createdAt._seconds) }}
+        {{ formatDate(item.createdAt) }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { formatDate } from '../../../shared/formatDate'
 
 const { t } = useI18n({ useScope: 'global' })
 defineProps<{

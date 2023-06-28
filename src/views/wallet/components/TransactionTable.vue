@@ -94,6 +94,7 @@ import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
 import ModalTransactionDetails, { TransactionModalPayload } from '../../../components/ModalTransactionDetails.vue'
+import { formatDate } from '../../../shared/formatDate'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
@@ -116,15 +117,22 @@ const modal = (b: boolean) => {
 }
 
 onMounted(async () => {
-  await getHistoric.historic(props.assetCode).then(data => {
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
+  isLoadingTransactionDetails.value = true
+  await getHistoric
+    .historic(props.assetCode)
+    .then(data => {
+      data.results.forEach(element => {
+        listTransaction.value.push(element)
+      })
+      if (data.nextPag) {
+        nextPage.value.nextPage = true
+        nextPage.value.data = data.nextPag
+      }
+      isLoadingTransactionDetails.value = false
     })
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
-      nextPage.value.data = data.nextPag
-    }
-  })
+    .catch(() => {
+      isLoadingTransactionDetails.value = false
+    })
 })
 
 const getTransactionType = (transactionData: any) => {
@@ -139,7 +147,7 @@ const getTransactionType = (transactionData: any) => {
   if (
     !transactionData.isInternal &&
     transactionData.assetCode === 'USD' &&
-    transactionData.to.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
+    transactionData.to?.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
   ) {
     return 'external-fiat-domestic'
   }
@@ -147,7 +155,7 @@ const getTransactionType = (transactionData: any) => {
   if (
     !transactionData.isInternal &&
     transactionData.assetCode === 'USD' &&
-    transactionData.to.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL'
+    transactionData.to?.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL'
   ) {
     return 'external-fiat-international'
   }
@@ -192,11 +200,8 @@ const prepareTransactionName = (transaction: any) => {
 const openModalTransactionDetails = (event: any, transaction: any) => {
   isLoadingTransactionDetails.value = true
   transaction.specificType = getTransactionType(transaction)
-  console.log('--transaction.specificType', transaction.specificType)
 
-  const txDate = new Date(transaction.createdAt._seconds * 1000)
-  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  transaction.formatedDate = formatter.format(txDate)
+  transaction.formatedDate = formatDate(transaction.createdAt)
 
   modalTransactionDetail.value = transaction
 
