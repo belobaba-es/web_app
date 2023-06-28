@@ -95,7 +95,7 @@
     </template>
 
     <template v-else>
-      <span v-if="transactionType === 'sell'">
+      <span v-if="assetCode">
         {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
       </span>
     </template>

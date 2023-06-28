@@ -30,6 +30,9 @@
           </div>
 
           <Divider :align="'bottom'" />
+
+          <ShowQuotePrice></ShowQuotePrice>
+
           <p class="mt-3 mb-3 text-sm text-center">
             {{ t('swapPriceQuote') }}
           </p>
@@ -75,6 +78,7 @@ import { SummarySwap } from './types/sumary'
 import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
 import ShowFee from './components/ShowFee.vue'
+import ShowQuotePrice from './components/ShowQuotePrice.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()
