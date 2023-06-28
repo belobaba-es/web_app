@@ -127,17 +127,17 @@ const findAssetByName = () => {
   lazyLoading.value = true
   if (assetCode.value) {
     assetsService
-        .listPaymentAddress(nextPag.value, assetCode.value)
-        .then(data => {
-          paymentAddress.value = [...data.results]
-          nextPag.value = data.nextPag
-          submitting.value = false
-          lazyLoading.value = false
-        })
-        .finally(() => {
-          submitting.value = false
-          lazyLoading.value = false
-        })
+      .listPaymentAddress(nextPag.value, assetCode.value)
+      .then(data => {
+        paymentAddress.value = [...data.results]
+        nextPag.value = data.nextPag
+        submitting.value = false
+        lazyLoading.value = false
+      })
+      .finally(() => {
+        submitting.value = false
+        lazyLoading.value = false
+      })
   }
 }
 
@@ -159,7 +159,7 @@ const searchWallets = () => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
   assetsService.listPaymentAddress().then(data => {
-    paymentAddress.value = getPaymentAddressAssetNetworkName(data.results);
+    paymentAddress.value = getPaymentAddressAssetNetworkName(data.results)
     lazyLoading.value = false
     nextPag.value = data.nextPag
   })
@@ -169,7 +169,7 @@ const getPaymentAddressAssetNetworkName = (paymentAddress: PaymentAddress[]) => 
   paymentAddress = paymentAddress.map(address => {
     const asset = assets.value.filter(asset => asset.assetId === address.assetsId)
     const networkName = asset[0].networkName
-    return {...address, networkName}
+    return { ...address, networkName }
   })
   return paymentAddress
 }
@@ -233,5 +233,13 @@ const onLazyLoad = (event: any) => {
 
 .select-asset {
   width: 100%;
+}
+.pi-search {
+  z-index: 9;
+  color: var(--primary-color) !important;
+}
+
+.select-asset {
+  padding-left: 26px !important;
 }
 </style>

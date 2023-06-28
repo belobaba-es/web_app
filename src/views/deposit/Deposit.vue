@@ -8,6 +8,12 @@
           <span class="text-center txt-border-bottom text-2xl"
             >{{ t('selectCurrency') }} <b> {{ t('currency') }}</b></span
           >
+
+          <div class="grid flex justify-content-center">
+            <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-4">
+              <Divider></Divider>
+            </div>
+          </div>
         </div>
 
         <router-link to="/deposit/fiat">
@@ -30,6 +36,7 @@ import { useI18n } from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
 import saveMoney from '../../assets/icons/save-money.svg'
 import ewallet from '../../assets/icons/ewallet.svg'
+import Divider from 'primevue/divider'
 
 interface tabItem {
   label: string
@@ -56,4 +63,12 @@ const menuItems = ref<tabItem[]>([
 ])
 </script>
 
-<style lang="css"></style>
+<style lang="css" scoped>
+.p-divider-solid.p-divider-horizontal:before {
+  border-color: var(--primary-color);
+}
+
+.p-divider-solid.p-divider-horizontal:before {
+  border-color: var(--primary-color);
+}
+</style>

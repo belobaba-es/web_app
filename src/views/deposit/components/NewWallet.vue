@@ -12,14 +12,15 @@
     </template>
     <div class="formgrid grid mt-3">
       <div class="col-12">
-        <span class="text-xl txt-border-bottom mb-2">{{ t('newWallet') }}</span>
+        <span class="text-xl txt-border-bottom mb-2 black-bold-text">{{ t('newWallet') }}</span>
+        <div><Divider></Divider></div>
       </div>
       <div class="field col-12 mt-4">
         <!--                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />-->
         <SelectedAssets @selectedAsset="selectAsset" />
       </div>
       <div class="field col-12" style="display: grid">
-        <label for="name">{{ t('nameWallet') }}</label>
+        <label for="name" class="black-bold-text">{{ t('nameWallet') }}</label>
         <InputText id="name" type="text" v-model="label" />
         <!-- @update:model-value="emit('update:name', $event)" -->
       </div>
@@ -48,6 +49,7 @@ import { Asset } from '../types/asset.interface'
 import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { AssetsService } from '../services/assets'
 import { useToast } from 'primevue/usetoast'
+import Divider from 'primevue/divider'
 
 defineProps<{
   display: boolean
@@ -93,4 +95,12 @@ const selectAsset = (asset: Asset) => {
 }
 </script>
 
-<style lang="css"></style>
+<style lang="css" scoped>
+.black-bold-text {
+  font-weight: 800;
+  color: black;
+}
+.p-divider-solid.p-divider-horizontal:before {
+  border-color: var(--primary-color);
+}
+</style>
