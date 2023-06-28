@@ -31,6 +31,9 @@
               <AssetInput type="crypto" v-if="transactionType === 'buy'" />
               <AssetInput type="fiat" v-else />
             </div>
+
+            <ShowQuotePrice v-if="quoteId"></ShowQuotePrice>
+
             <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
               <div class="grid">
                 <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 mx-auto mb-3 mt-3">
@@ -81,6 +84,7 @@ import { storeToRefs } from 'pinia'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import { onUnmounted } from 'vue'
 import ShowFee from './components/ShowFee.vue'
+import ShowQuotePrice from './components/ShowQuotePrice.vue'
 
 const {
   assetIcon,
