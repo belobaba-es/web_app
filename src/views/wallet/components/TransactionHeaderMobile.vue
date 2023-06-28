@@ -32,11 +32,12 @@
                 <h5 class="text-link-historic">Deposit</h5>
               </router-link>
             </div>
-            <div class="col-4 flex justify-content-center">
-              <router-link class="link-historic" to="/withdraw" exact role="menuitem" v-ripple>
-                <h5 class="text-link-historic">Withdraw</h5>
-              </router-link>
-            </div>
+            <!--            <div class="col-4 flex justify-content-center">-->
+            <!--              <router-link class="link-historic" to="/withdraw" exact role="menuitem" v-ripple>-->
+            <!--                <h5 class="text-link-historic">Withdraw</h5>-->
+            <!--              </router-link>-->
+            <!--            </div>-->
+            <WithdrawRouteSelect :isFiat="wallet?.name === 'US DOLLAR'"></WithdrawRouteSelect>
             <div class="col-4 flex justify-content-center">
               <router-link class="link-historic" to="/swap" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic">Swap</h5>
@@ -54,6 +55,7 @@ import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+import WithdrawRouteSelect from './WithdrawRouteSelect.vue'
 
 defineProps<{
   wallet: BalanceWallet
