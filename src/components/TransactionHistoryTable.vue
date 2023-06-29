@@ -386,6 +386,7 @@ const filtersChange = async (key: TransactionFiltersQueryTypeKeys, value: any) =
 const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
+const user = userStore.getUser
 const username = userStore.getUser.firstName
   ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
   : userStore.getUser.name
@@ -393,17 +394,33 @@ let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
   setTimeout(() => {
-    extractPDFInfo = {}
+    extractPDFInfo = []
+    const owner = {
+      name: username,
+      id: user.taxId,
+      address: `${user.streetOne} ${user.city}`,
+    }
     isLoadingPDF.value = false
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
     listTransaction.value.forEach((transaction, i) => {
-      extractPDFInfo[i] = `${transaction.assetCode} ${transaction.reference} ${transaction.createdAt
-        .toString()
-        .substr(0, 10)} ${transaction.createdAt.toString().substr(11, 8)}  ${transaction.amount} ${
-        transaction.assetCode
-      }`
+      const data = {
+        assetCode: transaction.assetCode,
+        reference: transaction.reference,
+        createdAt: formatDate(transaction.createdAt),
+        amount: transaction.amount,
+      }
+      extractPDFInfo[i] = data
     })
-    generatePDFTable(nameFile, logo, title, extractPDFInfo, footerPdf, jsPDFOptionsOrientationEnum.LANDSCAPE)
+    generatePDFTable(
+      nameFile,
+      logo,
+      'noba.cash',
+      extractPDFInfo,
+      owner,
+      { ownersName: t('ownersName'), documentPlaceholder: t('documentPlaceholder'), divisorLabel: t('divisorLabel') },
+      footerPdf,
+      jsPDFOptionsOrientationEnum.LANDSCAPE
+    )
   }, 2000)
 }
 

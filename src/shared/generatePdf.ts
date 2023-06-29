@@ -9,8 +9,63 @@ export enum jsPDFOptionsOrientationEnum {
 const setHeader = (pdf: any, logo: string, title: string) => {
   pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
   pdf.value.setFontSize(18)
-  pdf.value.text(title, 75, 40)
+  pdf.value.setTextColor(0, 190, 176)
+  pdf.value.text(title, 245, 25)
 }
+
+const setSubHeader = (pdf: any, owner: any, transaltions: any) => {
+  // pdf.value.setFillColor(0, 255, 0)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(transaltions.ownersName, 15, 40)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(transaltions.documentPlaceholder, 95, 40)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(transaltions.divisorLabel, 165, 40)
+
+  // datos del propietario
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(owner.name, 15, 48)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(owner.id, 95, 48)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text(owner.address, 165, 48)
+
+  // extract title
+  pdf.value.setFontSize(18)
+  pdf.value.setTextColor(0, 190, 176)
+  pdf.value.text('Extract generated', 15, 60)
+
+  // table header
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text('ASSET', 15, 71)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text('CONCEPT', 75, 71)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text('DATE/HOUR', 200, 71)
+
+  pdf.value.setFontSize(12)
+  pdf.value.setTextColor(27, 27, 17)
+  pdf.value.text('AMOUNT', 255, 71)
+
+  // pdf.value.rect(15, 38, 260, 15, 'F')
+}
+
 export default (nameFile: string, logo: string, title: string, data: any, footer: string) => {
   const pdf = ref(new jsPDF())
   pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
@@ -45,6 +100,8 @@ export const generatePDFTable = (
   logo: string,
   title: string,
   data: any,
+  owner: any,
+  transaltions: any,
   footer: string,
   orientation: jsPDFOptionsOrientationEnum = jsPDFOptionsOrientationEnum.PORTRAIT
 ) => {
@@ -57,39 +114,40 @@ export const generatePDFTable = (
     })
   )
   setHeader(pdf, logo, title)
+  setSubHeader(pdf, owner, transaltions)
+
   let i = 1
 
-  const keys = Object.keys(data)
   let rowCounter = 0
   let pageCounter = 1
 
-  keys.forEach(element => {
+  data.map((element: any) => {
     pdf.value.setFontSize(15)
     pdf.value.setTextColor(0, 0, 0)
     // pdf.value.text(element, 15, 55 * i)
+
     i = i + 0.15
     pdf.value.setFontSize(12)
     pdf.value.setTextColor(108, 117, 125)
-    pdf.value.text(data[element], 15, 55 * i)
-    // console.log('data[element]', data[element])
-    i = i + 0.2
+    pdf.value.text(element.assetCode.toString(), 15, 70 * i)
+    pdf.value.text(element.reference.toString(), 75, 70 * i)
+    pdf.value.text(element.createdAt.toString(), 200, 70 * i)
+    pdf.value.text(element.amount.toString(), 255, 70 * i)
+
+    i = i + 0.03
     rowCounter++
-    if (rowCounter === 7) {
-      console.warn('----------------------new page------------------------------')
+
+    if (rowCounter === 10) {
+      // ----------------------new page------------------------------
       pageCounter++
       rowCounter = 0
       i = 1
       pdf.value.addPage()
       setHeader(pdf, logo, title)
     }
-    // console.log('pdf i,', i)
-    // console.log('pdf  pageCounter', pageCounter)
-    // console.log('pdf  rowCounter', rowCounter)
-    // console.log('pdf element', element)
 
     pdf.value.setFontSize(12)
     pdf.value.setTextColor(0, 0, 0)
-    pdf.value.text(footer, 15, orientation === jsPDFOptionsOrientationEnum.LANDSCAPE ? 200 : 285)
   })
 
   var html =

@@ -308,5 +308,6 @@
   "yourRequest" : "Tu solicitud esta en proceso",
   "registeredSuccessfully": "Te has registrado exitosamente, espera la aprobación de un admin.",
   "temporaryBlockedTransfer": "Las trasnferencias a otros usuarios estan temporalmente bloqueadas.",
-  "viewAllTransactions": "Ver todas las transacciones"
+  "viewAllTransactions": "Ver todas las transacciones",
+  "ownersName" : "Owner`s name"
 }
