@@ -213,7 +213,7 @@ import Calendar from 'primevue/calendar'
 import Skeleton from 'primevue/skeleton'
 import ModalTransactionDetails from '../components/ModalTransactionDetails.vue'
 import Dropdown from 'primevue/dropdown'
-import { generatePDFTable, jsPDFOptionsOrientationEnum } from '../shared/generatePdf'
+import { generateTransactionHistory, jsPDFOptionsOrientationEnum } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
@@ -393,15 +393,20 @@ const username = userStore.getUser.firstName
 let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
+
   setTimeout(() => {
     extractPDFInfo = []
+
     const owner = {
       name: username,
       id: user.taxId,
       address: `${user.streetOne} ${user.city}`,
     }
+
     isLoadingPDF.value = false
+
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
+
     listTransaction.value.forEach((transaction, i) => {
       const data = {
         assetCode: transaction.assetCode,
@@ -411,17 +416,42 @@ const downloadExtract = () => {
       }
       extractPDFInfo[i] = data
     })
-    generatePDFTable(
+
+    generateTransactionHistory(
       nameFile,
       logo,
       'noba.cash',
+      footerPdf,
+      jsPDFOptionsOrientationEnum.LANDSCAPE,
       extractPDFInfo,
       owner,
-      { ownersName: t('ownersName'), documentPlaceholder: t('documentPlaceholder'), divisorLabel: t('divisorLabel') },
-      footerPdf,
-      jsPDFOptionsOrientationEnum.LANDSCAPE
+      {
+        ownersName: t('ownersName'),
+        documentPlaceholder: t('documentPlaceholder'),
+        divisorLabel: t('divisorLabel'),
+        extractGenerated: t('extractGenerated'),
+        from: t('from'),
+        to: t('to'),
+      },
+      prepareDatesFilterPDF()
     )
   }, 2000)
+}
+
+const prepareDatesFilterPDF = () => {
+  let dateFilters = {
+    startDate: '',
+    endDate: '',
+  }
+  if (isValidDates() && startDate.value && endDate.value) {
+    // validar que la busque se efectuo antes.
+    // dateFilters = {
+    //   startDate: formatDate(startDate.value),
+    //   endDate: formatDate(endDate.value),
+    // }
+  }
+
+  return dateFilters
 }
 
 const search = async () => {
