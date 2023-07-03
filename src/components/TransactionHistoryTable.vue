@@ -559,11 +559,10 @@ const loadTransactionDetail = async (transaction: any) => {
   padding-left: 0;
 }
 
-@media (max-width: 950px) {
-  .search-btn {
-    border-radius: 5px !important;
-  }
+.search-btn {
+  border-radius: 5px !important;
 }
+
 .reference {
   width: 90%;
   overflow: hidden;
