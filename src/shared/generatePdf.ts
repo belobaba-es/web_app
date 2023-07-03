@@ -87,16 +87,13 @@ export const generateTransactionHistory = (
   setHeader(pdf, logo, title)
   setSubHeader(pdf, owner, translations, dateFilters)
 
-  let i = 1
+  let i: number = 1
 
-  let rowCounter = 0
-  let pageCounter = 1
-  let rowBackgroundCounter = 0
+  let rowCounter: number = 0
+  let pageCounter: number = 1
+  let rowBackgroundCounter: number = 0
 
   data.map((element: any) => {
-    pdf.value.setFontSize(15)
-    pdf.value.setTextColor(0, 0, 0)
-
     i = i + 0.15
 
     const rowHeightPosition: number = 70 * i
@@ -113,12 +110,46 @@ export const generateTransactionHistory = (
     )
     rowBackgroundCounter++
 
-    pdf.value.setFontSize(12)
-    pdf.value.setTextColor(108, 117, 125)
-    pdf.value.text(element.assetCode.toString(), 20, rowHeightPosition)
-    pdf.value.text(element.reference.toString(), 75, rowHeightPosition)
-    pdf.value.text(element.createdAt.toString(), 200, rowHeightPosition)
-    pdf.value.text(element.amount.toString(), 255, rowHeightPosition)
+    createText(
+      {
+        fontSize: 12,
+        textColor: gray,
+        xPosition: 20,
+        yPosition: rowHeightPosition,
+        text: element.assetCode.toString(),
+      },
+      pdf
+    )
+    createText(
+      {
+        fontSize: 12,
+        textColor: gray,
+        xPosition: 75,
+        yPosition: rowHeightPosition,
+        text: element.reference.toString(),
+      },
+      pdf
+    )
+    createText(
+      {
+        fontSize: 12,
+        textColor: gray,
+        xPosition: 200,
+        yPosition: rowHeightPosition,
+        text: element.createdAt.toString(),
+      },
+      pdf
+    )
+    createText(
+      {
+        fontSize: 12,
+        textColor: gray,
+        xPosition: 255,
+        yPosition: rowHeightPosition,
+        text: element.amount.toString(),
+      },
+      pdf
+    )
 
     i = i + 0.03
     rowCounter++
@@ -132,9 +163,6 @@ export const generateTransactionHistory = (
       setHeader(pdf, logo, title)
       setSubHeader(pdf, owner, translations, dateFilters)
     }
-
-    pdf.value.setFontSize(12)
-    pdf.value.setTextColor(0, 0, 0)
   })
 
   pdf.value.save(`${nameFile}.pdf`)
@@ -155,7 +183,6 @@ export const generateTransactionReceipt = (
   let index = 0
 
   const keys = Object.keys(data)
-
   keys.forEach(element => {
     index++
 

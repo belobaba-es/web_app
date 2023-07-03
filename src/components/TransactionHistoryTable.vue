@@ -132,7 +132,7 @@
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
                     <p class="date">
-                      {{ formatDate(item.createdAt) }}
+                      {{ item.createdAt }}
                     </p>
                   </div>
                 </div>
@@ -204,7 +204,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -218,8 +218,8 @@ import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {
-  TransactionFiltersQueryType,
   ListTransactionPgType,
+  TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys,
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
@@ -229,7 +229,6 @@ import { iconAsset } from '../shared/iconAsset'
 import { TransactionModalPayload } from './ModalTransactionDetails.vue'
 import { useUserStore } from '../stores/user'
 import { Asset } from '../views/deposit/types/asset.interface'
-import { defineProps } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -276,6 +275,13 @@ const props = defineProps({
     required: true,
   },
 })
+const lastDateFiltersRegistry: any = ref({
+  transactions: [],
+  data: {
+    startDate: null,
+    endDate: null,
+  },
+})
 
 onMounted(async () => {
   await assetsService.list().then(data => {
@@ -306,27 +312,36 @@ onMounted(async () => {
 })
 
 const getTransactions = async (filters: any = {}) => {
+  registerSearchFilters([], {})
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
-  await getHistoric.getHistoric(filters).then(data => {
-    submitting.value = false
-    isLoading.value = false
-    isLoadingPDF.value = false
+  await getHistoric
+    .getHistoric(filters)
+    .then(data => {
+      submitting.value = false
+      isLoading.value = false
+      isLoadingPDF.value = false
 
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
-    })
+      data.results.forEach(element => {
+        element.createdAt = formatDate(element.createdAt)
+        listTransaction.value.push(element)
+      })
 
-    nextPage.value.data = data.nextPag
-    nextPage.value.nextPage = false
-
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
       nextPage.value.data = data.nextPag
-    }
-  })
+      nextPage.value.nextPage = false
+
+      if (data.nextPag) {
+        nextPage.value.nextPage = true
+        nextPage.value.data = data.nextPag
+      }
+
+      registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
+    })
+    .catch(() => {
+      registerSearchFilters([], {})
+    })
 }
 
 const loadMoreItems = async () => {
@@ -411,7 +426,7 @@ const downloadExtract = () => {
       const data = {
         assetCode: transaction.assetCode,
         reference: transaction.reference,
-        createdAt: formatDate(transaction.createdAt),
+        createdAt: transaction.createdAt,
         amount: transaction.amount,
       }
       extractPDFInfo[i] = data
@@ -439,19 +454,22 @@ const downloadExtract = () => {
 }
 
 const prepareDatesFilterPDF = () => {
-  let dateFilters = {
-    startDate: '',
-    endDate: '',
+  return {
+    startDate: lastDateFiltersRegistry.value.dates.startDate
+      ? formatDate(lastDateFiltersRegistry.value.dates.startDate)
+      : '',
+    endDate: lastDateFiltersRegistry.value.dates.endDate ? formatDate(lastDateFiltersRegistry.value.dates.endDate) : '',
   }
-  if (isValidDates() && startDate.value && endDate.value) {
-    // validar que la busque se efectuo antes.
-    // dateFilters = {
-    //   startDate: formatDate(startDate.value),
-    //   endDate: formatDate(endDate.value),
-    // }
-  }
+}
 
-  return dateFilters
+const registerSearchFilters = (transactions: ListTransactionPgType[], filters: any) => {
+  lastDateFiltersRegistry.value = {
+    transactions,
+    dates: {
+      startDate: filters.startDate,
+      endDate: filters.endDate,
+    },
+  }
 }
 
 const search = async () => {
