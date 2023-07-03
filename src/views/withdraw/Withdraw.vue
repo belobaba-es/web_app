@@ -5,7 +5,7 @@
       <div class="grid justify-content-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center line">
           <img src="../../assets/icons/cash-back.svg" alt="" srcset="" />
-          <p class="">{{ t('withdrawFiat') }}</p>
+          <p class="text-2xl font-medium p-3">{{ t('withdrawFiat') }}</p>
           <p class="text-base">{{ t('withdrawFiatSelectMsg') }}</p>
 
           <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/fiat" />
@@ -17,7 +17,7 @@
 
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center">
           <img src="../../assets/icons/blockchain.svg" alt="" srcset="" />
-          <p class="">{{ t('withdrawCrypto') }}</p>
+          <p class="text-2xl font-medium p-3">{{ t('withdrawCrypto') }}</p>
           <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
 
           <CardButon class="m-4 crypto" :label="t('betweenNOBACrypto')" to="/withdraw/noba/crypto" />
