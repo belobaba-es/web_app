@@ -80,6 +80,10 @@
       </div>
     </div>
 
+    <div class="col-12 field mt-4">
+      <p class="text-1xl">{{ t('wire24Hours') }}</p>
+    </div>
+
     <MessageAlertActiveTwoFactorAuth />
 
     <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">

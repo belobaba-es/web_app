@@ -11,7 +11,7 @@
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="text-base">{{ beneficiary.email }}</p>
+        <p class="text-base text-end">{{ beneficiary.email }}</p>
       </div>
     </div>
 
@@ -25,7 +25,7 @@
       </div>
 
       <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
-        <p class="text-base text-amount">
+        <p class="text-end text-base text-amount">
           {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} {{ assetSymbol }}</b>
         </p>
       </div>
@@ -74,6 +74,10 @@
           :placeholder="t('reference')"
         />
       </div>
+    </div>
+
+    <div class="col-12 field mt-4">
+      <p class="text-1xl">{{ t('wire24Hours') }}</p>
     </div>
 
     <MessageAlertActiveTwoFactorAuth />
@@ -248,5 +252,9 @@ const selectedAsset = (evt: Asset) => {
   @media only screen and (min-width: 1440px) {
     max-width: 60%;
   }
+}
+
+.text-end {
+  text-align: end !important;
 }
 </style>
