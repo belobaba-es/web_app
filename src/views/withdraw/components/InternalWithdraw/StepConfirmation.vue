@@ -98,10 +98,10 @@ const username = userStore.getUser.firstName
   : userStore.getUser.name
 
 const verifyCodeTwoFactorAuth = (res: boolean) => {
-  if (res) {
-    visibleModalVeryCodeTwoFactor.value = false
+  // if (res) {
+    // visibleModalVeryCodeTwoFactor.value = false
     makeTransaction()
-  }
+  // }
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {

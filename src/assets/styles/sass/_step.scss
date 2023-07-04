@@ -1,16 +1,21 @@
 .p-steps .p-steps-item::before {
-    content: " ";
-    border-top: 1px solid var(--primary-color);
+  content: ' ';
+  border-top: 1px solid var(--primary-color);
 }
 
 .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
-    color: #1B1B19;
-    border: 1px solid var(--primary-color);
-    // background: #f9f9f9 !important;
-    min-width: 2rem;
-    height: 2rem;
-    line-height: 2rem;
-    font-size: 1.143rem;
-    z-index: 1;
-    border-radius: 50%;
-  }
+  color: #1b1b19;
+  border: 1px solid var(--primary-color);
+  // background: #f9f9f9 !important;
+  min-width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 1.143rem;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.p-steps .p-steps-item.p-highlight .p-steps-number {
+    background: var(--primary-color) !important;
+    border: 1px solid #ffffff !important;
+}
