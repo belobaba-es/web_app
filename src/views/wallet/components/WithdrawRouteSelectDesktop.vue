@@ -2,7 +2,7 @@
   <div class="col-4 flex justify-content-start container-link-historic-desktop">
     <div class="dropdown-wrapper">
       <router-link class="link-historic-desktop" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
-        <h5 class="text-link-historic-desktop">Withdraw</h5>
+        <h5 class="text-link-historic-desktop">Withdraw <span class="p-2 pi pi-angle-down primary-color"></span></h5>
       </router-link>
 
       <div v-if="isDropdownOpen" class="dropdown">
@@ -80,11 +80,11 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 .dropdown ul li {
   padding: 8px;
   cursor: pointer;
-  color: var(--primary-color);
+  color: rgb(0, 0, 0);
 }
 
 .dropdown ul li:hover {
-  background: lightgray;
+  color: var(--primary-color);
 }
 
 //
@@ -93,5 +93,9 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 }
 .link-historic-desktop {
   color: white;
+}
+
+.primary-color {
+  color: var(--primary-color);
 }
 </style>

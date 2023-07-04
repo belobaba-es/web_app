@@ -2,9 +2,11 @@
   <div class="col-4 flex justify-content-center">
     <div class="dropdown-wrapper">
       <router-link class="link-historic" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
-        <h5 class="text-link-historic">Withdraw</h5>
+        <div class="flex align-items-center gap-2">
+          <h5 class="text-link-historic">Withdraw</h5>
+          <span class="pi pi-angle-down primary-color"></span>
+        </div>
       </router-link>
-
       <div v-if="isDropdownOpen" class="dropdown">
         <ul>
           <li v-for="option in links" :key="option.id" @click="handleOptionClick(option)">
@@ -80,11 +82,11 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 .dropdown ul li {
   padding: 8px;
   cursor: pointer;
-  color: var(--primary-color);
+  color: rgb(0, 0, 0);
 }
 
 .dropdown ul li:hover {
-  background: lightgray;
+  color: var(--primary-color);
 }
 
 //
@@ -93,5 +95,9 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 }
 .link-historic-desktop {
   color: white;
+}
+
+.primary-color {
+  color: var(--primary-color);
 }
 </style>
