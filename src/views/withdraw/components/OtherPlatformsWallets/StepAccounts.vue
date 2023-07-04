@@ -1,9 +1,9 @@
 <template>
-  <div class="my-3">
+  <div class="my-3 p-3">
     <SearchAccount />
   </div>
 
-  <div class="grid" style="margin-top: 1rem">
+  <div class="grid" style="margin-top: 1rem; margin-left: 1rem;">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
@@ -35,6 +35,16 @@
             />
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid p-fluid p-3">
+    <div class="grid col-12 mt-4 mb-2">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <RouterLink to="/withdraw/crypto/other/add-beneficiary">
+          <Button class="w-100" :label="t('addNewBeneficiary')" />
+        </RouterLink>
       </div>
     </div>
   </div>
