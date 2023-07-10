@@ -87,6 +87,20 @@
           </div>
         </div>
       </div>
+
+      <div class="col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3 mt-3 pl-0">
+        <div class="flex align-items-center">
+          <Button
+            class="p-button"
+            :label="t('extractGenerated')"
+            @click="downloadExtract()"
+            :loading="isLoadingPDF"
+            icon="pi pi-download"
+            iconPos="right"
+          />
+        </div>
+      </div>
+      <!--          -->
     </section>
 
     <div class="container-data mb-0 pb-0">
@@ -118,7 +132,7 @@
                   <div class="col-9">
                     <p class="name_to">{{ item.nameTo }}</p>
                     <p class="date">
-                      {{ formatDate(item.createdAt) }}
+                      {{ item.createdAt }}
                     </p>
                   </div>
                 </div>
@@ -190,7 +204,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ProgressSpinner from 'primevue/progressspinner'
@@ -199,13 +213,13 @@ import Calendar from 'primevue/calendar'
 import Skeleton from 'primevue/skeleton'
 import ModalTransactionDetails from '../components/ModalTransactionDetails.vue'
 import Dropdown from 'primevue/dropdown'
-import { generatePDFTable, jsPDFOptionsOrientationEnum } from '../shared/generatePdf'
+import { generateTransactionHistory, jsPDFOptionsOrientationEnum } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {
-  TransactionFiltersQueryType,
   ListTransactionPgType,
+  TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys,
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
@@ -215,7 +229,6 @@ import { iconAsset } from '../shared/iconAsset'
 import { TransactionModalPayload } from './ModalTransactionDetails.vue'
 import { useUserStore } from '../stores/user'
 import { Asset } from '../views/deposit/types/asset.interface'
-import { defineProps } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -225,8 +238,7 @@ const assetCode = ref('')
 const startDate = ref()
 const endDate = ref()
 const isLoading = ref(true)
-const isFirstLoad = ref(true)
-const isLoadingPDF = ref(true)
+const isLoadingPDF = ref(false)
 const filters: TransactionFiltersQueryType = {
   accountId: '',
   assetCode: '',
@@ -263,6 +275,13 @@ const props = defineProps({
     required: true,
   },
 })
+const lastDateFiltersRegistry: any = ref({
+  transactions: [],
+  data: {
+    startDate: null,
+    endDate: null,
+  },
+})
 
 onMounted(async () => {
   await assetsService.list().then(data => {
@@ -293,27 +312,36 @@ onMounted(async () => {
 })
 
 const getTransactions = async (filters: any = {}) => {
+  registerSearchFilters([], {})
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
-  await getHistoric.getHistoric(filters).then(data => {
-    submitting.value = false
-    isLoading.value = false
-    isLoadingPDF.value = false
+  await getHistoric
+    .getHistoric(filters)
+    .then(data => {
+      submitting.value = false
+      isLoading.value = false
+      isLoadingPDF.value = false
 
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
-    })
+      data.results.forEach(element => {
+        element.createdAt = formatDate(element.createdAt)
+        listTransaction.value.push(element)
+      })
 
-    nextPage.value.data = data.nextPag
-    nextPage.value.nextPage = false
-
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
       nextPage.value.data = data.nextPag
-    }
-  })
+      nextPage.value.nextPage = false
+
+      if (data.nextPag) {
+        nextPage.value.nextPage = true
+        nextPage.value.data = data.nextPag
+      }
+
+      registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
+    })
+    .catch(() => {
+      registerSearchFilters([], {})
+    })
 }
 
 const loadMoreItems = async () => {
@@ -373,25 +401,75 @@ const filtersChange = async (key: TransactionFiltersQueryTypeKeys, value: any) =
 const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
+const user = userStore.getUser
 const username = userStore.getUser.firstName
   ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
   : userStore.getUser.name
 let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
+
   setTimeout(() => {
-    extractPDFInfo = {}
+    extractPDFInfo = []
+
+    const owner = {
+      name: username,
+      id: user.taxId,
+      address: `${user.streetOne} ${user.city}`,
+    }
+
     isLoadingPDF.value = false
+
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
+
     listTransaction.value.forEach((transaction, i) => {
-      extractPDFInfo[i] = `${transaction.assetCode} ${transaction.reference} ${transaction.createdAt
-        .toString()
-        .substr(0, 10)} ${transaction.createdAt.toString().substr(11, 8)}  ${transaction.amount} ${
-        transaction.assetCode
-      }`
+      const data = {
+        assetCode: transaction.assetCode,
+        reference: transaction.reference,
+        createdAt: transaction.createdAt,
+        amount: transaction.amount,
+      }
+      extractPDFInfo[i] = data
     })
-    generatePDFTable(nameFile, logo, title, extractPDFInfo, footerPdf, jsPDFOptionsOrientationEnum.LANDSCAPE)
+
+    generateTransactionHistory(
+      nameFile,
+      logo,
+      'noba.cash',
+      footerPdf,
+      jsPDFOptionsOrientationEnum.LANDSCAPE,
+      extractPDFInfo,
+      owner,
+      {
+        ownersName: t('ownersName'),
+        documentPlaceholder: t('documentPlaceholder'),
+        divisorLabel: t('divisorLabel'),
+        extractGenerated: t('extractGenerated'),
+        from: t('from'),
+        to: t('to'),
+      },
+      prepareDatesFilterPDF()
+    )
   }, 2000)
+}
+
+const prepareDatesFilterPDF = () => {
+  return {
+    startDate: lastDateFiltersRegistry.value.dates.startDate
+      ? formatDate(lastDateFiltersRegistry.value.dates.startDate)
+      : '',
+    endDate: lastDateFiltersRegistry.value.dates.endDate ? formatDate(lastDateFiltersRegistry.value.dates.endDate) : '',
+  }
+}
+
+const registerSearchFilters = (transactions: ListTransactionPgType[], filters: any) => {
+  lastDateFiltersRegistry.value = {
+    transactions,
+    dates: {
+      startDate: filters.startDate,
+      endDate: filters.endDate,
+    },
+  }
 }
 
 const search = async () => {
@@ -477,11 +555,14 @@ const loadTransactionDetail = async (transaction: any) => {
   color: var(--primary-color);
 }
 
-@media (max-width: 950px) {
-  .search-btn {
-    border-radius: 5px !important;
-  }
+.pl-0 {
+  padding-left: 0;
 }
+
+.search-btn {
+  border-radius: 5px !important;
+}
+
 .reference {
   width: 90%;
   overflow: hidden;
