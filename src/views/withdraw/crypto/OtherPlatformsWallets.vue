@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-10 xl:col-6">
       <p class="text-3xl font-medium mb-4">
         {{ t('withdraw') }} / <span class="text-primary"> {{ t('crypto') }} </span>
       </p>
@@ -12,7 +12,7 @@
         <span class="text-xl">{{ t('otherPlatformCrypto') }}</span>
       </div>
 
-      <Steps class="mt-2" :model="items" :readonly="false" />
+      <Steps class="mt-2 p-3" :model="items" :readonly="false" />
       <router-view
         v-slot="{ Component }"
         :toNew="newBeneficiary"

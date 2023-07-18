@@ -68,7 +68,7 @@ import { useUserStore } from '../../../../stores/user'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import showMessage from "../../../../shared/showMessageArray";
+import showMessage from '../../../../shared/showMessageArray'
 
 const toast = useToast()
 const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
@@ -124,7 +124,6 @@ function makeTransaction() {
       transactionId.value = res.data.transactionId
       submitting.value = false
       updateBlockedBalanceWalletByCode('USD', props.formData.amount)
-
     })
     .catch(e => {
       submitting.value = false
@@ -142,7 +141,6 @@ function makeTransaction() {
       showMessage(toast, e.response.data)
     })
 }
-
 </script>
 
 <style scoped>

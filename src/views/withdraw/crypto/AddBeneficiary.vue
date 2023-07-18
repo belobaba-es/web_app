@@ -9,9 +9,9 @@
         <span class="text-xl"> {{ t('otherPlatformCrypto') }}</span>
       </div>
     </div>
-    <h5 class="font-medium mt-2">{{ t('addNewBeneficiary') }}</h5>
+    <h5 class="text-2xl font-medium mt-2 p-3">{{ t('addNewBeneficiary') }}</h5>
 
-    <div class="formgrid grid mt-4">
+    <div class="formgrid grid mt-4 p-3">
       <div class="col-8">
         <div class="field">
           <SelectedAssets @selectedAsset="selectAsset" />

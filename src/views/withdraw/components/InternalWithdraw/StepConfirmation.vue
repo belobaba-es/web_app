@@ -73,7 +73,7 @@ import ConfirmationCompletedWithdrawInternal from './ConfirmationCompletedWithdr
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import showMessage from "../../../../shared/showMessageArray";
+import showMessage from '../../../../shared/showMessageArray'
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
@@ -105,15 +105,15 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
-    if (isEnabledButtonToProceedWithdrawal.value) {
-        if (twoFactorIsActive()) {
-            visibleModalVeryCodeTwoFactor.value = true
-        } else {
-            makeTransaction()
-        }
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
     } else {
-        visibleModalVeryCodeTwoFactor.value = true
+      makeTransaction()
     }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
+  }
 }
 
 function makeTransaction() {
@@ -134,7 +134,6 @@ function makeTransaction() {
           submitting.value = false
           isCompleted.value = true
           updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
-          
         })
         .catch(e => {
           submitting.value = false
@@ -181,8 +180,6 @@ function makeTransaction() {
       submitting.value = false
   }
 }
-
-
 </script>
 
 <style scoped>
