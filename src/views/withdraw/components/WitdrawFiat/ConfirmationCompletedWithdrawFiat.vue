@@ -75,7 +75,13 @@ const username = userStore.getUser.firstName
   : userStore.getUser.name
 
 const goToWithdrawIndex = () => {
-  router.push(`/withdraw`)
+  if (props.formData.typeTransaction === 'international') {
+    router.push(`withdraw/fiat/international`)
+  }
+
+  if (props.formData.typeTransaction === 'domestic') {
+    router.push(`/withdraw/fiat/domestic`)
+  }
 }
 const generatePDFTransactionReceipt = async () => {
   isGeneratingTransactionPDF.value = true

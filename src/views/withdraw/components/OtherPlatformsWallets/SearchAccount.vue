@@ -1,26 +1,23 @@
 <template>
   <div class="grid p-fluid">
-    <div class="grid col-12">
-      <div class="grid mt-4 mb-2">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-          <RouterLink to="/withdraw/crypto/other/add-beneficiary">
-            <Button :label="t('addNewBeneficiary')" />
-          </RouterLink>
-        </div>
-      </div>
-
-      <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+    <div class="grid col-12 mt-4 mb-2">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <span class="p-input-icon-left flex p-fluid">
           <i class="pi pi-search" />
           <InputText type="text" class="b-gray w-50" v-model="search" :placeholder="t('searchBeneficiaryLabel')" />
           <Button
             style="border-top-left-radius: 0; border-bottom-left-radius: 0"
-            class="p-button search-btn w-25"
+            class="p-button search-btn w-50"
             :label="t('search')"
             @click="onSearch"
             :loading="submitting"
           />
         </span>
+      </div>
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <RouterLink to="/withdraw/crypto/other/add-beneficiary">
+          <Button class="w-100" :label="t('addNewBeneficiary')" />
+        </RouterLink>
       </div>
     </div>
   </div>

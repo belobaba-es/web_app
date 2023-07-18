@@ -79,7 +79,13 @@ const username = userStore.getUser.firstName
   : userStore.getUser.name
 
 const goToWithdrawIndex = () => {
-  router.push(`/withdraw`)
+  if (route.params.type === 'crypto') {
+    router.push(`/withdraw/noba/crypto`)
+  }
+
+  if (route.params.type === 'fiat') {
+    router.push(`/withdraw/noba/fiat`)
+  }
 }
 
 const generatePDFTransactionReceipt = () => {
