@@ -19,7 +19,6 @@ import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.
 const useUser = useUserStore()
 
 const areDocumentsUPloaded = () => {
-  console.log('areDocumentsUPloaded')
-  return false
+  return useUser.getUser.accountId !== null
 }
 </script>
