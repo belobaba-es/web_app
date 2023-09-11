@@ -38,7 +38,7 @@ export interface Account {
   accountId: string
   swapEnable: boolean
   twoFactorActive: boolean
-  status: string
+  status: AccountStatus
   kycMembers: {
     contactId: string
     kyc: {
@@ -47,6 +47,15 @@ export interface Account {
     }[]
   }
   feeWire?: FeeWireContent
+}
+
+export enum AccountStatus {
+  CHANGES_REQUESTED = "CHANGES_REQUESTED",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  SUBMITTED = "SUBMITTED",
+  PROCESSING = "PROCESSING",
+  REGISTERED = "REGISTERED"
 }
 
 export type FeeWireContent = {

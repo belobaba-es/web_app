@@ -1,6 +1,7 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar v-show="!areDocumentsUPloaded()"></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar v-show="!areDocumentsUploaded()"></FinishRegisterWarningBar>
+   
     <CardWallet :carousel="true" v-show="useUser.isAccountActive()" />
 
     <AccountValidationProcess v-show="!useUser.isAccountActive()" />
@@ -15,10 +16,12 @@ import { useUserStore } from '../../stores/user'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import TransactionHistoryTable from '../../components/TransactionHistoryTable.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import { AccountStatus } from '../login/types/login.interface'
 
 const useUser = useUserStore()
 
-const areDocumentsUPloaded = () => {
-  return useUser.getUser.accountId !== null
+const areDocumentsUploaded = () => {
+  
+  return useUser.getUser.account.status !== AccountStatus.REGISTERED
 }
 </script>
