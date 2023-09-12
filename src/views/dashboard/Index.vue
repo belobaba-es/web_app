@@ -21,7 +21,10 @@ import { AccountStatus } from '../login/types/login.interface'
 const useUser = useUserStore()
 
 const areDocumentsUploaded = () => {
-  
-  return useUser.getUser.account.status !== AccountStatus.REGISTERED
+  if ( useUser.getUser.client == undefined || useUser.getUser.client.clientStatus == undefined){
+    return false;
+  } 
+
+  return useUser.getUser.client.clientStatus === AccountStatus.APPROVED
 }
 </script>
