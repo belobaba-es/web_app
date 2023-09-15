@@ -10,7 +10,7 @@
 import Login from './Login.vue'
 import TwoFactorAuthentication from './TwoFactorAuthentication.vue'
 import { ref } from 'vue'
-import { LoginData } from './types/login.interface'
+import { AccountStatus, LoginData } from './types/login.interface'
 import { User, useUserStore } from '../../stores/user'
 import { twoFactorAuthenticationIsActiveRemotely } from '../../shared/services/remoteConfig'
 
@@ -32,10 +32,10 @@ const didLogin = async (payload: LoginData) => {
 
   userStore.setUser(userPayload.value as User)
 
-  if (userPayload.value.account.status !== 'pending') {
+  if (userPayload.value?.account.status !== AccountStatus.PROCESSING) {
     window.location.href = '/dashboard'
   } else {
-    window.location.href = `/profile/${userPayload.value.accountId}`
+    window.location.href = `/profile/${userPayload.value?.accountId}`
   }
 }
 </script>
