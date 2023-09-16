@@ -317,6 +317,8 @@
   "temporaryBlockedTransfer": "Transfers to other users are temporarily not allowed",
   "viewAllTransactions": "View all transactions",
   "ownersName" : "Owner`s name",
-  "information_account_text": "Account Information",
-  "beneficiary_information": "Beneficiary information"
+  "informationAccountText": "Account Information",
+  "beneficiaryInformation": "Beneficiary information",
+  "bankAccountInformation": "Bank address"
+  
 }

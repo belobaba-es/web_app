@@ -52,15 +52,15 @@ const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 
 const items = ref([
   {
-    label: t('information_account_text'),
+    label: t('informationAccountText'),
     to: `/withdraw/fiat/international/new`,
   },
   {
-    label: t('beneficiary_information'),
+    label: t('beneficiaryInformation'),
     to: `/withdraw/fiat/international/new/owner`,
   },
   {
-    label: 'Confirmation',
+    label: t('bankAccountInformation'),
     to: `/withdraw/fiat/international/new/bank-information`,
   },
 ])
