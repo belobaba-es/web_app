@@ -29,7 +29,7 @@
     </div>
 
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep()" iconPos="right" :loading="submitting" />
+      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep()" iconPos="right" />
     </div>
   </div>
 </template>
@@ -47,10 +47,6 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 
 const { t } = useI18n({ useScope: 'global' })
 
-const submitting = ref(false)
-
-const { getUserName } = useUserStore()
-
 const bankName = ref<string>('')
 const accountNumber = ref<string>('')
 const swiftCode = ref<string>('')
@@ -65,8 +61,8 @@ const nextStep = () => {
     accountNumber: accountNumber,
     swiftCode: swiftCode,
     iban: iban,
-  } 
-  
+  }
+
   emit('nextPage', {
     pageIndex: page,
     formData: formData.value,
