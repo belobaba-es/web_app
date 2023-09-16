@@ -1,0 +1,3 @@
+<template>
+    <h1>This is the first step</h1>
+</template>
