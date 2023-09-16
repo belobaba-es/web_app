@@ -40,10 +40,12 @@ import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import { useToast } from 'primevue/usetoast'
 
-import { useUserStore } from '../../../../stores/user'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
+
+const toast = useToast()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -53,19 +55,39 @@ const swiftCode = ref<string>('')
 const iban = ref<string>('')
 const formData = ref<object>()
 
+const validateFields = () => {
+  const isBankNameValid = bankName.value.trim() !== ''
+  const isAccountNumberValid = accountNumber.value.trim() !== ''
+  const isSwiftCodeValid = swiftCode.value.trim() !== ''
+  const isIbanValid = iban.value.trim() !== ''
+
+  return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIbanValid
+}
+
 const nextStep = () => {
-  const page = 0
+  if (validateFields() === true) {
+    const page = 0
 
-  formData.value = {
-    bankName: bankName,
-    accountNumber: accountNumber,
-    swiftCode: swiftCode,
-    iban: iban,
+    formData.value = {
+      bankName: bankName,
+      accountNumber: accountNumber,
+      swiftCode: swiftCode,
+      iban: iban,
+    }
+
+    emit('nextPage', {
+      pageIndex: page,
+      formData: formData.value,
+    })
   }
+  else{
+    toast.add({
+      severity: 'warn',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
+    })
 
-  emit('nextPage', {
-    pageIndex: page,
-    formData: formData.value,
-  })
+  }
 }
 </script>

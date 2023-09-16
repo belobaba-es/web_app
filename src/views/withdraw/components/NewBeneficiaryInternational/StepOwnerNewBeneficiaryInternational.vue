@@ -16,8 +16,9 @@ const props = defineProps<{
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const nextPage = () => {
-  console.log('test', props.formData)
+
   const page = 1
+
   const formData = {
     ...props.formData.value,
   }

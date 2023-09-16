@@ -319,6 +319,6 @@
   "ownersName" : "Owner`s name",
   "informationAccountText": "Account Information",
   "beneficiaryInformation": "Beneficiary information",
-  "bankAccountInformation": "Bank address"
-  
+  "bankAccountInformation": "Bank address",
+  "warningDetailAllFieldRequired": "Please make sure you enter all fields"
 }
