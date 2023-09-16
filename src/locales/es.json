@@ -314,5 +314,7 @@
   "beneficiaryInformation": "Información del beneficiario",
   "bankAccountInformation": "Dirección del banco",
   "warningDetailAllFieldRequired": "Por favor asegúrese de ingresar todos los campos",
-  "iban": "IBAN"
+  "iban": "IBAN",
+  "domesticAccount": "Cuenta Nacional",
+  "internationalAccount": "Cuenta Internacional"
 }

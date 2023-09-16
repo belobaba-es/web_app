@@ -3,12 +3,12 @@
     <div class="grid">
       <div class="field-radiobutton col-6">
         <RadioButton inputId="DOMESTIC" value="DOMESTIC" v-model="typeBeneficiaryBankWithdrawal" />
-        <label for="DOMESTIC">Domestic Account</label>
+        <label for="DOMESTIC">{{ t('domesticAccount') }}</label>
       </div>
 
       <div class="field-radiobutton col-6">
         <RadioButton inputId="INTERNATIONAL" value="INTERNATIONAL" v-model="typeBeneficiaryBankWithdrawal" />
-        <label for="INTERNATIONAL">International Account</label>
+        <label for="INTERNATIONAL">{{ t('internationalAccount') }}</label>
       </div>
     </div>
 

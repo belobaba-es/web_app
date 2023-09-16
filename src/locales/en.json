@@ -316,10 +316,12 @@
   "registeredSuccessfully": "ou have registered successfully, now wait fo an admin to approve you",
   "temporaryBlockedTransfer": "Transfers to other users are temporarily not allowed",
   "viewAllTransactions": "View all transactions",
-  "ownersName" : "Owner`s name",
+  "ownersName": "Owner`s name",
   "informationAccountText": "Account Information",
   "beneficiaryInformation": "Beneficiary information",
   "bankAccountInformation": "Bank address",
   "warningDetailAllFieldRequired": "Please make sure you enter all fields",
-  "iban": "IBAN"
+  "iban": "IBAN",
+  "domesticAccount": "Domestic Account",
+  "internationalAccount": "International Account"
 }
