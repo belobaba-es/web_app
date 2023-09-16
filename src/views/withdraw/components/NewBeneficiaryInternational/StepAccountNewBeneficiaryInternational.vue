@@ -37,7 +37,7 @@
     </div>
 
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep" iconPos="right" :loading="submitting" />
+      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep()" iconPos="right" :loading="submitting" />
     </div>
   </div>
 </template>
@@ -163,9 +163,12 @@ const saveBeneficiary = () => {
 
 const nextStep = () => {
   const page = 0
-  const formData = {}
 
-  console.log(formData)
+  const formData = {
+    accountNumber: form.value.accountNumber,
+  }
+
+  // console.log(formData)
 
   emit('nextPage', {
     pageIndex: page,

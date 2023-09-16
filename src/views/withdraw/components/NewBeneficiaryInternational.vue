@@ -67,12 +67,13 @@ const items = ref([
 
 route.meta.noCache = true
 
-const formObject = ref<WithdrawForm | any>({})
+const formObject = ref<any>({})
 
 const nextPage = (event: any) => {
   for (let field in event.formData) {
     formObject.value[field] = event.formData[field]
   }
+  console.log(formObject.value)
 
   router.push(items.value[event.pageIndex + 1].to)
 }
