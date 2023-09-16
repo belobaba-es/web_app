@@ -2,14 +2,20 @@
   <section class="section-main">
     <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
       <p class="text-3xl font-medium mb-4">
-        {{ t('withdraw') }} / <span class="text-primary"> {{ typeAsset }} </span>
+        {{ t('withdraw') }} / <span class="text-primary"> {{ t('fiat') }} </span>
       </p>
 
       <div class="flex align-items-center">
         <router-link to="/withdraw">
           <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
         </router-link>
-        <span class="text-xl">Between NOBA {{ typeWallet }}</span>
+        <span class="text-xl">{{ t('internationalWire') }} </span>
+      </div>
+
+      <div class="flex align-items-center">
+        <div class="mt-1 col-12">
+          <h3 class="font-medium">{{ t('addBeneficiaries') }}</h3>
+        </div>
       </div>
 
       <Steps :model="items" :readonly="false" />
