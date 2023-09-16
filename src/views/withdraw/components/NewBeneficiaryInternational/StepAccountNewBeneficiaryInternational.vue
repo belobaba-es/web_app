@@ -1,5 +1,17 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
+    <div class="grid">
+      <div class="field-radiobutton col-6">
+        <RadioButton inputId="DOMESTIC" value="DOMESTIC" v-model="typeBeneficiaryBankWithdrawal" />
+        <label for="DOMESTIC">Domestic Account</label>
+      </div>
+
+      <div class="field-radiobutton col-6">
+        <RadioButton inputId="INTERNATIONAL" value="INTERNATIONAL" v-model="typeBeneficiaryBankWithdrawal" />
+        <label for="INTERNATIONAL">International Account</label>
+      </div>
+    </div>
+
     <div class="field">
       <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
@@ -22,9 +34,10 @@
     </div>
 
     <div class="field">
-      <label>{{ t('IBAN') }}</label>
+      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">{{ t('routingNumber') }} </label>
+      <label v-show="typeBeneficiaryBankWithdrawal == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="iban" />
+        <InputText type="text" v-model="intermediaryNumber" />
       </div>
     </div>
 
@@ -39,9 +52,9 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
+import RadioButton from 'primevue/radiobutton'
 import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
-
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
@@ -52,16 +65,18 @@ const { t } = useI18n({ useScope: 'global' })
 const bankName = ref<string>('')
 const accountNumber = ref<string>('')
 const swiftCode = ref<string>('')
-const iban = ref<string>('')
+const intermediaryNumber = ref<string>('')
+const typeBeneficiaryBankWithdrawal = ref<string>('')
+
 const formData = ref<object>()
 
 const validateFields = () => {
   const isBankNameValid = bankName.value.trim() !== ''
   const isAccountNumberValid = accountNumber.value.trim() !== ''
   const isSwiftCodeValid = swiftCode.value.trim() !== ''
-  const isIbanValid = iban.value.trim() !== ''
+  const isIntermediaryNumberValid = intermediaryNumber.value.trim() !== ''
 
-  return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIbanValid
+  return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIntermediaryNumberValid
 }
 
 const nextStep = () => {
@@ -72,22 +87,20 @@ const nextStep = () => {
       bankName: bankName,
       accountNumber: accountNumber,
       swiftCode: swiftCode,
-      iban: iban,
+      intermediaryNumber: intermediaryNumber, //Iban - International | Routing number Domestic
     }
 
     emit('nextPage', {
       pageIndex: page,
       formData: formData.value,
     })
-  }
-  else{
+  } else {
     toast.add({
       severity: 'warn',
       summary: t('warningAllFieldRequired'),
       detail: t('warningDetailAllFieldRequired'),
       life: 4000,
     })
-
   }
 }
 </script>

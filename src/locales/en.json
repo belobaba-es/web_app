@@ -320,5 +320,6 @@
   "informationAccountText": "Account Information",
   "beneficiaryInformation": "Beneficiary information",
   "bankAccountInformation": "Bank address",
-  "warningDetailAllFieldRequired": "Please make sure you enter all fields"
+  "warningDetailAllFieldRequired": "Please make sure you enter all fields",
+  "iban": "IBAN"
 }

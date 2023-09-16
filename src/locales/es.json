@@ -313,6 +313,6 @@
   "informationAccountText": "Información de la cuenta",
   "beneficiaryInformation": "Información del beneficiario",
   "bankAccountInformation": "Dirección del banco",
-  "warningDetailAllFieldRequired": "Por favor asegúrese de ingresar todos los campos"
-
+  "warningDetailAllFieldRequired": "Por favor asegúrese de ingresar todos los campos",
+  "iban": "IBAN"
 }
