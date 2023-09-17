@@ -80,10 +80,11 @@ const validateFields = () => {
 }
 
 const nextStep = () => {
-  if (validateFields() === true) {
+  if (validateFields()) {
     const page = 0
 
     formData.value = {
+      typeBeneficiaryBankWithdrawal: typeBeneficiaryBankWithdrawal,
       bankName: bankName,
       accountNumber: accountNumber,
       swiftCode: swiftCode,
