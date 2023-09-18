@@ -21,6 +21,9 @@ import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccou
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
 import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
+import StepAccountNewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational/StepAccountNewBeneficiaryInternational.vue'
+import StepOwnerNewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational/StepOwnerNewBeneficiaryInternational.vue'
+import StepBankNewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational/StepBankNewBeneficiaryInternational.vue'
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
 import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
@@ -183,6 +186,20 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'fiat/international/new',
             component: NewBeneficiaryInternational,
+            children: [
+              {
+                path: '',
+                component: StepAccountNewBeneficiaryInternational,
+              },
+              {
+                path: 'owner',
+                component: StepOwnerNewBeneficiaryInternational,
+              },
+              {
+                path: 'bank-information',
+                component: StepBankNewBeneficiaryInternational,
+              },
+            ],
           },
           {
             path: 'fiat/international/successful',

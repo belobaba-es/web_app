@@ -78,8 +78,6 @@ const nextStep = (item: BeneficiaryInternal) => {
     beneficiary: { ...item, accountId: !item.accountTo ? item.accountId : item.accountTo },
   }
 
-  console.log(formData)
-
   emit('nextPage', {
     pageIndex: page,
     formData: formData,

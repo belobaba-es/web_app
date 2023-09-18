@@ -1,0 +1,176 @@
+<template>
+  <div class="col-12 md:col-8 mt-5">
+    <div class="field">
+      <label>{{ t('depositNameOnBank') }}</label>
+      <div class="p-inputgroup">
+        <InputText type="text" v-model="realName" readonly />
+      </div>
+      <small>Make sure it exactly as it appears on your bank account</small>
+    </div>
+
+    <p class="mt-4 mb-0 text-uppercase">{{ t('beneficiaryAddress') }}</p>
+    <Divider class="mt-0"></Divider>
+    <div class="grid mt-2">
+      <div class="field col-12">
+        <label>{{ t('countryLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="country"
+            :options="countries"
+            optionLabel="name"
+            option-value="country_code"
+            :loading="loadingCountiesField"
+            :placeholder="t('countryPlaceholder')"
+            :disabled="countriesInputIsEmpty"
+            class="w-full"
+            @change="onChangeCountryHandler"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field col-12">
+        <label>{{ t('streetAddress') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="streetOne" />
+        </div>
+      </div>
+
+      <div class="field col-12">
+        <label>{{ t('streetAddressTwo') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="streetTwo" />
+        </div>
+      </div>
+
+      <div class="field col-4">
+        <label>{{ t('cityLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="city" class="w-full" required />
+        </div>
+      </div>
+
+      <div class="field col-4">
+        <label>{{ t('stateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="state"
+            :options="states"
+            optionLabel="name"
+            option-value="name"
+            :loading="loadingStatesField"
+            :placeholder="t('statePlaceHolder')"
+            :disabled="statesInputIsEmpty"
+            class="w-full"
+            @change="onChangeStateHandler"
+          />
+        </div>
+      </div>
+
+      <div class="field col-4">
+        <label>{{ t('postalCodeLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="postalCode" />
+        </div>
+      </div>
+    </div>
+    <div class="field mt-5 flex justify-content-end">
+      <Button :label="t('nextButtonText')" class="px-5" @click="nextPage" iconPos="right" />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useWorld } from '../../../../composables/useWorld'
+import { useUserStore } from '../../../../stores/user'
+
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
+import Divider from 'primevue/divider'
+import { useToast } from 'primevue/usetoast'
+
+const { t } = useI18n({ useScope: 'global' })
+
+const toast = useToast()
+
+const { getUserName } = useUserStore()
+
+const emit = defineEmits(['nextPage', 'prevPage'])
+
+const {
+  countries,
+  fetchCountries,
+  loadingCountiesField,
+  countriesInputIsEmpty,
+  statesInputIsEmpty,
+  loadingStatesField,
+  states,
+  onChangeCountryHandler,
+  onChangeStateHandler,
+} = useWorld()
+
+const {
+  countries: bankCountries,
+  statesInputIsEmpty: bankStatesInputIsEmpty,
+  loadingStatesField: bankLoadingStatesField,
+  states: bankStates,
+  onChangeCountryHandler: onBankChangeCountryHandler,
+  onChangeStateHandler: onBankChangeStateHandler,
+} = useWorld()
+
+const props = defineProps<{
+  formData: object
+}>()
+
+const realName = ref<string>(getUserName())
+const country = ref<string>('')
+const streetOne = ref<string>('')
+const streetTwo = ref<string>('')
+const city = ref<string>('')
+const state = ref<string>('')
+const postalCode = ref<string>('')
+
+onMounted(() => {
+  fetchCountries(true).then(() => {
+    bankCountries.value = countries.value
+  })
+})
+
+const validateFields = () => {
+  return [realName, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
+}
+
+const nextPage = () => {
+  if (validateFields()) {
+    const formData = ref({
+      ...props.formData,
+      informationOwner: {
+        name: realName.value,
+        address: {
+          streetOne: streetOne.value,
+          streetTwo: streetTwo.value,
+          postCode: postalCode.value,
+          region: state.value,
+          city: city.value,
+          country: country.value,
+        },
+      },
+    })
+    const page = 1
+    emit('nextPage', {
+      pageIndex: page,
+      formData: formData.value,
+    })
+  } else {
+    toast.add({
+      severity: 'warn',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
+    })
+  }
+}
+</script>

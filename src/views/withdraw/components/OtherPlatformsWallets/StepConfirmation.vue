@@ -75,7 +75,7 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import ConfirmationCompletedWithOtherPlatformsWallet from './ConfirmationCompletedWithOtherPlatformsWallet.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import showMessage from "../../../../shared/showMessageArray";
+import showMessage from '../../../../shared/showMessageArray'
 
 const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
@@ -104,15 +104,15 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
-    if (isEnabledButtonToProceedWithdrawal.value) {
-        if (twoFactorIsActive()) {
-            visibleModalVeryCodeTwoFactor.value = true
-        } else {
-            makeTransaction()
-        }
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
     } else {
-        visibleModalVeryCodeTwoFactor.value = true
+      makeTransaction()
     }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
+  }
 }
 
 async function makeTransaction() {
@@ -129,7 +129,6 @@ async function makeTransaction() {
       updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.total)
       isCompleted.value = true
       submitting.value = false
-
     })
     .catch(e => {
       submitting.value = false
@@ -146,7 +145,6 @@ async function makeTransaction() {
       showMessage(toast, e.response.data)
     })
 }
-
 </script>
 
 <style scoped>

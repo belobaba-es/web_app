@@ -24,7 +24,9 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
-        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork', {networkName: paymentAddress?.networkName}) }}</p>
+        <p class="text-base font-bold text-uppercase">
+          {{ t('warningAssetNetwork', { networkName: paymentAddress?.networkName }) }}
+        </p>
       </div>
       <div class="col-12">
         <div class="p-inputgroup">

@@ -49,7 +49,7 @@ export class BeneficiaryService extends HttpService {
     return await this.post<any>(`beneficiary/domestic`, payload)
   }
 
-  async saveBeneficiaryInternational(payload: BeneficiaryFiatInternacional): Promise<any> {
+  async saveBeneficiaryInternational(payload: any): Promise<any> {
     return await this.post<any>(`beneficiary/international`, payload)
   }
 
