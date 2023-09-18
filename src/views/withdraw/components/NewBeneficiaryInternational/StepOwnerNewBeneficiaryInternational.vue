@@ -147,7 +147,7 @@ const nextPage = () => {
   if (validateFields()) {
     const formData = ref<object>({
       ...props.formData,
-      realName: realName.value, // Asignar el valor actual
+      realName: realName.value,
       country: country.value,
       streetOne: streetOne.value,
       streetTwo: streetTwo.value,
@@ -159,7 +159,7 @@ const nextPage = () => {
     const page = 1
     emit('nextPage', {
       pageIndex: page,
-      formData: JSON.stringify(formData.value),
+      formData: formData.value,
     })
   } else {
     toast.add({
