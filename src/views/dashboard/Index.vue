@@ -1,7 +1,7 @@
 <template>
   <section class="section-main">
     <FinishRegisterWarningBar v-show="!areDocumentsUploaded()"></FinishRegisterWarningBar>
-   
+
     <CardWallet :carousel="true" v-show="useUser.isAccountActive()" />
 
     <AccountValidationProcess v-show="!useUser.isAccountActive()" />
@@ -21,9 +21,9 @@ import { AccountStatus } from '../login/types/login.interface'
 const useUser = useUserStore()
 
 const areDocumentsUploaded = () => {
-  if ( useUser.getUser.client == undefined || useUser.getUser.client.clientStatus == undefined){
-    return false;
-  } 
+  if (useUser.getUser.client == undefined || useUser.getUser.client.clientStatus == undefined) {
+    return false
+  }
 
   return useUser.getUser.client.clientStatus === AccountStatus.APPROVED
 }
