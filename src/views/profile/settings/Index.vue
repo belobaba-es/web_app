@@ -35,7 +35,6 @@ const { t } = useI18n({
 })
 
 const { twoFactorIsActive } = useTwoFactorAuth()
-
 </script>
 
 <style lang="css" scoped></style>

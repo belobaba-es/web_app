@@ -5,7 +5,11 @@
     >
       <div class="col-4 align-items-start flex align-items-center justify-content-start">
         <div class="asset-icon">
-          <img class="icon-cripto" :src="asssetImg(paymentAddress.assetsId)" :alt="'icon-' + assetName(paymentAddress.assetsId)"/>
+          <img
+            class="icon-cripto"
+            :src="asssetImg(paymentAddress.assetsId)"
+            :alt="'icon-' + assetName(paymentAddress.assetsId)"
+          />
           <div class="font-semi-bold text-uppercase pl-3 text-center name-cripto-wallet">
             {{ assetName(paymentAddress.assetsId) }}
           </div>
@@ -31,7 +35,7 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { Asset, PaymentAddress } from '../types/asset.interface'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   assets: Array<Asset>

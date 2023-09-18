@@ -12,24 +12,28 @@
 
         <div class="codes bg-gray-100 mt-5 mb-5">
           <div class="grid text-center">
-            <div class="col-6 font-semi-bold" style="font-size: 11pt" v-for="(code, index) in code_recovery">{{ code }}</div>
+            <div class="col-6 font-semi-bold" style="font-size: 11pt" v-for="(code, index) in code_recovery">
+              {{ code }}
+            </div>
           </div>
         </div>
         <Button
-            class="float-right mb-5"
-            :label="t('download')"
-            icon="pi pi-download" icon-pos="right"
-            :loading="submitting"
-            @click="downloadCodeRecoveryTxtFile(code_recovery)"
+          class="float-right mb-5"
+          :label="t('download')"
+          icon="pi pi-download"
+          icon-pos="right"
+          :loading="submitting"
+          @click="downloadCodeRecoveryTxtFile(code_recovery)"
         />
         <Divider />
 
         <Button
-            :label="t('cancel')"
-            outlined class="mb-5"
-            icon="pi pi-angle-left"
-            :loading="submitting"
-            @click="cancel()"
+          :label="t('cancel')"
+          outlined
+          class="mb-5"
+          icon="pi pi-angle-left"
+          :loading="submitting"
+          @click="cancel()"
         />
 
         <ConfirmPopup group="demo">
@@ -42,10 +46,12 @@
         </ConfirmPopup>
 
         <Button
-            class="float-right mb-5"
-            @click="showTemplate($event)"
-            icon="pi pi-check" :label="t('activeTwoFactor')"
-            :loading="submitting" />
+          class="float-right mb-5"
+          @click="showTemplate($event)"
+          icon="pi pi-check"
+          :label="t('activeTwoFactor')"
+          :loading="submitting"
+        />
       </div>
     </div>
   </div>
@@ -59,32 +65,32 @@ import Divider from 'primevue/divider'
 import ConfirmPopup from 'primevue/confirmpopup'
 import { useI18n } from 'vue-i18n'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import {onUnmounted, ref} from "vue";
-import {Asset, PaymentAddress} from "../../../deposit/types/asset.interface";
-import {useRouter} from "vue-router";
-import {useConfirm} from "primevue/useconfirm";
-import {useToast} from "primevue/usetoast";
-import TwoFactorActiveSuccess from "./TwoFactorActiveSuccess.vue";
+import { onUnmounted, ref } from 'vue'
+import { Asset, PaymentAddress } from '../../../deposit/types/asset.interface'
+import { useRouter } from 'vue-router'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
+import TwoFactorActiveSuccess from './TwoFactorActiveSuccess.vue'
 
 const props = defineProps<{
   code_recovery: string[]
 }>()
 
-const router = useRouter();
+const router = useRouter()
 
 const { submitting, activeTwoFactor, downloadCodeRecoveryTxtFile } = useTwoFactorAuth()
 
-const twoFactorIsActive  = ref(false)
+const twoFactorIsActive = ref(false)
 
 const { t } = useI18n({
   useScope: 'global',
 })
 
-const confirm = useConfirm();
-const toast = useToast();
+const confirm = useConfirm()
+const toast = useToast()
 
 const cancel = () => {
-  router.push('/profile');
+  router.push('/profile')
 }
 
 const showTemplate = (event: any) => {
@@ -95,15 +101,14 @@ const showTemplate = (event: any) => {
     icon: 'pi pi-question-circle',
     acceptIcon: 'pi pi-check',
     rejectIcon: 'pi pi-times',
-    accept: async() => {
+    accept: async () => {
       twoFactorIsActive.value = await activeTwoFactor()
     },
     reject: () => {
-      toast.add({severity:'warn', detail: t('recommendationSaveCodeRecovery'), life: 6000});
-    }
-  });
+      toast.add({ severity: 'warn', detail: t('recommendationSaveCodeRecovery'), life: 6000 })
+    },
+  })
 }
-
 </script>
 
 <style scoped></style>

@@ -74,30 +74,8 @@
         </div>
       </div>
     </div>
-    <!-- <div class="field mt-5 flex justify-content-end">
+    <div class="field mt-5 flex justify-content-end">
       <Button :label="t('nextButtonText')" class="px-5" @click="nextPage" iconPos="right" />
-    </div> -->
-
-    <div class="field mt-5 grid">
-      <div class="col-6 flex justify-content-start">
-        <Button
-          type="button"
-          icon="pi pi-angle-left"
-          :label="t('backButtonTitle')"
-          class="font-light px-5 border-300 p-button-outlined"
-          @click="prevPage"
-        />
-      </div>
-      <div class="col-6 flex justify-content-end">
-        <Button
-          type="button"
-          icon="pi pi-angle-right"
-          :label="t('nextButtonText')"
-          class="px-5"
-          @click="nextPage"
-          iconPos="right"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -144,7 +122,7 @@ const {
 } = useWorld()
 
 const props = defineProps<{
-  formData: object;
+  formData: object
 }>()
 
 const realName = ref<string>(getUserName())
@@ -164,34 +142,24 @@ onMounted(() => {
 const validateFields = () => {
   return [realName, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
 }
-const formData = ref<object>({
-  ...props.formData,
-  // realName: realName.value, // Asignar el valor actual
-  // country: country.value,
-  // streetOne: streetOne.value,
-  // streetTwo: streetTwo.value,
-  // city: city.value,
-  // state: state.value,
-  // postalCode: postalCode.value,
-})
-
-
-const prevPage = () => {
-  const page = 1
-  console.log(`PrevPage ${formData.value}`)
-  emit('prevPage', {
-    pageIndex: page,
-    formData: formData.value,
-  })
-}
 
 const nextPage = () => {
   if (validateFields()) {
+    const formData = ref<object>({
+      ...props.formData,
+      realName: realName.value, // Asignar el valor actual
+      country: country.value,
+      streetOne: streetOne.value,
+      streetTwo: streetTwo.value,
+      city: city.value,
+      state: state.value,
+      postalCode: postalCode.value,
+    })
+
     const page = 1
-    console.log(`NextPage ${formData.value}`)
     emit('nextPage', {
       pageIndex: page,
-      formData: formData.value,
+      formData: JSON.stringify(formData.value),
     })
   } else {
     toast.add({

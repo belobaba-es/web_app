@@ -72,23 +72,26 @@ const saveBeneficiary = () => {
   }
 
   const beneficiaryService = BeneficiaryService.instance()
-  beneficiaryService.saveBeneficiaryAssets(form.value).then(resp => {
-    router.push('/withdraw/crypto/other')
-    toast.add({
-      severity: 'success',
-      detail: resp.message,
-      life: 4000,
+  beneficiaryService
+    .saveBeneficiaryAssets(form.value)
+    .then(resp => {
+      router.push('/withdraw/crypto/other')
+      toast.add({
+        severity: 'success',
+        detail: resp.message,
+        life: 4000,
+      })
     })
-  }).catch(error => {
+    .catch(error => {
       if (error.response.data.message) {
-          toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: error.response.data.message,
-              life: 4000,
-          })
-          return
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+        return
       }
-  })
+    })
 }
 </script>

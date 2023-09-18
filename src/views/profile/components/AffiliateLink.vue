@@ -2,11 +2,7 @@
   <div v-if="isApproved" class="padd-4 col-auto">
     <label class="required-label">{{ t('affiliateLink') }}</label>
     <div class="p-inputgroup">
-      <InputText
-        readonly="true"
-        :placeholder="t('walletAddress')"
-        :value="referralLink"
-      />
+      <InputText readonly="true" :placeholder="t('walletAddress')" :value="referralLink" />
       <span @click="copyToClipboardReferralLink()" class="p-inputgroup-addon btn-copy-to-clipboard">
         <i class="pi pi-copy"></i>
       </span>
@@ -15,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import {useUserStore} from "../../../stores/user";
-import {onMounted, ref} from "vue";
-import {BusinessAllie} from "../services/businessAllie";
-import {useI18n} from "vue-i18n";
-import {useToast} from "primevue/usetoast";
+import { useUserStore } from '../../../stores/user'
+import { onMounted, ref } from 'vue'
+import { BusinessAllie } from '../services/businessAllie'
+import { useI18n } from 'vue-i18n'
+import { useToast } from 'primevue/usetoast'
 import InputText from 'primevue/inputtext'
 
 const toast = useToast()
@@ -37,14 +33,12 @@ const generateReferralLink = (accountId: string) => {
 }
 
 const getBusinessAllieStatus = async () => {
-  businessAllieService
-    .getBusinessAllieStatus()
-    .then(res => {
-      if (res.status === 'APPROVED') {
-        isApproved.value = true
-        generateReferralLink(userStore.getUser.account.accountId)
-      }
-    })
+  businessAllieService.getBusinessAllieStatus().then(res => {
+    if (res.status === 'APPROVED') {
+      isApproved.value = true
+      generateReferralLink(userStore.getUser.account.accountId)
+    }
+  })
 }
 
 const copyToClipboardReferralLink = () => {
@@ -60,6 +54,4 @@ const copyToClipboardReferralLink = () => {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

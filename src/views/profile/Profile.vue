@@ -17,8 +17,8 @@
                 {{ item.label }}
               </RouterLink>
             </div>
-            <div  class="affiliate-link-container">
-              <AffiliateLink ></AffiliateLink>
+            <div class="affiliate-link-container">
+              <AffiliateLink></AffiliateLink>
             </div>
           </div>
         </template>
@@ -35,7 +35,7 @@ import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
 import { TypeAccount } from './types/account.interface'
-import AffiliateLink from "./components/AffiliateLink.vue";
+import AffiliateLink from './components/AffiliateLink.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const { natureAccount, accountId, fetchAccount, loading } = useAccount()
@@ -103,5 +103,4 @@ const setMenuItems = () => {
     margin-top: 4px;
   }
 }
-
 </style>

@@ -3,7 +3,7 @@
     <SearchAccount />
   </div>
 
-  <div class="grid" style="margin-top: 1rem; margin-left: 1rem;">
+  <div class="grid" style="margin-top: 1rem; margin-left: 1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
