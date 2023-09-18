@@ -309,7 +309,8 @@
   "registeredSuccessfully": "Te has registrado exitosamente, espera la aprobación de un admin.",
   "temporaryBlockedTransfer": "Las trasnferencias a otros usuarios estan temporalmente bloqueadas.",
   "viewAllTransactions": "Ver todas las transacciones",
-  "ownersName": "Owner`s name",
+  "ownersName" : "Owner`s name",
+  "uploadDocuments": "Upload your documents to complete the sign up process, click here"
   "informationAccountText": "Información de la cuenta",
   "beneficiaryInformation": "Información del beneficiario",
   "bankAccountInformation": "Dirección del banco",
