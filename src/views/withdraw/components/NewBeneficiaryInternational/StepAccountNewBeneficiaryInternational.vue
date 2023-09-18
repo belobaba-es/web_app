@@ -68,7 +68,7 @@ const swiftCode = ref<string>('')
 const intermediaryNumber = ref<string>('')
 const typeBeneficiaryBankWithdrawal = ref<string>('')
 
-const formData = ref<object>()
+const formData = ref()
 
 const validateFields = () => {
   const isBankNameValid = bankName.value.trim() !== ''
@@ -85,10 +85,12 @@ const nextStep = () => {
 
     formData.value = {
       typeBeneficiaryBankWithdrawal: typeBeneficiaryBankWithdrawal,
-      bankName: bankName,
-      accountNumber: accountNumber,
-      swiftCode: swiftCode,
-      intermediaryNumber: intermediaryNumber, //Iban - International | Routing number Domestic
+      informationBank:{
+        accountNumber: accountNumber,
+        bankName: bankName,
+        swiftCode: swiftCode,
+        iban: intermediaryNumber, //Iban - International | Routing number Domestic
+      },
     }
 
     emit('nextPage', {

@@ -145,17 +145,20 @@ const validateFields = () => {
 
 const nextPage = () => {
   if (validateFields()) {
-    const formData = ref<object>({
+    const formData = ref({
       ...props.formData,
-      realName: realName.value,
-      country: country.value,
-      streetOne: streetOne.value,
-      streetTwo: streetTwo.value,
-      city: city.value,
-      state: state.value,
-      postalCode: postalCode.value,
+      informationOwner: {
+        name: realName.value,
+        address: {
+          streetOne: streetOne.value,
+          streetTwo: streetTwo.value,
+          postCode: postalCode.value,
+          region: state.value,
+          city: city.value,
+          country: country.value,
+        },
+      },
     })
-
     const page = 1
     emit('nextPage', {
       pageIndex: page,
