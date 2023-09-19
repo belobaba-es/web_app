@@ -48,19 +48,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
 import RadioButton from 'primevue/radiobutton'
 import InputText from 'primevue/inputtext'
+
 import { useToast } from 'primevue/usetoast'
+import { useRoute, useRouter } from 'vue-router'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const toast = useToast()
 
 const { t } = useI18n({ useScope: 'global' })
+
+const router = useRouter()
+const route = useRoute()
 
 const bankName = ref<string>('')
 const accountNumber = ref<string>('')
@@ -69,6 +74,15 @@ const intermediaryNumber = ref<string>('')
 const typeBeneficiaryBankWithdrawal = ref<string>('')
 
 const formData = ref()
+const routeType = ref()
+
+onMounted(async () => {
+  if (route.path.includes('domestic')) {
+    routeType.value = 'DOMESTIC'
+  } else if (route.path.includes('international')) {
+    routeType.value = 'INTERNATIONAL'
+  }
+})
 
 const validateFields = () => {
   const isBankNameValid = bankName.value.trim() !== ''

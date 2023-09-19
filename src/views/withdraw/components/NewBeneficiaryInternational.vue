@@ -22,6 +22,7 @@
       <router-view
         v-slot="{ Component }"
         :formData="formObject"
+        :typeBeneficiary="typeBeneficiary"
         @prevPage="prevPage($event)"
         @nextPage="nextPage($event)"
         @complete="complete"
@@ -68,6 +69,8 @@ const items = ref([
 route.meta.noCache = true
 
 const formObject = ref<any>({})
+
+const typeBeneficiary = ref()
 
 const nextPage = (event: any) => {
   for (let field in event.formData) {
