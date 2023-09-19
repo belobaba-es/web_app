@@ -57,7 +57,7 @@
             v-model="state"
             :options="states"
             optionLabel="name"
-            option-value="name"
+            option-value="state_code"
             :loading="loadingStatesField"
             :placeholder="t('statePlaceHolder')"
             :disabled="statesInputIsEmpty"
@@ -150,7 +150,7 @@ const nextPage = () => {
         address: {
           streetOne: streetOne.value,
           streetTwo: streetTwo.value,
-          postCode: postalCode.value,
+          postalCode: postalCode.value,
           region: state.value,
           city: city.value,
           country: country.value,

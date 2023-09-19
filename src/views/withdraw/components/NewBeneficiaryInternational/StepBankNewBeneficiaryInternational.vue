@@ -50,7 +50,7 @@
             v-model="bankState"
             :options="states"
             optionLabel="name"
-            option-value="name"
+            option-value="state_code"
             :loading="loadingStatesField"
             :placeholder="t('statePlaceHolder')"
             :disabled="statesInputIsEmpty"
@@ -155,7 +155,7 @@ const saveBeneficiary = () => {
       address: {
         streetOne: bankStreetOne.value,
         streetTwo: bankStreetTwo.value,
-        postCode: bankPostalCode.value,
+        postalCode: bankPostalCode.value,
         region: bankState.value,
         city: bankCity.value,
         country: bankCountry.value,
