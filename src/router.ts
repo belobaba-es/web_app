@@ -47,6 +47,7 @@ import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 import UploadDocumentsIndex from './views/upload-documents/index.vue'
+import { AccountStatus } from './views/login/types/login.interface'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -317,7 +318,8 @@ router.beforeEach((to, from, next) => {
     next({ path: '/dashboard' })
   } else if (
     userStore.getUser &&
-    userStore.getUser.account.status !== 'opened' &&
+    userStore.getUser.client.status !== AccountStatus.APPROVED &&
+    // userStore.getUser.client.status !== 'opened' &&
     ['/deposit', '/withdraw'].includes(to.path)
   ) {
     next({ path: '/dashboard' })

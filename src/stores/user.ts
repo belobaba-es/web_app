@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { CryptoService } from '../shared/services/crypto'
-import { Account } from '../views/login/types/login.interface'
+import { Account, AccountStatus } from '../views/login/types/login.interface'
 
 export interface User {
   active: boolean
@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
 
     const user = JSON.parse(new CryptoService().decrypt(storageUser))
 
-    return user.account.status === 'opened'
+    return user.client.status === AccountStatus.APPROVED
   }
 
   const swapModuleIsActive = (): boolean => {

@@ -10,7 +10,7 @@ export interface LoginData {
   email: string
   token: string
   country: string
-  cllient: any
+  client: any
   postalCode: string
   region: string
   middleName: string
