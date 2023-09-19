@@ -1,5 +1,5 @@
 <template>
-  <section class="kyc mb-3 mt-3" v-show="!userStore.isAccountActive()">
+  <section class="kyc mb-3 mt-3">
     <transition-group name="p-message" tag="div">
       <Message v-for="msg of messages" severity="warn">{{ msg.content }}</Message>
     </transition-group>

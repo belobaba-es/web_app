@@ -57,16 +57,6 @@ export const useUserStore = defineStore('user', () => {
     sessionStorage.setItem('user', cryptoService.encrypt(JSON.stringify({ ...payload })))
   }
 
-  const isAccountActive = (): boolean => {
-    const storageUser = sessionStorage.getItem('user')
-
-    if (!storageUser) return true
-
-    const user = JSON.parse(new CryptoService().decrypt(storageUser))
-
-    return user.client.status === 'opened'
-  }
-
   const swapModuleIsActive = (): boolean => {
     const storageUser = sessionStorage.getItem('user')
 
@@ -120,5 +110,5 @@ export const useUserStore = defineStore('user', () => {
     return `${user.name}`
   }
 
-  return { setUser, getUser, getUserName, isAccountActive, swapModuleIsActive, getWarningKYC, getUserFeeWire }
+  return { setUser, getUser, getUserName, swapModuleIsActive, getWarningKYC, getUserFeeWire }
 })

@@ -1,8 +1,8 @@
 <template>
   <section class="section-main">
-    <CardWallet :carousel="false" v-show="useUser.isAccountActive()" />
+    <CardWallet :carousel="false" />
 
-    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <AccountValidationProcess />
   </section>
 </template>
 
