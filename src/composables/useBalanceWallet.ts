@@ -4,6 +4,7 @@ import { BalanceWallet } from '../views/deposit/types/asset.interface'
 import { FirebaseService } from '../shared/services/firebase'
 import { useUserStore } from '../stores/user'
 import { useI18n } from 'vue-i18n'
+import { AssetsService } from '../views/deposit/services/assets'
 
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
@@ -12,13 +13,19 @@ export const useBalanceWallet = () => {
 
   const fetchBalanceWallets = async () => {
     const userStore = useUserStore()
-    const firebaseService = await new FirebaseService(userStore.getUser.accountId)
-    await firebaseService.listenFirebaseChanges()
-    firebaseService.getBalances().then(observable => {
-      observable.subscribe((balances: BalanceWallet[]) => {
-        balanceWalletStore.setBalanceWallet(balances)
+    
+    AssetsService.instance()
+      .getBalanceWallets()
+      .then(response => {
+        balanceWalletStore.setBalanceWallet(response)
       })
-    })
+    // const firebaseService = await new FirebaseService(userStore.getUser.accountId)
+    // await firebaseService.listenFirebaseChanges()
+    // firebaseService.getBalances().then(observable => {
+    //   observable.subscribe((balances: BalanceWallet[]) => {
+    //     balanceWalletStore.setBalanceWallet(balances)
+    //   })
+    // })
   }
 
   const getBalanceByCode = (assetCode: string): number => {

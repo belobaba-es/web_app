@@ -18,9 +18,9 @@ const isNotTwoFactorActive = ref<boolean>(false)
 
 const userStore = useUserStore()
 
-const userPayload = ref<LoginData>()
+const userPayload = ref<any>()
 
-const didLogin = async (payload: LoginData) => {
+const didLogin = async (payload: any) => {
   userPayload.value = payload
 
   // if (await twoFactorAuthenticationIsActiveRemotely()) {
@@ -32,7 +32,7 @@ const didLogin = async (payload: LoginData) => {
 
   userStore.setUser(userPayload.value as User)
 
-  if (userPayload.value?.account.status !== AccountStatus.PROCESSING) {
+  if (userPayload.value?.client.status !== AccountStatus.REGISTERED) {
     window.location.href = '/dashboard'
   } else {
     window.location.href = `/profile/${userPayload.value?.accountId}`

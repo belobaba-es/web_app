@@ -3,31 +3,48 @@ import { computed, ref } from 'vue'
 import { CryptoService } from '../shared/services/crypto'
 import { Account } from '../views/login/types/login.interface'
 
+export interface Domestic {
+  in: number
+  out: number
+}
+
+export interface International {
+  in: number
+  out: number
+}
+
+export interface FeeSwap {
+  swapBuy: number
+  swapSell: number
+}
+
+export interface FeeWire {
+  domestic: Domestic
+  international: International
+}
+
 export interface User {
-  active: boolean
+  clientId: string
   accountId: string
-  name: string
-  country: string
-  email: string
-  token: string
-  taxId: string
-  firstName: string
-  label: string
-  phoneCountry: string
-  phoneSMS: boolean
-  contactId: string
-  contactType: string
-  phoneNumber: string
-  lastName: string
-  postalCode: string
-  middleName: string
-  dateBirth: string
-  streetTwo: string
-  taxCountry: string
-  streetOne: string
   city: string
+  country: string
+  dateBirth: string
+  dni: string
+  email: string
+  feeSwap: FeeSwap
+  feeWire: FeeWire
+  passport: string
+  phoneCountry: string
+  phoneNumber: string
+  postalCode: string
+  referredByAccountId: string
   region: string
-  account: Account
+  status: string
+  streetOne: string
+  streetTwo: string
+  taxId: string
+  type: string
+  name: string
   kyc: {
     cipChecks: string
     kycRequiredActions: { [key: string]: string }
@@ -47,7 +64,7 @@ export const useUserStore = defineStore('user', () => {
 
     const user = JSON.parse(new CryptoService().decrypt(storageUser))
 
-    return user.account.status === 'opened'
+    return user.client.status === 'opened'
   }
 
   const swapModuleIsActive = (): boolean => {
@@ -100,11 +117,7 @@ export const useUserStore = defineStore('user', () => {
     if (!storageUser) return ''
     const user: User = JSON.parse(cryptoService.decrypt(storageUser))
 
-    if (user.contactType === 'natural_person') {
-      return `${user.firstName} ${user.middleName} ${user.lastName}`
-    }
-
-    return user.name
+    return `${user.name}`
   }
 
   return { setUser, getUser, getUserName, isAccountActive, swapModuleIsActive, getWarningKYC, getUserFeeWire }
