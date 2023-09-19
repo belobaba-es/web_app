@@ -89,8 +89,14 @@ const nextStep = () => {
         accountNumber: accountNumber,
         bankName: bankName,
         swiftCode: swiftCode,
-        iban: intermediaryNumber, //Iban - International | Routing number Domestic
       },
+    }
+
+    //Iban - International | Routing number Domestic
+    if (typeBeneficiaryBankWithdrawal.value === 'INTERNATIONAL') {
+      formData.value.informationBank.iban = intermediaryNumber
+    } else if (typeBeneficiaryBankWithdrawal.value === 'DOMESTIC') {
+      formData.value.informationBank.routingNumber = intermediaryNumber
     }
 
     emit('nextPage', {

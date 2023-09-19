@@ -95,7 +95,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 
-
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {

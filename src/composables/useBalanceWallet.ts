@@ -13,7 +13,7 @@ export const useBalanceWallet = () => {
 
   const fetchBalanceWallets = async () => {
     const userStore = useUserStore()
-    
+
     AssetsService.instance()
       .getBalanceWallets()
       .then(response => {

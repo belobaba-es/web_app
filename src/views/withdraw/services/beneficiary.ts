@@ -31,7 +31,7 @@ export class BeneficiaryService extends HttpService {
     return this._instance
   }
 
-  async listBeneficiaryAssets(nextPag =1): Promise<BeneficiaryAssetsResponse> {
+  async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
     return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/${nextPag}`)
   }
 

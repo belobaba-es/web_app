@@ -141,59 +141,70 @@ onMounted(() => {
   })
 })
 
-// const validateFields = () => {
-//   return [realName, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
-// }
+const validateFields = () => {
+  return [bankCountry, bankState, bankCity, bankPostalCode, bankStreetOne].every(field => field.value.trim() !== '')
+}
 
 const saveBeneficiary = () => {
-  submitting.value = true
+  if (validateFields()) {
+    
+    submitting.value = true
 
-  const formData = ref({
-    typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
-    informationBank: {
-      ...props.formData.informationBank,
-      address: {
-        streetOne: bankStreetOne.value,
-        streetTwo: bankStreetTwo.value,
-        postalCode: bankPostalCode.value,
-        region: bankState.value,
-        city: bankCity.value,
-        country: bankCountry.value,
+    const formData = ref({
+      typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
+      informationBank: {
+        ...props.formData.informationBank,
+        address: {
+          streetOne: bankStreetOne.value,
+          streetTwo: bankStreetTwo.value,
+          postalCode: bankPostalCode.value,
+          region: bankState.value,
+          city: bankCity.value,
+          country: bankCountry.value,
+        },
       },
-    },
-    informationOwner: {
-      ...props.formData.informationOwner,
-    },
-  })
-
-  const beneficiaryService = BeneficiaryService.instance()
-  beneficiaryService
-    .saveBeneficiaryInternational(formData.value)
-    .then(resp => {
-      submitting.value = false
-      router.push('/withdraw/fiat/international')
-      toast.add({
-        severity: 'success',
-        detail: resp.message,
-        life: 4000,
-      })
+      informationOwner: {
+        ...props.formData.informationOwner,
+      },
     })
-    .catch(e => {
-      submitting.value = false
 
-      if (e.response.data.data?.warning) {
-        e.response.data.data.warning.forEach((element: any) => {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
+    const beneficiaryService = BeneficiaryService.instance()
+    beneficiaryService
+      .saveBeneficiaryInternational(formData.value)
+      .then(resp => {
+        submitting.value = false
+        router.push('/withdraw/fiat/international')
+        toast.add({
+          severity: 'success',
+          detail: resp.data.message,
+          life: 4000,
         })
-        return
-      }
+      })
+      .catch(e => {
+        submitting.value = false
 
-      if (e.response.data.message) {
-        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-        return
-      }
+        if (e.response.data.data?.warning) {
+          e.response.data.data.warning.forEach((element: any) => {
+            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
+          })
+          return
+        }
 
-      showMessage(toast, e.response.data)
+        if (e.response.data.message) {
+          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
+          return
+        }
+
+        showMessage(toast, e.response.data)
+      })
+
+  } else {
+    toast.add({
+      severity: 'warn',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
     })
+  }
 }
 </script>

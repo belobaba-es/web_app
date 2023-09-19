@@ -22,7 +22,7 @@ export const useBeneficiary = () => {
     submitting.value = true
 
     const beneficiaryService = BeneficiaryService.instance()
-    await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {    
+    await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })
