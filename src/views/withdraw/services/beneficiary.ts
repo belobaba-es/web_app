@@ -31,13 +31,13 @@ export class BeneficiaryService extends HttpService {
     return this._instance
   }
 
-  async listBeneficiaryAssets(nextPag: string = ''): Promise<BeneficiaryAssetsResponse> {
-    return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/?${nextPag}`)
+  async listBeneficiaryAssets(nextPag =1): Promise<BeneficiaryAssetsResponse> {
+    return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/${nextPag}`)
   }
 
-  async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag: string = '') {
+  async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag = 1) {
     return await this.get<BeneficiaryFiatInternacionalResp | BeneficiaryFiatInternacionalResp>(
-      `beneficiary?typeBeneficiaryTransfer=${beneficiaryType}&${nextPag}`
+      `beneficiary/${nextPag}?typeBeneficiaryTransfer=${beneficiaryType}`
     )
   }
 
@@ -50,7 +50,7 @@ export class BeneficiaryService extends HttpService {
   }
 
   async saveBeneficiaryInternational(payload: any): Promise<any> {
-    return await this.post<any>(`beneficiary/international`, payload)
+    return await this.post<any>(`beneficiary/banking`, payload)
   }
 
   async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {

@@ -2,9 +2,9 @@
   <section class="section-main">
     <FinishRegisterWarningBar v-show="!areDocumentsUploaded()"></FinishRegisterWarningBar>
 
-    <CardWallet :carousel="true" v-show="useUser.isAccountActive()" />
+    <CardWallet :carousel="true" />
 
-    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <AccountValidationProcess />
 
     <TransactionHistoryTable :isDashboard="true"></TransactionHistoryTable>
   </section>

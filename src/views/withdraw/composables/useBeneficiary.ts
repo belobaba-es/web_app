@@ -11,9 +11,9 @@ export enum TypeBeneficiaryInternal {
 
 export const useBeneficiary = () => {
   const listBeneficiary = ref<any[]>([])
-  const listNextPag = ref('')
+  const listNextPag = ref(1)
   const submitting = ref(false)
-  const nextPag = ref(0)
+  const nextPag = ref(1)
   const listBeneficiariesInternal = ref<BeneficiaryInternal[]>()
 
   const { getUserName, getUser } = useUserStore()
@@ -22,16 +22,12 @@ export const useBeneficiary = () => {
     submitting.value = true
 
     const beneficiaryService = BeneficiaryService.instance()
-    await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
-      const userName = getUserName()
-
+    await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {    
       resp.results.forEach(element => {
-        if (userName === element.realName) {
-          listBeneficiary.value.push(element)
-        }
+        listBeneficiary.value.push(element)
       })
       submitting.value = false
-      listNextPag.value = resp.nextPag.replace('?', '')
+      listNextPag.value = Number(resp.nextPag)
     })
   }
 
@@ -43,7 +39,7 @@ export const useBeneficiary = () => {
       })
       listBeneficiary.value = resp.results
       submitting.value = false
-      listNextPag.value = resp.nextPag.replace('?', '')
+      listNextPag.value = Number(resp.nextPag)
     })
   }
 

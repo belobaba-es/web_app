@@ -84,8 +84,8 @@ const nextStep = () => {
     const page = 0
 
     formData.value = {
-      typeBeneficiaryBankWithdrawal: typeBeneficiaryBankWithdrawal,
       informationBank: {
+        typeBeneficiaryBankWithdrawal: typeBeneficiaryBankWithdrawal,
         accountNumber: accountNumber,
         bankName: bankName,
         swiftCode: swiftCode,

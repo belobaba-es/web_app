@@ -3,7 +3,7 @@
     <div class="field">
       <label>{{ t('depositNameOnBank') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="realName" readonly />
+        <InputText type="text" v-model="realName" />
       </div>
       <small>Make sure it exactly as it appears on your bank account</small>
     </div>
@@ -57,7 +57,7 @@
             v-model="state"
             :options="states"
             optionLabel="name"
-            option-value="name"
+            option-value="state_code"
             :loading="loadingStatesField"
             :placeholder="t('statePlaceHolder')"
             :disabled="statesInputIsEmpty"
@@ -84,7 +84,6 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
-import { useUserStore } from '../../../../stores/user'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -96,7 +95,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 
-const { getUserName } = useUserStore()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
@@ -125,7 +123,7 @@ const props = defineProps<{
   formData: object
 }>()
 
-const realName = ref<string>(getUserName())
+const realName = ref<string>('')
 const country = ref<string>('')
 const streetOne = ref<string>('')
 const streetTwo = ref<string>('')
@@ -152,7 +150,7 @@ const nextPage = () => {
         address: {
           streetOne: streetOne.value,
           streetTwo: streetTwo.value,
-          postCode: postalCode.value,
+          postalCode: postalCode.value,
           region: state.value,
           city: city.value,
           country: country.value,
