@@ -32,7 +32,7 @@ const didLogin = async (payload: LoginData) => {
 
   userStore.setUser(userPayload.value as User)
 
-  if (userPayload.value?.account.status !== AccountStatus.PROCESSING) {
+  if (userPayload.value?.client.status !== AccountStatus.PROCESSING) {
     window.location.href = '/dashboard'
   } else {
     window.location.href = `/profile/${userPayload.value?.accountId}`
