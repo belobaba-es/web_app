@@ -169,7 +169,7 @@ const saveBeneficiary = () => {
 
     const beneficiaryService = BeneficiaryService.instance()
     beneficiaryService
-      .saveBeneficiaryInternational(formData.value)
+      .saveBeneficiary(formData.value)
       .then(resp => {
         submitting.value = false
         router.push('/withdraw/fiat/international')

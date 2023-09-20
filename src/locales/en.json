@@ -324,5 +324,6 @@
   "warningDetailAllFieldRequired": "Please make sure you enter all fields",
   "iban": "IBAN",
   "domesticAccount": "Domestic Account",
-  "internationalAccount": "International Account"
+  "internationalAccount": "International Account",
+  "abaRoutingNumber": "ABA Routing number"
 }

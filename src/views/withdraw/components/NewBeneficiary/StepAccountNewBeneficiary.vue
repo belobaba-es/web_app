@@ -34,7 +34,7 @@
     </div>
 
     <div class="field">
-      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">{{ t('routingNumber') }} </label>
+      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">{{ t('abaRoutingNumber') }} </label>
       <label v-show="typeBeneficiaryBankWithdrawal == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="intermediaryNumber" />
