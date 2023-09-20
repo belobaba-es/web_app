@@ -147,7 +147,6 @@ const validateFields = () => {
 
 const saveBeneficiary = () => {
   if (validateFields()) {
-    
     submitting.value = true
 
     const formData = ref({
@@ -197,7 +196,6 @@ const saveBeneficiary = () => {
 
         showMessage(toast, e.response.data)
       })
-
   } else {
     toast.add({
       severity: 'warn',

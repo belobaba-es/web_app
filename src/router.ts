@@ -178,7 +178,21 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/new',
-            component: NewBeneficiaryDomestic,
+            component: NewBeneficiaryInternational,
+            children: [
+              {
+                path: '',
+                component: StepAccountNewBeneficiaryInternational,
+              },
+              {
+                path: 'owner',
+                component: StepOwnerNewBeneficiaryInternational,
+              },
+              {
+                path: 'bank-information',
+                component: StepBankNewBeneficiaryInternational,
+              },
+            ],
           },
           {
             path: 'fiat/domestic/successful',

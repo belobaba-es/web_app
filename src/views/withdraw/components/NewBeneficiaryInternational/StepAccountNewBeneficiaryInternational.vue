@@ -74,14 +74,14 @@ const intermediaryNumber = ref<string>('')
 const typeBeneficiaryBankWithdrawal = ref<string>('')
 
 const formData = ref()
-const routeType = ref()
+
+const props = defineProps<{
+  typeBeneficiary: any
+  formData: any
+}>()
 
 onMounted(async () => {
-  if (route.path.includes('domestic')) {
-    routeType.value = 'DOMESTIC'
-  } else if (route.path.includes('international')) {
-    routeType.value = 'INTERNATIONAL'
-  }
+  typeBeneficiaryBankWithdrawal.value = props.typeBeneficiary
 })
 
 const validateFields = () => {
