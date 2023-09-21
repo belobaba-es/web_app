@@ -78,8 +78,8 @@ if (route.path.includes('domestic')) {
   typeBeneficiary.value = 'INTERNATIONAL'
 
   const nuevoItem = {
-    label: t('intermediaryBank'), 
-    to: `/withdraw/fiat/international/new/intermediary-bank`, 
+    label: t('intermediaryBank'),
+    to: `/withdraw/fiat/international/new/intermediary-bank`,
   }
 
   items.value.splice(items.value.length - 1, 0, nuevoItem)
