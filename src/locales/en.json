@@ -166,7 +166,7 @@
   "selectFile": "Select File",
   "viewSwapHistory": "View Swap History",
   "iHave": "I Have",
-  "intermediaryBankAddress": "Intermediary bank address",
+  "intermediaryBankAddress": "Intermediary Bank Address",
   "swapSuccessfulTitle": "Swap Successful",
   "swapSuccessfulText": "The transaction has been processed successfully. The transfer may still be in process; check the transaction log later.",
   "swapFrom": "from",
@@ -325,5 +325,6 @@
   "iban": "IBAN",
   "domesticAccount": "Domestic Account",
   "internationalAccount": "International Account",
-  "abaRoutingNumber": "ABA Routing number"
+  "abaRoutingNumber": "ABA Routing number",
+  "intermediaryBank": "Intermediary Bank"
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
-    <p class="mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
+    <p class="mb-0 text-uppercase">{{ t('bankAddress') }}</p>
     <Divider class="mt-0"></Divider>
 
     <div class="grid mt-2">
@@ -149,23 +149,48 @@ const saveBeneficiary = () => {
   if (validateFields()) {
     submitting.value = true
 
-    const formData = ref({
-      typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
-      informationBank: {
-        ...props.formData.informationBank,
-        address: {
-          streetOne: bankStreetOne.value,
-          streetTwo: bankStreetTwo.value,
-          postalCode: bankPostalCode.value,
-          region: bankState.value,
-          city: bankCity.value,
-          country: bankCountry.value,
+    const formData = ref()
+
+    if (props.formData.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
+      formData.value = {
+        typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
+        informationBank: {
+          ...props.formData.informationBank,
+          address: {
+            streetOne: bankStreetOne.value,
+            streetTwo: bankStreetTwo.value,
+            postalCode: bankPostalCode.value,
+            region: bankState.value,
+            city: bankCity.value,
+            country: bankCountry.value,
+          },
         },
-      },
-      informationOwner: {
-        ...props.formData.informationOwner,
-      },
-    })
+        informationOwner: {
+          ...props.formData.informationOwner,
+        },
+      }
+    } else {
+      formData.value = {
+        typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
+        informationBank: {
+          ...props.formData.informationBank,
+          address: {
+            streetOne: bankStreetOne.value,
+            streetTwo: bankStreetTwo.value,
+            postalCode: bankPostalCode.value,
+            region: bankState.value,
+            city: bankCity.value,
+            country: bankCountry.value,
+          },
+        },
+        informationOwner: {
+          ...props.formData.informationOwner,
+        },
+        informationIntermediaryBank: {
+          ...props.formData.informationIntermediaryBank,
+        },
+      }
+    }
 
     const beneficiaryService = BeneficiaryService.instance()
     beneficiaryService

@@ -318,5 +318,6 @@
   "iban": "IBAN",
   "domesticAccount": "Cuenta Nacional",
   "internationalAccount": "Cuenta Internacional", 
-  "abaRoutingNumber": "Número de ruta ABA"
+  "abaRoutingNumber": "Número de ruta ABA",
+  "intermediaryBank": "Banco intermediario"
 }

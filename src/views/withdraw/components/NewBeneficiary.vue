@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
       <p class="text-3xl font-medium mb-4">
         {{ t('withdraw') }} / <span class="text-primary"> {{ t('fiat') }} </span>
       </p>
@@ -51,6 +51,12 @@ const { t } = useI18n({ useScope: 'global' })
 const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('crypto')
 const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 
+route.meta.noCache = true
+
+const formObject = ref<any>({})
+
+const typeBeneficiary = ref()
+
 const items = ref([
   {
     label: t('informationAccountText'),
@@ -66,16 +72,17 @@ const items = ref([
   },
 ])
 
-route.meta.noCache = true
-
-const formObject = ref<any>({})
-
-const typeBeneficiary = ref()
-
 if (route.path.includes('domestic')) {
   typeBeneficiary.value = 'DOMESTIC'
 } else if (route.path.includes('international')) {
   typeBeneficiary.value = 'INTERNATIONAL'
+
+  const nuevoItem = {
+    label: t('intermediaryBank'), 
+    to: `/withdraw/fiat/international/new/intermediary-bank`, 
+  }
+
+  items.value.splice(items.value.length - 1, 0, nuevoItem)
 }
 
 const nextPage = (event: any) => {

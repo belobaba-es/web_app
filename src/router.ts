@@ -23,6 +23,7 @@ import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepC
 import NewBeneficiary from './views/withdraw/components/NewBeneficiary.vue'
 import StepAccountNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepAccountNewBeneficiary.vue'
 import StepOwnerNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'
+import StepIntermediaryBank from './views/withdraw/components/NewBeneficiary/StepIntermediaryBank.vue'
 import StepBankNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepBankNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
@@ -210,6 +211,10 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'owner',
                 component: StepOwnerNewBeneficiary,
+              },
+              {
+                path: 'intermediary-bank',
+                component: StepIntermediaryBank,
               },
               {
                 path: 'bank-information',

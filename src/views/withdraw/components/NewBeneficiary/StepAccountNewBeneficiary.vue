@@ -1,17 +1,5 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
-    <div class="grid">
-      <div class="field-radiobutton col-6">
-        <RadioButton inputId="DOMESTIC" value="DOMESTIC" v-model="typeBeneficiaryBankWithdrawal" />
-        <label for="DOMESTIC">{{ t('domesticAccount') }}</label>
-      </div>
-
-      <div class="field-radiobutton col-6">
-        <RadioButton inputId="INTERNATIONAL" value="INTERNATIONAL" v-model="typeBeneficiaryBankWithdrawal" />
-        <label for="INTERNATIONAL">{{ t('internationalAccount') }}</label>
-      </div>
-    </div>
-
     <div class="field">
       <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
