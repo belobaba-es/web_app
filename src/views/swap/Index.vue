@@ -1,8 +1,8 @@
 <template>
   <section class="section-main">
-<!--    todo uncomment-->
-<!--    <AccountValidationProcess />-->
-<!--    <PageLayout :title="t('swap')" v-show="useUser.swapModuleIsActive()">-->
+    <!--    todo uncomment-->
+    <!--    <AccountValidationProcess />-->
+    <!--    <PageLayout :title="t('swap')" v-show="useUser.swapModuleIsActive()">-->
     <PageLayout :title="t('swap')" v-show="true">
       <div class="grid flex justify-content-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
@@ -109,8 +109,8 @@ const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwa
 const useUser = useUserStore()
 
 const selectedAsset = async (asset: Asset) => {
-  console.log('asset', asset.code);
-  
+  console.log('asset', asset.code)
+
   showModalAssetSelector.value = false
   assetIcon.value = asset.icon
   assetName.value = asset.name

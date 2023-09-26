@@ -2,20 +2,39 @@
 
 export interface createExchangeResponse {
   message: string
-  data: Data
+  data: ExchangeData
 }
 
-export interface Data {
-  quoteId: string
-  amount: string
-  amountIsUnitCount: boolean
-  transactionType: string
-  assetId: string
-  accountId: string
-  status: string
-  baseAmount: number
-  feeAmount: number
-  totalAmount: number
-  unitCount: number
+// export interface Data {
+//   quoteId: string
+//   amount: string
+//   amountIsUnitCount: boolean
+//   transactionType: string
+//   assetId: string
+//   accountId: string
+//   status: string
+//   baseAmount: number
+//   feeAmount: number
+//   totalAmount: number
+//   unitCount: number
+//   feeNoba: number
+// }
+
+export interface ExchangeData {
+  exchangeId?: string
+  id?: string
+  status?: string
+  created_timestamp?: string
+  action?: string
+  source_details: {
+    source_account_id: string
+    asset_type_id: string
+    amount_to_debit: number
+  }
+  destination_details: {
+    destination_account_id: string
+    asset_type_id: string
+    amount_to_credit: number
+  }
   feeNoba: number
 }
