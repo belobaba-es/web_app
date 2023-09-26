@@ -133,7 +133,7 @@ const {
   assetId,
 } = storeToRefs(useSwapStore())
 
-const { createQuote, clearTimer } = useSwapStore()
+const { createExchange, clearTimer } = useSwapStore()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -161,9 +161,10 @@ watch(unitCount, async newVal => {
         detail: t('insufficientFunds'),
         life: 4000,
       })
-      return
+      // todo uncoment
+      // return
     }
-    await createQuote()
+    await createExchange()
   }
 })
 
@@ -172,7 +173,7 @@ const verifyAmountForCreateQoute = () => {
   setTimeout(async () => {
     if (transactionType.value === 'buy' && assetCode.value && amount.value > 0 && assetId.value && !loading.value) {
       await clearTimer()
-      await createQuote()
+      await createExchange()
     }
   }, 1000)
 }
