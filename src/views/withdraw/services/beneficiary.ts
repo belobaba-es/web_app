@@ -31,7 +31,7 @@ export class BeneficiaryService extends HttpService {
     return this._instance
   }
 
-  async listBeneficiaryAssets(nextPag =1): Promise<BeneficiaryAssetsResponse> {
+  async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
     return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/${nextPag}`)
   }
 
@@ -44,12 +44,7 @@ export class BeneficiaryService extends HttpService {
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
     return await this.get<BeneficiariesInternalResponse>(`beneficiary/internal/${type}/${nextPag === 0 ? 1 : nextPag}`)
   }
-
-  async saveBeneficiaryDomestic(payload: BeneficiaryFiatDomestic): Promise<any> {
-    return await this.post<any>(`beneficiary/domestic`, payload)
-  }
-
-  async saveBeneficiaryInternational(payload: any): Promise<any> {
+  async saveBeneficiary(payload: any): Promise<any> {
     return await this.post<any>(`beneficiary/banking`, payload)
   }
 

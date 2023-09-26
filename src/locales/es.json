@@ -317,5 +317,7 @@
   "warningDetailAllFieldRequired": "Por favor asegúrese de ingresar todos los campos",
   "iban": "IBAN",
   "domesticAccount": "Cuenta Nacional",
-  "internationalAccount": "Cuenta Internacional"
+  "internationalAccount": "Cuenta Internacional", 
+  "abaRoutingNumber": "Número de ruta ABA",
+  "intermediaryBank": "Banco intermediario"
 }

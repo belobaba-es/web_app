@@ -1,14 +1,27 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
-    <p class="mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
-    <Divider class="mt-0"></Divider>
+    <div class="field">
+      <label>{{ t('intermediaryBankName') }}</label>
+      <div class="p-inputgroup">
+        <InputText type="text" v-model="intermediaryBankName" />
+      </div>
+    </div>
 
+    <div class="field">
+      <label>{{ t('intermediarySwiftCode') }}</label>
+      <div class="p-inputgroup">
+        <InputText type="text" v-model="intermediaryBankSwiftCode" />
+      </div>
+    </div>
+
+    <p class="mt-4 mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
+    <Divider class="mt-0"></Divider>
     <div class="grid mt-2">
       <div class="field col-12">
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="bankCountry"
+            v-model="intermediaryBankCountry"
             :options="countries"
             optionLabel="name"
             option-value="country_code"
@@ -25,21 +38,21 @@
       <div class="field col-12">
         <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="bankStreetOne" />
+          <InputText type="text" v-model="intermediaryBankStreetOne" />
         </div>
       </div>
 
       <div class="field col-12">
         <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="bankStreetTwo" />
+          <InputText type="text" v-model="intermediaryBankStreetTwo" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('cityLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="bankCity" class="w-full" required />
+          <InputText type="text" v-model="intermediaryBankCity" class="w-full" required />
         </div>
       </div>
 
@@ -47,7 +60,7 @@
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="bankState"
+            v-model="intermediaryBankState"
             :options="states"
             optionLabel="name"
             option-value="state_code"
@@ -63,12 +76,12 @@
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="bankPostalCode" />
+          <InputText type="text" v-model="intermediaryBankPostalCode" />
         </div>
       </div>
     </div>
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('saveNewPayee')" class="px-5" @click="saveBeneficiary" :loading="submitting" iconPos="right" />
+      <Button :label="t('nextButtonText')" class="px-5" @click="nextPage" iconPos="right" />
     </div>
   </div>
 </template>
@@ -77,31 +90,18 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
-import { useUserStore } from '../../../../stores/user'
-import { BeneficiaryService } from '../../services/beneficiary'
-import { BeneficiaryFiatInternacional } from '../../types/beneficiary.interface'
-
-import router from '../../../../router'
-
-import showMessage from '../../../../shared/showMessageArray'
-import showExceptionError from '../../../../shared/showExceptionError'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
-
 import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 
-const { getUserName } = useUserStore()
-
 const emit = defineEmits(['nextPage', 'prevPage'])
-
-const submitting = ref(false)
 
 const {
   countries,
@@ -125,15 +125,17 @@ const {
 } = useWorld()
 
 const props = defineProps<{
-  formData: any
+  formData: object
 }>()
 
-const bankCountry = ref<string>('')
-const bankState = ref<string>('')
-const bankCity = ref<string>('')
-const bankPostalCode = ref<string>('')
-const bankStreetOne = ref<string>('')
-const bankStreetTwo = ref<string>('')
+const intermediaryBankName = ref<string>('')
+const intermediaryBankSwiftCode = ref<string>('')
+const intermediaryBankCountry = ref<string>('')
+const intermediaryBankStreetOne = ref<string>('')
+const intermediaryBankStreetTwo = ref<string>('')
+const intermediaryBankCity = ref<string>('')
+const intermediaryBankState = ref<string>('')
+const intermediaryBankPostalCode = ref<string>('')
 
 onMounted(() => {
   fetchCountries(true).then(() => {
@@ -141,59 +143,47 @@ onMounted(() => {
   })
 })
 
-// const validateFields = () => {
-//   return [realName, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
-// }
+const validateFields = () => {
+  return [
+    intermediaryBankName,
+    intermediaryBankSwiftCode,
+    intermediaryBankCountry,
+    intermediaryBankStreetOne,
+    intermediaryBankCity,
+    intermediaryBankState,
+    intermediaryBankPostalCode,
+  ].every(field => field.value.trim() !== '')
+}
 
-const saveBeneficiary = () => {
-  submitting.value = true
-
-  const formData = ref({
-    typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
-    informationBank: {
-      ...props.formData.informationBank,
-      address: {
-        streetOne: bankStreetOne.value,
-        streetTwo: bankStreetTwo.value,
-        postalCode: bankPostalCode.value,
-        region: bankState.value,
-        city: bankCity.value,
-        country: bankCountry.value,
+const nextPage = () => {
+  if (validateFields()) {
+    const formData = ref({
+      ...props.formData,
+      informationIntermediaryBank: {
+        bankName: intermediaryBankName.value,
+        swiftCode: intermediaryBankSwiftCode.value,
+        address: {
+          streetOne: intermediaryBankStreetOne.value,
+          streetTwo: intermediaryBankStreetTwo.value,
+          postalCode: intermediaryBankPostalCode.value,
+          region: intermediaryBankState.value,
+          city: intermediaryBankCity.value,
+          country: intermediaryBankCountry.value,
+        },
       },
-    },
-    informationOwner: {
-      ...props.formData.informationOwner,
-    },
-  })
-
-  const beneficiaryService = BeneficiaryService.instance()
-  beneficiaryService
-    .saveBeneficiaryInternational(formData.value)
-    .then(resp => {
-      submitting.value = false
-      router.push('/withdraw/fiat/international')
-      toast.add({
-        severity: 'success',
-        detail: resp.message,
-        life: 4000,
-      })
     })
-    .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.data?.warning) {
-        e.response.data.data.warning.forEach((element: any) => {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-        })
-        return
-      }
-
-      if (e.response.data.message) {
-        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-        return
-      }
-
-      showMessage(toast, e.response.data)
+    const page = 2
+    emit('nextPage', {
+      pageIndex: page,
+      formData: formData.value,
     })
+  } else {
+    toast.add({
+      severity: 'warn',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
+    })
+  }
 }
 </script>

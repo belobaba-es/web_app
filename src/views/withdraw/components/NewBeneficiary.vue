@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+    <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6">
       <p class="text-3xl font-medium mb-4">
         {{ t('withdraw') }} / <span class="text-primary"> {{ t('fiat') }} </span>
       </p>
@@ -22,6 +22,7 @@
       <router-view
         v-slot="{ Component }"
         :formData="formObject"
+        :typeBeneficiary="typeBeneficiary"
         @prevPage="prevPage($event)"
         @nextPage="nextPage($event)"
         @complete="complete"
@@ -35,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
 import Button from 'primevue/button'
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
@@ -49,6 +50,12 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('crypto')
 const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
+
+route.meta.noCache = true
+
+const formObject = ref<any>({})
+
+const typeBeneficiary = ref()
 
 const items = ref([
   {
@@ -65,9 +72,18 @@ const items = ref([
   },
 ])
 
-route.meta.noCache = true
+if (route.path.includes('domestic')) {
+  typeBeneficiary.value = 'DOMESTIC'
+} else if (route.path.includes('international')) {
+  typeBeneficiary.value = 'INTERNATIONAL'
 
-const formObject = ref<any>({})
+  const nuevoItem = {
+    label: t('intermediaryBank'),
+    to: `/withdraw/fiat/international/new/intermediary-bank`,
+  }
+
+  items.value.splice(items.value.length - 1, 0, nuevoItem)
+}
 
 const nextPage = (event: any) => {
   for (let field in event.formData) {
