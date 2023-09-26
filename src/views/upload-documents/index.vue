@@ -13,7 +13,7 @@
       aria-label="Custom ProgressSpinner"
     />
 
-    <iframe src="http://localhost:3001/register/" id="iregister" width="800" height="600" frameborder="0"></iframe>
+    <iframe :src="url" id="iregister" width="800" height="600" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -28,6 +28,8 @@ const { locale } = useI18n()
 const { getMembers } = useAccount()
 const iFrameRegister = ref()
 const isLoadingFrame = ref(true)
+
+const url = `${import.meta.env.VITE_BASE_NOBA_REGISTER}/register`;
 
 onMounted(() => {
   setTimeout(async () => {
@@ -55,7 +57,9 @@ const sendUserDataToIframe = () => {
     '*'
   )
 }
+//send data to 
 </script>
+
 
 <style scoped lang="scss">
 .p-chip {

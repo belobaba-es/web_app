@@ -100,8 +100,11 @@ const {
   assetCode,
   shouldRefreshQuote,
 } = storeToRefs(useSwapStore())
+
 const { t } = useI18n({ useScope: 'global' })
+
 const router = useRouter()
+
 const { createQuote, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
 
 const useUser = useUserStore()
