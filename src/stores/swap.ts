@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { SwapService } from '../views/swap/services/swap'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
@@ -54,6 +54,7 @@ export const useSwapStore = defineStore('swap', () => {
   const feeTradeDesk = ref(0.0)
   const totalSpend = ref(0.0)
 
+
   const setFeeTradeDesk = () => {
     if (transactionType.value === 'buy') {
       if (assetCode.value === 'USDT') {
@@ -79,7 +80,9 @@ export const useSwapStore = defineStore('swap', () => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
   })
 
-  const createQuote = async () => {
+  const createExchange = async () => {
+    console.log('assetId', assetId.value);
+    
     if (
       (transactionType.value === 'buy' && amount.value === 0.0) ||
       (transactionType.value === 'sell' && unitCount.value === 0.0)
@@ -87,13 +90,27 @@ export const useSwapStore = defineStore('swap', () => {
       return
 
     loading.value = true
+    let sourceWalletId = ""
+    let destinationWalletId = ""
     const swapService = SwapService.instance()
+
+    if (transactionType.value === 'buy') {
+      sourceWalletId = "USD"
+      destinationWalletId = assetId.value
+    } else {
+      sourceWalletId =  assetId.value
+      destinationWalletId = "USD"
+    }
+
+    console.log('== amount',  amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value);
+    
+    const amountFormated =  amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value 
     await swapService
-      .createQuote({
-        amount: amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value,
-        amountIsUnitCount: amountIsUnitCount.value,
-        transactionType: transactionType.value,
-        assetId: assetId.value,
+      .createExchange({
+        amount: amountFormated,
+        sourceWalletId,
+        destinationWalletId,
+        description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId}`,
       })
       .then(response => {
         assetId.value = response.data.assetId
@@ -102,6 +119,7 @@ export const useSwapStore = defineStore('swap', () => {
         feeAmount.value = response.data.feeAmount
         totalAmount.value = response.data.totalAmount
         feeNoba.value = response.data.feeNoba
+
         if (transactionType.value === 'buy') {
           unitCount.value = response.data.unitCount
         }
@@ -126,6 +144,44 @@ export const useSwapStore = defineStore('swap', () => {
           life: 4000,
         })
       })
+    // await swapService
+    //   .createExchange({
+    //     amount: amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value,
+    //     amountIsUnitCount: amountIsUnitCount.value,
+    //     transactionType: transactionType.value,
+    //     assetId: assetId.value,
+    //   })
+    //   .then(response => {
+    //     assetId.value = response.data.assetId
+    //     quoteId.value = response.data.quoteId
+    //     baseAmount.value = response.data.baseAmount
+    //     feeAmount.value = response.data.feeAmount
+    //     totalAmount.value = response.data.totalAmount
+    //     feeNoba.value = response.data.feeNoba
+    //     if (transactionType.value === 'buy') {
+    //       unitCount.value = response.data.unitCount
+    //     }
+    //
+    //     amount.value = Number(response.data.amount)
+    //
+    //     setFeeTradeDesk()
+    //
+    //     loading.value = false
+    //     if (transactionType.value === 'sell') {
+    //       amount.value = response.data.baseAmount
+    //     }
+    //     startTimer()
+    //   })
+    //   .catch(error => {
+    //     loading.value = false
+    //     shouldRefreshQuote.value = true
+    //     toast.add({
+    //       severity: 'error',
+    //       summary: t('somethingWentWrong'),
+    //       detail: error.response.data.message,
+    //       life: 4000,
+    //     })
+    //   })
   }
 
   const executeQuote = async () => {
@@ -294,7 +350,7 @@ export const useSwapStore = defineStore('swap', () => {
     assetId,
     assetName,
     assetIcon,
-    createQuote,
+    createExchange,
     unitCount,
     showModalAssetSelector,
     progressBarPercent,

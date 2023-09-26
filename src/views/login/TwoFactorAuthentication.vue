@@ -45,7 +45,7 @@ const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
   if (isValid) {
     userStore.setUser(props.loginData as User)
 
-    if (props.loginData.account.status !== AccountStatus.PROCESSING) {
+    if (props.loginData.client.status !== AccountStatus.PROCESSING) {
       window.location.href = '/dashboard'
     } else {
       window.location.href = `/profile/${props.loginData.accountId}`
