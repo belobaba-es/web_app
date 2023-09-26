@@ -37,7 +37,7 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFee v-if="summary.quoteId" />
+          <ShowFee v-if="summary.exchangeId" />
 
           <div class="flex justify-content-center mt-lg-2 mt-3">
             <div class="mr-4">

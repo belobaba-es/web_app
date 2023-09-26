@@ -6,7 +6,7 @@ export interface createExchangeResponse {
 }
 
 // export interface Data {
-//   quoteId: string
+//   exchangeId: string
 //   amount: string
 //   amountIsUnitCount: boolean
 //   transactionType: string

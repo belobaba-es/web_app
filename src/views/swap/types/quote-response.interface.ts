@@ -17,7 +17,7 @@ export interface Result {
   baseAmount: number
   accountId: string
   feeAmount: number
-  quoteId: string
+  exchangeId: string
   totalAmount: number
   amount: number
   transactionType: TransactionType

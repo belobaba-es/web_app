@@ -67,7 +67,7 @@
               </td>
 
               <td class="number-of-order-container">
-                <h3 class="text-center">{{ item.quoteId }}</h3>
+                <h3 class="text-center">{{ item.exchangeId }}</h3>
               </td>
             </tr>
           </tbody>

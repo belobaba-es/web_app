@@ -34,7 +34,7 @@
               <AssetInput type="fiat" v-else />
             </div>
 
-            <ShowQuotePrice v-if="quoteId"></ShowQuotePrice>
+            <ShowQuotePrice v-if="exchangeId"></ShowQuotePrice>
 
             <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
               <div class="grid">
@@ -44,13 +44,13 @@
               </div>
             </div>
 
-            <ShowFee v-if="quoteId" />
+            <ShowFee v-if="exchangeId" />
 
             <div class="mb-2">
               <Button
                 :label="swapBtnText"
                 class="w-full py-3 text-uppercase"
-                :disabled="loading || (!quoteId && !shouldRefreshQuote)"
+                :disabled="loading || (!exchangeId && !shouldRefreshQuote)"
                 @click="swapHandler"
                 :loading="loading"
               />
@@ -97,7 +97,7 @@ const {
   progressBarSeconds,
   swapBtnText,
   loading,
-  quoteId,
+  exchangeId,
   transactionType,
   assetCode,
   shouldRefreshQuote,
