@@ -1,15 +1,8 @@
 <template>
-  <div class="container-center">&nbsp;</div>
+  <div class="container-center">
+    <img class="logo-noba" :src="logo" alt="logo" />
+  </div>
   <div class="container-main">
-    <div class="grid col-12">
-      <div class="col-4">
-        <img class="logo-noba" :src="logo" alt="logo" />
-      </div>
-      <div class="col-4">
-        <Lang />
-      </div>
-      <div class="col-4"></div>
-    </div>
     <div class="lg:bg-contain container">
       <h1 class="font-extra-light text-center">{{ t('createAccount') }}</h1>
       <h2 class="font-extra-light text-center">{{ t('subtitleCreateAccount') }}</h2>
@@ -100,6 +93,12 @@
             @click="redirectSignin()"
           />
         </form>
+      </div>
+    </div>
+
+    <div class="container-center">
+      <div>
+        <Lang />
       </div>
     </div>
   </div>
