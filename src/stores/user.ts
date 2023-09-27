@@ -67,11 +67,11 @@ export const useUserStore = defineStore('user', () => {
     console.log('----- 0 usr', user)
     if (user?.account && user.account.swapEnable) {
       console.log('true')
-      return user.account.swapEnable;
+      return user.account.swapEnable
     } else {
       console.log('false')
 
-      return false;
+      return false
     }
   }
 

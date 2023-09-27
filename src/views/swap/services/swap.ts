@@ -19,14 +19,15 @@ export class SwapService extends HttpService {
 
     return this._instance
   }
+
   async createExchange(payload: any): Promise<createExchangeResponse> {
     console.log('-createExchange', payload)
     const resp = await this.post<createExchangeResponse>(`swap/exchanges`, payload, true)
     return resp
   }
 
-  async execute(quoteId: string): Promise<any> {
-    const resp = await this.post<any>(`swap/quotes/execute`, { quoteId }, true)
+  async execute(exchangeId: string): Promise<any> {
+    const resp = await this.post<any>(`swap/exchanges/accept/${exchangeId}`, {}, true)
     return resp
   }
 
