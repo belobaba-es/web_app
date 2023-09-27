@@ -152,12 +152,14 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const executeQuote = async () => {
+    console.log('-- executeQuote amount.value', amount.value)
     if (amount.value === 0.0) return
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
       .execute(exchangeId.value)
       .then(async response => {
+        console.log('accepted exchange response', response)
         successExecuted.value = true
         clearTimer()
 
