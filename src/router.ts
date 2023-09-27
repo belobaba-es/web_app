@@ -50,6 +50,8 @@ import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 import UploadDocumentsIndex from './views/upload-documents/index.vue'
 
+import CreateUser from './views/register/CreateUser.vue'
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -62,6 +64,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/recovery-two-factor-auth',
     component: RecoveryTwoFactorAuth,
+  },
+  {
+    path: '/create-user',
+    component: CreateUser,
   },
 
   {
@@ -328,6 +334,7 @@ router.beforeEach((to, from, next) => {
   console.log(to.path)
   if (
     to.path !== '/' &&
+    to.path !== '/create-user' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
     !userStore.getUser

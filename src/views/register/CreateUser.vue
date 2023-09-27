@@ -1,39 +1,73 @@
 <template>
-  <div class="container-center">
-    <img class="logo-noba" :src="logo" alt="logo" />
-  </div>
+  <div class="container-center">&nbsp;</div>
   <div class="container-main">
+    <div class="grid col-12">
+      <div class="col-4">
+        <img class="logo-noba" :src="logo" alt="logo" />
+      </div>
+      <div class="col-4">
+        <Lang />
+      </div>
+      <div class="col-4"></div>
+    </div>
     <div class="lg:bg-contain container">
-      <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
-      <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
+      <h1 class="font-extra-light text-center">{{ t('createAccount') }}</h1>
+      <h2 class="font-extra-light text-center">{{ t('subtitleCreateAccount') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" v-model="form.user" required :placeholder="t('emailPlaceholder')" />
+              <InputText type="text" v-model="form.email" required :placeholder="t('emailPlaceholder')" />
             </div>
           </div>
           <div class="field">
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
-              <Password v-model="form.pass" toggleMask required :feedback="false" placeholder="**********" />
+              <Password v-model="form.password" toggleMask required :feedback="false" placeholder="**********" />
             </div>
             <div>
-              <span class="help-text">{{ t('passwordHelpText') }}</span>
+              <span class="help-text">{{ t('registerHelpTextPassword') }}</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>{{ t('passwordConfirmLabel') }}</label>
+            <div class="p-inputgroup">
+              <Password
+                v-model="form.passwordConfirmation"
+                toggleMask
+                required
+                :feedback="false"
+                placeholder="**********"
+              />
+            </div>
+            <div>
+              <span class="help-text">{{ t('registerHelpTextPassword') }}</span>
             </div>
           </div>
           <div class="flex justify-content-between align-items-center">
             <div class="field-checkbox mt-2">
-              <Checkbox inputId="binary" v-model="form.remember" :binary="true" />
+              <Checkbox inputId="binary" v-model="form.terms" :binary="true" />
               <label for="binary">
-                {{ t('rememberMe') }}
+                I accept the Patriot Act
               </label>
             </div>
-            <div class="text-right">
+
+            <!-- <div class="text-right">
               <RouterLink to="/forgot-password">
                 {{ t('recoveryPassword') }}
               </RouterLink>
+            </div> -->
+          </div>
+
+          <div class="flex justify-content-between align-items-center">
+            <div class="field-checkbox mt-2">
+              <Checkbox inputId="binary" v-model="form.terms" :binary="true" />
+              <label for="binary">
+                <span>
+                  I accept the <strong>Terms and Conditions</strong> and the <strong>Privacy Policy</strong>
+                </span>
+              </label>
             </div>
           </div>
 
@@ -68,12 +102,6 @@
         </form>
       </div>
     </div>
-
-    <div class="container-center">
-      <div>
-        <Lang />
-      </div>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -84,7 +112,7 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
-import { LoginService } from './services/login'
+import { LoginService } from '../login/services/login'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
@@ -96,14 +124,16 @@ const { t } = useI18n({ useScope: 'global' })
 const didLoginEmit = defineEmits(['didLogin'])
 
 const loginService = LoginService.instance()
+
 const form = reactive({
-  user: '',
-  pass: '',
-  remember: false,
+  email: '',
+  password: '',
+  passwordConfirmation: '',
+  terms: false,
+  patriotic: false,
 })
 
 const router = useRouter()
-
 
 const redirectSignin = () => {
   router.push('/create-user')
@@ -116,7 +146,7 @@ const redirectPage = () => {
 const handleSubmit = () => {
   submitting.value = true
   loginService
-    .login(form.user.toLowerCase(), form.pass)
+    .login(form.email.toLowerCase(), form.password)
     .then(data => {
       const { data: userPayload } = data
 
