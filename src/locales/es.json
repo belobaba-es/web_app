@@ -323,5 +323,9 @@
   "createAccount": "Crear cuenta",
   "subtitleCreateAccount": "Bienvenido ¡Por favor ingrese sus datos!",
   "passwordConfirmLabel": "Repetir contraseña",
-  "registerHelpTextPassword": "Su contraseña debe tener minimo: 1 caracter en mayuscula, 1 caracter especial y una longitud minima de 8 caracteres."
+  "registerHelpTextPassword": "Su contraseña debe tener minimo: 1 caracter en mayuscula, 1 caracter especial y una longitud minima de 8 caracteres.",
+  "iAcceptConditions": "Acepto los",
+  "termsAndConditions": "Términos y condiciones",
+  "andThe": "y la",
+  "privacyPolicy": "Política de privacidad"
 }

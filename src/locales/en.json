@@ -330,5 +330,9 @@
   "createAccount": "Create Account",
   "subtitleCreateAccount": "Welcome, Please enter your information!",
   "passwordConfirmLabel": "Repeat password",
-  "registerHelpTextPassword": "Your password must have at least: 1 capital letter, 1 special character, and a minimum of 8 characters in length."
+  "registerHelpTextPassword": "Your password must have at least: 1 capital letter, 1 special character, and a minimum of 8 characters in length.",
+  "iAcceptConditions": "I accept the", 
+  "termsAndConditions": "Terms and Conditions",
+  "andThe": "and the",
+  "privacyPolicy": "Privacy Policy"
 }
