@@ -327,5 +327,9 @@
   "iAcceptConditions": "Acepto los",
   "termsAndConditions": "Términos y condiciones",
   "andThe": "y la",
-  "privacyPolicy": "Política de privacidad"
+  "privacyPolicy": "Política de privacidad",
+  "accept": "Aceptar",
+  "deny": "Rechazar",
+  "iAcceptPatriot": "Acepto la",
+  "patrioticLaw": "Ley Patriótica (USA PATRIOT ACT)"
 }
