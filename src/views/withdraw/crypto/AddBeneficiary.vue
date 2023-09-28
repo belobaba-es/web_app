@@ -28,6 +28,66 @@
             <InputText type="text" v-model="form.label" />
           </div>
         </div>
+        
+        <!--Caso el beneficiario es una institucion-->
+        <p class="mt-5 mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
+        <Divider class="mt-0"></Divider>
+
+        <div class="grid mt-5">
+          <div class="field col-12">
+            <label>{{ t('countryLabel') }}</label>
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="form.institutionAddress.country"
+                :options="bankCountries"
+                optionLabel="name"
+                option-value="country_code"
+                :loading="loadingCountiesField"
+                :placeholder="t('countryPlaceholder')"
+                :disabled="countriesInputIsEmpty"
+                class="w-full"
+                @change="onBankChangeCountryHandler"
+                required
+              />
+            </div>
+          </div>
+          <div class="field col-4">
+            <label>{{ t('stateLabel') }}</label>
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="form.institutionAddress.country"
+                :options="bankStates"
+                optionLabel="name"
+                option-value="name"
+                :loading="bankLoadingStatesField"
+                :placeholder="t('statePlaceHolder')"
+                :disabled="bankStatesInputIsEmpty"
+                class="w-full"
+                @change="onBankChangeStateHandler"
+              />
+            </div>
+          </div>
+          <div class="field col-4">
+            <label>{{ t('cityLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.institutionAddress.city" class="w-full" required />
+            </div>
+          </div>
+          <div class="field col-4">
+            <label>{{ t('postalCodeLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText type="text" v-model="form.institutionAddress.postalCode" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>{{ t('streetAddress') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" required v-model="form.institutionAddress.streetOne" />
+          </div>
+        </div>
+
         <div class="field flex justify-content-end">
           <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" />
         </div>
@@ -36,10 +96,13 @@
   </section>
 </template>
 <script lang="ts" setup>
+
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import Divider from 'primevue/divider'
+import { useWorld } from '../../../composables/useWorld'
 import { useI18n } from 'vue-i18n'
 import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { useWithdraw } from '../composables/useWithdraw'
@@ -51,15 +114,41 @@ const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 const { toBack } = useWithdraw([])
 
+const {
+  countries: bankCountries,
+  fetchCountries,
+  loadingCountiesField,
+  countriesInputIsEmpty,
+  statesInputIsEmpty: bankStatesInputIsEmpty,
+  loadingStatesField: bankLoadingStatesField,
+  states: bankStates,
+  onChangeCountryHandler: onBankChangeCountryHandler,
+  onChangeStateHandler: onBankChangeStateHandler,
+} = useWorld()
+
 const form = ref({
   walletAddress: '',
   label: '',
   assetId: '',
+  institutionAddress: {
+    streetOne: '',
+    postalCode: '',
+    city: '',
+    region: '',
+    country: ''
+  }
 })
+
 
 const selectAsset = (asset: any) => {
   form.value.assetId = asset.assetId
 }
+
+onMounted(() => {
+  fetchCountries(true).then(() => {
+    bankCountries.value = bankCountries.value
+  })
+})
 
 const saveBeneficiary = () => {
   if (form.value.assetId.length === 0 || form.value.label.length === 0 || form.value.walletAddress.length === 0) {
@@ -72,26 +161,23 @@ const saveBeneficiary = () => {
   }
 
   const beneficiaryService = BeneficiaryService.instance()
-  beneficiaryService
-    .saveBeneficiaryAssets(form.value)
-    .then(resp => {
-      router.push('/withdraw/crypto/other')
-      toast.add({
-        severity: 'success',
-        detail: resp.message,
-        life: 4000,
-      })
+  beneficiaryService.saveBeneficiaryAssets(form.value).then(resp => {
+    router.push('/withdraw/crypto/other')
+    toast.add({
+      severity: 'success',
+      detail: resp.message,
+      life: 4000,
     })
-    .catch(error => {
+  }).catch(error => {
       if (error.response.data.message) {
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.response.data.message,
-          life: 4000,
-        })
-        return
+          toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: error.response.data.message,
+              life: 4000,
+          })
+          return
       }
-    })
+  })
 }
 </script>
