@@ -124,7 +124,7 @@
           <Button
             type="button"
             :label="t('alreadyAccount')"
-            class="font-light mt-lg-3 with-buttons p-button-outlined border-300"
+            class="font-light mt-3 with-buttons p-button-outlined border-300"
             @click="redirectLogin()"
           />
         </form>
@@ -287,6 +287,10 @@ const handleSubmit = () => {
         detail: data.message,
         life: 5000,
       })
+
+      localStorage.setItem('noba@user-email', form.email.toLowerCase())
+
+      router.push('/confirm-email')
     })
     .catch(e => {
       submitting.value = false

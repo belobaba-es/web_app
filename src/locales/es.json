@@ -337,5 +337,11 @@
   "acceptPatriot": "Por favor acepte la ley patriótica",
   "passwordLength": "La contraseña debe tener al menos 8 caracteres",
   "passwordOneCapitalLetter": "La contraseña debe tener al menos una letra mayúscula",
-  "passwordOneSpecialCharacter": "La contraseña debe tener al menos un caracter especial"
+  "passwordOneSpecialCharacter": "La contraseña debe tener al menos un caracter especial",
+  "confirmEmail": "Confirmar correo electrónico",
+  "confirmEmailCodeText":"Por favor ingrese el código de verificación de 6 digitos que le enviamos a su correo electrónico",
+  "confirmEmailCodePlaceholder":"Por favor ingrese el código de verificación de 6 digitos",
+  "codeEmailLabel": "Código de verificación",
+  "resendCode": "Reenviar código",
+  "confirmTextEmailCode": "Confirmar correo electrónico"
 }

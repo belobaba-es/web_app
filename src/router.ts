@@ -51,6 +51,7 @@ import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.
 import UploadDocumentsIndex from './views/upload-documents/index.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
+import ConfirmEmail from './views/register/ConfirmEmail.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -68,6 +69,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/create-user',
     component: CreateUser,
+  },
+  {
+    path: '/confirm-email',
+    component: ConfirmEmail,
   },
 
   {
@@ -335,6 +340,7 @@ router.beforeEach((to, from, next) => {
   if (
     to.path !== '/' &&
     to.path !== '/create-user' &&
+    to.path !== '/confirm-email' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
     !userStore.getUser

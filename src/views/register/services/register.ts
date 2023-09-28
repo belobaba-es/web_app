@@ -22,10 +22,16 @@ export class RegisterService extends HttpService {
   }
   async register(email: string, password: string): Promise<RegisterResponse> {
     const resp = await this.post<RegisterResponse>(`user/signin/`, { email, password }, false)
-
-    console.log(resp.message)
     return resp
   }
 
+  async resendEmailCode(email: string, typeValidation: string): Promise<RegisterResponse> {
+    const resp = await this.post<RegisterResponse>(`user/new-validation-code/`, { email, typeValidation }, false)
+    return resp
+  }
 
+  async confirmCode(code: string, email: string): Promise<RegisterResponse> {
+    const resp = await this.post<RegisterResponse>(`user/verify-email-code/`, { code, email }, false)
+    return resp
+  }
 }

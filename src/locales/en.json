@@ -344,5 +344,11 @@
   "acceptPatriot": "You must accept the Patriot Act",
   "passwordLength": "Password must be at least 8 characters long",
   "passwordOneCapitalLetter": "Password must have at least one capital letter",
-  "passwordOneSpecialCharacter": "Password must have at least one special character"
+  "passwordOneSpecialCharacter": "Password must have at least one special character",
+  "confirmEmail": "Confirm email",
+  "confirmEmailCodeText": "Enter the 6 digits code we sent to your email",
+  "confirmEmailCodePlaceholder":"Enter the 6 digits code",
+  "codeEmailLabel": "Code",
+  "resendCode": "Resend code",
+  "confirmTextEmailCode": "Confirm email"
 }
