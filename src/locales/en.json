@@ -338,5 +338,11 @@
   "accept": "Accept",
   "deny": "Deny",
   "iAcceptPatriot": "I accept the",
-  "patrioticLaw": "Patriot Act"
+  "patrioticLaw": "Patriot Act",
+  "passwordsDontMatch": "Passwords don't match",
+  "acceptTermsAndConditions": "You must accept the terms and conditions",
+  "acceptPatriot": "You must accept the Patriot Act",
+  "passwordLength": "Password must be at least 8 characters long",
+  "passwordOneCapitalLetter": "Password must have at least one capital letter",
+  "passwordOneSpecialCharacter": "Password must have at least one special character"
 }

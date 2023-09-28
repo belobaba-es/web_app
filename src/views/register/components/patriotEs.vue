@@ -1,6 +1,6 @@
 <template>
-  <div class="contenedor">
-    <img width="624" height="109" :src="usPatriotImg" alt="" />
+  <div class="container-patriot">
+    <img width="624" height="109" :src="patriotImg" alt="" />
     <p>
       La primera prioridad del Departamento de Justicia es prevenir futuros ataques terroristas. Desde su
       aprobaci&oacute;n tras los ataques del 11 de septiembre de 2001, la Ley Patriota ha desempe&ntilde;ado un papel
@@ -153,16 +153,17 @@
       sustancialmente nuestra capacidad para prevenir, investigar y enjuiciar actos de terrorismo.
 
       <br />
+      <br />
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import usPatriotImg from '../../../assets/img/usPatriot.png'
+import patriotImg from '../../../assets/img/usPatriot.png'
 </script>
 
 <styles lang="scss">
-.contenedor {
+.container-patriot {
   background-color: #fff;
   display: flex;
   flex-direction: column;

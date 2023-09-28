@@ -331,5 +331,11 @@
   "accept": "Aceptar",
   "deny": "Rechazar",
   "iAcceptPatriot": "Acepto la",
-  "patrioticLaw": "Ley Patriótica (USA PATRIOT ACT)"
+  "patrioticLaw": "Ley Patriótica (USA PATRIOT ACT)", 
+  "passwordsDontMatch": "Las contraseñas no coinciden", 
+  "acceptTermsAndConditions": "Por favor acepte los términos y condiciones",
+  "acceptPatriot": "Por favor acepte la ley patriótica",
+  "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+  "passwordOneCapitalLetter": "La contraseña debe tener al menos una letra mayúscula",
+  "passwordOneSpecialCharacter": "La contraseña debe tener al menos un caracter especial"
 }

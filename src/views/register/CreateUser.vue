@@ -77,7 +77,8 @@
               <p class="text-4xl font-medium">Patriot Act</p>
             </template>
 
-            <usPatriot />
+            <patriotEn v-if="lang === 'en'" />
+            <patriotEs v-if="lang === 'es'" />
 
             <template #footer>
               <div class="flex justify-content-between mt-5">
@@ -147,13 +148,13 @@ import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
-import { LoginService } from '../login/services/login'
+import { RegisterService } from './services/register'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
 
-//import a usPatriot component
-import usPatriot from './components/usPatriotEs.vue'
+import patriotEs from './components/patriotEs.vue'
+import patriotEn from './components/patriotEn.vue'
 
 const submitting = ref(false)
 const visible = ref(false)
@@ -162,7 +163,7 @@ const { t } = useI18n({ useScope: 'global' })
 
 const didLoginEmit = defineEmits(['didLogin'])
 
-const loginService = LoginService.instance()
+const registerService = RegisterService.instance()
 
 const form = reactive({
   email: '',
@@ -213,15 +214,79 @@ const getTheLinkToPoliticsAndPrivacy = () => {
 }
 
 const handleSubmit = () => {
-  submitting.value = true
-  loginService
-    .login(form.email.toLowerCase(), form.password)
-    .then(data => {
-      const { data: userPayload } = data
+  if (form.password.length < 8) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('passwordLength'),
+      life: 4000,
+    })
+    return
+  }
 
+  if (!/[A-Z]/.test(form.password)) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('passwordOneCapitalLetter'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password)) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('passwordOneSpecialCharacter'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (form.password !== form.passwordConfirmation) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('passwordsDontMatch'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (form.terms === false) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('acceptTermsAndConditions'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (form.patriot === false) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('acceptPatriot'),
+      life: 4000,
+    })
+    return
+  }
+
+  submitting.value = true
+
+  registerService
+    .register(form.email.toLowerCase(), form.password)
+    .then(data => {
       submitting.value = false
 
-      didLoginEmit('didLogin', userPayload)
+      toast.add({
+        severity: 'success',
+        summary: t('successfulOperation'),
+        detail: data.message,
+        life: 5000,
+      })
     })
     .catch(e => {
       submitting.value = false
