@@ -67,7 +67,7 @@ const menuMobile = [
       { label: t('transactionHistory'), class: 'icon-history text-center', icon: 'pi', to: '/transaction-history' },
     ],
   },
-] 
+]
 
 const mobileMenuActive = ref(false)
 

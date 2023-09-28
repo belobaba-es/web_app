@@ -29,7 +29,7 @@ const { getMembers } = useAccount()
 const iFrameRegister = ref()
 const isLoadingFrame = ref(true)
 
-const url = `${import.meta.env.VITE_BASE_NOBA_REGISTER}/register`;
+const url = `${import.meta.env.VITE_BASE_NOBA_REGISTER}/register`
 
 onMounted(() => {
   setTimeout(async () => {
@@ -57,9 +57,8 @@ const sendUserDataToIframe = () => {
     '*'
   )
 }
-//send data to 
+//send data to
 </script>
-
 
 <style scoped lang="scss">
 .p-chip {

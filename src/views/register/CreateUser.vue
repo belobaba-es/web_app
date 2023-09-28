@@ -61,7 +61,9 @@
           <div class="flex justify-content-between align-items-center">
             <div class="field-checkbox mt-2">
               <Checkbox inputId="patriot" v-model="form.patriot" :binary="true" />
-              <label for="patriot"> {{t('iAcceptPatriot')}} <a href="#" @click="visible = true">{{ t('patrioticLaw') }}</a></label>
+              <label for="patriot">
+                {{ t('iAcceptPatriot') }} <a href="#" @click="visible = true">{{ t('patrioticLaw') }}</a></label
+              >
             </div>
           </div>
 
@@ -87,7 +89,8 @@
                       form.patriot = false
                       visible = false
                     }
-                  "                  text
+                  "
+                  text
                   class="font-light p-button-outlined border-300"
                 />
                 <Button
