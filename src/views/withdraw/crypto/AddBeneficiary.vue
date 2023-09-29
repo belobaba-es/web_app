@@ -9,6 +9,7 @@
         <span class="text-xl"> {{ t('otherPlatformCrypto') }}</span>
       </div>
     </div>
+
     <h5 class="text-2xl font-medium mt-2 p-3">{{ t('addNewBeneficiary') }}</h5>
 
     <div class="formgrid grid mt-4 p-3">
@@ -29,67 +30,80 @@
           </div>
         </div>
         
+      
         <!--Caso el beneficiario es una institucion-->
-        <p class="mt-5 mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
-        <Divider class="mt-0"></Divider>
+        <div v-if="showInstitutionSection">
 
-        <div class="grid mt-5">
-          <div class="field col-12">
-            <label>{{ t('countryLabel') }}</label>
-            <div class="p-inputgroup">
-              <Dropdown
-                v-model="form.institutionAddress.country"
-                :options="bankCountries"
-                optionLabel="name"
-                option-value="country_code"
-                :loading="loadingCountiesField"
-                :placeholder="t('countryPlaceholder')"
-                :disabled="countriesInputIsEmpty"
-                class="w-full"
-                @change="onBankChangeCountryHandler"
-                required
-              />
+          <p class="mt-5 mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
+          <Divider class="mt-0"></Divider>
+
+          <div class="grid mt-5">
+            <div class="field col-12">
+              <label>{{ t('countryLabel') }}</label>
+              <div class="p-inputgroup">
+                <Dropdown
+                  v-model="form.institutionAddress.country"
+                  :options="countries"
+                  optionLabel="name"
+                  option-value="country_code"
+                  :loading="loadingCountiesField"
+                  :placeholder="t('countryPlaceholder')"
+                  :disabled="countriesInputIsEmpty"
+                  class="w-full"
+                  @change="onChangeCountryHandler"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field col-4">
+              <label>{{ t('stateLabel') }}</label>
+              <div class="p-inputgroup">
+                <Dropdown
+                  v-model="form.institutionAddress.country"
+                  :options="states"
+                  optionLabel="name"
+                  option-value="state_code"
+                  :loading="loadingStatesField"
+                  :placeholder="t('statePlaceHolder')"
+                  :disabled="statesInputIsEmpty"
+                  class="w-full"
+                  @change="onChangeStateHandler"
+                />
+              </div>
+            </div>
+
+            <div class="field col-4">
+              <label>{{ t('cityLabel') }}</label>
+              <div class="p-inputgroup">
+                <InputText type="text" v-model="form.institutionAddress.city" class="w-full" required />
+              </div>
+            </div>
+
+            <div class="field col-4">
+              <label>{{ t('postalCodeLabel') }}</label>
+              <div class="p-inputgroup">
+                <InputText type="text" v-model="form.institutionAddress.postalCode" />
+              </div>
             </div>
           </div>
-          <div class="field col-4">
-            <label>{{ t('stateLabel') }}</label>
+
+          <div class="field">
+            <label>{{ t('streetAddress') }}</label>
             <div class="p-inputgroup">
-              <Dropdown
-                v-model="form.institutionAddress.country"
-                :options="bankStates"
-                optionLabel="name"
-                option-value="name"
-                :loading="bankLoadingStatesField"
-                :placeholder="t('statePlaceHolder')"
-                :disabled="bankStatesInputIsEmpty"
-                class="w-full"
-                @change="onBankChangeStateHandler"
-              />
-            </div>
-          </div>
-          <div class="field col-4">
-            <label>{{ t('cityLabel') }}</label>
-            <div class="p-inputgroup">
-              <InputText type="text" v-model="form.institutionAddress.city" class="w-full" required />
-            </div>
-          </div>
-          <div class="field col-4">
-            <label>{{ t('postalCodeLabel') }}</label>
-            <div class="p-inputgroup">
-              <InputText type="text" v-model="form.institutionAddress.postalCode" />
+              <InputText type="text" required v-model="form.institutionAddress.streetOne" />
             </div>
           </div>
         </div>
-
-        <div class="field">
-          <label>{{ t('streetAddress') }}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" required v-model="form.institutionAddress.streetOne" />
-          </div>
-        </div>
-
+       <!--###########################################-->
+      
         <div class="field flex justify-content-end">
-          <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" />
+          <div class="col-4">
+            <Button :label="t('Add institution')" class="px-5" @click="toggleInstitutionSection" v-if="!showInstitutionSection"/>
+          </div>
+
+        
+            <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" />
         </div>
       </div>
     </div>
@@ -115,10 +129,19 @@ const router = useRouter()
 const { toBack } = useWithdraw([])
 
 const {
-  countries: bankCountries,
+  countries,
   fetchCountries,
   loadingCountiesField,
   countriesInputIsEmpty,
+  statesInputIsEmpty,
+  loadingStatesField,
+  states,
+  onChangeCountryHandler,
+  onChangeStateHandler,
+} = useWorld()
+
+const {
+  countries: bankCountries,
   statesInputIsEmpty: bankStatesInputIsEmpty,
   loadingStatesField: bankLoadingStatesField,
   states: bankStates,
@@ -136,19 +159,29 @@ const form = ref({
     city: '',
     region: '',
     country: ''
+  },
+  OriginWallet: {
+    INSTITUTION : 'INSTITUTION',
+    OTHER : 'OTHER',
+    UNKNOWN : 'UNKNOWN',
   }
 })
 
+onMounted(() => {
+  fetchCountries(true).then(() => {
+    bankCountries.value = countries.value
+  })
+})
 
 const selectAsset = (asset: any) => {
   form.value.assetId = asset.assetId
 }
 
-onMounted(() => {
-  fetchCountries(true).then(() => {
-    bankCountries.value = bankCountries.value
-  })
-})
+const showInstitutionSection = ref(false);
+
+const toggleInstitutionSection = () => {
+  showInstitutionSection.value = !showInstitutionSection.value;
+}
 
 const saveBeneficiary = () => {
   if (form.value.assetId.length === 0 || form.value.label.length === 0 || form.value.walletAddress.length === 0) {
