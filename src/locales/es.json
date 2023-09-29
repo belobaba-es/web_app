@@ -343,5 +343,7 @@
   "confirmEmailCodePlaceholder":"Por favor ingrese el código de verificación de 6 digitos",
   "codeEmailLabel": "Código de verificación",
   "resendCode": "Reenviar código",
-  "confirmTextEmailCode": "Confirmar correo electrónico"
+  "confirmTextEmailCode": "Confirmar correo electrónico",
+  "relationshipConsumer": "Relación con el usuario",
+  "typeBeneficiary": "Tipo de Beneficiario"
 }

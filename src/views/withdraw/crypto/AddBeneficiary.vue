@@ -11,36 +11,43 @@
     </div>
 
     <h5 class="text-2xl font-medium mt-2 p-3">{{ t('addNewBeneficiary') }}</h5>
-    
-    <div class="grid">
-      
-    </div>
-    
+  
     <div class="formgrid grid mt-4 p-3">
       
-      <div class="field col-4">
-        <label>{{ t('countryLabel') }}</label>
-        <div class="p-inputgroup">
-          <Dropdown
-            v-model="form.informationOwner.country"
-            :options="countries"
-            optionLabel="name"
-            option-value="country_code"
-            :loading="loadingCountiesField"
-            :placeholder="t('countryPlaceholder')"
-            :disabled="countriesInputIsEmpty"
-            class="w-full"
-            @change="onChangeCountryHandler"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="field col-4">
-        <label>Nombre</label>
+      <div class="field col-8">
+        <label>{{ t('beneficiaryName') }}</label>
         <!--<label>{{ t('walletAddress') }}</label>-->
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.informationOwner.name" />
+        </div>
+      </div>
+      
+      <div class="col-8">
+        <div class="field">
+          <label>{{ t('relationshipConsumer') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="form.relationshipConsumer" />
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-8">
+        <div class="field">
+          <label>{{ t('countryLabel') }}</label>
+          <div class="p-inputgroup">
+            <Dropdown
+              v-model="form.informationOwner.country"
+              :options="countries"
+              optionLabel="name"
+              option-value="country_code"
+              :loading="loadingCountiesField"
+              :placeholder="t('countryPlaceholder')"
+              :disabled="countriesInputIsEmpty"
+              class="w-full"
+              @change="onChangeCountryHandler"
+              required
+            />
+          </div>
         </div>
       </div>
 
@@ -48,18 +55,19 @@
         <div class="field">
           <SelectedAssets @selectedAsset="selectAsset" />
         </div>
+
         <div class="field">
           <label>{{ t('walletAddress') }}</label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="form.walletAddress" />
           </div>
         </div>
-
+        
         <div class="field">
-          <label>{{ t('label') }}</label>
+          <label>{{ t('typeBeneficiary') }}</label>
             <div class="p-inputgroup">
               <Dropdown
-                v-model="selectedOriginWallet"
+                v-model="form.label"
                 :options="originWalletOptions"
                 optionLabel="label"
                 option-value="value"
@@ -69,10 +77,12 @@
             </div>
           </div>
         
-      
+        <!--#######################################-->  
         <!--Caso el beneficiario es una institucion-->
         <div v-if="showInstitutionSection">
-          <div class="grid mt-5">
+          <p class="mt-4 mb-0 text-uppercase">{{ t('beneficiaryAddress') }}</p>
+          <Divider class="mt-0"></Divider>
+          <div class="grid mt-3">
             <div class="field col-12">
               <label>{{ t('countryLabel') }}</label>
               <div class="p-inputgroup">
@@ -184,6 +194,7 @@ const form = ref({
   walletAddress: '',
   label: '',
   assetId: '',
+  relationshipConsumer: '',
   informationOwner: {
     name: '',
     country: '',
@@ -195,11 +206,6 @@ const form = ref({
     region: '',
     country: ''
   },
-  OriginWallet: {
-    INSTITUTION : 'INSTITUTION',
-    OTHER : 'OTHER',
-    UNKNOWN : 'UNKNOWN',
-  }
 })
 
 onMounted(() => {
@@ -235,6 +241,7 @@ const toggleInstitutionSection = () => {
 }
 
 const saveBeneficiary = () => {
+  console.log(form.value);
   if (form.value.assetId.length === 0 || form.value.label.length === 0 || form.value.walletAddress.length === 0) {
     toast.add({
       severity: 'info',
@@ -242,32 +249,6 @@ const saveBeneficiary = () => {
       life: 4000,
     })
     return
-  }
-
-  const formData = ref()
-
-  if(selectedOriginWallet.value === 'INSTITUTION'){
-    form.value = {
-      walletAddress: '',
-        label: '',
-        assetId: '',
-        informationOwner: {
-          name: '',
-          country: '',
-        },
-        institutionAddress: {
-          streetOne: '',
-          postalCode: '',
-          city: '',
-          region: '',
-          country: ''
-        },
-        OriginWallet: {
-          INSTITUTION : 'INSTITUTION',
-          OTHER : 'OTHER',
-          UNKNOWN : 'UNKNOWN',
-        }
-    }
   }
 
   const beneficiaryService = BeneficiaryService.instance()

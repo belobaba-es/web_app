@@ -350,5 +350,7 @@
   "confirmEmailCodePlaceholder":"Enter the 6 digits code",
   "codeEmailLabel": "Code",
   "resendCode": "Resend code",
-  "confirmTextEmailCode": "Confirm email"
+  "confirmTextEmailCode": "Confirm email",
+  "relationshipConsumer": "Relationship consumer",
+  "typeBeneficiary": "Type of beneficiary"
 }
