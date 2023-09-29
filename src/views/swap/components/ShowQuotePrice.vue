@@ -18,6 +18,11 @@ onMounted(() => {
     (transactionSummary.value.unitCount === 0 ? unitCount.value : transactionSummary.value.unitCount)
 
   quoteText.value = `1 ${assetName.value}  = ${calculateBalance('USD', quotePrice, 0)} USD`
+
+  console.log('--unitCount.value', unitCount.value)
+  console.log('--totalAmount.value', totalAmount.value)
+  console.log('-- transactionSummary.value', transactionSummary.value)
+  console.log('-- quotePrice', quotePrice)
 })
 </script>
 

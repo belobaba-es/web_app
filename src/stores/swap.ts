@@ -28,7 +28,7 @@ export const useSwapStore = defineStore('swap', () => {
   const exchangeId = ref()
   const showModalAssetSelector = ref(false)
   const progressBarPercent = ref(0)
-  const progressBarSeconds = ref(10)
+  const progressBarSeconds = ref(60)
   const loading = ref(false)
   let timer: number
   const shouldRefreshQuote = ref(false)
@@ -57,24 +57,36 @@ export const useSwapStore = defineStore('swap', () => {
   const exchange = ref<ExchangeData>()
 
   const setFeeTradeDesk = () => {
-    if (transactionType.value === 'buy') {
-      if (assetCode.value === 'USDT') {
-        feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
-      } else {
-        feeTradeDesk.value = Number((totalAmount.value - amount.value).toFixed(2))
-      }
+    console.log(' transactionType.value', transactionType.value)
+    console.log('+setFeeTradeDesk')
+    // if (transactionType.value === 'buy') {
+    //   if (assetCode.value === 'USDT') {
+    //     feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
+    //   } else {
+    //     feeTradeDesk.value = Number((totalAmount.value - amount.value).toFixed(2))
+    //   }
+    //
+    //   totalSpend.value = Number((totalAmount.value + feeNoba.value).toFixed(2))
+    //   return
+    // }
+    //
+    // if (assetCode.value === 'USDT') {
+    //   feeTradeDesk.value = Number((amount.value - totalAmount.value).toFixed(2))
+    // } else {
+    //   feeTradeDesk.value = Number((baseAmount.value - totalAmount.value).toFixed(2))
+    // }
 
-      totalSpend.value = Number((totalAmount.value + feeNoba.value).toFixed(2))
-      return
-    }
+    console.log(
+      '== baseAmount.value, unitCount.value, feeNoba.value, totalAmount.value',
+      baseAmount.value,
+      unitCount.value,
+      feeNoba.value,
+      totalAmount.value
+    )
+    feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
 
-    if (assetCode.value === 'USDT') {
-      feeTradeDesk.value = Number((amount.value - totalAmount.value).toFixed(2))
-    } else {
-      feeTradeDesk.value = Number((baseAmount.value - totalAmount.value).toFixed(2))
-    }
-
-    totalSpend.value = Number((totalAmount.value - feeNoba.value).toFixed(2))
+    // todo, cual es la diferencia entre totalAmount y totalSpend????
+    totalSpend.value = totalAmount.value
   }
 
   const swapBtnText = computed(() => {
@@ -116,18 +128,25 @@ export const useSwapStore = defineStore('swap', () => {
 
         feeNoba.value = exchange.value?.feeNoba
 
-        if (transactionType.value === 'buy') {
-          // unitCount.value = response.data.unitCount
-          unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
-          feeAmount.value = (exchange.value?.destination_details.amount_to_credit * exchange.value?.feeNoba) / 100
-          baseAmount.value = exchange.value?.destination_details.amount_to_credit
-          totalAmount.value = exchange.value?.destination_details.amount_to_credit + feeAmount.value
-        } else {
-          unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
-          feeAmount.value = (exchange.value?.source_details.amount_to_debit * exchange.value?.feeNoba) / 100
-          baseAmount.value = exchange.value?.source_details.amount_to_debit
-          totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
-        }
+        // if (transactionType.value === 'buy') {
+        //   // unitCount.value = response.data.unitCount
+        //   unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
+        //   feeAmount.value = (exchange.value?.destination_details.amount_to_credit * exchange.value?.feeNoba) / 100
+        //
+        //   totalAmount.value = exchange.value?.destination_details.amount_to_credit + feeAmount.value
+        // } else {
+        //   unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
+        //   baseAmount.value = exchange.value?.source_details.amount_to_debit
+        //
+        //
+        //   feeAmount.value = (exchange.value?.source_details.amount_to_debit * exchange.value?.feeNoba) / 100
+        //   totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
+        // }
+
+        unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
+        baseAmount.value = exchange.value?.source_details.amount_to_debit
+        feeAmount.value = (exchange.value?.source_details.amount_to_debit * exchange.value?.feeNoba) / 100
+        totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
 
         exchangeId.value = exchange.value?.exchangeId
 
@@ -137,7 +156,8 @@ export const useSwapStore = defineStore('swap', () => {
 
         loading.value = false
 
-        startTimer()
+        // todo uncomment
+        // startTimer()
       })
       .catch(error => {
         loading.value = false
@@ -217,7 +237,7 @@ export const useSwapStore = defineStore('swap', () => {
   const clearTimer = () => {
     clearInterval(timer)
     timer = 0
-    progressBarSeconds.value = 10
+    progressBarSeconds.value = 60
     progressBarPercent.value = 0
   }
 
