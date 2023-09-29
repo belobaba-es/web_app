@@ -179,7 +179,7 @@ const originWalletOptions = [
   { label: 'UNKNOWN', value: 'UNKNOWN' },
 ];
 
-const selectedOriginWallet = ref('OTHER');
+const selectedOriginWallet = ref('');
 
 const toggleInstitutionFields = () => {
   if (selectedOriginWallet.value === 'INSTITUTION') {
