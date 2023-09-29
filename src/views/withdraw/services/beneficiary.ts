@@ -49,6 +49,6 @@ export class BeneficiaryService extends HttpService {
   }
 
   async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {
-    return await this.post<any>(`beneficiary/asset/`, payload)
+    return await this.post<any>(`beneficiary/asset`, payload)
   }
 }

@@ -16,18 +16,23 @@
       
       <div class="field col-8">
         <label>{{ t('beneficiaryName') }}</label>
-        <!--<label>{{ t('walletAddress') }}</label>-->
         <div class="p-inputgroup">
           <InputText type="text" v-model="form.informationOwner.name" />
         </div>
       </div>
-      
+     
       <div class="col-8">
         <div class="field">
-          <label>{{ t('relationshipConsumer') }}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="form.relationshipConsumer" />
-          </div>
+          <label>{{ t('typeBeneficiary') }}</label>
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="form.relationshipConsumer"
+                :options="relationshipOptions"
+                optionLabel="label"
+                option-value="value"
+                class="w-full"
+              />
+            </div>
         </div>
       </div>
       
@@ -72,7 +77,7 @@
                 optionLabel="label"
                 option-value="value"
                 class="w-full"
-                @change="toggleInstitutionFields"
+                @change="toggleInstitutionSection"
               />
             </div>
           </div>
@@ -213,11 +218,55 @@ onMounted(() => {
     bankCountries.value = countries.value
   })
 })
+const OTHER = t('other');
+const INSTITUTION = t('institution');
+const UNKNOWN = t('unknown');
 
 const originWalletOptions = [
-  { label: 'OTHER', value: 'OTHER' },
-  { label: 'INSTITUTION', value: 'INSTITUTION' },
-  { label: 'UNKNOWN', value: 'UNKNOWN' },
+  { label: OTHER, value: 'OTHER' },
+  { label: INSTITUTION, value: 'INSTITUTION' },
+  { label: UNKNOWN, value: 'UNKNOWN' },
+];
+
+
+const EX_SPOUSE = t('ex_spouse');
+const CHILDREN = t('children');
+const PARENT = t('parent');
+const SIBLING = t('sibling');
+const RELATIVE = t('relative');
+const SELF = t('self');
+const FRIEND = t('friend');
+const BUSINESS_PARTNER = t('business_partner');
+const CUSTOMER = t('customer');
+const EMPLOYEE = t('employee');
+const BRANCH_OFFICE = t('branch_office');
+const SUBSIDIARY_COMPANY = t('subsidiary_company');
+const HOLDING_COMPANY = t('holding_company');
+const SUPPLIER = t('supplier');
+const CREDITOR = t('creditor');
+const DEBTOR = t('debtor');
+const FRANCHISEE = t('franchisee');
+const NOT_RELATED = t('not_related');
+
+const relationshipOptions = [
+  { label: EX_SPOUSE, value: 'EX_SPOUSE' },
+  { label: CHILDREN, value: 'CHILDREN' },
+  { label: PARENT, value: 'PARENT' },
+  { label: SIBLING, value: 'SIBLING' },
+  { label: RELATIVE, value: 'RELATIVE' },
+  { label: SELF, value: 'SELF' },
+  { label: FRIEND, value: 'FRIEND' },
+  { label: BUSINESS_PARTNER, value: 'BUSINESS_PARTNER' },
+  { label: CUSTOMER, value: 'CUSTOMER' },
+  { label: EMPLOYEE, value: 'EMPLOYEE' },
+  { label: BRANCH_OFFICE, value: 'BRANCH_OFFICE' },
+  { label: SUBSIDIARY_COMPANY, value: 'SUBSIDIARY_COMPANY' },
+  { label: HOLDING_COMPANY, value: 'HOLDING_COMPANY' },
+  { label: SUPPLIER, value: 'SUPPLIER' },
+  { label: CREDITOR, value: 'CREDITOR' },
+  { label: DEBTOR, value: 'DEBTOR' },
+  { label: FRANCHISEE, value: 'FRANCHISEE' },
+  { label: NOT_RELATED, value: 'DEBTOR' }
 ];
 
 const selectedOriginWallet = ref('');
@@ -241,7 +290,6 @@ const toggleInstitutionSection = () => {
 }
 
 const saveBeneficiary = () => {
-  console.log(form.value);
   if (form.value.assetId.length === 0 || form.value.label.length === 0 || form.value.walletAddress.length === 0) {
     toast.add({
       severity: 'info',
