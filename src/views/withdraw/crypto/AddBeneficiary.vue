@@ -11,8 +11,39 @@
     </div>
 
     <h5 class="text-2xl font-medium mt-2 p-3">{{ t('addNewBeneficiary') }}</h5>
-
+    
+    <div class="grid">
+      
+    </div>
+    
     <div class="formgrid grid mt-4 p-3">
+      
+      <div class="field col-4">
+        <label>{{ t('countryLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="form.informationOwner.country"
+            :options="countries"
+            optionLabel="name"
+            option-value="country_code"
+            :loading="loadingCountiesField"
+            :placeholder="t('countryPlaceholder')"
+            :disabled="countriesInputIsEmpty"
+            class="w-full"
+            @change="onChangeCountryHandler"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field col-4">
+        <label>Nombre</label>
+        <!--<label>{{ t('walletAddress') }}</label>-->
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="form.informationOwner.name" />
+        </div>
+      </div>
+
       <div class="col-8">
         <div class="field">
           <SelectedAssets @selectedAsset="selectAsset" />
@@ -64,7 +95,7 @@
               <label>{{ t('stateLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
-                  v-model="form.institutionAddress.country"
+                  v-model="form.institutionAddress.region"
                   :options="states"
                   optionLabel="name"
                   option-value="state_code"
@@ -153,6 +184,10 @@ const form = ref({
   walletAddress: '',
   label: '',
   assetId: '',
+  informationOwner: {
+    name: '',
+    country: '',
+  },
   institutionAddress: {
     streetOne: '',
     postalCode: '',
@@ -207,6 +242,32 @@ const saveBeneficiary = () => {
       life: 4000,
     })
     return
+  }
+
+  const formData = ref()
+
+  if(selectedOriginWallet.value === 'INSTITUTION'){
+    form.value = {
+      walletAddress: '',
+        label: '',
+        assetId: '',
+        informationOwner: {
+          name: '',
+          country: '',
+        },
+        institutionAddress: {
+          streetOne: '',
+          postalCode: '',
+          city: '',
+          region: '',
+          country: ''
+        },
+        OriginWallet: {
+          INSTITUTION : 'INSTITUTION',
+          OTHER : 'OTHER',
+          UNKNOWN : 'UNKNOWN',
+        }
+    }
   }
 
   const beneficiaryService = BeneficiaryService.instance()
