@@ -23,20 +23,24 @@
             <InputText type="text" v-model="form.walletAddress" />
           </div>
         </div>
+
         <div class="field">
           <label>{{ t('label') }}</label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="form.label" />
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="selectedOriginWallet"
+                :options="originWalletOptions"
+                optionLabel="label"
+                option-value="value"
+                class="w-full"
+                @change="toggleInstitutionFields"
+              />
+            </div>
           </div>
-        </div>
         
       
         <!--Caso el beneficiario es una institucion-->
         <div v-if="showInstitutionSection">
-
-          <p class="mt-5 mb-0 text-uppercase">{{ t('intermediaryBankAddress') }}</p>
-          <Divider class="mt-0"></Divider>
-
           <div class="grid mt-5">
             <div class="field col-12">
               <label>{{ t('countryLabel') }}</label>
@@ -98,11 +102,6 @@
        <!--###########################################-->
       
         <div class="field flex justify-content-end">
-          <div class="col-4">
-            <Button :label="t('Add institution')" class="px-5" @click="toggleInstitutionSection" v-if="!showInstitutionSection"/>
-          </div>
-
-        
             <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" />
         </div>
       </div>
@@ -115,6 +114,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
 import { onMounted, ref } from 'vue'
+import Dropdown from 'primevue/dropdown';
 import Divider from 'primevue/divider'
 import { useWorld } from '../../../composables/useWorld'
 import { useI18n } from 'vue-i18n'
@@ -172,6 +172,22 @@ onMounted(() => {
     bankCountries.value = countries.value
   })
 })
+
+const originWalletOptions = [
+  { label: 'OTHER', value: 'OTHER' },
+  { label: 'INSTITUTION', value: 'INSTITUTION' },
+  { label: 'UNKNOWN', value: 'UNKNOWN' },
+];
+
+const selectedOriginWallet = ref('OTHER');
+
+const toggleInstitutionFields = () => {
+  if (selectedOriginWallet.value === 'INSTITUTION') {
+    showInstitutionSection.value = true;
+  } else {
+    showInstitutionSection.value = false;
+  }
+}
 
 const selectAsset = (asset: any) => {
   form.value.assetId = asset.assetId
