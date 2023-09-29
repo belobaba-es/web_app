@@ -162,7 +162,7 @@
 import patriotImg from '../../../assets/img/usPatriot.png'
 </script>
 
-<styles lang="scss">
+<style lang="scss" scoped>
 .container-patriot {
   background-color: #fff;
   display: flex;
@@ -184,4 +184,4 @@ p {
   text-align: justify; /* Justifica el texto */
   margin-top: 10px; /* Espacio entre la imagen y el texto (ajusta según tus necesidades) */
 }
-</styles>
+</style>
