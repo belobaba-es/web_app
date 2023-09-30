@@ -26,7 +26,7 @@
           <label>{{ t('typeBeneficiary') }}</label>
             <div class="p-inputgroup">
               <Dropdown
-                v-model="form.relationshipConsumer"
+                v-model="form.informationWallet.relationshipConsumer"
                 :options="relationshipOptions"
                 optionLabel="label"
                 option-value="value"
@@ -64,7 +64,7 @@
         <div class="field">
           <label>{{ t('walletAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="form.walletAddress" />
+            <InputText type="text" v-model="form.informationWallet.address" />
           </div>
         </div>
         
@@ -72,7 +72,7 @@
           <label>{{ t('typeBeneficiary') }}</label>
             <div class="p-inputgroup">
               <Dropdown
-                v-model="form.label"
+                v-model="form.informationWallet.originWallet"
                 :options="originWalletOptions"
                 optionLabel="label"
                 option-value="value"
@@ -92,7 +92,7 @@
               <label>{{ t('countryLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
-                  v-model="form.institutionAddress.country"
+                  v-model="form.informationWallet.institutionAddress.country"
                   :options="countries"
                   optionLabel="name"
                   option-value="country_code"
@@ -110,7 +110,7 @@
               <label>{{ t('stateLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
-                  v-model="form.institutionAddress.region"
+                  v-model="form.informationWallet.institutionAddress.region"
                   :options="states"
                   optionLabel="name"
                   option-value="state_code"
@@ -126,14 +126,14 @@
             <div class="field col-4">
               <label>{{ t('cityLabel') }}</label>
               <div class="p-inputgroup">
-                <InputText type="text" v-model="form.institutionAddress.city" class="w-full" required />
+                <InputText type="text" v-model="form.informationWallet.institutionAddress.city" class="w-full" required />
               </div>
             </div>
 
             <div class="field col-4">
               <label>{{ t('postalCodeLabel') }}</label>
               <div class="p-inputgroup">
-                <InputText type="text" v-model="form.institutionAddress.postalCode" />
+                <InputText type="text" v-model="form.informationWallet.institutionAddress.postalCode" />
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@
           <div class="field">
             <label>{{ t('streetAddress') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" required v-model="form.institutionAddress.streetOne" />
+              <InputText type="text" required v-model="form.informationWallet.institutionAddress.streetOne" />
             </div>
           </div>
         </div>
@@ -168,6 +168,7 @@ import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { useWithdraw } from '../composables/useWithdraw'
 import { BeneficiaryService } from '../services/beneficiary'
 import { useRouter } from 'vue-router'
+import { BeneficiaryAsset } from '../types/beneficiary.interface';
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -195,23 +196,26 @@ const {
   onChangeStateHandler: onBankChangeStateHandler,
 } = useWorld()
 
-const form = ref({
-  walletAddress: '',
-  label: '',
-  assetId: '',
-  relationshipConsumer: '',
+const form = ref<BeneficiaryAsset>({
+  informationWallet: {
+    assetId: '',
+    address: '',
+    relationshipConsumer: '',
+    originWallet: '',
+    institutionName: '',
+    institutionAddress: {
+      streetOne: '',
+      postalCode: '',
+      city: '',
+      region: '',
+      country: ''
+    }
+  },
   informationOwner: {
     name: '',
-    country: '',
-  },
-  institutionAddress: {
-    streetOne: '',
-    postalCode: '',
-    city: '',
-    region: '',
     country: ''
-  },
-})
+  }
+});
 
 onMounted(() => {
   fetchCountries(true).then(() => {
@@ -280,7 +284,7 @@ const toggleInstitutionFields = () => {
 }
 
 const selectAsset = (asset: any) => {
-  form.value.assetId = asset.assetId
+  form.value.informationWallet.assetId = asset.assetId
 }
 
 const showInstitutionSection = ref(false);
@@ -289,8 +293,9 @@ const toggleInstitutionSection = () => {
   showInstitutionSection.value = !showInstitutionSection.value;
 }
 
+
 const saveBeneficiary = () => {
-  if (form.value.assetId.length === 0 || form.value.label.length === 0 || form.value.walletAddress.length === 0) {
+  if (form.value.informationWallet.relationshipConsumer.length === 0 || form.value.informationWallet.assetId.length === 0 || form.value.informationWallet.address.length === 0) {
     toast.add({
       severity: 'info',
       detail: t('pleaseVerifyField'),
@@ -299,6 +304,7 @@ const saveBeneficiary = () => {
     return
   }
 
+  
   const beneficiaryService = BeneficiaryService.instance()
   beneficiaryService.saveBeneficiaryAssets(form.value).then(resp => {
     router.push('/withdraw/crypto/other')
