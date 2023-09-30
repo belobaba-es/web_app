@@ -5,9 +5,9 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { QuoteResponse } from '../views/swap/types/quote-response.interface'
+import { ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
-import { ExchangeData } from '../views/swap/types/create-quote-response.interface'
+import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -33,7 +33,7 @@ export const useSwapStore = defineStore('swap', () => {
   let timer: number
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
-  const quotes = ref<QuoteResponse>({
+  const exchanges = ref<ExchangeResponse>({
     count: 0,
     nextPag: '',
     prevPag: '',
@@ -57,16 +57,6 @@ export const useSwapStore = defineStore('swap', () => {
   const exchange = ref<ExchangeData>()
 
   const setFeeTradeDesk = () => {
-    console.log(' transactionType.value', transactionType.value)
-    console.log('+setFeeTradeDesk')
-
-    console.log(
-      '== baseAmount.value, unitCount.value, feeNoba.value, totalAmount.value',
-      baseAmount.value,
-      unitCount.value,
-      feeNoba.value,
-      totalAmount.value
-    )
     feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
 
     totalSpend.value = totalAmount.value
@@ -225,11 +215,11 @@ export const useSwapStore = defineStore('swap', () => {
     shouldRefreshQuote.value = false
   }
 
-  const fetchQuotes = async () => {
+  const fetchExchanges = async () => {
     loading.value = true
     const swapService = SwapService.instance()
     await swapService.exchanges().then(response => {
-      quotes.value = response
+      exchanges.value = response
       loading.value = false
     })
   }
@@ -270,13 +260,13 @@ export const useSwapStore = defineStore('swap', () => {
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
-      .nextQuotes(quotes.value.nextPag)
+      .nextQuotes(exchanges.value.nextPag)
       .then(response => {
         response.results.forEach(result => {
-          const existInResults = quotes.value.results.find(item => item.id === result.id)
-          if (!existInResults) quotes.value.results.push(result)
+          const existInResults = exchanges.value.results.find(item => item.id === result.id)
+          if (!existInResults) exchanges.value.results.push(result)
         })
-        quotes.value.nextPag = response.nextPag
+        exchanges.value.nextPag = response.nextPag
       })
       .finally(() => {
         loading.value = false
@@ -314,8 +304,8 @@ export const useSwapStore = defineStore('swap', () => {
     exchangeId,
     startTimer,
     clearTimer,
-    fetchQuotes,
-    quotes,
+    fetchExchanges,
+    exchanges,
     switchTransactionType,
     assetCode,
     refreshQuote,
