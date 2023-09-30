@@ -5,52 +5,32 @@
         {{ t('withdraw') }} / <span class="text-primary">{{ t('crypto') }} </span>
       </p>
       <div class="flex align-items-center">
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
+        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack"/>
         <span class="text-xl"> {{ t('otherPlatformCrypto') }}</span>
       </div>
     </div>
 
     <h5 class="text-2xl font-medium mt-2 p-3">{{ t('addNewBeneficiary') }}</h5>
-  
+
     <div class="formgrid grid mt-4 p-3">
-      
+
       <div class="field col-8">
         <label>{{ t('beneficiaryName') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="form.informationOwner.name" />
+          <InputText type="text" v-model="form.informationOwner.name"/>
         </div>
       </div>
-     
+
       <div class="col-8">
         <div class="field">
           <label>{{ t('typeBeneficiary') }}</label>
-            <div class="p-inputgroup">
-              <Dropdown
+          <div class="p-inputgroup">
+            <Dropdown
                 v-model="form.informationWallet.relationshipConsumer"
                 :options="relationshipOptions"
                 optionLabel="label"
                 option-value="value"
                 class="w-full"
-              />
-            </div>
-        </div>
-      </div>
-      
-      <div class="col-8">
-        <div class="field">
-          <label>{{ t('countryLabel') }}</label>
-          <div class="p-inputgroup">
-            <Dropdown
-              v-model="form.informationOwner.country"
-              :options="countries"
-              optionLabel="name"
-              option-value="country_code"
-              :loading="loadingCountiesField"
-              :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
-              class="w-full"
-              @change="onChangeCountryHandler"
-              required
             />
           </div>
         </div>
@@ -58,31 +38,51 @@
 
       <div class="col-8">
         <div class="field">
-          <SelectedAssets @selectedAsset="selectAsset" />
+          <label>{{ t('countryLabel') }}</label>
+          <div class="p-inputgroup">
+            <Dropdown
+                v-model="form.informationOwner.country"
+                :options="countries"
+                optionLabel="name"
+                option-value="country_code"
+                :loading="loadingCountiesField"
+                :placeholder="t('countryPlaceholder')"
+                :disabled="countriesInputIsEmpty"
+                class="w-full"
+                @change="onChangeCountryHandler"
+                required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-8">
+        <div class="field">
+          <SelectedAssets @selectedAsset="selectAsset"/>
         </div>
 
         <div class="field">
           <label>{{ t('walletAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="form.informationWallet.address" />
+            <InputText type="text" v-model="form.informationWallet.address"/>
           </div>
         </div>
-        
+
         <div class="field">
           <label>{{ t('typeBeneficiary') }}</label>
-            <div class="p-inputgroup">
-              <Dropdown
+          <div class="p-inputgroup">
+            <Dropdown
                 v-model="form.informationWallet.originWallet"
                 :options="originWalletOptions"
                 optionLabel="label"
                 option-value="value"
                 class="w-full"
                 @change="toggleInstitutionSection"
-              />
-            </div>
+            />
           </div>
-        
-        <!--#######################################-->  
+        </div>
+
+        <!--#######################################-->
         <!--Caso el beneficiario es una institucion-->
         <div v-if="showInstitutionSection">
           <p class="mt-4 mb-0 text-uppercase">{{ t('beneficiaryAddress') }}</p>
@@ -92,16 +92,16 @@
               <label>{{ t('countryLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
-                  v-model="form.informationWallet.institutionAddress.country"
-                  :options="countries"
-                  optionLabel="name"
-                  option-value="country_code"
-                  :loading="loadingCountiesField"
-                  :placeholder="t('countryPlaceholder')"
-                  :disabled="countriesInputIsEmpty"
-                  class="w-full"
-                  @change="onChangeCountryHandler"
-                  required
+                    v-model="form.informationWallet.institutionAddress.country"
+                    :options="countries"
+                    optionLabel="name"
+                    option-value="country_code"
+                    :loading="loadingCountiesField"
+                    :placeholder="t('countryPlaceholder')"
+                    :disabled="countriesInputIsEmpty"
+                    class="w-full"
+                    @change="onChangeCountryHandler"
+                    required
                 />
               </div>
             </div>
@@ -110,15 +110,15 @@
               <label>{{ t('stateLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
-                  v-model="form.informationWallet.institutionAddress.region"
-                  :options="states"
-                  optionLabel="name"
-                  option-value="state_code"
-                  :loading="loadingStatesField"
-                  :placeholder="t('statePlaceHolder')"
-                  :disabled="statesInputIsEmpty"
-                  class="w-full"
-                  @change="onChangeStateHandler"
+                    v-model="form.informationWallet.institutionAddress.region"
+                    :options="states"
+                    optionLabel="name"
+                    option-value="state_code"
+                    :loading="loadingStatesField"
+                    :placeholder="t('statePlaceHolder')"
+                    :disabled="statesInputIsEmpty"
+                    class="w-full"
+                    @change="onChangeStateHandler"
                 />
               </div>
             </div>
@@ -126,14 +126,15 @@
             <div class="field col-4">
               <label>{{ t('cityLabel') }}</label>
               <div class="p-inputgroup">
-                <InputText type="text" v-model="form.informationWallet.institutionAddress.city" class="w-full" required />
+                <InputText type="text" v-model="form.informationWallet.institutionAddress.city" class="w-full"
+                           required/>
               </div>
             </div>
 
             <div class="field col-4">
               <label>{{ t('postalCodeLabel') }}</label>
               <div class="p-inputgroup">
-                <InputText type="text" v-model="form.informationWallet.institutionAddress.postalCode" />
+                <InputText type="text" v-model="form.informationWallet.institutionAddress.postalCode"/>
               </div>
             </div>
           </div>
@@ -141,14 +142,15 @@
           <div class="field">
             <label>{{ t('streetAddress') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" required v-model="form.informationWallet.institutionAddress.streetOne" />
+              <InputText type="text" required v-model="form.informationWallet.institutionAddress.streetOne"/>
             </div>
           </div>
         </div>
-       <!--###########################################-->
-      
+        <!--###########################################-->
+
         <div class="field flex justify-content-end">
-            <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" />
+          <Button :label="t('Save new beneficiary')" class="px-5" @click="saveBeneficiary" iconPos="right"
+                  :loading="submitting"/>
         </div>
       </div>
     </div>
@@ -158,22 +160,23 @@
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import { useToast } from 'primevue/usetoast'
-import { onMounted, ref } from 'vue'
+import {useToast} from 'primevue/usetoast'
+import {onMounted, ref} from 'vue'
 import Dropdown from 'primevue/dropdown';
 import Divider from 'primevue/divider'
-import { useWorld } from '../../../composables/useWorld'
-import { useI18n } from 'vue-i18n'
+import {useWorld} from '../../../composables/useWorld'
+import {useI18n} from 'vue-i18n'
 import SelectedAssets from '../../../components/SelectedAssets.vue'
-import { useWithdraw } from '../composables/useWithdraw'
-import { BeneficiaryService } from '../services/beneficiary'
-import { useRouter } from 'vue-router'
-import { BeneficiaryAsset } from '../types/beneficiary.interface';
+import {useWithdraw} from '../composables/useWithdraw'
+import {BeneficiaryService} from '../services/beneficiary'
+import {useRouter} from 'vue-router'
+import {BeneficiaryAsset} from '../types/beneficiary.interface';
+import showMessageArray from "../../../shared/showMessageArray";
 
 const toast = useToast()
-const { t } = useI18n({ useScope: 'global' })
+const {t} = useI18n({useScope: 'global'})
 const router = useRouter()
-const { toBack } = useWithdraw([])
+const {toBack} = useWithdraw([])
 
 const {
   countries,
@@ -227,9 +230,9 @@ const INSTITUTION = t('institution');
 const UNKNOWN = t('unknown');
 
 const originWalletOptions = [
-  { label: OTHER, value: 'OTHER' },
-  { label: INSTITUTION, value: 'INSTITUTION' },
-  { label: UNKNOWN, value: 'UNKNOWN' },
+  {label: OTHER, value: 'OTHER'},
+  {label: INSTITUTION, value: 'INSTITUTION'},
+  {label: UNKNOWN, value: 'UNKNOWN'},
 ];
 
 
@@ -253,24 +256,24 @@ const FRANCHISEE = t('franchisee');
 const NOT_RELATED = t('not_related');
 
 const relationshipOptions = [
-  { label: EX_SPOUSE, value: 'EX_SPOUSE' },
-  { label: CHILDREN, value: 'CHILDREN' },
-  { label: PARENT, value: 'PARENT' },
-  { label: SIBLING, value: 'SIBLING' },
-  { label: RELATIVE, value: 'RELATIVE' },
-  { label: SELF, value: 'SELF' },
-  { label: FRIEND, value: 'FRIEND' },
-  { label: BUSINESS_PARTNER, value: 'BUSINESS_PARTNER' },
-  { label: CUSTOMER, value: 'CUSTOMER' },
-  { label: EMPLOYEE, value: 'EMPLOYEE' },
-  { label: BRANCH_OFFICE, value: 'BRANCH_OFFICE' },
-  { label: SUBSIDIARY_COMPANY, value: 'SUBSIDIARY_COMPANY' },
-  { label: HOLDING_COMPANY, value: 'HOLDING_COMPANY' },
-  { label: SUPPLIER, value: 'SUPPLIER' },
-  { label: CREDITOR, value: 'CREDITOR' },
-  { label: DEBTOR, value: 'DEBTOR' },
-  { label: FRANCHISEE, value: 'FRANCHISEE' },
-  { label: NOT_RELATED, value: 'DEBTOR' }
+  {label: EX_SPOUSE, value: 'EX_SPOUSE'},
+  {label: CHILDREN, value: 'CHILDREN'},
+  {label: PARENT, value: 'PARENT'},
+  {label: SIBLING, value: 'SIBLING'},
+  {label: RELATIVE, value: 'RELATIVE'},
+  {label: SELF, value: 'SELF'},
+  {label: FRIEND, value: 'FRIEND'},
+  {label: BUSINESS_PARTNER, value: 'BUSINESS_PARTNER'},
+  {label: CUSTOMER, value: 'CUSTOMER'},
+  {label: EMPLOYEE, value: 'EMPLOYEE'},
+  {label: BRANCH_OFFICE, value: 'BRANCH_OFFICE'},
+  {label: SUBSIDIARY_COMPANY, value: 'SUBSIDIARY_COMPANY'},
+  {label: HOLDING_COMPANY, value: 'HOLDING_COMPANY'},
+  {label: SUPPLIER, value: 'SUPPLIER'},
+  {label: CREDITOR, value: 'CREDITOR'},
+  {label: DEBTOR, value: 'DEBTOR'},
+  {label: FRANCHISEE, value: 'FRANCHISEE'},
+  {label: NOT_RELATED, value: 'DEBTOR'}
 ];
 
 const selectedOriginWallet = ref('');
@@ -288,6 +291,7 @@ const selectAsset = (asset: any) => {
 }
 
 const showInstitutionSection = ref(false);
+const submitting = ref(false)
 
 const toggleInstitutionSection = () => {
   showInstitutionSection.value = !showInstitutionSection.value;
@@ -295,16 +299,8 @@ const toggleInstitutionSection = () => {
 
 
 const saveBeneficiary = () => {
-  if (form.value.informationWallet.relationshipConsumer.length === 0 || form.value.informationWallet.assetId.length === 0 || form.value.informationWallet.address.length === 0) {
-    toast.add({
-      severity: 'info',
-      detail: t('pleaseVerifyField'),
-      life: 4000,
-    })
-    return
-  }
 
-  
+  submitting.value = true;
   const beneficiaryService = BeneficiaryService.instance()
   beneficiaryService.saveBeneficiaryAssets(form.value).then(resp => {
     router.push('/withdraw/crypto/other')
@@ -313,16 +309,19 @@ const saveBeneficiary = () => {
       detail: resp.message,
       life: 4000,
     })
+    submitting.value = false;
   }).catch(error => {
-      if (error.response.data.message) {
-          toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: error.response.data.message,
-              life: 4000,
-          })
-          return
-      }
+    submitting.value = false;
+    showMessageArray(toast, error.response.data)
+    if (error.response.data.message) {
+      toast.add({
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: error.response.data.message,
+        life: 4000,
+      })
+      return
+    }
   })
 }
 </script>
