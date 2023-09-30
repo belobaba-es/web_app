@@ -142,7 +142,9 @@ const handleSubmit = () => {
         detail: data.message,
         life: 5000,
       })
-
+      
+      localStorage.removeItem('noba@user-email')
+      
       router.push('/')
     })
     .catch(e => {
