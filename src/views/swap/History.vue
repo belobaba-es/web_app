@@ -21,63 +21,63 @@
             </tr>
           </thead>
 
-          <tbody v-if="isReady">
+          <tbody v-if="!isLoading">
             <tr v-for="item in exchanges.results">
-              <p>{{ item }}</p>
+              <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">
+                <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img
+                  :src="iconAsset(item.sourceDetails.assetCode, listAssets)"
+                  class="h-3rem h-3rem absolute bottom-0 right-0"
+                />
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">
+                <img
+                  :src="iconAsset(item.destinationDetails.assetCode, listAssets)"
+                  class="h-3rem h-3rem absolute top-0 left-0"
+                />
+                <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
+              </td>
+
+              <td v-if="item.transactionType === 'buy'" class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="balance-in-container">
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              </td>
+
+              <td class="swap-icon-container">
+                <img :src="swapIcon" />
+              </td>
+
+              <td v-if="item.transactionType === 'buy'" class="balance-in-container">
+                <h3 class="text-center">{{ item.destinationDetails.amountCredit }}</h3>
+              </td>
+
+              <td v-if="item.transactionType === 'sell'" class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              </td>
+
+              <td class="operation-date-container">
+                <h3 class="text-center">{{ item.createdAt }}</h3>
+              </td>
+
+              <td class="status-container">
+                <h3 class="text-center" :class="statusClass(item.status)">{{ item.status }}</h3>
+              </td>
+
+              <td class="fee-amount-container">
+                <h3 class="text-center">
+                  <small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}
+                </h3>
+              </td>
+
+              <td class="number-of-order-container">
+                <h3 class="text-center">{{ item.exchangeId }}</h3>
+              </td>
             </tr>
           </tbody>
-          <!--          -->
-          <!--          <tbody>-->
-          <!--            <tr v-for="item in exchanges.results">-->
-          <!--              <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">-->
-          <!--                <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />-->
-          <!--                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute bottom-0 right-0" />-->
-          <!--              </td>-->
-
-          <!--              <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">-->
-          <!--                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute top-0 left-0" />-->
-          <!--                <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />-->
-          <!--              </td>-->
-
-          <!--              <td v-if="item.transactionType === 'buy'" class="total-amount-container">-->
-          <!--                <h3 class="text-center">{{ item.totalAmount }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td v-if="item.transactionType === 'sell'" class="balance-in-container">-->
-          <!--                <h3 class="text-center">{{ item.unitCount }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td class="swap-icon-container">-->
-          <!--                <img :src="swapIcon" />-->
-          <!--              </td>-->
-
-          <!--              <td v-if="item.transactionType === 'buy'" class="balance-in-container">-->
-          <!--                <h3 class="text-center">{{ item.unitCount }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td v-if="item.transactionType === 'sell'" class="total-amount-container">-->
-          <!--                <h3 class="text-center">{{ item.totalAmount }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td class="operation-date-container">-->
-          <!--                <h3 class="text-center">{{ secondsToDate(item.createdAt._seconds) }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td class="status-container">-->
-          <!--                <h3 class="text-center" :class="statusClass(item.status)">{{ item.status }}</h3>-->
-          <!--              </td>-->
-
-          <!--              <td class="fee-amount-container">-->
-          <!--                <h3 class="text-center">-->
-          <!--                  <small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}-->
-          <!--                </h3>-->
-          <!--              </td>-->
-
-          <!--              <td class="number-of-order-container">-->
-          <!--                <h3 class="text-center">{{ item.exchangeId }}</h3>-->
-          <!--              </td>-->
-          <!--            </tr>-->
-          <!--          </tbody>-->
         </table>
       </div>
 
@@ -105,6 +105,7 @@ import { useSwapStore } from '../../stores/swap'
 import { useRouter } from 'vue-router'
 import { Asset } from '../deposit/types/asset.interface'
 import { AssetsService } from '../deposit/services/assets'
+import { ExchangeCreated } from './types/quote-response.interface'
 
 const { t } = useI18n({ useScope: 'global' })
 const { exchanges } = useSwap()
@@ -112,27 +113,27 @@ const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
 
 const listAssets = ref<Asset[]>([])
-const isReady = ref<boolean>(false)
+const isLoading = ref<boolean>(true)
 
 const assetsService = AssetsService.instance()
+const exchangesList = ref<ExchangeCreated[]>()
 
 onMounted(async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
   })
 
-  console.log('not ready')
   await fetchExchanges()
-  isReady.value = true
-  console.log('sh rready exch', exchanges.value)
+  isLoading.value = false
+  exchangesList.value = exchanges.value.results as ExchangeCreated[]
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
 
 const statusClass = (status: string) => {
   return {
-    'text-green-500': status === 'process',
-    'text-orange-500': status === 'pending',
+    'text-green-500': status === 'ACCEPTED',
+    'text-orange-500': status === 'REQUESTED',
     'text-red-500': status === 'cancel',
   }
 }
