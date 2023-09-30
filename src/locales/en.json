@@ -176,6 +176,8 @@
   "swapExchangeServiceText": "Exchange services are available through third-party API providers",
   "swapSpend": "Total to spend",
   "swapReceive": "Total to receive",
+  "swapPriceWarning": "The final amount could possibly vary a little bit",
+  "swapSuccessDelayWarning": "The accreditation to your bank account or digital asset wallet may take a few minutes. If, after 20 minutes, the operation has not been completed, please get in touch with our customer support",
   "wallets": "Wallets",
   "amount": "Amount",
   "confirmation": "Confirmation",
@@ -347,7 +349,7 @@
   "passwordOneSpecialCharacter": "Password must have at least one special character",
   "confirmEmail": "Confirm email",
   "confirmEmailCodeText": "Enter the 6 digits code we sent to your email",
-  "confirmEmailCodePlaceholder":"Enter the 6 digits code",
+  "confirmEmailCodePlaceholder": "Enter the 6 digits code",
   "codeEmailLabel": "Code",
   "resendCode": "Resend code",
   "confirmTextEmailCode": "Confirm email"
