@@ -31,8 +31,8 @@ export class SwapService extends HttpService {
     return resp
   }
 
-  async quotes() {
-    const resp = await this.get<any>(`swap/quotes`, {}, true)
+  async exchanges() {
+    const resp = await this.get<any>(`swap/exchanges`, {}, true)
     return resp
   }
 

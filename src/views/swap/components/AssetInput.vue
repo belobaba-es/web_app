@@ -104,8 +104,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ref, watch, computed, toRef } from 'vue'
-import { defineProps } from 'vue'
+import { computed, defineProps, watch } from 'vue'
 import Button from 'primevue/button'
 import { useSwapStore } from '../../../stores/swap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
@@ -161,8 +160,7 @@ watch(unitCount, async newVal => {
         detail: t('insufficientFunds'),
         life: 4000,
       })
-      // todo uncoment
-      // return
+      return
     }
     await createExchange()
   }

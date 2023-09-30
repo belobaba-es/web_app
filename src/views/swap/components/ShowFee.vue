@@ -1,6 +1,5 @@
 <template>
   <div class="mt-3 mb-3 container-fee">
-    <!--    todo pendng-->
     <!--    <div class="col-12 pt-0 pb-0 grid">-->
     <!--&lt;!&ndash;      <div class="col-5">&ndash;&gt;-->
     <!--&lt;!&ndash;        <span class="font-regular text-primary text-1xl">Fee trade desk:</span>&ndash;&gt;-->
