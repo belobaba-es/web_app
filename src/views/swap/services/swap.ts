@@ -42,6 +42,9 @@ export class SwapService extends HttpService {
   }
 
   async cancelQuote(quiteId: string) {
+    // todo create this method in the backend
+    return
+
     const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, {}, true)
     return resp
   }

@@ -1,13 +1,14 @@
 <template>
   <div class="mt-3 mb-3 container-fee">
-    <div class="col-12 pt-0 pb-0 grid">
-      <div class="col-5">
-        <span class="font-regular text-primary text-1xl">Fee trade desk:</span>
-      </div>
-      <div class="col-7">
-        <span class="text-1xl font-light text-lg-left"><small>US$</small> {{ feeTradeDesk }}</span>
-      </div>
-    </div>
+    <!--    todo pendng-->
+    <!--    <div class="col-12 pt-0 pb-0 grid">-->
+    <!--&lt;!&ndash;      <div class="col-5">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <span class="font-regular text-primary text-1xl">Fee trade desk:</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;      </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;      <div class="col-7">&ndash;&gt;-->
+    <!--&lt;!&ndash;        <span class="text-1xl font-light text-lg-left"><small>US$</small> {{ feeTradeDesk }}</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;      </div>&ndash;&gt;-->
+    <!--    </div>-->
 
     <div class="col-12 pt-0 pb-0 grid">
       <div class="col-5 pt-0 pb-0">
@@ -50,6 +51,7 @@ const getLabelTotal = () => {
   width: 270px;
   margin: 0 auto;
 }
+
 small {
   font-size: 7.5pt;
   font-weight: normal;
