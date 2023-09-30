@@ -59,22 +59,6 @@ export const useSwapStore = defineStore('swap', () => {
   const setFeeTradeDesk = () => {
     console.log(' transactionType.value', transactionType.value)
     console.log('+setFeeTradeDesk')
-    // if (transactionType.value === 'buy') {
-    //   if (assetCode.value === 'USDT') {
-    //     feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
-    //   } else {
-    //     feeTradeDesk.value = Number((totalAmount.value - amount.value).toFixed(2))
-    //   }
-    //
-    //   totalSpend.value = Number((totalAmount.value + feeNoba.value).toFixed(2))
-    //   return
-    // }
-    //
-    // if (assetCode.value === 'USDT') {
-    //   feeTradeDesk.value = Number((amount.value - totalAmount.value).toFixed(2))
-    // } else {
-    //   feeTradeDesk.value = Number((baseAmount.value - totalAmount.value).toFixed(2))
-    // }
 
     console.log(
       '== baseAmount.value, unitCount.value, feeNoba.value, totalAmount.value',
@@ -123,34 +107,24 @@ export const useSwapStore = defineStore('swap', () => {
         description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId}`,
       })
       .then(response => {
-        console.log('== response', response.data)
         exchange.value = response.data
-
         feeNoba.value = exchange.value?.feeNoba
-
-        // if (transactionType.value === 'buy') {
-        //   // unitCount.value = response.data.unitCount
-        //   unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
-        //   feeAmount.value = (exchange.value?.destination_details.amount_to_credit * exchange.value?.feeNoba) / 100
-        //
-        //   totalAmount.value = exchange.value?.destination_details.amount_to_credit + feeAmount.value
-        // } else {
-        //   unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
-        //   baseAmount.value = exchange.value?.source_details.amount_to_debit
-        //
-        //
-        //   feeAmount.value = (exchange.value?.source_details.amount_to_debit * exchange.value?.feeNoba) / 100
-        //   totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
-        // }
-
-        unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
+        unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
         baseAmount.value = exchange.value?.source_details.amount_to_debit
-        feeAmount.value = (exchange.value?.source_details.amount_to_debit * exchange.value?.feeNoba) / 100
+        feeAmount.value = exchange.value?.feeNoba
+        console.log('feeAmount.value', feeAmount.value)
+        console.log(
+          'exchange.value?.source_details.amount_to_debit + feeAmount.value',
+          exchange.value?.source_details.amount_to_debit,
+          feeAmount.value
+        )
         totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
 
-        exchangeId.value = exchange.value?.exchangeId
+        if (transactionType.value === 'sell') {
+          unitCount.value = Number(unitCount.value.toFixed(6))
+        }
 
-        // amount.value = Number(response.data.amount)
+        exchangeId.value = exchange.value?.exchangeId
 
         setFeeTradeDesk()
 
@@ -201,6 +175,10 @@ export const useSwapStore = defineStore('swap', () => {
         transactionSummary.value.feeNoba = feeNoba.value
         transactionSummary.value.feeTradeDesk = feeTradeDesk.value
         transactionSummary.value.totalSpend = totalSpend.value
+
+        console.log('====')
+        console.log('==== transactionSummary.value', transactionSummary.value)
+        console.log('====')
 
         router.push('/swap/success')
       })
