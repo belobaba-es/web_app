@@ -14,6 +14,19 @@
 
     <div class="formgrid grid mt-4 p-3">
 
+      <div class="col-8">
+        <div class="field">
+          <SelectedAssets @selectedAsset="selectAsset"/>
+        </div>
+      </div>
+
+      <div class="field col-8">
+        <label>{{ t('walletAddress') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="form.informationWallet.address"/>
+        </div>
+      </div>
+
       <div class="field col-8">
         <label>{{ t('beneficiaryName') }}</label>
         <div class="p-inputgroup">
@@ -21,24 +34,10 @@
         </div>
       </div>
 
-      <div class="col-8">
-        <div class="field">
-          <label>{{ t('typeBeneficiary') }}</label>
-          <div class="p-inputgroup">
-            <Dropdown
-                v-model="form.informationWallet.relationshipConsumer"
-                :options="relationshipOptions"
-                optionLabel="label"
-                option-value="value"
-                class="w-full"
-            />
-          </div>
-        </div>
-      </div>
 
       <div class="col-8">
         <div class="field">
-          <label>{{ t('countryLabel') }}</label>
+          <label>{{ t('beneficiaryCountry') }}</label>
           <div class="p-inputgroup">
             <Dropdown
                 v-model="form.informationOwner.country"
@@ -56,17 +55,26 @@
         </div>
       </div>
 
+
       <div class="col-8">
         <div class="field">
-          <SelectedAssets @selectedAsset="selectAsset"/>
-        </div>
-
-        <div class="field">
-          <label>{{ t('walletAddress') }}</label>
+          <label>{{ t('relationshipConsumer') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="form.informationWallet.address"/>
+            <Dropdown
+                v-model="form.informationWallet.relationshipConsumer"
+                :options="relationshipOptions"
+                optionLabel="label"
+                option-value="value"
+                class="w-full"
+            />
           </div>
         </div>
+      </div>
+
+
+      <div class="col-8">
+
+
 
         <div class="field">
           <label>{{ t('typeBeneficiary') }}</label>
@@ -85,7 +93,7 @@
         <!--#######################################-->
         <!--Caso el beneficiario es una institucion-->
         <div v-if="showInstitutionSection">
-          <p class="mt-4 mb-0 text-uppercase">{{ t('beneficiaryAddress') }}</p>
+          <p class="mt-5 mb-0 text-uppercase">{{ t('institutionAddress') }}</p>
           <Divider class="mt-0"></Divider>
           <div class="grid mt-3">
             <div class="field col-12">
@@ -162,7 +170,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import {useToast} from 'primevue/usetoast'
 import {onMounted, ref} from 'vue'
-import Dropdown from 'primevue/dropdown';
+import Dropdown, {DropdownChangeEvent} from 'primevue/dropdown';
 import Divider from 'primevue/divider'
 import {useWorld} from '../../../composables/useWorld'
 import {useI18n} from 'vue-i18n'
@@ -230,8 +238,9 @@ const INSTITUTION = t('institution');
 const UNKNOWN = t('unknown');
 
 const originWalletOptions = [
-  {label: OTHER, value: 'OTHER'},
+  {label: "", value: ""},
   {label: INSTITUTION, value: 'INSTITUTION'},
+  {label: OTHER, value: 'OTHER'},
   {label: UNKNOWN, value: 'UNKNOWN'},
 ];
 
@@ -293,8 +302,9 @@ const selectAsset = (asset: any) => {
 const showInstitutionSection = ref(false);
 const submitting = ref(false)
 
-const toggleInstitutionSection = () => {
-  showInstitutionSection.value = !showInstitutionSection.value;
+const toggleInstitutionSection = (event: DropdownChangeEvent) => {
+  console.log(event.value);
+  showInstitutionSection.value = event.value === 'INSTITUTION';
 }
 
 
