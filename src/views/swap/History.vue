@@ -27,70 +27,55 @@
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
-                  :src="iconAsset(item.sourceDetails.assetCode, listAssets)"
+                  :src="iconAsset(item.destinationDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute bottom-0 right-0"
                 />
-                1
               </td>
 
               <!--              sell-->
               <td v-if="item.sourceDetails.assetCode !== 'USD'" class="h-5rem w-6rem relative icons-container">
-                2
                 <img
-                  :src="iconAsset(item.destinationDetails.assetCode, listAssets)"
+                  :src="iconAsset(item.sourceDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute top-0 left-0"
                 />
                 <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
-              <!--              buy-->
-              <td v-if="item.sourceDetails.assetCode === 'USD'" class="total-amount-container">
-                3
-                <h3 class="text-center">{{ item.totalAmount }}</h3>
-              </td>
-
-              <!--              sell-->
-              <td v-if="item.sourceDetails.assetCode !== 'USD'" class="balance-in-container">
-                4
-                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              <td class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
               <td class="swap-icon-container">
-                5
                 <img :src="swapIcon" />
               </td>
 
               <!--              buy-->
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="balance-in-container">
-                6
-                <h3 class="text-center">{{ item.destinationDetails.amountCredit }}</h3>
+                <h3 class="text-center">
+                  {{ item.destinationDetails.amountCredit }} {{ item.destinationDetails.assetCode }}
+                </h3>
               </td>
 
               <!--              sell-->
               <td v-if="item.sourceDetails.assetCode !== 'USD'" class="total-amount-container">
-                7
-                <h3 class="text-center">{{ item.totalAmount }}</h3>
+                <h3 class="text-center">{{ item.totalAmount }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
               <td class="operation-date-container">
-                8
                 <h3 class="text-center">{{ item.createdAt }}</h3>
               </td>
 
               <td class="status-container">
-                9
                 <h3 class="text-center" :class="statusClass(item.status)">{{ item.status }}</h3>
               </td>
 
               <td class="fee-amount-container">
                 <h3 class="text-center">
-                  10
                   <small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}
                 </h3>
               </td>
 
               <td class="number-of-order-container">
-                11
                 <h3 class="text-center">{{ item.exchangeId }}</h3>
               </td>
             </tr>
