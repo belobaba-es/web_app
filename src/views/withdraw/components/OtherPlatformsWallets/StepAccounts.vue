@@ -14,7 +14,7 @@
           @click="onSelect(item)"
         >
           <img :src="getIcon(item.assetCode)" alt="" />
-          <span class="ml-4 mt-2 mb-2">{{ item.label }}</span>
+          <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
           <div class="flex align-items-center">
             {{ t('withdraw') }}
             <i class="pi pi-angle-right"></i>
@@ -77,7 +77,7 @@ const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:b
 const onSelect = (item: BeneficiaryInternal) => {
   const page = 0
   const formData = {
-    beneficiary: item,
+    beneficiary: item.counterpartyId,
   }
   emit('nextPage', {
     pageIndex: page,

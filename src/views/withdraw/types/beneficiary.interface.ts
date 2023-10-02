@@ -19,11 +19,19 @@ export interface BeneficiaryAssets {
   accountId: string
 }
 
+export enum CounterpartyType {
+  CRYPTO = 'CRYPTO',
+    FIAT = 'FIAT',
+}
+
 export type BeneficiaryInternal = {
-  accountId: string
-  accountTo: string
-  email: string
-  name: string
+  clientId: string
+  counterpartyId: string
+  counterpartyType: CounterpartyType
+  informationOwner : {
+    name: string
+    countery: string
+  }
 }
 
 export interface Beneficiary {
@@ -92,7 +100,22 @@ export interface BeneficiaryFiatInternacionalResp extends Pagination<Beneficiary
 export interface BeneficiaryFiatDomesticResp extends Pagination<BeneficiaryFiatDomestic> {}
 
 export interface BeneficiaryAsset {
-  assetId: string
-  walletAddress: string
-  label: string
+  informationWallet: {
+    assetId: string;
+    address: string;
+    relationshipConsumer: string;
+    originWallet: string;
+    institutionName: string;
+    institutionAddress: {
+      streetOne: string;
+      postalCode: string;
+      city: string;
+      region: string;
+      country: string;
+    };
+  };
+  informationOwner: {
+    name: string;
+    country: string;
+  };
 }
