@@ -7,7 +7,7 @@ import { UserAccount } from '../types/account'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
-  FIAT = 'USD',
+  FIAT = 'BANKING',
 }
 
 export const useBeneficiary = () => {

@@ -68,12 +68,10 @@ onMounted(async () => {
   if (route.params.type === 'crypto') {
     type.value = TypeBeneficiaryInternal.ASSET
   }
-  console.log('eddddddd')
   await loadMore()
 })
 
 const nextStep = (item: UserAccount) => {
-  console.log(item)
   const page = 0
   const formData = {
     beneficiary: { ...item },
