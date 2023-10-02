@@ -34,7 +34,7 @@ export type TransactionHistory = {
   assetId: string
   assetCode?: string
   clientId: string
-  counterparty: Counterparty
+  counterparty?: Counterparty
   createdAt: Date
   isInternal: boolean
   reference: string

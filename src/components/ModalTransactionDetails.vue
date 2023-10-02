@@ -25,7 +25,7 @@
 
           <p
             v-if="
-              props.transaction.assetCode !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0
+              props.transaction.assetCode !== 'USD' && props.transaction.counterparty?.informationOwner?.name.length > 0
             "
             class="font-medium text-sm"
           >
@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
+          <p>{{ props.transaction.counterparty?.informationOwner?.name }}</p>
           <p v-if="props.transaction.assetCode === 'USD'"></p>
         </div>
       </div>
@@ -134,7 +134,7 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction.counterparty.informationOwner.name}`
+  const beneficiaryName = `${transaction.counterparty?.informationOwner?.name ?? 'test'}`
   console.log('modal transaction', transaction)
   // const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
 
