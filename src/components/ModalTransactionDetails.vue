@@ -16,14 +16,14 @@
       <div class="inner-row-flex mt-20">
         <div class="col-6">
           <p
-            v-if="props.transaction.assetCode === 'USD' && props.transaction.nameTo.length > 0"
+            v-if="props.transaction.assetId?.slice(-3) === 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
             class="font-medium text-sm"
           >
             {{ t('bankAccountHolder') }}
           </p>
 
           <p
-            v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0"
+            v-if="props.transaction.assetId?.slice(-3) !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
             class="font-medium text-sm"
           >
             {{ t('beneficiaryName') }}
@@ -31,8 +31,8 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.nameTo }}</p>
-          <p v-if="props.transaction.assetCode === 'USD'"></p>
+          <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
+          <p v-if="props.transaction.assetId?.slice(-3) === 'USD'"></p>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.amount }} {{ props.transaction.assetCode }}</p>
+          <p>{{ props.transaction.amount }} {{ props.transaction.assetId?.slice(-3) }}</p>
           <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>
           <p></p>
         </div>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ transaction.id }}</p>
+          <p>{{ transaction._id }}</p>
           <p>{{ transaction.formatedDate }}</p>
         </div>
       </div>
@@ -94,15 +94,21 @@ import logo from '../assets/img/logo.png'
 import { useUserStore } from '../stores/user'
 
 export interface TransactionModalPayload {
-  id?: any
+  _id?: any
   formatedDate?: any
   feeWire?: any
   isInternal?: boolean
   amount?: any
-  assetCode?: string
-  nameTo?: any
+  assetId?: string
+  counterparty: CounterpartyInfo;
   reference?: any
   beneficiary?: any
+}
+export interface CounterpartyInfo{
+  informationOwner: {
+    name: string;
+    country: string;
+  };
 }
 
 const userStore = useUserStore()
