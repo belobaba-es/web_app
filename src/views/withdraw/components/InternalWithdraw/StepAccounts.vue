@@ -9,9 +9,7 @@
       <div class="container">
         <div class="grid w-100% asset-item" v-for="item in listBeneficiariesInternal" @click="nextStep(item)">
           <div class="mt-2 col-4 sm:col-4" style="width: 40%">{{ item.name }}</div>
-          <div class="mt-2 col-4" style="width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-            {{ item.email }}
-          </div>
+
           <div class="mt-2 col-4" style="width: 6%">
             <div class="pi pi-angle-right float-right"></div>
           </div>

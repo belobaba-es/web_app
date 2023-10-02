@@ -59,7 +59,7 @@ export const useBeneficiary = () => {
     for (const listElement of result.results) {
       list.push({
         name: listElement.informationOwner.name,
-        clientId: listElement.clientId,
+        clientId: listElement.counterpartyId,
       })
     }
 
