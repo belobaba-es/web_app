@@ -141,7 +141,7 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
-  transactionPDF[t('assetType')] = transaction.assetCode ?? ''
+  transactionPDF[t('assetType')] = transaction.assetCode === 'USD' ? 'FIAT' : 'CRYPTO'
   transactionPDF[t('amount')] = `${transaction.amount}`
   transactionPDF[t('transactionNumber')] = transaction.id
   transactionPDF[t('reference')] = `${transaction.reference}`
