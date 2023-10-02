@@ -4,7 +4,7 @@
       <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
       <p class="name_to">{{ item.reference }}</p>
       <p class="date">
-        {{ formatDate(item.counterparty.createdAt) }}
+        {{ item.counterparty.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -13,7 +13,7 @@
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">
         {{ item.amount }}
-        <small>{{ item.assetId.slice(-3) }}</small>
+        <small>{{ item.assetId }}</small>
         &nbsp;
         <i v-if="item.transactionType === 'withdraw-funds'" class="pi pi-arrow-circle-up icon-withdraw-funds"></i>
         <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
@@ -33,7 +33,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { formatDate } from '../../../shared/formatDate'
 
 const { t } = useI18n({ useScope: 'global' })
 defineProps<{

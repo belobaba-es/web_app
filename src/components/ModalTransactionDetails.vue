@@ -16,14 +16,14 @@
       <div class="inner-row-flex mt-20">
         <div class="col-6">
           <p
-            v-if="props.transaction.assetId?.slice(-3) === 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
+            v-if="props.transaction.assetId === 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
             class="font-medium text-sm"
           >
             {{ t('bankAccountHolder') }}
           </p>
 
           <p
-            v-if="props.transaction.assetId?.slice(-3) !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
+            v-if="props.transaction.assetId !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
             class="font-medium text-sm"
           >
             {{ t('beneficiaryName') }}
@@ -32,7 +32,7 @@
 
         <div class="col-6 pt-1">
           <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
-          <p v-if="props.transaction.assetId?.slice(-3) === 'USD'"></p>
+          <p v-if="props.transaction.assetId === 'USD'"></p>
         </div>
       </div>
 
@@ -135,14 +135,14 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
+  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.counterparty.informationOwner.name ?? transaction.to.label}`
 
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
-  transactionPDF[t('assetType')] = transaction.assetCode
-  transactionPDF[t('amount')] = `${transaction.amount}`
-  transactionPDF[t('transactionNumber')] = transaction.id
+  transactionPDF[t('assetType')] = transaction.assetId
+  transactionPDF[t('amount')] = `${transaction.amount} ${transaction.assetId.slice(-3)}`
+  transactionPDF[t('transactionNumber')] = transaction._id
   transactionPDF[t('reference')] = `${transaction.reference}`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
