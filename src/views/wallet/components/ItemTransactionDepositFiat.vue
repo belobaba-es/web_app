@@ -3,7 +3,7 @@
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <p class="name_to">{{ username }}</p>
       <p class="date">
-        {{ formatDate(item.createdAt) }}
+        {{ item.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -42,15 +42,7 @@ const { t } = useI18n({ useScope: 'global' })
 
 const userStore = useUserStore()
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
-
-const secondsToDate = (seconds: number) => {
-  const locale = localStorage.getItem('noba@lang')
-  const date = new Date(seconds * 1000)
-  return date.toLocaleString(locale!)
-}
+const username = userStore.getUser.name
 </script>
 
 <style lang="scss">
