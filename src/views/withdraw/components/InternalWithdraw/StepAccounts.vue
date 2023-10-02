@@ -44,9 +44,9 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { useToast } from 'primevue/usetoast'
 import SearchAccountByEmail from './SearchAccountByEmail.vue'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import Button from 'primevue/button'
 import { TypeBeneficiaryInternal, useBeneficiary } from '../../composables/useBeneficiary'
+import { UserAccount } from '../../types/account'
 
 const router = useRouter()
 const toast = useToast()
@@ -60,7 +60,7 @@ const { fetchBeneficiariesInternal, listBeneficiariesInternal, submitting, nextP
 
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
-const setListBeneficiaries = (list: BeneficiaryInternal[]) => {
+const setListBeneficiaries = (list: UserAccount[]) => {
   listBeneficiariesInternal.value = list
 }
 
@@ -68,14 +68,15 @@ onMounted(async () => {
   if (route.params.type === 'crypto') {
     type.value = TypeBeneficiaryInternal.ASSET
   }
-
+  console.log('eddddddd')
   await loadMore()
 })
 
-const nextStep = (item: BeneficiaryInternal) => {
+const nextStep = (item: UserAccount) => {
+  console.log(item)
   const page = 0
   const formData = {
-    beneficiary: { ...item, accountId: !item.accountTo ? item.accountId : item.accountTo },
+    beneficiary: { ...item },
   }
 
   emit('nextPage', {

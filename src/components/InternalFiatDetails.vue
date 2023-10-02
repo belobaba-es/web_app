@@ -50,10 +50,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-  },
   amountFee: {
     type: String,
     required: true,

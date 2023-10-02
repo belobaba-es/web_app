@@ -57,7 +57,7 @@ const beneficiary = props.formData.beneficiary
 
 const isGeneratingTransactionPDF = ref(false)
 
-const username = userStore.getUser.name
+const username = userStore.getUser.client.name
 
 const goToWithdrawIndex = () => {
   router.push(`/withdraw/crypto/other`)

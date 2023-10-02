@@ -36,13 +36,11 @@ export class BeneficiaryService extends HttpService {
   }
 
   async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag = 1) {
-    return await this.get<any>(
-      `beneficiary/${nextPag}?typeBeneficiaryTransfer=${beneficiaryType}`
-    )
+    return await this.get<any>(`beneficiary/${nextPag}?typeBeneficiaryTransfer=${beneficiaryType}`)
   }
 
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
-    return await this.get<BeneficiariesInternalResponse>(`beneficiary/internal/${type}/${nextPag === 0 ? 1 : nextPag}`)
+    return await this.get<BeneficiariesInternalResponse>(`beneficiary/asset/${nextPag === 0 ? 1 : nextPag}`)
   }
   async saveBeneficiary(payload: any): Promise<any> {
     return await this.post<any>(`beneficiary/banking`, payload)

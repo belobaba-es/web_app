@@ -19,7 +19,7 @@ export class AccountService extends HttpService {
   }
 
   async getAccountByEmail(email: string | string[]): Promise<UserAccount> {
-    return await this.get<UserAccount>(`/account/owner-email/${email}`)
+    return await this.get<UserAccount>(`/account/by-email/${email}`)
   }
 
   async enableTwoFactorAuthentication(): Promise<void> {

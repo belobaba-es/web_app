@@ -41,12 +41,13 @@
 
     <div v-if="showAmount" class="grid col-12 flex w-full">
       <div class="flex w-full">
-        <InputText
+        <InputNumber
           id="amount"
-          type="number"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
           :placeholder="t('amount')"
+          :minFractionDigits="2"
+          :maxFractionDigits="8"
         />
         <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
       </div>
@@ -91,6 +92,7 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'

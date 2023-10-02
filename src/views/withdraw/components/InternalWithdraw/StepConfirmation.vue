@@ -120,13 +120,13 @@ function makeTransaction() {
   const withDrawService = WithdrawService.instance()
 
   submitting.value = true
-
+  console.log(props.formData)
   switch (route.params.type) {
     case 'fiat':
       withDrawService
         .makeFiatInternalTransfer({
           amount: props.formData.amount,
-          accountDestination: props.formData.beneficiary.accountId,
+          clientIdDestination: props.formData.beneficiary.clientId,
           reference: props.formData.reference,
         })
         .then((res: any) => {
@@ -149,10 +149,10 @@ function makeTransaction() {
     case 'crypto':
       withDrawService
         .makeAssetInternalTransfer({
+          clientIdDestination: props.formData.beneficiary.clientId,
           amount: props.formData.amount,
-          accountDestination: props.formData.beneficiary.accountId,
           reference: props.formData.reference,
-          assetId: props.formData.assetId,
+          assetCode: props.formData.assetCode,
         })
         .then((res: any) => {
           transactionId.value = res.data.transactionId
