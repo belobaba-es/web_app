@@ -22,8 +22,14 @@
           </thead>
 
           <tbody v-if="!isLoading">
-            <tr v-for="item in exchanges.results as ExchangeCreated[]">
+            <!--          todo-->
+            <!--            <tr v-for="item in exchanges.results as ExchangeCreated[]" :key="i">-->
+            <tr v-for="(item, i) in exchangesList" :key="i">
               <!--              buy-->
+              <!--              todo-->
+              {{
+                i
+              }}
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
@@ -45,9 +51,7 @@
                 <h3 class="text-center">{{ item.totalAmount }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
-              <td class="swap-icon-container">
-                <img :src="swapIcon" />
-              </td>
+              <td class="swap-icon-container"><img :src="swapIcon" /></td>
 
               <!--              buy-->
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="balance-in-container">
@@ -127,10 +131,8 @@ const { t } = useI18n({ useScope: 'global' })
 const { exchanges } = useSwap()
 const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
-
 const listAssets = ref<Asset[]>([])
 const isLoading = ref<boolean>(true)
-
 const assetsService = AssetsService.instance()
 const exchangesList = ref<ExchangeCreated[]>()
 
@@ -140,8 +142,17 @@ onMounted(async () => {
   })
 
   await fetchExchanges()
+  console.log('================================================')
+  console.log('0 exchangesList.value', exchangesList.value)
+  console.log('0 exchanges.value', exchanges.value)
   isLoading.value = false
-  exchangesList.value = exchanges.value.results as ExchangeCreated[]
+  exchangesList.value = [
+    ...((exchangesList.value as ExchangeCreated[]) ?? []),
+    ...(exchanges.value.results as ExchangeCreated[]),
+  ]
+
+  console.log('1 exchangesList.value', exchangesList.value)
+  console.log('================================================')
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
@@ -155,7 +166,6 @@ const statusClass = (status: string) => {
 }
 
 const getPriceQuote = (totalAmount: number, unitCount: number) => {
-  console.log(' -- totalAmount unitCount', totalAmount, unitCount)
   const price = totalAmount / unitCount
 
   return price.toFixed(2)

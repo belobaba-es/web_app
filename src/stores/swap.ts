@@ -257,15 +257,19 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const getNextPage = async () => {
+    console.log('-- getNextPage nextPag', exchanges.value.nextPag)
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
       .nextQuotes(exchanges.value.nextPag)
       .then(response => {
-        response.results.forEach(result => {
-          const existInResults = exchanges.value.results.find(item => item.id === result.id)
-          if (!existInResults) exchanges.value.results.push(result)
-        })
+        console.log('response.results', response.results)
+        // todo check
+        // response.results.forEach(result => {
+        //   const existInResults = exchanges.value.results.find(item => item.id === result.id)
+        //   if (!existInResults) exchanges.value.results.push(result)
+        // })
+        exchanges.value.results = [...exchanges.value.results, ...response.results]
         exchanges.value.nextPag = response.nextPag
       })
       .finally(() => {
