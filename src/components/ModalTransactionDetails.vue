@@ -14,15 +14,7 @@
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div v-if="ownerName.length > 0" class="col-6">
-          <!--          <p-->
-          <!--            v-if="-->
-          <!--              props.transaction.assetId === 'USD' && props.transaction.counterparty?.informationOwner?.name.length > 0-->
-          <!--            "-->
-          <!--            class="font-medium text-sm"-->
-          <!--          >-->
-          <!--            {{ t('bankAccountHolder') }}-->
-          <!--          </p>-->
+        <div v-if="hasCounterParty" class="col-6">
           <p v-if="isUsdAndOwnerNameExists" class="font-medium text-sm">
             {{ t('bankAccountHolder') }}
           </p>
@@ -30,15 +22,6 @@
             {{ t('beneficiaryName') }}
           </p>
 
-          <!--          <p-->
-          <!--            v-if="-->
-          <!--              props.transaction.assetCode !== 'USD' ||-->
-          <!--              props.transaction.counterparty?.informationOwner?.name?.length > 0-->
-          <!--            "-->
-          <!--            class="font-medium text-sm"-->
-          <!--          >-->
-          <!--            {{ t('beneficiaryName') }}-->
-          <!--          </p>-->
           <p>{{ ownerName }}</p>
         </div>
 
@@ -61,8 +44,6 @@
           <p>
             {{ props.transaction.amount }} {{ props.transaction.assetCode ?? props.transaction.assetId?.slice(-3) }}
           </p>
-          <!--          todo-->
-          <!--          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>-->
           <p v-if="!props.transaction.isInternal && props.transaction.feeWire">{{ props.transaction.feeWire }}</p>
           <p></p>
         </div>
@@ -141,6 +122,10 @@ const props = defineProps<{
   transaction: TransactionHistory
 }>()
 const isGeneratingTransactionPDF = ref(false)
+const hasCounterParty = (): boolean => {
+  console.log('has counter party', props.transaction.counterparty ? true : false)
+  return props.transaction.counterparty ? true : false
+}
 const ownerName = props.transaction.counterparty?.informationOwner?.name ?? ''
 const isUsdAndOwnerNameExists = props.transaction.assetId === 'USD' && ownerName && ownerName.length > 0
 const isUsdOrAssetIdIsUsd = props.transaction.assetCode === 'USD' || props.transaction.assetId === 'USD'
@@ -157,7 +142,7 @@ const generatePDFTransactionReceipt = () => {
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
   const beneficiaryName = `${
-    transaction.beneficiary?.name ?? transaction.counterparty.informationOwner.name ?? transaction.to.label
+    transaction.beneficiary?.name ?? transaction.counterparty?.informationOwner?.name ?? transaction.to?.label ?? ''
   }`
 
   transactionPDF[t('userName')] = `${username}`
