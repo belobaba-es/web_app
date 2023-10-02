@@ -19,11 +19,19 @@ export interface BeneficiaryAssets {
   accountId: string
 }
 
+export enum CounterpartyType {
+  CRYPTO = 'CRYPTO',
+    FIAT = 'FIAT',
+}
+
 export type BeneficiaryInternal = {
-  accountId: string
-  accountTo: string
-  email: string
-  name: string
+  clientId: string
+  counterpartyId: string
+  counterpartyType: CounterpartyType
+  informationOwner : {
+    name: string
+    countery: string
+  }
 }
 
 export interface Beneficiary {
