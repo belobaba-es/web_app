@@ -1,6 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
-import { createExchangeResponse } from '../types/create-quote-response.interface'
-import { QuoteResponse } from '../types/quote-response.interface'
+import { createExchangeResponse } from '../types/create-exchange-response.interface'
+import { ExchangeResponse } from '../types/quote-response.interface'
 
 export class SwapService extends HttpService {
   private static _instance: SwapService
@@ -21,7 +21,6 @@ export class SwapService extends HttpService {
   }
 
   async createExchange(payload: any): Promise<createExchangeResponse> {
-    console.log('-createExchange', payload)
     const resp = await this.post<createExchangeResponse>(`swap/exchanges`, payload, true)
     return resp
   }
@@ -31,13 +30,8 @@ export class SwapService extends HttpService {
     return resp
   }
 
-  async quotes() {
-    const resp = await this.get<any>(`swap/quotes`, {}, true)
-    return resp
-  }
-
-  async nextQuotes(nextPag: string): Promise<QuoteResponse> {
-    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, {}, true)
+  async exchanges(nextPag: number = 1) {
+    const resp = await this.get<any>(`swap/exchanges/${nextPag}/20`, {}, true)
     return resp
   }
 

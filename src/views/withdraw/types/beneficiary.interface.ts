@@ -5,11 +5,6 @@ export enum BeneficiaryType {
   DOMESTIC = 'DOMESTIC',
 }
 
-export interface Beneficiary {
-  name: string
-  email: string
-}
-
 export interface BeneficiaryAssets {
   id: string
   assetId: string
@@ -24,7 +19,7 @@ export enum CounterpartyType {
     FIAT = 'FIAT',
 }
 
-export type BeneficiaryInternal = {
+export type Beneficiary = {
   clientId: string
   counterpartyId: string
   counterpartyType: CounterpartyType
@@ -32,20 +27,18 @@ export type BeneficiaryInternal = {
     name: string
     countery: string
   }
-}
+  informationWallet : {
+    assetId: string
+    address: string
 
-export interface Beneficiary {
-  id: string
-  assetId: string
-  assetTransferMethod: string
-  label: string
-  walletAddress: string
-  accountId: string
+  }
+  assetCode: string
+  assetIcon: string
 }
 
 export interface BeneficiaryAssetsResponse extends Pagination<Beneficiary> {}
 
-export interface BeneficiariesInternalResponse extends Pagination<BeneficiaryInternal> {}
+export interface BeneficiariesInternalResponse extends Pagination<Beneficiary> {}
 
 interface IntermediaryBank {
   bankCity: string

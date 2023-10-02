@@ -370,5 +370,7 @@
   "creditor": "ACREEDOR",
   "debtor": "DEUDOR",
   "franchisee": "FRANQUICIADO",
-  "not_related": "NO_RELACIONADO"
+  "not_related": "NO_RELACIONADO",
+  "namePdfTransactionHistory": "historico-transacciones"
+
 }

@@ -175,6 +175,12 @@ export const generateTransactionReceipt = (
   data: any,
   footer: string
 ) => {
+  console.log('nameFile:', nameFile)
+  console.log('logo:', logo)
+  console.log('title:', title)
+  console.log('data:', data)
+  console.log('footer:', footer)
+
   const pdf = ref(new jsPDF())
   pdf.value.addImage(logo, 'PNG', 85, 10, 40, 20)
   createText({ fontSize: 28, textColor: black, xPosition: 65, yPosition: 45, text: title }, pdf)

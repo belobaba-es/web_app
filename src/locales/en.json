@@ -377,5 +377,6 @@
   "creditor": "CREDITOR",
   "debtor": "DEBTOR",
   "franchisee": "FRANCHISEE",
-  "not_related": "NOT_RELATED"
+  "not_related": "NOT_RELATED",
+  "namePdfTransactionHistory": "transaction-history"
 }

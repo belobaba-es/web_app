@@ -1,7 +1,6 @@
 import { useBalanceWalletStore } from '../stores/balanceWallets'
 import { storeToRefs } from 'pinia'
 import { BalanceWallet } from '../views/deposit/types/asset.interface'
-import { FirebaseService } from '../shared/services/firebase'
 import { useUserStore } from '../stores/user'
 import { useI18n } from 'vue-i18n'
 import { AssetsService } from '../views/deposit/services/assets'
@@ -11,14 +10,20 @@ export const useBalanceWallet = () => {
   const balanceWalletStore = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
 
-  const fetchBalanceWallets = async () => {
-    const userStore = useUserStore()
-
+  const requestBalance = async () => {
     AssetsService.instance()
       .getBalanceWallets()
       .then(response => {
         balanceWalletStore.setBalanceWallet(response)
       })
+  }
+  const fetchBalanceWallets = async () => {
+    const userStore = useUserStore()
+    await requestBalance()
+    setInterval(async () => {
+      await requestBalance()
+    }, 10000)
+
     // const firebaseService = await new FirebaseService(userStore.getUser.accountId)
     // await firebaseService.listenFirebaseChanges()
     // firebaseService.getBalances().then(observable => {

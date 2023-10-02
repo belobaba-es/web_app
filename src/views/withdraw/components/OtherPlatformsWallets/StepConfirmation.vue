@@ -6,11 +6,11 @@
     </div>
     <div class="col-12">
       <h5 class="text-base text-600">{{ t('description') }}</h5>
-      <p class="text-base font-medium">{{ beneficiary.label }}</p>
+      <p class="text-base font-medium">{{ beneficiary.informationOwner.name }}</p>
     </div>
     <div class="col-12">
       <h5 class="text-base text-600">{{ t('walletAddress') }}</h5>
-      <p class="text-base font-medium">{{ beneficiary.walletAddress }}</p>
+      <p class="text-base font-medium">{{ beneficiary.informationWallet.address }}</p>
     </div>
     <Divider></Divider>
 
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to: {{ beneficiary.label }}</p>
+      <p class="text-base">Your are sending to: {{ beneficiary.informationOwner.name }}</p>
     </div>
 
     <div class="col-12">
@@ -121,7 +121,7 @@ async function makeTransaction() {
   withDrawService
     .makeAssetExternalTransfer({
       amount: props.formData.total,
-      beneficiaryAssetId: props.formData.beneficiary.id,
+      beneficiaryAssetId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
     })
     .then((res: any) => {

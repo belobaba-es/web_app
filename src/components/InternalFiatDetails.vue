@@ -7,7 +7,6 @@
 
     <div class="col-6">
       <p>{{ props.realName }}</p>
-      <p>{{ props.email }}</p>
     </div>
 
     <Divider type="dashed"></Divider>
@@ -47,10 +46,6 @@ const props = defineProps({
     required: true,
   },
   account: {
-    type: String,
-    required: true,
-  },
-  email: {
     type: String,
     required: true,
   },

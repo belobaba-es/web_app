@@ -2,31 +2,72 @@ export interface HistoricTransactionsResponse {
   nextPag: string
   prevPag: string
   count: number
-  results: ListTransactionPgType[]
+  results: any[]
+  // results: ListTransactionPgType[]
 }
 
-export type ListTransactionPgType = {
+type Counterparty = {
   id: string
-  accountId: string
-  accountNumber?: string
-  accountTo?: string
-  assetCode: string
-  assetCodeTo?: string
-  assetType: string
-  assetTransferMethod?: string
-  amount: number
-  bankName?: string
-  emailTo?: string
-  fundsTransferMethod?: string
-  isInternal: boolean
-  nameTo?: string
-  reference: string
-  transactionType: TransactionTypeEnum
-  transactionId: string
-  status: WithdrawalStatusEnum
-  createdAt: any
-  updatedAt?: any
+  clientId: string
+  counterpartyId: string
+  counterpartyType: string
+  informationOwner: {
+    name: string
+    country: string
+  }
+  informationWallet: {
+    assetId: string
+    address: string
+    relationshipConsumer: string
+    originWallet: string
+  }
+  createdAt: {
+    $date: string
+  }
 }
+
+export type TransactionHistory = {
+  _id?: {
+    $oid: string
+  }
+  amount: number
+  assetId: string
+  assetCode?: string
+  clientId: string
+  counterparty: Counterparty
+  createdAt: Date
+  isInternal: boolean
+  reference: string
+  status: string
+  transactionId: string
+  transactionType: string
+  formatedDate?: any
+}
+
+export type ListTransactionPgType = {}
+
+// export type ListTransactionPgType = {
+//   id: string
+//   accountId: string
+//   accountNumber?: string
+//   accountTo?: string
+//   assetCode: string
+//   assetCodeTo?: string
+//   assetType: string
+//   assetTransferMethod?: string
+//   amount: number
+//   bankName?: string
+//   emailTo?: string
+//   fundsTransferMethod?: string
+//   isInternal: boolean
+//   nameTo?: string
+//   reference: string
+//   transactionType: TransactionTypeEnum
+//   transactionId: string
+//   status: WithdrawalStatusEnum
+//   createdAt: any
+//   updatedAt?: any
+// }
 
 export enum TransactionTypeEnum {
   DEPOSIT = 'deposit',
@@ -54,13 +95,13 @@ export enum Status {
 }
 
 export type TransactionFiltersQueryType = {
-  accountId: string
+  clientId: string
   assetCode?: string
   assetType?: 'FIAT' | 'ASSET' | ''
-  initDoc?: string
+  perPage?: number
   nameTo?: string
   startDate?: string
-  next?: string
+  page?: number
   endDate?: string
   transactionType?: TransactionTypeEnum | ''
 }

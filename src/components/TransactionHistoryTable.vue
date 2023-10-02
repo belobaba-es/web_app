@@ -11,6 +11,7 @@
       aria-label="Custom ProgressSpinner"
     />
 
+    <!--    filters-->
     <section v-if="!props.isDashboard">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
         <div class="flex align-items-center">
@@ -125,14 +126,14 @@
                   <div class="col-3 flex align-items-center data-hidden">
                     <img
                       class="icon-cripto"
-                      alt="icon-{{ item.assetCode }}"
-                      :src="iconAsset(item.assetCode, listAssets)"
+                      :alt="item.assetId"
+                      :src="iconAsset(item.counterparty?.informationWallet?.assetId ?? item.assetId, listAssets)"
                     />
                   </div>
                   <div class="col-9">
-                    <p class="name_to">{{ item.nameTo }}</p>
+                    <p class="name_to">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
                     <p class="date">
-                      {{ item.createdAt }}
+                      {{ item.formatedDate }}
                     </p>
                   </div>
                 </div>
@@ -143,8 +144,7 @@
               <div class="col sm:col-6 lg:col-3">
                 <p class="amount-x font-semi-bold">
                   {{ item.amount }}
-                  <small>{{ item.assetCode }}</small>
-                  &nbsp;
+                  <small>{{ getAsset(item.assetId, listAssets).code }}</small> &nbsp;
                   <i
                     v-if="item.transactionType === 'withdraw-funds'"
                     class="pi pi-arrow-circle-up icon-withdraw-funds"
@@ -199,7 +199,7 @@
 
   <ModalTransactionDetails
     v-model:display="displayModalTransactionDetail"
-    :transaction="modalTransactionDetail"
+    :transaction="modalTransactionDetail as TransactionHistory ?? {} as TransactionHistory"
   ></ModalTransactionDetails>
 </template>
 
@@ -218,9 +218,9 @@ import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {
-  ListTransactionPgType,
   TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys,
+  TransactionHistory,
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
@@ -229,6 +229,7 @@ import { iconAsset } from '../shared/iconAsset'
 import { TransactionModalPayload } from './ModalTransactionDetails.vue'
 import { useUserStore } from '../stores/user'
 import { Asset } from '../views/deposit/types/asset.interface'
+import { getAsset } from '../shared/getAsset'
 
 const router = useRouter()
 const route = useRoute()
@@ -239,13 +240,13 @@ const startDate = ref()
 const endDate = ref()
 const isLoading = ref(true)
 const isLoadingPDF = ref(false)
-const filters: TransactionFiltersQueryType = {
-  accountId: '',
+const filters: TransactionFiltersQueryType | any = {
+  clientId: '',
   assetCode: '',
   assetType: '',
-  initDoc: '',
+  perPage: 10,
   startDate: '',
-  next: '',
+  page: 1,
   endDate: '',
   transactionType: '',
 }
@@ -260,11 +261,11 @@ const assets = ref<{ name: string; code: string }[]>([])
 const listAssets = ref<Asset[]>([])
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
-const listTransaction = ref<ListTransactionPgType[]>([])
+const listTransaction = ref<TransactionHistory[]>([])
 const submitting = ref(false)
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
-const modalTransactionDetail = ref({})
+const modalTransactionDetail = ref<TransactionHistory>()
 const nextPage = ref({
   nextPage: false,
   data: '',
@@ -286,7 +287,6 @@ const lastDateFiltersRegistry: any = ref({
 onMounted(async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
-
     let a = [
       {
         name: t('allItems'),
@@ -317,6 +317,8 @@ const getTransactions = async (filters: any = {}) => {
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
+
+  // todo send nextPage as page into the payload
   await getHistoric
     .getHistoric(filters)
     .then(data => {
@@ -324,8 +326,9 @@ const getTransactions = async (filters: any = {}) => {
       isLoading.value = false
       isLoadingPDF.value = false
 
-      data.results.forEach(element => {
-        element.createdAt = formatDate(element.createdAt)
+      data.results.forEach((element: TransactionHistory) => {
+        element.formatedDate = formatDate(element.createdAt)
+        element.assetCode = getAsset(element.assetId, listAssets.value).code
         listTransaction.value.push(element)
       })
 
@@ -335,6 +338,7 @@ const getTransactions = async (filters: any = {}) => {
       if (data.nextPag) {
         nextPage.value.nextPage = true
         nextPage.value.data = data.nextPag
+        filtersChange('page', data.nextPag)
       }
 
       registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
@@ -350,7 +354,7 @@ const loadMoreItems = async () => {
   submitting.value = true
   listTransaction.value = []
 
-  await filtersChange('initDoc', nextPage.value.data)
+  await filtersChange('page', nextPage.value.data)
   await getTransactions(filters)
 }
 
@@ -402,9 +406,9 @@ const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
 const user = userStore.getUser
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+// todo set company name when ready
+const username =
+  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
 let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
@@ -414,8 +418,8 @@ const downloadExtract = () => {
 
     const owner = {
       name: username,
-      id: user.taxId,
-      address: `${user.streetOne} ${user.city}`,
+      id: user.taxId ?? user.client.dni,
+      address: `${user.client.streetOne} ${user.client.city}`,
     }
 
     isLoadingPDF.value = false
@@ -424,10 +428,10 @@ const downloadExtract = () => {
 
     listTransaction.value.forEach((transaction, i) => {
       const data = {
-        assetCode: transaction.assetCode,
+        assetCode: getAsset(transaction.assetId, listAssets.value).code,
         reference: transaction.reference,
-        createdAt: transaction.createdAt,
-        amount: transaction.amount,
+        createdAt: transaction.formatedDate,
+        amount: Number(transaction.amount.toFixed(8).replace(/\.?0*$/, '')),
       }
       extractPDFInfo[i] = data
     })
@@ -462,7 +466,7 @@ const prepareDatesFilterPDF = () => {
   }
 }
 
-const registerSearchFilters = (transactions: ListTransactionPgType[], filters: any) => {
+const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
   lastDateFiltersRegistry.value = {
     transactions,
     dates: {
@@ -485,34 +489,38 @@ const search = async () => {
   await getTransactions(filters)
 }
 
-const openModalTransactionDetails = (event: any, transaction: any) => {
+const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
   isLoadingTransactionDetails.value = true
-
-  const txDate = new Date(transaction.createdAt)
-  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  transaction.formatedDate = formatter.format(txDate)
-
+  transaction.formatedDate = transaction.formatedDate
+  transaction.amount = Number(transaction.amount.toFixed(8).replace(/\.?0*$/, ''))
   modalTransactionDetail.value = transaction
+  console.log('transaction', transaction)
 
-  loadTransactionDetail(transaction)
+  // loadTransactionDetail(transaction)
+
+  displayModalTransactionDetail.value = true
+  isLoadingTransactionDetails.value = false
 }
 
-const loadTransactionDetail = async (transaction: any) => {
-  await getTransactonHistoric
-    .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
-    .then(data => {
-      const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
-
-      displayModalTransactionDetail.value = true
-      isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = {
-        ...modalTransactionDetail.value,
-        ...(data as TransactionModalPayload),
-        nameTo,
-      } as TransactionModalPayload
-    })
-}
+// const loadTransactionDetail = async (transaction: TransactionHistory) => {
+//   await getTransactonHistoric
+//     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+//     .then(data => {
+//       // const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
+//       // todo
+//       const nameTo = ``
+//
+//       console.log('loadTransactionDetail transaction', transaction)
+//       console.log('loadTransactionDetail data', data)
+//       displayModalTransactionDetail.value = true
+//       isLoadingTransactionDetails.value = false
+//       modalTransactionDetail.value = transaction
+//
+//       console.log('modalTransactionDetail.value', modalTransactionDetail.value)
+//     })
+// }
 </script>
+
 <style lang="scss" scoped>
 .dropdown-full {
   width: 100% !important;
