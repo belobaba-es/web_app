@@ -14,7 +14,7 @@
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div v-if="hasCounterParty" class="col-6">
+        <div v-if="hasCounterParty()" class="col-6">
           <p v-if="isUsdAndOwnerNameExists" class="font-medium text-sm">
             {{ t('bankAccountHolder') }}
           </p>
