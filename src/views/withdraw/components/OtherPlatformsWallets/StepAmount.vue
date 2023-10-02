@@ -17,11 +17,11 @@
 
     <div class="grid col-12">
       <div class="col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-        <p class="text-base font-medium">{{ beneficiary.label }}</p>
+        <p class="text-base font-medium">{{ beneficiary.informationOwner.name }}</p>
       </div>
 
       <div class="col-6 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-        <p class="text-base font-medium wallet-address">{{ beneficiary.walletAddress }}</p>
+        <p class="text-base font-medium wallet-address">{{ beneficiary.informationWallet.address }}</p>
       </div>
     </div>
 
@@ -115,7 +115,7 @@ const props = defineProps<{
 const beneficiary = props.formData.beneficiary
 
 const emit = defineEmits(['nextPage'])
-const amount = ref('')
+const amount = ref<number>(0)
 const fee = ref(0)
 const reference = ref('')
 const assetId = ref('')
@@ -126,6 +126,7 @@ const total = ref(0)
 const showAmount = ref(true)
 
 onMounted(() => {
+  console.log(props.formData.beneficiary)
   asset.value = props.formData.beneficiary.assetCode
   assetId.value = props.formData.beneficiary.assetId
   balance.value = getBalanceByCode(asset.value)
@@ -134,8 +135,10 @@ onMounted(() => {
 })
 
 const amountFee = computed(() => {
-  const t = isNaN(parseFloat(amount.value) - fee.value) ? 0 : parseFloat(amount.value) - fee.value
-  if (t > balance.value) {
+  fee.value = fee.value ?? 0
+
+  const subtotal = isNaN(amount.value - fee.value) ? 0 : amount.value - fee.value
+  if (subtotal > balance.value) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',
@@ -143,19 +146,23 @@ const amountFee = computed(() => {
       life: 4000,
     })
 
-    amount.value = '0'
+    amount.value = 0
 
     total.value = 0
   }
 
-  total.value = Number(t.toFixed(8))
-  return Number(t.toFixed(8))
+  total.value = Number(subtotal.toFixed(8))
+  return Number(subtotal.toFixed(8))
 })
 
 const events = computed(() => {
   return [
     { amount: fee.value, label: t('Fee'), name: false },
-    { amount: amountFee.value, label: `${t('youSendTo')}: ${props.formData.beneficiary.label}`, name: true },
+    {
+      amount: amountFee.value,
+      label: `${t('youSendTo')}: ${props.formData.beneficiary.informationOwner.name}`,
+      name: true,
+    },
   ]
 })
 

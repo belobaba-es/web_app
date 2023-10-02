@@ -10,16 +10,18 @@ export const useBalanceWallet = () => {
   const balanceWalletStore = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
 
+  const requestBalance = async () => {
+    AssetsService.instance()
+      .getBalanceWallets()
+      .then(response => {
+        balanceWalletStore.setBalanceWallet(response)
+      })
+  }
   const fetchBalanceWallets = async () => {
     const userStore = useUserStore()
-
-    setInterval(() => {
-      console.log('-- remove this soon')
-      AssetsService.instance()
-        .getBalanceWallets()
-        .then(response => {
-          balanceWalletStore.setBalanceWallet(response)
-        })
+    await requestBalance()
+    setInterval(async () => {
+      await requestBalance()
     }, 10000)
 
     // const firebaseService = await new FirebaseService(userStore.getUser.accountId)

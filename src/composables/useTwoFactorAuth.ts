@@ -41,14 +41,10 @@ export const useTwoFactorAuth = () => {
   const lookQRTwoFactor = async (): Promise<void> => {
     const user = userStore.getUser as User
 
-    const naturalAccount = `${user.firstName} ${user.middleName} ${user.lastName}`
-    const accountType = user.contactType
-    const companyAccount = user.name
-
     const payload = {
-      accountId: user.account.accountId,
+      accountId: user.clientId,
       email: user.email,
-      name: accountType === 'company' ? companyAccount : naturalAccount,
+      name: user.name,
     }
 
     TwoFactorService.instance()
@@ -71,23 +67,19 @@ export const useTwoFactorAuth = () => {
 
   const getQR = computed(() => {
     if (twoFactorData.value?.qr != undefined) {
-      return twoFactorData.value.qr
+      return twoFactorData.value!.qr
     }
   })
 
   const getSecret = computed(() => {
     if (twoFactorData.value?.secret != undefined) {
-      return twoFactorData.value.secret
+      return twoFactorData.value!.secret
     }
   })
 
   const getCodeRecovery = (): string[] => {
     console.log(twoFactorData.value?.code_recovery)
-    if (twoFactorData.value?.code_recovery != undefined) {
-      return twoFactorData.value.code_recovery
-    }
-
-    return []
+    return twoFactorData.value?.code_recovery ?? []
   }
 
   /**
@@ -96,7 +88,7 @@ export const useTwoFactorAuth = () => {
    */
   const verifyCode = (account?: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (codeForVerify.value.length < 6) {
+      if (codeForVerify.value.length < 6) {-
         toast.add({
           severity: 'warn',
           detail: t('validVerifyCode'),
@@ -108,7 +100,7 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: account ?? userStore.getUser.account.accountId,
+        accountId: account ?? userStore.getuser.client.accountId,
         code: codeForVerify.value.replace('-', ''),
       }
 
@@ -195,15 +187,15 @@ export const useTwoFactorAuth = () => {
   const setTwoFactorActive = () => {
     const user = userStore.getUser
 
-    user.account.twoFactorActive = true
+    user.client.twoFactorActive = true
 
     userStore.setUser(user)
   }
 
   const twoFactorIsActive = (): boolean => {
     const user = userStore.getUser
-    console.log(user.account.twoFactorActive === true)
-    return user.account.twoFactorActive === true
+    console.log(user.client.twoFactorActive === true)
+    return user.client.twoFactorActive === true
   }
 
   const downloadCodeRecoveryTxtFile = (codes: string[]) => {

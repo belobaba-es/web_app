@@ -1,7 +1,8 @@
 <template>
   <div class="col-12 content">
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
+      <!-- bankAccountHolder en cripto ???? -->
+      <!-- <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p> -->
       <p class="font-medium text-sm">{{ t('wallet') }}</p>
     </div>
 
