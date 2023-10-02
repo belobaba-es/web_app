@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="mt-4" v-if="listNextPag !== ''">
+      <div class="mt-4" v-if="listNextPag > 1">
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
@@ -59,7 +59,7 @@ import { useToast } from 'primevue/usetoast'
 import { useBeneficiary } from '../../composables/useBeneficiary'
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
-import { Beneficiary } from "../../types/beneficiary.interface";
+import { Beneficiary } from '../../types/beneficiary.interface'
 
 const router = useRouter()
 const toast = useToast()

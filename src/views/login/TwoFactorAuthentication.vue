@@ -36,7 +36,7 @@ const { t } = useI18n({
 })
 
 interface Props {
-  loginData: LoginData
+  loginData: User
 }
 
 const props = defineProps<Props>()
@@ -44,8 +44,9 @@ const props = defineProps<Props>()
 const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
   if (isValid) {
     userStore.setUser(props.loginData as User)
+    const loginData = props.loginData as any
 
-    if (props.loginData.client.status !== AccountStatus.PROCESSING) {
+    if (loginData.client.status !== AccountStatus.PROCESSING) {
       window.location.href = '/dashboard'
     } else {
       window.location.href = `/profile/${props.loginData.accountId}`

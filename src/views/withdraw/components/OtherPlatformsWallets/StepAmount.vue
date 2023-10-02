@@ -169,7 +169,7 @@ const events = computed(() => {
 })
 
 const validateField = (): boolean => {
-  if (amount.value.trim().length === 0) {
+  if (amount.value === 0) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',

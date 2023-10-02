@@ -88,8 +88,8 @@ export const useTwoFactorAuth = () => {
    */
   const verifyCode = (account?: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      if (codeForVerify.value.length < 6) {-
-        toast.add({
+      if (codeForVerify.value.length < 6) {
+        ;-toast.add({
           severity: 'warn',
           detail: t('validVerifyCode'),
           life: 6000,
@@ -100,7 +100,7 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: account ?? userStore.getuser.client.accountId,
+        accountId: account ?? userStore.getUser.client.clientId,
         code: codeForVerify.value.replace('-', ''),
       }
 

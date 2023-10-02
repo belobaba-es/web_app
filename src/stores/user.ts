@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { CryptoService } from '../shared/services/crypto'
-import { Account } from '../views/login/types/login.interface'
 
 export interface Domestic {
   in: number

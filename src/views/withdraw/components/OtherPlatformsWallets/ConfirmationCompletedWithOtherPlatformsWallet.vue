@@ -15,7 +15,6 @@
       :wallet="beneficiary.informationWallet.address"
       :amount="props.formData.total"
       :amountFee="props.formData.total + 0"
-      :fee="0"
       :transactionId="transactionId"
       :assetCode="props.formData.symbol"
     ></CryptoTransferDetail>

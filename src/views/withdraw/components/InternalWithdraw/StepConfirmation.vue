@@ -63,7 +63,6 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { WithdrawService } from '../../services/withdraw'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
@@ -89,7 +88,7 @@ const props = defineProps<{
   formData: any
 }>()
 const assetSymbol = props.formData.symbol
-const beneficiary = props.formData.beneficiary as BeneficiaryInternal
+const beneficiary = props.formData.beneficiary
 const emit = defineEmits(['complete'])
 const router = useRouter()
 const userStore = useUserStore()

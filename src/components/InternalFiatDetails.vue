@@ -7,7 +7,6 @@
 
     <div class="col-6">
       <p>{{ props.realName }}</p>
-      <p>{{ props.email }}</p>
     </div>
 
     <Divider type="dashed"></Divider>
