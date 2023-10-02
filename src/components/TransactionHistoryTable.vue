@@ -11,6 +11,7 @@
       aria-label="Custom ProgressSpinner"
     />
 
+    <!--    filters-->
     <section v-if="!props.isDashboard">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
         <div class="flex align-items-center">
@@ -126,11 +127,11 @@
                     <img
                       class="icon-cripto"
                       alt="icon-{{ item.assetCode }}"
-                      :src="iconAsset(item.assetCode, listAssets)"
+                      :src="iconAsset(item.counterparty.informationWallet.assetId, listAssets)"
                     />
                   </div>
                   <div class="col-9">
-                    <p class="name_to">{{ item.nameTo }}</p>
+                    <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
                     <p class="date">
                       {{ item.createdAt }}
                     </p>
@@ -218,9 +219,9 @@ import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {
-  ListTransactionPgType,
   TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys,
+  TransactionHistory,
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
@@ -260,7 +261,7 @@ const assets = ref<{ name: string; code: string }[]>([])
 const listAssets = ref<Asset[]>([])
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
-const listTransaction = ref<ListTransactionPgType[]>([])
+const listTransaction = ref<TransactionHistory[]>([])
 const submitting = ref(false)
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
@@ -285,6 +286,7 @@ const lastDateFiltersRegistry: any = ref({
 
 onMounted(async () => {
   await assetsService.list().then(data => {
+    console.log('assets listed data', data)
     listAssets.value = data
 
     let a = [
@@ -317,6 +319,8 @@ const getTransactions = async (filters: any = {}) => {
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
+
+  // todo send nextPage as page into the payload
   await getHistoric
     .getHistoric(filters)
     .then(data => {
@@ -462,7 +466,7 @@ const prepareDatesFilterPDF = () => {
   }
 }
 
-const registerSearchFilters = (transactions: ListTransactionPgType[], filters: any) => {
+const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
   lastDateFiltersRegistry.value = {
     transactions,
     dates: {
@@ -513,6 +517,7 @@ const loadTransactionDetail = async (transaction: any) => {
     })
 }
 </script>
+
 <style lang="scss" scoped>
 .dropdown-full {
   width: 100% !important;

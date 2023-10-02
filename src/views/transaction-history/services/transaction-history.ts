@@ -23,10 +23,6 @@ export class TransactionHistoricService extends HttpService {
     return await this.get<HistoricTransactionsResponse>(`transactionHistory`, payload, true)
   }
 
-  async getHistoricNextPage(nextPag: string, payload = {}) {
-    return await this.get<HistoricTransactionsResponse>(`transactionHistory/?next=${nextPag}`, payload, true)
-  }
-
   // async historic(assetCode:any) {
   //   const resp = await this.get<HistoricTransactionsResponse>(`transaction/${assetCode}`, [], true)
   //   return resp;
