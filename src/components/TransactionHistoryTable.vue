@@ -127,11 +127,11 @@
                     <img
                       class="icon-cripto"
                       :alt="item.assetId"
-                      :src="iconAsset(item.counterparty.informationWallet.assetId, listAssets)"
+                      :src="iconAsset(item.counterparty?.informationWallet?.assetId ?? item.assetId, listAssets)"
                     />
                   </div>
                   <div class="col-9">
-                    <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
+                    <p class="name_to">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
                     <p class="date">
                       {{ item.formatedDate }}
                     </p>
@@ -431,7 +431,7 @@ const downloadExtract = () => {
         assetCode: getAsset(transaction.assetId, listAssets.value).code,
         reference: transaction.reference,
         createdAt: transaction.formatedDate,
-        amount: transaction.amount,
+        amount: Number(transaction.amount.toFixed(8).replace(/\.?0*$/, '')),
       }
       extractPDFInfo[i] = data
     })
@@ -492,6 +492,7 @@ const search = async () => {
 const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
   isLoadingTransactionDetails.value = true
   transaction.formatedDate = transaction.formatedDate
+  transaction.amount = Number(transaction.amount.toFixed(8).replace(/\.?0*$/, ''))
   modalTransactionDetail.value = transaction
   console.log('transaction', transaction)
 
