@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ item.clientId }}</p>
+      <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
       <p class="date">
         {{ formatDate(item.counterparty.createdAt) }}
       </p>
