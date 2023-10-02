@@ -110,9 +110,10 @@ export interface TransactionModalPayload {
   beneficiary?: any
 }
 const userStore = useUserStore()
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+// todo set company name when ready
+const username =
+  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
+
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
@@ -133,7 +134,7 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction}`
+  const beneficiaryName = `${transaction.counterparty.informationOwner.name}`
   console.log('modal transaction', transaction)
   // const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
 

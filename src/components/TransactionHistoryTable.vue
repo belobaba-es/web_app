@@ -287,7 +287,6 @@ const lastDateFiltersRegistry: any = ref({
 onMounted(async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
-    console.log('listAssets', listAssets.value)
     let a = [
       {
         name: t('allItems'),
@@ -326,7 +325,6 @@ const getTransactions = async (filters: any = {}) => {
       submitting.value = false
       isLoading.value = false
       isLoadingPDF.value = false
-      console.log('&&& data', data)
 
       data.results.forEach((element: TransactionHistory) => {
         element.formatedDate = formatDate(element.createdAt)
@@ -420,18 +418,15 @@ const downloadExtract = () => {
 
     const owner = {
       name: username,
-      id: user.taxId,
-      address: `${user.streetOne} ${user.city}`,
+      id: user.taxId ?? user.client.dni,
+      address: `${user.client.streetOne} ${user.client.city}`,
     }
 
     isLoadingPDF.value = false
 
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
-    console.log('username', username)
-    console.log('nameFile', nameFile)
 
     listTransaction.value.forEach((transaction, i) => {
-      console.log('transaction.formatedDate', transaction.formatedDate)
       const data = {
         assetCode: getAsset(transaction.assetId, listAssets.value).code,
         reference: transaction.reference,
@@ -439,10 +434,7 @@ const downloadExtract = () => {
         amount: transaction.amount,
       }
       extractPDFInfo[i] = data
-      console.log('--> downloadExtract data', data)
     })
-
-    console.log('extractPDFInfo', extractPDFInfo)
 
     generateTransactionHistory(
       nameFile,
@@ -501,26 +493,31 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   isLoadingTransactionDetails.value = true
   transaction.formatedDate = transaction.formatedDate
   modalTransactionDetail.value = transaction
-  loadTransactionDetail(transaction)
+  console.log('transaction', transaction)
+
+  // loadTransactionDetail(transaction)
+
+  displayModalTransactionDetail.value = true
+  isLoadingTransactionDetails.value = false
 }
 
-const loadTransactionDetail = async (transaction: TransactionHistory) => {
-  await getTransactonHistoric
-    .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
-    .then(data => {
-      // const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
-      // todo
-      const nameTo = ``
-
-      console.log('loadTransactionDetail transaction', transaction)
-      console.log('loadTransactionDetail data', data)
-      displayModalTransactionDetail.value = true
-      isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = transaction
-
-      console.log('modalTransactionDetail.value', modalTransactionDetail.value)
-    })
-}
+// const loadTransactionDetail = async (transaction: TransactionHistory) => {
+//   await getTransactonHistoric
+//     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+//     .then(data => {
+//       // const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
+//       // todo
+//       const nameTo = ``
+//
+//       console.log('loadTransactionDetail transaction', transaction)
+//       console.log('loadTransactionDetail data', data)
+//       displayModalTransactionDetail.value = true
+//       isLoadingTransactionDetails.value = false
+//       modalTransactionDetail.value = transaction
+//
+//       console.log('modalTransactionDetail.value', modalTransactionDetail.value)
+//     })
+// }
 </script>
 
 <style lang="scss" scoped>
