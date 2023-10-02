@@ -42,6 +42,7 @@ export type TransactionHistory = {
   transactionId: string
   transactionType: string
   formatedDate?: any
+  feeWire: any
 }
 
 export type ListTransactionPgType = {}
