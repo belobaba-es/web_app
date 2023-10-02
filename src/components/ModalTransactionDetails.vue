@@ -15,15 +15,18 @@
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
         <div class="col-6">
-          <p
-            v-if="props.transaction.assetCode === 'USD' && props.transaction.nameTo.length > 0"
-            class="font-medium text-sm"
-          >
-            {{ t('bankAccountHolder') }}
-          </p>
+          <!--          todo set owner name-->
+          <!--          <p-->
+          <!--            v-if="props.transaction.assetCode === 'USD' && props.transaction.nameTo.length > 0"-->
+          <!--            class="font-medium text-sm"-->
+          <!--          >-->
+          <!--            {{ t('bankAccountHolder') }}-->
+          <!--          </p>-->
 
           <p
-            v-if="props.transaction.assetCode !== 'USD' && props.transaction.nameTo.length > 0"
+            v-if="
+              props.transaction.assetCode !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0
+            "
             class="font-medium text-sm"
           >
             {{ t('beneficiaryName') }}
@@ -31,7 +34,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.nameTo }}</p>
+          <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
           <p v-if="props.transaction.assetCode === 'USD'"></p>
         </div>
       </div>
@@ -47,7 +50,8 @@
 
         <div class="col-6 pt-1">
           <p>{{ props.transaction.amount }} {{ props.transaction.assetCode }}</p>
-          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>
+          <!--          todo-->
+          <!--          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>-->
           <p></p>
         </div>
       </div>
@@ -61,7 +65,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ transaction.id }}</p>
+          <p>{{ transaction.transactionId }}</p>
           <p>{{ transaction.formatedDate }}</p>
         </div>
       </div>
@@ -92,6 +96,7 @@ import transformCharactersIntoAsterics from '../shared/transformCharactersIntoAs
 import { generateTransactionReceipt } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
 import { useUserStore } from '../stores/user'
+import { TransactionHistory } from '../views/transaction-history/types/transaction-history-response.interface'
 
 export interface TransactionModalPayload {
   id?: any
@@ -104,7 +109,6 @@ export interface TransactionModalPayload {
   reference?: any
   beneficiary?: any
 }
-
 const userStore = useUserStore()
 const username = userStore.getUser.firstName
   ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
@@ -113,7 +117,7 @@ const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
-  transaction: TransactionModalPayload
+  transaction: TransactionHistory
 }>()
 const isGeneratingTransactionPDF = ref(false)
 
@@ -122,24 +126,27 @@ const generatePDFTransactionReceipt = () => {
 
   isGeneratingTransactionPDF.value = true
   const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+  const userAccountNumber = transformCharactersIntoAsterics(user.clientId)
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
+  const beneficiaryName = `${transaction}`
+  console.log('modal transaction', transaction)
+  // const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
 
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
-  transactionPDF[t('assetType')] = transaction.assetCode
+  transactionPDF[t('assetType')] = transaction.assetCode ?? ''
   transactionPDF[t('amount')] = `${transaction.amount}`
   transactionPDF[t('transactionNumber')] = transaction.id
   transactionPDF[t('reference')] = `${transaction.reference}`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
+  console.table(transactionPDF)
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false
 }

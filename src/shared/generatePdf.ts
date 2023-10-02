@@ -75,6 +75,8 @@ export const generateTransactionHistory = (
   translations: any,
   dateFilters?: any
 ) => {
+  console.log('nameFile:', nameFile)
+
   const pdf = ref(
     new jsPDF({
       orientation: orientation,

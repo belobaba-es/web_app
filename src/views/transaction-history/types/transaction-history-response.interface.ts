@@ -27,21 +27,21 @@ type Counterparty = {
 }
 
 export type TransactionHistory = {
-  _id: {
+  _id?: {
     $oid: string
   }
   amount: number
   assetId: string
+  assetCode?: string
   clientId: string
   counterparty: Counterparty
-  createdAt: {
-    $date: string
-  }
+  createdAt: Date
   isInternal: boolean
   reference: string
   status: string
   transactionId: string
   transactionType: string
+  formatedDate?: any
 }
 
 export type ListTransactionPgType = {}
@@ -95,13 +95,13 @@ export enum Status {
 }
 
 export type TransactionFiltersQueryType = {
-  accountId: string
+  clientId: string
   assetCode?: string
   assetType?: 'FIAT' | 'ASSET' | ''
-  initDoc?: string
+  perPage?: number
   nameTo?: string
   startDate?: string
-  next?: string
+  page?: number
   endDate?: string
   transactionType?: TransactionTypeEnum | ''
 }
