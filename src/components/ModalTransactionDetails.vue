@@ -15,13 +15,12 @@
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
         <div class="col-6">
-          <!--          todo set owner name-->
-          <!--          <p-->
-          <!--            v-if="props.transaction.assetCode === 'USD' && props.transaction.nameTo.length > 0"-->
-          <!--            class="font-medium text-sm"-->
-          <!--          >-->
-          <!--            {{ t('bankAccountHolder') }}-->
-          <!--          </p>-->
+          <p
+            v-if="props.transaction.assetId === 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
+            class="font-medium text-sm"
+          >
+            {{ t('bankAccountHolder') }}
+          </p>
 
           <p
             v-if="
@@ -34,8 +33,8 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.counterparty?.informationOwner?.name }}</p>
-          <p v-if="props.transaction.assetCode === 'USD'"></p>
+          <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
+          <p v-if="props.transaction.assetCode? === 'USD' || props.transaction.assetId? === 'USD'"></p>
         </div>
       </div>
 
@@ -49,9 +48,10 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.amount }} {{ props.transaction.assetCode }}</p>
+          <p>{{ props.transaction.amount }} {{ props.transaction.assetCode ?? props.transaction.assetId?.slice(-3)  }}</p>
           <!--          todo-->
           <!--          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>-->
+          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire? }}</p>
           <p></p>
         </div>
       </div>
@@ -106,8 +106,16 @@ export interface TransactionModalPayload {
   amount?: any
   assetCode?: string
   nameTo?: any
+  assetId?: string
+  counterparty?: CounterpartyInfo;
   reference?: any
   beneficiary?: any
+}
+export interface CounterpartyInfo{
+  informationOwner: {
+    name: string;
+    country: string;
+  };
 }
 const userStore = useUserStore()
 // todo set company name when ready
@@ -134,20 +142,17 @@ const generatePDFTransactionReceipt = () => {
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction.counterparty?.informationOwner?.name ?? 'test'}`
-  console.log('modal transaction', transaction)
-  // const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.nameTo ?? transaction.to.label}`
+  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.counterparty.informationOwner.name ?? transaction.to.label}`
 
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
-  transactionPDF[t('assetType')] = transaction.assetCode === 'USD' ? 'FIAT' : 'CRYPTO'
+  transactionPDF[t('assetType')] = transaction.assetCode === 'USD' || transaction.assetId ? 'FIAT' : 'CRYPTO'
   transactionPDF[t('amount')] = `${transaction.amount}`
-  transactionPDF[t('transactionNumber')] = transaction.id
+  transactionPDF[t('transactionNumber')] = transaction.transactionId
   transactionPDF[t('reference')] = `${transaction.reference}`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
-  console.table(transactionPDF)
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false
 }

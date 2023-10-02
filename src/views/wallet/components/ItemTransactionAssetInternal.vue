@@ -1,9 +1,9 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ item.emailTo }}</p>
+      <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
       <p class="date">
-        {{ formatDate(item.createdAt) }}
+        {{ item.counterparty.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -12,7 +12,7 @@
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">
         {{ item.amount }}
-        <small>{{ item.assetCode }}</small>
+        <small>{{ item.assetId.slice(-3) }}</small>
         &nbsp;
         <i v-if="item.transactionType === 'withdraw-funds'" class="pi pi-arrow-circle-up icon-withdraw-funds"></i>
         <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
@@ -32,7 +32,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { formatDate } from '../../../shared/formatDate'
 
 defineProps<{
   item: any
