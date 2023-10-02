@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { ExchangeResponse } from '../views/swap/types/quote-response.interface'
+import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
 
@@ -35,8 +35,7 @@ export const useSwapStore = defineStore('swap', () => {
   const assetCode = ref()
   const exchanges = ref<ExchangeResponse>({
     count: 0,
-    nextPag: '',
-    prevPag: '',
+    nextPag: 1,
     results: [],
   })
   const successExecuted = ref(false)
@@ -257,19 +256,14 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const getNextPage = async () => {
-    console.log('-- getNextPage nextPag', exchanges.value.nextPag)
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
-      .nextQuotes(exchanges.value.nextPag)
+      .exchanges(exchanges.value.nextPag)
       .then(response => {
-        console.log('response.results', response.results)
-        // todo check
-        // response.results.forEach(result => {
-        //   const existInResults = exchanges.value.results.find(item => item.id === result.id)
-        //   if (!existInResults) exchanges.value.results.push(result)
-        // })
-        exchanges.value.results = [...exchanges.value.results, ...response.results]
+        response.results.forEach((result: ExchangeCreated) => {
+          exchanges.value.results.push(result)
+        })
         exchanges.value.nextPag = response.nextPag
       })
       .finally(() => {

@@ -23,13 +23,13 @@
 
           <tbody v-if="!isLoading">
             <!--          todo-->
-            <!--            <tr v-for="item in exchanges.results as ExchangeCreated[]" :key="i">-->
-            <tr v-for="(item, i) in exchangesList" :key="i">
+            <tr v-for="item in exchanges.results as ExchangeCreated[]">
+              <!--            <tr v-for="(item, i) in exchangesList" :key="i">-->
               <!--              buy-->
               <!--              todo-->
-              {{
-                i
-              }}
+              <!--              {{-->
+              <!--                i-->
+              <!--              }}-->
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
@@ -98,7 +98,7 @@
         </table>
       </div>
 
-      <div class="grid flex justify-content-end">
+      <div class="grid flex justify-content-end" v-if="exchanges.nextPag > 1">
         <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
           <Button
             class="p-button load-more-btn"
