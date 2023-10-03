@@ -3,7 +3,7 @@
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <p class="name_to">{{ username }}</p>
       <p class="date">
-        {{ item.counterparty.createdAt }}
+        {{ item.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -12,13 +12,20 @@
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">
         {{ item.amount }}
-        <small>{{ item.assetId }}</small>
+        <small>{{ item.assetId.slice(-3) }}</small>
         &nbsp;
         <i v-if="item.transactionType === 'withdraw-funds'" class="pi pi-arrow-circle-up icon-withdraw-funds"></i>
         <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
       </p>
     </div>
-    <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3 details-mobile">
+
+    <div class="col-1 flex align-items-center data-hidden">
+      <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
+        {{ item.status }}
+      </p>
+    </div>
+
+    <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2 details-mobile">
       <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
         <h4>
           <i class="pi pi-eye"></i>
@@ -37,9 +44,7 @@ import { useI18n } from 'vue-i18n'
 const userStore = useUserStore()
 const { t } = useI18n({ useScope: 'global' })
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+const username = userStore.getUser.name
 defineProps<{
   item: any
 }>()
