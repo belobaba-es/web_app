@@ -97,7 +97,7 @@ export enum Status {
 
 export type TransactionFiltersQueryType = {
   clientId: string
-  assetCode?: string
+  assetId?: string
   assetType?: 'FIAT' | 'ASSET' | ''
   perPage?: number
   nameTo?: string
