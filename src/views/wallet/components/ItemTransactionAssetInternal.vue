@@ -1,9 +1,9 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
+      <p class="name_to">{{ item.counterparty?.informationOwner?.name }}</p>
       <p class="date">
-        {{ item.counterparty.createdAt }}
+        {{ item.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
@@ -77,7 +77,7 @@ const secondsToDate = (seconds: number) => {
   --min-font: 15;
   font-size: var(--responsive);
 }
-.status{
+.status {
   font-family: KanitLight !important;
   font-weith: bold;
   width: fit-content;
