@@ -63,7 +63,7 @@
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="bankPostalCode" />
+          <InputText type="text" v-model="postalCode" />
         </div>
       </div>
     </div>
@@ -131,7 +131,7 @@ const props = defineProps<{
 const bankCountry = ref<string>('')
 const bankState = ref<string>('')
 const bankCity = ref<string>('')
-const bankPostalCode = ref<string>('')
+const postalCode = ref<string>('')
 const bankStreetOne = ref<string>('')
 const bankStreetTwo = ref<string>('')
 
@@ -142,7 +142,7 @@ onMounted(() => {
 })
 
 const validateFields = () => {
-  return [bankCountry, bankState, bankCity, bankPostalCode, bankStreetOne].every(field => field.value.trim() !== '')
+  return [bankCountry, bankState, bankCity, postalCode, bankStreetOne].every(field => field.value.trim() !== '')
 }
 
 const saveBeneficiary = () => {
@@ -159,7 +159,7 @@ const saveBeneficiary = () => {
           address: {
             streetOne: bankStreetOne.value,
             streetTwo: bankStreetTwo.value,
-            postalCode: bankPostalCode.value,
+            postalCode: postalCode.value,
             region: bankState.value,
             city: bankCity.value,
             country: bankCountry.value,
@@ -177,7 +177,7 @@ const saveBeneficiary = () => {
           address: {
             streetOne: bankStreetOne.value,
             streetTwo: bankStreetTwo.value,
-            postalCode: bankPostalCode.value,
+            postalCode: postalCode.value,
             region: bankState.value,
             city: bankCity.value,
             country: bankCountry.value,
