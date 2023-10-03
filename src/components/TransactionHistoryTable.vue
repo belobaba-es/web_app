@@ -47,10 +47,10 @@
                 <label class="label-search">{{ t('assetType') }}</label>
                 <Dropdown
                   class="dropdown-full"
-                  v-model="assetCode"
+                  v-model="assetId"
                   :options="assets"
                   optionLabel="name"
-                  optionValue="code"
+                  optionValue="assetId"
                   :placeholder="t('selectAnAsset')"
                 />
               </div>
@@ -234,14 +234,14 @@ const router = useRouter()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 const selectedTypeTransaction = ref()
-const assetCode = ref('')
+const assetId = ref('')
 const startDate = ref()
 const endDate = ref()
 const isLoading = ref(true)
 const isLoadingPDF = ref(false)
 const filters: TransactionFiltersQueryType | any = {
   clientId: '',
-  assetCode: '',
+  assetId: '',
   assetType: '',
   perPage: 10,
   startDate: '',
@@ -256,7 +256,7 @@ const transactionTypes = ref([
 ])
 const toast = useToast()
 const assetsService = AssetsService.instance()
-const assets = ref<{ name: string; code: string }[]>([])
+const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
@@ -284,31 +284,48 @@ const lastDateFiltersRegistry: any = ref({
 })
 
 onMounted(async () => {
+  await getAssets()
+  await getTransactions()
+})
+
+const getAssets = async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
-    let a = [
-      {
-        name: t('allItems'),
-        code: '',
-      },
-      {
-        name: 'US DOLLAR',
-        code: 'USD',
-      },
-    ]
+    let a = []
+    const allAssetsOption = {
+      name: t('allItems'),
+      assetId: '',
+    }
 
-    data.forEach(d => {
-      a.push({
-        name: d.name,
-        code: d.code,
-      })
+    // Initialize the variable to store the "USD" asset
+    let usdAsset = null
+
+    data.forEach(asset => {
+      if (asset.code === 'USD') {
+        // If the asset's assetId is "USD", store it in the usdAsset variable
+        usdAsset = {
+          name: asset.name,
+          assetId: asset.assetId,
+        }
+      } else {
+        a.push({
+          name: asset.name,
+          assetId: asset.assetId,
+        })
+      }
     })
+
+    // If the "USD" asset was found, add it to the beginning of the array
+    if (usdAsset) {
+      a.unshift(usdAsset)
+    }
+
+    // add al options at the begining
+    a.unshift(allAssetsOption)
 
     assets.value = a
   })
-
-  await getTransactions()
-})
+}
 
 const getTransactions = async (filters: any = {}) => {
   registerSearchFilters([], {})
@@ -337,7 +354,6 @@ const getTransactions = async (filters: any = {}) => {
       if (data.nextPag) {
         nextPage.value.nextPage = true
         nextPage.value.data = data.nextPag
-        filtersChange('page', data.nextPag)
       }
 
       registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
@@ -391,9 +407,9 @@ watch(selectedTypeTransaction, async newValue => {
   }
 })
 
-watch(assetCode, async newValue => {
-  if (assetCode) {
-    await filtersChange('assetCode', newValue)
+watch(assetId, async newValue => {
+  if (assetId) {
+    await filtersChange('assetId', newValue)
   }
 })
 
