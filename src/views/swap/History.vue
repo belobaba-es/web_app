@@ -33,7 +33,7 @@
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
-                  :src="iconAsset(item.destinationDetails.assetCode, listAssets)"
+                  :src="iconAssetByCode(item.destinationDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute bottom-0 right-0"
                 />
               </td>
@@ -41,7 +41,7 @@
               <!--              sell-->
               <td v-if="item.sourceDetails.assetCode !== 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img
-                  :src="iconAsset(item.sourceDetails.assetCode, listAssets)"
+                  :src="iconAssetByCode(item.sourceDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute top-0 left-0"
                 />
                 <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
@@ -123,9 +123,9 @@ import { useRouter } from 'vue-router'
 import { Asset } from '../deposit/types/asset.interface'
 import { AssetsService } from '../deposit/services/assets'
 import { ExchangeCreated } from './types/quote-response.interface'
-import { iconAsset } from '../../shared/iconAsset'
 import Skeleton from 'primevue/skeleton'
 import swapIcon from '../../assets/icons/swap.svg'
+import { iconAssetByCode } from '../../shared/iconAssetByCode'
 
 const { t } = useI18n({ useScope: 'global' })
 const { exchanges } = useSwap()

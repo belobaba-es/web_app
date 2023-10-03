@@ -34,7 +34,7 @@ export type TransactionHistory = {
   assetId: string
   assetCode?: string
   clientId: string
-  counterparty: Counterparty
+  counterparty?: Counterparty
   createdAt: Date
   isInternal: boolean
   reference: string
@@ -42,6 +42,7 @@ export type TransactionHistory = {
   transactionId: string
   transactionType: string
   formatedDate?: any
+  feeWire: any
 }
 
 export type ListTransactionPgType = {}

@@ -14,25 +14,20 @@
 
     <div class="col-12 content">
       <div class="inner-row-flex mt-20">
-        <div class="col-6">
-          <p
-            v-if="props.transaction.assetId === 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
-            class="font-medium text-sm"
-          >
+        <div v-if="hasCounterParty()" class="col-6">
+          <p v-if="isUsdAndOwnerNameExists" class="font-medium text-sm">
             {{ t('bankAccountHolder') }}
           </p>
-
-          <p
-            v-if="props.transaction.assetId !== 'USD' && props.transaction.counterparty.informationOwner.name.length > 0"
-            class="font-medium text-sm"
-          >
+          <p v-else class="font-medium text-sm">
             {{ t('beneficiaryName') }}
           </p>
+
+          <p>{{ ownerName }}</p>
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.counterparty.informationOwner.name }}</p>
-          <p v-if="props.transaction.assetId === 'USD'"></p>
+          <p>{{ props.transaction.counterparty?.informationOwner?.name }}</p>
+          <p v-if="props.transaction.assetCode === 'USD' || props.transaction.assetId === 'USD'"></p>
         </div>
       </div>
 
@@ -46,8 +41,10 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ props.transaction.amount }} {{ props.transaction.assetId?.slice(-3) }}</p>
-          <p v-if="!props.transaction.isInternal">{{ props.transaction.feeWire }}</p>
+          <p>
+            {{ props.transaction.amount }} {{ props.transaction.assetCode ?? props.transaction.assetId?.slice(-3) }}
+          </p>
+          <p v-if="!props.transaction.isInternal && props.transaction.feeWire">{{ props.transaction.feeWire }}</p>
           <p></p>
         </div>
       </div>
@@ -61,7 +58,7 @@
         </div>
 
         <div class="col-6 pt-1">
-          <p>{{ transaction._id }}</p>
+          <p>{{ transaction.transactionId }}</p>
           <p>{{ transaction.formatedDate }}</p>
         </div>
       </div>
@@ -92,57 +89,68 @@ import transformCharactersIntoAsterics from '../shared/transformCharactersIntoAs
 import { generateTransactionReceipt } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
 import { useUserStore } from '../stores/user'
+import { TransactionHistory } from '../views/transaction-history/types/transaction-history-response.interface'
 
 export interface TransactionModalPayload {
-  _id?: any
+  id?: any
   formatedDate?: any
   feeWire?: any
   isInternal?: boolean
   amount?: any
+  assetCode?: string
+  nameTo?: any
   assetId?: string
-  counterparty: CounterpartyInfo;
+  counterparty?: CounterpartyInfo
   reference?: any
   beneficiary?: any
 }
-export interface CounterpartyInfo{
+export interface CounterpartyInfo {
   informationOwner: {
-    name: string;
-    country: string;
-  };
+    name: string
+    country: string
+  }
 }
-
 const userStore = useUserStore()
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+// todo set company name when ready
+const username =
+  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
+
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
   display: boolean
-  transaction: TransactionModalPayload
+  transaction: TransactionHistory
 }>()
 const isGeneratingTransactionPDF = ref(false)
-
+const hasCounterParty = (): boolean => {
+  console.log('has counter party', props.transaction.counterparty ? true : false)
+  return props.transaction.counterparty ? true : false
+}
+const ownerName = props.transaction.counterparty?.informationOwner?.name ?? ''
+const isUsdAndOwnerNameExists = props.transaction.assetId === 'USD' && ownerName && ownerName.length > 0
+const isUsdOrAssetIdIsUsd = props.transaction.assetCode === 'USD' || props.transaction.assetId === 'USD'
 const generatePDFTransactionReceipt = () => {
   const transaction: any = props.transaction
 
   isGeneratingTransactionPDF.value = true
   const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+  const userAccountNumber = transformCharactersIntoAsterics(user.clientId)
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
   const footerPdf = t('footerPdfFiatData')
   const fileName = `${t('transactionReceipt')}-${transaction.id}`
 
-  const beneficiaryName = `${transaction.beneficiary?.name ?? transaction.counterparty.informationOwner.name ?? transaction.to.label}`
+  const beneficiaryName = `${
+    transaction.beneficiary?.name ?? transaction.counterparty?.informationOwner?.name ?? transaction.to?.label ?? ''
+  }`
 
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
-  transactionPDF[t('assetType')] = transaction.assetId
-  transactionPDF[t('amount')] = `${transaction.amount} ${transaction.assetId.slice(-3)}`
-  transactionPDF[t('transactionNumber')] = transaction._id
+  transactionPDF[t('assetType')] = transaction.assetCode === 'USD' || transaction.assetId ? 'FIAT' : 'CRYPTO'
+  transactionPDF[t('amount')] = `${transaction.amount}`
+  transactionPDF[t('transactionNumber')] = transaction.transactionId
   transactionPDF[t('reference')] = `${transaction.reference}`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
