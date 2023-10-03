@@ -44,24 +44,16 @@ const { natureAccount, fetchAccount, loading } = useAccount()
 const menuItems = ref()
 const checkCanSee = (...args: string[]) => {
   if (!userStore.getUser.client.type) {
-    console.log('no value')
     return
   }
 
-  console.log('args', ...args)
   return args.includes(userStore.getUser.client.type || '')
 }
 const userStore = useUserStore()
 const { getUser } = useUserStore()
 onBeforeMount(async () => {
-  console.log('getUser.client.type', getUser.client.type)
   await fetchAccount()
   setMenuItems()
-  console.log('-- userStore.getUser', userStore.getUser)
-  console.log('-- userStore.getUser.clientId', userStore.getUser.clientId)
-  console.log('userStore.getUser.clientId', userStore.getUser.clientId)
-  console.log('userStore.getUser.type ', userStore.getUser.client.type)
-  console.log(' TypeAccount.natural', userStore.getUser.client.type === TypeAccount.NATURAL_PERSON)
 })
 
 const documentsPath = computed(() => {
@@ -98,8 +90,6 @@ const setMenuItems = () => {
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
   ].filter(item => item.canSee)
-
-  console.log('menuItems', menuItems.value)
 }
 </script>
 

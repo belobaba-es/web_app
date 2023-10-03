@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ProfileService } from '../views/profile/services/profile'
 import { useUserStore } from '../stores/user'
-import { Document, Member, Owner } from '../views/profile/types/account.interface'
+import { Document, Member, Owner, TypeAccount } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
 import showMessage from '../shared/showMessageArray'
 
@@ -22,44 +22,49 @@ export const useAccount = () => {
   const currentPassword = ref<string>('')
   const newPassword = ref<string>('')
   const confirmNewPassword = ref<string>('')
+  const { getUser } = useUserStore()
 
-  const phoneNumberWithCountry = computed(() => {
-    // return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
-    if (isShowView.value && route.params.contactId) {
-      const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
-      return `${member?.phoneCountry} ${member?.phoneNumber}`
-    } else {
-      return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
-    }
-  })
+  // const phoneNumberWithCountry = computed(() => {
+  //   // return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
+  //   if (isShowView.value && route.params.contactId) {
+  //     const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
+  //     return `${member?.phoneCountry} ${member?.phoneNumber}`
+  //   } else {
+  //     return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
+  //   }
+  // })
+  const phoneNumberWithCountry = getUser.client.phoneNumber
 
-  const address = computed(() => {
-    if (isShowView.value && route.params.contactId) {
-      const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
-      return member?.streetOne
-    } else {
-      return account.owner.value?.streetOne
-    }
-  })
+  // const address = computed(() => {
+  //   if (isShowView.value && route.params.contactId) {
+  //     const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
+  //     return member?.streetOne
+  //   } else {
+  //     return account.owner.value?.streetOne
+  //   }
+  // })
+  const address = getUser.client.streetOne
 
-  const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person')
+  // const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person')
+  const isNaturalAccount = getUser.client.type === TypeAccount.COMPANY
 
-  const fullName = computed(() => {
-    const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
-    const companyAccount = account.owner.value?.name
-    const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
-    const memberFullName = `${member?.firstName} ${member?.middleName} ${member?.lastName}`
-    // return isNaturalAccount.value ? naturalAccount : companyAccount
-    if (isShowView.value && route.params.contactId) {
-      return memberFullName
-    }
-
-    if (isNaturalAccount.value) {
-      return naturalAccount
-    }
-
-    return companyAccount
-  })
+  // const fullName = computed(() => {
+  //   const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
+  //   const companyAccount = account.owner.value?.name
+  //   const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
+  //   const memberFullName = `${member?.firstName} ${member?.middleName} ${member?.lastName}`
+  //   // return isNaturalAccount.value ? naturalAccount : companyAccount
+  //   if (isShowView.value && route.params.contactId) {
+  //     return memberFullName
+  //   }
+  //
+  //   if (isNaturalAccount) {
+  //     return naturalAccount
+  //   }
+  //
+  //   return companyAccount
+  // })
+  const fullName = getUser.client.name
 
   const dateBirth = computed(() => {
     if (isShowView.value && route.params.contactId) {
@@ -69,26 +74,28 @@ export const useAccount = () => {
     }
   })
 
-  const taxId = computed(() => {
-    if (isShowView.value && route.params.contactId) {
-      return accountStore.members?.find(member => member.contactId === route.params.contactId)?.taxId
-    } else {
-      return account.owner.value?.taxId
-    }
-  })
+  // const taxId = computed(() => {
+  //   if (isShowView.value && route.params.contactId) {
+  //     return accountStore.members?.find(member => member.contactId === route.params.contactId)?.taxId
+  //   } else {
+  //     return account.owner.value?.taxId
+  //   }
+  // })
+  const taxId = getUser.client.taxId.length > 0 ? getUser.client.taxId.length : getUser.client.dni
 
-  const email = computed(() => {
-    if (isShowView.value && route.params.contactId) {
-      const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
-      return member?.email
-    } else {
-      return account.owner.value?.email
-    }
-  })
+  // const email = computed(() => {
+  //   if (isShowView.value && route.params.contactId) {
+  //     const member = accountStore.members?.find(member => member.contactId === route.params.contactId)
+  //     return member?.email
+  //   } else {
+  //     return account.owner.value?.email
+  //   }
+  // })
+  const email = getUser.client.email
 
   const labelNameProfile = computed(() => {
     // return isNaturalAccount.value ? t('fullName') : t('businessNameLabel')
-    if ((isShowView.value && route.params.contactId) || isNaturalAccount.value) {
+    if ((isShowView.value && route.params.contactId) || isNaturalAccount) {
       return t('fullName')
     } else {
       return t('businessNameLabel')
@@ -101,7 +108,7 @@ export const useAccount = () => {
       return t('partnerTitle')
     }
 
-    if (isNaturalAccount.value) {
+    if (isNaturalAccount) {
       return t('naturalAccountTittle')
     }
 
@@ -157,7 +164,7 @@ export const useAccount = () => {
   })
 
   const isAccountBusinessComputed = computed(() => {
-    return !isNaturalAccount.value
+    return !isNaturalAccount
   })
 
   const submitProfileForm = () => {
@@ -175,11 +182,11 @@ export const useAccount = () => {
       isNaturalAccountLet = false
     }
 
-    if (isUpdateProfileView.value && isNaturalAccount.value) {
+    if (isUpdateProfileView.value && isNaturalAccount) {
       isNaturalAccountLet = true
     }
 
-    if (isNaturalAccount.value) {
+    if (isNaturalAccount) {
       isNaturalAccountLet = true
     }
 
