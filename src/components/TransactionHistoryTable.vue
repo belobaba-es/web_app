@@ -337,7 +337,6 @@ const getTransactions = async (filters: any = {}) => {
       if (data.nextPag) {
         nextPage.value.nextPage = true
         nextPage.value.data = data.nextPag
-        filtersChange('page', data.nextPag)
       }
 
       registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
