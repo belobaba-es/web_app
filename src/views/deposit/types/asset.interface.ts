@@ -33,6 +33,8 @@ export interface CreatePaymentAddressResponse {
 
 export interface PaymentAddressResponse extends Pagination<PaymentAddress> {
   address: string
+  assetId: string
+  assetCode: string
   icon: string
   name: string
   label: string
@@ -46,8 +48,8 @@ export interface PaymentAddress {
   accountId: string
   address: string
   assetsId: string
-  qr?: string
-  networkName?: string
+  qr: string
+  networkName: string
 }
 
 export type BalanceWallet = {
