@@ -1,5 +1,7 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+
     <CardWallet :carousel="false" />
 
     <AccountValidationProcess />
@@ -12,6 +14,7 @@ import CardWallet from '../../components/CardWallet.vue'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 
 import { useUserStore } from '../../stores/user'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 const useUser = useUserStore()
 </script>

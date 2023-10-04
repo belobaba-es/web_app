@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
     <!--    todo uncomment-->
     <!--    <AccountValidationProcess />-->
     <!--    <PageLayout :title="t('swap')" v-show="useUser.swapModuleIsActive()">-->
@@ -83,10 +84,10 @@ import { useUserStore } from '../../stores/user'
 import { useRouter } from 'vue-router'
 import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
-import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import { onUnmounted } from 'vue'
 import ShowFee from './components/ShowFee.vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 const {
   assetIcon,
@@ -144,9 +145,11 @@ onUnmounted(() => {
   transform: rotate(90deg);
   width: 2rem;
 }
+
 .btn-historic {
   width: 40%;
 }
+
 @media screen and (min-width: 1200px) {
   .xl\:col-4 {
     width: 40rem;

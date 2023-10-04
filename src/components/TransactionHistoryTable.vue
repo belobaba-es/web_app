@@ -1,5 +1,7 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+
     <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
 
     <ProgressSpinner
@@ -229,6 +231,7 @@ import { iconAsset } from '../shared/iconAsset'
 import { useUserStore } from '../stores/user'
 import { Asset } from '../views/deposit/types/asset.interface'
 import { getAsset } from '../shared/getAsset'
+import FinishRegisterWarningBar from './FinishRegisterWarningBar.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -445,9 +448,10 @@ const downloadExtract = () => {
     listTransaction.value.forEach((transaction, i) => {
       const data = {
         assetCode: getAsset(transaction.assetId, listAssets.value).code,
-        reference: transaction.reference.length > maxReferenceLength 
-        ? transaction.reference.slice(0, maxReferenceLength)
-        : transaction.reference,
+        reference:
+          transaction.reference.length > maxReferenceLength
+            ? transaction.reference.slice(0, maxReferenceLength)
+            : transaction.reference,
         createdAt: transaction.formatedDate,
         amount: Number(transaction.amount.toFixed(8).replace(/\.?0*$/, '')),
       }
@@ -542,23 +546,29 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
 .dropdown-full {
   width: 100% !important;
 }
+
 .container-data {
   margin: -14px;
   margin-top: 30px;
 }
+
 .padding-search-div {
   padding-top: 1.62rem !important;
   padding-left: 0.5rem;
 }
+
 .mb-15 {
   margin-bottom: 1.5rem;
 }
+
 .label-search {
   margin-left: 0.5rem !important;
 }
+
 .p-button {
   width: 100%;
 }
+
 .mb-25 {
   margin-bottom: 2.5rem;
 }
@@ -570,6 +580,7 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
 .amount-x {
   font-size: 14pt;
 }
+
 .details-mobile {
   display: flex;
   justify-content: center;
