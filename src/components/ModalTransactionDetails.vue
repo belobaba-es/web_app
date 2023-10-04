@@ -145,13 +145,17 @@ const generatePDFTransactionReceipt = () => {
     transaction.beneficiary?.name ?? transaction.counterparty?.informationOwner?.name ?? transaction.to?.label ?? ''
   }`
 
+  const maxReferenceLength = 49
+
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = beneficiaryName
   transactionPDF[t('assetType')] = transaction.assetCode === 'USD' || transaction.assetId ? 'FIAT' : 'CRYPTO'
   transactionPDF[t('amount')] = `${transaction.amount}`
   transactionPDF[t('transactionNumber')] = transaction.transactionId
-  transactionPDF[t('reference')] = `${transaction.reference}`
+  transactionPDF[t('reference')] = `${transaction.reference.length > maxReferenceLength 
+    ? transaction.reference.slice(0, maxReferenceLength) 
+    : transaction.reference}`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
