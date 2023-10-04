@@ -74,7 +74,7 @@ import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import VirtualScroller from 'primevue/virtualscroller'
-import { Asset, PaymentAddress } from './types/asset.interface'
+import { Asset, PaymentAddress, PaymentAddressResponse } from './types/asset.interface'
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue'
 import { AssetsService } from './services/assets'
@@ -92,12 +92,12 @@ const displayNew = ref(false)
 const lazyLoading = ref(false)
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
-const selectPaymentAddress = ref<PaymentAddress | null>(null)
+const selectPaymentAddress = ref<PaymentAddressResponse | null>(null)
 const submitting = ref(false)
 const route = useRoute()
 const assetsService = AssetsService.instance()
 const assets = ref<Asset[]>([])
-const paymentAddress = ref<PaymentAddress[]>([])
+const paymentAddress = ref<PaymentAddressResponse[]>([])
 
 onMounted(async () => {
   await assetsService.list().then(data => (assets.value = data))
@@ -158,10 +158,10 @@ const viewAddressAsset = (item: PaymentAddress) => {
 const searchWallets = () => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then(data => {
-    paymentAddress.value = getPaymentAddressAssetNetworkName(data.results)
+  assetsService.listPaymentAddress().then((data: PaymentAddressResponse[]) => {
+    paymentAddress.value = data
     lazyLoading.value = false
-    nextPag.value = data.nextPag
+    // nextPag.value = data.nextPag
   })
 }
 
@@ -177,11 +177,11 @@ const getPaymentAddressAssetNetworkName = (paymentAddress: PaymentAddress[]) => 
 const searchWallet = (assetId: string) => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then(data => {
-    lazyLoading.value = false
-    paymentAddress.value = data.results.filter((res: PaymentAddress) => res.assetsId === assetId)
-    nextPag.value = data.nextPag
-  })
+  // assetsService.listPaymentAddress().then(data => {
+  //   lazyLoading.value = false
+  //   paymentAddress.value = data.results.filter((res: PaymentAddress) => res.assetsId === assetId)
+  //   nextPag.value = data.nextPag
+  // })
 }
 
 const onCreateAddress = (event: any) => {

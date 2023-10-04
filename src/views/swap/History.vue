@@ -24,12 +24,6 @@
           <tbody v-if="!isLoading">
             <!--          todo-->
             <tr v-for="item in exchanges.results as ExchangeCreated[]">
-              <!--            <tr v-for="(item, i) in exchangesList" :key="i">-->
-              <!--              buy-->
-              <!--              todo-->
-              <!--              {{-->
-              <!--                i-->
-              <!--              }}-->
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
@@ -48,7 +42,7 @@
               </td>
 
               <td class="total-amount-container">
-                <h3 class="text-center">{{ item.totalAmount }} {{ item.sourceDetails.assetCode }}</h3>
+                <h3 class="text-center">{{ item.sourceDetails.amountDebit }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
               <td class="swap-icon-container"><img :src="swapIcon" /></td>
@@ -62,7 +56,7 @@
 
               <!--              sell-->
               <td v-if="item.sourceDetails.assetCode !== 'USD'" class="total-amount-container">
-                <h3 class="text-center">{{ item.totalAmount }} {{ item.sourceDetails.assetCode }}</h3>
+                <h3 class="text-center">{{ item.totalAmount }} {{ item.destinationDetails.assetCode }}</h3>
               </td>
 
               <td class="operation-date-container">
@@ -76,9 +70,8 @@
               <td class="fee-amount-container">
                 <h3 class="text-center">
                   <small>US$</small>
-                  {{ getPriceQuote(item.sourceDetails.amountDebit, item.destinationDetails.amountCredit) }}
+                  {{ getPriceQuote(item.sourceDetails, item.destinationDetails) }}
                 </h3>
-                <!--                <h3 class="text-center"><small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount) }}</h3>-->
               </td>
 
               <td class="number-of-order-container">
@@ -88,12 +81,16 @@
           </tbody>
 
           <template v-if="isLoading">
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-            <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+            <tr>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+            </tr>
           </template>
         </table>
       </div>
@@ -142,17 +139,11 @@ onMounted(async () => {
   })
 
   await fetchExchanges()
-  console.log('================================================')
-  console.log('0 exchangesList.value', exchangesList.value)
-  console.log('0 exchanges.value', exchanges.value)
   isLoading.value = false
   exchangesList.value = [
     ...((exchangesList.value as ExchangeCreated[]) ?? []),
     ...(exchanges.value.results as ExchangeCreated[]),
   ]
-
-  console.log('1 exchangesList.value', exchangesList.value)
-  console.log('================================================')
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
@@ -165,8 +156,13 @@ const statusClass = (status: string) => {
   }
 }
 
-const getPriceQuote = (totalAmount: number, unitCount: number) => {
-  const price = totalAmount / unitCount
+const getPriceQuote = (sourceDetail: any, destinationDetail: any) => {
+  let price: number
+  if (sourceDetail.assetCode === 'USD') {
+    price = sourceDetail.amountDebit / destinationDetail.amountCredit
+  } else {
+    price = destinationDetail.amountCredit / sourceDetail.amountDebit
+  }
 
   return price.toFixed(2)
 }

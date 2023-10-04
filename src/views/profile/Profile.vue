@@ -18,7 +18,8 @@
               </RouterLink>
             </div>
             <div class="affiliate-link-container">
-              <AffiliateLink></AffiliateLink>
+              <!--              todo-->
+              <!--              <AffiliateLink></AffiliateLink>-->
             </div>
           </div>
         </template>
@@ -36,54 +37,57 @@ import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
 import { TypeAccount } from './types/account.interface'
 import AffiliateLink from './components/AffiliateLink.vue'
+import { useUserStore } from '../../stores/user'
 
 const { t } = useI18n({ useScope: 'global' })
-const { natureAccount, accountId, fetchAccount, loading } = useAccount()
-
+const { natureAccount, fetchAccount, loading } = useAccount()
 const menuItems = ref()
-
 const checkCanSee = (...args: string[]) => {
-  if (!natureAccount.value) return
-  return args.includes(natureAccount.value || '')
-}
+  if (!userStore.getUser.client.type) {
+    return
+  }
 
+  return args.includes(userStore.getUser.client.type || '')
+}
+const userStore = useUserStore()
+const { getUser } = useUserStore()
 onBeforeMount(async () => {
   await fetchAccount()
   setMenuItems()
 })
 
 const documentsPath = computed(() => {
-  return natureAccount.value === TypeAccount.natural
-    ? `/profile/${accountId.value}/documentation/person`
-    : `/profile/${accountId.value}/documentation/company`
+  return userStore.getUser.client.type === TypeAccount.COMPANY
+    ? `/profile/${userStore.getUser.clientId}/documentation/person`
+    : `/profile/${userStore.getUser.clientId}/documentation/company`
 })
 
 const setMenuItems = () => {
   menuItems.value = [
     {
       label: t('profile'),
-      to: `/profile/${accountId.value}`,
-      canSee: checkCanSee('company', 'natural_person'),
+      to: `/profile/${userStore.getUser.clientId}`,
+      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('shareholders'),
-      to: `/profile/${accountId.value}/partners`,
-      canSee: checkCanSee('company'),
+      to: `/profile/${userStore.getUser.clientId}/partners`,
+      canSee: checkCanSee('COMPANY'),
     },
     {
       label: t('documents'),
       to: documentsPath,
-      canSee: checkCanSee('company', 'natural_person'),
+      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('setting'),
-      to: `/profile/${accountId.value}/settings`,
-      canSee: checkCanSee('company', 'natural_person'),
+      to: `/profile/${userStore.getUser.clientId}/settings`,
+      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('businessPartners'),
-      to: `/profile/${accountId.value}/business-partners`,
-      canSee: checkCanSee('company', 'natural_person'),
+      to: `/profile/${userStore.getUser.clientId}/business-partners`,
+      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
   ].filter(item => item.canSee)
 }
