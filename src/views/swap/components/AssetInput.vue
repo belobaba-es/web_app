@@ -38,7 +38,7 @@
             </Button>
           </template>
           <template v-else>
-            <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
+            <img alt="logo" class="logo-usd" :src="getUsdIcon()" style="width: 3.5rem" />
           </template>
         </div>
 
@@ -182,6 +182,12 @@ const maxCountInput = (typeCode: string) => {
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
+}
+
+const getUsdIcon = () => {
+  const defaultUsdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
+
+  return getWalletByAssetCode('USD')?.icon ?? defaultUsdIcon
 }
 </script>
 

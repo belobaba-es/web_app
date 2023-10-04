@@ -12,8 +12,8 @@
     </template>
     <div class="grid" style="padding: 0 3rem">
       <div class="col-6 mt-3">
-        <img width="140" :src="asset?.icon" alt="" />
-        <p class="text-base mt-3">{{ asset?.name }}</p>
+        <img width="140" :src="paymentAddress?.icon" alt="" />
+        <p class="text-base mt-3">{{ paymentAddress?.name }}</p>
         <p class="text-base font-bold">{{ paymentAddress?.label }}</p>
         <small class="font-medium">{{ asset?.code }}</small>
       </div>
@@ -24,8 +24,9 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
+
         <p class="text-base font-bold text-uppercase">
-          {{ t('warningAssetNetwork', { networkName: paymentAddress?.networkName }) }}
+          {{ t('warningAssetNetwork', { networkName: paymentAddress.networkName + ' ' + paymentAddress.network }) }}
         </p>
       </div>
       <div class="col-12">

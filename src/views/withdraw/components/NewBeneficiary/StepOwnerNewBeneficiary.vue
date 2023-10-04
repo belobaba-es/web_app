@@ -3,7 +3,7 @@
     <div class="field">
       <label>{{ t('depositNameOnBank') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="realName" />
+        <InputText type="text" v-model="name" />
       </div>
       <small>Make sure it exactly as it appears on your bank account</small>
     </div>
@@ -122,7 +122,7 @@ const props = defineProps<{
   formData: object
 }>()
 
-const realName = ref<string>('')
+const name = ref<string>('')
 const country = ref<string>('')
 const streetOne = ref<string>('')
 const streetTwo = ref<string>('')
@@ -137,7 +137,7 @@ onMounted(() => {
 })
 
 const validateFields = () => {
-  return [realName, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
+  return [name, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
 }
 
 const nextPage = () => {
@@ -145,7 +145,7 @@ const nextPage = () => {
     const formData = ref({
       ...props.formData,
       informationOwner: {
-        name: realName.value,
+        name: name.value,
         address: {
           streetOne: streetOne.value,
           streetTwo: streetTwo.value,

@@ -5,8 +5,8 @@
       v-for="item in listBeneficiary"
       @click="emit('select', item)"
     >
-      <!--<span class="ml-4 mt-2 mb-2">{{ item.realName }}</span>
-       <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span> -->
+      <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+      <!-- <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span>-->
       <Button icon="pi pi-angle-right" class="p-button-text p-button-primary" label="" />
     </div>
 

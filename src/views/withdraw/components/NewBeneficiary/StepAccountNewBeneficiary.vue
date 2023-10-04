@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="field">
+    <div class="field" v-if="typeBeneficiaryBankWithdrawal !== 'DOMESTIC'">
       <label>{{ t('swiftCode') }}</label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="swiftCode" />
@@ -25,7 +25,7 @@
       <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">{{ t('abaRoutingNumber') }} </label>
       <label v-show="typeBeneficiaryBankWithdrawal == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="intermediaryNumber" />
+        <InputText type="text" v-model="routingNumber" />
       </div>
     </div>
 
@@ -58,7 +58,7 @@ const route = useRoute()
 const bankName = ref<string>('')
 const accountNumber = ref<string>('')
 const swiftCode = ref<string>('')
-const intermediaryNumber = ref<string>('')
+const routingNumber = ref<string>('')
 const typeBeneficiaryBankWithdrawal = ref<string>('')
 
 const formData = ref()
@@ -76,7 +76,7 @@ const validateFields = () => {
   const isBankNameValid = bankName.value.trim() !== ''
   const isAccountNumberValid = accountNumber.value.trim() !== ''
   const isSwiftCodeValid = swiftCode.value.trim() !== ''
-  const isIntermediaryNumberValid = intermediaryNumber.value.trim() !== ''
+  const isIntermediaryNumberValid = routingNumber.value.trim() !== ''
 
   return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIntermediaryNumberValid
 }
@@ -96,9 +96,9 @@ const nextStep = () => {
 
     //Iban - International | Routing number Domestic
     if (typeBeneficiaryBankWithdrawal.value === 'INTERNATIONAL') {
-      formData.value.informationBank.iban = intermediaryNumber
+      formData.value.informationBank.iban = routingNumber
     } else if (typeBeneficiaryBankWithdrawal.value === 'DOMESTIC') {
-      formData.value.informationBank.routingNumber = intermediaryNumber
+      formData.value.informationBank.routingNumber = routingNumber
     }
 
     emit('nextPage', {

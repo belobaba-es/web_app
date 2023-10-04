@@ -5,8 +5,8 @@
       <Divider></Divider>
     </div>
     <div>
-      <p class="title-beneficiary">{{ formData?.beneficiary?.realName }}</p>
-      <p class="font-ligth text-base">{{ formData?.beneficiary?.accountNumber }}</p>
+      <p class="title-beneficiary">{{ formData.beneficiary.informationOwner.name }}</p>
+      <p class="font-ligth text-base">{{ formData?.beneficiary?.informationBank.accountNumber }}</p>
     </div>
     <Divider></Divider>
 
@@ -25,7 +25,7 @@
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to {{ formData?.beneficiary?.realName }}</p>
+      <p class="text-base">Your are sending to {{ formData?.beneficiary?.informationOwner.name }}</p>
     </div>
 
     <div class="col-12 mb-2">
@@ -116,7 +116,7 @@ function makeTransaction() {
   withdraw
     .makeFiatExternalTransfer({
       amount: props.formData.amount,
-      beneficiaryId: props.formData.beneficiary.id,
+      beneficiaryId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
     })
     .then((res: any) => {

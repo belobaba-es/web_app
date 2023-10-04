@@ -36,6 +36,9 @@ export interface PaymentAddressResponse extends Pagination<PaymentAddress> {
   icon: string
   name: string
   label: string
+  networkName: string
+  network: string
+  qr: string
 }
 
 export interface PaymentAddress {
