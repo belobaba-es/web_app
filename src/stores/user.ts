@@ -104,7 +104,7 @@ export const useUserStore = defineStore('user', () => {
 
     if (!storageUser) return
 
-    return JSON.parse(new CryptoService().decrypt(storageUser)).account.feeWire
+    return JSON.parse(new CryptoService().decrypt(storageUser)).client.feeWire
   }
 
   const getUserName = (): string => {

@@ -9,7 +9,12 @@
         <router-link to="/withdraw">
           <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
         </router-link>
-        <span class="text-xl">{{ t('internationalWire') }} </span>
+          <span class="text-xl" v-if="typeBeneficiary === 'DOMESTIC'">
+            {{ t('domesticWire') }}
+          </span>
+          <span class="text-xl" v-else>
+            {{ t('internationalWire') }}
+          </span>
       </div>
 
       <div class="flex align-items-center">

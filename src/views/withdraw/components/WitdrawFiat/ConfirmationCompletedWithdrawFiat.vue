@@ -12,9 +12,8 @@
 
     <InternationalTransferDetail
       v-if="props.formData.typeTransaction === 'international'"
-      :realName="props.formData.beneficiary.realName"
-      :email="props.formData.beneficiary.email"
-      :account="props.formData.beneficiary.accountNumber"
+      :realName="props.formData.beneficiary.informationOwner.name"
+      :account="props.formData.beneficiary.informationBank.accountNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
@@ -24,9 +23,8 @@
 
     <DomesticTransferDetail
       v-if="props.formData.typeTransaction === 'domestic'"
-      :realName="props.formData.beneficiary.realName"
-      :email="props.formData.beneficiary.email"
-      :account="props.formData.beneficiary.accountNumber"
+      :realName="props.formData.beneficiary.informationOwner.name"
+      :account="props.formData.beneficiary.informationBank.accountNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
@@ -70,9 +68,9 @@ const props = defineProps<{
   transactionId: string
 }>()
 
-const username = userStore.getUser.firstName
+/*const username = userStore.getUser.firstName
   ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+  : userStore.getUser.name*/
 
 const goToWithdrawIndex = () => {
   if (props.formData.typeTransaction === 'international') {
@@ -97,12 +95,11 @@ const generatePDFTransactionReceipt = async () => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const formattedDate = formatter.format(date)
 
-  transactionPDF[t('userName')] = `${username}`
-  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.accountNumber.substr(-4)}`
+  transactionPDF[t('userName')] = `${userStore.getUser.client.name}`
+  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountId}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.informationOwner.name}`
   transactionPDF[t('amount')] = `${props.formData.amount} USD`
   transactionPDF[t('transactionNumber')] = props.transactionId
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.realName}`
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
 
