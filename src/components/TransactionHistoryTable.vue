@@ -440,11 +440,14 @@ const downloadExtract = () => {
     isLoadingPDF.value = false
 
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
+    const maxReferenceLength = 59
 
     listTransaction.value.forEach((transaction, i) => {
       const data = {
         assetCode: getAsset(transaction.assetId, listAssets.value).code,
-        reference: transaction.reference,
+        reference: transaction.reference.length > maxReferenceLength 
+        ? transaction.reference.slice(0, maxReferenceLength)
+        : transaction.reference,
         createdAt: transaction.formatedDate,
         amount: Number(transaction.amount.toFixed(8).replace(/\.?0*$/, '')),
       }
