@@ -14,7 +14,10 @@
         <span class="font-regular text-primary text-1xl">Fee Noba:</span>
       </div>
       <div class="col-7 pt-0 pb-0">
-        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ feeNoba }}</span>
+        <span class="text-1xl font-light text-lg-right">
+          {{ feeNoba }} <small>{{ destinationWalletId }}</small></span
+        >
+        <!--        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ feeNoba }}</span>-->
       </div>
     </div>
 
@@ -23,7 +26,10 @@
         <span class="font-regular text-primary text-1xl">{{ getLabelTotal() }}:</span>
       </div>
       <div class="col-7 pt-0 pb-0">
-        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ totalSpend }}</span>
+        <!--        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ totalSpend }}</span>-->
+        <span class="text-1xl font-light text-lg-right"
+          >{{ totalSpend }} <small>{{ destinationWalletId }}</small>
+        </span>
       </div>
     </div>
   </div>
@@ -34,14 +40,16 @@ import { useSwap } from '../../../composables/useSwap'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
-const { feeTradeDesk, feeNoba, totalSpend, transactionType } = useSwap()
+const { feeTradeDesk, feeNoba, totalSpend, transactionType, destinationWalletId } = useSwap()
 
 const getLabelTotal = () => {
-  if (transactionType.value === 'buy') {
-    return t('swapSpend')
-  }
-
-  return t('swapReceive')
+  return t('swapSpend')
+  // Con fix source siempre sera fijo
+  // if (transactionType.value === 'buy') {
+  //   return t('swapSpend')
+  // }
+  //
+  // return t('swapReceive')
 }
 </script>
 

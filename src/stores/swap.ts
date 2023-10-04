@@ -33,6 +33,7 @@ export const useSwapStore = defineStore('swap', () => {
   let timer: number
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
+  const destinationWalletId = ref()
   const exchanges = ref<ExchangeResponse>({
     count: 0,
     nextPag: 1,
@@ -56,9 +57,12 @@ export const useSwapStore = defineStore('swap', () => {
   const exchange = ref<ExchangeData>()
 
   const setFeeTradeDesk = () => {
-    feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
-
-    totalSpend.value = totalAmount.value
+    // feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
+    if (transactionType.value === 'buy') {
+      totalSpend.value = baseAmount.value + feeAmount.value
+    } else {
+      totalSpend.value = amount.value + feeAmount.value
+    }
   }
 
   const swapBtnText = computed(() => {
@@ -74,15 +78,14 @@ export const useSwapStore = defineStore('swap', () => {
 
     loading.value = true
     let sourceWalletId = ''
-    let destinationWalletId = ''
     const swapService = SwapService.instance()
 
     if (transactionType.value === 'buy') {
       sourceWalletId = 'USD'
-      destinationWalletId = assetCode.value
+      destinationWalletId.value = assetCode.value
     } else {
       sourceWalletId = assetCode.value
-      destinationWalletId = 'USD'
+      destinationWalletId.value = 'USD'
     }
 
     const amountFormated = amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value
@@ -90,21 +93,30 @@ export const useSwapStore = defineStore('swap', () => {
       .createExchange({
         amount: amountFormated,
         sourceWalletId,
-        destinationWalletId,
-        description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId}`,
+        destinationWalletId: destinationWalletId.value,
+        description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId.value}`,
       })
       .then(response => {
         exchange.value = response.data
         feeNoba.value = exchange.value?.feeNoba
-        unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
         baseAmount.value = exchange.value?.source_details.amount_to_debit
         feeAmount.value = exchange.value?.feeNoba
 
         totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
 
-        if (transactionType.value === 'sell') {
+        if (transactionType.value === 'buy') {
+          unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
+        } else {
+          console.log(
+            '+ exchange.value?.destination_details?.amount_to_credit',
+            exchange.value?.destination_details?.amount_to_credit
+          )
+          amount.value = <number>exchange.value?.destination_details?.amount_to_credit
+          unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
           unitCount.value = Number(unitCount.value.toFixed(6))
         }
+
+        console.log('=  amount.value', amount.value)
 
         exchangeId.value = exchange.value?.exchangeId
 
@@ -315,5 +327,6 @@ export const useSwapStore = defineStore('swap', () => {
     feeTradeDesk,
     totalSpend,
     exchange,
+    destinationWalletId,
   }
 })
