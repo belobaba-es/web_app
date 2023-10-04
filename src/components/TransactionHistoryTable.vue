@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar v-if="!props.isDashboard"></FinishRegisterWarningBar>
 
     <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
 
