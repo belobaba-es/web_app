@@ -35,7 +35,7 @@ const didLogin = async (payload: any) => {
   if (userPayload.value?.client.status !== AccountStatus.REGISTERED) {
     window.location.href = '/dashboard'
   } else {
-    window.location.href = `/profile/${userPayload.value?.accountId}`
+    window.location.href = `/profile/${userPayload.value?.client.clientId}`
   }
 }
 </script>
