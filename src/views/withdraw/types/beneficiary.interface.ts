@@ -19,23 +19,6 @@ export enum CounterpartyType {
     FIAT = 'FIAT',
 }
 
-/*export type Beneficiary = {
-  clientId: string
-  counterpartyId: string
-  counterpartyType: CounterpartyType
-  informationOwner : {
-    name: string
-    countery: string
-  }
-  informationWallet : {
-    assetId: string
-    address: string
-
-  }
-  assetCode: string
-  assetIcon: string
-}*/
-
 export type Beneficiary = {
   accountId: string
   assetCode: string
@@ -46,6 +29,7 @@ export type Beneficiary = {
   counterpartyType: CounterpartyType
   createdAt: string
   informationBank : {
+    accountNumber: string
     address: BankAdress
     bankName: string
     networkBank: string
