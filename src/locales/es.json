@@ -397,5 +397,7 @@
   "otherLastName": "Segundo apellido",
   "taxIdLabel": "Número de identificación fiscal",
   "passportOrTaxIdEmpty": "Por favor ingrese su número de pasaporte o número de identificación fiscal",
-  "error": "Error"
+  "error": "Error",
+  "helpTextCompanyName": "Escriba el nombre de la empresa tal como aparece en los documentos de la empresa.",
+  "helpTextCompanyTax": "Rellene el EIN de la empresa."
 }

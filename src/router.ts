@@ -50,7 +50,12 @@ import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
 import UploadDocumentsIndex from './views/upload-documents/index.vue'
+
 import PersonalStep1 from './views/upload-documents/components/personal/Step1.vue'
+import PersonalStep2 from './views/upload-documents/components/personal/Step2.vue'
+
+
+import BusinessStep1 from './views/upload-documents/components/business/Step1.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -333,6 +338,14 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'personal/step1',
             component: PersonalStep1,
+          },
+          {
+            path: 'personal/step2',
+            component: PersonalStep2,
+          },
+          {
+            path: 'business/step1',
+            component: BusinessStep1,
           },
         ],
       },

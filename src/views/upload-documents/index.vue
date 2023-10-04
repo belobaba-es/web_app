@@ -5,9 +5,7 @@
     <div class="flex align-items-center" style="height: 580px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
-          <span class="text-center txt-border-bottom text-2xl"
-            >{{ t('subtitleUploadDocuments') }}</span
-          >
+          <span class="text-center txt-border-bottom text-2xl">{{ t('subtitleUploadDocuments') }}</span>
 
           <div class="grid flex justify-content-center">
             <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-4">
@@ -16,7 +14,7 @@
           </div>
         </div>
 
-        <router-link to="/deposit/fiat">
+        <router-link to="/upload-documents/business/step1">
           <CardButon class="m-4" :icon="business" :label="t('businessAccount')" />
         </router-link>
 
@@ -37,7 +35,7 @@ import CardButon from './components/CardButton.vue'
 
 import business from '../../assets/icons/business.svg'
 import personal from '../../assets/icons/userAccount.svg'
- 
+
 import Divider from 'primevue/divider'
 
 interface tabItem {

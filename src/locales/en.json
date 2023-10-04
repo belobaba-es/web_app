@@ -404,5 +404,8 @@
   "otherLastName": "Other last name",
   "taxIdLabel": "Tax ID",
   "passportOrTaxIdEmpty": "Passport or Tax ID cannot be empty",
-  "error": "Error"
+  "error": "Error",
+  "titleBusinessAccount": "Business",
+  "helpTextCompanyName": "Write down the company name as it appears on company docs.",
+  "helpTextCompanyTax": "Fill in the EIN of the company."
 }

@@ -4,17 +4,17 @@
       <h1 class="text-2xl">
         {{ t('accountRegistration') }}
       </h1>
-      <p class="text-3xl font-medium">{{ t('titleNaturalPerson') }}</p>
+      <p class="text-3xl font-medium">{{ t('titleBusinessAccount') }}</p>
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('nameLabel') }}</label>
+        <label>{{ t('businessNameLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="firstName" class="w-full" required />
         </div>
         <div>
-          <span class="help-text">{{ t('helpTextName') }}</span>
+          <span class="help-text">{{ t('helpTextCompanyName') }}</span>
         </div>
       </div>
 
