@@ -55,13 +55,13 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Message from 'primevue/message'
 import { useToast } from 'primevue/usetoast'
-import { Asset, PaymentAddress } from '../types/asset.interface'
+import { Asset, PaymentAddress, PaymentAddressResponse } from '../types/asset.interface'
 
 defineProps<{
   visible: boolean
   walletAddress?: string
   asset: Asset | null
-  paymentAddress: PaymentAddress | null
+  paymentAddress: PaymentAddressResponse | null
 }>()
 
 const emit = defineEmits(['update:visible'])

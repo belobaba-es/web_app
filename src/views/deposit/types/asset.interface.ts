@@ -31,7 +31,12 @@ export interface CreatePaymentAddressResponse {
   qr: string
 }
 
-export interface PaymentAddressResponse extends Pagination<PaymentAddress> {}
+export interface PaymentAddressResponse extends Pagination<PaymentAddress> {
+  address: string
+  icon: string
+  name: string
+  label: string
+}
 
 export interface PaymentAddress {
   label: string
