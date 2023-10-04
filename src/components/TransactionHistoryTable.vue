@@ -140,10 +140,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4 data-hidden">
+              <div class="col-3 data-hidden">
                 <p class="reference">{{ item.reference }}</p>
               </div>
-              <div class="col sm:col-6 lg:col-3">
+
+              <div class="col sm:col-6 lg:col-2">
                 <p class="amount-x font-semi-bold">
                   {{ item.amount }}
                   <small>{{ getAsset(item.assetId, listAssets).code }}</small> &nbsp;
@@ -154,6 +155,13 @@
                   <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
                 </p>
               </div>
+
+              <div class="col-2 data-hidden">
+                <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
+                  {{ item.status }}
+                </p>
+              </div>
+
               <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
                 <router-link
                   class="link-modal-data-transaction"
