@@ -208,7 +208,7 @@ export const generateTransactionReceipt = (
 
     createText({ fontSize: 16, textColor: black, xPosition: 15, yPosition: textHeigthPosition, text: element }, pdf)
     createText(
-      { fontSize: 16, textColor: black, xPosition: 100, yPosition: textHeigthPosition, text: data[element] },
+      { fontSize: 12, textColor: black, xPosition: 100, yPosition: textHeigthPosition, text: data[element] },
       pdf
     )
 

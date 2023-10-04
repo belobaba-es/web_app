@@ -509,7 +509,6 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   transaction.formatedDate = transaction.formatedDate
   transaction.amount = Number(transaction.amount.toFixed(8).replace(/\.?0*$/, ''))
   modalTransactionDetail.value = transaction
-  console.log('transaction', transaction)
 
   // loadTransactionDetail(transaction)
 
