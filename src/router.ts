@@ -48,7 +48,9 @@ import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
+
 import UploadDocumentsIndex from './views/upload-documents/index.vue'
+import PersonalStep1 from './views/upload-documents/components/personal/Step1.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -323,7 +325,16 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/upload-documents',
-        component: UploadDocumentsIndex,
+        children: [
+          {
+            path: '',
+            component: UploadDocumentsIndex,
+          },
+          {
+            path: 'personal/step1',
+            component: PersonalStep1,
+          },
+        ],
       },
     ],
   },

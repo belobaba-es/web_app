@@ -221,6 +221,8 @@ const saveBeneficiary = () => {
 
         showMessage(toast, e.response.data)
       })
+
+      
   } else {
     toast.add({
       severity: 'warn',
