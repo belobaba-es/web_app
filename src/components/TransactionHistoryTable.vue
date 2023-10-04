@@ -123,7 +123,7 @@
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
             <div class="grid">
-              <div class="col sm:col-1 md:col-6 lg:col-3 xl:col-3">
+              <div class="col sm:col-4 md:col-4 lg:col-2 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
                     <img
@@ -132,7 +132,7 @@
                       :src="iconAsset(item.counterparty?.informationWallet?.assetId ?? item.assetId, listAssets)"
                     />
                   </div>
-                  <div class="col-9">
+                  <div class="col-8">
                     <p class="name_to">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
                     <p class="date">
                       {{ item.formatedDate }}
@@ -140,11 +140,12 @@
                   </div>
                 </div>
               </div>
-              <div class="col-3 data-hidden">
+
+              <div class="col sm:col-3 md:col-3 lg:col-3 xl:col-3 data-hidden">
                 <p class="reference">{{ item.reference }}</p>
               </div>
 
-              <div class="col sm:col-6 lg:col-2">
+              <div class="col sm:col-4 md:col-4 lg:col-3 xl:col-2">
                 <p class="amount-x font-semi-bold">
                   {{ item.amount }}
                   <small>{{ getAsset(item.assetId, listAssets).code }}</small> &nbsp;
@@ -156,13 +157,13 @@
                 </p>
               </div>
 
-              <div class="col-2 data-hidden">
+              <div class="col sm:col-4 md:col-3 lg:col-2 xl:col-2 data-hidden">
                 <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
                   {{ item.status }}
                 </p>
               </div>
 
-              <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
+              <div class="col sm:col-4 md:col-4 lg:col-2 xl:col-2 details-mobile">
                 <router-link
                   class="link-modal-data-transaction"
                   to="#"
@@ -551,6 +552,14 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
 </script>
 
 <style lang="scss" scoped>
+@media screen and (max-width: 600px) {
+  .details-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .dropdown-full {
   width: 100% !important;
 }
@@ -589,12 +598,6 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   font-size: 14pt;
 }
 
-.details-mobile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .pi-chevron-right {
   color: var(--primary-color);
 }
@@ -618,5 +621,14 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   margin-left: 33%;
   z-index: 999;
   margin-top: 30%;
+}
+
+.details-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  h4 {
+    margin: 0;
+  }
 }
 </style>
