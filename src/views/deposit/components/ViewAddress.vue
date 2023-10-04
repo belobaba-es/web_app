@@ -26,7 +26,7 @@
         </Message>
 
         <p class="text-base font-bold text-uppercase">
-          {{ t('warningAssetNetwork', { networkName: paymentAddress.networkName + ' ' + paymentAddress.network }) }}
+          {{ t('warningAssetNetwork', { networkName: paymentAddress?.networkName + ' ' + paymentAddress?.network }) }}
         </p>
       </div>
       <div class="col-12">

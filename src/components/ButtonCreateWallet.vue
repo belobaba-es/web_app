@@ -17,7 +17,7 @@
 import { ref } from 'vue'
 import Button from 'primevue/button'
 import NewWallet from '../views/deposit/components/NewWallet.vue'
-import { Asset, PaymentAddress } from '../views/deposit/types/asset.interface'
+import { Asset, PaymentAddress, PaymentAddressResponse } from '../views/deposit/types/asset.interface'
 import { AssetsService } from '../views//deposit/services/assets'
 import { useI18n } from 'vue-i18n'
 
@@ -30,11 +30,11 @@ const lazyLoading = ref(false)
 
 const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
-const selectPaymentAddress = ref<PaymentAddress | null>(null)
+const selectPaymentAddress = ref<PaymentAddressResponse | null>(null)
 
 const assetsService = AssetsService.instance()
 const assets = ref<Asset[]>([])
-const paymentAddress = ref<PaymentAddress[]>([])
+const paymentAddress = ref<PaymentAddressResponse[]>([])
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -49,19 +49,19 @@ const searchWallets = () => {
   assetsService.list().then(data => (assets.value = data))
   assetsService.listPaymentAddress().then(data => {
     lazyLoading.value = false
-    paymentAddress.value = data.results
-    nextPag.value = data.nextPag
+    paymentAddress.value = data
+    // paymentAddress.value = data.results
+    // nextPag.value = data.nextPag
   })
 }
 
 const onCreateAddress = (event: any) => {
   selectPaymentAddress.value = {
     label: event.name,
-    accountId: '',
     address: event.paymentAddress,
-    assetsId: event.assetId,
+    assetId: event.assetId,
     qr: event.qr,
-  }
+  } as PaymentAddressResponse
 
   selectViewAsset.value = findAsset(event.assetId)
   displayNew.value = false

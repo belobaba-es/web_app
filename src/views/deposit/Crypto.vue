@@ -129,8 +129,9 @@ const findAssetByName = () => {
     assetsService
       .listPaymentAddress(nextPag.value, assetCode.value)
       .then(data => {
-        paymentAddress.value = [...data.results]
-        nextPag.value = data.nextPag
+        paymentAddress.value = [...data]
+        // paymentAddress.value = [...data.results]
+        // nextPag.value = data.nextPag
         submitting.value = false
         lazyLoading.value = false
       })
@@ -147,12 +148,12 @@ function onChange(e: any) {
   }
 }
 
-const viewAddressAsset = (item: PaymentAddress) => {
+const viewAddressAsset = (item: PaymentAddressResponse) => {
   display.value = !display.value
   display.value = true
 
   selectPaymentAddress.value = item
-  selectViewAsset.value = findAsset(item.assetsId)
+  selectViewAsset.value = findAsset(item.assetId)
 }
 
 const searchWallets = () => {
@@ -165,33 +166,34 @@ const searchWallets = () => {
   })
 }
 
-const getPaymentAddressAssetNetworkName = (paymentAddress: PaymentAddress[]) => {
-  paymentAddress = paymentAddress.map(address => {
-    const asset = assets.value.filter(asset => asset.assetId === address.assetsId)
-    const networkName = asset[0].networkName
-    return { ...address, networkName }
-  })
-  return paymentAddress
-}
-
 const searchWallet = (assetId: string) => {
   lazyLoading.value = true
   assetsService.list().then(data => (assets.value = data))
-  // assetsService.listPaymentAddress().then(data => {
-  //   lazyLoading.value = false
-  //   paymentAddress.value = data.results.filter((res: PaymentAddress) => res.assetsId === assetId)
-  //   nextPag.value = data.nextPag
-  // })
+  assetsService.listPaymentAddress().then(data => {
+    lazyLoading.value = false
+    paymentAddress.value = data.filter((res: PaymentAddressResponse) => res.assetId === assetId)
+    // nextPag.value = data.nextPag
+  })
 }
 
 const onCreateAddress = (event: any) => {
-  selectPaymentAddress.value = {
-    label: event.name,
-    accountId: '',
-    address: event.paymentAddress,
-    assetsId: event.assetId,
-    qr: event.qr,
-  }
+  // selectPaymentAddress.value = {
+  //   label: event.name,
+  //   accountId: '',
+  //   address: event.paymentAddress,
+  //   assetsId: event.assetId,
+  //   qr: event.qr,
+  // }
+  //
+  // selectPaymentAddress.value ={
+  //   address: ""
+  //   icon: string
+  //   name: string
+  //   label: event.name,
+  //   networkName: string
+  //   network: string
+  //   qr: string
+  // }
 
   selectViewAsset.value = findAsset(event.assetId)
   displayNew.value = false
@@ -208,8 +210,8 @@ const onLazyLoad = (event: any) => {
     assetsService
       .listPaymentAddress(nextPag.value)
       .then(data => {
-        paymentAddress.value = [...paymentAddress.value, ...data.results]
-        nextPag.value = data.nextPag
+        paymentAddress.value = [...paymentAddress.value, ...data]
+        // nextPag.value = data.nextPag
       })
       .finally(() => {
         lazyLoading.value = false
