@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="field">
+    <div class="field" v-if="typeBeneficiaryBankWithdrawal !== 'DOMESTIC'">
       <label>{{ t('swiftCode') }}</label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="swiftCode" />
