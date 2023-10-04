@@ -22,7 +22,6 @@
             {{ t('beneficiaryName') }}
           </p>
 
-          <p>{{ ownerName }}</p>
         </div>
 
         <div class="col-6 pt-1">
@@ -54,12 +53,14 @@
       <div class="inner-row-flex">
         <div class="col-6">
           <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>
-          <p class="font-medium text-sm">{{ t('datePicker') }}</p>
+          <p class="font-medium text-sm">{{ t('status') }}</p>
+          <p class="font-medium text-sm">{{ t('datePicker') }}</p> 
         </div>
 
         <div class="col-6 pt-1">
           <p>{{ transaction.transactionId }}</p>
-          <p>{{ transaction.formatedDate }}</p>
+          <p class="status" :class="transaction.status !== 'CANCELLED' ? 'green-text' : 'red-text'"> {{ transaction.status }}</p>
+          <p>{{ transaction.formatedDate }}</p> 
         </div>
       </div>
     </div>
@@ -152,6 +153,7 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('beneficiaryName')] = beneficiaryName
   transactionPDF[t('assetType')] = transaction.assetCode === 'USD' || transaction.assetId ? 'FIAT' : 'CRYPTO'
   transactionPDF[t('amount')] = `${transaction.amount}`
+  transactionPDF[t('status')] = `${transaction.status}`
   transactionPDF[t('transactionNumber')] = transaction.transactionId
   transactionPDF[t('reference')] = `${transaction.reference.length > maxReferenceLength 
     ? transaction.reference.slice(0, maxReferenceLength) 
@@ -164,6 +166,13 @@ const generatePDFTransactionReceipt = () => {
 </script>
 
 <style lang="css" scoped>
+.green-text {
+  color: green;
+}
+
+.red-text {
+  color: red;
+}
 .content {
   display: contents;
 }

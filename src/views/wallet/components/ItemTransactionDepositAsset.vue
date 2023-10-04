@@ -25,7 +25,7 @@
       </p>
     </div>
 
-    <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2 details-mobile">
+    <div class="col-6 sm:col-2 md:col-2 lg:col-2 xl:col-2 details-mobile">
       <router-link class="link-modal-data-transaction" to="#" exact role="menuitem" v-ripple>
         <h4>
           <i class="pi pi-eye"></i>
