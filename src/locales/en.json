@@ -407,5 +407,16 @@
   "error": "Error",
   "titleBusinessAccount": "Business",
   "helpTextCompanyName": "Write down the company name as it appears on company docs.",
-  "helpTextCompanyTax": "Fill in the EIN of the company."
+  "helpTextCompanyTax": "Fill in the company registration number.",
+  "labelDocumentCompany": "Company registration number",
+  "labelNaics": "NAICS",
+  "helpTextNaics": "Fill in the NAICS code.",
+  "labelnaicsDescription": "NAICS description",
+  "helpTextNaicsDescription": "Fill in the NAICS description.",
+  "labelEstablishedDate": "Established date",
+  "helpTextEstablishedDate": "Fill in the date the company was established.",
+  "labelWebsite": "Website",
+  "helpTextWebsite": "Fill in the company website.",
+  "labelAdressRegistration": "Company registration address",
+  "labelAdressFisical": "Company fisical address"
 }

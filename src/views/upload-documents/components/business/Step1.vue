@@ -8,77 +8,17 @@
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('businessNameLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="firstName" class="w-full" required />
+          <InputText type="text" v-model="name" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextCompanyName') }}</span>
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('secondNameLabel') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="middleName" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextMiddleName') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('surnameLabel') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="lastName" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextSurname') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('otherLastName') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="otherLastName" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextSecondSurname') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
-        <label>{{ t('docTypeLabelPassport') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="passport" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextPassport') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
-        <label>{{ t('documentLabel') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="dni" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
-        <label>{{ t('taxIdLabel') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="taxId" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
@@ -86,13 +26,53 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('birthdateLabel') }}</label>
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('labelDocumentCompany') }}</label>
         <div class="p-inputgroup">
-          <Calendar v-model="dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+          <InputText type="text" v-model="registerNumber" class="w-full" required />
         </div>
         <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+          <span class="help-text">{{ t('helpTextCompanyTax') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('labelNaics') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="naics" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextNaics') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('labelnaicsDescription') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="naicsDescription" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextNaicsDescription') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('labelEstablishedDate') }}</label>
+        <div class="p-inputgroup">
+          <Calendar v-model="establishedDate" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextEstablishedDate') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+        <label>{{ t('labelWebsite') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="website" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextWebsite') }}</span>
         </div>
       </div>
 
@@ -111,14 +91,14 @@
         </div>
       </div>
 
-      <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
+      <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressRegistration') }}</p>
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('countryLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="country"
+              v-model="registerCountry"
               :options="countries"
               optionLabel="name"
               option-value="country_code"
@@ -139,7 +119,7 @@
           <label>{{ t('stateLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="state"
+              v-model="registerState"
               :options="states"
               optionLabel="name"
               option-value="state_code"
@@ -158,7 +138,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="city" class="w-full" required />
+            <InputText type="text" v-model="registerCity" class="w-full" required />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -168,7 +148,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="streetOne" />
+            <InputText type="text" v-model="registerStreetOne" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -178,7 +158,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="streetTwo" />
+            <InputText type="text" v-model="registerStreetTwo" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -188,7 +168,92 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="postalCode" />
+            <InputText type="text" v-model="registerPostalCode" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressFisical') }}</p>
+      <Divider class="mt-0"></Divider>
+      <div class="grid mt-2">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('countryLabel') }}</label>
+          <div class="p-inputgroup">
+            <Dropdown
+              v-model="registerCountry"
+              :options="countries"
+              optionLabel="name"
+              option-value="country_code"
+              :loading="loadingCountiesField"
+              :placeholder="t('countryPlaceholder')"
+              :disabled="countriesInputIsEmpty"
+              class="w-full"
+              @change="onChangeCountryHandler"
+              required
+            />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextCountry') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('stateLabel') }}</label>
+          <div class="p-inputgroup">
+            <Dropdown
+              v-model="registerState"
+              :options="states"
+              optionLabel="name"
+              option-value="state_code"
+              :loading="loadingStatesField"
+              :placeholder="t('statePlaceHolder')"
+              :disabled="statesInputIsEmpty"
+              class="w-full"
+              @change="onChangeStateHandler"
+            />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextState') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('cityLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="registerCity" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextCity') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('streetAddress') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="registerStreetOne" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressOne') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('streetAddressTwo') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="registerStreetTwo" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('postalCodeLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="registerPostalCode" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -241,34 +306,27 @@ const toast = useToast()
 
 const submitting = ref(false)
 
-const firstName = ref<string>('')
-const middleName = ref<string>('')
-const lastName = ref<string>('')
-const otherLastName = ref<string>('')
-
+const name = ref<string>('')
 const email = ref<string>('')
-const dateBirth = ref<string>('')
-
-const dni = ref<string>('')
-const taxId = ref<string>('')
-const passport = ref<string>('')
+const registerNumber = ref<string>('')
+const naics = ref<string>('')
+const naicsDescription = ref<string>('')
+const establishedDate = ref<string>('')
+const website = ref<string>('')
 const phoneCountry = ref<string>('')
 const phoneNumber = ref<string>('')
-const streetOne = ref<string>('')
-const streetTwo = ref<string>('')
-const postalCode = ref<string>('')
-const city = ref<string>('')
-const state = ref<string>('')
-const type = ref<string>('')
-const country = ref<string>('')
+
+const registerStreetOne = ref<string>('')
+const registerStreetTwo = ref<string>('')
+const registerPostalCode = ref<string>('')
+const registerCity = ref<string>('')
+const registerState = ref<string>('')
+const registerCountry = ref<string>('')
 
 onMounted(async () => {
   await fetchCountries()
 })
 
-const isPassportOrTaxIdEmpty = () => {
-  return !passport.value && !taxId.value
-}
 const convertISODateToYYYYMMDD = (isoDateString: string) => {
   const date = new Date(isoDateString)
 
@@ -284,37 +342,13 @@ const convertISODateToYYYYMMDD = (isoDateString: string) => {
 const saveData = () => {
   submitting.value = true
 
-  if (isPassportOrTaxIdEmpty()) {
-    toast.add({
-      severity: 'error',
-      summary: t('error'),
-      detail: t('passportOrTaxIdEmpty'),
-    })
-    submitting.value = false
-    return
-  }
-
-  type.value = 'NATURAL_PERSON'
   const formData = ref()
 
   formData.value = {
-    firstName: firstName.value,
-    middleName: middleName.value,
-    lastName: lastName.value + ' ' + otherLastName.value,
-    email: email.value,
-    dateBirth: convertISODateToYYYYMMDD(dateBirth.value),
-    dni: dni.value,
-    taxId: taxId.value,
-    passport: passport.value,
+    name: name.value,
+    dateBirth: convertISODateToYYYYMMDD(establishedDate.value),
     phoneCountry: phoneCountry.value,
     phoneNumber: phoneNumber.value,
-    streetOne: streetOne.value,
-    streetTwo: streetTwo.value,
-    postalCode: postalCode.value,
-    city: city.value,
-    region: state.value,
-    country: country.value,
-    type: type.value,
   }
 
   const uploadDocumentsService = UploadDocumentsService.instance()
@@ -329,8 +363,6 @@ const saveData = () => {
         life: 4000,
       })
       //save localstorage
-      localStorage.setItem('accountId', resp.data.clientId)
-      localStorage.setItem('dni', dni.value)
 
       router.push('/upload-documents/personal/step2')
     })
