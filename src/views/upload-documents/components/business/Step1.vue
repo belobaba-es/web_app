@@ -284,7 +284,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch, ref } from 'vue'
-import Dropdown from 'primevue/dropdown'
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Calendar from 'primevue/calendar'
@@ -372,9 +372,12 @@ const physicalAddressIsSameRegisteredAddress = () => {
     fisicalStreetTwo.value = registerStreetTwo.value
     fisicalPostalCode.value = registerPostalCode.value
     fisicalCity.value = registerCity.value
-    fisicalState.value = registerState.value
     fisicalCountry.value = registerCountry.value
-  }else{
+
+    if (fisicalState.value.length > 0) {
+      fisicalState.value = registerState.value
+    }
+  } else {
     fisicalStreetOne.value = ''
     fisicalStreetTwo.value = ''
     fisicalPostalCode.value = ''
