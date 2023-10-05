@@ -176,14 +176,28 @@
         </div>
       </div>
 
-      <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressFisical') }}</p>
+      <div class="flex w-100 justify-content-between align-items-center mt-2">
+        <div>
+          <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressFisical') }}</p>
+        </div>
+        <div class="field-checkbox mt-2">
+          <Checkbox
+            inputId="patriot"
+            v-model="isFisicalAdress"
+            @change="physicalAddressIsSameRegisteredAddress"
+            :binary="true"
+          />
+          <label for="patriot">Click aqui si la direccion fisica es igual que la direccion de registro</label>
+        </div>
+      </div>
+
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('countryLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="registerCountry"
+              v-model="fisicalCountry"
               :options="countries"
               optionLabel="name"
               option-value="country_code"
@@ -191,7 +205,7 @@
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
-              @change="onChangeCountryHandler"
+              @change="onChangeCountryHandlerTwo"
               required
             />
           </div>
@@ -204,11 +218,11 @@
           <label>{{ t('stateLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="registerState"
-              :options="states"
+              v-model="fisicalState"
+              :options="statesTwo"
               optionLabel="name"
               option-value="state_code"
-              :loading="loadingStatesField"
+              :loading="loadingStatesFieldTwo"
               :placeholder="t('statePlaceHolder')"
               :disabled="statesInputIsEmpty"
               class="w-full"
@@ -223,7 +237,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerCity" class="w-full" required />
+            <InputText type="text" v-model="fisicalCity" class="w-full" required />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -233,7 +247,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerStreetOne" />
+            <InputText type="text" v-model="fisicalStreetOne" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -243,7 +257,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerStreetTwo" />
+            <InputText type="text" v-model="fisicalStreetTwo" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -253,7 +267,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerPostalCode" />
+            <InputText type="text" v-model="fisicalPostalCode" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -275,6 +289,8 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Calendar from 'primevue/calendar'
 import Divider from 'primevue/divider'
+import Checkbox from 'primevue/checkbox'
+
 import { useToast } from 'primevue/usetoast'
 
 import { useRoute } from 'vue-router'
@@ -294,8 +310,11 @@ const {
   countriesInputIsEmpty,
   statesInputIsEmpty,
   loadingStatesField,
+  loadingStatesFieldTwo,
   states,
+  statesTwo,
   onChangeCountryHandler,
+  onChangeCountryHandlerTwo,
   onChangeStateHandler,
   calling_code,
 } = useWorld()
@@ -323,6 +342,15 @@ const registerCity = ref<string>('')
 const registerState = ref<string>('')
 const registerCountry = ref<string>('')
 
+const fisicalStreetOne = ref<string>('')
+const fisicalStreetTwo = ref<string>('')
+const fisicalPostalCode = ref<string>('')
+const fisicalCity = ref<string>('')
+const fisicalState = ref<string>('')
+const fisicalCountry = ref<string>('')
+
+const isFisicalAdress = ref<boolean>(false)
+
 onMounted(async () => {
   await fetchCountries()
 })
@@ -337,6 +365,23 @@ const convertISODateToYYYYMMDD = (isoDateString: string) => {
   const formattedDate = `${year}-${month}-${day}`
 
   return formattedDate
+}
+const physicalAddressIsSameRegisteredAddress = () => {
+  if (isFisicalAdress.value) {
+    fisicalStreetOne.value = registerStreetOne.value
+    fisicalStreetTwo.value = registerStreetTwo.value
+    fisicalPostalCode.value = registerPostalCode.value
+    fisicalCity.value = registerCity.value
+    fisicalState.value = registerState.value
+    fisicalCountry.value = registerCountry.value
+  }else{
+    fisicalStreetOne.value = ''
+    fisicalStreetTwo.value = ''
+    fisicalPostalCode.value = ''
+    fisicalCity.value = ''
+    fisicalState.value = ''
+    fisicalCountry.value = ''
+  }
 }
 
 const saveData = () => {
