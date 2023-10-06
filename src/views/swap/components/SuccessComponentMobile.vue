@@ -11,7 +11,7 @@
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ usdName }}</div>
-        <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee) }} {{ usdName }}</div>
+        <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
       </div>
     </div>
     <div class="flex" v-else>
@@ -51,7 +51,7 @@
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
           <div class="font-medium">{{ usdName }}</div>
-          <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee) }} {{ usdName }}</div>
+          <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
         </div>
       </div>
     </div>
