@@ -9,29 +9,29 @@
     <!--&lt;!&ndash;      </div>&ndash;&gt;-->
     <!--    </div>-->
 
-    <div class="col-12 pt-0 pb-0 grid">
-      <div class="col-5 pt-0 pb-0">
-        <span class="font-regular text-primary text-1xl">Fee Noba:</span>
-      </div>
-      <div class="col-7 pt-0 pb-0">
-        <span class="text-1xl font-light text-lg-right">
-          {{ feeNoba }} <small>{{ destinationWalletId }}</small></span
-        >
-        <!--        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ feeNoba }}</span>-->
-      </div>
-    </div>
+    <!--    <div class="col-12 pt-0 pb-0 grid">-->
+    <!--      <div class="col-5 pt-0 pb-0">-->
+    <!--        <span class="font-regular text-primary text-1xl">Fee Noba:</span>-->
+    <!--      </div>-->
+    <!--      <div class="col-7 pt-0 pb-0">-->
+    <!--        <span class="text-1xl font-light text-lg-right">-->
+    <!--          {{ feeNoba }} <small>{{ transactionType === 'buy' ? sourceWalletId : destinationWalletId }}</small></span-->
+    <!--        >-->
+    <!--        &lt;!&ndash;        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ feeNoba }}</span>&ndash;&gt;-->
+    <!--      </div>-->
+    <!--    </div>-->
 
-    <div class="col-12 grid">
-      <div class="col-5 pt-0 pb-0">
-        <span class="font-regular text-primary text-1xl">{{ getLabelTotal() }}:</span>
-      </div>
-      <div class="col-7 pt-0 pb-0">
-        <!--        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ totalSpend }}</span>-->
-        <span class="text-1xl font-light text-lg-right"
-          >{{ totalSpend }} <small>{{ destinationWalletId }}</small>
-        </span>
-      </div>
-    </div>
+    <!--    <div class="col-12 grid">-->
+    <!--      <div class="col-5 pt-0 pb-0">-->
+    <!--        <span class="font-regular text-primary text-1xl">{{ getLabelTotal() }}:</span>-->
+    <!--      </div>-->
+    <!--      <div class="col-7 pt-0 pb-0">-->
+    <!--        &lt;!&ndash;        <span class="text-1xl font-light text-lg-right"><small>US$</small> {{ totalSpend }}</span>&ndash;&gt;-->
+    <!--        <span class="text-1xl font-light text-lg-right"-->
+    <!--          >{{ totalSpend }} <small>{{ transactionType === 'buy' ? sourceWalletId : destinationWalletId }}</small>-->
+    <!--        </span>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -40,7 +40,7 @@ import { useSwap } from '../../../composables/useSwap'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
-const { feeTradeDesk, feeNoba, totalSpend, transactionType, destinationWalletId } = useSwap()
+const { feeTradeDesk, feeNoba, totalSpend, transactionType, sourceWalletId, destinationWalletId } = useSwap()
 
 const getLabelTotal = () => {
   return t('swapSpend')
