@@ -355,6 +355,7 @@ const saveData = () => {
     formData.value.partners.push(newShareholder)
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
+    submitting.value = false
 
     router.push('/upload-documents/business/step2')
   } else {

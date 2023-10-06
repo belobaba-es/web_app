@@ -44,6 +44,10 @@
           </div>
         </div>
       </div>
+
+      <div class="field col-12 flex align-items-center justify-content-end">
+        <Button :label="t('save')" class="px-5 mt-3 btn-submit" @click="saveData()" :loading="submitting" />
+      </div>
     </div>
   </section>
 </template>
