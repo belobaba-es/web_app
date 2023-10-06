@@ -293,16 +293,12 @@ import Checkbox from 'primevue/checkbox'
 
 import { useToast } from 'primevue/usetoast'
 
-import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../../composables/useWorld'
-import { useAccount } from '../../../../composables/useAccount'
-import showExceptionError from '../../../../shared/showExceptionError'
-import showMessage from '../../../../shared/showMessageArray'
 
-import { UploadDocumentsService } from '../../services/upload-documents'
 import router from '../../../../router'
+
 const {
   countries,
   fetchCountries,
@@ -366,6 +362,55 @@ const convertISODateToYYYYMMDD = (isoDateString: string) => {
 
   return formattedDate
 }
+
+const validateFields = () => {
+  const isNameValid = name.value.trim() !== ''
+  const isEmailValid = email.value.trim() !== ''
+  const isRegisterNumberValid = registerNumber.value.trim() !== ''
+  const isNaicsValid = naics.value.trim() !== ''
+  const isNaicsDescriptionValid = naicsDescription.value.trim() !== ''
+  const isEstablishedDateValid = establishedDate.value !== ''
+  const isWebsiteValid = website.value.trim() !== ''
+  const isPhoneCountryValid = phoneCountry.value.trim() !== ''
+  const isPhoneNumberValid = phoneNumber.value.trim() !== ''
+  const isRegisterStreetOneValid = registerStreetOne.value.trim() !== ''
+  const isRegisterStreetTwoValid = registerStreetTwo.value.trim() !== ''
+  const isRegisterPostalCodeValid = registerPostalCode.value.trim() !== ''
+  const isRegisterCityValid = registerCity.value.trim() !== ''
+  const isRegisterStateValid = registerState.value.trim() !== ''
+  const isRegisterCountryValid = registerCountry.value.trim() !== ''
+  const isFisicalStreetOneValid = fisicalStreetOne.value.trim() !== ''
+  const isFisicalStreetTwoValid = fisicalStreetTwo.value.trim() !== ''
+  const isFisicalPostalCodeValid = fisicalPostalCode.value.trim() !== ''
+  const isFisicalCityValid = fisicalCity.value.trim() !== ''
+  const isFisicalStateValid = fisicalState.value.trim() !== ''
+  const isFisicalCountryValid = fisicalCountry.value.trim() !== ''
+
+  return (
+    isNameValid &&
+    isEmailValid &&
+    isRegisterNumberValid &&
+    isNaicsValid &&
+    isNaicsDescriptionValid &&
+    isEstablishedDateValid &&
+    isWebsiteValid &&
+    isPhoneCountryValid &&
+    isPhoneNumberValid &&
+    isRegisterStreetOneValid &&
+    isRegisterStreetTwoValid &&
+    isRegisterPostalCodeValid &&
+    isRegisterCityValid &&
+    isRegisterStateValid &&
+    isRegisterCountryValid &&
+    isFisicalStreetOneValid &&
+    isFisicalStreetTwoValid &&
+    isFisicalPostalCodeValid &&
+    isFisicalCityValid &&
+    isFisicalStateValid &&
+    isFisicalCountryValid
+  )
+}
+
 const physicalAddressIsSameRegisteredAddress = () => {
   if (isFisicalAdress.value) {
     fisicalStreetOne.value = registerStreetOne.value
@@ -390,47 +435,52 @@ const physicalAddressIsSameRegisteredAddress = () => {
 const saveData = () => {
   submitting.value = true
 
-  const formData = ref()
+  if (validateFields()) {
+    const formData = ref()
 
-  formData.value = {
-    name: name.value,
-    dateBirth: convertISODateToYYYYMMDD(establishedDate.value),
-    phoneCountry: phoneCountry.value,
-    phoneNumber: phoneNumber.value,
+    formData.value = {
+      informationCompany: {
+        name: name.value,
+        email: email.value,
+        registerNumber: registerNumber.value,
+        naics: naics.value,
+        naicsDescription: naicsDescription.value,
+        establishedDate: convertISODateToYYYYMMDD(establishedDate.value),
+        website: website.value,
+        phoneCountry: phoneCountry.value,
+        phoneNumber: phoneNumber.value,
+      },
+      registeredAddress: {
+        streetOne: registerStreetOne.value,
+        streetTwo: registerStreetTwo.value,
+        postalCode: registerPostalCode.value,
+        city: registerCity.value,
+        region: registerState.value,
+        country: registerCountry.value,
+      },
+      physicalAddress: {
+        streetOne: fisicalStreetOne.value,
+        streetTwo: fisicalStreetTwo.value,
+        postalCode: fisicalPostalCode.value,
+        city: fisicalCity.value,
+        region: fisicalState.value,
+        country: fisicalCountry.value,
+      },
+    }
+
+    //set data to localstorage 
+    localStorage.setItem('companyData', JSON.stringify(formData.value))
+
+    router.push('/upload-documents/business/step2')
+  } else {
+    submitting.value = false
+    toast.add({
+      severity: 'error',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
+    })
   }
-
-  const uploadDocumentsService = UploadDocumentsService.instance()
-
-  uploadDocumentsService
-    .openingAccountPersonal(formData.value)
-    .then(resp => {
-      submitting.value = false
-      toast.add({
-        severity: 'success',
-        detail: resp.message,
-        life: 4000,
-      })
-      //save localstorage
-
-      router.push('/upload-documents/personal/step2')
-    })
-    .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.data?.warning) {
-        e.response.data.data.warning.forEach((element: any) => {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-        })
-        return
-      }
-
-      if (e.response.data.message) {
-        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-        return
-      }
-
-      showMessage(toast, e.response.data)
-    })
 }
 </script>
 <style lang="scss">

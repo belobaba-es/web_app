@@ -56,6 +56,8 @@ import PersonalStep2 from './views/upload-documents/components/personal/Step2.vu
 
 
 import BusinessStep1 from './views/upload-documents/components/business/Step1.vue'
+import BusinessStep2 from './views/upload-documents/components/business/Step2.vue'
+
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -345,6 +347,10 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'business/step1',
+            component: BusinessStep1,
+          },
+          {
+            path: 'business/step2',
             component: BusinessStep1,
           },
         ],
