@@ -418,5 +418,8 @@
   "labelWebsite": "Website",
   "helpTextWebsite": "Fill in the company website.",
   "labelAdressRegistration": "Company registration address",
-  "labelAdressFisical": "Company fisical address"
+  "labelAdressFisical": "Company fisical address",
+  "accountPropuseTitle": "Account purpose",
+  "accountPropuseHelpText": "Write briefly the use you are going to make of the account. Example: Sales invoicing, payroll payment, payment to suppliers, payment of services.",
+  "associationsAccountsLabel": "Associations with other accounts"
 }

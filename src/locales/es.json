@@ -401,7 +401,7 @@
   "titleBusinessAccount": "Negocios",
   "helpTextCompanyName": "Escriba el nombre de la empresa tal como aparece en los documentos de la empresa.",
   "helpTextCompanyTax": "Rellene el número de registro de la empresa.",
-  "labelDocumentCompany" : "Número de registro de la empresa",
+  "labelDocumentCompany": "Número de registro de la empresa",
   "labelNaics": "NAICS",
   "helpTextNaics": "Rellene el código NAICS de la empresa.",
   "labelnaicsDescription": "Descripción NAICS",
@@ -411,7 +411,7 @@
   "labelWebsite": "Sitio web",
   "helpTextWebsite": "Rellene el sitio web de la empresa.",
   "labelAdressRegistration": "Dirección de registro de la empresa",
-  "labelAdressFisical": "Dirección fisica de la empresa"
-
-
+  "labelAdressFisical": "Dirección fisica de la empresa",
+  "accountPropuseTitle": "Propósito de la cuenta",
+  "accountPropuseHelpText": "Escriba brevemente el uso que va a realizar de la cuenta. Ejemplo: Facturación de ventas, pago de nómina, pago a proveedores, pago de servicios."
 }

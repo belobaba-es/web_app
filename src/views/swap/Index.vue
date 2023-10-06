@@ -45,7 +45,7 @@
               </div>
             </div>
 
-            <ShowFee v-if="exchangeId" />
+            <!--            <ShowFee v-if="exchangeId" />-->
 
             <div class="mb-2">
               <Button
@@ -112,8 +112,6 @@ const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwa
 const useUser = useUserStore()
 
 const selectedAsset = async (asset: Asset) => {
-  console.log('asset', asset.code)
-
   showModalAssetSelector.value = false
   assetIcon.value = asset.icon
   assetName.value = asset.name

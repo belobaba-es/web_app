@@ -20,6 +20,7 @@ export const useSwapStore = defineStore('swap', () => {
   const totalAmount = ref(0.0)
   const unitCount = ref(0.0)
   const amount = ref(0.0)
+  const amountAfterRemovingFee = ref(0.0)
   const amountIsUnitCount = ref(false)
   const transactionType = ref('buy')
   const assetId = ref()
@@ -34,6 +35,7 @@ export const useSwapStore = defineStore('swap', () => {
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
   const destinationWalletId = ref()
+  const sourceWalletId = ref()
   const exchanges = ref<ExchangeResponse>({
     count: 0,
     nextPag: 1,
@@ -51,6 +53,7 @@ export const useSwapStore = defineStore('swap', () => {
     feeNoba: 0,
     feeTradeDesk: 0,
     totalSpend: 0,
+    amountAfterRemovingFee: 0,
   })
   const feeTradeDesk = ref(0.0)
   const totalSpend = ref(0.0)
@@ -61,7 +64,7 @@ export const useSwapStore = defineStore('swap', () => {
     if (transactionType.value === 'buy') {
       totalSpend.value = baseAmount.value + feeAmount.value
     } else {
-      totalSpend.value = amount.value + feeAmount.value
+      totalSpend.value = amountAfterRemovingFee.value - feeAmount.value
     }
   }
 
@@ -71,28 +74,29 @@ export const useSwapStore = defineStore('swap', () => {
 
   const createExchange = async () => {
     if (
-      (transactionType.value === 'buy' && amount.value === 0.0) ||
+      (transactionType.value === 'buy' && amountAfterRemovingFee.value === 0.0) ||
       (transactionType.value === 'sell' && unitCount.value === 0.0)
     )
       return
 
     loading.value = true
-    let sourceWalletId = ''
     const swapService = SwapService.instance()
 
     if (transactionType.value === 'buy') {
-      sourceWalletId = 'USD'
+      sourceWalletId.value = 'USD'
       destinationWalletId.value = assetCode.value
     } else {
-      sourceWalletId = assetCode.value
+      sourceWalletId.value = assetCode.value
       destinationWalletId.value = 'USD'
     }
 
-    const amountFormated = amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value
+    const amountFormated = amountIsUnitCount.value
+      ? Math.trunc(unitCount.value * 1e6) / 1e6
+      : amountAfterRemovingFee.value
     await swapService
       .createExchange({
         amount: amountFormated,
-        sourceWalletId,
+        sourceWalletId: sourceWalletId.value,
         destinationWalletId: destinationWalletId.value,
         description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId.value}`,
       })
@@ -107,16 +111,10 @@ export const useSwapStore = defineStore('swap', () => {
         if (transactionType.value === 'buy') {
           unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
         } else {
-          console.log(
-            '+ exchange.value?.destination_details?.amount_to_credit',
-            exchange.value?.destination_details?.amount_to_credit
-          )
-          amount.value = <number>exchange.value?.destination_details?.amount_to_credit
+          amountAfterRemovingFee.value = <number>exchange.value?.destination_details?.amount_to_credit - feeNoba.value
           unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
           unitCount.value = Number(unitCount.value.toFixed(6))
         }
-
-        console.log('=  amount.value', amount.value)
 
         exchangeId.value = exchange.value?.exchangeId
 
@@ -139,7 +137,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const executeQuote = async () => {
-    if (amount.value === 0.0) return
+    if (amountAfterRemovingFee.value === 0.0) return
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
@@ -161,11 +159,12 @@ export const useSwapStore = defineStore('swap', () => {
         transactionSummary.value.feeAmount = feeAmount.value
         transactionSummary.value.totalAmount = totalAmount.value
         transactionSummary.value.transactionType = transactionType.value
-        transactionSummary.value.unitCount = unitCount.value
+        transactionSummary.value.unitCount = Math.trunc(unitCount.value * 1e6) / 1e6
         transactionSummary.value.exchangeId = exchangeId.value
         transactionSummary.value.feeNoba = feeNoba.value
         transactionSummary.value.feeTradeDesk = feeTradeDesk.value
         transactionSummary.value.totalSpend = totalSpend.value
+        transactionSummary.value.amountAfterRemovingFee = amountAfterRemovingFee.value
 
         router.push('/swap/success')
       })
@@ -220,7 +219,7 @@ export const useSwapStore = defineStore('swap', () => {
     feeAmount.value = 0.0
     totalAmount.value = 0.0
     unitCount.value = 0.0
-    amount.value = 0.0
+    amountAfterRemovingFee.value = 0.0
     // progressBarSeconds.value = 10
     // progressBarPercent.value = 0
     shouldRefreshQuote.value = false
@@ -238,8 +237,8 @@ export const useSwapStore = defineStore('swap', () => {
   const switchTransactionType = async () => {
     if (transactionType.value === 'buy') {
       amountIsUnitCount.value = true
-      if (amount.value > 0.0) {
-        amount.value = 0.0
+      if (amountAfterRemovingFee.value > 0.0) {
+        amountAfterRemovingFee.value = 0.0
       }
       transactionType.value = 'sell'
     } else {
@@ -328,5 +327,7 @@ export const useSwapStore = defineStore('swap', () => {
     totalSpend,
     exchange,
     destinationWalletId,
+    sourceWalletId,
+    amountAfterRemovingFee,
   }
 })

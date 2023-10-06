@@ -128,6 +128,8 @@ const props = defineProps<{
   formData: any
 }>()
 
+console.log("props.formData",props.formData)
+
 const bankCountry = ref<string>('')
 const bankState = ref<string>('')
 const bankCity = ref<string>('')
@@ -168,6 +170,9 @@ const saveBeneficiary = () => {
         informationOwner: {
           ...props.formData.informationOwner,
         },
+        informationIntermediaryBank: {
+          ...props.formData.informationIntermediaryBank,
+        },
       }
     } else {
       formData.value = {
@@ -185,10 +190,7 @@ const saveBeneficiary = () => {
         },
         informationOwner: {
           ...props.formData.informationOwner,
-        },
-        informationIntermediaryBank: {
-          ...props.formData.informationIntermediaryBank,
-        },
+        }
       }
     }
 

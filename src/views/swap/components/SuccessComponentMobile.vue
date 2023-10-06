@@ -10,8 +10,8 @@
         <img alt="logo" :src="usdIcon" style="width: 4rem" />
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
-        <div class="font-medium">1a {{ usdName }}</div>
-        <div class="font-medium">{{ totalBuy() }} {{ usdName }}</div>
+        <div class="font-medium">{{ usdName }}</div>
+        <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
       </div>
     </div>
     <div class="flex" v-else>
@@ -19,7 +19,7 @@
         <img alt="logo" :src="summary.assetIcon" style="width: 4rem" />
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
-        <div class="font-medium">1b {{ transactionSummary.assetName }}</div>
+        <div class="font-medium">{{ transactionSummary.assetName }}</div>
         <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
       </div>
     </div>
@@ -30,6 +30,8 @@
         </div>
       </div>
     </div>
+
+    <!--    sell-->
     <div>
       <div class="col-12 flex justify-content-center flex-wrap">
         <span class="mb-1 text-from">{{ t('swapTo') }}</span>
@@ -39,7 +41,7 @@
           <img alt="logo" :src="summary.assetIcon" style="width: 4rem" />
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
-          <div class="font-medium">2a{{ transactionSummary.assetName }}</div>
+          <div class="font-medium">{{ transactionSummary.assetName }}</div>
           <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
         </div>
       </div>
@@ -48,8 +50,8 @@
           <img alt="logo" :src="usdIcon" style="width: 4rem" />
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
-          <div class="font-medium">2b {{ usdName }}</div>
-          <div class="font-medium">{{ totalSell() }} {{ usdName }}</div>
+          <div class="font-medium">{{ usdName }}</div>
+          <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
         </div>
       </div>
     </div>
@@ -62,6 +64,9 @@ import { useI18n } from 'vue-i18n'
 import { SummarySwap } from '../types/sumary'
 
 import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
+import { useSwap } from '../../../composables/useSwap'
+import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+const { calculateBalance } = useBalanceWallet()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -73,13 +78,10 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { unitCount } = useSwap()
 
-const totalBuy = () => {
-  return (props.summary.totalAmount + props.summary.feeNoba).toFixed(2)
-}
-
-const totalSell = () => {
-  return (props.summary.totalAmount - props.summary.feeNoba).toFixed(2)
+const formatFiat = (amount: number) => {
+  return calculateBalance('USD', amount, 0)
 }
 </script>
 

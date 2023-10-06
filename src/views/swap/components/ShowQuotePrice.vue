@@ -1,7 +1,7 @@
 <template>
   <div class="mt-6 mb-3">
     <p class="text-sm text-center main-text">{{ t('swapPriceWarning') }}</p>
-    <p class="text-sm text-center main-text">{{ quoteText }}</p>
+    <!--    <p class="text-sm text-center main-text">{{ quoteText }}</p>-->
   </div>
 </template>
 

@@ -45,7 +45,7 @@
         <div class="input-mount col-5 flex align-items-center">
           <template v-if="type === 'fiat'">
             <InputNumber
-              v-model="amount"
+              v-model="amountAfterRemovingFee"
               mode="decimal"
               :max-fraction-digits="2"
               :min-fraction-digits="2"
@@ -121,6 +121,7 @@ const toast = useToast()
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
 const {
+  amountAfterRemovingFee,
   amount,
   assetName,
   assetIcon,
@@ -145,7 +146,7 @@ const openModalSelector = () => {
 
 const disabledBtnSelectCrypto = computed(() => {
   if (transactionType.value === 'buy') {
-    return amount.value === 0.0 || loading.value
+    return amountAfterRemovingFee.value === 0.0 || loading.value
   } else if (transactionType.value === 'sell') {
     return loading.value
   }
@@ -169,7 +170,13 @@ watch(unitCount, async newVal => {
 const verifyAmountForCreateQoute = () => {
   //TODO el setTimeout es porque primevue tarda alguno milisegundo en actualizar la variable reactiva.
   setTimeout(async () => {
-    if (transactionType.value === 'buy' && assetCode.value && amount.value > 0 && assetId.value && !loading.value) {
+    if (
+      transactionType.value === 'buy' &&
+      assetCode.value &&
+      amountAfterRemovingFee.value > 0 &&
+      assetId.value &&
+      !loading.value
+    ) {
       await clearTimer()
       await createExchange()
     }
@@ -178,7 +185,7 @@ const verifyAmountForCreateQoute = () => {
 
 const maxCountInput = (typeCode: string) => {
   if (typeCode === 'USD') {
-    amount.value = getBalanceByCode('USD')
+    amountAfterRemovingFee.value = getBalanceByCode('USD')
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
