@@ -26,7 +26,14 @@
                           <div class="field">
                             <label>{{ t('Document Type') }}</label>
                             <div class="p-inputgroup">
-                              <Dropdown :options="data" optionLabel="label" option-value="value" class="w-full" />
+                              <Dropdown
+                                  :options="DocumentType"
+                                  option-label="name"
+                                  option-value="value"
+                                  :placeholder="t('documentTypePlaceHolder')"
+                                  class="w-full"
+                                  v-model="documentType"
+                                  @change="selectedProofOfAddress" />
                             </div>
                           </div>
                         </div>
@@ -38,14 +45,14 @@
                                 <label>{{ t('Front side') }}</label>
                                 <FileInput label="other" side="front" type="other" :account-id="accountId ?? ''"
                                   :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" />
+                                  :is-company="true" v-model="front"/>
                               </div>
 
                               <div class="col-6">
                                 <label>{{ t('Back side') }}</label>
                                 <FileInput label="other" side="front" type="other" :account-id="accountId ?? ''"
                                   :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" />
+                                  :is-company="true" v-model="backside" />
                               </div>
                             </div>
                           </div>
@@ -57,14 +64,14 @@
                               <div class="col-6">
                                 <label>{{ t('utilityBillLabel') }}</label>
                                 <div class="mt-2 mb-4">
-                                  <Dropdown v-model="proofOfAddress" :options="documentTypeProofOfAddress"
+                                  <Dropdown :options="documentTypeProofOfAddress"
                                     option-label="name" option-value="value" :placeholder="t('documentTypePlaceHolder')"
-                                    class="w-full" @change="selectedProofOfAddress" />
+                                    class="w-full" @change="selectedProofOfAddress" v-model="typeDocumentAddress" />
                                 </div>
                                 <FileInput :label="getSelectedTypeDocumentProofOfAddress('0')" side="front"
                                   :type="getSelectedTypeDocumentProofOfAddress('0')" :account-id="accountId ?? ''"
                                   :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" />
+                                  :is-company="true" v-model="documentFiscal"/>
                               </div>
                             </div>
                           </div>
@@ -78,6 +85,9 @@
             </div>
           </div>
         </div>
+        <div class="field col-12 flex align-items-center justify-content-end">
+          <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveData()" :loading="submitting" />
+        </div>
       </div>
     </div>
   </section>
@@ -86,16 +96,28 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
 import { ref, onBeforeMount } from 'vue'
-import Divider from 'primevue/divider'
 import { useAccount } from '../../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../profile/components/FileInput.vue'
-import FileUpload from './FileUploaded.vue'
 import { useDocuments } from '../../../../composables/useDocuments'
+import {ProfileService} from "../../../profile/services/profile";
+import router from "../../../../router";
+import showExceptionError from "../../../../shared/showExceptionError";
+import showMessage from "../../../../shared/showMessageArray";
+import {useToast} from "primevue/usetoast";
+import Button from "primevue/button";
 
 const { t } = useI18n({ useScope: 'global' })
 const { getOwner, accountId } = useAccount()
+const toast = useToast()
 const { addDocument, setSelectedTypeDocumentProofOfAddress, getSelectedTypeDocumentProofOfAddress } = useDocuments()
+
+const documentType = ref<string>('')
+const front = ref<string>('')
+const backside = ref<string>('')
+const documentFiscal = ref<string>('')
+const typeDocumentAddress = ref<string>('')
+const submitting = ref(false)
 
 const documentTypeProofOfAddress = ref([
   { value: 'monthly_utility', name: t('documentProofOfAddress1') },
@@ -107,6 +129,24 @@ const documentTypeProofOfAddress = ref([
   { value: 'w2', name: t('documentProofOfAddress7') },
 ])
 
+const DocumentType = ref( [
+  {value: "PASSPORT", name: "passport"},
+  {value: 'DRIVERS_LICENSE', name: "drivers_license"},
+  {value: "GOVERNMENT_ID", name: "government_id"},
+  {value: "RESIDENCE_PERMIT", name: "residence_permit"},
+  {value: "UTILITY_BILL", name: "utility_bill"},
+  {value: "STATEMENT", name: "statements"},
+  {value: "OTHER", name: "other"},
+  {value: "MONTHLY_UTILITY", name: "monthly_utility"},
+  {value: "RENTAL_LEASE_AGREEMENT", name: "rental_lease_agreement"},
+  {value: "VEHICLE_REGISTRATION", name: "vehicle_registration"},
+  {value: "REAL_ESTATE_PROPERTY_TITLE", name: "real_estate_property_title"},
+  {value: "PROPERTY_TAX_BILL", name: "property_tax_bill"},
+  {value: "INCOPORATION_DOCUMENT", name: "incorporation_document"},
+  {value: "ACCOUNT_AGREEMENT", name: "account_agreement"},
+  {value: "BENEFICIAL_OWNERSHIP_CERTIFICATE", name: "beneficial_ownership_certificate"},
+  {value: "W2", name: "w2"},
+])
 const proofOfAddress = ref('')
 
 onBeforeMount(() => {
@@ -116,17 +156,54 @@ onBeforeMount(() => {
   })
 })
 
-const data = [
-  { id: 1, name: 'Ram' },
-  { id: 2, name: 'Shyam' },
-  { id: 3, name: 'Hari' },
-  { id: 4, name: 'Krishna' },
-  { id: 5, name: 'Balram' },
-  { id: 6, name: 'Arjun' },
-]
-
 const selectedProofOfAddress = (e: any) => {
   setSelectedTypeDocumentProofOfAddress('0', e.value)
+}
+
+const saveData = () => {
+  submitting.value = true
+  const formData = ref()
+
+  formData.value = {
+    documentType: documentType.value,
+    dni: localStorage.getItem('dni'),
+    file: typeDocumentAddress.value,
+    front: front.value,
+    backside: backside.value,
+    isPartner: false
+  }
+  console.log(formData.value)
+  
+  const uploadDocumentsService = ProfileService.instance()
+  uploadDocumentsService
+      .updateDocuments(formData.value)
+      .then(resp => {
+        submitting.value = false
+        toast.add({
+          severity: 'success',
+          detail: resp.message,
+          life: 4000,
+        })
+
+        router.push('/personal/completed')
+      })
+      .catch(e => {
+        submitting.value = false
+
+        if (e.response.data.data?.warning) {
+          e.response.data.data.warning.forEach((element: any) => {
+            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
+          })
+          return
+        }
+
+        if (e.response.data.message) {
+          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
+          return
+        }
+
+        showMessage(toast, e.response.data)
+      })
 }
 </script>
 
