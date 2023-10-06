@@ -128,6 +128,8 @@ const props = defineProps<{
   formData: any
 }>()
 
+console.log("props.formData",props.formData)
+
 const bankCountry = ref<string>('')
 const bankState = ref<string>('')
 const bankCity = ref<string>('')
