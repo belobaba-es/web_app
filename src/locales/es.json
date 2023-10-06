@@ -398,6 +398,20 @@
   "taxIdLabel": "Número de identificación fiscal",
   "passportOrTaxIdEmpty": "Por favor ingrese su número de pasaporte o número de identificación fiscal",
   "error": "Error",
+  "titleBusinessAccount": "Negocios",
   "helpTextCompanyName": "Escriba el nombre de la empresa tal como aparece en los documentos de la empresa.",
-  "helpTextCompanyTax": "Rellene el EIN de la empresa."
+  "helpTextCompanyTax": "Rellene el número de registro de la empresa.",
+  "labelDocumentCompany" : "Número de registro de la empresa",
+  "labelNaics": "NAICS",
+  "helpTextNaics": "Rellene el código NAICS de la empresa.",
+  "labelnaicsDescription": "Descripción NAICS",
+  "helpTextNaicsDescription": "Rellene la descripción NAICS de la empresa.",
+  "labelEstablishedDate": "Fecha de establecimiento",
+  "helpTextEstablishedDate": "Rellene la fecha de establecimiento de la empresa.",
+  "labelWebsite": "Sitio web",
+  "helpTextWebsite": "Rellene el sitio web de la empresa.",
+  "labelAdressRegistration": "Dirección de registro de la empresa",
+  "labelAdressFisical": "Dirección fisica de la empresa"
+
+
 }
