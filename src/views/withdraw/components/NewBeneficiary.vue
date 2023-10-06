@@ -56,7 +56,7 @@ const { t } = useI18n({ useScope: 'global' })
 const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('crypto')
 const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 
-route.meta.noCache = true
+// route.meta.noCache = true
 
 const formObject = ref<any>({})
 
@@ -91,6 +91,7 @@ if (route.path.includes('domestic')) {
 }
 
 const nextPage = (event: any) => {
+  console.log("event",event)
   for (let field in event.formData) {
     formObject.value[field] = event.formData[field]
   }
