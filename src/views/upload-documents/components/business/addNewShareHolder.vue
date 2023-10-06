@@ -352,7 +352,7 @@ const saveData = () => {
       country: country.value,
     }
 
-    formData.value.shareholders.push(newShareholder)
+    formData.value.partners.push(newShareholder)
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
 

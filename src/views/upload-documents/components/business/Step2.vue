@@ -8,23 +8,29 @@
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
-      <!-- <div v-for="(member, idx) in members" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
-          <div
-            class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
-            @click="showDetails(member)"
-          >
-            <div class="mb-2">
-              <img src="../../assets/icons/icon-user.svg" />
-            </div>
-            <div>
-              <p class="text-lg">{{ getFullName(member) }}</p>
-            </div>
-            <div class="flex justify-content-between align-items-center">
-              <span class="text-base">{{ member.label }}</span>
-              <Button label="Remove" class="p-button-text" icon="pi pi-trash" icon-pos="right" />
-            </div>
+      <div v-for="(shareholder, idx) in partners" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
+        <div class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer">
+          <div class="mb-2">
+            <img src="../../../../assets/icons/icon-user.svg" />
           </div>
-        </div> -->
+          <div>
+            <p class="text-lg">{{ shareholder.firstName + ' ' + shareholder.lastName }}</p>
+          </div>
+          <span class="text-base">{{ shareholder.email }}</span>
+
+          <div class="flex justify-content-between align-items-center">
+            <span class="text-base">{{ shareholder.dni }}</span>
+
+            <Button
+              label="Remove"
+              @click="deleteShareholder(idx)"
+              class="p-button-text"
+              icon="pi pi-trash"
+              icon-pos="right"
+            />
+          </div>
+        </div>
+      </div>
       <div class="col-5 sm:col-5 md:col-5 lg:col-3 xl:col-3">
         <div
           class="p-3 border-1 border-cyan-500 border-round-2xl flex-column bg-gray-100 cursor-pointer"
@@ -45,6 +51,7 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch, ref } from 'vue'
 
+import Button from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
@@ -57,10 +64,26 @@ const toast = useToast()
 
 const submitting = ref(false)
 
-onMounted(async () => {})
+const formData = ref()
+const partners = ref()
+
+onMounted(() => {
+  const data = localStorage.getItem('companyData') || '{}'
+
+  if (data) {
+    formData.value = JSON.parse(data)
+    partners.value = formData.value.partners
+    console.log(partners.value)
+  }
+})
 
 const onCreateNewShareholder = () => {
   router.push('/upload-documents/business/new-shareholder')
+}
+const deleteShareholder = (idx: number) => {
+  partners.value.splice(idx, 1)
+  formData.value.shareholders = partners.value
+  localStorage.setItem('companyData', JSON.stringify(formData.value))
 }
 
 const saveData = () => {

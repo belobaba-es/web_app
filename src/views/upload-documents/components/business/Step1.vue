@@ -466,6 +466,7 @@ const saveData = () => {
         region: fisicalState.value,
         country: fisicalCountry.value,
       },
+      partners: [],
     }
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
