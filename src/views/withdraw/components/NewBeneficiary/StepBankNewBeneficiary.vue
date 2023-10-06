@@ -170,6 +170,9 @@ const saveBeneficiary = () => {
         informationOwner: {
           ...props.formData.informationOwner,
         },
+        informationIntermediaryBank: {
+          ...props.formData.informationIntermediaryBank,
+        },
       }
     } else {
       formData.value = {
@@ -187,10 +190,7 @@ const saveBeneficiary = () => {
         },
         informationOwner: {
           ...props.formData.informationOwner,
-        },
-        informationIntermediaryBank: {
-          ...props.formData.informationIntermediaryBank,
-        },
+        }
       }
     }
 
