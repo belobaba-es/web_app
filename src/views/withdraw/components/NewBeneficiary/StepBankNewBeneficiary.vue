@@ -153,7 +153,8 @@ const saveBeneficiary = () => {
 
     const formData = ref()
 
-    if (props.formData.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
+    if (props.formData.informationBank.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
+      alert('INTERNATIONAL')
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
@@ -175,6 +176,7 @@ const saveBeneficiary = () => {
         },
       }
     } else {
+      alert('Domestic')
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
