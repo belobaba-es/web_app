@@ -13,22 +13,11 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch, ref } from 'vue'
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Calendar from 'primevue/calendar'
-import Divider from 'primevue/divider'
-import Checkbox from 'primevue/checkbox'
 
 import { useToast } from 'primevue/usetoast'
 
-import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
-import { useWorld } from '../../../../composables/useWorld'
-import { useAccount } from '../../../../composables/useAccount'
-import showExceptionError from '../../../../shared/showExceptionError'
-import showMessage from '../../../../shared/showMessageArray'
 
 import router from '../../../../router'
 

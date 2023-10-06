@@ -351,7 +351,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'business/step2',
-            component: BusinessStep1,
+            component: BusinessStep2,
           },
         ],
       },
