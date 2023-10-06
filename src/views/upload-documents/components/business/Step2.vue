@@ -77,7 +77,6 @@ onMounted(() => {
   if (data) {
     formData.value = JSON.parse(data)
     partners.value = formData.value.partners
-    console.log(partners.value)
   }
 })
 
