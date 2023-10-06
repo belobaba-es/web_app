@@ -8,7 +8,7 @@
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
-        <!-- <div v-for="(member, idx) in members" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
+      <!-- <div v-for="(member, idx) in members" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
           <div
             class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer"
             @click="showDetails(member)"
@@ -25,19 +25,19 @@
             </div>
           </div>
         </div> -->
-        <div class="col-5 sm:col-5 md:col-5 lg:col-3 xl:col-3">
-          <div
-            class="p-3 border-1 border-cyan-500 border-round-2xl flex-column bg-gray-100 cursor-pointer"
-            @click="onCreateNewShareholder"
-          >
-            <div>
-              <img src="../../../../assets/icons/user-add.svg" />
-            </div>
-            <div>
-              <p class="text-lg">{{ t('addNewShareHolder') }}</p>
-            </div>
+      <div class="col-5 sm:col-5 md:col-5 lg:col-3 xl:col-3">
+        <div
+          class="p-3 border-1 border-cyan-500 border-round-2xl flex-column bg-gray-100 cursor-pointer"
+          @click="onCreateNewShareholder"
+        >
+          <div>
+            <img src="../../../../assets/icons/user-add.svg" />
+          </div>
+          <div>
+            <p class="text-lg">{{ t('addNewShareHolder') }}</p>
           </div>
         </div>
+      </div>
     </div>
   </section>
 </template>
@@ -58,7 +58,6 @@ const toast = useToast()
 const submitting = ref(false)
 
 onMounted(async () => {})
-
 
 const onCreateNewShareholder = () => {
   router.push('/upload-documents/business/new-shareholder')
