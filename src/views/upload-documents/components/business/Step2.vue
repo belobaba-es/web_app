@@ -91,26 +91,7 @@ const deleteShareholder = (idx: number) => {
 }
 
 const saveData = () => {
-  submitting.value = true
-
-  if (true) {
-    const formData = ref()
-
-    formData.value = {}
-
-    //set data to localstorage
-    localStorage.setItem('companyData', JSON.stringify(formData.value))
-
-    router.push('/upload-documents/business/step2')
-  } else {
-    submitting.value = false
-    toast.add({
-      severity: 'error',
-      summary: t('warningAllFieldRequired'),
-      detail: t('warningDetailAllFieldRequired'),
-      life: 4000,
-    })
-  }
+  router.push('/upload-documents/business/step3')
 }
 </script>
 <style lang="scss">
