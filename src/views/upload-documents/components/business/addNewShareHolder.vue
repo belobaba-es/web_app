@@ -258,7 +258,6 @@ const streetTwo = ref<string>('')
 const postalCode = ref<string>('')
 const city = ref<string>('')
 const state = ref<string>('')
-const type = ref<string>('')
 const country = ref<string>('')
 
 onMounted(async () => {
@@ -280,6 +279,42 @@ const convertISODateToYYYYMMDD = (isoDateString: string) => {
   return formattedDate
 }
 
+const validateFields = () => {
+  const isFirstNameValid = firstName.value.trim() !== ''
+  const isMiddleNameValid = middleName.value.trim() !== ''
+  const isLastNameValid = lastName.value.trim() !== ''
+  const isOtherLastNameValid = otherLastName.value.trim() !== ''
+  const isEmailValid = email.value.trim() !== ''
+  const isDateBirthValid = dateBirth.value !== ''
+  const isDniValid = dni.value.trim() !== ''
+  const isPhoneCountryValid = phoneCountry.value.trim() !== ''
+  const isPhoneNumberValid = phoneNumber.value.trim() !== ''
+  const isStreetOneValid = streetOne.value.trim() !== ''
+  const isStreetTwoValid = streetTwo.value.trim() !== ''
+  const isPostalCodeValid = postalCode.value.trim() !== ''
+  const isCityValid = city.value.trim() !== ''
+  const isStateValid = state.value.trim() !== ''
+  const isCountryValid = country.value.trim() !== ''
+
+  return (
+    isFirstNameValid &&
+    isMiddleNameValid &&
+    isLastNameValid &&
+    isOtherLastNameValid &&
+    isEmailValid &&
+    isDateBirthValid &&
+    isDniValid &&
+    isPhoneCountryValid &&
+    isPhoneNumberValid &&
+    isStreetOneValid &&
+    isStreetTwoValid &&
+    isPostalCodeValid &&
+    isCityValid &&
+    isStateValid &&
+    isCountryValid
+  )
+}
+
 const saveData = () => {
   submitting.value = true
 
@@ -293,63 +328,44 @@ const saveData = () => {
     return
   }
 
-  type.value = 'NATURAL_PERSON'
-  const formData = ref()
+  if (validateFields()) {
+    const formData = ref()
+    formData.value = JSON.parse(localStorage.getItem('companyData') || '{}')
 
-  formData.value = {
-    firstName: firstName.value,
-    middleName: middleName.value,
-    lastName: lastName.value + ' ' + otherLastName.value,
-    email: email.value,
-    dateBirth: convertISODateToYYYYMMDD(dateBirth.value),
-    dni: dni.value,
-    taxId: taxId.value,
-    passport: passport.value,
-    phoneCountry: phoneCountry.value,
-    phoneNumber: phoneNumber.value,
-    streetOne: streetOne.value,
-    streetTwo: streetTwo.value,
-    postalCode: postalCode.value,
-    city: city.value,
-    region: state.value,
-    country: country.value,
-    type: type.value,
+    const newShareholder = {
+      firstName: firstName.value,
+      middleName: middleName.value,
+      lastName: lastName.value,
+      otherLastName: otherLastName.value,
+      email: email.value,
+      dateBirth: convertISODateToYYYYMMDD(dateBirth.value),
+      dni: dni.value,
+      taxId: taxId.value,
+      passport: passport.value,
+      phoneCountry: phoneCountry.value,
+      phoneNumber: phoneNumber.value,
+      streetOne: streetOne.value,
+      streetTwo: streetTwo.value,
+      postalCode: postalCode.value,
+      city: city.value,
+      state: state.value,
+      country: country.value,
+    }
+
+    formData.value.shareholders.push(newShareholder)
+
+    localStorage.setItem('companyData', JSON.stringify(formData.value))
+
+    router.push('/upload-documents/business/step2')
+  } else {
+    submitting.value = false
+    toast.add({
+      severity: 'error',
+      summary: t('warningAllFieldRequired'),
+      detail: t('warningDetailAllFieldRequired'),
+      life: 4000,
+    })
   }
-
-  const uploadDocumentsService = UploadDocumentsService.instance()
-
-  uploadDocumentsService
-    .openingAccountPersonal(formData.value)
-    .then(resp => {
-      submitting.value = false
-      toast.add({
-        severity: 'success',
-        detail: resp.message,
-        life: 4000,
-      })
-      //save localstorage
-      localStorage.setItem('accountId', resp.data.clientId)
-      localStorage.setItem('dni', dni.value)
-
-      router.push('/upload-documents/personal/step2')
-    })
-    .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.data?.warning) {
-        e.response.data.data.warning.forEach((element: any) => {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-        })
-        return
-      }
-
-      if (e.response.data.message) {
-        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-        return
-      }
-
-      showMessage(toast, e.response.data)
-    })
 }
 </script>
 <style lang="scss">

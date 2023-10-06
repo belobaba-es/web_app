@@ -468,7 +468,6 @@ const saveData = () => {
       },
     }
 
-    //set data to localstorage 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
 
     router.push('/upload-documents/business/step2')
