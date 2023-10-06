@@ -57,6 +57,7 @@ import PersonalStep2 from './views/upload-documents/components/personal/Step2.vu
 
 import BusinessStep1 from './views/upload-documents/components/business/Step1.vue'
 import BusinessStep2 from './views/upload-documents/components/business/Step2.vue'
+import BusinessStep3 from './views/upload-documents/components/business/Step3.vue'
 import NewSharedHolder from './views/upload-documents/components/business/addNewShareHolder.vue'
 
 
@@ -353,6 +354,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'business/step2',
             component: BusinessStep2,
+          },
+          {
+            path: 'business/step3',
+            component: BusinessStep3,
           },
           {
             path: 'business/new-shareholder',
