@@ -9,4 +9,5 @@ export type SummarySwap = {
   exchangeId: string
   feeTradeDesk: number
   totalSpend: number
+  amountAfterRemovingFee?: number
 }
