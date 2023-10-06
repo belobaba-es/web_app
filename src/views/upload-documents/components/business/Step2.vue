@@ -61,7 +61,7 @@ onMounted(async () => {})
 
 
 const onCreateNewShareholder = () => {
-  router.push('/upload-documents/business/step1')
+  router.push('/upload-documents/business/new-shareholder')
 }
 
 const saveData = () => {
