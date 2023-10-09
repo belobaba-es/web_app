@@ -22,7 +22,6 @@
                     <div class="grid">
                       <div class="col-12">
                         <div class="field col-12">
-                          
                           <div class="field">
                             <label>{{ t('Document Type') }}</label>
                             <div class="p-inputgroup">
@@ -32,7 +31,7 @@
                                   option-value="value"
                                   :placeholder="t('documentTypePlaceHolder')"
                                   class="w-full"
-                                  v-model="documentType"
+                                  v-model="typeSelectDocument"
                                   @change="selectedProofOfAddress" />
                             </div>
                           </div>
@@ -42,17 +41,32 @@
                           <div class="field">
                             <div class="grid">
                               <div class="col-6">
-                                <label>  {{ t('Front side') }}</label>
-                                <FileInput label="other" side="front" type="other" :account-id="accountId ?? ''"
-                                  :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" v-model="front"/>
+                                <label>  {{ t('Document Front side') }}</label>
+                                <div class="mt-2">
+                                  <FileInput
+                                      label="other"
+                                      side="front"
+                                      :type="documentType"
+                                      :account-id="accountId ?? ''"
+                                      :document-country="getOwner()?.taxCountry ?? 'US'"
+                                      :tax-id="getOwner()?.taxId ?? ''"
+                                      :is-company="false"
+                                      ,v-model="front"/>
+                                </div>
                               </div>
 
-                              <div class="col-6">
-                                <label>{{ t('Back side') }}</label>
-                                <FileInput label="other" side="front" type="other" :account-id="accountId ?? ''"
-                                  :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" v-model="backside" />
+                              <div class="col-6" v-if="shouldShowFrontBank()">
+                                <label>{{ t('Document Back side') }}</label>
+                                <div class="mt-2">
+                                  <FileInput
+                                      label="other" side="front"
+                                      :type="documentType"
+                                      :account-id="accountId ?? ''"
+                                      :document-country="getOwner()?.taxCountry ?? 'US'"
+                                      :tax-id="getOwner()?.taxId ?? ''"
+                                      :is-company="false"
+                                      v-model="backside" />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -68,10 +82,15 @@
                                     option-label="name" option-value="value" :placeholder="t('documentTypePlaceHolder')"
                                     class="w-full" @change="selectedProofOfAddress" v-model="typeDocumentAddress" />
                                 </div>
-                                <FileInput :label="getSelectedTypeDocumentProofOfAddress('0')" side="front"
-                                  :type="getSelectedTypeDocumentProofOfAddress('0')" :account-id="accountId ?? ''"
-                                  :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
-                                  :is-company="true" v-model="documentFiscal"/>
+                                <FileInput
+                                    :label="getSelectedTypeDocumentProofOfAddress('0')"
+                                    side="front"
+                                    :type="getSelectedTypeDocumentProofOfAddress('0')"
+                                    :account-id="accountId ?? ''"
+                                    :document-country="getOwner()?.taxCountry ?? 'US'"
+                                    :tax-id="getOwner()?.taxId ?? ''"
+                                    :is-company="false"
+                                    v-model="documentFiscal"/>
                               </div>
                             </div>
                           </div>
@@ -112,7 +131,8 @@ const { getOwner, accountId } = useAccount()
 const toast = useToast()
 const { addDocument, setSelectedTypeDocumentProofOfAddress, getSelectedTypeDocumentProofOfAddress } = useDocuments()
 
-const documentType = ref<string>('')
+const dni = localStorage.getItem('dni')
+const typeSelectDocument = ref<string>('')
 const front = ref<string>('')
 const backside = ref<string>('')
 const documentFiscal = ref<string>('')
@@ -156,6 +176,9 @@ onBeforeMount(() => {
   })
 })
 
+const shouldShowFrontBank = () => {
+  return ['DRIVERS_LICENSE', 'GOVERNMENT_ID', 'RESIDENCE_PERMIT'].includes(documentType.value)
+}
 const selectedProofOfAddress = (e: any) => {
   setSelectedTypeDocumentProofOfAddress('0', e.value)
 }
@@ -165,9 +188,9 @@ const saveData = () => {
   const formData = ref()
 
   formData.value = {
-    documentType: documentType.value,
-    dni: localStorage.getItem('dni'),
     file: typeDocumentAddress.value,
+    dni: dni,
+    documentType: typeSelectDocument.value,
     front: front.value,
     backside: backside.value,
     isPartner: false
