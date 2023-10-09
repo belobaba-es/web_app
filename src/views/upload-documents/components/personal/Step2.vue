@@ -42,7 +42,7 @@
                           <div class="field">
                             <div class="grid">
                               <div class="col-6">
-                                <label>{{ t('Front side') }}</label>
+                                <label>  {{ t('Front side') }}</label>
                                 <FileInput label="other" side="front" type="other" :account-id="accountId ?? ''"
                                   :document-country="getOwner()?.taxCountry ?? 'US'" :tax-id="getOwner()?.taxId ?? ''"
                                   :is-company="true" v-model="front"/>
@@ -130,21 +130,21 @@ const documentTypeProofOfAddress = ref([
 ])
 
 const DocumentType = ref( [
-  {value: "PASSPORT", name: "passport"},
-  {value: 'DRIVERS_LICENSE', name: "drivers_license"},
-  {value: "GOVERNMENT_ID", name: "government_id"},
-  {value: "RESIDENCE_PERMIT", name: "residence_permit"},
-  {value: "UTILITY_BILL", name: "utility_bill"},
-  {value: "STATEMENT", name: "statements"},
-  {value: "OTHER", name: "other"},
-  {value: "MONTHLY_UTILITY", name: "monthly_utility"},
-  {value: "RENTAL_LEASE_AGREEMENT", name: "rental_lease_agreement"},
-  {value: "VEHICLE_REGISTRATION", name: "vehicle_registration"},
-  {value: "REAL_ESTATE_PROPERTY_TITLE", name: "real_estate_property_title"},
-  {value: "PROPERTY_TAX_BILL", name: "property_tax_bill"},
-  {value: "INCOPORATION_DOCUMENT", name: "incorporation_document"},
-  {value: "ACCOUNT_AGREEMENT", name: "account_agreement"},
-  {value: "BENEFICIAL_OWNERSHIP_CERTIFICATE", name: "beneficial_ownership_certificate"},
+  {value: "PASSPORT", name: "Passport"},
+  {value: 'DRIVERS_LICENSE', name: "Drivers License"},
+  {value: "GOVERNMENT_ID", name: "Government Id"},
+  {value: "RESIDENCE_PERMIT", name: "Residence Permit"},
+  {value: "UTILITY_BILL", name: "Utility Bill"},
+  {value: "STATEMENT", name: "Statements"},
+  {value: "OTHER", name: "Other"},
+  {value: "MONTHLY_UTILITY", name: "Monthly Utility"},
+  {value: "RENTAL_LEASE_AGREEMENT", name: "Rental Lease Agreement"},
+  {value: "VEHICLE_REGISTRATION", name: "Vehicle Registration"},
+  {value: "REAL_ESTATE_PROPERTY_TITLE", name: "Real Estate Property Title"},
+  {value: "PROPERTY_TAX_BILL", name: "Property Tax Bill"},
+  {value: "INCOPORATION_DOCUMENT", name: "Incorporation Document"},
+  {value: "ACCOUNT_AGREEMENT", name: "Account Agreement"},
+  {value: "BENEFICIAL_OWNERSHIP_CERTIFICATE", name: "Beneficial Ownership Certificate"},
   {value: "W2", name: "w2"},
 ])
 const proofOfAddress = ref('')
