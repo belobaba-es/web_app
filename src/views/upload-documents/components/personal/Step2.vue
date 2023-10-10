@@ -7,7 +7,6 @@
       <p class="text-3xl font-medium">{{ t('titleNaturalPerson') }}</p>
     </div>
 
-    <h1>This is the step 2</h1>
     <div class="p-panel p-component shareholders-panel col-8">
       <div class="p-panel-header">
         <span class="p-panel-title">CARGA DE DOCUMENTOS</span>
@@ -26,13 +25,13 @@
                             <label>{{ t('Document Type') }}</label>
                             <div class="p-inputgroup">
                               <Dropdown
-                                  :options="DocumentType"
+                                  :options="documentTypeOptions"
                                   option-label="name"
                                   option-value="value"
                                   :placeholder="t('documentTypePlaceHolder')"
                                   class="w-full"
-                                  v-model="typeSelectDocument"
-                                  @change="selectedProofOfAddress" />
+                                  v-model="identifyDocument"
+                                  @change="selectedIdentifyDocument" />
                             </div>
                           </div>
                         </div>
@@ -44,14 +43,13 @@
                                 <label>  {{ t('Document Front side') }}</label>
                                 <div class="mt-2">
                                   <FileInput
-                                      label="other"
+                                      :label="getSelectedTypeIdentificationDocument(taxId)"
                                       side="front"
-                                      :type="documentType"
+                                      :type="getSelectedTypeIdentificationDocument(taxId)"
                                       :account-id="accountId ?? ''"
                                       :document-country="getOwner()?.taxCountry ?? 'US'"
                                       :tax-id="getOwner()?.taxId ?? ''"
-                                      :is-company="false"
-                                      ,v-model="front"/>
+                                      v-model="documentSide"/>
                                 </div>
                               </div>
 
@@ -59,13 +57,14 @@
                                 <label>{{ t('Document Back side') }}</label>
                                 <div class="mt-2">
                                   <FileInput
-                                      label="other" side="front"
-                                      :type="documentType"
+                                      label="other" 
+                                      side="front"
+                                      type="other"
                                       :account-id="accountId ?? ''"
                                       :document-country="getOwner()?.taxCountry ?? 'US'"
                                       :tax-id="getOwner()?.taxId ?? ''"
                                       :is-company="false"
-                                      v-model="backside" />
+                                      v-model="documentSide" />
                                 </div>
                               </div>
                             </div>
@@ -114,7 +113,7 @@
 
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, defineProps } from 'vue'
 import { useAccount } from '../../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../profile/components/FileInput.vue'
@@ -127,14 +126,20 @@ import {useToast} from "primevue/usetoast";
 import Button from "primevue/button";
 
 const { t } = useI18n({ useScope: 'global' })
-const { getOwner, accountId } = useAccount()
+const { getOwner, accountId, getFullName, findMember } = useAccount()
 const toast = useToast()
-const { addDocument, setSelectedTypeDocumentProofOfAddress, getSelectedTypeDocumentProofOfAddress } = useDocuments()
+const {
+  addDocument,
+  setSelectedTypeIdentificationDocument,
+  setSelectedTypeDocumentProofOfAddress,
+  getSelectedTypeIdentificationDocument,
+  getSelectedTypeDocumentProofOfAddress,
+} = useDocuments()
+
 
 const dni = localStorage.getItem('dni')
-const typeSelectDocument = ref<string>('')
-const front = ref<string>('')
-const backside = ref<string>('')
+const identifyDocument = ref<string>('')
+const documentSide  = ref<string>('')
 const documentFiscal = ref<string>('')
 const typeDocumentAddress = ref<string>('')
 const submitting = ref(false)
@@ -149,57 +154,58 @@ const documentTypeProofOfAddress = ref([
   { value: 'w2', name: t('documentProofOfAddress7') },
 ])
 
-const DocumentType = ref( [
-  {value: "PASSPORT", name: "Passport"},
-  {value: 'DRIVERS_LICENSE', name: "Drivers License"},
-  {value: "GOVERNMENT_ID", name: "Government Id"},
-  {value: "RESIDENCE_PERMIT", name: "Residence Permit"},
-  {value: "UTILITY_BILL", name: "Utility Bill"},
-  {value: "STATEMENT", name: "Statements"},
-  {value: "OTHER", name: "Other"},
-  {value: "MONTHLY_UTILITY", name: "Monthly Utility"},
-  {value: "RENTAL_LEASE_AGREEMENT", name: "Rental Lease Agreement"},
-  {value: "VEHICLE_REGISTRATION", name: "Vehicle Registration"},
-  {value: "REAL_ESTATE_PROPERTY_TITLE", name: "Real Estate Property Title"},
-  {value: "PROPERTY_TAX_BILL", name: "Property Tax Bill"},
-  {value: "INCOPORATION_DOCUMENT", name: "Incorporation Document"},
-  {value: "ACCOUNT_AGREEMENT", name: "Account Agreement"},
-  {value: "BENEFICIAL_OWNERSHIP_CERTIFICATE", name: "Beneficial Ownership Certificate"},
-  {value: "W2", name: "w2"},
-])
-const proofOfAddress = ref('')
+const documentTypeOptions = ref([
+  { value: "passport", name: t('docTypeLabelPassport') },
+  { value: 'drivers_license', name: t('docTypeLabelDriversLicense') },
+  { value: "government_id", name: t('docTypeLabelGovernmentId') },
+  { value: "residence_permit", name: "Residence Permit" }
+]);
+
+interface Props {
+  taxId: string
+}
+
+const props = defineProps<Props>()
+  const member = ref()
 
 onBeforeMount(() => {
-  addDocument('0', {
-    selectedTypeDocumentProofOfAddress: '',
-    selectedTypeIdentificationDocument: '',
-  })
+  addDocument(props.taxId, { selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: '' })
+  member.value = findMember(props.taxId)
 })
 
 const shouldShowFrontBank = () => {
-  return ['DRIVERS_LICENSE', 'GOVERNMENT_ID', 'RESIDENCE_PERMIT'].includes(documentType.value)
+  return ['drivers_license', 'government_id', 'residence_permit'].includes(identifyDocument.value)
 }
+
+const selectedIdentifyDocument = (e: any) => {
+  console.log(e)
+  setSelectedTypeIdentificationDocument(props.taxId, e.value)
+}
+
 const selectedProofOfAddress = (e: any) => {
   setSelectedTypeDocumentProofOfAddress('0', e.value)
 }
 
+
+
 const saveData = () => {
   submitting.value = true
-  const formData = ref()
+  
+  const payload = ref()
 
-  formData.value = {
+  payload.value = {
     file: typeDocumentAddress.value,
     dni: dni,
-    documentType: typeSelectDocument.value,
-    front: front.value,
-    backside: backside.value,
-    isPartner: false
+    documentType: identifyDocument.value,
+    documentSide: documentSide.value,
+    isPartner: false, 
   }
-  console.log(formData.value)
+
+  console.log(payload.value)
   
   const uploadDocumentsService = ProfileService.instance()
   uploadDocumentsService
-      .updateDocuments(formData.value)
+      .updateDocuments(payload.value)
       .then(resp => {
         submitting.value = false
         toast.add({
