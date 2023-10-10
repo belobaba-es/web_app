@@ -45,10 +45,11 @@
                                   <FileInput
                                       :label="getSelectedTypeIdentificationDocument(taxId)"
                                       side="front"
-                                      :type="getSelectedTypeIdentificationDocument(taxId)"
+                                      :type="identifyDocument"
                                       :account-id="accountId ?? ''"
                                       :document-country="getOwner()?.taxCountry ?? 'US'"
-                                      :tax-id="getOwner()?.taxId ?? ''"
+                                      :tax-id="taxId ?? ''"
+                                      :isCompany = false
                                       v-model="documentSide"/>
                                 </div>
                               </div>
@@ -57,9 +58,9 @@
                                 <label>{{ t('Document Back side') }}</label>
                                 <div class="mt-2">
                                   <FileInput
-                                      label="other" 
-                                      side="front"
-                                      type="other"
+                                      label="getSelectedTypeIdentificationDocument(taxId)" 
+                                      side="backside "
+                                      :type="identifyDocument"
                                       :account-id="accountId ?? ''"
                                       :document-country="getOwner()?.taxCountry ?? 'US'"
                                       :tax-id="getOwner()?.taxId ?? ''"
@@ -77,14 +78,19 @@
                               <div class="col-6">
                                 <label>{{ t('utilityBillLabel') }}</label>
                                 <div class="mt-2 mb-4">
-                                  <Dropdown :options="documentTypeProofOfAddress"
-                                    option-label="name" option-value="value" :placeholder="t('documentTypePlaceHolder')"
-                                    class="w-full" @change="selectedProofOfAddress" v-model="typeDocumentAddress" />
+                                  <Dropdown 
+                                  :options="documentTypeProofOfAddress"
+                                  option-label="name" 
+                                  option-value="value" 
+                                  :placeholder="t('documentTypePlaceHolder')"
+                                  class="w-full" 
+                                  @change="selectedProofOfAddress" 
+                                  v-model="typeDocumentAddress" />
                                 </div>
                                 <FileInput
                                     :label="getSelectedTypeDocumentProofOfAddress('0')"
                                     side="front"
-                                    :type="getSelectedTypeDocumentProofOfAddress('0')"
+                                    :type="typeDocumentAddress"
                                     :account-id="accountId ?? ''"
                                     :document-country="getOwner()?.taxCountry ?? 'US'"
                                     :tax-id="getOwner()?.taxId ?? ''"
@@ -103,9 +109,6 @@
             </div>
           </div>
         </div>
-        <div class="field col-12 flex align-items-center justify-content-end">
-          <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveData()" :loading="submitting" />
-        </div>
       </div>
     </div>
   </section>
@@ -118,15 +121,11 @@ import { useAccount } from '../../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../profile/components/FileInput.vue'
 import { useDocuments } from '../../../../composables/useDocuments'
-import {ProfileService} from "../../../profile/services/profile";
 import router from "../../../../router";
-import showExceptionError from "../../../../shared/showExceptionError";
-import showMessage from "../../../../shared/showMessageArray";
 import {useToast} from "primevue/usetoast";
-import Button from "primevue/button";
 
 const { t } = useI18n({ useScope: 'global' })
-const { getOwner, accountId, getFullName, findMember } = useAccount()
+const { getOwner, accountId, getFullName, findMember, submitProfileForm } = useAccount()
 const toast = useToast()
 const {
   addDocument,
@@ -135,7 +134,6 @@ const {
   getSelectedTypeIdentificationDocument,
   getSelectedTypeDocumentProofOfAddress,
 } = useDocuments()
-
 
 const dni = localStorage.getItem('dni')
 const identifyDocument = ref<string>('')
@@ -178,7 +176,6 @@ const shouldShowFrontBank = () => {
 }
 
 const selectedIdentifyDocument = (e: any) => {
-  console.log(e)
   setSelectedTypeIdentificationDocument(props.taxId, e.value)
 }
 
@@ -186,54 +183,8 @@ const selectedProofOfAddress = (e: any) => {
   setSelectedTypeDocumentProofOfAddress('0', e.value)
 }
 
+//router.push('/personal/completed')
 
-
-const saveData = () => {
-  submitting.value = true
-  
-  const payload = ref()
-
-  payload.value = {
-    file: typeDocumentAddress.value,
-    dni: dni,
-    documentType: identifyDocument.value,
-    documentSide: documentSide.value,
-    isPartner: false, 
-  }
-
-  console.log(payload.value)
-  
-  const uploadDocumentsService = ProfileService.instance()
-  uploadDocumentsService
-      .updateDocuments(payload.value)
-      .then(resp => {
-        submitting.value = false
-        toast.add({
-          severity: 'success',
-          detail: resp.message,
-          life: 4000,
-        })
-
-        router.push('/personal/completed')
-      })
-      .catch(e => {
-        submitting.value = false
-
-        if (e.response.data.data?.warning) {
-          e.response.data.data.warning.forEach((element: any) => {
-            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-          })
-          return
-        }
-
-        if (e.response.data.message) {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-          return
-        }
-
-        showMessage(toast, e.response.data)
-      })
-}
 </script>
 
 <style scoped></style>
