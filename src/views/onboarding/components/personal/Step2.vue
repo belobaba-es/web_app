@@ -46,10 +46,8 @@
                                       :label="getSelectedTypeIdentificationDocument(taxId)"
                                       side="front"
                                       :type="identifyDocument"
-                                      :account-id="accountId ?? ''"
-                                      :document-country="getOwner()?.taxCountry ?? 'US'"
-                                      :tax-id="taxId ?? ''"
-                                      :isCompany = false
+                                      :dni ="dni"
+                                      :isPartner="isPartner"
                                       v-model="documentSide"/>
                                 </div>
                               </div>
@@ -60,11 +58,9 @@
                                   <FileInput
                                       label="getSelectedTypeIdentificationDocument(taxId)" 
                                       side="backside "
+                                      :dni ="dni"
+                                      :isPartner="isPartner"
                                       :type="identifyDocument"
-                                      :account-id="accountId ?? ''"
-                                      :document-country="getOwner()?.taxCountry ?? 'US'"
-                                      :tax-id="getOwner()?.taxId ?? ''"
-                                      :is-company="false"
                                       v-model="documentSide" />
                                 </div>
                               </div>
@@ -90,11 +86,10 @@
                                 <FileInput
                                     :label="getSelectedTypeDocumentProofOfAddress('0')"
                                     side="front"
+                                    :isPartner="isPartner"
                                     :type="typeDocumentAddress"
-                                    :account-id="accountId ?? ''"
-                                    :document-country="getOwner()?.taxCountry ?? 'US'"
-                                    :tax-id="getOwner()?.taxId ?? ''"
-                                    :is-company="false"
+                                    :account-id="accountId ?? idAccount"
+                                    :dni ="dni"
                                     v-model="documentFiscal"/>
                               </div>
                             </div>
@@ -135,12 +130,16 @@ const {
   getSelectedTypeDocumentProofOfAddress,
 } = useDocuments()
 
-const dni = localStorage.getItem('dni')
+const idAccount = localStorage.getItem('accountId') || ''
+const dni = localStorage.getItem('dni') || ''
 const identifyDocument = ref<string>('')
 const documentSide  = ref<string>('')
 const documentFiscal = ref<string>('')
 const typeDocumentAddress = ref<string>('')
-const submitting = ref(false)
+const isPartner = ref(false)
+
+console.log(isPartner);
+
 
 const documentTypeProofOfAddress = ref([
   { value: 'monthly_utility', name: t('documentProofOfAddress1') },

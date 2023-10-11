@@ -36,30 +36,19 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  dni: {
+    type: String,
+    required: true,
+  },
   side: {
     type: String,
     required: false,
     default: () => 'front',
   },
-  accountId: {
-    type: String,
-    required: true,
-  },
-  taxId: {
-    type: String,
-    required: true,
-  },
-  documentCountry: {
-    type: String,
-    required: true,
-  },
-  isCompany: {
+
+  isPartner: {
     type: Boolean,
     default: () => false,
-  },
-  isAccountBusiness: {
-    type: Boolean,
-    default: () => true,
   },
   isProofOfAddress: {
     type: Boolean,
@@ -80,7 +69,7 @@ const handleClick = () => {
 }
 
 const getIdInput = () => {
-  return `${props.label}${props.side}${props.isCompany ? 'yes' : 'no'}`
+  return `${props.label}${props.side}`
 }
 
 const icon = computed(() => {
@@ -94,35 +83,21 @@ const handleUpload = async (event: any) => {
 
   let formData = new FormData()
 
-  if (props.isProofOfAddress === true) {
     formData.append('file', file)
-    formData.append('taxId', props.taxId)
-    formData.append('accountId', props.accountId)
-    formData.append('isBusinessMember', 'false')
-    formData.append('documentCountry', props.documentCountry)
-    formData.append('documentType', props.type)
-    formData.append('isAccountBusiness', props.isAccountBusiness.toString())
-  } else {
-    formData.append('file', file)
-    formData.append('taxId', props.taxId)
-    formData.append('accountId', props.accountId)
-    formData.append('isBusinessMember', props.isCompany ? 'false' : 'true')
-    formData.append('isAccountBusiness', props.isAccountBusiness.toString())
+    formData.append('dni', props.dni)
+    formData.append('isPartner', props.isPartner ? 'true' : 'false')
     formData.append('documentSide', props.side)
-    formData.append('documentCountry', props.documentCountry)
     formData.append('documentType', props.type)
-  }
+  
 
   const newDocumentObject = {
-    documentId: '',
+    dni: '',
     documentSide: props.side,
     label: props.label,
-    taxId: props.taxId,
     documentType: props.type,
     file: '',
-    isBusinessMember: 'true',
+    isPartner: Boolean,
     description: props.label,
-    documentCountry: props.documentCountry,
   }
 
   const profileService = ProfileService.instance()
