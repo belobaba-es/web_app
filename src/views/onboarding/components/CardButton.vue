@@ -3,7 +3,7 @@
     <div class="flex">
       <img :src="icon" alt="" />
     </div>
-    <p class="text-2xl font-medium">{{ label }}</p>
+    <p class="text-2xl font-normal">{{ label }}</p>
   </div>
 </template>
 
@@ -20,16 +20,26 @@ defineProps({
   text-align: center;
   padding: 2rem 3rem;
   border: 1px solid #00beb0;
-  background: #f7fdfd 0% 0% no-repeat padding-box;
+  background: #fff 0% 0% no-repeat padding-box;
   width: 288px;
-  height: 180px;
 }
 .card > div {
-  height: 80px;
   margin-bottom: 1rem;
 }
 
 .card > div > img {
   margin: auto;
+}
+
+.card:hover {
+  color: #fff;
+  cursor: pointer;
+  background: #00beb0 0% 0% no-repeat padding-box;
+  transition: background-color 0.5s ease;
+
+
+}
+.card:hover img {
+  filter:grayscale(100%) contrast(60);
 }
 </style>
