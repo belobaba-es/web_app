@@ -82,7 +82,7 @@
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
-          <InputText type="text" v-model="email" class="w-full" required />
+          <InputText type="text" v-model="email" class="w-full" readonly required />
         </div>
       </div>
 
@@ -221,6 +221,7 @@ import showMessage from '../../../../shared/showMessageArray'
 
 import { OnboardingService } from '../../services/onboarding'
 import router from '../../../../router'
+import {useUserStore} from "../../../../stores/user";
 const {
   countries,
   fetchCountries,
@@ -234,6 +235,8 @@ const {
   calling_code,
 } = useWorld()
 
+const { getEmail } = useUserStore()
+
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
@@ -245,7 +248,7 @@ const middleName = ref<string>('')
 const lastName = ref<string>('')
 const otherLastName = ref<string>('')
 
-const email = ref<string>('')
+const email = ref<string>(getEmail())
 const dateBirth = ref<string>('')
 
 const dni = ref<string>('')
