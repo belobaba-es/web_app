@@ -117,5 +117,15 @@ export const useUserStore = defineStore('user', () => {
     return `${user.name}`
   }
 
-  return { setUser, getUser, getUserName, swapModuleIsActive, getWarningKYC, getUserFeeWire }
+  const getEmail= (): string => {
+    const storageUser = sessionStorage.getItem('user')
+    const cryptoService = new CryptoService()
+
+    if (!storageUser) return ''
+    const user: User = JSON.parse(cryptoService.decrypt(storageUser))
+
+    return `${user.email}`
+  }
+
+  return { setUser, getUser, getUserName, swapModuleIsActive, getWarningKYC, getUserFeeWire, getEmail }
 })

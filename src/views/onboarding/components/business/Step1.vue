@@ -22,7 +22,7 @@
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
-          <InputText type="text" v-model="email" class="w-full" required />
+          <InputText type="text" v-model="email" class="w-full" readonly required />
         </div>
       </div>
 
@@ -298,6 +298,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
 import router from '../../../../router'
+import {useUserStore} from "../../../../stores/user";
 
 const {
   countries,
@@ -315,6 +316,8 @@ const {
   calling_code,
 } = useWorld()
 
+const { getEmail } = useUserStore()
+
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
@@ -322,7 +325,7 @@ const toast = useToast()
 const submitting = ref(false)
 
 const name = ref<string>('')
-const email = ref<string>('')
+const email = ref<string>(getEmail())
 const registerNumber = ref<string>('')
 const naics = ref<string>('')
 const naicsDescription = ref<string>('')
