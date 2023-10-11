@@ -1,11 +1,12 @@
 <template>
   <section class="section-main">
-    <p class="text-3xl font-medium">{{ t('uploadDocumentsTitle') }}</p>
+
 
     <div class="flex align-items-center" style="height: 580px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
-          <span class="text-center txt-border-bottom text-2xl">{{ t('subtitleUploadDocuments') }}</span>
+          <h1  class="text-1xl">{{ t('onboardingTitle') }}</h1>
+          <h3 class="text-center txt-border-bottom text-2xl mb-0">{{ t('subtitleUploadDocuments') }}</h3>
 
           <div class="grid flex justify-content-center">
             <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-4">
@@ -14,12 +15,12 @@
           </div>
         </div>
 
-        <router-link to="/upload-documents/business/step1">
-          <CardButon class="m-4" :icon="business" :label="t('businessAccount')" />
+        <router-link to="/onboarding/business/step1">
+          <CardButon class="m-4 pt-5 pb-5" :icon="business" :label="t('businessAccount')" />
         </router-link>
 
-        <router-link to="/upload-documents/personal/step1">
-          <CardButon class="m-4" :icon="personal" :label="t('personalAccount')" />
+        <router-link to="/onboarding/personal/step1">
+          <CardButon class="m-4 pt-5 pb-5" :icon="personal" :label="t('personalAccount')" />
         </router-link>
       </div>
     </div>
