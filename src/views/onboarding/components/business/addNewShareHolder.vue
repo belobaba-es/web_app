@@ -219,7 +219,7 @@ import { useAccount } from '../../../../composables/useAccount'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
 
-import { UploadDocumentsService } from '../../services/upload-documents'
+import { OnboardingService } from '../../services/onboarding'
 import router from '../../../../router'
 const {
   countries,
@@ -357,7 +357,7 @@ const saveData = () => {
     localStorage.setItem('companyData', JSON.stringify(formData.value))
     submitting.value = false
 
-    router.push('/upload-documents/business/step2')
+    router.push('/onboarding/business/step2')
   } else {
     submitting.value = false
     toast.add({

@@ -49,17 +49,17 @@ import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
-import UploadDocumentsIndex from './views/upload-documents/index.vue'
+import UploadDocumentsIndex from './views/onboarding/index.vue'
 
-import PersonalStep1 from './views/upload-documents/components/personal/Step1.vue'
-import PersonalStep2 from './views/upload-documents/components/personal/Step2.vue'
-import CompletedDocument from './views/upload-documents/components/CompletedDocument.vue'
+import PersonalStep1 from './views/onboarding/components/personal/Step1.vue'
+import PersonalStep2 from './views/onboarding/components/personal/Step2.vue'
+import CompletedDocument from './views/onboarding/components/CompletedDocument.vue'
 
 
-import BusinessStep1 from './views/upload-documents/components/business/Step1.vue'
-import BusinessStep2 from './views/upload-documents/components/business/Step2.vue'
-import BusinessStep3 from './views/upload-documents/components/business/Step3.vue'
-import NewSharedHolder from './views/upload-documents/components/business/addNewShareHolder.vue'
+import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
+import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
+import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
+import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
 
 
 import CreateUser from './views/register/CreateUser.vue'
@@ -334,7 +334,7 @@ const routes: RouteRecordRaw[] = [
         ],
       },
       {
-        path: '/upload-documents',
+        path: '/onboarding',
         children: [
           {
             path: '',

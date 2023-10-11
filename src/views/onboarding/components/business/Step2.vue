@@ -81,7 +81,7 @@ onMounted(() => {
 })
 
 const onCreateNewShareholder = () => {
-  router.push('/upload-documents/business/new-shareholder')
+  router.push('/onboarding/business/new-shareholder')
 }
 const deleteShareholder = (idx: number) => {
   partners.value.splice(idx, 1)
@@ -90,7 +90,7 @@ const deleteShareholder = (idx: number) => {
 }
 
 const saveData = () => {
-  router.push('/upload-documents/business/step3')
+  router.push('/onboarding/business/step3')
 }
 </script>
 <style lang="scss">

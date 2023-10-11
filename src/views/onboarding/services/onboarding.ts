@@ -1,7 +1,7 @@
 import { HttpService } from '../../../shared/services/http'
 
-export class UploadDocumentsService extends HttpService {
-  private static _instance: UploadDocumentsService
+export class OnboardingService extends HttpService {
+  private static _instance: OnboardingService
 
   constructor() {
     // @ts-ignore
@@ -13,7 +13,7 @@ export class UploadDocumentsService extends HttpService {
       return this._instance
     }
 
-    this._instance = new UploadDocumentsService()
+    this._instance = new OnboardingService()
 
     return this._instance
   }
