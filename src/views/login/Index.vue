@@ -23,19 +23,18 @@ const userPayload = ref<any>()
 const didLogin = async (payload: any) => {
   userPayload.value = payload
 
-  // if (await twoFactorAuthenticationIsActiveRemotely()) {
-  //   if (userPayload.value?.account.twoFactorActive) {
-  //     isNotTwoFactorActive.value = true
-  //     return
-  //   }
-  // }
-
   userStore.setUser(userPayload.value as User)
 
   if (userPayload.value?.client.status !== AccountStatus.REGISTERED) {
     window.location.href = '/dashboard'
-  } else {
-    window.location.href = `/profile/${userPayload.value?.client.clientId}`
+    return
   }
+  // console.log("userPayload.value",userPayload.value)
+  if (userPayload.value.clientId === null) {
+    window.location.href = '/onboarding'
+    return
+  }
+
+  window.location.href = `/profile/${userPayload.value.clientId}`
 }
 </script>
