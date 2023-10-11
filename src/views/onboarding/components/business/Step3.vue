@@ -253,7 +253,7 @@ const saveData = () => {
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
 
-    router.push('/upload-documents/business/step2')
+    router.push('/onboarding/business/step2')
   } else {
     submitting.value = false
     toast.add({
