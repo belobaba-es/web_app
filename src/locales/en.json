@@ -422,5 +422,6 @@
   "labelAdressFisical": "Company fisical address",
   "accountPropuseTitle": "Account purpose",
   "accountPropuseHelpText": "Write briefly the use you are going to make of the account. Example: Sales invoicing, payroll payment, payment to suppliers, payment of services.",
-  "associationsAccountsLabel": "Associations with other accounts"
+  "associationsAccountsLabel": "Associations with other accounts",
+  "editNewShareHolder": "Edit shareholder"
 }

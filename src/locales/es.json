@@ -414,5 +414,6 @@
   "labelAdressRegistration": "Dirección de registro de la empresa",
   "labelAdressFisical": "Dirección fisica de la empresa",
   "accountPropuseTitle": "Propósito de la cuenta",
-  "accountPropuseHelpText": "Escriba brevemente el uso que va a realizar de la cuenta. Ejemplo: Facturación de ventas, pago de nómina, pago a proveedores, pago de servicios."
+  "accountPropuseHelpText": "Escriba brevemente el uso que va a realizar de la cuenta. Ejemplo: Facturación de ventas, pago de nómina, pago a proveedores, pago de servicios.",
+  "editNewShareHolder": "Editar accionista"
 }

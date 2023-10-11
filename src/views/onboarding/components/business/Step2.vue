@@ -8,7 +8,12 @@
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
-      <div v-for="(shareholder, idx) in partners" class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3" :key="idx">
+      <div
+        @click="editShareholder(idx)"
+        v-for="(shareholder, idx) in partners"
+        class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-3"
+        :key="idx"
+      >
         <div class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer">
           <div class="mb-2">
             <img src="../../../../assets/icons/icon-user.svg" />
@@ -53,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import Button from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
@@ -87,6 +92,15 @@ const deleteShareholder = (idx: number) => {
   partners.value.splice(idx, 1)
   formData.value.shareholders = partners.value
   localStorage.setItem('companyData', JSON.stringify(formData.value))
+}
+
+const editShareholder = (idx: number) => {
+  router.push({
+    name: 'business/edit-shareholder',
+    params: {
+      id: idx,
+    },
+  })
 }
 
 const saveData = () => {
