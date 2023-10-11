@@ -474,7 +474,7 @@ const saveData = () => {
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
 
-    router.push('/onboarding/business/step2')
+    router.push('/onboarding/business/new-shareholder')
   } else {
     submitting.value = false
     toast.add({
