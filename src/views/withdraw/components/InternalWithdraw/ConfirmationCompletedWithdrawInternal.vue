@@ -13,7 +13,6 @@
     <InternalFiatDetails
       v-if="route.params.type === 'fiat'"
       :realName="beneficiary.name"
-      :email="beneficiary.email"
       :account="props.formData.beneficiary.accountNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
@@ -25,7 +24,6 @@
     <CryptoTransferDetail
       v-if="route.params.type === 'crypto'"
       :realName="props.formData.beneficiary.name"
-      :email="props.formData.beneficiary.email"
       :wallet="props.formData.symbol"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
@@ -58,14 +56,14 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '../../../../stores/user'
 import { useI18n } from 'vue-i18n'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
+import { UserAccount } from '../../types/account'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const props = defineProps<{
   formData: any
   transactionId: string
-  beneficiary: BeneficiaryInternal
+  beneficiary: UserAccount
 }>()
 
 const router = useRouter()
@@ -91,7 +89,8 @@ const goToWithdrawIndex = () => {
 const generatePDFTransactionReceipt = () => {
   isGeneratingTransactionPDF.value = true
   const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+  console.log(user)
+  const userAccountNumber = transformCharactersIntoAsterics(user.userId)
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
@@ -102,14 +101,16 @@ const generatePDFTransactionReceipt = () => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const formattedDate = formatter.format(date)
 
-  transactionPDF[t('userName')] = `${username}`
+  transactionPDF[t('userName')] = `${user.client.name}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.name}`
-  transactionPDF[t('assetType')] = props.formData.symbol
+  transactionPDF[t('assetType')] = props.formData.assetCode
   transactionPDF[t('amount')] = `${props.formData.total}`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
+
+  console.log(transactionPDF)
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false

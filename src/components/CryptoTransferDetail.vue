@@ -1,7 +1,8 @@
 <template>
   <div class="col-12 content">
     <div class="col-6">
-      <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p>
+      <!-- bankAccountHolder en cripto ???? -->
+      <!-- <p class="font-medium text-sm">{{ t('bankAccountHolder') }}</p> -->
       <p class="font-medium text-sm">{{ t('wallet') }}</p>
     </div>
 
@@ -20,7 +21,7 @@
 
     <div class="col-6">
       <p>{{ props.amountFee }} {{ props.assetCode }}</p>
-      <p>{{ props.fee }} {{ props.assetCode }}</p>
+      <!--      <p>{{ props.fee }} {{ props.assetCode }}</p>-->
       <p>{{ props.amount }} {{ props.assetCode }}</p>
     </div>
 
@@ -58,10 +59,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  fee: {
-    type: String,
-    required: true,
-  },
+  // fee: {
+  //   type: String,
+  //   required: true,
+  // },
   transactionId: {
     type: String,
     required: true,

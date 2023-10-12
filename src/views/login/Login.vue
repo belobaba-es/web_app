@@ -63,7 +63,7 @@
             type="button"
             :label="t('noAccount')"
             class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
-            @click="redirectSignin"
+            @click="redirectSignin()"
           />
         </form>
       </div>
@@ -105,7 +105,7 @@ const form = reactive({
 const router = useRouter()
 
 const redirectSignin = () => {
-  window.location.href = import.meta.env.VITE_NOBA_SIGNIN
+  router.push('/create-user')
 }
 
 const redirectPage = () => {

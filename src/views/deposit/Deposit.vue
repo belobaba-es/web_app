@@ -1,5 +1,7 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+
     <p class="text-3xl font-medium">{{ t('deposit') }}</p>
 
     <div class="flex align-items-center" style="height: 580px">
@@ -37,6 +39,7 @@ import CardButon from './components/CardButon.vue'
 import saveMoney from '../../assets/icons/save-money.svg'
 import ewallet from '../../assets/icons/ewallet.svg'
 import Divider from 'primevue/divider'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 interface tabItem {
   label: string

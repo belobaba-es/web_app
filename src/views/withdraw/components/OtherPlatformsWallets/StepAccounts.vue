@@ -3,7 +3,7 @@
     <SearchAccount />
   </div>
 
-  <div class="grid" style="margin-top: 1rem; margin-left: 1rem;">
+  <div class="grid" style="margin-top: 1rem; margin-left: 1rem">
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
@@ -14,7 +14,7 @@
           @click="onSelect(item)"
         >
           <img :src="getIcon(item.assetCode)" alt="" />
-          <span class="ml-4 mt-2 mb-2">{{ item.label }}</span>
+          <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
           <div class="flex align-items-center">
             {{ t('withdraw') }}
             <i class="pi pi-angle-right"></i>
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="mt-4" v-if="listNextPag !== ''">
+      <div class="mt-4" v-if="listNextPag > 1">
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
@@ -56,10 +56,10 @@ import Divider from 'primevue/divider'
 import { useRouter } from 'vue-router'
 import SearchAccount from './SearchAccount.vue'
 import { useToast } from 'primevue/usetoast'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { useBeneficiary } from '../../composables/useBeneficiary'
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
+import { Beneficiary } from '../../types/beneficiary.interface'
 
 const router = useRouter()
 const toast = useToast()
@@ -74,7 +74,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
-const onSelect = (item: BeneficiaryInternal) => {
+const onSelect = (item: Beneficiary) => {
   const page = 0
   const formData = {
     beneficiary: item,

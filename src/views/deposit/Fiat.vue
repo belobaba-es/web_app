@@ -252,7 +252,7 @@ const footerPdf = t('footerPdfNobaData')
 onMounted(async () => {
   submitting.value = true
   fiatService
-    .bankData(userStore.getUser.accountId)
+    .bankData()
     .then(data => {
       submitting.value = false
       dataBank.value = data

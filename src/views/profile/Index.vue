@@ -43,7 +43,8 @@
       </template>
       <template v-else>
         <h5 class="text-base text-600">{{ t('countryLabel') }}</h5>
-        <p class="text-base font-medium">{{ owner?.country }}</p>
+        <p class="text-base font-medium">{{ country }}</p>
+        <!--        <p class="text-base font-medium">{{ owner?.country }}</p>-->
       </template>
     </div>
 
@@ -90,9 +91,11 @@ import Skeleton from 'primevue/skeleton'
 import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import WarningKYC from './components/WarningKYC.vue'
+import { useUserStore } from '../../stores/user'
+import { TypeAccount } from './types/account.interface'
 
 const { t } = useI18n({ useScope: 'global' })
-
+const { getUser } = useUserStore()
 const {
   editProfile,
   fullName,
@@ -107,6 +110,8 @@ const {
   email,
   address,
 } = useAccount()
+
+const country = getUser.client.country
 </script>
 
 <style scoped>

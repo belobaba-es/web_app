@@ -82,6 +82,8 @@ const newBeneficiary = () => {
 }
 
 onMounted(async () => {
+  console.log('International view', route.params.type)
+
   if (route.params.type !== 'domestic') {
     type.value = 'International'
   }

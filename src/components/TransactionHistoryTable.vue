@@ -1,5 +1,7 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar v-if="!props.isDashboard"></FinishRegisterWarningBar>
+
     <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
 
     <ProgressSpinner
@@ -11,6 +13,7 @@
       aria-label="Custom ProgressSpinner"
     />
 
+    <!--    filters-->
     <section v-if="!props.isDashboard">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 mt-3">
         <div class="flex align-items-center">
@@ -46,10 +49,10 @@
                 <label class="label-search">{{ t('assetType') }}</label>
                 <Dropdown
                   class="dropdown-full"
-                  v-model="assetCode"
+                  v-model="assetId"
                   :options="assets"
                   optionLabel="name"
-                  optionValue="code"
+                  optionValue="assetId"
                   :placeholder="t('selectAnAsset')"
                 />
               </div>
@@ -120,31 +123,32 @@
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12">
             <div class="grid">
-              <div class="col sm:col-1 md:col-6 lg:col-3 xl:col-3">
+              <div class="col sm:col-4 md:col-4 lg:col-2 xl:col-3">
                 <div class="grid">
                   <div class="col-3 flex align-items-center data-hidden">
                     <img
                       class="icon-cripto"
-                      alt="icon-{{ item.assetCode }}"
-                      :src="iconAsset(item.assetCode, listAssets)"
+                      :alt="item.assetId"
+                      :src="iconAsset(item.counterparty?.informationWallet?.assetId ?? item.assetId, listAssets)"
                     />
                   </div>
-                  <div class="col-9">
-                    <p class="name_to">{{ item.nameTo }}</p>
+                  <div class="col-8">
+                    <p class="name_to">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
                     <p class="date">
-                      {{ item.createdAt }}
+                      {{ item.formatedDate }}
                     </p>
                   </div>
                 </div>
               </div>
-              <div class="col-4 data-hidden">
+
+              <div class="col sm:col-3 md:col-3 lg:col-3 xl:col-3 data-hidden">
                 <p class="reference">{{ item.reference }}</p>
               </div>
-              <div class="col sm:col-6 lg:col-3">
+
+              <div class="col sm:col-4 md:col-4 lg:col-3 xl:col-2">
                 <p class="amount-x font-semi-bold">
                   {{ item.amount }}
-                  <small>{{ item.assetCode }}</small>
-                  &nbsp;
+                  <small>{{ getAsset(item.assetId, listAssets).code }}</small> &nbsp;
                   <i
                     v-if="item.transactionType === 'withdraw-funds'"
                     class="pi pi-arrow-circle-up icon-withdraw-funds"
@@ -152,7 +156,14 @@
                   <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
                 </p>
               </div>
-              <div class="sm:col-3 md:col-6 lg:col-2 details-mobile">
+
+              <div class="col sm:col-4 md:col-3 lg:col-2 xl:col-2 data-hidden">
+                <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
+                  {{ item.status }}
+                </p>
+              </div>
+
+              <div class="col sm:col-4 md:col-4 lg:col-2 xl:col-2 details-mobile">
                 <router-link
                   class="link-modal-data-transaction"
                   to="#"
@@ -199,7 +210,7 @@
 
   <ModalTransactionDetails
     v-model:display="displayModalTransactionDetail"
-    :transaction="modalTransactionDetail"
+    :transaction="modalTransactionDetail as TransactionHistory ?? {} as TransactionHistory"
   ></ModalTransactionDetails>
 </template>
 
@@ -218,34 +229,35 @@ import logo from '../assets/img/logo.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {
-  ListTransactionPgType,
   TransactionFiltersQueryType,
   TransactionFiltersQueryTypeKeys,
+  TransactionHistory,
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
 import { HistoricService } from '../views/wallet/services/historic'
 import { iconAsset } from '../shared/iconAsset'
-import { TransactionModalPayload } from './ModalTransactionDetails.vue'
 import { useUserStore } from '../stores/user'
 import { Asset } from '../views/deposit/types/asset.interface'
+import { getAsset } from '../shared/getAsset'
+import FinishRegisterWarningBar from './FinishRegisterWarningBar.vue'
 
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 const selectedTypeTransaction = ref()
-const assetCode = ref('')
+const assetId = ref('')
 const startDate = ref()
 const endDate = ref()
 const isLoading = ref(true)
 const isLoadingPDF = ref(false)
-const filters: TransactionFiltersQueryType = {
-  accountId: '',
-  assetCode: '',
+const filters: TransactionFiltersQueryType | any = {
+  clientId: '',
+  assetId: '',
   assetType: '',
-  initDoc: '',
+  perPage: 10,
   startDate: '',
-  next: '',
+  page: 1,
   endDate: '',
   transactionType: '',
 }
@@ -256,15 +268,15 @@ const transactionTypes = ref([
 ])
 const toast = useToast()
 const assetsService = AssetsService.instance()
-const assets = ref<{ name: string; code: string }[]>([])
+const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
 const getHistoric = TransactionHistoricService.instance()
 const getTransactonHistoric = HistoricService.instance()
-const listTransaction = ref<ListTransactionPgType[]>([])
+const listTransaction = ref<TransactionHistory[]>([])
 const submitting = ref(false)
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
-const modalTransactionDetail = ref({})
+const modalTransactionDetail = ref<TransactionHistory>()
 const nextPage = ref({
   nextPage: false,
   data: '',
@@ -284,32 +296,48 @@ const lastDateFiltersRegistry: any = ref({
 })
 
 onMounted(async () => {
+  await getAssets()
+  await getTransactions()
+})
+
+const getAssets = async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
+    let a = []
+    const allAssetsOption = {
+      name: t('allItems'),
+      assetId: '',
+    }
 
-    let a = [
-      {
-        name: t('allItems'),
-        code: '',
-      },
-      {
-        name: 'US DOLLAR',
-        code: 'USD',
-      },
-    ]
+    // Initialize the variable to store the "USD" asset
+    let usdAsset = null
 
-    data.forEach(d => {
-      a.push({
-        name: d.name,
-        code: d.code,
-      })
+    data.forEach(asset => {
+      if (asset.code === 'USD') {
+        // If the asset's assetId is "USD", store it in the usdAsset variable
+        usdAsset = {
+          name: asset.name,
+          assetId: asset.assetId,
+        }
+      } else {
+        a.push({
+          name: asset.name,
+          assetId: asset.assetId,
+        })
+      }
     })
+
+    // If the "USD" asset was found, add it to the beginning of the array
+    if (usdAsset) {
+      a.unshift(usdAsset)
+    }
+
+    // add al options at the begining
+    a.unshift(allAssetsOption)
 
     assets.value = a
   })
-
-  await getTransactions()
-})
+}
 
 const getTransactions = async (filters: any = {}) => {
   registerSearchFilters([], {})
@@ -317,6 +345,8 @@ const getTransactions = async (filters: any = {}) => {
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
+
+  // todo send nextPage as page into the payload
   await getHistoric
     .getHistoric(filters)
     .then(data => {
@@ -324,8 +354,9 @@ const getTransactions = async (filters: any = {}) => {
       isLoading.value = false
       isLoadingPDF.value = false
 
-      data.results.forEach(element => {
-        element.createdAt = formatDate(element.createdAt)
+      data.results.forEach((element: TransactionHistory) => {
+        element.formatedDate = formatDate(element.createdAt)
+        element.assetCode = getAsset(element.assetId, listAssets.value).code
         listTransaction.value.push(element)
       })
 
@@ -350,7 +381,7 @@ const loadMoreItems = async () => {
   submitting.value = true
   listTransaction.value = []
 
-  await filtersChange('initDoc', nextPage.value.data)
+  await filtersChange('page', nextPage.value.data)
   await getTransactions(filters)
 }
 
@@ -388,9 +419,9 @@ watch(selectedTypeTransaction, async newValue => {
   }
 })
 
-watch(assetCode, async newValue => {
-  if (assetCode) {
-    await filtersChange('assetCode', newValue)
+watch(assetId, async newValue => {
+  if (assetId) {
+    await filtersChange('assetId', newValue)
   }
 })
 
@@ -402,9 +433,9 @@ const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
 const user = userStore.getUser
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+// todo set company name when ready
+const username =
+  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
 let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
@@ -414,20 +445,24 @@ const downloadExtract = () => {
 
     const owner = {
       name: username,
-      id: user.taxId,
-      address: `${user.streetOne} ${user.city}`,
+      id: user.taxId ?? user.client.dni,
+      address: `${user.client.streetOne} ${user.client.city}`,
     }
 
     isLoadingPDF.value = false
 
     const nameFile = `${username} ${t('namePdfTransactionHistory')}`
+    const maxReferenceLength = 59
 
     listTransaction.value.forEach((transaction, i) => {
       const data = {
-        assetCode: transaction.assetCode,
-        reference: transaction.reference,
-        createdAt: transaction.createdAt,
-        amount: transaction.amount,
+        assetCode: getAsset(transaction.assetId, listAssets.value).code,
+        reference:
+          transaction.reference.length > maxReferenceLength
+            ? transaction.reference.slice(0, maxReferenceLength)
+            : transaction.reference,
+        createdAt: transaction.formatedDate,
+        amount: Number(transaction.amount.toFixed(8).replace(/\.?0*$/, '')),
       }
       extractPDFInfo[i] = data
     })
@@ -462,7 +497,7 @@ const prepareDatesFilterPDF = () => {
   }
 }
 
-const registerSearchFilters = (transactions: ListTransactionPgType[], filters: any) => {
+const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
   lastDateFiltersRegistry.value = {
     transactions,
     dates: {
@@ -485,55 +520,72 @@ const search = async () => {
   await getTransactions(filters)
 }
 
-const openModalTransactionDetails = (event: any, transaction: any) => {
+const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
   isLoadingTransactionDetails.value = true
-
-  const txDate = new Date(transaction.createdAt)
-  const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  transaction.formatedDate = formatter.format(txDate)
-
+  transaction.formatedDate = transaction.formatedDate
+  transaction.amount = Number(transaction.amount.toFixed(8).replace(/\.?0*$/, ''))
   modalTransactionDetail.value = transaction
 
-  loadTransactionDetail(transaction)
+  // loadTransactionDetail(transaction)
+
+  displayModalTransactionDetail.value = true
+  isLoadingTransactionDetails.value = false
 }
 
-const loadTransactionDetail = async (transaction: any) => {
-  await getTransactonHistoric
-    .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
-    .then(data => {
-      const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
-
-      displayModalTransactionDetail.value = true
-      isLoadingTransactionDetails.value = false
-      modalTransactionDetail.value = {
-        ...modalTransactionDetail.value,
-        ...(data as TransactionModalPayload),
-        nameTo,
-      } as TransactionModalPayload
-    })
-}
+// const loadTransactionDetail = async (transaction: TransactionHistory) => {
+//   await getTransactonHistoric
+//     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
+//     .then(data => {
+//       // const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`
+//       // todo
+//       const nameTo = ``
+//
+//       console.log('loadTransactionDetail transaction', transaction)
+//       console.log('loadTransactionDetail data', data)
+//       displayModalTransactionDetail.value = true
+//       isLoadingTransactionDetails.value = false
+//       modalTransactionDetail.value = transaction
+//
+//       console.log('modalTransactionDetail.value', modalTransactionDetail.value)
+//     })
+// }
 </script>
+
 <style lang="scss" scoped>
+@media screen and (max-width: 600px) {
+  .details-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .dropdown-full {
   width: 100% !important;
 }
+
 .container-data {
   margin: -14px;
   margin-top: 30px;
 }
+
 .padding-search-div {
   padding-top: 1.62rem !important;
   padding-left: 0.5rem;
 }
+
 .mb-15 {
   margin-bottom: 1.5rem;
 }
+
 .label-search {
   margin-left: 0.5rem !important;
 }
+
 .p-button {
   width: 100%;
 }
+
 .mb-25 {
   margin-bottom: 2.5rem;
 }
@@ -544,11 +596,6 @@ const loadTransactionDetail = async (transaction: any) => {
 
 .amount-x {
   font-size: 14pt;
-}
-.details-mobile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .pi-chevron-right {
@@ -574,5 +621,14 @@ const loadTransactionDetail = async (transaction: any) => {
   margin-left: 33%;
   z-index: 999;
   margin-top: 30%;
+}
+
+.details-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  h4 {
+    margin: 0;
+  }
 }
 </style>

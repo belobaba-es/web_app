@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-2xl">{{ t('documents') }}</h1>
   </div>
-  <template v-if="natureAccount === 'company'">
+  <template v-if="natureAccount === 'COMPANY'">
     <DocumentsCompany />
   </template>
   <template v-else>

@@ -10,7 +10,7 @@
 import Login from './Login.vue'
 import TwoFactorAuthentication from './TwoFactorAuthentication.vue'
 import { ref } from 'vue'
-import { LoginData } from './types/login.interface'
+import { AccountStatus, LoginData } from './types/login.interface'
 import { User, useUserStore } from '../../stores/user'
 import { twoFactorAuthenticationIsActiveRemotely } from '../../shared/services/remoteConfig'
 
@@ -18,24 +18,23 @@ const isNotTwoFactorActive = ref<boolean>(false)
 
 const userStore = useUserStore()
 
-const userPayload = ref<LoginData>()
+const userPayload = ref<any>()
 
-const didLogin = async (payload: LoginData) => {
+const didLogin = async (payload: any) => {
   userPayload.value = payload
-
-  // if (await twoFactorAuthenticationIsActiveRemotely()) {
-  //   if (userPayload.value?.account.twoFactorActive) {
-  //     isNotTwoFactorActive.value = true
-  //     return
-  //   }
-  // }
 
   userStore.setUser(userPayload.value as User)
 
-  if (userPayload.value.account.status !== 'pending') {
+  if (userPayload.value?.client.status !== AccountStatus.REGISTERED) {
     window.location.href = '/dashboard'
-  } else {
-    window.location.href = `/profile/${userPayload.value.accountId}`
+    return
   }
+  // console.log("userPayload.value",userPayload.value)
+  if (userPayload.value.clientId === null) {
+    window.location.href = '/onboarding'
+    return
+  }
+
+  window.location.href = `/profile/${userPayload.value.clientId}`
 }
 </script>

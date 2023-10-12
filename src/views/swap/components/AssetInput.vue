@@ -38,14 +38,14 @@
             </Button>
           </template>
           <template v-else>
-            <img alt="logo" class="logo-usd" :src="getWalletByAssetCode('USD')?.icon" style="width: 3.5rem" />
+            <img alt="logo" class="logo-usd" :src="getUsdIcon()" style="width: 3.5rem" />
           </template>
         </div>
 
         <div class="input-mount col-5 flex align-items-center">
           <template v-if="type === 'fiat'">
             <InputNumber
-              v-model="amount"
+              v-model="amountAfterRemovingFee"
               mode="decimal"
               :max-fraction-digits="2"
               :min-fraction-digits="2"
@@ -104,8 +104,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ref, watch, computed, toRef } from 'vue'
-import { defineProps } from 'vue'
+import { computed, defineProps, watch } from 'vue'
 import Button from 'primevue/button'
 import { useSwapStore } from '../../../stores/swap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
@@ -122,6 +121,7 @@ const toast = useToast()
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
 const {
+  amountAfterRemovingFee,
   amount,
   assetName,
   assetIcon,
@@ -133,7 +133,7 @@ const {
   assetId,
 } = storeToRefs(useSwapStore())
 
-const { createQuote, clearTimer } = useSwapStore()
+const { createExchange, clearTimer } = useSwapStore()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -146,7 +146,7 @@ const openModalSelector = () => {
 
 const disabledBtnSelectCrypto = computed(() => {
   if (transactionType.value === 'buy') {
-    return amount.value === 0.0 || loading.value
+    return amountAfterRemovingFee.value === 0.0 || loading.value
   } else if (transactionType.value === 'sell') {
     return loading.value
   }
@@ -163,26 +163,38 @@ watch(unitCount, async newVal => {
       })
       return
     }
-    await createQuote()
+    await createExchange()
   }
 })
 
 const verifyAmountForCreateQoute = () => {
   //TODO el setTimeout es porque primevue tarda alguno milisegundo en actualizar la variable reactiva.
   setTimeout(async () => {
-    if (transactionType.value === 'buy' && assetCode.value && amount.value > 0 && assetId.value && !loading.value) {
+    if (
+      transactionType.value === 'buy' &&
+      assetCode.value &&
+      amountAfterRemovingFee.value > 0 &&
+      assetId.value &&
+      !loading.value
+    ) {
       await clearTimer()
-      await createQuote()
+      await createExchange()
     }
   }, 1000)
 }
 
 const maxCountInput = (typeCode: string) => {
   if (typeCode === 'USD') {
-    amount.value = getBalanceByCode('USD')
+    amountAfterRemovingFee.value = getBalanceByCode('USD')
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
+}
+
+const getUsdIcon = () => {
+  const defaultUsdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
+
+  return getWalletByAssetCode('USD')?.icon ?? defaultUsdIcon
 }
 </script>
 

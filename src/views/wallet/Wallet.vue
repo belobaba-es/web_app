@@ -1,8 +1,10 @@
 <template>
   <section class="section-main">
-    <CardWallet :carousel="false" v-show="useUser.isAccountActive()" />
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
 
-    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <CardWallet :carousel="false" />
+
+    <AccountValidationProcess />
   </section>
 </template>
 
@@ -12,6 +14,7 @@ import CardWallet from '../../components/CardWallet.vue'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 
 import { useUserStore } from '../../stores/user'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 const useUser = useUserStore()
 </script>

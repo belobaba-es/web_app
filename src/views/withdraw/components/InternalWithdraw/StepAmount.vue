@@ -10,9 +10,9 @@
         <p class="title-beneficiary text-capitalize">{{ beneficiary.name }}</p>
       </div>
 
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="text-base text-end">{{ beneficiary.email }}</p>
-      </div>
+      <!--      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">-->
+      <!--        <p class="text-base text-end">{{ beneficiary.email }}</p>-->
+      <!--      </div>-->
     </div>
 
     <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset" />
@@ -93,13 +93,13 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import SelectedAssets from '../../../../components/SelectedAssets.vue'
 import { Asset } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import { UserAccount } from '../../types/account'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -111,7 +111,7 @@ const props = defineProps<{
   formData: any
 }>()
 
-const beneficiary = props.formData.beneficiary as BeneficiaryInternal
+const beneficiary = props.formData.beneficiary as UserAccount
 
 const emit = defineEmits(['nextPage'])
 const amount = ref(0)
@@ -130,12 +130,13 @@ const showSelectedAsset = ref(isAsset)
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
 
-const events = ref<any>([
+const events = ref([
   { amount: '2,5', label: t('Fee'), name: false },
   { amount: '2,5', label: t('youSendTo'), name: true },
 ])
 
 const amountFee = computed(() => {
+  fee.value = fee.value ?? 0
   const t = isNaN(amount.value - fee.value) ? 0 : amount.value - fee.value
   if (t > balance.value) {
     toast.add({
@@ -201,8 +202,7 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     asset: asset.value,
-    symbol: assetSymbol.value,
-    assetId: assetId.value,
+    assetCode: assetSymbol.value,
     total: total.value,
   }
   emit('nextPage', {

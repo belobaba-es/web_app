@@ -1,7 +1,10 @@
 <template>
   <section class="section-main">
-    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
-    <PageLayout :title="t('swap')" v-show="useUser.isAccountActive() && useUser.swapModuleIsActive()">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+    <!--    todo uncomment-->
+    <!--    <AccountValidationProcess />-->
+    <!--    <PageLayout :title="t('swap')" v-show="useUser.swapModuleIsActive()">-->
+    <PageLayout :title="t('swap')" v-show="true">
       <div class="grid flex justify-content-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
           <div class="flex justify-content-end mb-4">
@@ -32,7 +35,7 @@
               <AssetInput type="fiat" v-else />
             </div>
 
-            <ShowQuotePrice v-if="quoteId"></ShowQuotePrice>
+            <ShowQuotePrice v-if="exchangeId"></ShowQuotePrice>
 
             <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
               <div class="grid">
@@ -42,13 +45,13 @@
               </div>
             </div>
 
-            <ShowFee v-if="quoteId" />
+            <!--            <ShowFee v-if="exchangeId" />-->
 
             <div class="mb-2">
               <Button
                 :label="swapBtnText"
                 class="w-full py-3 text-uppercase"
-                :disabled="loading || (!quoteId && !shouldRefreshQuote)"
+                :disabled="loading || (!exchangeId && !shouldRefreshQuote)"
                 @click="swapHandler"
                 :loading="loading"
               />
@@ -81,10 +84,10 @@ import { useUserStore } from '../../stores/user'
 import { useRouter } from 'vue-router'
 import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
-import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import { onUnmounted } from 'vue'
 import ShowFee from './components/ShowFee.vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 const {
   assetIcon,
@@ -95,14 +98,16 @@ const {
   progressBarSeconds,
   swapBtnText,
   loading,
-  quoteId,
+  exchangeId,
   transactionType,
   assetCode,
   shouldRefreshQuote,
 } = storeToRefs(useSwapStore())
+
 const { t } = useI18n({ useScope: 'global' })
+
 const router = useRouter()
-const { createQuote, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
+const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
 
 const useUser = useUserStore()
 
@@ -112,7 +117,7 @@ const selectedAsset = async (asset: Asset) => {
   assetName.value = asset.name
   assetId.value = asset.assetId
   assetCode.value = asset.code
-  await createQuote()
+  await createExchange()
 }
 
 const modal = (b: boolean) => {
@@ -138,9 +143,11 @@ onUnmounted(() => {
   transform: rotate(90deg);
   width: 2rem;
 }
+
 .btn-historic {
   width: 40%;
 }
+
 @media screen and (min-width: 1200px) {
   .xl\:col-4 {
     width: 40rem;

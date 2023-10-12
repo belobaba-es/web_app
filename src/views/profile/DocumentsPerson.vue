@@ -74,6 +74,7 @@
                   <FileInput
                     :is-proof-of-address="true"
                     :tax-id="taxId ?? ''"
+                    :dni="''"
                     :document-country="getOwner()?.taxCountry ?? ''"
                     :accountId="accountId ?? ''"
                     :is-company="false"
@@ -88,6 +89,7 @@
       </TabPanel>
     </TabView>
   </template>
+  
 </template>
 
 <script setup lang="ts">

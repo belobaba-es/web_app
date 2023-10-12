@@ -1,6 +1,6 @@
 import { HttpService } from '../../../shared/services/http'
-import { CreateQuoteResponse } from '../types/create-quote-response.interface'
-import { QuoteResponse } from '../types/quote-response.interface'
+import { createExchangeResponse } from '../types/create-exchange-response.interface'
+import { ExchangeResponse } from '../types/quote-response.interface'
 
 export class SwapService extends HttpService {
   private static _instance: SwapService
@@ -19,27 +19,26 @@ export class SwapService extends HttpService {
 
     return this._instance
   }
-  async createQuote(payload: any): Promise<CreateQuoteResponse> {
-    const resp = await this.post<CreateQuoteResponse>(`swap/quotes/create`, payload, true)
+
+  async createExchange(payload: any): Promise<createExchangeResponse> {
+    const resp = await this.post<createExchangeResponse>(`swap/exchanges`, payload, true)
     return resp
   }
 
-  async execute(quoteId: string): Promise<any> {
-    const resp = await this.post<any>(`swap/quotes/execute`, { quoteId }, true)
+  async execute(exchangeId: string): Promise<any> {
+    const resp = await this.post<any>(`swap/exchanges/accept/${exchangeId}`, {}, true)
     return resp
   }
 
-  async quotes() {
-    const resp = await this.get<any>(`swap/quotes`, {}, true)
-    return resp
-  }
-
-  async nextQuotes(nextPag: string): Promise<QuoteResponse> {
-    const resp = await this.get<QuoteResponse>(`swap/quotes/${nextPag}`, {}, true)
+  async exchanges(nextPag: number = 1) {
+    const resp = await this.get<any>(`swap/exchanges/${nextPag}/20`, {}, true)
     return resp
   }
 
   async cancelQuote(quiteId: string) {
+    // todo create this method in the backend
+    return
+
     const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, {}, true)
     return resp
   }

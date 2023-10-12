@@ -10,7 +10,7 @@ export interface WithdrawForm {
 
 export type MakeFiatInternalTransfer = {
   amount: string
-  accountDestination: string
+  clientIdDestination: string
   reference: string
 }
 
@@ -22,8 +22,8 @@ export type MakeFiatExternalTransfer = {
 
 export type MakeAssetInternalTransfer = {
   amount: string
-  accountDestination: string
-  assetId: string
+  clientIdDestination: string
+  assetCode: string
   reference: string
 }
 

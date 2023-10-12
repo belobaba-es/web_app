@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { SwapService } from '../views/swap/services/swap'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../composables/useBalanceWallet'
-import { QuoteResponse } from '../views/swap/types/quote-response.interface'
+import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
+import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -19,12 +20,13 @@ export const useSwapStore = defineStore('swap', () => {
   const totalAmount = ref(0.0)
   const unitCount = ref(0.0)
   const amount = ref(0.0)
+  const amountAfterRemovingFee = ref(0.0)
   const amountIsUnitCount = ref(false)
   const transactionType = ref('buy')
   const assetId = ref()
   const assetName = ref()
   const assetIcon = ref()
-  const quoteId = ref()
+  const exchangeId = ref()
   const showModalAssetSelector = ref(false)
   const progressBarPercent = ref(0)
   const progressBarSeconds = ref(10)
@@ -32,10 +34,11 @@ export const useSwapStore = defineStore('swap', () => {
   let timer: number
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
-  const quotes = ref<QuoteResponse>({
+  const destinationWalletId = ref()
+  const sourceWalletId = ref()
+  const exchanges = ref<ExchangeResponse>({
     count: 0,
-    nextPag: '',
-    prevPag: '',
+    nextPag: 1,
     results: [],
   })
   const successExecuted = ref(false)
@@ -46,75 +49,80 @@ export const useSwapStore = defineStore('swap', () => {
     assetName: '',
     unitCount: 0.0,
     transactionType: '',
-    quoteId: '',
+    exchangeId: '',
     feeNoba: 0,
     feeTradeDesk: 0,
     totalSpend: 0,
+    amountAfterRemovingFee: 0,
   })
   const feeTradeDesk = ref(0.0)
   const totalSpend = ref(0.0)
+  const exchange = ref<ExchangeData>()
 
   const setFeeTradeDesk = () => {
+    // feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
     if (transactionType.value === 'buy') {
-      if (assetCode.value === 'USDT') {
-        feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
-      } else {
-        feeTradeDesk.value = Number((totalAmount.value - amount.value).toFixed(2))
-      }
-
-      totalSpend.value = Number((totalAmount.value + feeNoba.value).toFixed(2))
-      return
-    }
-
-    if (assetCode.value === 'USDT') {
-      feeTradeDesk.value = Number((amount.value - totalAmount.value).toFixed(2))
+      totalSpend.value = baseAmount.value + feeAmount.value
     } else {
-      feeTradeDesk.value = Number((baseAmount.value - totalAmount.value).toFixed(2))
+      totalSpend.value = amountAfterRemovingFee.value - feeAmount.value
     }
-
-    totalSpend.value = Number((totalAmount.value - feeNoba.value).toFixed(2))
   }
 
   const swapBtnText = computed(() => {
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
   })
 
-  const createQuote = async () => {
+  const createExchange = async () => {
     if (
-      (transactionType.value === 'buy' && amount.value === 0.0) ||
+      (transactionType.value === 'buy' && amountAfterRemovingFee.value === 0.0) ||
       (transactionType.value === 'sell' && unitCount.value === 0.0)
     )
       return
 
     loading.value = true
     const swapService = SwapService.instance()
+
+    if (transactionType.value === 'buy') {
+      sourceWalletId.value = 'USD'
+      destinationWalletId.value = assetCode.value
+    } else {
+      sourceWalletId.value = assetCode.value
+      destinationWalletId.value = 'USD'
+    }
+
+    const amountFormated = amountIsUnitCount.value
+      ? Math.trunc(unitCount.value * 1e6) / 1e6
+      : amountAfterRemovingFee.value
     await swapService
-      .createQuote({
-        amount: amountIsUnitCount.value ? Math.trunc(unitCount.value * 1e6) / 1e6 : amount.value,
-        amountIsUnitCount: amountIsUnitCount.value,
-        transactionType: transactionType.value,
-        assetId: assetId.value,
+      .createExchange({
+        amount: amountFormated,
+        sourceWalletId: sourceWalletId.value,
+        destinationWalletId: destinationWalletId.value,
+        description: `Swap ${amountFormated} ${sourceWalletId} --> ${destinationWalletId.value}`,
       })
       .then(response => {
-        assetId.value = response.data.assetId
-        quoteId.value = response.data.quoteId
-        baseAmount.value = response.data.baseAmount
-        feeAmount.value = response.data.feeAmount
-        totalAmount.value = response.data.totalAmount
-        feeNoba.value = response.data.feeNoba
+        exchange.value = response.data
+        feeNoba.value = exchange.value?.feeNoba
+        baseAmount.value = exchange.value?.source_details.amount_to_debit
+        feeAmount.value = exchange.value?.feeNoba
+
+        totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
+
         if (transactionType.value === 'buy') {
-          unitCount.value = response.data.unitCount
+          unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
+        } else {
+          amountAfterRemovingFee.value = <number>exchange.value?.destination_details?.amount_to_credit - feeNoba.value
+          unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
+          unitCount.value = Number(unitCount.value.toFixed(6))
         }
 
-        amount.value = Number(response.data.amount)
+        exchangeId.value = exchange.value?.exchangeId
 
         setFeeTradeDesk()
 
         loading.value = false
-        if (transactionType.value === 'sell') {
-          amount.value = response.data.baseAmount
-        }
-        startTimer()
+
+        // startTimer()
       })
       .catch(error => {
         loading.value = false
@@ -129,11 +137,11 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const executeQuote = async () => {
-    if (amount.value === 0.0) return
+    if (amountAfterRemovingFee.value === 0.0) return
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
-      .execute(quoteId.value)
+      .execute(exchangeId.value)
       .then(async response => {
         successExecuted.value = true
         clearTimer()
@@ -151,11 +159,12 @@ export const useSwapStore = defineStore('swap', () => {
         transactionSummary.value.feeAmount = feeAmount.value
         transactionSummary.value.totalAmount = totalAmount.value
         transactionSummary.value.transactionType = transactionType.value
-        transactionSummary.value.unitCount = unitCount.value
-        transactionSummary.value.quoteId = quoteId.value
+        transactionSummary.value.unitCount = Math.trunc(unitCount.value * 1e6) / 1e6
+        transactionSummary.value.exchangeId = exchangeId.value
         transactionSummary.value.feeNoba = feeNoba.value
         transactionSummary.value.feeTradeDesk = feeTradeDesk.value
         transactionSummary.value.totalSpend = totalSpend.value
+        transactionSummary.value.amountAfterRemovingFee = amountAfterRemovingFee.value
 
         router.push('/swap/success')
       })
@@ -192,13 +201,13 @@ export const useSwapStore = defineStore('swap', () => {
   const clearTimer = () => {
     clearInterval(timer)
     timer = 0
-    progressBarSeconds.value = 10
+    progressBarSeconds.value = 60
     progressBarPercent.value = 0
   }
 
   watch(progressBarSeconds, async newValue => {
     if (newValue === 0) {
-      if (quoteId.value && !successExecuted.value) {
+      if (exchangeId.value && !successExecuted.value) {
         shouldRefreshQuote.value = true
         await cancelQuote()
       }
@@ -210,17 +219,17 @@ export const useSwapStore = defineStore('swap', () => {
     feeAmount.value = 0.0
     totalAmount.value = 0.0
     unitCount.value = 0.0
-    amount.value = 0.0
+    amountAfterRemovingFee.value = 0.0
     // progressBarSeconds.value = 10
     // progressBarPercent.value = 0
     shouldRefreshQuote.value = false
   }
 
-  const fetchQuotes = async () => {
+  const fetchExchanges = async () => {
     loading.value = true
     const swapService = SwapService.instance()
-    await swapService.quotes().then(response => {
-      quotes.value = response
+    await swapService.exchanges().then(response => {
+      exchanges.value = response
       loading.value = false
     })
   }
@@ -228,8 +237,8 @@ export const useSwapStore = defineStore('swap', () => {
   const switchTransactionType = async () => {
     if (transactionType.value === 'buy') {
       amountIsUnitCount.value = true
-      if (amount.value > 0.0) {
-        amount.value = 0.0
+      if (amountAfterRemovingFee.value > 0.0) {
+        amountAfterRemovingFee.value = 0.0
       }
       transactionType.value = 'sell'
     } else {
@@ -240,7 +249,7 @@ export const useSwapStore = defineStore('swap', () => {
       transactionType.value = 'buy'
     }
 
-    if (quoteId.value) {
+    if (exchangeId.value) {
       // clearTimer()
       await cancelQuote()
     }
@@ -254,20 +263,19 @@ export const useSwapStore = defineStore('swap', () => {
 
   const cancelQuote = async () => {
     const swapService = SwapService.instance()
-    await swapService.cancelQuote(quoteId.value).then(() => (quoteId.value = undefined))
+    await swapService.cancelQuote(exchangeId.value).then(() => (exchangeId.value = undefined))
   }
 
   const getNextPage = async () => {
     loading.value = true
     const swapService = SwapService.instance()
     await swapService
-      .nextQuotes(quotes.value.nextPag)
+      .exchanges(exchanges.value.nextPag)
       .then(response => {
-        response.results.forEach(result => {
-          const existInResults = quotes.value.results.find(item => item.id === result.id)
-          if (!existInResults) quotes.value.results.push(result)
+        response.results.forEach((result: ExchangeCreated) => {
+          exchanges.value.results.push(result)
         })
-        quotes.value.nextPag = response.nextPag
+        exchanges.value.nextPag = response.nextPag
       })
       .finally(() => {
         loading.value = false
@@ -277,8 +285,8 @@ export const useSwapStore = defineStore('swap', () => {
   const clearSwap = async (typeTransaction = 'buy') => {
     refreshQuote()
     // clearTimer()
-    quoteId.value = ''
-    // if (quoteId.value) {
+    exchangeId.value = ''
+    // if (exchangeId.value) {
     //   await cancelQuote();
     // }
     transactionType.value = typeTransaction
@@ -294,7 +302,7 @@ export const useSwapStore = defineStore('swap', () => {
     assetId,
     assetName,
     assetIcon,
-    createQuote,
+    createExchange,
     unitCount,
     showModalAssetSelector,
     progressBarPercent,
@@ -302,11 +310,11 @@ export const useSwapStore = defineStore('swap', () => {
     swapBtnText,
     loading,
     swapHandler,
-    quoteId,
+    exchangeId,
     startTimer,
     clearTimer,
-    fetchQuotes,
-    quotes,
+    fetchExchanges,
+    exchanges,
     switchTransactionType,
     assetCode,
     refreshQuote,
@@ -317,5 +325,9 @@ export const useSwapStore = defineStore('swap', () => {
     feeNoba,
     feeTradeDesk,
     totalSpend,
+    exchange,
+    destinationWalletId,
+    sourceWalletId,
+    amountAfterRemovingFee,
   }
 })
