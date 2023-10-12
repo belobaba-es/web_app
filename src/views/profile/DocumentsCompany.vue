@@ -9,7 +9,7 @@
     <div class="col-12 md:col-6">
       <Panel :header="t('uploadFileDocumentCompanyText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
-          <DocumentCompanyEditForm />
+          <!-- <DocumentCompanyEditForm /> -->
         </ScrollPanel>
       </Panel>
     </div>
@@ -17,7 +17,7 @@
       <Panel :header="t('uploadFileDocumentShareHolderText')" class="shareholders-panel">
         <ScrollPanel style="width: 100%; height: 400px" class="custom">
           <div v-for="(partner, idx) in getMembers()">
-            <DocumentPartnersEditForm :tax-id="partner.taxId" :key="idx" />
+            <!-- <DocumentPartnersEditForm :tax-id="partner.taxId" :key="idx" /> -->
           </div>
         </ScrollPanel>
       </Panel>
@@ -28,8 +28,8 @@
 <script setup lang="ts">
 import Panel from 'primevue/panel'
 import ScrollPanel from 'primevue/scrollpanel'
-import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue'
-import DocumentCompanyEditForm from './components/DocumentCompanyEditForm.vue'
+// import DocumentPartnersEditForm from './components/DocumentPartnersEditForm.vue'
+// import DocumentCompanyEditForm from './components/DocumentCompanyEditForm.vue'
 import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 
