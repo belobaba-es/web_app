@@ -423,5 +423,21 @@
   "accountPropuseTitle": "Account purpose",
   "accountPropuseHelpText": "Write briefly the use you are going to make of the account. Example: Sales invoicing, payroll payment, payment to suppliers, payment of services.",
   "associationsAccountsLabel": "Associations with other accounts",
-  "editNewShareHolder": "Edit shareholder"
+  "editNewShareHolder": "Edit shareholder",
+  "sourceAssetsAndIncomeLabel": "Source of assets and income",
+  "sourceAssetsAndIncomeHelpText": "Briefly describe your commercial activity and the origin of the funds that would be transacted through your NOBA account or wallet.",
+  "intendedUseAccountLabel": "Intended use account",
+  "intendedUseAccountHelpText": "Describe the use for which the account will be put. Example: swap from crypto to fiat. Custody billing account. Account for transactions within the USA.",
+  "anticipatedTypesAssetsLabel": "Advance types of assets",
+  "anticipatedTypesAssetsHelpText": "Place the assets you hope to buy or sell in your NOBA wallet. Example: Bitcoin, Ethereum, Cardano, etc.",
+  "anticipatedMonthlyCashVolumeLabel": "Monthly cash volume anticipated",
+  "anticipatedMonthlyCashVolumeHelpText": "Place an average amount that you expect to take into account and move monthly. Example: $5,000-$10,000; $10,000-$20,000; $20,000-$50,000; $50,000-$200,000; $200,000-$500,000; $500,000-$5,000,000; Above $5,000,000.",
+  "anticipatedTradingPatternsLabel": "Anticipated trading patterns",
+  "anticipatedTradingPatternsHelpText": "Describe the type of movements you expect to make with your crypto asset wallet. Example: Purchase and sale of assets, exchange of one asset for another, others.",
+  "anticipatedMonthlyTransactionsIncomingLabel": "Incoming Anticipated Monthly Transactions",
+  "anticipatedMonthlyTransactionsIncomingHelpText": "Number of incoming transactions you expect to enter monthly.",
+  "anticipatedMonthlyTransactionsOutgoingLabel": "Outgoing Anticipated Monthly Transactions",
+  "anticipatedMonthlyTransactionsOutgoingHelpText": "Estimate the volume of transactions you expect to make monthly. Example: from 1 to 49, from 50 to 99, from 100 to 499, etc.",
+  "natureBusinessCompanyLabel": "Nature Business of the Company",
+  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business."
 }

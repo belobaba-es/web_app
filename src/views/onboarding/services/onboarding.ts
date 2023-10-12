@@ -21,4 +21,8 @@ export class OnboardingService extends HttpService {
   async openingAccountPersonal(payload: any): Promise<any> {
     return await this.post<any>(`account/custodial-account-natural-person`, payload)
   }
+
+  async openingAccountBussiness(payload: any): Promise<any> {
+    return await this.post<any>(`account/custodial-account-company`, payload)
+  }
 }

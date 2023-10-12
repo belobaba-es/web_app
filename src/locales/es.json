@@ -415,5 +415,21 @@
   "labelAdressFisical": "Dirección fisica de la empresa",
   "accountPropuseTitle": "Propósito de la cuenta",
   "accountPropuseHelpText": "Escriba brevemente el uso que va a realizar de la cuenta. Ejemplo: Facturación de ventas, pago de nómina, pago a proveedores, pago de servicios.",
-  "editNewShareHolder": "Editar accionista"
+  "editNewShareHolder": "Editar accionista",
+  "sourceAssetsAndIncomeLabel": "Fuente de activos e ingresos",
+  "sourceAssetsAndIncomeHelpText": "Describa brevemente su actividad comercial y el origen de los fondos que se transarían a través de su cuenta o wallet de NOBA.",
+  "intendedUseAccountLabel": "Cuenta de uso previsto",
+  "intendedUseAccountHelpText": "Describa el uso para el que destinará la cuenta. Ejemplo: swap de cripto a fiat. Cuenta custodia de facturación. Cuenta para transacciones dentro de USA.",
+  "anticipatedTypesAssetsLabel": "Tipos anticipados de activos",
+  "anticipatedTypesAssetsHelpText": "Coloque los activos que espera adquirir o vender en su wallet NOBA. Ejemplo: Bitcoin, Ethereum, Cardano, etc.",
+  "anticipatedMonthlyCashVolumeLabel": "Volumen de efectivo mensual anticipado",
+  "anticipatedMonthlyCashVolumeHelpText": "Coloque un monto promedio que espera tener en cuenta y mover mensualmente. Ejemplo: $5,000-$10,000; $10,000-$20,000; $20,000-$50,000; $50,000-$200,000; $200,000-$500,000; $500,000-$5,000,000; Por encima de $5,000,000.",
+  "anticipatedTradingPatternsLabel": "Patrones comerciales anticipados",
+  "anticipatedTradingPatternsHelpText": "Describa el tipo de movimientos que espera hacer con su wallet de criptoactivos. Ejemplo: Compra y venta de activos, intercambio de un activo por otro, otros.",
+  "anticipatedMonthlyTransactionsIncomingLabel": "Transacciones Mensuales Anticipadas Entrantes",
+  "anticipatedMonthlyTransactionsIncomingHelpText": "Cantidad de transacciones entrantes que espera ingresar mensualmente.",
+  "anticipatedMonthlyTransactionsOutgoingLabel": "Transacciones Mensuales Anticipadas Salientes",
+  "anticipatedMonthlyTransactionsOutgoingHelpText": "Estime el volumen de transacciones que espera hacer mensualmente. Ejemplo: de 1 a 49, de 50 a 99, de 100 a 499, etc.",
+  "natureBusinessCompanyLabel": "Nature Business of the Company",
+  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business."
 }
