@@ -71,11 +71,7 @@
         </div>
       </div>
 
-
       <div class="col-8">
-
-
-
         <div class="field">
           <label>{{ t('typeBeneficiary') }}</label>
           <div class="p-inputgroup">
