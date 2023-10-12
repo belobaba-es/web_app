@@ -83,12 +83,11 @@ const handleUpload = async (event: any) => {
 
   let formData = new FormData()
 
-    formData.append('file', file)
-    formData.append('dni', props.dni)
-    formData.append('isPartner', props.isPartner ? 'true' : 'false')
-    formData.append('documentSide', props.side)
-    formData.append('documentType', props.type)
-  
+  formData.append('file', file)
+  formData.append('dni', props.dni)
+  formData.append('isPartner', props.isPartner ? 'true' : 'false')
+  formData.append('documentSide', props.side)
+  formData.append('documentType', props.type)
 
   const newDocumentObject = {
     dni: '',

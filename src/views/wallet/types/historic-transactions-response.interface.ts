@@ -1,40 +1,40 @@
 export interface HistoricTransactionsResponse {
-  nextPag: string; 
-  prevPag: string;
-  count: number;
-  results: LisTransaction[]; 
+  nextPag: string
+  prevPag: string
+  count: number
+  results: LisTransaction[]
 }
 
 export interface LisTransaction {
-  _id: string;
-  amount: number;
-  assetId: string;
-  clientId: string;
-  counterparty: CounterpartyInfo;
-  createdAt: string;
-  isInternal: boolean;
-  reference: string;
-  status: WithdrawalStatusEnum;
-  transactionId: string;
-  transactionType: TransactionTypeEnum;
+  _id: string
+  amount: number
+  assetId: string
+  clientId: string
+  counterparty: CounterpartyInfo
+  createdAt: string
+  isInternal: boolean
+  reference: string
+  status: WithdrawalStatusEnum
+  transactionId: string
+  transactionType: TransactionTypeEnum
 }
 
 export interface CounterpartyInfo {
-  id: string;
-  clientId: string;
-  counterpartyId: string;
-  counterpartyType: string;
+  id: string
+  clientId: string
+  counterpartyId: string
+  counterpartyType: string
   informationOwner: {
-    name: string;
-    country: string;
-  };
+    name: string
+    country: string
+  }
   informationWallet: {
-    assetId: string;
-    address: string;
-    relationshipConsumer: string;
-    originWallet: string;
-  };
-  createdAt: string;
+    assetId: string
+    address: string
+    relationshipConsumer: string
+    originWallet: string
+  }
+  createdAt: string
 }
 
 export enum WithdrawalStatusEnum {
@@ -48,7 +48,6 @@ export enum TransactionTypeEnum {
   WITHDRAW = 'withdraw-funds',
   REVERT = 'revert',
 }
-
 
 /*export interface HistoricTransactionsResponse {
   nextPag: string

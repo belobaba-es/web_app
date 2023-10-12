@@ -128,7 +128,7 @@ const props = defineProps<{
   formData: any
 }>()
 
-console.log("props.formData",props.formData)
+console.log('props.formData', props.formData)
 
 const bankCountry = ref<string>('')
 const bankState = ref<string>('')
@@ -192,7 +192,7 @@ const saveBeneficiary = () => {
         },
         informationOwner: {
           ...props.formData.informationOwner,
-        }
+        },
       }
     }
 
@@ -225,8 +225,6 @@ const saveBeneficiary = () => {
 
         showMessage(toast, e.response.data)
       })
-
-      
   } else {
     toast.add({
       severity: 'warn',

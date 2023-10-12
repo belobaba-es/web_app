@@ -55,14 +55,11 @@ import PersonalStep1 from './views/onboarding/components/personal/Step1.vue'
 import PersonalStep2 from './views/onboarding/components/personal/Step2.vue'
 import CompletedDocument from './views/onboarding/components/CompletedDocument.vue'
 
-
 import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
 import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
 import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
 import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
 import EditSharedHolder from './views/onboarding/components/business/editNewShareHolder.vue'
-
-
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -373,8 +370,8 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'personal/completed',
-            component: CompletedDocument
-          }
+            component: CompletedDocument,
+          },
         ],
       },
     ],

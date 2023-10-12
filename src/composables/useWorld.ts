@@ -96,7 +96,6 @@ export const useWorld = () => {
     await fetchStatesTwo()
   }
 
-
   const onChangeStateHandler = async (event: DropdownChangeEvent) => {
     const state = states.value.find(state => state.name === event.value)
     if (!state) return

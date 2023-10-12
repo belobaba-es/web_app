@@ -1,7 +1,7 @@
 <template>
   <div class="completion-view">
     <div class="center-content">
-      <img src="../../../assets/icons/check.svg" alt="Imagen de finalización"  />
+      <img src="../../../assets/icons/check.svg" alt="Imagen de finalización" />
       <p class="title-text">Gracias por su registro</p>
       <p class="sub-title">
         Una vez aprobada tu cuenta te estaremos enviado <br />
@@ -40,8 +40,6 @@ const redirectToHome = () => {
 
   .center-content {
     text-align: center;
-
-    
 
     .title-text {
       font-size: 38px;

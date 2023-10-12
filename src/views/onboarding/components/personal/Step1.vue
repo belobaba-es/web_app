@@ -221,7 +221,7 @@ import showMessage from '../../../../shared/showMessageArray'
 
 import { OnboardingService } from '../../services/onboarding'
 import router from '../../../../router'
-import {useUserStore} from "../../../../stores/user";
+import { useUserStore } from '../../../../stores/user'
 const {
   countries,
   fetchCountries,
@@ -330,7 +330,7 @@ const saveData = () => {
         detail: resp.message,
         life: 4000,
       })
-      
+
       //save localstorage
       localStorage.setItem('accountId', resp.data.clientId)
       localStorage.setItem('dni', dni.value)
@@ -354,8 +354,6 @@ const saveData = () => {
 
       showMessage(toast, e.response.data)
     })
-
-    
 }
 </script>
 <style lang="scss">

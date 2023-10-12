@@ -291,7 +291,7 @@ onMounted(() => {
       streetTwo.value = partner.streetTwo
       postalCode.value = partner.postalCode
       city.value = partner.city
-      state.value = partner.state
+      state.value = partner.region
       country.value = partner.country
     }
   }
@@ -385,7 +385,7 @@ const saveData = () => {
       streetTwo: streetTwo.value,
       postalCode: postalCode.value,
       city: city.value,
-      state: state.value,
+      region: state.value,
       country: country.value,
     }
 

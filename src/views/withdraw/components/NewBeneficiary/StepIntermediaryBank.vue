@@ -143,7 +143,6 @@ onMounted(() => {
   })
 })
 
-
 const validateFields = () => {
   return [
     intermediaryBankName,
@@ -153,7 +152,7 @@ const validateFields = () => {
     intermediaryBankCity,
     intermediaryBankState,
     intermediaryBankPostalCode,
-  ]//.every(field => field.value.trim() !== '')
+  ] //.every(field => field.value.trim() !== '')
 }
 
 const nextPage = () => {

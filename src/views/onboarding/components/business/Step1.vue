@@ -298,7 +298,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
 import router from '../../../../router'
-import {useUserStore} from "../../../../stores/user";
+import { useUserStore } from '../../../../stores/user'
 
 const {
   countries,
@@ -449,25 +449,25 @@ const saveData = () => {
         naics: naics.value,
         naicsDescription: naicsDescription.value,
         establishedDate: convertISODateToYYYYMMDD(establishedDate.value),
-        website: website.value,
+        webSite: website.value,
         phoneCountry: phoneCountry.value,
         phoneNumber: phoneNumber.value,
-      },
-      registeredAddress: {
-        streetOne: registerStreetOne.value,
-        streetTwo: registerStreetTwo.value,
-        postalCode: registerPostalCode.value,
-        city: registerCity.value,
-        region: registerState.value,
-        country: registerCountry.value,
-      },
-      physicalAddress: {
-        streetOne: fisicalStreetOne.value,
-        streetTwo: fisicalStreetTwo.value,
-        postalCode: fisicalPostalCode.value,
-        city: fisicalCity.value,
-        region: fisicalState.value,
-        country: fisicalCountry.value,
+        registeredAddress: {
+          streetOne: registerStreetOne.value,
+          streetTwo: registerStreetTwo.value,
+          postalCode: registerPostalCode.value,
+          city: registerCity.value,
+          region: registerState.value,
+          country: registerCountry.value,
+        },
+        physicalAddress: {
+          streetOne: fisicalStreetOne.value,
+          streetTwo: fisicalStreetTwo.value,
+          postalCode: fisicalPostalCode.value,
+          city: fisicalCity.value,
+          region: fisicalState.value,
+          country: fisicalCountry.value,
+        },
       },
       partners: [],
     }

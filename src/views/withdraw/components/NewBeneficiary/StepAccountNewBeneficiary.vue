@@ -93,7 +93,7 @@ const nextStep = () => {
       detail: t('warningDetailAllFieldRequired'),
       life: 4000,
     })
-    return;
+    return
   }
 
   const page = 0
