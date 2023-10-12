@@ -82,8 +82,7 @@ export const useAccount = () => {
   //   }
   // })
 
-  //TODO
-  // const taxId = getUser.client.taxId.length > 0 ? getUser.client.taxId.length : getUser.client.dni
+  const taxId = getUser.client.taxId !== undefined ||  getUser.client.taxId !== "" ? getUser.client.taxId : ""
 
   // const email = computed(() => {
   //   if (isShowView.value && route.params.contactId) {
@@ -322,7 +321,7 @@ export const useAccount = () => {
     isUpdateProfileView,
     isShowView,
     dateBirth,
-    // taxId,
+    taxId,
     email,
     address,
     isEditPartnerAccount,
