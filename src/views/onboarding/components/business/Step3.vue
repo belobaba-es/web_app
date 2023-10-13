@@ -201,8 +201,8 @@ const saveData = () => {
           life: 4000,
         })
 
-        console.log(resp)
-        // router.push('/dashboard')
+
+        router.push('/dashboard')
       })
       .catch(e => {
         submitting.value = false

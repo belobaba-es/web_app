@@ -59,7 +59,7 @@
                                 <div class="mt-2">
                                   <FileInput
                                     label="getSelectedTypeIdentificationDocument(taxId)"
-                                    side="backside "
+                                    side="back"
                                     :dni="dni"
                                     :isPartner="isPartner"
                                     :type="identifyDocument"
