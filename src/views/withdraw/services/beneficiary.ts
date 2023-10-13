@@ -1,14 +1,8 @@
 import { HttpService } from '../../../shared/services/http'
 import {
   BeneficiariesInternalResponse,
-  Beneficiary,
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
-  BeneficiaryFiatDomestic,
-  BeneficiaryFiatDomesticResp,
-  BeneficiaryFiatInternacional,
-  BeneficiaryFiatInternacionalResp,
-  BeneficiaryInternal,
   BeneficiaryType,
 } from '../types/beneficiary.interface'
 import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
@@ -31,29 +25,22 @@ export class BeneficiaryService extends HttpService {
     return this._instance
   }
 
-  async listBeneficiaryAssets(nextPag: string = ''): Promise<BeneficiaryAssetsResponse> {
-    return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/?${nextPag}`)
+  async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
+    return await this.get<BeneficiaryAssetsResponse>(`beneficiary/asset/${nextPag}`)
   }
 
-  async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag: string = '') {
-    return await this.get<BeneficiaryFiatInternacionalResp | BeneficiaryFiatInternacionalResp>(
-      `beneficiary?typeBeneficiaryTransfer=${beneficiaryType}&${nextPag}`
-    )
+  async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag = 1) {
+    return await this.get<any>(`beneficiary/banking/external/${nextPag}`)
   }
 
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
-    return await this.get<BeneficiariesInternalResponse>(`beneficiary/internal/${type}/${nextPag === 0 ? 1 : nextPag}`)
+    return await this.get<BeneficiariesInternalResponse>(`beneficiary/${type}/internal/${nextPag === 0 ? 1 : nextPag}`)
   }
-
-  async saveBeneficiaryDomestic(payload: BeneficiaryFiatDomestic): Promise<any> {
-    return await this.post<any>(`beneficiary/domestic`, payload)
-  }
-
-  async saveBeneficiaryInternational(payload: BeneficiaryFiatInternacional): Promise<any> {
-    return await this.post<any>(`beneficiary/international`, payload)
+  async saveBeneficiary(payload: any): Promise<any> {
+    return await this.post<any>(`beneficiary/banking`, payload)
   }
 
   async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {
-    return await this.post<any>(`beneficiary/asset/`, payload)
+    return await this.post<any>(`beneficiary/asset`, payload)
   }
 }
