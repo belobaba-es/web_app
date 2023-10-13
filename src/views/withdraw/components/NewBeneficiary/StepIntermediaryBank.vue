@@ -59,17 +59,7 @@
       <div class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <Dropdown
-            v-model="intermediaryBankState"
-            :options="states"
-            optionLabel="name"
-            option-value="state_code"
-            :loading="loadingStatesField"
-            :placeholder="t('statePlaceHolder')"
-            :disabled="statesInputIsEmpty"
-            class="w-full"
-            @change="onChangeStateHandler"
-          />
+          <InputText type="text" v-model="intermediaryBankState" />
         </div>
       </div>
 

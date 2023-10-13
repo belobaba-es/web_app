@@ -24,12 +24,14 @@ export const useWorld = () => {
   const calling_code = ref<string[]>()
   const countries = ref<Country[]>([])
   const states = ref<State[]>([])
+  const statesTwo = ref<State[]>([])
 
   const country = ref<Country | null>(null)
   const state = ref<State | null>(null)
 
   const loadingCountiesField = ref<boolean>(false)
   const loadingStatesField = ref<boolean>(false)
+  const loadingStatesFieldTwo = ref<boolean>(false)
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
   const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
@@ -60,6 +62,16 @@ export const useWorld = () => {
     })
   }
 
+  const fetchStatesTwo = async () => {
+    loadingStatesFieldTwo.value = true
+    const worldService = WorldService.instance()
+    if (!country.value?.country_id) return
+    await worldService.getStates(country.value?.country_id).then(resp => {
+      statesTwo.value = resp
+      loadingStatesFieldTwo.value = false
+    })
+  }
+
   const setCountry = (payload: Country) => {
     country.value = payload
   }
@@ -76,6 +88,14 @@ export const useWorld = () => {
     await fetchStates()
   }
 
+  const onChangeCountryHandlerTwo = async (event: DropdownChangeEvent) => {
+    const country = countries.value.find(country => country.country_code === event.value)
+
+    if (!country) return
+    setCountry(country)
+    await fetchStatesTwo()
+  }
+
   const onChangeStateHandler = async (event: DropdownChangeEvent) => {
     const state = states.value.find(state => state.name === event.value)
     if (!state) return
@@ -89,10 +109,12 @@ export const useWorld = () => {
   return {
     countries,
     states,
+    statesTwo,
     statesInputIsEmpty,
     countriesInputIsEmpty,
     loadingCountiesField,
     loadingStatesField,
+    loadingStatesFieldTwo,
     country,
     state,
     calling_code,
@@ -101,6 +123,7 @@ export const useWorld = () => {
     setCountry,
     setState,
     onChangeCountryHandler,
+    onChangeCountryHandlerTwo,
     onChangeStateHandler,
   }
 }

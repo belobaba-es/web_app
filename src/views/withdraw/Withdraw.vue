@@ -1,5 +1,7 @@
 <template>
   <section class="section-main">
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+
     <p class="text-3xl font-medium">{{ t('withdraw') }}</p>
     <section class="container-center">
       <div class="grid justify-content-center">
@@ -35,6 +37,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1)

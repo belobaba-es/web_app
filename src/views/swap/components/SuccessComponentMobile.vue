@@ -3,13 +3,15 @@
     <div class="col-12 flex justify-content-center flex-wrap">
       <span class="mb-1 text-from">{{ t('swapFrom') }}</span>
     </div>
+
+    <!--    buy-->
     <div class="flex" v-if="transactionSummary.transactionType === 'buy'">
       <div class="flex-shrink-0 flex align-items-center mr-2">
         <img alt="logo" :src="usdIcon" style="width: 4rem" />
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ usdName }}</div>
-        <div class="font-medium">{{ totalBuy() }} {{ usdName }}</div>
+        <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
       </div>
     </div>
     <div class="flex" v-else>
@@ -28,6 +30,8 @@
         </div>
       </div>
     </div>
+
+    <!--    sell-->
     <div>
       <div class="col-12 flex justify-content-center flex-wrap">
         <span class="mb-1 text-from">{{ t('swapTo') }}</span>
@@ -47,7 +51,7 @@
         </div>
         <div class="flex-grow-1 flex-row align-items-center">
           <div class="font-medium">{{ usdName }}</div>
-          <div class="font-medium">{{ totalSell() }} {{ usdName }}</div>
+          <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
         </div>
       </div>
     </div>
@@ -60,6 +64,9 @@ import { useI18n } from 'vue-i18n'
 import { SummarySwap } from '../types/sumary'
 
 import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
+import { useSwap } from '../../../composables/useSwap'
+import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+const { calculateBalance } = useBalanceWallet()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -71,13 +78,10 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { unitCount } = useSwap()
 
-const totalBuy = () => {
-  return (props.summary.totalAmount + props.summary.feeNoba).toFixed(2)
-}
-
-const totalSell = () => {
-  return (props.summary.totalAmount - props.summary.feeNoba).toFixed(2)
+const formatFiat = (amount: number) => {
+  return calculateBalance('USD', amount, 0)
 }
 </script>
 

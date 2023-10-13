@@ -19,7 +19,7 @@ export class FiatService extends HttpService {
 
     return this._instance
   }
-  async bankData(accountId: string): Promise<BankData[]> {
-    return await this.get<BankData[]>(`banking/bank-data/${accountId}`)
+  async bankData(): Promise<BankData[]> {
+    return await this.get<BankData[]>(`banking/instruction-for-deposit/`)
   }
 }

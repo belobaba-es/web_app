@@ -19,8 +19,13 @@ import DocumentsCompany from './views/profile/DocumentsCompany.vue'
 import NewPartner from './views/profile/NewPartner.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
-import NewBeneficiaryDomestic from './views/withdraw/components/NewBeneficiaryDomestic.vue'
-import NewBeneficiaryInternational from './views/withdraw/components/NewBeneficiaryInternational.vue'
+
+import NewBeneficiary from './views/withdraw/components/NewBeneficiary.vue'
+import StepAccountNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepAccountNewBeneficiary.vue'
+import StepOwnerNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'
+import StepIntermediaryBank from './views/withdraw/components/NewBeneficiary/StepIntermediaryBank.vue'
+import StepBankNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepBankNewBeneficiary.vue'
+
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
 import DashboardIndex from './views/dashboard/Index.vue'
 import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
@@ -44,6 +49,21 @@ import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
+import UploadDocumentsIndex from './views/onboarding/index.vue'
+
+import PersonalStep1 from './views/onboarding/components/personal/Step1.vue'
+import PersonalStep2 from './views/onboarding/components/personal/Step2.vue'
+import CompletedDocument from './views/onboarding/components/CompletedDocument.vue'
+
+import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
+import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
+import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
+import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
+import EditSharedHolder from './views/onboarding/components/business/editNewShareHolder.vue'
+
+import CreateUser from './views/register/CreateUser.vue'
+import ConfirmEmail from './views/register/ConfirmEmail.vue'
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -56,6 +76,14 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/recovery-two-factor-auth',
     component: RecoveryTwoFactorAuth,
+  },
+  {
+    path: '/create-user',
+    component: CreateUser,
+  },
+  {
+    path: '/confirm-email',
+    component: ConfirmEmail,
   },
 
   {
@@ -174,7 +202,21 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/new',
-            component: NewBeneficiaryDomestic,
+            component: NewBeneficiary,
+            children: [
+              {
+                path: '',
+                component: StepAccountNewBeneficiary,
+              },
+              {
+                path: 'owner',
+                component: StepOwnerNewBeneficiary,
+              },
+              {
+                path: 'bank-information',
+                component: StepBankNewBeneficiary,
+              },
+            ],
           },
           {
             path: 'fiat/domestic/successful',
@@ -182,7 +224,25 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/international/new',
-            component: NewBeneficiaryInternational,
+            component: NewBeneficiary,
+            children: [
+              {
+                path: '',
+                component: StepAccountNewBeneficiary,
+              },
+              {
+                path: 'owner',
+                component: StepOwnerNewBeneficiary,
+              },
+              {
+                path: 'intermediary-bank',
+                component: StepIntermediaryBank,
+              },
+              {
+                path: 'bank-information',
+                component: StepBankNewBeneficiary,
+              },
+            ],
           },
           {
             path: 'fiat/international/successful',
@@ -272,6 +332,48 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: '/onboarding',
+        children: [
+          {
+            path: '',
+            component: UploadDocumentsIndex,
+          },
+          {
+            path: 'personal/step1',
+            component: PersonalStep1,
+          },
+          {
+            path: 'personal/step2',
+            component: PersonalStep2,
+          },
+          {
+            path: 'business/step1',
+            component: BusinessStep1,
+          },
+          {
+            path: 'business/step2',
+            component: BusinessStep2,
+          },
+          {
+            path: 'business/step3',
+            component: BusinessStep3,
+          },
+          {
+            path: 'business/new-shareholder',
+            component: NewSharedHolder,
+          },
+          {
+            path: 'business/edit-shareholder/:id',
+            name: 'business/edit-shareholder',
+            component: EditSharedHolder,
+          },
+          {
+            path: 'personal/completed',
+            component: CompletedDocument,
+          },
+        ],
+      },
     ],
   },
 ]
@@ -286,18 +388,14 @@ router.beforeEach((to, from, next) => {
   console.log(to.path)
   if (
     to.path !== '/' &&
+    to.path !== '/create-user' &&
+    to.path !== '/confirm-email' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
     !userStore.getUser
   ) {
     next({ path: '/' })
   } else if (to.path === '/' && userStore.getUser) {
-    next({ path: '/dashboard' })
-  } else if (
-    userStore.getUser &&
-    userStore.getUser.account.status !== 'opened' &&
-    ['/deposit', '/withdraw'].includes(to.path)
-  ) {
     next({ path: '/dashboard' })
   } else {
     next()

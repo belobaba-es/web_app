@@ -38,7 +38,6 @@ const shouldSearchUsers = ref(true)
 
 onMounted(() => {
   accountService = AccountService.instance()
-  shouldSearchUsers.value = !shouldBlockNobaUsers()
 })
 
 const onSearch = () => {
@@ -68,11 +67,6 @@ const onSearch = () => {
         life: 4000,
       })
     })
-}
-
-const shouldBlockNobaUsers = () => {
-  const accountId = userStore.getUser.account.accountId
-  return accountId !== import.meta.env.VITE_PINTTOSOFT_ACCOUNT
 }
 </script>
 

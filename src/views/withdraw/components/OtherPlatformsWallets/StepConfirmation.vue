@@ -6,11 +6,11 @@
     </div>
     <div class="col-12">
       <h5 class="text-base text-600">{{ t('description') }}</h5>
-      <p class="text-base font-medium">{{ beneficiary.label }}</p>
+      <p class="text-base font-medium">{{ beneficiary.informationOwner.name }}</p>
     </div>
     <div class="col-12">
       <h5 class="text-base text-600">{{ t('walletAddress') }}</h5>
-      <p class="text-base font-medium">{{ beneficiary.walletAddress }}</p>
+      <p class="text-base font-medium">{{ beneficiary.informationWallet.address }}</p>
     </div>
     <Divider></Divider>
 
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to: {{ beneficiary.label }}</p>
+      <p class="text-base">Your are sending to: {{ beneficiary.informationOwner.name }}</p>
     </div>
 
     <div class="col-12">
@@ -75,7 +75,7 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import ConfirmationCompletedWithOtherPlatformsWallet from './ConfirmationCompletedWithOtherPlatformsWallet.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import showMessage from "../../../../shared/showMessageArray";
+import showMessage from '../../../../shared/showMessageArray'
 
 const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
@@ -104,15 +104,15 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
-    if (isEnabledButtonToProceedWithdrawal.value) {
-        if (twoFactorIsActive()) {
-            visibleModalVeryCodeTwoFactor.value = true
-        } else {
-            makeTransaction()
-        }
+  if (isEnabledButtonToProceedWithdrawal.value) {
+    if (twoFactorIsActive()) {
+      visibleModalVeryCodeTwoFactor.value = true
     } else {
-        visibleModalVeryCodeTwoFactor.value = true
+      makeTransaction()
     }
+  } else {
+    visibleModalVeryCodeTwoFactor.value = true
+  }
 }
 
 async function makeTransaction() {
@@ -121,7 +121,7 @@ async function makeTransaction() {
   withDrawService
     .makeAssetExternalTransfer({
       amount: props.formData.total,
-      beneficiaryAssetId: props.formData.beneficiary.id,
+      beneficiaryAssetId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
     })
     .then((res: any) => {
@@ -129,7 +129,6 @@ async function makeTransaction() {
       updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.total)
       isCompleted.value = true
       submitting.value = false
-
     })
     .catch(e => {
       submitting.value = false
@@ -146,7 +145,6 @@ async function makeTransaction() {
       showMessage(toast, e.response.data)
     })
 }
-
 </script>
 
 <style scoped>

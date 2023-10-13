@@ -12,8 +12,8 @@
     </template>
     <div class="grid" style="padding: 0 3rem">
       <div class="col-6 mt-3">
-        <img width="140" :src="asset?.icon" alt="" />
-        <p class="text-base mt-3">{{ asset?.name }}</p>
+        <img width="140" :src="paymentAddress?.icon" alt="" />
+        <p class="text-base mt-3">{{ paymentAddress?.name }}</p>
         <p class="text-base font-bold">{{ paymentAddress?.label }}</p>
         <small class="font-medium">{{ asset?.code }}</small>
       </div>
@@ -24,7 +24,10 @@
         <Message severity="warn" :closable="false">
           {{ t('warningSendAsset', { asset: asset?.name }) }}
         </Message>
-        <p class="text-base font-bold text-uppercase">{{ t('warningAssetNetwork', {networkName: paymentAddress?.networkName}) }}</p>
+
+        <p class="text-base font-bold text-uppercase">
+          {{ t('warningAssetNetwork', { networkName: paymentAddress?.networkName + ' ' + paymentAddress?.network }) }}
+        </p>
       </div>
       <div class="col-12">
         <div class="p-inputgroup">
@@ -53,13 +56,13 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Message from 'primevue/message'
 import { useToast } from 'primevue/usetoast'
-import { Asset, PaymentAddress } from '../types/asset.interface'
+import { Asset, PaymentAddress, PaymentAddressResponse } from '../types/asset.interface'
 
 defineProps<{
   visible: boolean
   walletAddress?: string
   asset: Asset | null
-  paymentAddress: PaymentAddress | null
+  paymentAddress: PaymentAddressResponse | null
 }>()
 
 const emit = defineEmits(['update:visible'])

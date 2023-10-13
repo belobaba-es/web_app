@@ -22,8 +22,8 @@
 import logo from '../../assets/img/logo.svg'
 import VeryCodeTwoFactorAuth from '../../components/VeryCodeTwoFactorAuth.vue'
 import Lang from '../../components/Lang.vue'
-import { LoginData } from './types/login.interface'
-import {User, useUserStore} from '../../stores/user'
+import { AccountStatus, LoginData } from './types/login.interface'
+import { User, useUserStore } from '../../stores/user'
 import { ref } from 'vue'
 import TwoFactorAuthRecovery from './TwoFactorAuthRecovery.vue'
 import { useI18n } from 'vue-i18n'
@@ -36,7 +36,7 @@ const { t } = useI18n({
 })
 
 interface Props {
-  loginData: LoginData
+  loginData: User
 }
 
 const props = defineProps<Props>()
@@ -44,8 +44,9 @@ const props = defineProps<Props>()
 const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
   if (isValid) {
     userStore.setUser(props.loginData as User)
+    const loginData = props.loginData as any
 
-    if (props.loginData.account.status !== 'pending') {
+    if (loginData.client.status !== AccountStatus.PROCESSING) {
       window.location.href = '/dashboard'
     } else {
       window.location.href = `/profile/${props.loginData.accountId}`

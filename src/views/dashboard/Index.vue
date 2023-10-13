@@ -1,8 +1,10 @@
 <template>
   <section class="section-main">
-    <CardWallet :carousel="true" v-show="useUser.isAccountActive()" />
+    <FinishRegisterWarningBar></FinishRegisterWarningBar>
 
-    <AccountValidationProcess v-show="!useUser.isAccountActive()" />
+    <CardWallet :carousel="true" />
+
+    <AccountValidationProcess />
 
     <TransactionHistoryTable :isDashboard="true"></TransactionHistoryTable>
   </section>
@@ -10,9 +12,7 @@
 
 <script setup lang="ts">
 import CardWallet from '../../components/CardWallet.vue'
-import { useUserStore } from '../../stores/user'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import TransactionHistoryTable from '../../components/TransactionHistoryTable.vue'
-
-const useUser = useUserStore()
+import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 </script>

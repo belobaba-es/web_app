@@ -63,7 +63,7 @@ export const useAccountStore = defineStore('account', {
     members: [],
     questionnaire: null,
     createdAt: null,
-    natureAccount: TypeAccount.natural,
+    natureAccount: TypeAccount.NATURAL_PERSON,
     accountId: null,
     owner: null,
     agreement: null,

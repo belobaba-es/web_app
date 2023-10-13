@@ -63,7 +63,6 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import { WithdrawService } from '../../services/withdraw'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
@@ -89,7 +88,7 @@ const props = defineProps<{
   formData: any
 }>()
 const assetSymbol = props.formData.symbol
-const beneficiary = props.formData.beneficiary as BeneficiaryInternal
+const beneficiary = props.formData.beneficiary
 const emit = defineEmits(['complete'])
 const router = useRouter()
 const userStore = useUserStore()
@@ -120,13 +119,13 @@ function makeTransaction() {
   const withDrawService = WithdrawService.instance()
 
   submitting.value = true
-
+  console.log(props.formData)
   switch (route.params.type) {
     case 'fiat':
       withDrawService
         .makeFiatInternalTransfer({
           amount: props.formData.amount,
-          accountDestination: props.formData.beneficiary.accountId,
+          clientIdDestination: props.formData.beneficiary.clientId,
           reference: props.formData.reference,
         })
         .then((res: any) => {
@@ -149,10 +148,10 @@ function makeTransaction() {
     case 'crypto':
       withDrawService
         .makeAssetInternalTransfer({
+          clientIdDestination: props.formData.beneficiary.clientId,
           amount: props.formData.amount,
-          accountDestination: props.formData.beneficiary.accountId,
           reference: props.formData.reference,
-          assetId: props.formData.assetId,
+          assetCode: props.formData.assetCode,
         })
         .then((res: any) => {
           transactionId.value = res.data.transactionId

@@ -4,10 +4,6 @@ export enum BeneficiaryType {
   INTERNATIONAL = 'INTERNATIONAL',
   DOMESTIC = 'DOMESTIC',
 }
-export interface Beneficiary {
-  name: string
-  email: string
-}
 
 export interface BeneficiaryAssets {
   id: string
@@ -18,25 +14,59 @@ export interface BeneficiaryAssets {
   accountId: string
 }
 
-export type BeneficiaryInternal = {
-  accountId: string
-  accountTo: string
-  email: string
-  name: string
+export enum CounterpartyType {
+  CRYPTO = 'CRYPTO',
+  FIAT = 'FIAT',
 }
 
-export interface Beneficiary {
-  id: string
-  assetId: string
-  assetTransferMethod: string
-  label: string
-  walletAddress: string
+export type Beneficiary = {
   accountId: string
+  assetCode: string
+  assetIcon: string
+  assetId: string
+  clientId: string
+  counterpartyId: string
+  counterpartyType: CounterpartyType
+  createdAt: string
+  informationBank: {
+    accountNumber: string
+    address: BankAdress
+    bankName: string
+    networkBank: string
+  }
+  informationOwner: {
+    address: OwnerAddress
+    name: string
+    countery: string
+  }
+}
+
+export enum CounterpartyType {
+  CRYPTO_BTC = 'CRYPTO',
+  FIAT_US = 'FIAT_US',
+}
+
+export interface BankAdress {
+  city: string
+  country: string
+  postalCode: number
+  region: string
+  streetOne: string
+  streetTwo: string
+}
+
+export interface OwnerAddress {
+  city: string
+  country: string
+  postalCode: number
+  region: string
+  streetOne: string
+  streetTwo: string
 }
 
 export interface BeneficiaryAssetsResponse extends Pagination<Beneficiary> {}
 
-export interface BeneficiariesInternalResponse extends Pagination<BeneficiaryInternal> {}
+export interface BeneficiariesInternalResponse extends Pagination<Beneficiary> {}
 
 interface IntermediaryBank {
   bankCity: string
@@ -91,7 +121,22 @@ export interface BeneficiaryFiatInternacionalResp extends Pagination<Beneficiary
 export interface BeneficiaryFiatDomesticResp extends Pagination<BeneficiaryFiatDomestic> {}
 
 export interface BeneficiaryAsset {
-  assetId: string
-  walletAddress: string
-  label: string
+  informationWallet: {
+    assetId: string
+    address: string
+    relationshipConsumer: string
+    originWallet: string
+    institutionName: string
+    institutionAddress: {
+      streetOne: string
+      postalCode: string
+      city: string
+      region: string
+      country: string
+    }
+  }
+  informationOwner: {
+    name: string
+    country: string
+  }
 }

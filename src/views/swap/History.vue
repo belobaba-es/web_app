@@ -20,40 +20,47 @@
               <th class="number-of-order-container font-medium p-3">{{ t('numberOfOrder') }}</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="item in quotes.results">
-              <td v-if="item.transactionType === 'buy'" class="h-5rem w-6rem relative icons-container">
+
+          <tbody v-if="!isLoading">
+            <!--          todo-->
+            <tr v-for="item in exchanges.results as ExchangeCreated[]">
+              <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
-                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute bottom-0 right-0" />
+                <img
+                  :src="iconAssetByCode(item.destinationDetails.assetCode, listAssets)"
+                  class="h-3rem h-3rem absolute bottom-0 right-0"
+                />
               </td>
 
-              <td v-if="item.transactionType === 'sell'" class="h-5rem w-6rem relative icons-container">
-                <img :src="iconAsset(item.code, listAssets)" class="h-3rem h-3rem absolute top-0 left-0" />
+              <!--              sell-->
+              <td v-if="item.sourceDetails.assetCode !== 'USD'" class="h-5rem w-6rem relative icons-container">
+                <img
+                  :src="iconAssetByCode(item.sourceDetails.assetCode, listAssets)"
+                  class="h-3rem h-3rem absolute top-0 left-0"
+                />
                 <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
-              <td v-if="item.transactionType === 'buy'" class="total-amount-container">
-                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              <td class="total-amount-container">
+                <h3 class="text-center">{{ item.sourceDetails.amountDebit }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
-              <td v-if="item.transactionType === 'sell'" class="balance-in-container">
-                <h3 class="text-center">{{ item.unitCount }}</h3>
+              <td class="swap-icon-container"><img :src="swapIcon" /></td>
+
+              <!--              buy-->
+              <td v-if="item.sourceDetails.assetCode === 'USD'" class="balance-in-container">
+                <h3 class="text-center">
+                  {{ item.destinationDetails.amountCredit }} {{ item.destinationDetails.assetCode }}
+                </h3>
               </td>
 
-              <td class="swap-icon-container">
-                <img :src="swapIcon" />
-              </td>
-
-              <td v-if="item.transactionType === 'buy'" class="balance-in-container">
-                <h3 class="text-center">{{ item.unitCount }}</h3>
-              </td>
-
-              <td v-if="item.transactionType === 'sell'" class="total-amount-container">
-                <h3 class="text-center">{{ item.totalAmount }}</h3>
+              <!--              sell-->
+              <td v-if="item.sourceDetails.assetCode !== 'USD'" class="total-amount-container">
+                <h3 class="text-center">{{ item.totalAmount }} {{ item.destinationDetails.assetCode }}</h3>
               </td>
 
               <td class="operation-date-container">
-                <h3 class="text-center">{{ secondsToDate(item.createdAt._seconds) }}</h3>
+                <h3 class="text-center">{{ item.createdAt }}</h3>
               </td>
 
               <td class="status-container">
@@ -62,19 +69,33 @@
 
               <td class="fee-amount-container">
                 <h3 class="text-center">
-                  <small>US$</small> {{ getPriceQuote(item.totalAmount, item.unitCount, item.transactionType) }}
+                  <small>US$</small>
+                  {{ getPriceQuote(item.sourceDetails, item.destinationDetails) }}
                 </h3>
               </td>
 
               <td class="number-of-order-container">
-                <h3 class="text-center">{{ item.quoteId }}</h3>
+                <h3 class="text-center">{{ item.exchangeId }}</h3>
               </td>
             </tr>
           </tbody>
+
+          <template v-if="isLoading">
+            <tr>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+            </tr>
+          </template>
         </table>
       </div>
 
-      <div class="grid flex justify-content-end">
+      <div class="grid flex justify-content-end" v-if="exchanges.nextPag > 1">
         <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
           <Button
             class="p-button load-more-btn"
@@ -95,42 +116,53 @@ import Button from 'primevue/button'
 import { onMounted, ref } from 'vue'
 import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
-import swapIcon from '../../assets/icons/swap.svg'
 import { useRouter } from 'vue-router'
-import { secondsToDate } from '../../shared/secondsToDate'
-import { iconAsset } from '../../shared/iconAsset'
 import { Asset } from '../deposit/types/asset.interface'
 import { AssetsService } from '../deposit/services/assets'
+import { ExchangeCreated } from './types/quote-response.interface'
+import Skeleton from 'primevue/skeleton'
+import swapIcon from '../../assets/icons/swap.svg'
+import { iconAssetByCode } from '../../shared/iconAssetByCode'
 
 const { t } = useI18n({ useScope: 'global' })
-const { quotes } = useSwap()
-const { fetchQuotes, getNextPage } = useSwapStore()
+const { exchanges } = useSwap()
+const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
-
 const listAssets = ref<Asset[]>([])
-
+const isLoading = ref<boolean>(true)
 const assetsService = AssetsService.instance()
+const exchangesList = ref<ExchangeCreated[]>()
 
 onMounted(async () => {
   await assetsService.list().then(data => {
     listAssets.value = data
   })
 
-  await fetchQuotes()
+  await fetchExchanges()
+  isLoading.value = false
+  exchangesList.value = [
+    ...((exchangesList.value as ExchangeCreated[]) ?? []),
+    ...(exchanges.value.results as ExchangeCreated[]),
+  ]
 })
 
 const usdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
 
 const statusClass = (status: string) => {
   return {
-    'text-green-500': status === 'process',
-    'text-orange-500': status === 'pending',
+    'text-green-500': status === 'ACCEPTED',
+    'text-orange-500': status === 'REQUESTED',
     'text-red-500': status === 'cancel',
   }
 }
 
-const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: string) => {
-  const price = totalAmount / unitCount
+const getPriceQuote = (sourceDetail: any, destinationDetail: any) => {
+  let price: number
+  if (sourceDetail.assetCode === 'USD') {
+    price = sourceDetail.amountDebit / destinationDetail.amountCredit
+  } else {
+    price = destinationDetail.amountCredit / sourceDetail.amountDebit
+  }
 
   return price.toFixed(2)
 }
@@ -154,6 +186,7 @@ const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: 
   border-bottom: 1px solid #dee2e6;
   vertical-align: top;
 }
+
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #dee2e6;
@@ -170,23 +203,29 @@ const getPriceQuote = (totalAmount: number, unitCount: number, transactionType: 
 .icons-container {
   min-width: 75px;
 }
+
 .total-amount-container {
   min-width: 100px;
 }
+
 .swap-icon-container {
   text-align: center !important;
   vertical-align: middle !important;
   min-width: 25px;
 }
+
 .balance-in-container {
   min-width: 135px;
 }
+
 .operation-date-container {
   min-width: 150px;
 }
+
 .status-container {
   min-width: 80px;
 }
+
 .fee-amount-container {
   min-width: 110px;
 }

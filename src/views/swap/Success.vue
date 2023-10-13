@@ -8,6 +8,7 @@
           </div>
           <h1 class="text-center">{{ t('swapSuccessfulTitle') }}</h1>
           <p class="text-center">{{ t('swapSuccessfulText') }}</p>
+          <p class="text-center">{{ t('swapSuccessDelayWarning') }}</p>
 
           <!-- DesktopComponent -->
           <div class="my-5 justify-content-between hidden sm:hidden md:hidden lg:flex xl:flex">
@@ -37,7 +38,7 @@
             {{ t('swapPriceQuote') }}
           </p>
 
-          <ShowFee v-if="summary.quoteId" />
+          <ShowFee v-if="summary.exchangeId" />
 
           <div class="flex justify-content-center mt-lg-2 mt-3">
             <div class="mr-4">

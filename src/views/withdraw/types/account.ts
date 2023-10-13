@@ -1,5 +1,4 @@
 export interface UserAccount {
-  accountId: string
+  clientId: string
   name: string
-  email: string
 }

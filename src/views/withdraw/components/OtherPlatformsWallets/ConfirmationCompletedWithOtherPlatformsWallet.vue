@@ -11,11 +11,10 @@
     </div>
 
     <CryptoTransferDetail
-      :realName="beneficiary.label"
-      :wallet="beneficiary.walletAddress"
+      :realName="beneficiary.informationOwner.name"
+      :wallet="beneficiary.informationWallet.address"
       :amount="props.formData.total"
-      :amountFee="props.formData.total + props.formData.fee"
-      :fee="props.formData.fee"
+      :amountFee="props.formData.total + 0"
       :transactionId="transactionId"
       :assetCode="props.formData.symbol"
     ></CryptoTransferDetail>
@@ -57,9 +56,7 @@ const beneficiary = props.formData.beneficiary
 
 const isGeneratingTransactionPDF = ref(false)
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+const username = userStore.getUser.client.name
 
 const goToWithdrawIndex = () => {
   router.push(`/withdraw/crypto/other`)
@@ -68,7 +65,7 @@ const goToWithdrawIndex = () => {
 const generatePDFTransactionReceipt = () => {
   isGeneratingTransactionPDF.value = true
   const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+  const userAccountNumber = transformCharactersIntoAsterics(user.userId)
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
   const footerPdf = t('footerPdfFiatData')
@@ -78,10 +75,10 @@ const generatePDFTransactionReceipt = () => {
   const formattedDate = formatter.format(date)
   transactionPDF[t('userName')] = `${username}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.label}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.informationOwner.name}`
   transactionPDF[t('assetType')] = props.formData.symbol
   transactionPDF[t('amount')] = `${props.formData.total}`
-  transactionPDF[t('bankAccountHolder')] = `${props.formData.beneficiary.label}`
+  transactionPDF[t('bankAccountHolder')] = `${props.formData.beneficiary.informationOwner.name}`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`

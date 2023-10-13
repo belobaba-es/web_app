@@ -5,12 +5,12 @@
       v-for="item in listBeneficiary"
       @click="emit('select', item)"
     >
-      <span class="ml-4 mt-2 mb-2">{{ item.realName }}</span>
-      <!-- <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span> -->
+      <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+      <!-- <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span>-->
       <Button icon="pi pi-angle-right" class="p-button-text p-button-primary" label="" />
     </div>
 
-    <div class="mt-4" v-if="listNextPag !== ''">
+    <div class="mt-4" v-if="listNextPag.toString() !== ''">
       <div class="grid flex justify-content-end">
         <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
           <Button

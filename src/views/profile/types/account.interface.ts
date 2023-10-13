@@ -13,8 +13,8 @@ export interface Account {
 }
 
 export enum TypeAccount {
-  natural = 'natural_person',
-  company = 'company',
+  NATURAL_PERSON = 'NATURAL_PERSON',
+  COMPANY = 'COMPANY',
 }
 
 export interface Agreement {

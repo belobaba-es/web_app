@@ -9,9 +9,7 @@
       <div class="container">
         <div class="grid w-100% asset-item" v-for="item in listBeneficiariesInternal" @click="nextStep(item)">
           <div class="mt-2 col-4 sm:col-4" style="width: 40%">{{ item.name }}</div>
-          <div class="mt-2 col-4" style="width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-            {{ item.email }}
-          </div>
+
           <div class="mt-2 col-4" style="width: 6%">
             <div class="pi pi-angle-right float-right"></div>
           </div>
@@ -44,9 +42,9 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { useToast } from 'primevue/usetoast'
 import SearchAccountByEmail from './SearchAccountByEmail.vue'
-import { BeneficiaryInternal } from '../../types/beneficiary.interface'
 import Button from 'primevue/button'
 import { TypeBeneficiaryInternal, useBeneficiary } from '../../composables/useBeneficiary'
+import { UserAccount } from '../../types/account'
 
 const router = useRouter()
 const toast = useToast()
@@ -60,7 +58,7 @@ const { fetchBeneficiariesInternal, listBeneficiariesInternal, submitting, nextP
 
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
-const setListBeneficiaries = (list: BeneficiaryInternal[]) => {
+const setListBeneficiaries = (list: UserAccount[]) => {
   listBeneficiariesInternal.value = list
 }
 
@@ -68,17 +66,14 @@ onMounted(async () => {
   if (route.params.type === 'crypto') {
     type.value = TypeBeneficiaryInternal.ASSET
   }
-
   await loadMore()
 })
 
-const nextStep = (item: BeneficiaryInternal) => {
+const nextStep = (item: UserAccount) => {
   const page = 0
   const formData = {
-    beneficiary: { ...item, accountId: !item.accountTo ? item.accountId : item.accountTo },
+    beneficiary: { ...item },
   }
-
-  console.log(formData)
 
   emit('nextPage', {
     pageIndex: page,
