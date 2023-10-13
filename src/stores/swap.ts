@@ -103,16 +103,16 @@ export const useSwapStore = defineStore('swap', () => {
       .then(response => {
         exchange.value = response.data
         feeNoba.value = exchange.value?.feeNoba
-        baseAmount.value = exchange.value?.source_details.amount_to_debit
+        baseAmount.value = exchange.value?.sourceDetails.amountDebit
         feeAmount.value = exchange.value?.feeNoba
 
-        totalAmount.value = exchange.value?.source_details.amount_to_debit + feeAmount.value
+        totalAmount.value = exchange.value?.sourceDetails.amountDebit + feeAmount.value
 
         if (transactionType.value === 'buy') {
-          unitCount.value = <number>exchange.value?.destination_details?.amount_to_credit
+          unitCount.value = <number>exchange.value?.destinationDetails?.amountCredit
         } else {
-          amountAfterRemovingFee.value = <number>exchange.value?.destination_details?.amount_to_credit - feeNoba.value
-          unitCount.value = <number>exchange.value?.source_details?.amount_to_debit
+          amountAfterRemovingFee.value = <number>exchange.value?.destinationDetails?.amountCredit - feeNoba.value
+          unitCount.value = <number>exchange.value?.sourceDetails?.amountDebit
           unitCount.value = Number(unitCount.value.toFixed(6))
         }
 

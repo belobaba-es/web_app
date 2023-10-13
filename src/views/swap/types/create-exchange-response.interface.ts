@@ -26,15 +26,15 @@ export interface ExchangeData {
   status?: string
   created_timestamp?: string
   action?: string
-  source_details: {
-    source_account_id: string
-    asset_type_id: string
-    amount_to_debit: number
+  sourceDetails: {
+    walletId: string
+    assetCode: string
+    amountDebit: number
   }
-  destination_details: {
-    destination_account_id: string
-    asset_type_id: string
-    amount_to_credit: number
+  destinationDetails: {
+    walletId: string
+    assetCode: string
+    amountCredit: number
   }
   feeNoba: number
 }
