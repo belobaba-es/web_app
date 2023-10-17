@@ -188,6 +188,7 @@ const saveData = () => {
     }
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
+    localStorage.setItem('registerNumber', formData.value.informationCompany.registerNumber)
 
     const onboardingService = OnboardingService.instance()
 

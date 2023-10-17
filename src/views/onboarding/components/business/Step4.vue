@@ -8,7 +8,9 @@
     </div>
 
     <div class="grid">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 p-panel p-component shareholders-panel">
+      <DocumentsCompany :register-number="registerNumber" />
+
+      <div class="p-panel p-component shareholders-panel col-6">
         <div class="p-panel-header">
           <span class="p-panel-title">{{ t('uploadDocumentsTitle') }}</span>
         </div>
@@ -17,29 +19,8 @@
             <div class="p-scrollpanel p-component custom" style="height: 400px">
               <div class="p-scrollpanel-wrapper">
                 <div class="p-scrollpanel-content">
-                  <div class="px-3 pt-3 pb-0">
-                    <DocumentsCompany :dni="formData.informationCompany.registerNumber" tax-id="formData.informationCompany.registerNumber"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 p-panel p-component shareholders-panel">
-      <div class="p-panel-header">
-        <span class="p-panel-title">{{ t('uploadDocumentsTitle') }}</span>
-      </div>
-      <div class="p-toggleable-content" role="region">
-        <div class="p-panel-content">
-          <div class="p-scrollpanel p-component custom" style="height: 400px">
-            <div class="p-scrollpanel-wrapper">
-              <div class="p-scrollpanel-content">
-                <div class="px-3 pt-3 pb-0">
-                  <div class="field" v-for="(shareholder, idx) in partners" :key="idx">
-                    <DocumentsShareholders :dni="shareholder.dni" :tax-id="shareholder.taxId" />
+                  <div class="px-3 pt-3 pb-0" v-for="(shareholder, idx) in partners" :key="idx">
+                    <DocumentsPartners :name="shareholder.firstName + shareholder.lastName" :dni="shareholder.dni" />
                   </div>
                 </div>
               </div>
@@ -52,9 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount, defineProps, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import DocumentsShareholders from '../DocumentsShareholders.vue'
+import DocumentsPartners from '../DocumentsPartners.vue'
 import DocumentsCompany from '../DocumentsCompany.vue'
 
 const { t } = useI18n({ useScope: 'global' })

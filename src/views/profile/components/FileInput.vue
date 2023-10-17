@@ -38,9 +38,12 @@ const props = defineProps({
   },
   dni: {
     type: String,
-    required: true,
+    required: false,
   },
-
+  registerNumber: {
+    type: String,
+    required: false,
+  },
   side: {
     type: String,
     required: false,
@@ -78,7 +81,9 @@ const icon = computed(() => {
 })
 
 const handleUpload = async (event: any) => {
+  
   console.log('handleUpload')
+  console.log(props.isPartner)
   const file = event.target.files[0]
   doc.value = file
   setLoading(true)
@@ -86,10 +91,15 @@ const handleUpload = async (event: any) => {
   let formData = new FormData()
 
   formData.append('file', file)
-  formData.append('dni', props.dni)
   formData.append('isPartner', props.isPartner ? 'true' : 'false')
   formData.append('documentSide', props.side)
   formData.append('documentType', props.type)
+
+  if (props.registerNumber) {
+    formData.append('registerNumber', props.registerNumber)
+  } else {
+    formData.append('dni', props.dni ? props.dni : '')
+  }
 
   const newDocumentObject = {
     dni: '',
