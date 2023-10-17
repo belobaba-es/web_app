@@ -40,6 +40,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
   side: {
     type: String,
     required: false,
@@ -77,6 +78,7 @@ const icon = computed(() => {
 })
 
 const handleUpload = async (event: any) => {
+  console.log('handleUpload')
   const file = event.target.files[0]
   doc.value = file
   setLoading(true)
@@ -91,6 +93,7 @@ const handleUpload = async (event: any) => {
 
   const newDocumentObject = {
     dni: '',
+
     documentSide: props.side,
     label: props.label,
     documentType: props.type,
