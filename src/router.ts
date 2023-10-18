@@ -58,6 +58,7 @@ import CompletedDocument from './views/onboarding/components/CompletedDocument.v
 import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
 import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
 import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
+import BusinessStep4 from './views/onboarding/components/business/Step4.vue'
 import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
 import EditSharedHolder from './views/onboarding/components/business/editNewShareHolder.vue'
 
@@ -358,6 +359,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'business/step3',
             component: BusinessStep3,
+          },
+          {
+            path: 'business/step4',
+            component: BusinessStep4,
           },
           {
             path: 'business/new-shareholder',
