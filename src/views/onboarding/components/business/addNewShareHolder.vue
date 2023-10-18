@@ -348,7 +348,7 @@ const saveData = () => {
       streetTwo: streetTwo.value,
       postalCode: postalCode.value,
       city: city.value,
-      state: state.value,
+      region: state.value,
       country: country.value,
     }
 

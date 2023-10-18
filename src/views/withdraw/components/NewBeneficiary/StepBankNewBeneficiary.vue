@@ -46,17 +46,7 @@
       <div class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <Dropdown
-            v-model="bankState"
-            :options="states"
-            optionLabel="name"
-            option-value="state_code"
-            :loading="loadingStatesField"
-            :placeholder="t('statePlaceHolder')"
-            :disabled="statesInputIsEmpty"
-            class="w-full"
-            @change="onChangeStateHandler"
-          />
+          <InputText type="text" v-model="bankState" />
         </div>
       </div>
 
@@ -128,7 +118,7 @@ const props = defineProps<{
   formData: any
 }>()
 
-console.log("props.formData",props.formData)
+console.log('props.formData', props.formData)
 
 const bankCountry = ref<string>('')
 const bankState = ref<string>('')
@@ -154,7 +144,7 @@ const saveBeneficiary = () => {
     const formData = ref()
 
     if (props.formData.informationBank.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
-      alert('INTERNATIONAL')
+
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
@@ -176,7 +166,7 @@ const saveBeneficiary = () => {
         },
       }
     } else {
-      alert('Domestic')
+
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
@@ -192,7 +182,7 @@ const saveBeneficiary = () => {
         },
         informationOwner: {
           ...props.formData.informationOwner,
-        }
+        },
       }
     }
 
@@ -225,8 +215,6 @@ const saveBeneficiary = () => {
 
         showMessage(toast, e.response.data)
       })
-
-      
   } else {
     toast.add({
       severity: 'warn',

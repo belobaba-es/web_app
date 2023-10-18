@@ -90,7 +90,7 @@ const onCreateNewShareholder = () => {
 }
 const deleteShareholder = (idx: number) => {
   partners.value.splice(idx, 1)
-  formData.value.shareholders = partners.value
+  formData.value.partners = partners.value
   localStorage.setItem('companyData', JSON.stringify(formData.value))
 }
 

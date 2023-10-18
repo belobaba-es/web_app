@@ -36,10 +36,8 @@ defineProps({
   cursor: pointer;
   background: #00beb0 0% 0% no-repeat padding-box;
   transition: background-color 0.5s ease;
-
-
 }
 .card:hover img {
-  filter:grayscale(100%) contrast(60);
+  filter: grayscale(100%) contrast(60);
 }
 </style>

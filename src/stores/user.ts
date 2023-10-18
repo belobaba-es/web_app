@@ -117,7 +117,7 @@ export const useUserStore = defineStore('user', () => {
     return `${user.name}`
   }
 
-  const getEmail= (): string => {
+  const getEmail = (): string => {
     const storageUser = sessionStorage.getItem('user')
     const cryptoService = new CryptoService()
 

@@ -13,7 +13,7 @@
       </div>
       <div class="p-toggleable-content" role="region">
         <div class="p-panel-content">
-          <div class="p-scrollpanel p-component custom" style="height: 400px;">
+          <div class="p-scrollpanel p-component custom" style="height: 400px">
             <div class="p-scrollpanel-wrapper">
               <div class="p-scrollpanel-content">
                 <div class="px-3 pt-3 pb-0">
@@ -25,13 +25,14 @@
                             <label>{{ t('Document Type') }}</label>
                             <div class="p-inputgroup">
                               <Dropdown
-                                  :options="documentTypeOptions"
-                                  option-label="name"
-                                  option-value="value"
-                                  :placeholder="t('documentTypePlaceHolder')"
-                                  class="w-full"
-                                  v-model="identifyDocument"
-                                  @change="selectedIdentifyDocument" />
+                                :options="documentTypeOptions"
+                                option-label="name"
+                                option-value="value"
+                                :placeholder="t('documentTypePlaceHolder')"
+                                class="w-full"
+                                v-model="identifyDocument"
+                                @change="selectedIdentifyDocument"
+                              />
                             </div>
                           </div>
                         </div>
@@ -40,15 +41,16 @@
                           <div class="field">
                             <div class="grid">
                               <div class="col-6">
-                                <label>  {{ t('Document Front side') }}</label>
+                                <label> {{ t('Document Front side') }}</label>
                                 <div class="mt-2">
                                   <FileInput
-                                      :label="getSelectedTypeIdentificationDocument(taxId)"
-                                      side="front"
-                                      :type="identifyDocument"
-                                      :dni ="dni"
-                                      :isPartner="isPartner"
-                                      v-model="documentSide"/>
+                                    :label="getSelectedTypeIdentificationDocument(taxId)"
+                                    side="front"
+                                    :type="identifyDocument"
+                                    :dni="dni"
+                                    :isPartner="isPartner"
+                                    v-model="documentSide"
+                                  />
                                 </div>
                               </div>
 
@@ -56,12 +58,13 @@
                                 <label>{{ t('Document Back side') }}</label>
                                 <div class="mt-2">
                                   <FileInput
-                                      label="getSelectedTypeIdentificationDocument(taxId)" 
-                                      side="backside "
-                                      :dni ="dni"
-                                      :isPartner="isPartner"
-                                      :type="identifyDocument"
-                                      v-model="documentSide" />
+                                    label="getSelectedTypeIdentificationDocument(taxId)"
+                                    side="back"
+                                    :dni="dni"
+                                    :isPartner="isPartner"
+                                    :type="identifyDocument"
+                                    v-model="documentSide"
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -74,29 +77,30 @@
                               <div class="col-6">
                                 <label>{{ t('utilityBillLabel') }}</label>
                                 <div class="mt-2 mb-4">
-                                  <Dropdown 
-                                  :options="documentTypeProofOfAddress"
-                                  option-label="name" 
-                                  option-value="value" 
-                                  :placeholder="t('documentTypePlaceHolder')"
-                                  class="w-full" 
-                                  @change="selectedProofOfAddress" 
-                                  v-model="typeDocumentAddress" />
+                                  <Dropdown
+                                    :options="documentTypeProofOfAddress"
+                                    option-label="name"
+                                    option-value="value"
+                                    :placeholder="t('documentTypePlaceHolder')"
+                                    class="w-full"
+                                    @change="selectedProofOfAddress"
+                                    v-model="typeDocumentAddress"
+                                  />
                                 </div>
                                 <FileInput
-                                    :label="getSelectedTypeDocumentProofOfAddress('0')"
-                                    side="front"
-                                    :isPartner="isPartner"
-                                    :type="typeDocumentAddress"
-                                    :account-id="accountId ?? idAccount"
-                                    :dni ="dni"
-                                    v-model="documentFiscal"/>
+                                  :label="getSelectedTypeDocumentProofOfAddress('0')"
+                                  side="front"
+                                  :isPartner="isPartner"
+                                  :type="typeDocumentAddress"
+                                  :account-id="accountId ?? idAccount"
+                                  :dni="dni"
+                                  v-model="documentFiscal"
+                                />
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -116,8 +120,8 @@ import { useAccount } from '../../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../profile/components/FileInput.vue'
 import { useDocuments } from '../../../../composables/useDocuments'
-import router from "../../../../router";
-import {useToast} from "primevue/usetoast";
+import router from '../../../../router'
+import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
 const { getOwner, accountId, getFullName, findMember, submitProfileForm } = useAccount()
@@ -133,13 +137,12 @@ const {
 const idAccount = localStorage.getItem('accountId') || ''
 const dni = localStorage.getItem('dni') || ''
 const identifyDocument = ref<string>('')
-const documentSide  = ref<string>('')
+const documentSide = ref<string>('')
 const documentFiscal = ref<string>('')
 const typeDocumentAddress = ref<string>('')
 const isPartner = ref(false)
 
-console.log(isPartner);
-
+console.log(isPartner)
 
 const documentTypeProofOfAddress = ref([
   { value: 'monthly_utility', name: t('documentProofOfAddress1') },
@@ -152,18 +155,18 @@ const documentTypeProofOfAddress = ref([
 ])
 
 const documentTypeOptions = ref([
-  { value: "passport", name: t('docTypeLabelPassport') },
+  { value: 'passport', name: t('docTypeLabelPassport') },
   { value: 'drivers_license', name: t('docTypeLabelDriversLicense') },
-  { value: "government_id", name: t('docTypeLabelGovernmentId') },
-  { value: "residence_permit", name: "Residence Permit" }
-]);
+  { value: 'government_id', name: t('docTypeLabelGovernmentId') },
+  { value: 'residence_permit', name: 'Residence Permit' },
+])
 
 interface Props {
   taxId: string
 }
 
 const props = defineProps<Props>()
-  const member = ref()
+const member = ref()
 
 onBeforeMount(() => {
   addDocument(props.taxId, { selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: '' })
@@ -183,8 +186,6 @@ const selectedProofOfAddress = (e: any) => {
 }
 
 //router.push('/personal/completed')
-
 </script>
 
 <style scoped></style>
-

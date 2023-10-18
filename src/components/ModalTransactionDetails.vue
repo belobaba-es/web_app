@@ -21,7 +21,6 @@
           <p v-else class="font-medium text-sm">
             {{ t('beneficiaryName') }}
           </p>
-
         </div>
 
         <div class="col-6 pt-1">
@@ -54,13 +53,15 @@
         <div class="col-6">
           <p class="font-medium text-sm">{{ t('transactionNumber') }}</p>
           <p class="font-medium text-sm">{{ t('status') }}</p>
-          <p class="font-medium text-sm">{{ t('datePicker') }}</p> 
+          <p class="font-medium text-sm">{{ t('datePicker') }}</p>
         </div>
 
         <div class="col-6 pt-1">
           <p>{{ transaction.transactionId }}</p>
-          <p class="status" :class="transaction.status !== 'CANCELLED' ? 'green-text' : 'red-text'"> {{ transaction.status }}</p>
-          <p>{{ transaction.formatedDate }}</p> 
+          <p class="status" :class="transaction.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
+            {{ transaction.status }}
+          </p>
+          <p>{{ transaction.formatedDate }}</p>
         </div>
       </div>
     </div>
@@ -155,9 +156,11 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('amount')] = `${transaction.amount}`
   transactionPDF[t('status')] = `${transaction.status}`
   transactionPDF[t('transactionNumber')] = transaction.transactionId
-  transactionPDF[t('reference')] = `${transaction.reference.length > maxReferenceLength 
-    ? transaction.reference.slice(0, maxReferenceLength) 
-    : transaction.reference}`
+  transactionPDF[t('reference')] = `${
+    transaction.reference.length > maxReferenceLength
+      ? transaction.reference.slice(0, maxReferenceLength)
+      : transaction.reference
+  }`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)

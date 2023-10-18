@@ -82,7 +82,7 @@ export const useAccount = () => {
   //   }
   // })
 
-  const taxId = getUser.client.taxId !== undefined ||  getUser.client.taxId !== "" ? getUser.client.taxId : ""
+  const taxId = getUser.client.taxId !== undefined || getUser.client.taxId !== '' ? getUser.client.taxId : ''
 
   // const email = computed(() => {
   //   if (isShowView.value && route.params.contactId) {

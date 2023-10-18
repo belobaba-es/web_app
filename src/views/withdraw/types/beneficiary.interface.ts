@@ -16,7 +16,7 @@ export interface BeneficiaryAssets {
 
 export enum CounterpartyType {
   CRYPTO = 'CRYPTO',
-    FIAT = 'FIAT',
+  FIAT = 'FIAT',
 }
 
 export type Beneficiary = {
@@ -28,26 +28,24 @@ export type Beneficiary = {
   counterpartyId: string
   counterpartyType: CounterpartyType
   createdAt: string
-  informationBank : {
+  informationBank: {
     accountNumber: string
     address: BankAdress
     bankName: string
     networkBank: string
   }
-  informationOwner : {
+  informationOwner: {
     address: OwnerAddress
     name: string
     countery: string
-    
   }
- 
 }
 
 export enum CounterpartyType {
   CRYPTO_BTC = 'CRYPTO',
   FIAT_US = 'FIAT_US',
 }
- 
+
 export interface BankAdress {
   city: string
   country: string
@@ -57,7 +55,7 @@ export interface BankAdress {
   streetTwo: string
 }
 
-export interface OwnerAddress{
+export interface OwnerAddress {
   city: string
   country: string
   postalCode: number
@@ -124,21 +122,21 @@ export interface BeneficiaryFiatDomesticResp extends Pagination<BeneficiaryFiatD
 
 export interface BeneficiaryAsset {
   informationWallet: {
-    assetId: string;
-    address: string;
-    relationshipConsumer: string;
-    originWallet: string;
-    institutionName: string;
+    assetId: string
+    address: string
+    relationshipConsumer: string
+    originWallet: string
+    institutionName: string
     institutionAddress: {
-      streetOne: string;
-      postalCode: string;
-      city: string;
-      region: string;
-      country: string;
-    };
-  };
+      streetOne: string
+      postalCode: string
+      city: string
+      region: string
+      country: string
+    }
+  }
   informationOwner: {
-    name: string;
-    country: string;
-  };
+    name: string
+    country: string
+  }
 }
