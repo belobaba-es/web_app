@@ -235,12 +235,13 @@ import {
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
-import { HistoricService } from '../views/wallet/services/historic'
+
 import { iconAsset } from '../shared/iconAsset'
-import { useUserStore } from '../stores/user'
+
 import { Asset } from '../views/deposit/types/asset.interface'
 import { getAsset } from '../shared/getAsset'
 import FinishRegisterWarningBar from './FinishRegisterWarningBar.vue'
+import { useAuth } from '../composables/useAuth'
 
 const router = useRouter()
 const route = useRoute()
@@ -271,7 +272,7 @@ const assetsService = AssetsService.instance()
 const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
 const getHistoric = TransactionHistoricService.instance()
-const getTransactonHistoric = HistoricService.instance()
+const { getUserName, getUserDni, getUserAddress } = useAuth()
 const listTransaction = ref<TransactionHistory[]>([])
 const submitting = ref(false)
 const displayModalTransactionDetail = ref(false)
@@ -429,13 +430,11 @@ const filtersChange = async (key: TransactionFiltersQueryTypeKeys, value: any) =
   filters[key] = value
 }
 
-const userStore = useUserStore()
 const title = t('transactionHistory')
 const footerPdf = t('footerPdfNobaData')
-const user = userStore.getUser
+
 // todo set company name when ready
-const username =
-  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
+const username = getUserName()
 let extractPDFInfo: any = {}
 const downloadExtract = () => {
   isLoadingPDF.value = true
@@ -445,8 +444,8 @@ const downloadExtract = () => {
 
     const owner = {
       name: username,
-      id: user.taxId ?? user.client.dni,
-      address: `${user.client.streetOne} ${user.client.city}`,
+      id: getUserDni(),
+      address: getUserAddress(),
     }
 
     isLoadingPDF.value = false

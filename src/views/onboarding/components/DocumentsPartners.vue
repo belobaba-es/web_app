@@ -94,7 +94,6 @@ import { useAccount } from '../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../profile/components/FileInput.vue'
 import { useDocuments } from '../../../composables/useDocuments'
-import router from '../../../router'
 import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -153,7 +152,7 @@ const shouldShowFrontBank = () => {
 }
 
 const selectedIdentifyDocument = (e: any) => {
-    console.log(identifyDocument.value)
+  console.log(identifyDocument.value)
   setSelectedTypeIdentificationDocument(props.dni, e.value)
 }
 

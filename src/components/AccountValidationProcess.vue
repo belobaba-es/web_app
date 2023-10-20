@@ -11,14 +11,13 @@
 import Message from 'primevue/message'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
-import { useUserStore } from '../stores/user'
+import { useAuth } from '../composables/useAuth'
 
-const userStore = useUserStore()
+const { isUserActive } = useAuth()
 const { t } = useI18n({ useScope: 'global' })
 const isEmailValidated = ref(true)
-const user = userStore.getUser
 
 onMounted(async () => {
-  isEmailValidated.value = user.active
+  isEmailValidated.value = isUserActive()
 })
 </script>

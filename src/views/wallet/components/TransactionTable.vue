@@ -93,8 +93,9 @@ import ProgressSpinner from 'primevue/progressspinner'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import ModalTransactionDetails, { TransactionModalPayload } from '../../../components/ModalTransactionDetails.vue'
+import ModalTransactionDetails from '../../../components/ModalTransactionDetails.vue'
 import { formatDate } from '../../../shared/formatDate'
+import { TransactionModalPayload } from '../../../types/transactionModal.interface'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)

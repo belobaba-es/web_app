@@ -21,7 +21,7 @@ export enum CountryID {
 }
 
 export const useWorld = () => {
-  const calling_code = ref<string[]>()
+  const calling_code = ref<string[]>([''])
   const countries = ref<Country[]>([])
   const states = ref<State[]>([])
   const statesTwo = ref<State[]>([])
@@ -38,8 +38,8 @@ export const useWorld = () => {
 
   const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
     loadingCountiesField.value = true
-    const worldService = WorldService.instance()
-    await worldService.getCountries().then((resp: Country[]) => {
+
+    await new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
       if (shouldDeleteBannedCountries) {
         countries.value = deleteUnavailableCountries(resp)

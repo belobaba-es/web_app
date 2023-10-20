@@ -10,7 +10,6 @@ import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
-import { useUserStore } from './stores/user'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
@@ -64,6 +63,7 @@ import EditSharedHolder from './views/onboarding/components/business/editNewShar
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
+import { useAuth } from './composables/useAuth'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -389,18 +389,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore()
-  console.log(to.path)
+  const { getUserEmail } = useAuth()
   if (
     to.path !== '/' &&
     to.path !== '/create-user' &&
     to.path !== '/confirm-email' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
-    !userStore.getUser
+    getUserEmail() === ''
   ) {
     next({ path: '/' })
-  } else if (to.path === '/' && userStore.getUser) {
+  } else if (to.path === '/' && getUserEmail() !== '') {
     next({ path: '/dashboard' })
   } else {
     next()

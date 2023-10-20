@@ -31,7 +31,7 @@ import ButtonCreateWallet from '../../components/ButtonCreateWallet.vue'
 
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
-import { LoginService } from '../login/services/login'
+import { useAuth } from '../../composables/useAuth'
 
 const router = useRouter()
 const inactiveTime = ref(0)
@@ -132,8 +132,8 @@ onMounted(() => {
 })
 
 const closedSession = async () => {
-  const loginService = LoginService.instance()
-  await loginService.logout()
+  const { logout } = useAuth()
+  await logout()
   window.location.href = '/'
 }
 

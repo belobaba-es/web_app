@@ -59,7 +59,6 @@ import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../../stores/user'
 import { useToast } from 'primevue/usetoast'
 import { ForgotPasswordService } from './services/forgot-password'
 
@@ -72,8 +71,6 @@ const form = reactive({
 })
 
 const router = useRouter()
-
-const userStore = useUserStore()
 
 const forgotPasswordService = ForgotPasswordService.instance()
 

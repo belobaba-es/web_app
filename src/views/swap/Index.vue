@@ -80,12 +80,10 @@ import swapIcon from '../../assets/icons/swap.svg'
 import { Asset } from '../deposit/types/asset.interface'
 import ModalAssetSelector from '../../components/ModalAssetSelector.vue'
 import ProgressBar from 'primevue/progressbar'
-import { useUserStore } from '../../stores/user'
 import { useRouter } from 'vue-router'
 import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
 import { onUnmounted } from 'vue'
-import ShowFee from './components/ShowFee.vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
@@ -108,8 +106,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const router = useRouter()
 const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
-
-const useUser = useUserStore()
 
 const selectedAsset = async (asset: Asset) => {
   showModalAssetSelector.value = false

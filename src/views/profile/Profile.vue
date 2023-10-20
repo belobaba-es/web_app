@@ -36,42 +36,41 @@ import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
 import { TypeAccount } from './types/account.interface'
-import AffiliateLink from './components/AffiliateLink.vue'
-import { useUserStore } from '../../stores/user'
+import { useAuth } from '../../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
-const { natureAccount, fetchAccount, loading } = useAccount()
+const { fetchAccount, loading } = useAccount()
 const menuItems = ref()
+
+const { getAccountType, getClientId } = useAuth()
 const checkCanSee = (...args: string[]) => {
-  if (!userStore.getUser.client.type) {
+  if (getAccountType() === '') {
     return
   }
 
-  return args.includes(userStore.getUser.client.type || '')
+  return args.includes(getAccountType() || '')
 }
-const userStore = useUserStore()
-const { getUser } = useUserStore()
 onBeforeMount(async () => {
   await fetchAccount()
   setMenuItems()
 })
 
 const documentsPath = computed(() => {
-  return userStore.getUser.client.type === TypeAccount.COMPANY
-    ? `/profile/${userStore.getUser.clientId}/documentation/person`
-    : `/profile/${userStore.getUser.clientId}/documentation/company`
+  return getAccountType() === TypeAccount.COMPANY
+    ? `/profile/${getClientId()}/documentation/person`
+    : `/profile/${getClientId()}/documentation/company`
 })
 
 const setMenuItems = () => {
   menuItems.value = [
     {
       label: t('profile'),
-      to: `/profile/${userStore.getUser.clientId}`,
+      to: `/profile/${getClientId()}`,
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('shareholders'),
-      to: `/profile/${userStore.getUser.clientId}/partners`,
+      to: `/profile/${getClientId()}/partners`,
       canSee: checkCanSee('COMPANY'),
     },
     {
@@ -81,12 +80,12 @@ const setMenuItems = () => {
     },
     {
       label: t('setting'),
-      to: `/profile/${userStore.getUser.clientId}/settings`,
+      to: `/profile/${getClientId()}/settings`,
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('businessPartners'),
-      to: `/profile/${userStore.getUser.clientId}/business-partners`,
+      to: `/profile/${getClientId()}/business-partners`,
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
   ].filter(item => item.canSee)

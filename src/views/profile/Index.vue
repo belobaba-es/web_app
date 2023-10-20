@@ -91,11 +91,11 @@ import Skeleton from 'primevue/skeleton'
 import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import WarningKYC from './components/WarningKYC.vue'
-import { useUserStore } from '../../stores/user'
-import { TypeAccount } from './types/account.interface'
+import { useAuth } from '../../composables/useAuth'
+
+const { getUserAddress } = useAuth()
 
 const { t } = useI18n({ useScope: 'global' })
-const { getUser } = useUserStore()
 const {
   editProfile,
   fullName,
@@ -111,7 +111,7 @@ const {
   address,
 } = useAccount()
 
-const country = getUser.client.country
+const country = getUserAddress()
 </script>
 
 <style scoped>

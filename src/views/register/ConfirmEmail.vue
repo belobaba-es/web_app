@@ -70,10 +70,6 @@ const submittingResendTheCode = ref(false)
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const didLoginEmit = defineEmits(['didLogin'])
-
-const registerService = RegisterService.instance()
-
 const inputValueFormat = ref('')
 const email = localStorage.getItem('noba@user-email')
 
@@ -105,7 +101,7 @@ const resendCode = () => {
 
   let typeValidation = 'email'
 
-  registerService
+  new RegisterService()
     .resendEmailCode(email || '', typeValidation)
     .then(data => {
       submittingResendTheCode.value = false
@@ -131,7 +127,7 @@ const resendCode = () => {
 const handleSubmit = () => {
   submitting.value = true
 
-  registerService
+  new RegisterService()
     .confirmCode(form.code, email || '')
     .then(data => {
       submitting.value = false
@@ -144,7 +140,6 @@ const handleSubmit = () => {
       })
 
       localStorage.removeItem('noba@user-email')
-
       router.push('/')
     })
     .catch(e => {

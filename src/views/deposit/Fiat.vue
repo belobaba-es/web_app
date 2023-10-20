@@ -216,12 +216,12 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
-import { useUserStore } from '../../stores/user'
 
 import logo from '../../assets/img/logo.png'
 
 import generatePdf from '../../shared/generatePdf'
 import { useToast } from 'primevue/usetoast'
+import { useAuth } from '../../composables/useAuth'
 
 interface tabItem {
   label: string
@@ -233,12 +233,9 @@ const toast = useToast()
 const submitting = ref(false)
 
 const { t } = useI18n({ useScope: 'global' })
-const fiatService = FiatService.instance()
-const userStore = useUserStore()
+const { getUserName } = useAuth()
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+const username = getUserName()
 
 const dataBank = ref<BankData[]>([])
 const bankNational = ref()
@@ -251,7 +248,7 @@ const footerPdf = t('footerPdfNobaData')
 
 onMounted(async () => {
   submitting.value = true
-  fiatService
+  new FiatService()
     .bankData()
     .then(data => {
       submitting.value = false

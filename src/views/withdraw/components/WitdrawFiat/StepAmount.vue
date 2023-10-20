@@ -90,10 +90,10 @@ import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
-import { useUserStore } from '../../../../stores/user'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { twoFactorAuthenticationIsActiveRemotely } from '../../../../shared/services/remoteConfig'
+import { useAuth } from '../../../../composables/useAuth'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -107,7 +107,7 @@ const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
-const userStore = useUserStore()
+const { getUserFeeWire } = useAuth()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')
@@ -126,10 +126,7 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
-  fee.value =
-    typeTransaction.value === 'domestic'
-      ? userStore.getUserFeeWire()?.domestic.out
-      : userStore.getUserFeeWire()?.international.out
+  fee.value = typeTransaction.value === 'domestic' ? getUserFeeWire().domestic.out : getUserFeeWire().international.out
 }
 const amountFee = computed(() => {
   const total = isNaN(amount.value + fee.value) ? 0 : amount.value + fee.value

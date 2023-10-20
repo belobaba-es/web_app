@@ -22,22 +22,20 @@ import Message from 'primevue/message'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../stores/user'
 import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
 import { useTwoFactorAuth } from '../composables/useTwoFactorAuth'
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useAuth } from '../composables/useAuth'
 
 const { twoFactorIsActive } = useTwoFactorAuth()
 const { t } = useI18n({ useScope: 'global' })
-
+const { getClientId } = useAuth()
 const route = useRouter()
-
-const userStore = useUserStore()
 
 const isShowMessage = ref(false)
 
 const redirectForActiveTwoFactor = () => {
-  route.push(`/profile/${userStore.getUser.account.accountId}/settings`)
+  route.push(`/profile/${getClientId()}/settings`)
 }
 
 onMounted(() => {

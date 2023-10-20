@@ -25,14 +25,12 @@
 
 <script lang="ts" setup>
 import SplitButton from 'primevue/splitbutton'
-import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
-import { useUserStore } from '../../stores/user'
-import { LoginService } from '../login/services/login'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
+import { useAuth } from '../../composables/useAuth'
 
 const router = useRouter()
 const { getBalanceByCode } = useBalanceWallet()
@@ -40,12 +38,9 @@ const emit = defineEmits(['menu-toggle'])
 
 const { t } = useI18n({ useScope: 'global' })
 
-const userStore = useUserStore()
-const loginService = LoginService.instance()
+const { getUserName, getClientId, logout } = useAuth()
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+const username = getUserName()
 
 const balanceWalletUsd = () => {
   return getBalanceByCode('USD')
@@ -56,7 +51,7 @@ const items = ref([
     label: t('profile'),
     icon: 'pi pi-user',
     command: () => {
-      router.push(`/profile/${userStore.getUser.clientId}`)
+      router.push(`/profile/${getClientId}`)
     },
   },
   {
@@ -82,14 +77,14 @@ const items = ref([
     label: t('logOut'),
     icon: 'pi pi-sign-out',
     command: async () => {
-      await loginService.logout()
+      await logout()
       window.location.href = '/'
     },
   },
 ])
 
 const avatar = () => {
-  return `https://ui-avatars.com/api/?name=${userStore.getUser.firstName}+${userStore.getUser.lastName}`
+  return `https://ui-avatars.com/api/?name=${getUserName()}`
 }
 </script>
 

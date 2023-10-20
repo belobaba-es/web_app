@@ -298,7 +298,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
 import router from '../../../../router'
-import { useUserStore } from '../../../../stores/user'
+import { useAuth } from '../../../../composables/useAuth'
 
 const {
   countries,
@@ -316,7 +316,7 @@ const {
   calling_code,
 } = useWorld()
 
-const { getEmail } = useUserStore()
+const { getUserEmail } = useAuth()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -325,7 +325,7 @@ const toast = useToast()
 const submitting = ref(false)
 
 const name = ref<string>('')
-const email = ref<string>(getEmail())
+const email = ref<string>(getUserEmail())
 const registerNumber = ref<string>('')
 const naics = ref<string>('')
 const naicsDescription = ref<string>('')

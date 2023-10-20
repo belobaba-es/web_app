@@ -24,7 +24,6 @@ import { onMounted, ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { AccountService } from '../../../../shared/services/account'
 import { useAccount } from '../../../../composables/useAccount'
-import { useUserStore } from '../../../../stores/user'
 
 const toast = useToast()
 const emit = defineEmits(['listBeneficiaries'])
@@ -33,7 +32,6 @@ const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 const submitting = ref(false)
 const { fetchAccount, accountId } = useAccount()
-const userStore = useUserStore()
 const shouldSearchUsers = ref(true)
 
 onMounted(() => {
