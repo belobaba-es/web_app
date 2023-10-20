@@ -32,7 +32,6 @@ const assetSelect = ref(null)
 const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddressResponse | null>(null)
 
-const assetsService = AssetsService.instance()
 const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddressResponse[]>([])
 
@@ -46,8 +45,8 @@ const findAsset = (assetId: string) => {
 
 const searchWallets = () => {
   lazyLoading.value = true
-  assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then(data => {
+  new AssetsService().list().then(data => (assets.value = data))
+  new AssetsService().listPaymentAddress().then(data => {
     lazyLoading.value = false
     paymentAddress.value = data
     // paymentAddress.value = data.results

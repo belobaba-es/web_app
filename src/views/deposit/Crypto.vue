@@ -95,12 +95,11 @@ const selectViewAsset = ref<Asset | null>(null)
 const selectPaymentAddress = ref<PaymentAddressResponse | null>(null)
 const submitting = ref(false)
 const route = useRoute()
-const assetsService = AssetsService.instance()
 const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddressResponse[]>([])
 
 onMounted(async () => {
-  await assetsService.list().then(data => (assets.value = data))
+  await new AssetsService().list().then(data => (assets.value = data))
 
   const assetCode = (route.params.assetCode as string) ?? ''
 
@@ -126,7 +125,7 @@ const findAssetByName = () => {
   submitting.value = true
   lazyLoading.value = true
   if (assetCode.value) {
-    assetsService
+    new AssetsService()
       .listPaymentAddress(nextPag.value, assetCode.value)
       .then(data => {
         paymentAddress.value = [...data]
@@ -158,8 +157,8 @@ const viewAddressAsset = (item: PaymentAddressResponse) => {
 
 const searchWallets = () => {
   lazyLoading.value = true
-  assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then((data: PaymentAddressResponse[]) => {
+  new AssetsService().list().then(data => (assets.value = data))
+  new AssetsService().listPaymentAddress().then((data: PaymentAddressResponse[]) => {
     paymentAddress.value = data
     lazyLoading.value = false
     // nextPag.value = data.nextPag
@@ -168,8 +167,8 @@ const searchWallets = () => {
 
 const searchWallet = (assetId: string) => {
   lazyLoading.value = true
-  assetsService.list().then(data => (assets.value = data))
-  assetsService.listPaymentAddress().then(data => {
+  new AssetsService().list().then(data => (assets.value = data))
+  new AssetsService().listPaymentAddress().then(data => {
     lazyLoading.value = false
     paymentAddress.value = data.filter((res: PaymentAddressResponse) => res.assetId === assetId)
     // nextPag.value = data.nextPag
@@ -207,7 +206,7 @@ const onLazyLoad = (event: any) => {
 
   if (last == paymentAddress.value.length && nextPag.value != '') {
     lazyLoading.value = true
-    assetsService
+    new AssetsService()
       .listPaymentAddress(nextPag.value)
       .then(data => {
         paymentAddress.value = [...paymentAddress.value, ...data]

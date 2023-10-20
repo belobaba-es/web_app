@@ -268,10 +268,8 @@ const transactionTypes = ref([
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
 ])
 const toast = useToast()
-const assetsService = AssetsService.instance()
 const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
-const getHistoric = TransactionHistoricService.instance()
 const { getUserName, getUserDni, getUserAddress } = useAuth()
 const listTransaction = ref<TransactionHistory[]>([])
 const submitting = ref(false)
@@ -302,7 +300,7 @@ onMounted(async () => {
 })
 
 const getAssets = async () => {
-  await assetsService.list().then(data => {
+  await new AssetsService().list().then(data => {
     listAssets.value = data
     let a = []
     const allAssetsOption = {
@@ -348,7 +346,7 @@ const getTransactions = async (filters: any = {}) => {
   listTransaction.value = []
 
   // todo send nextPage as page into the payload
-  await getHistoric
+  await new TransactionHistoricService()
     .getHistoric(filters)
     .then(data => {
       submitting.value = false

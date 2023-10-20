@@ -47,8 +47,6 @@ const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 const type = ref('Domestic')
 
-const accountService = AccountService.instance()
-
 route.meta.noCache = true
 
 const items = ref([
@@ -74,8 +72,6 @@ const {
   stepComplete,
   toBack,
 } = useWithdraw(items)
-
-const { fetchBeneficiaries, listBeneficiary } = useBeneficiary()
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)

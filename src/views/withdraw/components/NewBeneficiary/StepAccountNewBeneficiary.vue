@@ -22,7 +22,7 @@
     </div>
 
     <div class="field">
-      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">{{ t('abaRoutingNumber') }} </label>
+      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">ABA Fedwire</label>
       <label v-show="typeBeneficiaryBankWithdrawal == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="routingNumberOrIBAN" />

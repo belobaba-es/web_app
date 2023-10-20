@@ -47,10 +47,9 @@ const emit = defineEmits(['selectedAsset'])
 const listAsset = ref<Asset[]>([])
 const filteredListAsset = ref<Asset[]>([])
 const search = ref('')
-const assetService = AssetsService.instance()
 
 onMounted(async () => {
-  await assetService.list().then(data => {
+  await new AssetsService().list().then(data => {
     listAsset.value = data
     filteredListAsset.value = data
   })
