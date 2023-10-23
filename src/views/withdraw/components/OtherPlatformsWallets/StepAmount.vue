@@ -140,7 +140,7 @@ const amountFee = computed(() => {
   fee.value = fee.value ?? 0
 
   const subtotal = isNaN(amount.value - fee.value) ? 0 : amount.value - fee.value
-  if (subtotal > balance.value) {
+  if (subtotal > Number(balance.value)) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',

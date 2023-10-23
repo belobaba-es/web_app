@@ -73,7 +73,7 @@
                 <div class="mt-4 col-12 sm:col-12 md:col-12 lg:col-6 xl:col-4">
                   <FileInput
                     :is-proof-of-address="true"
-                    :tax-id="taxId ?? ''"
+                    :tax-id="''"
                     :dni="''"
                     :document-country="getOwner()?.taxCountry ?? ''"
                     :accountId="accountId ?? ''"
@@ -117,16 +117,8 @@ const initFileLoader = () => {
   setFormInitialInfo()
 }
 
-const {
-  getOwner,
-  accountId,
-  taxId,
-  setDocumentResponseId,
-  setFormInitialInfo,
-  form,
-  submitProfileForm,
-  setDeviceResponseId,
-} = useAccount()
+const { getOwner, accountId, setDocumentResponseId, setFormInitialInfo, form, submitProfileForm, setDeviceResponseId } =
+  useAccount()
 const documentIdRef = toRef(form.value, 'documentId')
 
 const documentType = ref()
