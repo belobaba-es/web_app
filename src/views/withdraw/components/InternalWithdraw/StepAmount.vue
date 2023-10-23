@@ -138,7 +138,7 @@ const events = ref([
 const amountFee = computed(() => {
   fee.value = fee.value ?? 0
   const t = isNaN(amount.value - fee.value) ? 0 : amount.value - fee.value
-  if (t > balance.value) {
+  if (t > Number(balance.value)) {
     toast.add({
       severity: 'warn',
       summary: 'Order structure',

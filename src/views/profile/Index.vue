@@ -31,7 +31,7 @@
       </template>
       <Divider type="solid" />
 
-      <template v-if="isNaturalAccount">
+      <template v-if="isNaturalAccount()">
         <template v-if="submitting">
           <Skeleton width="10rem" class="mb-2"></Skeleton>
           <Skeleton class="mb-2"></Skeleton>
