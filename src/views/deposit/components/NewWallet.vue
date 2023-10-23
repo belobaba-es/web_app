@@ -63,11 +63,9 @@ const submitting = ref(false)
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const { t } = useI18n({ useScope: 'global' })
 
-const assetsService = AssetsService.instance()
-
 const onCreate = () => {
   submitting.value = true
-  assetsService
+  new AssetsService()
     .paymentAddress({ label: label.value, assetCode: assetSelect.value?.code })
     .then(resp => {
       submitting.value = false

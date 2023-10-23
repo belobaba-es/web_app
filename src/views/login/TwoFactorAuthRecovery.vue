@@ -131,7 +131,7 @@ const makeRequestRecoveryTwoFactorAuth = () => {
     })
   }
 
-  TwoFactorService.instance()
+  new TwoFactorService()
     .requestRecoveryTwoFactorAuth(codes.value, props.accountId)
     .then(r => {
       verifySuccess.value = true

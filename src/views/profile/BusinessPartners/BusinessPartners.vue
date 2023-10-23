@@ -50,8 +50,7 @@ import { useAccount } from '../../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
-import { BusinessAllie } from '../services/businessAllie'
-import { useUserStore } from '../../../stores/user'
+import { BusinessAllieService } from '../services/businessAllieService'
 import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
 import ListBusinessPartners from '../components/ListBusinessPartners.vue'
@@ -61,12 +60,11 @@ import RegisterAsBusinessAllie from '../components/RegisterAsBusinessAllie.vue'
 import AwaitingApproval from '../components/AwaitingApproval.vue'
 import { BusinessOpportunity } from '../types/businessOpportunity'
 
-const businessAllieService = new BusinessAllie()
+const businessAllieService = new BusinessAllieService()
 const submitting = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const { getFullName } = useAccount()
 const router = useRouter()
-const userStore = useUserStore()
 const isApprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')
 const toast = useToast()

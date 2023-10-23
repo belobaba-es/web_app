@@ -87,7 +87,7 @@ import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
-import { BusinessAllie } from '../services/businessAllie'
+import { BusinessAllieService } from '../services/businessAllieService'
 import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const toast = useToast()
@@ -100,7 +100,7 @@ const props = defineProps<{
 }>()
 const displayEditOpportunity = ref(false)
 const isSendingRequest = ref(false)
-const businessAllieService = new BusinessAllie()
+const businessAllieService = new BusinessAllieService()
 
 const updateBusinessOpportunity = () => {
   isSendingRequest.value = true

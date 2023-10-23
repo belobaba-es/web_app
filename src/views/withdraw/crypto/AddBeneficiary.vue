@@ -309,8 +309,8 @@ const toggleInstitutionSection = (event: DropdownChangeEvent) => {
 
 const saveBeneficiary = () => {
   submitting.value = true
-  const beneficiaryService = BeneficiaryService.instance()
-  beneficiaryService
+
+  new BeneficiaryService()
     .saveBeneficiaryAssets(form.value)
     .then(resp => {
       router.push('/withdraw/crypto/other')

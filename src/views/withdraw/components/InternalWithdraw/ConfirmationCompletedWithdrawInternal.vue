@@ -54,9 +54,9 @@ import { generateTransactionReceipt } from '../../../../shared/generatePdf'
 import logo from '../../../../assets/img/logo.png'
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '../../../../stores/user'
 import { useI18n } from 'vue-i18n'
 import { UserAccount } from '../../types/account'
+import { useAuth } from '../../../../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -68,13 +68,10 @@ const props = defineProps<{
 
 const router = useRouter()
 const route = useRoute()
-const userStore = useUserStore()
 
 const isGeneratingTransactionPDF = ref(false)
 
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
+const { getUserName, getUserId } = useAuth()
 
 const goToWithdrawIndex = () => {
   if (route.params.type === 'crypto') {
@@ -88,9 +85,7 @@ const goToWithdrawIndex = () => {
 
 const generatePDFTransactionReceipt = () => {
   isGeneratingTransactionPDF.value = true
-  const user = userStore.getUser
-  console.log(user)
-  const userAccountNumber = transformCharactersIntoAsterics(user.userId)
+  const userAccountNumber = transformCharactersIntoAsterics(getUserId())
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
@@ -101,7 +96,7 @@ const generatePDFTransactionReceipt = () => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const formattedDate = formatter.format(date)
 
-  transactionPDF[t('userName')] = `${user.client.name}`
+  transactionPDF[t('userName')] = `${getUserName()}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.name}`
   transactionPDF[t('assetType')] = props.formData.assetCode

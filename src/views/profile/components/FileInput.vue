@@ -38,7 +38,11 @@ const props = defineProps({
   },
   dni: {
     type: String,
-    required: true,
+    required: false,
+  },
+  registerNumber: {
+    type: String,
+    required: false,
   },
   side: {
     type: String,
@@ -84,13 +88,19 @@ const handleUpload = async (event: any) => {
   let formData = new FormData()
 
   formData.append('file', file)
-  formData.append('dni', props.dni)
   formData.append('isPartner', props.isPartner ? 'true' : 'false')
   formData.append('documentSide', props.side)
   formData.append('documentType', props.type)
 
+  if (props.registerNumber) {
+    formData.append('registerNumber', props.registerNumber)
+  } else {
+    formData.append('dni', props.dni ? props.dni : '')
+  }
+
   const newDocumentObject = {
     dni: '',
+
     documentSide: props.side,
     label: props.label,
     documentType: props.type,
@@ -99,8 +109,7 @@ const handleUpload = async (event: any) => {
     description: props.label,
   }
 
-  const profileService = ProfileService.instance()
-  await profileService
+  await new ProfileService()
     .updateDocuments(formData)
     .then(response => {
       setLoading(false)

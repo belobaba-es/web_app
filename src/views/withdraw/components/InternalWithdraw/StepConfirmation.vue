@@ -67,7 +67,6 @@ import { WithdrawService } from '../../services/withdraw'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
-import { useUserStore } from '../../../../stores/user'
 import ConfirmationCompletedWithdrawInternal from './ConfirmationCompletedWithdrawInternal.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
@@ -91,10 +90,6 @@ const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary
 const emit = defineEmits(['complete'])
 const router = useRouter()
-const userStore = useUserStore()
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
 
 const verifyCodeTwoFactorAuth = (res: boolean) => {
   if (res) {
@@ -116,13 +111,11 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 }
 
 function makeTransaction() {
-  const withDrawService = WithdrawService.instance()
-
   submitting.value = true
   console.log(props.formData)
   switch (route.params.type) {
     case 'fiat':
-      withDrawService
+      new WithdrawService()
         .makeFiatInternalTransfer({
           amount: props.formData.amount,
           clientIdDestination: props.formData.beneficiary.clientId,
@@ -146,7 +139,7 @@ function makeTransaction() {
         })
       break
     case 'crypto':
-      withDrawService
+      new WithdrawService()
         .makeAssetInternalTransfer({
           clientIdDestination: props.formData.beneficiary.clientId,
           amount: props.formData.amount,

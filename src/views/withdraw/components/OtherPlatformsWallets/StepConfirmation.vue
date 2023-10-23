@@ -116,7 +116,7 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 }
 
 async function makeTransaction() {
-  const withDrawService = WithdrawService.instance()
+  const withDrawService = new WithdrawService()
   submitting.value = true
   withDrawService
     .makeAssetExternalTransfer({

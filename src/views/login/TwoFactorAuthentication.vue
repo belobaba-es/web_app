@@ -6,7 +6,7 @@
 
     <div class="container-main">
       <VeryCodeTwoFactorAuth
-        :account-id="props.loginData.accountId"
+        :account-id="getClientId()"
         :recovery-link="true"
         @code-is-valid="isTwoFactorAuthCodeIsValid"
         @recovery-two-factor-auth="recoveryTwoFactorAuth"
@@ -16,40 +16,32 @@
     </div>
   </div>
 
-  <TwoFactorAuthRecovery v-if="isRecoveryTwoFactorAuth" :account-id="props.loginData.accountId" />
+  <TwoFactorAuthRecovery v-if="isRecoveryTwoFactorAuth" :account-id="getClientId()" />
 </template>
 <script setup lang="ts">
 import logo from '../../assets/img/logo.svg'
 import VeryCodeTwoFactorAuth from '../../components/VeryCodeTwoFactorAuth.vue'
 import Lang from '../../components/Lang.vue'
-import { AccountStatus, LoginData } from './types/login.interface'
-import { User, useUserStore } from '../../stores/user'
+
 import { ref } from 'vue'
 import TwoFactorAuthRecovery from './TwoFactorAuthRecovery.vue'
 import { useI18n } from 'vue-i18n'
+import { AccountStatus } from '../../types/accountStatus.enum'
+import { useAuth } from '../../composables/useAuth'
 
-const userStore = useUserStore()
+const { getAccountStatus, getClientId } = useAuth()
 const isRecoveryTwoFactorAuth = ref(false)
 
 const { t } = useI18n({
   useScope: 'global',
 })
 
-interface Props {
-  loginData: User
-}
-
-const props = defineProps<Props>()
-
 const isTwoFactorAuthCodeIsValid = (isValid: boolean) => {
   if (isValid) {
-    userStore.setUser(props.loginData as User)
-    const loginData = props.loginData as any
-
-    if (loginData.client.status !== AccountStatus.PROCESSING) {
+    if (getAccountStatus() !== AccountStatus.PROCESSING) {
       window.location.href = '/dashboard'
     } else {
-      window.location.href = `/profile/${props.loginData.accountId}`
+      window.location.href = `/profile/${getClientId()}`
     }
   }
 }

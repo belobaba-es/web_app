@@ -93,8 +93,9 @@ import ProgressSpinner from 'primevue/progressspinner'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import ModalTransactionDetails, { TransactionModalPayload } from '../../../components/ModalTransactionDetails.vue'
+import ModalTransactionDetails from '../../../components/ModalTransactionDetails.vue'
 import { formatDate } from '../../../shared/formatDate'
+import { TransactionModalPayload } from '../../../types/transactionModal.interface'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
@@ -104,7 +105,6 @@ const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   assetCode: string | undefined
 }>()
-const getHistoric = HistoricService.instance()
 const listTransaction = ref<LisTransaction[]>([])
 const submitting = ref(false)
 const nextPage = ref({
@@ -118,7 +118,7 @@ const modal = (b: boolean) => {
 
 onMounted(async () => {
   isLoadingTransactionDetails.value = true
-  await getHistoric
+  await new HistoricService()
     .historic(props.assetCode)
     .then(data => {
       data.results.forEach(element => {
@@ -176,7 +176,7 @@ const getTransactionType = (transactionData: any) => {
 const loadMoreItems = async () => {
   submitting.value = true
 
-  await getHistoric.historicNextPage(props.assetCode, nextPage.value.data).then(data => {
+  await new HistoricService().historicNextPage(props.assetCode, nextPage.value.data).then(data => {
     data.results.forEach(element => {
       listTransaction.value.push(element)
     })
@@ -209,7 +209,7 @@ const openModalTransactionDetails = (event: any, transaction: any) => {
 }
 
 const loadTransactionDetail = async (transaction: any) => {
-  await getHistoric
+  await new HistoricService()
     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
     .then(data => {
       const nameTo = `${transaction.beneficiary?.name ?? transaction?.nameTo ?? transaction.to?.label ?? ''}`

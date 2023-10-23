@@ -1,9 +1,8 @@
 import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
 import { Beneficiary, BeneficiaryType } from '../types/beneficiary.interface'
-import { useUserStore } from '../../../stores/user'
-import { AccountService } from '../../../shared/services/account'
 import { UserAccount } from '../types/account'
+import { useAuth } from '../../../composables/useAuth'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -17,13 +16,10 @@ export const useBeneficiary = () => {
   const nextPag = ref(1)
   const listBeneficiariesInternal = ref<UserAccount[]>()
 
-  const { getUserName, getUser } = useUserStore()
-
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
 
-    const beneficiaryService = BeneficiaryService.instance()
-    await beneficiaryService.listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
+    await new BeneficiaryService().listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
       resp.results.forEach((element: any) => {
         listBeneficiary.value.push(element)
       })
@@ -33,8 +29,7 @@ export const useBeneficiary = () => {
   }
 
   const fetchBeneficiariesAssets = async () => {
-    const beneficiaryService = BeneficiaryService.instance()
-    await beneficiaryService.listBeneficiaryAssets(listNextPag.value).then(resp => {
+    await new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })
@@ -47,13 +42,11 @@ export const useBeneficiary = () => {
   const fetchBeneficiariesInternal = async (type: TypeBeneficiaryInternal): Promise<void> => {
     submitting.value = true
 
-    const result = await BeneficiaryService.instance().listBeneficiaryInternal(type, nextPag.value)
+    const result = await new BeneficiaryService().listBeneficiaryInternal(type, nextPag.value)
 
     nextPag.value = Number(result.nextPag === null ? 0 : result.nextPag)
 
     submitting.value = false
-
-    console.log(result.results)
 
     const list = []
     for (const listElement of result.results) {

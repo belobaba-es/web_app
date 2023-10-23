@@ -1,24 +1,24 @@
 import { useBalanceWalletStore } from '../stores/balanceWallets'
 import { storeToRefs } from 'pinia'
 import { BalanceWallet } from '../views/deposit/types/asset.interface'
-import { useUserStore } from '../stores/user'
 import { useI18n } from 'vue-i18n'
-import { AssetsService } from '../views/deposit/services/assets'
+import { useAuth } from './useAuth'
+import { getBalanceWallets } from '../views/deposit/services/fetchAsset'
 
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
   const balanceWalletStore = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
+  const { getClientId } = useAuth()
 
   const requestBalance = async () => {
-    AssetsService.instance()
-      .getBalanceWallets()
-      .then(response => {
-        balanceWalletStore.setBalanceWallet(response)
-      })
+    getBalanceWallets().then(response => {
+      balanceWalletStore.setBalanceWallet(response)
+    })
   }
   const fetchBalanceWallets = async () => {
-    const userStore = useUserStore()
+    if (getClientId() === '') return
+
     await requestBalance()
     setInterval(async () => {
       await requestBalance()

@@ -6,21 +6,21 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { AccountStatus } from '../views/login/types/login.interface'
-import { useUserStore } from '../stores/user'
 import { onMounted, ref } from 'vue'
 import Message from 'primevue/message'
+import { AccountStatus } from '../types/accountStatus.enum'
+import { useAuth } from '../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
-const useUser = useUserStore()
 const isVisible = ref(false)
+const { getAccountStatus } = useAuth()
 
 onMounted(() => {
   areDocumentsUploaded()
 })
 
 const areDocumentsUploaded = () => {
-  isVisible.value = useUser.getUser.client.status == AccountStatus.REGISTERED
+  isVisible.value = getAccountStatus() == AccountStatus.REGISTERED
 }
 </script>
 

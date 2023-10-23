@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ username }}</p>
+      <p class="name_to">{{ getUserName() }}</p>
       <p class="date">
         {{ item.createdAt }}
       </p>
@@ -38,17 +38,15 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import { useUserStore } from '../../../stores/user'
 import { useI18n } from 'vue-i18n'
+import { useAuth } from '../../../composables/useAuth'
 
 defineProps<{
   item: any
 }>()
 const { t } = useI18n({ useScope: 'global' })
 
-const userStore = useUserStore()
-
-const username = userStore.getUser.name
+const { getUserName } = useAuth()
 </script>
 
 <style lang="scss">

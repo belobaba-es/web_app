@@ -59,7 +59,7 @@ export class FirebaseService {
         return
       }
 
-      const data = await AssetsService.instance().getBalanceWallets()
+      const data = await new AssetsService().getBalanceWallets()
 
       await this.setBalances(data)
     })

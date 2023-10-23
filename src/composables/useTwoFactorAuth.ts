@@ -1,12 +1,11 @@
 import { computed, onMounted, ref } from 'vue'
-import { useAccount } from './useAccount'
 import { TwoFactorService } from '../shared/services/twoFactor'
 import { useToast } from 'primevue/usetoast'
 import { TwoFactor } from '../views/profile/types/TwoFactorReponse'
 import { useI18n } from 'vue-i18n'
-import { User, useUserStore } from '../stores/user'
 import { AccountService } from '../shared/services/account'
 import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
+import { useAuth } from './useAuth'
 
 export const useTwoFactorAuth = () => {
   const isShowView = ref(false)
@@ -14,9 +13,8 @@ export const useTwoFactorAuth = () => {
   const submitting = ref(false)
   const twoFactorData = ref<TwoFactor>()
   const codeForVerify = ref<string>('')
-  const userStore = useUserStore()
 
-  const { fullName, email, accountId } = useAccount()
+  const { getUserName, getUserEmail, getClientId, twoFactorActive, isTwoFactorActive } = useAuth()
 
   const toast = useToast()
 
@@ -39,15 +37,13 @@ export const useTwoFactorAuth = () => {
   })
 
   const lookQRTwoFactor = async (): Promise<void> => {
-    const user = userStore.getUser as User
-
     const payload = {
-      accountId: user.clientId,
-      email: user.email,
-      name: user.name,
+      accountId: getClientId(),
+      email: getUserEmail(),
+      name: getUserName(),
     }
 
-    TwoFactorService.instance()
+    new TwoFactorService()
       .request(payload)
       .then((r: TwoFactor) => {
         twoFactorData.value = r
@@ -100,13 +96,13 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: account ?? userStore.getUser.client.clientId,
+        accountId: getClientId(),
         code: codeForVerify.value.replace('-', ''),
       }
 
       submitting.value = true
 
-      TwoFactorService.instance()
+      new TwoFactorService()
         .verifyCode(payload)
         .then(r => {
           submitting.value = false
@@ -144,13 +140,13 @@ export const useTwoFactorAuth = () => {
   const activeTwoFactor = async (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       const payload = {
-        accountId: accountId.value,
+        accountId: getClientId(),
         code: codeForVerify.value,
       }
 
       submitting.value = true
 
-      TwoFactorService.instance()
+      new TwoFactorService()
         .active(payload)
         .then(async r => {
           toast.add({
@@ -159,11 +155,11 @@ export const useTwoFactorAuth = () => {
             life: 4000,
           })
 
-          await AccountService.instance().enableTwoFactorAuthentication()
+          await new AccountService().enableTwoFactorAuthentication()
 
           submitting.value = false
 
-          setTwoFactorActive()
+          twoFactorActive()
 
           resolve(true)
         })
@@ -184,18 +180,8 @@ export const useTwoFactorAuth = () => {
     })
   }
 
-  const setTwoFactorActive = () => {
-    const user = userStore.getUser
-
-    user.client.twoFactorActive = true
-
-    userStore.setUser(user)
-  }
-
   const twoFactorIsActive = (): boolean => {
-    const user = userStore.getUser
-    console.log(user.client.twoFactorActive === true)
-    return user.client.twoFactorActive === true
+    return isTwoFactorActive()
   }
 
   const downloadCodeRecoveryTxtFile = (codes: string[]) => {

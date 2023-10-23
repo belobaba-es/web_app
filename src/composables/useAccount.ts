@@ -4,25 +4,25 @@ import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ProfileService } from '../views/profile/services/profile'
-import { useUserStore } from '../stores/user'
-import { Document, Member, Owner, TypeAccount } from '../views/profile/types/account.interface'
+import { Member, Owner, TypeAccount } from '../views/profile/types/account.interface'
 import { useToast } from 'primevue/usetoast'
 import showMessage from '../shared/showMessageArray'
+import { useAuth } from './useAuth'
 
 export const useAccount = () => {
   const router = useRouter()
   const route = useRoute()
   const accountStore = useAccountStore()
-  const userStore = useUserStore()
   const account = storeToRefs(accountStore)
   const { t } = useI18n({ useScope: 'global' })
   const toast = useToast()
+
   const submitting = ref(false)
 
   const currentPassword = ref<string>('')
   const newPassword = ref<string>('')
   const confirmNewPassword = ref<string>('')
-  const { getUser } = useUserStore()
+  const { getAccountType, getUserName, getUserEmail } = useAuth()
 
   // const phoneNumberWithCountry = computed(() => {
   //   // return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
@@ -33,7 +33,7 @@ export const useAccount = () => {
   //     return `${account.owner.value?.phoneCountry} ${account.owner.value?.phoneNumber}`
   //   }
   // })
-  const phoneNumberWithCountry = getUser.client.phoneNumber
+  // const phoneNumberWithCountry = getUser.client.phoneNumber
 
   // const address = computed(() => {
   //   if (isShowView.value && route.params.contactId) {
@@ -43,10 +43,10 @@ export const useAccount = () => {
   //     return account.owner.value?.streetOne
   //   }
   // })
-  const address = getUser.client.streetOne
+  // const address = getUser.client.streetOne
 
   // const isNaturalAccount = computed<boolean>(() => account.natureAccount.value === 'natural_person')
-  const isNaturalAccount = getUser.client.type === TypeAccount.COMPANY
+  const isNaturalAccount = getAccountType() === TypeAccount.COMPANY
 
   // const fullName = computed(() => {
   //   const naturalAccount = `${account.owner.value?.firstName} ${account.owner.value?.middleName} ${account.owner.value?.lastName}`
@@ -64,7 +64,7 @@ export const useAccount = () => {
   //
   //   return companyAccount
   // })
-  const fullName = getUser.client.name
+  const fullName = getUserName()
 
   const dateBirth = computed(() => {
     if (isShowView.value && route.params.contactId) {
@@ -82,7 +82,7 @@ export const useAccount = () => {
   //   }
   // })
 
-  const taxId = getUser.client.taxId !== undefined || getUser.client.taxId !== '' ? getUser.client.taxId : ''
+  // const taxId = getUser.client.taxId !== undefined || getUser.client.taxId !== '' ? getUser.client.taxId : ''
 
   // const email = computed(() => {
   //   if (isShowView.value && route.params.contactId) {
@@ -92,7 +92,7 @@ export const useAccount = () => {
   //     return account.owner.value?.email
   //   }
   // })
-  const email = getUser.client.email
+  const email = getUserEmail()
 
   const labelNameProfile = computed(() => {
     // return isNaturalAccount.value ? t('fullName') : t('businessNameLabel')
@@ -170,7 +170,6 @@ export const useAccount = () => {
 
   const submitProfileForm = () => {
     submitting.value = true
-    const profileService = ProfileService.instance()
 
     let contactId = null
     let isNaturalAccountLet = null
@@ -191,7 +190,7 @@ export const useAccount = () => {
       isNaturalAccountLet = true
     }
 
-    profileService
+    new ProfileService()
       .updateContact(account.accountId.value!, contactId!, isNaturalAccountLet!, accountStore.form)
       .then(() => {
         submitting.value = false
@@ -252,9 +251,8 @@ export const useAccount = () => {
 
   const submitUpdatePassword = async () => {
     submitting.value = true
-    const profileService = ProfileService.instance()
-    profileService
-      .updatePassword(userStore.getUser.email, newPassword.value, currentPassword.value)
+    new ProfileService()
+      .updatePassword(getUserEmail(), newPassword.value, currentPassword.value)
       .then(() => {
         submitting.value = false
         clearUpdatePasswordForm()
@@ -308,9 +306,7 @@ export const useAccount = () => {
     setAccountForm,
     ...account,
     fullName,
-    phoneNumberWithCountry,
     formTitle,
-    isNaturalAccount,
     submitting,
     labelNameProfile,
     newPassword,
@@ -321,9 +317,7 @@ export const useAccount = () => {
     isUpdateProfileView,
     isShowView,
     dateBirth,
-    taxId,
     email,
-    address,
     isEditPartnerAccount,
     getPartnerToEdit,
     isAccountBusinessComputed,

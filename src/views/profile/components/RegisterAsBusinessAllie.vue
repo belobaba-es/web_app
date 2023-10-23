@@ -35,12 +35,12 @@ import InputText from 'primevue/inputtext'
 import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { BusinessAllie } from '../services/businessAllie'
+import { BusinessAllieService } from '../services/businessAllieService'
 import { useToast } from 'primevue/usetoast'
 
 const referredBy = ref('')
 const { t } = useI18n({ useScope: 'global' })
-const businessAllieService = new BusinessAllie()
+const businessAllieService = new BusinessAllieService()
 const submitting = ref(false)
 const toast = useToast()
 const emit = defineEmits(['create'])

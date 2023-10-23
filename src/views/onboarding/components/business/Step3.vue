@@ -188,10 +188,9 @@ const saveData = () => {
     }
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
+    localStorage.setItem('registerNumber', formData.value.informationCompany.registerNumber)
 
-    const onboardingService = OnboardingService.instance()
-
-    onboardingService
+    new OnboardingService()
       .openingAccountBussiness(formData.value)
       .then(resp => {
         submitting.value = false
@@ -200,7 +199,6 @@ const saveData = () => {
           detail: resp.message,
           life: 4000,
         })
-
 
         router.push('/dashboard')
       })

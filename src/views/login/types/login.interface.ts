@@ -1,65 +1,11 @@
-export interface LoginResponse {
-  message: string
-  data: LoginData
+import { AccountStatus } from '../../../types/accountStatus.enum'
+
+interface FeeSwap {
+  swapBuy: number
+  swapSell: number
 }
 
-export interface LoginData {
-  active: boolean
-  accountId: string
-  name: string
-  email: string
-  token: string
-  country: string
-  client: any
-  postalCode: string
-  region: string
-  middleName: string
-  firstName: string
-  contactId: string
-  phoneCountry: string
-  city: string
-  taxId: string
-  label: string
-  streetOne: string
-  phoneNumber: string
-  phoneSMS: boolean
-  contactType: string
-  lastName: string
-  dateBirth: string
-  taxCountry: string
-  streetTwo: string
-  account: Account
-  kyc: {
-    cipChecks: string
-    kycRequiredActions: { [key: string]: string }
-  }
-}
-
-export interface Account {
-  accountId: string
-  swapEnable: boolean
-  twoFactorActive: boolean
-  status: AccountStatus
-  kycMembers: {
-    contactId: string
-    kyc: {
-      cipChecks: string
-      kycRequiredActions: { [key: string]: string }
-    }[]
-  }
-  feeWire?: FeeWireContent
-}
-
-export enum AccountStatus {
-  CHANGES_REQUESTED = 'CHANGES_REQUESTED',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  SUBMITTED = 'SUBMITTED',
-  PROCESSING = 'PROCESSING',
-  REGISTERED = 'REGISTERED',
-}
-
-export type FeeWireContent = {
+export interface FeeWire {
   domestic: {
     in: number
     out: number
@@ -68,4 +14,32 @@ export type FeeWireContent = {
     in: number
     out: number
   }
+}
+
+interface Client {
+  clientId: string
+  dateBirth: Date
+  dni: string
+  feeSwap: FeeSwap
+  feeWire: FeeWire
+  status: AccountStatus
+  twoFactorActive: boolean
+  phoneNumber: string
+  phoneCountry: string
+  type: string
+  name: string
+  postalCode: string
+  region: string
+  city: string
+  country: string
+  streetOne: string
+}
+
+export interface UserAuth {
+  email: string
+  token: string
+  clientId: string
+  active: boolean
+  userId: string
+  client: Client
 }

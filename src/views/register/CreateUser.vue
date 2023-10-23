@@ -163,8 +163,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const didLoginEmit = defineEmits(['didLogin'])
 
-const registerService = RegisterService.instance()
-
 const form = reactive({
   email: '',
   password: '',
@@ -276,7 +274,7 @@ const handleSubmit = () => {
 
   submitting.value = true
 
-  registerService
+  new RegisterService()
     .register(form.email.toLowerCase(), form.password)
     .then(data => {
       submitting.value = false

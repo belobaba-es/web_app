@@ -33,11 +33,9 @@ import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
-import { AccountService } from '../../../shared/services/account'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'
-import { useBeneficiary } from '../composables/useBeneficiary'
 
 const router = useRouter()
 const route = useRoute()
@@ -46,8 +44,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 const type = ref('International')
-
-const accountService = AccountService.instance()
 
 route.meta.noCache = true
 
@@ -66,24 +62,13 @@ const items = ref([
   },
 ])
 
-const {
-  formObject,
-
-  nextStepPage,
-  prevStepPage,
-  stepComplete,
-  toBack,
-} = useWithdraw(items)
-
-const { fetchBeneficiaries, listBeneficiary } = useBeneficiary()
+const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)
 }
 
 onMounted(async () => {
-  console.log('International view', route.params.type)
-
   if (route.params.type !== 'domestic') {
     type.value = 'International'
   }

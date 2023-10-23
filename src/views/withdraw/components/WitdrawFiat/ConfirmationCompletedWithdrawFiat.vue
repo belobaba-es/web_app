@@ -54,11 +54,10 @@ import transformCharactersIntoAsterics from '../../../../shared/transformCharact
 import { generateTransactionReceipt } from '../../../../shared/generatePdf'
 import logo from '../../../../assets/img/logo.png'
 import { ref } from 'vue'
-import { useUserStore } from '../../../../stores/user'
 import { useRouter } from 'vue-router'
+import { useAuth } from '../../../../composables/useAuth'
 
 const router = useRouter()
-const userStore = useUserStore()
 const { t } = useI18n({ useScope: 'global' })
 
 const isGeneratingTransactionPDF = ref(false)
@@ -68,9 +67,7 @@ const props = defineProps<{
   transactionId: string
 }>()
 
-/*const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name*/
+const { getUserId, getUserName } = useAuth()
 
 const goToWithdrawIndex = () => {
   if (props.formData.typeTransaction === 'international') {
@@ -83,8 +80,7 @@ const goToWithdrawIndex = () => {
 }
 const generatePDFTransactionReceipt = async () => {
   isGeneratingTransactionPDF.value = true
-  const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.accountId)
+  const userAccountNumber = transformCharactersIntoAsterics(getUserId())
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')
@@ -95,7 +91,7 @@ const generatePDFTransactionReceipt = async () => {
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const formattedDate = formatter.format(date)
 
-  transactionPDF[t('userName')] = `${userStore.getUser.client.name}`
+  transactionPDF[t('userName')] = `${getUserName()}`
   transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountId}`
   transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.informationOwner.name}`
   transactionPDF[t('amount')] = `${props.formData.amount} USD`

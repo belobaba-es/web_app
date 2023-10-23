@@ -67,9 +67,7 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
-import { useUserStore } from '../../../../stores/user'
 import { BeneficiaryService } from '../../services/beneficiary'
-import { BeneficiaryFiatInternacional } from '../../types/beneficiary.interface'
 
 import router from '../../../../router'
 
@@ -82,12 +80,13 @@ import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 
 import { useToast } from 'primevue/usetoast'
+import { useAuth } from '../../../../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 
-const { getUserName } = useUserStore()
+const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
@@ -144,7 +143,6 @@ const saveBeneficiary = () => {
     const formData = ref()
 
     if (props.formData.informationBank.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
-
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
@@ -166,7 +164,6 @@ const saveBeneficiary = () => {
         },
       }
     } else {
-
       formData.value = {
         typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
         informationBank: {
@@ -186,8 +183,7 @@ const saveBeneficiary = () => {
       }
     }
 
-    const beneficiaryService = BeneficiaryService.instance()
-    beneficiaryService
+    new BeneficiaryService()
       .saveBeneficiary(formData.value)
       .then(resp => {
         submitting.value = false

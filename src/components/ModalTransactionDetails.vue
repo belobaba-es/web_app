@@ -90,32 +90,12 @@ import Divider from 'primevue/divider'
 import transformCharactersIntoAsterics from '../shared/transformCharactersIntoAsterics'
 import { generateTransactionReceipt } from '../shared/generatePdf'
 import logo from '../assets/img/logo.png'
-import { useUserStore } from '../stores/user'
 import { TransactionHistory } from '../views/transaction-history/types/transaction-history-response.interface'
+import { useAuth } from '../composables/useAuth'
 
-export interface TransactionModalPayload {
-  id?: any
-  formatedDate?: any
-  feeWire?: any
-  isInternal?: boolean
-  amount?: any
-  assetCode?: string
-  nameTo?: any
-  assetId?: string
-  counterparty?: CounterpartyInfo
-  reference?: any
-  beneficiary?: any
-}
-export interface CounterpartyInfo {
-  informationOwner: {
-    name: string
-    country: string
-  }
-}
-const userStore = useUserStore()
-// todo set company name when ready
-const username =
-  userStore.getUser.client.type === 'NATURAL_PERSON' ? userStore.getUser.client.name : userStore.getUser.client.name
+const { getUserName, getClientId } = useAuth()
+
+const username = getUserName()
 
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
@@ -125,18 +105,17 @@ const props = defineProps<{
 }>()
 const isGeneratingTransactionPDF = ref(false)
 const hasCounterParty = (): boolean => {
-  console.log('has counter party', props.transaction.counterparty ? true : false)
   return props.transaction.counterparty ? true : false
 }
 const ownerName = props.transaction.counterparty?.informationOwner?.name ?? ''
 const isUsdAndOwnerNameExists = props.transaction.assetId === 'USD' && ownerName && ownerName.length > 0
 const isUsdOrAssetIdIsUsd = props.transaction.assetCode === 'USD' || props.transaction.assetId === 'USD'
+
 const generatePDFTransactionReceipt = () => {
   const transaction: any = props.transaction
 
   isGeneratingTransactionPDF.value = true
-  const user = userStore.getUser
-  const userAccountNumber = transformCharactersIntoAsterics(user.clientId)
+  const userAccountNumber = transformCharactersIntoAsterics(getClientId())
 
   const transactionPDF: any = {}
   const title = t('transactionReceipt')

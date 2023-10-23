@@ -64,7 +64,6 @@ import { ref } from 'vue'
 import { WithdrawService } from '../../services/withdraw'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
-import { useUserStore } from '../../../../stores/user'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
@@ -82,10 +81,6 @@ const transactionId = ref('')
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const router = useRouter()
-const userStore = useUserStore()
-const username = userStore.getUser.firstName
-  ? userStore.getUser.firstName + ' ' + userStore.getUser.lastName
-  : userStore.getUser.name
 const props = defineProps<{
   formData: any
 }>()
@@ -110,10 +105,9 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 function makeTransaction() {
-  const withdraw = WithdrawService.instance()
   submitting.value = true
 
-  withdraw
+  new WithdrawService()
     .makeFiatExternalTransfer({
       amount: props.formData.amount,
       beneficiaryId: props.formData.beneficiary.counterpartyId,

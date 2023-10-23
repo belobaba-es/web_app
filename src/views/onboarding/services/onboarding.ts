@@ -1,28 +1,17 @@
 import { HttpService } from '../../../shared/services/http'
 
-export class OnboardingService extends HttpService {
-  private static _instance: OnboardingService
-
-  constructor() {
-    // @ts-ignore
-    super(import.meta.env.VITE_BASE_ENDPOINT)
-  }
-
-  static instance() {
-    if (this._instance) {
-      return this._instance
-    }
-
-    this._instance = new OnboardingService()
-
-    return this._instance
-  }
-
+export class OnboardingService {
   async openingAccountPersonal(payload: any): Promise<any> {
-    return await this.post<any>(`account/custodial-account-natural-person`, payload)
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
+      `account/custodial-account-natural-person`,
+      payload
+    )
   }
 
   async openingAccountBussiness(payload: any): Promise<any> {
-    return await this.post<any>(`account/custodial-account-company`, payload)
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
+      `account/custodial-account-company`,
+      payload
+    )
   }
 }

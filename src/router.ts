@@ -6,11 +6,9 @@ import Partners from './views/profile/Partners.vue'
 import Settings from './views/profile/settings/Index.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
-import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
-import { useUserStore } from './stores/user'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
@@ -58,11 +56,13 @@ import CompletedDocument from './views/onboarding/components/CompletedDocument.v
 import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
 import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
 import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
+import BusinessStep4 from './views/onboarding/components/business/Step4.vue'
 import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
 import EditSharedHolder from './views/onboarding/components/business/editNewShareHolder.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
+import { useAuth } from './composables/useAuth'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -149,7 +149,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat',
-            component: DepositFiat,
+            component: () => import('./views/deposit/Fiat.vue'),
           },
           {
             path: 'crypto/:assetCode?',
@@ -302,7 +302,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'history',
-            component: SwapHistory,
+            component: () => import('./views/swap/History.vue'),
           },
           {
             path: 'success',
@@ -360,6 +360,10 @@ const routes: RouteRecordRaw[] = [
             component: BusinessStep3,
           },
           {
+            path: 'business/step4',
+            component: BusinessStep4,
+          },
+          {
             path: 'business/new-shareholder',
             component: NewSharedHolder,
           },
@@ -384,18 +388,17 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore()
-  console.log(to.path)
+  const { getUserEmail } = useAuth()
   if (
     to.path !== '/' &&
     to.path !== '/create-user' &&
     to.path !== '/confirm-email' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
-    !userStore.getUser
+    getUserEmail() === ''
   ) {
     next({ path: '/' })
-  } else if (to.path === '/' && userStore.getUser) {
+  } else if (to.path === '/' && getUserEmail() !== '') {
     next({ path: '/dashboard' })
   } else {
     next()

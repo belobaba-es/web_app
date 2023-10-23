@@ -115,8 +115,7 @@ export const useAccountStore = defineStore('account', {
     },
     async getAccountByID(accountId: string | string[]) {
       this.loading = true
-      const profileService = ProfileService.instance()
-      await profileService.getAccountByID(accountId).then(data => {
+      await new ProfileService().getAccountByID(accountId).then(data => {
         this.setAccount(data)
         this.loading = false
       })

@@ -11,19 +11,19 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '../../../stores/user'
 import { onMounted, ref } from 'vue'
-import { BusinessAllie } from '../services/businessAllie'
+import { BusinessAllieService } from '../services/businessAllieService'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import InputText from 'primevue/inputtext'
+import { useAuth } from '../../../composables/useAuth'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
-const userStore = useUserStore()
 const referralLink = ref('')
 const isApproved = ref(false)
-const businessAllieService = new BusinessAllie()
+const businessAllieService = new BusinessAllieService()
+const { getClientId } = useAuth()
 
 onMounted(() => {
   getBusinessAllieStatus()
@@ -36,7 +36,7 @@ const getBusinessAllieStatus = async () => {
   businessAllieService.getBusinessAllieStatus().then(res => {
     if (res.status === 'APPROVED') {
       isApproved.value = true
-      generateReferralLink(userStore.getUser.account.accountId)
+      generateReferralLink(getClientId())
     }
   })
 }

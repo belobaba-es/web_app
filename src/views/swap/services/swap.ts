@@ -1,45 +1,32 @@
 import { HttpService } from '../../../shared/services/http'
 import { createExchangeResponse } from '../types/create-exchange-response.interface'
-import { ExchangeResponse } from '../types/quote-response.interface'
 
-export class SwapService extends HttpService {
-  private static _instance: SwapService
-
-  constructor() {
-    // @ts-ignore
-    super(import.meta.env.VITE_BASE_ENDPOINT)
-  }
-
-  static instance() {
-    if (this._instance) {
-      return this._instance
-    }
-
-    this._instance = new SwapService()
-
-    return this._instance
-  }
-
+export class SwapService {
   async createExchange(payload: any): Promise<createExchangeResponse> {
-    const resp = await this.post<createExchangeResponse>(`swap/exchanges`, payload, true)
-    return resp
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<createExchangeResponse>(
+      `swap/exchanges`,
+      payload,
+      true
+    )
   }
 
   async execute(exchangeId: string): Promise<any> {
-    const resp = await this.post<any>(`swap/exchanges/accept/${exchangeId}`, {}, true)
-    return resp
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
+      `swap/exchanges/accept/${exchangeId}`,
+      {},
+      true
+    )
   }
 
   async exchanges(nextPag: number = 1) {
-    const resp = await this.get<any>(`swap/exchanges/${nextPag}/20`, {}, true)
-    return resp
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(`swap/exchanges/${nextPag}/20`, {}, true)
   }
 
   async cancelQuote(quiteId: string) {
-    // todo create this method in the backend
-    return
-
-    const resp = await this.patch<any>(`swap/quotes/cancel/${quiteId}`, {}, true)
-    return resp
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).patch<any>(
+      `swap/quotes/cancel/${quiteId}`,
+      {},
+      true
+    )
   }
 }

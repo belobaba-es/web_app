@@ -51,6 +51,7 @@ const props = defineProps<{
   formData: any
   toNew: any
 }>()
+
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const search = ref('')
 const route = useRoute()

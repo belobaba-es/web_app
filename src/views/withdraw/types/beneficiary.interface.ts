@@ -1,4 +1,4 @@
-import { Pagination } from '../../../shared/types/pagination'
+import { Pagination } from '../../../types/pagination'
 
 export enum BeneficiaryType {
   INTERNATIONAL = 'INTERNATIONAL',

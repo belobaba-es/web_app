@@ -7,28 +7,26 @@
 </template>
 <script setup lang="ts">
 import Message from 'primevue/message'
-import { useUserStore } from '../../../stores/user'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
-const userStore = useUserStore()
-
 const messages = ref<any>([])
 
 onMounted(() => {
-  const kyc = userStore.getWarningKYC(route.params.contactId === undefined ? undefined : String(route.params.contactId))
-  if (!kyc) {
-    return
-  }
-
-  for (let kycRequiredActionsKey in kyc.kycRequiredActions) {
-    messages.value.push({ content: kyc.kycRequiredActions[kycRequiredActionsKey] })
-  }
-
-  if (kyc.cipChecks !== '') {
-    messages.value.push({ content: kyc.cipChecks })
-  }
+  //TODO implementar KYC noba
+  // const kyc = userStore.getWarningKYC(route.params.contactId === undefined ? undefined : String(route.params.contactId))
+  // if (!kyc) {
+  //   return
+  // }
+  //
+  // for (let kycRequiredActionsKey in kyc.kycRequiredActions) {
+  //   messages.value.push({ content: kyc.kycRequiredActions[kycRequiredActionsKey] })
+  // }
+  //
+  // if (kyc.cipChecks !== '') {
+  //   messages.value.push({ content: kyc.cipChecks })
+  // }
 })
 </script>
 

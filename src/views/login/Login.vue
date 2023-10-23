@@ -63,7 +63,7 @@
             type="button"
             :label="t('noAccount')"
             class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
-            @click="redirectSignin()"
+            @click="redirectSigning()"
           />
         </form>
       </div>
@@ -77,61 +77,52 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
-import { LoginService } from './services/login'
 import { useRouter } from 'vue-router'
-import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
+import { useAuth } from '../../composables/useAuth'
+import { AccountStatus } from '../../types/accountStatus.enum'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
 
-const submitting = ref(false)
+const { form, submitting, makeLogin, redirectSigning, redirectPage } = useAuth()
+
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const didLoginEmit = defineEmits(['didLogin'])
-
-const loginService = LoginService.instance()
-const form = reactive({
-  user: '',
-  pass: '',
-  remember: false,
-})
-
 const router = useRouter()
 
-const redirectSignin = () => {
-  router.push('/create-user')
-}
+const handleSubmit = async () => {
+  try {
+    const userAuth = await makeLogin()
+    if (!userAuth) {
+      return
+    }
 
-const redirectPage = () => {
-  window.location.href = window.location.origin ?? 'https://noba.cash/'
-}
+    if (userAuth.client.status !== AccountStatus.REGISTERED) {
+      window.location.href = '/dashboard'
+      return
+    }
 
-const handleSubmit = () => {
-  submitting.value = true
-  loginService
-    .login(form.user.toLowerCase(), form.pass)
-    .then(data => {
-      const { data: userPayload } = data
+    if (userAuth.client.clientId === null) {
+      window.location.href = '/onboarding'
+      return
+    }
 
-      submitting.value = false
-
-      didLoginEmit('didLogin', userPayload)
+    window.location.href = `/profile/${userAuth.client.clientId}`
+  } catch (e: any) {
+    submitting.value = false
+    toast.add({
+      severity: 'warn',
+      summary: t('somethingWentWrong'),
+      detail: e.response.data.message,
+      life: 4000,
     })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'info',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
-    })
+  }
 }
 </script>
 

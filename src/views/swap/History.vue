@@ -130,11 +130,10 @@ const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
 const listAssets = ref<Asset[]>([])
 const isLoading = ref<boolean>(true)
-const assetsService = AssetsService.instance()
 const exchangesList = ref<ExchangeCreated[]>()
 
 onMounted(async () => {
-  await assetsService.list().then(data => {
+  await new AssetsService().list().then(data => {
     listAssets.value = data
   })
 
