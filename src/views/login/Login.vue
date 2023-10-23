@@ -59,12 +59,12 @@
             </div>
           </div>
 
-          <Button
-            type="button"
-            :label="t('noAccount')"
-            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
-            @click="redirectSigning()"
-          />
+          <!--          <Button-->
+          <!--            type="button"-->
+          <!--            :label="t('noAccount')"-->
+          <!--            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"-->
+          <!--            @click="redirectSigning()"-->
+          <!--          />-->
         </form>
       </div>
     </div>
