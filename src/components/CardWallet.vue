@@ -2,7 +2,7 @@
   <h2 class="font-medium">{{ t('wallet') }}</h2>
 
   <Carousel
-    v-if="submitting === true && carousel === true"
+    v-if="submitting === true && carousel"
     :value="skeleton"
     :numVisible="5"
     :showIndicators="false"
