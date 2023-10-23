@@ -43,7 +43,7 @@ export const useTwoFactorAuth = () => {
       name: getUserName(),
     }
 
-    TwoFactorService.instance()
+    new TwoFactorService()
       .request(payload)
       .then((r: TwoFactor) => {
         twoFactorData.value = r
@@ -102,7 +102,7 @@ export const useTwoFactorAuth = () => {
 
       submitting.value = true
 
-      TwoFactorService.instance()
+      new TwoFactorService()
         .verifyCode(payload)
         .then(r => {
           submitting.value = false
@@ -146,7 +146,7 @@ export const useTwoFactorAuth = () => {
 
       submitting.value = true
 
-      TwoFactorService.instance()
+      new TwoFactorService()
         .active(payload)
         .then(async r => {
           toast.add({
@@ -155,7 +155,7 @@ export const useTwoFactorAuth = () => {
             life: 4000,
           })
 
-          await AccountService.instance().enableTwoFactorAuthentication()
+          await new AccountService().enableTwoFactorAuthentication()
 
           submitting.value = false
 

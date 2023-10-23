@@ -115,8 +115,9 @@ const handleSubmit = async () => {
 
     window.location.href = `/profile/${userAuth.client.clientId}`
   } catch (e: any) {
+    submitting.value = false
     toast.add({
-      severity: 'info',
+      severity: 'warn',
       summary: t('somethingWentWrong'),
       detail: e.response.data.message,
       life: 4000,

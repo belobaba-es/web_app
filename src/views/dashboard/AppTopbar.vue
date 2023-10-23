@@ -51,7 +51,7 @@ const items = ref([
     label: t('profile'),
     icon: 'pi pi-user',
     command: () => {
-      router.push(`/profile/${getClientId}`)
+      router.push(`/profile/${getClientId()}`)
     },
   },
   {

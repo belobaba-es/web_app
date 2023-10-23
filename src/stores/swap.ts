@@ -80,7 +80,6 @@ export const useSwapStore = defineStore('swap', () => {
       return
 
     loading.value = true
-    const swapService = SwapService.instance()
 
     if (transactionType.value === 'buy') {
       sourceWalletId.value = 'USD'
@@ -93,7 +92,7 @@ export const useSwapStore = defineStore('swap', () => {
     const amountFormated = amountIsUnitCount.value
       ? Math.trunc(unitCount.value * 1e6) / 1e6
       : amountAfterRemovingFee.value
-    await swapService
+    await new SwapService()
       .createExchange({
         amount: amountFormated,
         sourceWalletId: sourceWalletId.value,
@@ -139,8 +138,8 @@ export const useSwapStore = defineStore('swap', () => {
   const executeQuote = async () => {
     if (amountAfterRemovingFee.value === 0.0) return
     loading.value = true
-    const swapService = SwapService.instance()
-    await swapService
+
+    await new SwapService()
       .execute(exchangeId.value)
       .then(async response => {
         successExecuted.value = true
@@ -227,8 +226,8 @@ export const useSwapStore = defineStore('swap', () => {
 
   const fetchExchanges = async () => {
     loading.value = true
-    const swapService = SwapService.instance()
-    await swapService.exchanges().then(response => {
+
+    await new SwapService().exchanges().then(response => {
       exchanges.value = response
       loading.value = false
     })
@@ -262,14 +261,13 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const cancelQuote = async () => {
-    const swapService = SwapService.instance()
-    await swapService.cancelQuote(exchangeId.value).then(() => (exchangeId.value = undefined))
+    await new SwapService().cancelQuote(exchangeId.value).then(() => (exchangeId.value = undefined))
   }
 
   const getNextPage = async () => {
     loading.value = true
-    const swapService = SwapService.instance()
-    await swapService
+
+    await new SwapService()
       .exchanges(exchanges.value.nextPag)
       .then(response => {
         response.results.forEach((result: ExchangeCreated) => {

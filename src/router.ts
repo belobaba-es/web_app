@@ -6,7 +6,6 @@ import Partners from './views/profile/Partners.vue'
 import Settings from './views/profile/settings/Index.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
-import DepositFiat from './views/deposit/Fiat.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
@@ -150,7 +149,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat',
-            component: DepositFiat,
+            component: () => import('./views/deposit/Fiat.vue'),
           },
           {
             path: 'crypto/:assetCode?',
@@ -303,7 +302,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'history',
-            component: SwapHistory,
+            component: () => import('./views/swap/History.vue'),
           },
           {
             path: 'success',
