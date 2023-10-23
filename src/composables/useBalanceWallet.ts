@@ -28,7 +28,7 @@ export const useBalanceWallet = () => {
   const getBalanceByCode = (assetCode: string): number => {
     const wallet = balanceWalletStore.getWalletByAssetCode(assetCode)
     if (wallet) {
-      return Number(calculateBalance(wallet?.assetCode, wallet?.balance, wallet.blockedBalance ?? 0))
+      return calculateBalance(wallet?.assetCode, wallet?.balance, wallet.blockedBalance ?? 0) as unknown as number
     }
 
     return 0

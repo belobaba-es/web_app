@@ -8,7 +8,7 @@
       <div class="mr-2 ml-2">
         <p style="margin: 0; font-size: 12px">{{ t('balance') }}</p>
         <span>
-          <strong class="font-bold"> {{ balanceWalletUsd() }} USD</strong>
+          <strong class="font-bold"> {{ getBalanceByCode('USD') }} USD</strong>
         </span>
       </div>
       <!--      <Button class="p-button-outlined mr-2 ml-2">-->
@@ -41,10 +41,6 @@ const { t } = useI18n({ useScope: 'global' })
 const { getUserName, getClientId, logout } = useAuth()
 
 const username = getUserName()
-
-const balanceWalletUsd = () => {
-  return getBalanceByCode('USD')
-}
 
 const items = ref([
   {
