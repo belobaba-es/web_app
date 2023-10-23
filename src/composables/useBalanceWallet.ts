@@ -23,23 +23,15 @@ export const useBalanceWallet = () => {
     setInterval(async () => {
       await requestBalance()
     }, 10000)
-
-    // const firebaseService = await new FirebaseService(userStore.getUser.accountId)
-    // await firebaseService.listenFirebaseChanges()
-    // firebaseService.getBalances().then(observable => {
-    //   observable.subscribe((balances: BalanceWallet[]) => {
-    //     balanceWalletStore.setBalanceWallet(balances)
-    //   })
-    // })
   }
 
-  const getBalanceByCode = (assetCode: string): number => {
-    const balance = balanceWalletStore.getBalanceByCode(assetCode)
-    if (assetCode === 'USD') {
-      return Number(balance.toFixed(2))
+  const getBalanceByCode = (assetCode: string): string => {
+    const wallet = balanceWalletStore.getWalletByAssetCode(assetCode)
+    if (wallet) {
+      return calculateBalance(wallet?.assetCode, wallet?.balance, wallet.blockedBalance ?? 0)
     }
 
-    return Number(balance.toFixed(8))
+    return '0'
   }
 
   const getWalletByAssetCode = (assetCode: string): BalanceWallet | undefined => {
