@@ -111,13 +111,11 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 }
 
 function makeTransaction() {
-  const withDrawService = WithdrawService.instance()
-
   submitting.value = true
   console.log(props.formData)
   switch (route.params.type) {
     case 'fiat':
-      withDrawService
+      new WithdrawService()
         .makeFiatInternalTransfer({
           amount: props.formData.amount,
           clientIdDestination: props.formData.beneficiary.clientId,
@@ -141,7 +139,7 @@ function makeTransaction() {
         })
       break
     case 'crypto':
-      withDrawService
+      new WithdrawService()
         .makeAssetInternalTransfer({
           clientIdDestination: props.formData.beneficiary.clientId,
           amount: props.formData.amount,

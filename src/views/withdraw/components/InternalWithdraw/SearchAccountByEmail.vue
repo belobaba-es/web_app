@@ -27,16 +27,12 @@ import { useAccount } from '../../../../composables/useAccount'
 
 const toast = useToast()
 const emit = defineEmits(['listBeneficiaries'])
-let accountService: AccountService
+
 const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 const submitting = ref(false)
 const { fetchAccount, accountId } = useAccount()
 const shouldSearchUsers = ref(true)
-
-onMounted(() => {
-  accountService = AccountService.instance()
-})
 
 const onSearch = () => {
   let email = search.value
@@ -50,7 +46,7 @@ const onSearch = () => {
   }
 
   submitting.value = true
-  accountService
+  new AccountService()
     .getAccountByEmail(email.toLowerCase())
     .then(resp => {
       emit('listBeneficiaries', [resp])

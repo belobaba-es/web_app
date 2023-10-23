@@ -48,8 +48,6 @@ const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
 
-const accountService = AccountService.instance()
-
 const items = ref([
   {
     label: t('wallets'),
@@ -72,7 +70,7 @@ const newBeneficiary = () => {
 }
 
 // const onSearch = () => {
-//   accountService
+//   new AccountService()
 //     .getAccountByEmail(search.value.toLowerCase())
 //     .then(resp => {
 //       console.log(resp)

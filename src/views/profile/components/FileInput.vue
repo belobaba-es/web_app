@@ -81,9 +81,6 @@ const icon = computed(() => {
 })
 
 const handleUpload = async (event: any) => {
-  
-  console.log('handleUpload')
-  console.log(props.isPartner)
   const file = event.target.files[0]
   doc.value = file
   setLoading(true)
@@ -112,8 +109,7 @@ const handleUpload = async (event: any) => {
     description: props.label,
   }
 
-  const profileService = ProfileService.instance()
-  await profileService
+  await new ProfileService()
     .updateDocuments(formData)
     .then(response => {
       setLoading(false)

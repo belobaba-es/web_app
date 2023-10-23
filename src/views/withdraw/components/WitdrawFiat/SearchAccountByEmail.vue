@@ -14,7 +14,7 @@
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { AccountService } from '../../../../shared/services/account'
 
@@ -24,10 +24,6 @@ let accountService: AccountService
 const { t } = useI18n({ useScope: 'global' })
 const search = ref('')
 const submitting = ref(false)
-
-onMounted(() => {
-  accountService = AccountService.instance()
-})
 
 const onSearch = () => {
   if (search.value.trim() === '') {
@@ -39,7 +35,7 @@ const onSearch = () => {
     return
   }
   submitting.value = true
-  accountService
+  new AccountService()
     .getAccountByEmail(search.value.toLowerCase())
     .then(resp => {
       emit('listBeneficiaries', [resp])

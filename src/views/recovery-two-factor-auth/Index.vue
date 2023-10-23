@@ -89,10 +89,10 @@ onMounted(() => {
   }
   submitting.value = true
 
-  TwoFactorService.instance()
+  new TwoFactorService()
     .verifyTokenToRecoveryTwoFactorAuth(String(token))
     .then(async r => {
-      await AccountService.instance().disableTwoFactorAuthentication(r.data.accountId)
+      await new AccountService().disableTwoFactorAuthentication(r.data.accountId)
 
       submitting.value = false
       verifySuccess.value = true

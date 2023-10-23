@@ -51,9 +51,7 @@ export const useOnboardingPersonal = () => {
       return
     }
 
-    const uploadDocumentsService = OnboardingService.instance()
-
-    uploadDocumentsService
+    new OnboardingService()
       .openingAccountPersonal(onboardingPersonal.value)
       .then(resp => {
         submitting.value = false

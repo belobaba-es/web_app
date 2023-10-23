@@ -18,11 +18,14 @@ export interface FeeWire {
 
 interface Client {
   clientId: string
+  dateBirth: Date
   dni: string
   feeSwap: FeeSwap
   feeWire: FeeWire
   status: AccountStatus
   twoFactorActive: boolean
+  phoneNumber: string
+  phoneCountry: string
   type: string
   name: string
   postalCode: string

@@ -18,10 +18,13 @@ export const useAuthStore = defineStore('useAuthStore', {
       userId: '',
       client: {
         name: '',
+        dateBirth: new Date(),
         postalCode: '',
         region: '',
         city: '',
         country: '',
+        phoneNumber: '',
+        phoneCountry: '',
         streetOne: '',
         dni: '',
         clientId: '',
@@ -60,6 +63,12 @@ export const useAuthStore = defineStore('useAuthStore', {
     getTwoFactorActive(): boolean {
       return this.client.twoFactorActive
     },
+    getDateBirth(): Date {
+      return this.client.dateBirth
+    },
+    getClientDni(): string {
+      return this.client.dni
+    },
     getAccountStatus(): AccountStatus {
       return this.client.status
     },
@@ -86,6 +95,12 @@ export const useAuthStore = defineStore('useAuthStore', {
     },
     getUserAddress(): string {
       return `${this.client.streetOne} ${this.client.region} ${this.client.city} ${this.client.country} ${this.client.postalCode}`
+    },
+    getCountry(): string {
+      return this.client.country
+    },
+    getUserPhone(): string {
+      return this.client.phoneNumber
     },
     getUserEmail(): string {
       return this.email

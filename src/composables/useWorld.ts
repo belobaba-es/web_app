@@ -54,9 +54,8 @@ export const useWorld = () => {
 
   const fetchStates = async () => {
     loadingStatesField.value = true
-    const worldService = WorldService.instance()
     if (!country.value?.country_id) return
-    await worldService.getStates(country.value?.country_id).then(resp => {
+    await new WorldService().getStates(country.value?.country_id).then(resp => {
       states.value = resp
       loadingStatesField.value = false
     })
@@ -64,9 +63,9 @@ export const useWorld = () => {
 
   const fetchStatesTwo = async () => {
     loadingStatesFieldTwo.value = true
-    const worldService = WorldService.instance()
+
     if (!country.value?.country_id) return
-    await worldService.getStates(country.value?.country_id).then(resp => {
+    await new WorldService().getStates(country.value?.country_id).then(resp => {
       statesTwo.value = resp
       loadingStatesFieldTwo.value = false
     })

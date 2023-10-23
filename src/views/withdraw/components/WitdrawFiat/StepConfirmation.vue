@@ -105,10 +105,9 @@ const verifyCodeTwoFactorAuth = (res: boolean) => {
 }
 
 function makeTransaction() {
-  const withdraw = WithdrawService.instance()
   submitting.value = true
 
-  withdraw
+  new WithdrawService()
     .makeFiatExternalTransfer({
       amount: props.formData.amount,
       beneficiaryId: props.formData.beneficiary.counterpartyId,
