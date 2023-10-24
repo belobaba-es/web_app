@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.name === 'US DOLLAR' }">
+  <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.assetCode === 'USD' }">
     <div class="flex justify-content-start flex-wrap container-name-cripto">
       <h1 class="text-header name-cripto">
         Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
@@ -32,7 +32,7 @@
                 <h5 class="text-link-historic">Deposit</h5>
               </router-link>
             </div>
-            <WithdrawRouteSelectMobile :isFiat="wallet?.name === 'US DOLLAR'"></WithdrawRouteSelectMobile>
+            <WithdrawRouteSelectMobile :isFiat="wallet?.assetCode === 'USD'"></WithdrawRouteSelectMobile>
             <div class="col-4 flex justify-content-center">
               <router-link class="link-historic" to="/swap" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic">Swap</h5>
@@ -62,7 +62,7 @@ const { calculateBalance } = useBalanceWallet()
 const emit = defineEmits(['toBack'])
 
 const isFiat = (wallet: BalanceWallet | undefined) => {
-  if (wallet?.name === 'US DOLLAR') {
+  if (wallet?.assetCode === 'USD') {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
