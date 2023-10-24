@@ -257,7 +257,7 @@ new FiatService()
     }
 
     bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
-    bankNationalPdf[t('routingNumber') + ':'] = bankNational.value.routingNumber
+    bankNationalPdf['ABA Fedwire:'] = bankNational.value.routingNumber
     bankNationalPdf[t('creditTo') + ':'] = bankNational.value.creditTo
     bankNationalPdf[t('reference') + ':'] = bankNational.value.reference
     bankNationalPdf[t('address') + ':'] = bankNational.value.address
