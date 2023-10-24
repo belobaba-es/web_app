@@ -15,7 +15,10 @@ export class BeneficiaryService {
   }
 
   async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag = 1) {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(`beneficiary/banking/external/${nextPag}`)
+      const tipoBanco = beneficiaryType == 'DOMESTIC'?'internal':'external';
+
+      return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(`beneficiary/banking/${tipoBanco}/${nextPag}`);
+
   }
 
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
