@@ -1,15 +1,8 @@
 <template>
-  <section class="section-main">
-    <div class="mb-4">
-      <h1 class="text-2xl">
-        {{ t('accountRegistration') }}
-      </h1>
-      <p class="text-3xl font-medium">{{ t('titleNaturalPerson') }}</p>
-    </div>
-
+  <section class="section-main pt-6">
     <div class="p-panel p-component shareholders-panel col-8">
       <div class="p-panel-header">
-        <span class="p-panel-title">CARGA DE DOCUMENTOS</span>
+        <span class="p-panel-title">UPLOAD DOCUMENTS</span>
       </div>
       <div class="p-toggleable-content" role="region">
         <div class="p-panel-content">
@@ -116,11 +109,11 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
 import { ref, onBeforeMount, defineProps } from 'vue'
-import { useAccount } from '../../../../composables/useAccount'
+import { useAccount } from '../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
-import FileInput from '../../../profile/components/FileInput.vue'
-import { useDocuments } from '../../../../composables/useDocuments'
-import router from '../../../../router'
+import FileInput from '../../profile/components/FileInput.vue'
+import { useDocuments } from '../../../composables/useDocuments'
+import router from '../../../router'
 import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })

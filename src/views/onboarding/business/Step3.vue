@@ -107,17 +107,17 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch, ref } from 'vue'
-import { OnboardingService } from '../../services/onboarding'
+import { OnboardingService } from '../services/onboarding'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import showExceptionError from '../../../../shared/showExceptionError'
-import showMessage from '../../../../shared/showMessageArray'
+import showExceptionError from '../../../shared/showExceptionError'
+import showMessage from '../../../shared/showMessageArray'
 
 import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
 
-import router from '../../../../router'
+import router from '../../../router'
 
 const { t } = useI18n({ useScope: 'global' })
 
