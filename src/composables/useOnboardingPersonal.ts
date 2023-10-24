@@ -8,32 +8,15 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
+import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 
 export const useOnboardingPersonal = () => {
   const { getUserEmail, getClientId } = useAuth()
+  const { setInitialOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
   const submitting = ref(false)
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
-  const onboardingPersonal = ref<OnboardingPersonal>({
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: getUserEmail(),
-    dateBirth: '',
-    dni: '',
-    taxId: '',
-    passport: '',
-    phoneCountry: '',
-    phoneNumber: '',
-    streetOne: '',
-    streetTwo: '',
-    postalCode: '',
-    city: '',
-    region: '',
-    country: '',
-    type: 'NATURAL_PERSON',
-    referredByAccountId: '',
-  })
+  const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
   const isPassportOrTaxIdEmpty = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
@@ -41,7 +24,7 @@ export const useOnboardingPersonal = () => {
 
   const saveData = () => {
     submitting.value = true
-
+    setInitialOnboardingPersonal(onboardingPersonal.value)
     if (isPassportOrTaxIdEmpty()) {
       toast.add({
         severity: 'error',
@@ -94,6 +77,7 @@ export const useOnboardingPersonal = () => {
       .then((resp: any) => {
         console.log(resp)
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
+        setInitialOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
       })
       .catch(e => {

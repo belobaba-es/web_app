@@ -115,6 +115,7 @@ import FileInput from '../../profile/components/FileInput.vue'
 import { useDocuments } from '../../../composables/useDocuments'
 import router from '../../../router'
 import { useToast } from 'primevue/usetoast'
+import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 
 const { t } = useI18n({ useScope: 'global' })
 const { getOwner, accountId, getFullName, findMember, submitProfileForm } = useAccount()
@@ -127,8 +128,10 @@ const {
   getSelectedTypeDocumentProofOfAddress,
 } = useDocuments()
 
+const { onboardingPersonal } = useOnboardingPersonal()
+
 const idAccount = localStorage.getItem('accountId') || ''
-const dni = localStorage.getItem('dni') || ''
+const dni = onboardingPersonal.value?.dni || ''
 const identifyDocument = ref<string>('')
 const documentSide = ref<string>('')
 const documentFiscal = ref<string>('')
@@ -162,6 +165,7 @@ const props = defineProps<Props>()
 const member = ref()
 
 onBeforeMount(() => {
+  console.log(':SSSSS', onboardingPersonal.value?.dni)
   addDocument(props.taxId, { selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: '' })
   member.value = findMember(props.taxId)
 })

@@ -88,7 +88,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: DashboardIndex,
+        component: () => import('./views/dashboard/Index.vue'),
       },
       {
         path: '/profile/:accountId',
@@ -202,7 +202,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'owner',
-                component: StepOwnerNewBeneficiary,
+                component: () => import('./views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'bank-information',
@@ -341,7 +341,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'step2',
-                component: PersonalStep2,
+                component: () => import('./views/onboarding/personal/Step2.vue'),
               },
               {
                 path: 'completed',

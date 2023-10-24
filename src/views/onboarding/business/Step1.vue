@@ -102,7 +102,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -201,7 +201,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -303,7 +303,7 @@ import { useAuth } from '../../../composables/useAuth'
 const {
   countries,
   fetchCountries,
-  loadingCountiesField,
+  loadingCountriesField,
   countriesInputIsEmpty,
   statesInputIsEmpty,
   loadingStatesField,

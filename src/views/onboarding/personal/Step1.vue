@@ -113,7 +113,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -178,7 +178,7 @@
       </div>
 
       <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveData()" :loading="submitting" />
+        <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveDataAndNextPag()" :loading="submitting" />
       </div>
     </div>
   </section>
@@ -200,16 +200,13 @@ import { useOnboardingPersonal } from '../../../composables/useOnboardingPersona
 const {
   countries,
   fetchCountries,
-  loadingCountiesField,
+  loadingCountriesField,
   countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  states,
   onChangeCountryHandler,
-  onChangeStateHandler,
   calling_code,
 } = useWorld()
 
+const emit = defineEmits(['nextPage'])
 const { getUserEmail } = useAuth()
 const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
@@ -217,6 +214,11 @@ const { t } = useI18n({ useScope: 'global' })
 onMounted(async () => {
   await fetchCountries()
 })
+
+const saveDataAndNextPag = async () => {
+  await saveData()
+  emit('nextPage', { pageIndex: 0 })
+}
 </script>
 <style lang="scss">
 .phone-input {
