@@ -29,7 +29,7 @@ const fiatLinks = [
   { name: 'International Wire', link: '/withdraw/fiat/international' },
 ]
 const assetLinks = [
-  { name: 'Netween Noba Crypto Wallets', link: '/withdraw/noba/crypto' },
+  { name: 'Between Noba Crypto Wallets', link: '/withdraw/noba/crypto' },
   { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other' },
 ]
 const links: any = ref()
