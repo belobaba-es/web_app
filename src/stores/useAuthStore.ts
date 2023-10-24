@@ -94,7 +94,9 @@ export const useAuthStore = defineStore('useAuthStore', {
       return this.client.dni
     },
     getUserAddress(): string {
-      return `${this.client.streetOne} ${this.client.region} ${this.client.city} ${this.client.country} ${this.client.postalCode}`
+      return `${this.client.streetOne || ''} ${this.client.region || ''} ${this.client.city || ''} ${
+        this.client.country || ''
+      } ${this.client.postalCode || ''}`
     },
     getCountry(): string {
       return this.client.country

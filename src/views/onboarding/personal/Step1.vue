@@ -197,7 +197,9 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useAuth } from '../../../composables/useAuth'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
-import router from '../../../router'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const {
   countries,
   fetchCountries,

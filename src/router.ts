@@ -356,32 +356,38 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: UploadDocumentsIndex,
-          },
-          {
-            path: 'step1',
-            component: BusinessStep1,
-          },
-          {
-            path: 'step2',
-            component: BusinessStep2,
-          },
-          {
-            path: 'step3',
-            component: BusinessStep3,
-          },
-          {
-            path: 'step4',
-            component: BusinessStep4,
-          },
-          {
-            path: 'new-shareholder',
-            component: NewSharedHolder,
-          },
-          {
-            path: 'edit-shareholder/:id',
-            name: 'edit-shareholder',
-            component: EditSharedHolder,
+            component: () => import('./views/onboarding/business/index.vue'),
+            children: [
+              {
+                path: '',
+                component: UploadDocumentsIndex,
+              },
+              {
+                path: 'step1',
+                component: BusinessStep1,
+              },
+              {
+                path: 'step2',
+                component: BusinessStep2,
+              },
+              {
+                path: 'step3',
+                component: BusinessStep3,
+              },
+              {
+                path: 'step4',
+                component: BusinessStep4,
+              },
+              {
+                path: 'new-shareholder',
+                component: NewSharedHolder,
+              },
+              {
+                path: 'edit-shareholder/:id',
+                name: 'edit-shareholder',
+                component: EditSharedHolder,
+              },
+            ],
           },
         ],
       },

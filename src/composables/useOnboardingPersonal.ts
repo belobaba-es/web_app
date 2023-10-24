@@ -85,7 +85,9 @@ export const useOnboardingPersonal = () => {
       })
   }
 
-  fetchDataToClient()
+  if (getClientId()) {
+    fetchDataToClient()
+  }
 
   return {
     onboardingPersonal,

@@ -13,26 +13,29 @@
     </router-view>
   </section>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { WithdrawForm } from '../../withdraw/types/withdraw'
-import { useRouter } from 'vue-router'
-import { useToast } from 'primevue/usetoast'
+<script setup lang="ts">
 import Steps from 'primevue/steps'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n({ useScope: 'global' })
+import { useToast } from 'primevue/usetoast'
 
-const router = useRouter()
 const toast = useToast()
-const formObject = ref<WithdrawForm | any>({})
-
+const router = useRouter()
 const items = ref([
   {
-    label: 'Personal data',
+    label: 'Company information',
     to: `/onboarding/personal/step1`,
   },
+  {
+    label: 'Add shareholders',
+    to: `/onboarding/personal/step1`,
+  },
+  {
+    label: 'Account purpose',
+    to: `/onboarding/personal/step2`,
+  },
+
   {
     label: 'Upload documents',
     to: `/onboarding/personal/step2`,
