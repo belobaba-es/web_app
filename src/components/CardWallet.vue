@@ -249,7 +249,8 @@ const responsiveOptions = ref([
 .card-blue {
   background: #134591;
   .name-cripto,
-  .text-balance {
+  .text-balance,
+  .text-balance-wallet {
     color: white;
   }
   img {
