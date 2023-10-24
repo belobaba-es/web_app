@@ -108,12 +108,12 @@ const handleSubmit = async () => {
       return
     }
 
-    // if (userAuth.client.status !== AccountStatus.REGISTERED) {
-    //   window.location.href = '/dashboard'
-    //   return
-    // }
-    //
-    // window.location.href = `/profile/${userAuth.client.clientId}`
+    if (userAuth.client.status !== AccountStatus.REGISTERED) {
+      window.location.href = '/dashboard'
+      return
+    }
+
+    window.location.href = `/profile/${userAuth.client.clientId}`
   } catch (e: any) {
     submitting.value = false
     toast.add({

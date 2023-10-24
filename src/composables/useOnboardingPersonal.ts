@@ -9,6 +9,7 @@ import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
+import { processException } from '../shared/processException'
 
 export const useOnboardingPersonal = () => {
   const { getUserEmail, getClientId } = useAuth()
@@ -17,6 +18,7 @@ export const useOnboardingPersonal = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
+  const isUpdateData = ref<boolean>(false)
 
   const isPassportOrTaxIdEmpty = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
@@ -37,7 +39,7 @@ export const useOnboardingPersonal = () => {
       }
 
       new OnboardingService()
-        .openingAccountPersonal(onboardingPersonal.value)
+        .openingAccountPersonal(onboardingPersonal.value, isUpdateData.value)
         .then(resp => {
           submitting.value = false
           toast.add({
@@ -50,20 +52,7 @@ export const useOnboardingPersonal = () => {
         })
         .catch(e => {
           submitting.value = false
-
-          if (e.response.data.data?.warning) {
-            e.response.data.data.warning.forEach((element: any) => {
-              showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-            })
-            return
-          }
-
-          if (e.response.data.message) {
-            showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-            return
-          }
-
-          showMessage(toast, e.response.data)
+          processException(toast, t, e.response.data)
           reject(e)
         })
     })
@@ -74,7 +63,7 @@ export const useOnboardingPersonal = () => {
     new ProfileService()
       .getAccountByClientId(getClientId())
       .then((resp: any) => {
-        console.log(resp)
+        isUpdateData.value = true
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
         setInitialOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
