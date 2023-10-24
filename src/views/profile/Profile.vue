@@ -7,7 +7,6 @@
             <Skeleton width="5rem" height="2rem" borderRadius="16px"></Skeleton>
             <Skeleton width="5rem" height="2rem" borderRadius="16px"></Skeleton>
             <Skeleton width="5rem" height="2rem" borderRadius="16px"></Skeleton>
-            <Skeleton width="5rem" height="2rem" borderRadius="16px"></Skeleton>
           </div>
         </template>
         <template v-else>
@@ -35,7 +34,6 @@ import PageLayout from '../../components/PageLayout.vue'
 import { useAccount } from '../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
-import { TypeAccount } from './types/account.interface'
 import { useAuth } from '../../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -47,18 +45,10 @@ const checkCanSee = (...args: string[]) => {
   if (getAccountType() === '') {
     return
   }
-
   return args.includes(getAccountType() || '')
 }
 onBeforeMount(async () => {
-  await fetchAccount()
   setMenuItems()
-})
-
-const documentsPath = computed(() => {
-  return getAccountType() === TypeAccount.COMPANY
-    ? `/profile/${getClientId()}/documentation/person`
-    : `/profile/${getClientId()}/documentation/company`
 })
 
 const setMenuItems = () => {
@@ -72,11 +62,6 @@ const setMenuItems = () => {
       label: t('shareholders'),
       to: `/profile/${getClientId()}/partners`,
       canSee: checkCanSee('COMPANY'),
-    },
-    {
-      label: t('documents'),
-      to: documentsPath,
-      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
     {
       label: t('setting'),

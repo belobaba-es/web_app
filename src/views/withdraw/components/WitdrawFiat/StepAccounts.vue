@@ -74,7 +74,6 @@ onMounted(async () => {
 })
 
 const onSearch = () => {
-  console.log('===========OOOOOOOOOO', search.value)
   // accountService.getAccountByEmail(search.value).then(resp=>{
   //     console.log(resp)
   //     beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]

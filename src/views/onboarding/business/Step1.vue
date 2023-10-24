@@ -295,10 +295,10 @@ import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
 
-import { useWorld } from '../../../../composables/useWorld'
+import { useWorld } from '../../../composables/useWorld'
 
-import router from '../../../../router'
-import { useAuth } from '../../../../composables/useAuth'
+import router from '../../../router'
+import { useAuth } from '../../../composables/useAuth'
 
 const {
   countries,

@@ -7,9 +7,10 @@ import showMessage from '../shared/showMessageArray'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
+import { ProfileService } from '../views/profile/services/profile'
 
 export const useOnboardingPersonal = () => {
-  const { getUserEmail } = useAuth()
+  const { getUserEmail, getClientId } = useAuth()
   const submitting = ref(false)
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -85,6 +86,23 @@ export const useOnboardingPersonal = () => {
         showMessage(toast, e.response.data)
       })
   }
+
+  const fetchDataToClient = () => {
+    submitting.value = true
+    new ProfileService()
+      .getAccountByClientId(getClientId())
+      .then((resp: any) => {
+        console.log(resp)
+        onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
+        submitting.value = false
+      })
+      .catch(e => {
+        submitting.value = false
+        showMessage(toast, e.response.data)
+      })
+  }
+
+  fetchDataToClient()
 
   return {
     onboardingPersonal,

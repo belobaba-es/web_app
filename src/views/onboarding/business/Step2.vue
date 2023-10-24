@@ -16,7 +16,7 @@
       >
         <div class="p-3 border-1 border-gray-300 border-round-2xl flex-column cursor-pointer">
           <div class="mb-2">
-            <img src="../../../../assets/icons/icon-user.svg" />
+            <img src="../../../assets/icons/icon-user.svg" />
           </div>
           <div>
             <p class="text-lg">{{ shareholder.firstName + ' ' + shareholder.lastName }}</p>
@@ -42,7 +42,7 @@
           @click="onCreateNewShareholder"
         >
           <div>
-            <img src="../../../../assets/icons/user-add.svg" />
+            <img src="../../../assets/icons/user-add.svg" />
           </div>
           <div>
             <p class="text-lg">{{ t('addNewShareHolder') }}</p>
@@ -65,7 +65,7 @@ import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
 
-import router from '../../../../router'
+import router from '../../../router'
 
 const { t } = useI18n({ useScope: 'global' })
 
