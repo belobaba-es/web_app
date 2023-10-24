@@ -1,7 +1,7 @@
 <template>
   <section class="section-main">
     <Steps :model="items" :readonly="false" />
-    <router-view v-slot="{ Component }" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+    <router-view v-slot="{ Component }" @complete="complete">
       <keep-alive>
         <component :is="Component" />
       </keep-alive>
@@ -19,14 +19,6 @@ import Steps from 'primevue/steps'
 const router = useRouter()
 const toast = useToast()
 const formObject = ref<WithdrawForm | any>({})
-
-const nextPage = (event: any) => {
-  router.push(items.value[event.pageIndex + 1].to)
-}
-
-const prevPage = (event: any) => {
-  router.push(items.value[event.pageIndex - 1].to)
-}
 
 const items = ref([
   {

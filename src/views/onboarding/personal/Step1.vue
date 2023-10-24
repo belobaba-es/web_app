@@ -197,6 +197,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useAuth } from '../../../composables/useAuth'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
+import router from '../../../router'
 const {
   countries,
   fetchCountries,
@@ -206,7 +207,6 @@ const {
   calling_code,
 } = useWorld()
 
-const emit = defineEmits(['nextPage'])
 const { getUserEmail } = useAuth()
 const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
@@ -216,8 +216,9 @@ onMounted(async () => {
 })
 
 const saveDataAndNextPag = async () => {
-  await saveData()
-  emit('nextPage', { pageIndex: 0 })
+  saveData().then(() => {
+    router.push('/onboarding/personal/step2')
+  })
 }
 </script>
 <style lang="scss">

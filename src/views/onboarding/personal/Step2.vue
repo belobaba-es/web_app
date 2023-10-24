@@ -85,7 +85,6 @@
                                   side="front"
                                   :isPartner="isPartner"
                                   :type="typeDocumentAddress"
-                                  :account-id="accountId ?? idAccount"
                                   :dni="dni"
                                   v-model="documentFiscal"
                                 />
@@ -116,6 +115,7 @@ import { useDocuments } from '../../../composables/useDocuments'
 import router from '../../../router'
 import { useToast } from 'primevue/usetoast'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
+import { useAuth } from '../../../composables/useAuth'
 
 const { t } = useI18n({ useScope: 'global' })
 const { getOwner, accountId, getFullName, findMember, submitProfileForm } = useAccount()
@@ -138,8 +138,6 @@ const documentFiscal = ref<string>('')
 const typeDocumentAddress = ref<string>('')
 const isPartner = ref(false)
 
-console.log(isPartner)
-
 const documentTypeProofOfAddress = ref([
   { value: 'monthly_utility', name: t('documentProofOfAddress1') },
   { value: 'statements', name: t('documentProofOfAddress2') },
@@ -157,18 +155,12 @@ const documentTypeOptions = ref([
   { value: 'residence_permit', name: 'Residence Permit' },
 ])
 
-interface Props {
-  taxId: string
-}
-
-const props = defineProps<Props>()
 const member = ref()
 
-onBeforeMount(() => {
-  console.log(':SSSSS', onboardingPersonal.value?.dni)
-  addDocument(props.taxId, { selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: '' })
-  member.value = findMember(props.taxId)
-})
+// onBeforeMount(() => {
+//   addDocument(props.taxId, { selectedTypeDocumentProofOfAddress: '', selectedTypeIdentificationDocument: '' })
+//   member.value = findMember(props.taxId)
+// })
 
 const shouldShowFrontBank = () => {
   return ['drivers_license', 'government_id', 'residence_permit'].includes(identifyDocument.value)
