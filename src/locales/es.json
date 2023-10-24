@@ -213,6 +213,7 @@
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
   "transactionHistory": "Histórico de transacciones",
   "extractGenerated": "Extracto Generado",
+  "extracts": "Extractos",
   "chooseExtract": "Seleccion el extracto que quiere consultar",
   "transactionType": "Tipo de transaccion",
   "assetType": "Tipo de asset",

@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar v-if="!props.isDashboard"></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar v-if="!props.isDashboard" />
 
     <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
 
@@ -20,7 +20,7 @@
           <router-link to="/dashboard">
             <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
           </router-link>
-          <span class="text-xl">{{ t('extractGenerated') }}</span>
+          <span class="text-xl">{{ t('extracts') }}</span>
         </div>
       </div>
 
