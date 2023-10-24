@@ -20,7 +20,7 @@
           <router-link to="/dashboard">
             <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
           </router-link>
-          <span class="text-xl">{{ t('extractGenerated') }}</span>
+          <span class="text-xl">{{ t('extracts') }}</span>
         </div>
       </div>
 

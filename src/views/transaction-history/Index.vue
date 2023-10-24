@@ -1,5 +1,5 @@
 <template>
-  <TransactionHistoryTable :isDashboard="false"></TransactionHistoryTable>
+  <TransactionHistoryTable :isDashboard="false" />
 </template>
 
 <script lang="ts" setup>
