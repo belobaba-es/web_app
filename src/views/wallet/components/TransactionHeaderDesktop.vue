@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.name === 'US DOLLAR' }">
+  <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.assetCode === 'USD' }">
     <div class="flex justify-content-start flex-wrap container-name-cripto">
       <h1 class="text-header name-cripto">
         Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
@@ -35,7 +35,7 @@
                 <h5 class="text-link-historic-desktop">Deposit</h5>
               </router-link>
             </div>
-            <WithdrawRouteSelectDesktop :isFiat="wallet?.name === 'US DOLLAR'"></WithdrawRouteSelectDesktop>
+            <WithdrawRouteSelectDesktop :isFiat="wallet?.assetCode === 'USD'"></WithdrawRouteSelectDesktop>
             <div class="col-4 justify-content-start container-link-historic-desktop">
               <router-link class="link-historic-desktop" to="/swap" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic-desktop">Swap</h5>
@@ -56,8 +56,6 @@ import { defineProps, ref } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
-import WithdrawRouteSelect from './WithdrawRouteSelect.vue'
-import WithdrawRouteSelectCustom from './WithdrawRouteSelectDesktop.vue'
 import WithdrawRouteSelectDesktop from './WithdrawRouteSelectDesktop.vue'
 
 defineProps<{
@@ -68,7 +66,7 @@ const { calculateBalance } = useBalanceWallet()
 const emit = defineEmits(['toBack'])
 
 const isFiat = (wallet: BalanceWallet | undefined) => {
-  if (wallet?.name === 'US DOLLAR') {
+  if (wallet?.assetCode === 'USD') {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
@@ -138,7 +136,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   position: relative;
   top: -40px;
   border-radius: 50%;
-  background-color: white;
+  filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
 
   @media only screen and (min-width: 992px) {
     max-width: 250px !important;

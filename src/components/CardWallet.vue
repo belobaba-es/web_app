@@ -35,7 +35,7 @@
   </Carousel>
 
   <Carousel
-    v-if="carousel === true && !oneWallet"
+    v-if="carousel && !oneWallet"
     :value="getWallets()"
     :numVisible="5"
     :showIndicators="false"
@@ -80,7 +80,7 @@
     </template>
   </Carousel>
 
-  <div class="grid col-12 wallet" v-if="carousel === false || oneWallet">
+  <div class="grid col-12 wallet" v-if="!carousel || oneWallet">
     <div
       class="col-12 sm:col-5 md:col-5 lg:col-3 xl:col-3 card-border"
       v-bind:class="getStyle(item.assetCode)"
@@ -147,7 +147,11 @@ const getWallets = () => {
   return wallets
 }
 
-const getStyle = (assetCode: string) => {}
+const getStyle = (assetCode: string) => {
+  if (assetCode === 'USD') {
+    return 'card-blue'
+  }
+}
 
 const goToHistoricTransactions = (assetCode: string) => {
   router.push(`/wallet/transactions/${assetCode}`)
@@ -239,6 +243,17 @@ const responsiveOptions = ref([
   transition: box-shadow 0.2s ease-in-out;
   &:hover {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+.card-blue {
+  background: #134591;
+  .name-cripto,
+  .text-balance {
+    color: white;
+  }
+  img {
+    filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
   }
 }
 
