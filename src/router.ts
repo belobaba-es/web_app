@@ -67,7 +67,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/forgot-password',
-    component: ForgotPassword,
+    component: () => import('./views/forgot-password/ForgotPassword.vue'),
   },
   {
     path: '/recovery-two-factor-auth',
