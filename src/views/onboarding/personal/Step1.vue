@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }}</label>
         <div class="p-inputgroup">
           <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
@@ -47,13 +47,13 @@
         </div>
       </div>
 
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 phone-input">
         <label>{{ t('phoneLabel') }}</label>
         <div class="field grid">
-          <div class="col-4">
+          <div class="col-2">
             <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
           </div>
-          <div class="col-8">
+          <div class="col-10">
             <InputText id="phoneNumber" type="text" class="" v-model="onboardingPersonal.phoneNumber" required />
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
@@ -62,7 +62,15 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
+        <label>{{ t('emailLabel') }}</label>
+        <div class="p-inputgroup">
+          <!-- //FIX readonly -->
+          <InputText type="text" v-model="onboardingPersonal.email" class="w-full" readonly required />
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('docTypeLabelPassport') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
@@ -72,7 +80,7 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('documentLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
@@ -82,21 +90,13 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('taxIdLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
-        <label>{{ t('emailLabel') }}</label>
-        <div class="p-inputgroup">
-          <!-- //FIX readonly -->
-          <InputText type="text" v-model="onboardingPersonal.email" class="w-full" readonly required />
         </div>
       </div>
 
