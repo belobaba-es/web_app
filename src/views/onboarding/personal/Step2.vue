@@ -81,7 +81,7 @@ const shouldShowFrontBank = () => {
 }
 
 const selectedIdentifyDocument = (e: any) => {
-  setSelectedTypeIdentificationDocument(props.taxId, e.value)
+  setSelectedTypeIdentificationDocument('', e.value)
 }
 
 const selectedProofOfAddress = (e: any) => {
