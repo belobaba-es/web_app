@@ -40,7 +40,11 @@ export const useAuth = () => {
   }
 
   const editProfile = () => {
-    router.push(`/profile/${getClientId()}/edit`)
+    if (getAccountType() === 'NATURAL_PERSON') {
+      router.push(`/onboarding/personal/step1`)
+    } else {
+      router.push(`/onboarding/personal/step1`)
+    }
   }
 
   const isNaturalAccount = () => {

@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main">
+  <section class="section-main pt-0">
     <WarningKYC />
     <div class="flex justify-content-between align-items-center">
       <h1 class="text-2xl">{{ t('personalData') }}</h1>

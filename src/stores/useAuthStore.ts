@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('useAuthStore', {
         dni: '',
         clientId: '',
         twoFactorActive: false,
-        status: AccountStatus.SUBMITTED,
+        status: AccountStatus.REGISTERED,
         type: '',
         feeSwap: {
           swapBuy: 0,
@@ -94,7 +94,9 @@ export const useAuthStore = defineStore('useAuthStore', {
       return this.client.dni
     },
     getUserAddress(): string {
-      return `${this.client.streetOne} ${this.client.region} ${this.client.city} ${this.client.country} ${this.client.postalCode}`
+      return `${this.client.streetOne || ''} ${this.client.region || ''} ${this.client.city || ''} ${
+        this.client.country || ''
+      } ${this.client.postalCode || ''}`
     },
     getCountry(): string {
       return this.client.country
@@ -119,6 +121,15 @@ export const useAuthStore = defineStore('useAuthStore', {
     },
     getUserId(): string {
       return this.userId
+    },
+    markDataSubmitted() {
+      const storageUser = sessionStorage.getItem('user')
+      if (storageUser) {
+        const user = JSON.parse(new CryptoService().decrypt(storageUser)) as UserAuth
+        user.client.status = AccountStatus.SUBMITTED
+
+        sessionStorage.setItem('user', new CryptoService().encrypt(JSON.stringify({ ...user })))
+      }
     },
   },
 })

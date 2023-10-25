@@ -22,8 +22,10 @@ import { defineProps, ref, computed } from 'vue'
 import { ProfileService } from '../services/profile'
 import { useToast } from 'primevue/usetoast'
 import FileUpload from './FileUploaded.vue'
+import { useAuth } from '../../../composables/useAuth'
 
 const toast = useToast()
+const { markDataSubmitted } = useAuth()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -100,7 +102,6 @@ const handleUpload = async (event: any) => {
 
   const newDocumentObject = {
     dni: '',
-
     documentSide: props.side,
     label: props.label,
     documentType: props.type,
@@ -112,6 +113,7 @@ const handleUpload = async (event: any) => {
   await new ProfileService()
     .updateDocuments(formData)
     .then(response => {
+      markDataSubmitted()
       setLoading(false)
       if (props.isProofOfAddress === true) {
         toast.add({

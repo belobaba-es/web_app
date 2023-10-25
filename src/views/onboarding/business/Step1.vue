@@ -102,7 +102,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -201,7 +201,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -295,15 +295,15 @@ import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
 
-import { useWorld } from '../../../../composables/useWorld'
+import { useWorld } from '../../../composables/useWorld'
 
-import router from '../../../../router'
-import { useAuth } from '../../../../composables/useAuth'
+import router from '../../../router'
+import { useAuth } from '../../../composables/useAuth'
 
 const {
   countries,
   fetchCountries,
-  loadingCountiesField,
+  loadingCountriesField,
   countriesInputIsEmpty,
   statesInputIsEmpty,
   loadingStatesField,

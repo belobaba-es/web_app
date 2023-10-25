@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar />
 
     <p class="text-3xl font-medium">{{ t('withdraw') }}</p>
     <section class="container-center">

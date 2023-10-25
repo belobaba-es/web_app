@@ -29,7 +29,7 @@ export const useWorld = () => {
   const country = ref<Country | null>(null)
   const state = ref<State | null>(null)
 
-  const loadingCountiesField = ref<boolean>(false)
+  const loadingCountriesField = ref<boolean>(false)
   const loadingStatesField = ref<boolean>(false)
   const loadingStatesFieldTwo = ref<boolean>(false)
 
@@ -37,7 +37,7 @@ export const useWorld = () => {
   const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
 
   const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
-    loadingCountiesField.value = true
+    loadingCountriesField.value = true
 
     await new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
@@ -48,7 +48,7 @@ export const useWorld = () => {
       const arrayCallingCode = resp.map(c => c.calling_code).sort()
       calling_code.value = [...new Set(arrayCallingCode)]
 
-      loadingCountiesField.value = false
+      loadingCountriesField.value = false
     })
   }
 
@@ -111,7 +111,7 @@ export const useWorld = () => {
     statesTwo,
     statesInputIsEmpty,
     countriesInputIsEmpty,
-    loadingCountiesField,
+    loadingCountriesField: loadingCountriesField,
     loadingStatesField,
     loadingStatesFieldTwo,
     country,

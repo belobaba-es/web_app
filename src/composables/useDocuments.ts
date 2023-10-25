@@ -7,7 +7,6 @@ export const useDocuments = () => {
   const addDocument = (taxId: string, doc: DocumentAdd) => {
     // @ts-ignore
     documentsStore.documents[taxId] = doc
-    console.log('PPPP', taxId, doc)
   }
 
   const getSelectedTypeIdentificationDocument = (taxId: string) => {

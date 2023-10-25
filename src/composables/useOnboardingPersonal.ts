@@ -7,83 +7,75 @@ import showMessage from '../shared/showMessageArray'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
+import { ProfileService } from '../views/profile/services/profile'
+import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
+import { processException } from '../shared/processException'
 
 export const useOnboardingPersonal = () => {
-  const { getUserEmail } = useAuth()
+  const { getUserEmail, getClientId } = useAuth()
+  const { setInitialOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
   const submitting = ref(false)
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
-  const onboardingPersonal = ref<OnboardingPersonal>({
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: getUserEmail(),
-    dateBirth: '',
-    dni: '',
-    taxId: '',
-    passport: '',
-    phoneCountry: '',
-    phoneNumber: '',
-    streetOne: '',
-    streetTwo: '',
-    postalCode: '',
-    city: '',
-    region: '',
-    country: '',
-    type: 'NATURAL_PERSON',
-    referredByAccountId: '',
-  })
+  const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
+  const isUpdateData = ref<boolean>(false)
 
   const isPassportOrTaxIdEmpty = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
   }
 
   const saveData = () => {
-    submitting.value = true
-
-    if (isPassportOrTaxIdEmpty()) {
-      toast.add({
-        severity: 'error',
-        summary: t('error'),
-        detail: t('passportOrTaxIdEmpty'),
-      })
-      submitting.value = false
-      return
-    }
-
-    new OnboardingService()
-      .openingAccountPersonal(onboardingPersonal.value)
-      .then(resp => {
-        submitting.value = false
+    return new Promise((resolve, reject) => {
+      submitting.value = true
+      setInitialOnboardingPersonal(onboardingPersonal.value)
+      if (isPassportOrTaxIdEmpty()) {
         toast.add({
-          severity: 'success',
-          detail: resp.message,
-          life: 4000,
+          severity: 'error',
+          summary: t('error'),
+          detail: t('passportOrTaxIdEmpty'),
         })
+        submitting.value = false
+        return
+      }
 
-        //save localstorage
-        localStorage.setItem('accountId', resp.data.clientId)
-        localStorage.setItem('dni', onboardingPersonal.value.dni)
+      new OnboardingService()
+        .openingAccountPersonal(onboardingPersonal.value, isUpdateData.value)
+        .then(resp => {
+          submitting.value = false
+          toast.add({
+            severity: 'success',
+            detail: resp.message,
+            life: 4000,
+          })
 
-        router.push('/onboarding/personal/step2')
+          resolve(resp)
+        })
+        .catch(e => {
+          submitting.value = false
+          processException(toast, t, e.response.data)
+          reject(e)
+        })
+    })
+  }
+
+  const fetchDataToClient = () => {
+    submitting.value = true
+    new ProfileService()
+      .getAccountByClientId(getClientId())
+      .then((resp: any) => {
+        isUpdateData.value = true
+        onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
+        setInitialOnboardingPersonal(onboardingPersonal.value)
+        submitting.value = false
       })
       .catch(e => {
         submitting.value = false
-
-        if (e.response.data.data?.warning) {
-          e.response.data.data.warning.forEach((element: any) => {
-            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-          })
-          return
-        }
-
-        if (e.response.data.message) {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-          return
-        }
-
         showMessage(toast, e.response.data)
       })
+  }
+
+  if (getClientId()) {
+    fetchDataToClient()
   }
 
   return {

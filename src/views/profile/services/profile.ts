@@ -1,10 +1,10 @@
 import { HttpService } from '../../../shared/services/http'
-import { Account } from '../types/account.interface'
+import { Account, IndividualDTO } from '../types/account.interface'
 import { FormData as FormDataAccount } from '../../../stores/account'
 
 export class ProfileService {
-  async getAccountByID(accountID: string | string[]): Promise<Account> {
-    return new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<Account>(`account/${accountID}`)
+  async getAccountByClientId(accountID: string | string[]): Promise<any> {
+    return new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(`account/${accountID}`)
   }
 
   async updateContact(

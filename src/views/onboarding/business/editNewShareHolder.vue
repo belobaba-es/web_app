@@ -4,7 +4,7 @@
       <h1 class="text-2xl">
         {{ t('accountRegistration') }}
       </h1>
-      <p class="text-3xl font-medium">{{ t('titleBusinessAccount') }} - {{ t('addNewShareHolder') }}</p>
+      <p class="text-3xl font-medium">{{ t('titleBusinessAccount') }} - {{ t('editNewShareHolder') }}</p>
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
@@ -122,7 +122,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
-              :loading="loadingCountiesField"
+              :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
@@ -214,17 +214,17 @@ import { useToast } from 'primevue/usetoast'
 
 import { useI18n } from 'vue-i18n'
 
-import { useWorld } from '../../../../composables/useWorld'
-import { useAccount } from '../../../../composables/useAccount'
-import showExceptionError from '../../../../shared/showExceptionError'
-import showMessage from '../../../../shared/showMessageArray'
+import { useWorld } from '../../../composables/useWorld'
+import { useAccount } from '../../../composables/useAccount'
+import showExceptionError from '../../../shared/showExceptionError'
+import showMessage from '../../../shared/showMessageArray'
 
-import { OnboardingService } from '../../services/onboarding'
-import router from '../../../../router'
+import { OnboardingService } from '../services/onboarding'
+import router from '../../../router'
 const {
   countries,
   fetchCountries,
-  loadingCountiesField,
+  loadingCountriesField,
   countriesInputIsEmpty,
   statesInputIsEmpty,
   loadingStatesField,
@@ -262,6 +262,39 @@ const country = ref<string>('')
 
 onMounted(async () => {
   await fetchCountries()
+})
+
+onMounted(() => {
+  const id = Number(router.currentRoute.value.params.id)
+
+  const data = localStorage.getItem('companyData') || '{}'
+
+  if (data) {
+    const formData = JSON.parse(data)
+    const partners = formData.partners
+
+    if (partners.length > 0) {
+      const partner = partners[id]
+
+      firstName.value = partner.firstName
+      middleName.value = partner.middleName
+      lastName.value = partner.lastName
+      otherLastName.value = partner.otherLastName
+      email.value = partner.email
+      dateBirth.value = partner.dateBirth
+      dni.value = partner.dni
+      taxId.value = partner.taxId
+      passport.value = partner.passport
+      phoneCountry.value = partner.phoneCountry
+      phoneNumber.value = partner.phoneNumber
+      streetOne.value = partner.streetOne
+      streetTwo.value = partner.streetTwo
+      postalCode.value = partner.postalCode
+      city.value = partner.city
+      state.value = partner.region
+      country.value = partner.country
+    }
+  }
 })
 
 const isPassportOrTaxIdEmpty = () => {
@@ -332,7 +365,11 @@ const saveData = () => {
     const formData = ref()
     formData.value = JSON.parse(localStorage.getItem('companyData') || '{}')
 
-    const newShareholder = {
+    const id = Number(router.currentRoute.value.params.id)
+
+    const partners = formData.value.partners
+
+    const partner = {
       firstName: firstName.value,
       middleName: middleName.value,
       lastName: lastName.value,
@@ -352,9 +389,12 @@ const saveData = () => {
       country: country.value,
     }
 
-    formData.value.partners.push(newShareholder)
+    partners[id] = partner
+
+    formData.value.partners = partners
 
     localStorage.setItem('companyData', JSON.stringify(formData.value))
+
     submitting.value = false
 
     router.push('/onboarding/business/step2')

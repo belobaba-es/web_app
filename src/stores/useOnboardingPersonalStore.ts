@@ -43,5 +43,27 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
     },
+    dataOnboardingPersonal(): OnboardingPersonal {
+      return {
+        firstName: this.firstName,
+        middleName: this.middleName,
+        lastName: this.lastName,
+        email: this.email,
+        dateBirth: this.dateBirth,
+        dni: this.dni,
+        taxId: this.taxId,
+        passport: this.passport,
+        phoneCountry: this.phoneCountry,
+        phoneNumber: this.phoneNumber,
+        streetOne: this.streetOne,
+        streetTwo: this.streetTwo,
+        postalCode: this.postalCode,
+        city: this.city,
+        region: this.region,
+        country: this.country,
+        type: this.type,
+        referredByAccountId: this.referredByAccountId,
+      }
+    },
   },
 })

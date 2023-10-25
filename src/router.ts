@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Dashboard from './views/dashboard/Dashboard.vue'
-import Profile from './views/profile/Profile.vue'
 import ProfileIndex from './views/profile/Index.vue'
 import Partners from './views/profile/Partners.vue'
 import Settings from './views/profile/settings/Index.vue'
@@ -32,7 +30,6 @@ import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/St
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 import SwapIndexVue from './views/swap/Index.vue'
-import SwapHistory from './views/swap/History.vue'
 import SwapSuccess from './views/swap/Success.vue'
 import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
 import WithdrawOtherPlatformsStepAccounts from './views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'
@@ -49,16 +46,15 @@ import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.
 
 import UploadDocumentsIndex from './views/onboarding/index.vue'
 
-import PersonalStep1 from './views/onboarding/components/personal/Step1.vue'
-import PersonalStep2 from './views/onboarding/components/personal/Step2.vue'
+import PersonalStep2 from './views/onboarding/personal/Step2.vue'
 import CompletedDocument from './views/onboarding/components/CompletedDocument.vue'
 
-import BusinessStep1 from './views/onboarding/components/business/Step1.vue'
-import BusinessStep2 from './views/onboarding/components/business/Step2.vue'
-import BusinessStep3 from './views/onboarding/components/business/Step3.vue'
-import BusinessStep4 from './views/onboarding/components/business/Step4.vue'
-import NewSharedHolder from './views/onboarding/components/business/addNewShareHolder.vue'
-import EditSharedHolder from './views/onboarding/components/business/editNewShareHolder.vue'
+import BusinessStep1 from './views/onboarding/business/Step1.vue'
+import BusinessStep2 from './views/onboarding/business/Step2.vue'
+import BusinessStep3 from './views/onboarding/business/Step3.vue'
+import BusinessStep4 from './views/onboarding/business/Step4.vue'
+import NewSharedHolder from './views/onboarding/business/addNewShareHolder.vue'
+import EditSharedHolder from './views/onboarding/business/editNewShareHolder.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -71,7 +67,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/forgot-password',
-    component: ForgotPassword,
+    component: () => import('./views/forgot-password/ForgotPassword.vue'),
   },
   {
     path: '/recovery-two-factor-auth',
@@ -88,23 +84,19 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/dashboard',
-    component: Dashboard,
+    component: () => import('./views/dashboard/Dashboard.vue'),
     children: [
       {
         path: '',
-        component: DashboardIndex,
+        component: () => import('./views/dashboard/Index.vue'),
       },
       {
         path: '/profile/:accountId',
-        component: Profile,
+        component: () => import('./views/profile/Profile.vue'),
         children: [
           {
             path: '',
             component: ProfileIndex,
-          },
-          {
-            path: 'edit',
-            component: Edit,
           },
           {
             path: 'partners',
@@ -210,7 +202,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'owner',
-                component: StepOwnerNewBeneficiary,
+                component: () => import('./views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'bank-information',
@@ -334,47 +326,68 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/onboarding',
+        component: () => import('./views/onboarding/index.vue'),
+      },
+      {
+        path: '/onboarding/personal',
         children: [
           {
             path: '',
-            component: UploadDocumentsIndex,
+            component: () => import('./views/onboarding/personal/index.vue'),
+            children: [
+              {
+                path: 'step1',
+                component: () => import('./views/onboarding/personal/Step1.vue'),
+              },
+              {
+                path: 'step2',
+                component: () => import('./views/onboarding/personal/Step2.vue'),
+              },
+              {
+                path: 'completed',
+                component: CompletedDocument,
+              },
+            ],
           },
+        ],
+      },
+      {
+        path: '/onboarding/business',
+        children: [
           {
-            path: 'personal/step1',
-            component: PersonalStep1,
-          },
-          {
-            path: 'personal/step2',
-            component: PersonalStep2,
-          },
-          {
-            path: 'business/step1',
-            component: BusinessStep1,
-          },
-          {
-            path: 'business/step2',
-            component: BusinessStep2,
-          },
-          {
-            path: 'business/step3',
-            component: BusinessStep3,
-          },
-          {
-            path: 'business/step4',
-            component: BusinessStep4,
-          },
-          {
-            path: 'business/new-shareholder',
-            component: NewSharedHolder,
-          },
-          {
-            path: 'business/edit-shareholder/:id',
-            name: 'business/edit-shareholder',
-            component: EditSharedHolder,
-          },
-          {
-            path: 'personal/completed',
-            component: CompletedDocument,
+            path: '',
+            component: () => import('./views/onboarding/business/index.vue'),
+            children: [
+              {
+                path: '',
+                component: UploadDocumentsIndex,
+              },
+              {
+                path: 'step1',
+                component: BusinessStep1,
+              },
+              {
+                path: 'step2',
+                component: BusinessStep2,
+              },
+              {
+                path: 'step3',
+                component: BusinessStep3,
+              },
+              {
+                path: 'step4',
+                component: BusinessStep4,
+              },
+              {
+                path: 'new-shareholder',
+                component: NewSharedHolder,
+              },
+              {
+                path: 'edit-shareholder/:id',
+                name: 'edit-shareholder',
+                component: EditSharedHolder,
+              },
+            ],
           },
         ],
       },
