@@ -1,8 +1,6 @@
 import { ref } from 'vue'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
-import router from '../router'
-import showExceptionError from '../shared/showExceptionError'
 import showMessage from '../shared/showMessageArray'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
@@ -12,7 +10,7 @@ import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore
 import { processException } from '../shared/processException'
 
 export const useOnboardingPersonal = () => {
-  const { getUserEmail, getClientId } = useAuth()
+  const { getClientId } = useAuth()
   const { setInitialOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
   const submitting = ref(false)
   const toast = useToast()

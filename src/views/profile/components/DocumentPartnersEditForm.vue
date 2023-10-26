@@ -8,35 +8,35 @@
     <div class="grid">
       <div class="field col-12">
         <Dropdown
-            v-model="identifyDocument"
-            :options="documentTypeOptions"
-            option-label="name"
-            option-value="value"
-            :placeholder="t('documentTypePlaceHolder')"
-            class="w-full"
-            @change="selectedIdentifyDocument"
+          v-model="identifyDocument"
+          :options="documentTypeOptions"
+          option-label="name"
+          option-value="value"
+          :placeholder="t('documentTypePlaceHolder')"
+          class="w-full"
+          @change="selectedIdentifyDocument"
         />
       </div>
       <div class="field col-12 md:col-6">
         <label>{{ t('dni') }} {{ t('shareholderFileFrontLabel') }}</label>
         <FileInput
-            :label="getSelectedTypeIdentificationDocument(taxId)"
-            side="front"
-            :type="getSelectedTypeIdentificationDocument(taxId)"
-            :account-id="accountId ?? ''"
-            :document-country="member.taxCountry"
-            :tax-id="member.taxId"
+          :label="getSelectedTypeIdentificationDocument(taxId)"
+          side="front"
+          :type="getSelectedTypeIdentificationDocument(taxId)"
+          :account-id="accountId ?? ''"
+          :document-country="member.taxCountry"
+          :tax-id="member.taxId"
         />
       </div>
       <div :class="{ hidden: isPassport }" class="field col-12 md:col-6">
         <label>{{ t('dni') }} {{ t('shareholderFileBackLabel') }}</label>
         <FileInput
-            :label="getSelectedTypeIdentificationDocument(taxId)"
-            side="backside"
-            :type="getSelectedTypeIdentificationDocument(taxId)"
-            :account-id="accountId ?? ''"
-            :document-country="member.taxCountry"
-            :tax-id="member.taxId"
+          :label="getSelectedTypeIdentificationDocument(taxId)"
+          side="backside"
+          :type="getSelectedTypeIdentificationDocument(taxId)"
+          :account-id="accountId ?? ''"
+          :document-country="member.taxCountry"
+          :tax-id="member.taxId"
         />
       </div>
 
@@ -47,22 +47,22 @@
               <label>{{ t('utilityBillLabel') }}</label>
               <div class="mt-2 mb-4">
                 <Dropdown
-                    v-model="proofOfAddress"
-                    :options="documentTypeProofOfAddress"
-                    option-label="name"
-                    option-value="value"
-                    :placeholder="t('documentTypePlaceHolder')"
-                    class="w-full"
-                    @change="selectedProofOfAddress"
+                  v-model="proofOfAddress"
+                  :options="documentTypeProofOfAddress"
+                  option-label="name"
+                  option-value="value"
+                  :placeholder="t('documentTypePlaceHolder')"
+                  class="w-full"
+                  @change="selectedProofOfAddress"
                 />
               </div>
               <FileInput
-                  side="front"
-                  :label="getSelectedTypeDocumentProofOfAddress(taxId)"
-                  :type="getSelectedTypeDocumentProofOfAddress(taxId)"
-                  :account-id="accountId ?? ''"
-                  :document-country="member.taxCountry"
-                  :tax-id="member.taxId"
+                side="front"
+                :label="getSelectedTypeDocumentProofOfAddress(taxId)"
+                :type="getSelectedTypeDocumentProofOfAddress(taxId)"
+                :account-id="accountId ?? ''"
+                :document-country="member.taxCountry"
+                :tax-id="member.taxId"
               />
             </div>
           </div>
@@ -79,7 +79,7 @@ import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useAccount } from '../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
-import FileInput from './FileInput.vue'
+import FileInput from '../../../components/FileInput.vue'
 import { useAccountStore } from '../../../stores/account'
 import { useDocuments } from '../../../composables/useDocuments'
 

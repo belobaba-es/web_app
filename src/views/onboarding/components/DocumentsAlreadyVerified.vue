@@ -2,10 +2,7 @@
   <div class="completion-view">
     <div class="center-content">
       <img src="../../../assets/icons/check.svg" alt="Imagen de finalización" />
-      <p class="title-text">{{ t('titleFinishOnboarding') }}</p>
-      <p class="sub-title">
-        {{ t('descriptionFinishOnboarding') }}
-      </p>
+      <p class="title-text">{{ t('documentAlreadyVerified') }}</p>
 
       <Button
         :label="t('continuar')"
@@ -17,11 +14,10 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import Button from 'primevue/button'
-import router from '../../../router'
 import { useI18n } from 'vue-i18n'
+import router from '../../../router'
 const { t } = useI18n({ useScope: 'global' })
 
 const redirectToHome = () => {

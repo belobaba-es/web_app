@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './views/profile/Index.vue'
-import Partners from './views/profile/Partners.vue'
 import Settings from './views/profile/settings/Index.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
@@ -45,9 +44,6 @@ import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
 import UploadDocumentsIndex from './views/onboarding/index.vue'
-
-import PersonalStep2 from './views/onboarding/personal/Step2.vue'
-import CompletedDocument from './views/onboarding/components/CompletedDocument.vue'
 
 import BusinessStep1 from './views/onboarding/business/Step1.vue'
 import BusinessStep2 from './views/onboarding/business/Step2.vue'
@@ -100,7 +96,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'partners',
-            component: Partners,
+            component: () => import('./views/profile/Partners.vue'),
           },
           {
             path: 'partners/create',
@@ -345,7 +341,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'completed',
-                component: CompletedDocument,
+                component: () => import('./views/onboarding/components/CompletedDocument.vue'),
               },
             ],
           },

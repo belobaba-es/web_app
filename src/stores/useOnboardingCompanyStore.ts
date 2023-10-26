@@ -3,9 +3,9 @@ import { OnboardingCompany } from '../types/onboardingCompany'
 
 export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore', {
   state: (): OnboardingCompany => ({
+    email: '',
     informationCompany: {
       name: '',
-      email: '',
       registerNumber: '',
       naics: '',
       naicsDescription: '',

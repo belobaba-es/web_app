@@ -56,6 +56,7 @@
   "addressLabel2": "Dirección 2",
   "addressPlaceholder2": "Dirección 2",
   "postalCodeLabel": "Código postal",
+  "documentAlreadyVerified": "Tus documentos ya fueron verificados",
   "documents": "Documentos",
   "businessTitle": "EMPRESA - CARGA DE DOCUMENTOS",
   "businessDocumentLabel": "Documentos constitutivo de la empresa",
@@ -432,5 +433,7 @@
   "anticipatedMonthlyTransactionsOutgoingLabel": "Transacciones Mensuales Anticipadas Salientes",
   "anticipatedMonthlyTransactionsOutgoingHelpText": "Estime el volumen de transacciones que espera hacer mensualmente. Ejemplo: de 1 a 49, de 50 a 99, de 100 a 499, etc.",
   "natureBusinessCompanyLabel": "Nature Business of the Company",
-  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business."
+  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business.",
+  "titleFinishOnboarding": "Gracias por su registro",
+  "descriptionFinishOnboarding": "Una vez aprobada tu cuenta te estaremos enviado un correo con la validación de su cuenta."
 }

@@ -35,8 +35,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import DocumentsPartners from '../components/DocumentsPartners.vue'
-import DocumentsCompany from '../components/DocumentsCompany.vue'
+import DocumentsPartners from './components/DocumentsPartners.vue'
+import DocumentsCompany from './components/DocumentsCompany.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 

@@ -1,7 +1,7 @@
 export type OnboardingCompany = {
+  email: string
   informationCompany: {
     name: string
-    email: string
     registerNumber: string
     naics: string
     naicsDescription: string

@@ -19,28 +19,26 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { defineProps, ref, computed } from 'vue'
-import { ProfileService } from '../services/profile'
+import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
-import FileUpload from './FileUploaded.vue'
-import { useAuth } from '../../../composables/useAuth'
+import FileUpload from '../views/profile/components/FileUploaded.vue'
+import { useAuth } from '../composables/useAuth'
 
 const toast = useToast()
 const { markDataSubmitted } = useAuth()
 
 const { t } = useI18n({ useScope: 'global' })
 
+const emit = defineEmits(['uploadComplete'])
+
 const props = defineProps({
-  label: {
-    type: String,
-    required: false,
-  },
   type: {
     type: String,
     required: true,
   },
   dni: {
     type: String,
-    required: false,
+    required: true,
   },
   registerNumber: {
     type: String,
@@ -75,7 +73,7 @@ const handleClick = () => {
 }
 
 const getIdInput = () => {
-  return `${props.label}${props.side}`
+  return `${props.dni}${props.side}`
 }
 
 const icon = computed(() => {
@@ -100,22 +98,15 @@ const handleUpload = async (event: any) => {
     formData.append('dni', props.dni ? props.dni : '')
   }
 
-  const newDocumentObject = {
-    dni: '',
-    documentSide: props.side,
-    label: props.label,
-    documentType: props.type,
-    file: '',
-    isPartner: Boolean,
-    description: props.label,
-  }
-
   await new ProfileService()
     .updateDocuments(formData)
     .then(response => {
       markDataSubmitted()
       setLoading(false)
+      let side = props.side
       if (props.isProofOfAddress === true) {
+        side = 'proofOfAddress'
+
         toast.add({
           severity: 'success',
           summary: t('successfulOperation'),
@@ -130,6 +121,12 @@ const handleUpload = async (event: any) => {
           life: 6000,
         })
       }
+
+      emit('uploadComplete', {
+        side: side,
+        dni: props.dni,
+        registerNumber: props.registerNumber,
+      })
     })
     .catch(error => {
       setLoading(false)

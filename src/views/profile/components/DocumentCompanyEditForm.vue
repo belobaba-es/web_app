@@ -6,13 +6,13 @@
           <label>{{ t('companyIncorporationFile') }}</label>
           <div class="mt-2 mb-4"></div>
           <FileInput
-              label="other"
-              side="front"
-              type="other"
-              :account-id="accountId ?? ''"
-              :document-country="getOwner()?.taxCountry ?? 'US'"
-              :tax-id="getOwner()?.taxId ?? ''"
-              :is-company="true"
+            label="other"
+            side="front"
+            type="other"
+            :account-id="accountId ?? ''"
+            :document-country="getOwner()?.taxCountry ?? 'US'"
+            :tax-id="getOwner()?.taxId ?? ''"
+            :is-company="true"
           />
         </div>
       </div>
@@ -27,23 +27,23 @@
           <label>{{ t('utilityBillLabel') }}</label>
           <div class="mt-2 mb-4">
             <Dropdown
-                v-model="proofOfAddress"
-                :options="documentTypeProofOfAddress"
-                option-label="name"
-                option-value="value"
-                :placeholder="t('documentTypePlaceHolder')"
-                class="w-full"
-                @change="selectedProofOfAddress"
+              v-model="proofOfAddress"
+              :options="documentTypeProofOfAddress"
+              option-label="name"
+              option-value="value"
+              :placeholder="t('documentTypePlaceHolder')"
+              class="w-full"
+              @change="selectedProofOfAddress"
             />
           </div>
           <FileInput
-              :label="getSelectedTypeDocumentProofOfAddress('0')"
-              side="front"
-              :type="getSelectedTypeDocumentProofOfAddress('0')"
-              :account-id="accountId ?? ''"
-              :document-country="getOwner()?.taxCountry ?? 'US'"
-              :tax-id="getOwner()?.taxId ?? ''"
-              :is-company="true"
+            :label="getSelectedTypeDocumentProofOfAddress('0')"
+            side="front"
+            :type="getSelectedTypeDocumentProofOfAddress('0')"
+            :account-id="accountId ?? ''"
+            :document-country="getOwner()?.taxCountry ?? 'US'"
+            :tax-id="getOwner()?.taxId ?? ''"
+            :is-company="true"
           />
         </div>
       </div>
@@ -57,7 +57,7 @@ import { ref, onBeforeMount } from 'vue'
 import Divider from 'primevue/divider'
 import { useAccount } from '../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
-import FileInput from './FileInput.vue'
+import FileInput from '../../../components/FileInput.vue'
 import FileUpload from './FileUploaded.vue'
 import { useDocuments } from '../../../composables/useDocuments'
 

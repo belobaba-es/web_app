@@ -96,7 +96,7 @@ import Button from 'primevue/button'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Dropdown from 'primevue/dropdown'
-import FileInput from './components/FileInput.vue'
+import FileInput from '../../components/FileInput.vue'
 
 import { onMounted, ref, toRef, watch } from 'vue'
 import { useAccount } from '../../composables/useAccount'

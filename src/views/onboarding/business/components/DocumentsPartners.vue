@@ -90,10 +90,10 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
 import { ref, onBeforeMount, defineProps } from 'vue'
-import { useAccount } from '../../../composables/useAccount'
+import { useAccount } from '../../../../composables/useAccount'
 import { useI18n } from 'vue-i18n'
-import FileInput from '../../profile/components/FileInput.vue'
-import { useDocuments } from '../../../composables/useDocuments'
+import FileInput from '../../../../components/FileInput.vue'
+import { useDocuments } from '../../../../composables/useDocuments'
 import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
