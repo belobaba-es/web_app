@@ -8,8 +8,10 @@ import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
+import { useRouter } from 'vue-router'
 
 export const useOnboardingPersonal = () => {
+  const router = useRouter()
   const { getClientId } = useAuth()
   const { setInitialOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
   const submitting = ref(false)
@@ -71,6 +73,11 @@ export const useOnboardingPersonal = () => {
         showMessage(toast, e.response.data)
       })
   }
+  const saveDataAndNextPag = async () => {
+    saveData().then(() => {
+      router.push('/onboarding/personal/step2')
+    })
+  }
 
   if (getClientId()) {
     fetchDataToClient()
@@ -80,5 +87,6 @@ export const useOnboardingPersonal = () => {
     onboardingPersonal,
     submitting,
     saveData,
+    saveDataAndNextPag,
   }
 }

@@ -195,11 +195,8 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
-import { useAuth } from '../../../composables/useAuth'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 const {
   countries,
   fetchCountries,
@@ -209,19 +206,12 @@ const {
   calling_code,
 } = useWorld()
 
-const { getUserEmail } = useAuth()
-const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
+const { onboardingPersonal, saveData, submitting, saveDataAndNextPag } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
 })
-
-const saveDataAndNextPag = async () => {
-  saveData().then(() => {
-    router.push('/onboarding/personal/step2')
-  })
-}
 </script>
 <style lang="scss">
 .phone-input {

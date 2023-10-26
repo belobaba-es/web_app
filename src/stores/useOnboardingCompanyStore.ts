@@ -30,27 +30,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
         country: '',
       },
     },
-    partners: [
-      {
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        otherLastName: '',
-        email: '',
-        dateBirth: new Date(),
-        dni: '',
-        taxId: '',
-        passport: '',
-        phoneCountry: '',
-        phoneNumber: '',
-        streetOne: '',
-        streetTwo: '',
-        postalCode: '',
-        city: '',
-        region: '',
-        country: '',
-      },
-    ],
+    partners: [],
     accountQuestionnaire: {
       purposeAccount: '',
       sourceAssetsAndIncome: '',
@@ -63,4 +43,14 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
       natureBusinessCompany: '',
     },
   }),
+  actions: {
+    dataOnboardingCompany(): OnboardingCompany {
+      return {
+        email: this.email,
+        informationCompany: this.informationCompany,
+        partners: this.partners,
+        accountQuestionnaire: this.accountQuestionnaire,
+      }
+    },
+  },
 })

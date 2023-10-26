@@ -360,28 +360,28 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'step1',
-                component: BusinessStep1,
+                component: () => import('./views/onboarding/business/Step1.vue'),
               },
               {
                 path: 'step2',
-                component: BusinessStep2,
+                component: () => import('./views/onboarding/business/Step2.vue'),
               },
               {
                 path: 'step3',
-                component: BusinessStep3,
+                component: () => import('./views/onboarding/business/Step3.vue'),
               },
               {
                 path: 'step4',
-                component: BusinessStep4,
+                component: () => import('./views/onboarding/business/Step4.vue'),
               },
               {
                 path: 'new-shareholder',
-                component: NewSharedHolder,
+                component: () => import('./views/onboarding/business/addNewShareHolder.vue'),
               },
               {
                 path: 'edit-shareholder/:id',
                 name: 'edit-shareholder',
-                component: EditSharedHolder,
+                component: () => import('./views/onboarding/business/editNewShareHolder.vue'),
               },
             ],
           },

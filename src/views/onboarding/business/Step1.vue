@@ -1,10 +1,7 @@
 <template>
   <section class="section-main">
     <div class="mb-4">
-      <h1 class="text-2xl">
-        {{ t('accountRegistration') }}
-      </h1>
-      <p class="text-3xl font-medium">{{ t('titleBusinessAccount') }}</p>
+      <p class="text-3xl mt-0 font-medium">{{ t('titleBusinessAccount') }}</p>
     </div>
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
@@ -299,6 +296,8 @@ import { useWorld } from '../../../composables/useWorld'
 
 import router from '../../../router'
 import { useAuth } from '../../../composables/useAuth'
+import { convertISODateToYYYYMMDD } from '../../../shared/formatDate'
+import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 
 const {
   countries,
@@ -315,6 +314,8 @@ const {
   onChangeStateHandler,
   calling_code,
 } = useWorld()
+
+const { onboardingCompany } = useOnboardingCompany()
 
 const { getUserEmail } = useAuth()
 
@@ -353,18 +354,6 @@ const isFisicalAdress = ref<boolean>(false)
 onMounted(async () => {
   await fetchCountries()
 })
-
-const convertISODateToYYYYMMDD = (isoDateString: string) => {
-  const date = new Date(isoDateString)
-
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-
-  const formattedDate = `${year}-${month}-${day}`
-
-  return formattedDate
-}
 
 const validateFields = () => {
   const isNameValid = name.value.trim() !== ''

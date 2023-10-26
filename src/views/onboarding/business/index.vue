@@ -25,20 +25,20 @@ const router = useRouter()
 const items = ref([
   {
     label: 'Company information',
-    to: `/onboarding/personal/step1`,
+    to: `/onboarding/business/step1`,
   },
   {
     label: 'Add shareholders',
-    to: `/onboarding/personal/step1`,
+    to: `/onboarding/business/step1`,
   },
   {
     label: 'Account purpose',
-    to: `/onboarding/personal/step2`,
+    to: `/onboarding/business/step2`,
   },
 
   {
     label: 'Upload documents',
-    to: `/onboarding/personal/step2`,
+    to: `/onboarding/business/step2`,
   },
 ])
 
