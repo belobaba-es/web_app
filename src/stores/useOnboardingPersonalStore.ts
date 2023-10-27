@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
+import { useAuth } from '../composables/useAuth'
+const { getUserEmail } = useAuth()
 
 export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStore', {
   state: (): OnboardingPersonal => ({
     firstName: '',
     middleName: '',
     lastName: '',
-    email: '',
+    email: getUserEmail(),
     dateBirth: '',
     dni: '',
     taxId: '',

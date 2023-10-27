@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { OnboardingCompany } from '../types/onboardingCompany'
+import { useAuth } from '../composables/useAuth'
+const { getUserEmail } = useAuth()
 
 export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore', {
   state: (): OnboardingCompany => ({
-    email: '',
+    email: getUserEmail(),
     informationCompany: {
       name: '',
       registerNumber: '',
@@ -51,6 +53,12 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
         partners: this.partners,
         accountQuestionnaire: this.accountQuestionnaire,
       }
+    },
+    setInitialOnboardingCompany(onboardingCompany: OnboardingCompany) {
+      this.email = onboardingCompany.email
+      this.informationCompany = onboardingCompany.informationCompany
+      this.partners = onboardingCompany.partners
+      this.accountQuestionnaire = onboardingCompany.accountQuestionnaire
     },
   },
 })

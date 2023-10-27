@@ -443,5 +443,6 @@
   "natureBusinessCompanyLabel": "Nature Business of the Company",
   "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business.",
   "titleFinishOnboarding": "Thank you for your registration",
-  "descriptionFinishOnboarding": "Once your account is approved we will send you an email with the validation of your account."
+  "descriptionFinishOnboarding": "Once your account is approved we will send you an email with the validation of your account.",
+  "duplicateCompanyPhysicalAddress": "Click here if the physical address is the same as the registration address"
 }
