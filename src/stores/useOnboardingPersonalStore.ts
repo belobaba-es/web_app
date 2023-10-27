@@ -25,7 +25,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     referredByAccountId: '',
   }),
   actions: {
-    setInitialOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
+    setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
       this.firstName = onboardingPersonal.firstName
       this.middleName = onboardingPersonal.middleName
       this.lastName = onboardingPersonal.lastName

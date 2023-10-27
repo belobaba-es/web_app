@@ -49,7 +49,7 @@ import BusinessStep1 from './views/onboarding/business/Step1.vue'
 import BusinessStep2 from './views/onboarding/business/Step2.vue'
 import BusinessStep3 from './views/onboarding/business/Step3.vue'
 import BusinessStep4 from './views/onboarding/business/Step4.vue'
-import NewSharedHolder from './views/onboarding/business/addNewShareHolder.vue'
+import NewSharedHolder from './views/onboarding/business/AddOrEditShareholder.vue'
 import EditSharedHolder from './views/onboarding/business/editNewShareHolder.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
@@ -376,12 +376,12 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'new-shareholder',
-                component: () => import('./views/onboarding/business/addNewShareHolder.vue'),
+                component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
               },
               {
-                path: 'edit-shareholder/:id',
+                path: 'edit-shareholder/:dni',
                 name: 'edit-shareholder',
-                component: () => import('./views/onboarding/business/editNewShareHolder.vue'),
+                component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
               },
             ],
           },

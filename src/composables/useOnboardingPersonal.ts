@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
 import showMessage from '../shared/showMessageArray'
@@ -13,11 +13,15 @@ import { useRouter } from 'vue-router'
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId } = useAuth()
-  const { setInitialOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
+
+  const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
+
   const submitting = ref(false)
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
+
   const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
+
   const isUpdateData = ref<boolean>(false)
 
   const isPassportOrTaxIdEmpty = () => {
@@ -27,7 +31,7 @@ export const useOnboardingPersonal = () => {
   const saveData = () => {
     return new Promise((resolve, reject) => {
       submitting.value = true
-      setInitialOnboardingPersonal(onboardingPersonal.value)
+      setStateOnboardingPersonal(onboardingPersonal.value)
       if (isPassportOrTaxIdEmpty()) {
         toast.add({
           severity: 'error',
@@ -65,7 +69,7 @@ export const useOnboardingPersonal = () => {
       .then((resp: any) => {
         isUpdateData.value = true
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
-        setInitialOnboardingPersonal(onboardingPersonal.value)
+        setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
       })
       .catch(e => {
@@ -82,6 +86,14 @@ export const useOnboardingPersonal = () => {
   if (getClientId()) {
     fetchDataToClient()
   }
+
+  // const watchChagedData = () => {
+  watch(onboardingPersonal.value, () => {
+    setStateOnboardingPersonal(onboardingPersonal.value)
+  })
+  // }
+
+  // watchChagedData()
 
   return {
     onboardingPersonal,

@@ -29,16 +29,15 @@ const items = ref([
   },
   {
     label: 'Add shareholders',
-    to: `/onboarding/business/step1`,
+    to: `/onboarding/business/step2`,
   },
   {
     label: 'Account purpose',
-    to: `/onboarding/business/step2`,
+    to: `/onboarding/business/step3`,
   },
-
   {
     label: 'Upload documents',
-    to: `/onboarding/business/step2`,
+    to: `/onboarding/business/step4`,
   },
 ])
 

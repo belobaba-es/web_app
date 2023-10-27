@@ -2,9 +2,8 @@ export type Partner = {
   firstName: string
   middleName: string
   lastName: string
-  otherLastName: string
   email: string
-  dateBirth: Date
+  dateBirth: string
   dni: string
   taxId: string
   passport: string

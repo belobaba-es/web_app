@@ -1,18 +1,20 @@
 import showMessage from '../shared/showMessageArray'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { OnboardingCompany, Partner } from '../types/onboardingCompany'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
+import { validateObject } from '../shared/validateObject'
 
 export const useOnboardingCompany = () => {
   const router = useRouter()
   const toast = useToast()
   const submitting = ref(false)
   const isUpdateData = ref<boolean>(false)
-  const { dataOnboardingCompany, setInitialOnboardingCompany } = useOnboardingCompanyStore()
+
+  const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
   const { getClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
 
@@ -20,7 +22,7 @@ export const useOnboardingCompany = () => {
 
   const saveData = () => {}
 
-  const validateStepOne = () => {
+  const validateStepOne = (): boolean => {
     const fieldsToValidate: any = {
       'informationCompany.name': onboardingCompany.value.informationCompany.name,
       email: onboardingCompany.value.email,
@@ -41,25 +43,7 @@ export const useOnboardingCompany = () => {
       'physicalAddress.city': onboardingCompany.value.informationCompany.physicalAddress.city,
     }
 
-    let isValid = true
-
-    for (const fieldKey in fieldsToValidate) {
-      const value = fieldsToValidate[fieldKey]
-
-      const trimmedValue = value && typeof value === 'string' ? value.trim() : value
-
-      if (!trimmedValue) {
-        toast.add({
-          severity: 'warn',
-          summary: 'Valdation field',
-          detail: `The field ${fieldKey} is required.`,
-          life: 4000,
-        })
-        isValid = false
-      }
-    }
-
-    return isValid
+    return validateObject(toast, fieldsToValidate)
   }
 
   const physicalAddressIsSameRegisteredAddress = (isPhysicalAddress: boolean) => {
@@ -104,7 +88,7 @@ export const useOnboardingCompany = () => {
       .then((resp: any) => {
         isUpdateData.value = true
         onboardingCompany.value = resp.clientData as unknown as OnboardingCompany
-        setInitialOnboardingCompany(onboardingCompany.value)
+        setStateOnboardingCompany(onboardingCompany.value)
         submitting.value = false
       })
       .catch(e => {
@@ -122,10 +106,25 @@ export const useOnboardingCompany = () => {
   if (getClientId()) {
     fetchDataToClient()
   }
+
+  const hasPartner = computed((): boolean => {
+    return onboardingCompany.value.partners.length > 0
+  })
+
+  const nextStep3 = () => {
+    if (!hasPartner.value) {
+      showMessage(toast, 'Please add at least one partner')
+      return
+    }
+    router.push(`/onboarding/business/step3`)
+  }
+
   return {
-    ...useOnboardingCompanyStore,
+    ...useOnboardingCompanyStore(),
+    hasPartner,
+    onboardingCompany,
+    nextStep3,
     physicalAddressIsSameRegisteredAddress,
     nextStepTwo,
-    onboardingCompany,
   }
 }

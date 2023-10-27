@@ -1,0 +1,203 @@
+<template>
+  <section class="section-main">
+    <div class="mb-4">
+      <p class="text-3xl mt-0 mb-0 font-medium">{{ t('titleBusinessAccount') }} - {{ t('addNewShareHolder') }}</p>
+      <p class="font-light mt-2 text-primary">{{ t('shareholderInformationLabel') }}</p>
+    </div>
+
+    <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('nameLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.firstName" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextName') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('secondNameLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.middleName" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextMiddleName') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('surnameLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.lastName" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextSurname') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('docTypeLabelPassport') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.passport" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextPassport') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('documentLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.dni" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('taxIdLabel') }}</label>
+        <div class="p-inputgroup">
+          <InputText type="text" v-model="partner.taxId" class="w-full" required />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
+        <label>{{ t('birthdateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('emailLabel') }}</label>
+        <div class="p-inputgroup">
+          <!-- //FIX readonly -->
+          <InputText type="text" v-model="partner.email" class="w-full" required />
+        </div>
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
+        <label>{{ t('phoneLabel') }}</label>
+        <div class="field grid">
+          <div class="col-4">
+            <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
+          </div>
+          <div class="col-8">
+            <InputText id="phoneNumber" type="text" class="" v-model="partner.phoneNumber" required />
+            <div>
+              <span class="help-text">{{ t('helpTextPhone') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
+      <Divider class="mt-0"></Divider>
+      <div class="grid mt-2">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('countryLabel') }}</label>
+          <div class="p-inputgroup">
+            <Dropdown
+              v-model="partner.country"
+              :options="countries"
+              optionLabel="name"
+              option-value="country_code"
+              :loading="loadingCountriesField"
+              :placeholder="t('countryPlaceholder')"
+              :disabled="countriesInputIsEmpty"
+              class="w-full"
+              required
+            />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextCountry') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('stateLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.region" class="w-full" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextState') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('cityLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.city" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextCity') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('streetAddress') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.streetOne" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressOne') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('streetAddressTwo') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.streetTwo" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('postalCodeLabel') }}</label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.postalCode" />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field col-12 flex align-items-center justify-content-end">
+        <Button :label="t('addShareHolder')" class="px-5 mt-2 btn-submit" @click="addNewShareholder()" />
+      </div>
+    </div>
+  </section>
+</template>
+
+<script lang="ts" setup>
+import { onMounted, watch } from 'vue'
+import Dropdown from 'primevue/dropdown'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Calendar from 'primevue/calendar'
+import Divider from 'primevue/divider'
+
+import { useI18n } from 'vue-i18n'
+
+import { useWorld } from '../../../composables/useWorld'
+import { useShareholder } from '../../../composables/useShareholder'
+import { useRoute } from 'vue-router'
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
+const { partner, addNewShareholder } = useShareholder()
+const route = useRoute()
+const { t } = useI18n({ useScope: 'global' })
+
+onMounted(async () => {
+  console.log('aaa')
+  await fetchCountries()
+})
+</script>
+<style lang="scss"></style>
