@@ -8,7 +8,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('businessNameLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="name" class="w-full" required />
+          <InputText type="text" v-model="onboardingCompany.informationCompany.name" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextCompanyName') }}</span>
@@ -19,14 +19,19 @@
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
-          <InputText type="text" v-model="email" class="w-full" readonly required />
+          <InputText type="text" v-model="onboardingCompany.email" class="w-full" readonly required />
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelDocumentCompany') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="registerNumber" class="w-full" required />
+          <InputText
+            type="text"
+            v-model="onboardingCompany.informationCompany.registerNumber"
+            class="w-full"
+            required
+          />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextCompanyTax') }}</span>
@@ -36,7 +41,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelNaics') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="naics" class="w-full" required />
+          <InputText type="text" v-model="onboardingCompany.informationCompany.naics" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextNaics') }}</span>
@@ -46,7 +51,12 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelnaicsDescription') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="naicsDescription" class="w-full" required />
+          <InputText
+            type="text"
+            v-model="onboardingCompany.informationCompany.naicsDescription"
+            class="w-full"
+            required
+          />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextNaicsDescription') }}</span>
@@ -56,7 +66,11 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelEstablishedDate') }}</label>
         <div class="p-inputgroup">
-          <Calendar v-model="establishedDate" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+          <Calendar
+            v-model="onboardingCompany.informationCompany.establishedDate"
+            placeholder="0000/00/00"
+            dateFormat="yy/mm/dd"
+          />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextEstablishedDate') }}</span>
@@ -66,7 +80,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <label>{{ t('labelWebsite') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="website" class="w-full" required />
+          <InputText type="text" v-model="onboardingCompany.informationCompany.webSite" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextWebsite') }}</span>
@@ -77,7 +91,11 @@
         <label>{{ t('phoneLabel') }}</label>
         <div class="field grid">
           <div class="col-4">
-            <Dropdown class="w-full" v-model="phoneCountry" :options="calling_code" />
+            <Dropdown
+              class="w-full"
+              v-model="onboardingCompany.informationCompany.phoneCountry"
+              :options="calling_code"
+            />
           </div>
           <div class="col-8">
             <InputText id="phoneNumber" type="text" class="" v-model="phoneNumber" required />
@@ -95,7 +113,7 @@
           <label>{{ t('countryLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="registerCountry"
+              v-model="onboardingCompany.informationCompany.registeredAddress.country"
               :options="countries"
               optionLabel="name"
               option-value="country_code"
@@ -115,16 +133,11 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('stateLabel') }}</label>
           <div class="p-inputgroup">
-            <Dropdown
-              v-model="registerState"
-              :options="states"
-              optionLabel="name"
-              option-value="state_code"
-              :loading="loadingStatesField"
-              :placeholder="t('statePlaceHolder')"
-              :disabled="statesInputIsEmpty"
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.registeredAddress.region"
               class="w-full"
-              @change="onChangeStateHandler"
+              required
             />
           </div>
           <div>
@@ -135,7 +148,12 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerCity" class="w-full" required />
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.registeredAddress.city"
+              class="w-full"
+              required
+            />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -145,7 +163,11 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerStreetOne" />
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.registeredAddress.streetOne"
+              required
+            />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -155,7 +177,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerStreetTwo" />
+            <InputText type="text" v-model="onboardingCompany.informationCompany.registeredAddress.streetTwo" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -165,7 +187,11 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="registerPostalCode" />
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.registeredAddress.postalCode"
+              required
+            />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -184,7 +210,7 @@
             @change="physicalAddressIsSameRegisteredAddress"
             :binary="true"
           />
-          <label for="patriot">Click aqui si la direccion fisica es igual que la direccion de registro</label>
+          <label for="patriot">Click aquí si la dirección fisica es igual que la dirección de registro</label>
         </div>
       </div>
 
@@ -194,7 +220,7 @@
           <label>{{ t('countryLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="fisicalCountry"
+              v-model="onboardingCompany.informationCompany.physicalAddress.country"
               :options="countries"
               optionLabel="name"
               option-value="country_code"
@@ -214,16 +240,10 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('stateLabel') }}</label>
           <div class="p-inputgroup">
-            <Dropdown
-              v-model="fisicalState"
-              :options="statesTwo"
-              optionLabel="name"
-              option-value="state_code"
-              :loading="loadingStatesFieldTwo"
-              :placeholder="t('statePlaceHolder')"
-              :disabled="statesInputIsEmpty"
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.physicalAddress.region"
               class="w-full"
-              @change="onChangeStateHandler"
             />
           </div>
           <div>
@@ -234,7 +254,12 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="fisicalCity" class="w-full" required />
+            <InputText
+              type="text"
+              v-model="onboardingCompany.informationCompany.physicalAddress.city"
+              class="w-full"
+              required
+            />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -244,7 +269,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="fisicalStreetOne" />
+            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.streetOne" required />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -254,7 +279,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="fisicalStreetTwo" />
+            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.streetTwo" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -264,7 +289,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="fisicalPostalCode" />
+            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.postalCode" required />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -299,21 +324,8 @@ import { useAuth } from '../../../composables/useAuth'
 import { convertISODateToYYYYMMDD } from '../../../shared/formatDate'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  loadingStatesFieldTwo,
-  states,
-  statesTwo,
-  onChangeCountryHandler,
-  onChangeCountryHandlerTwo,
-  onChangeStateHandler,
-  calling_code,
-} = useWorld()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, loadingStatesField, calling_code } =
+  useWorld()
 
 const { onboardingCompany } = useOnboardingCompany()
 
@@ -403,76 +415,20 @@ const validateFields = () => {
   )
 }
 
-const physicalAddressIsSameRegisteredAddress = () => {
-  if (isFisicalAdress.value) {
-    fisicalStreetOne.value = registerStreetOne.value
-    fisicalStreetTwo.value = registerStreetTwo.value
-    fisicalPostalCode.value = registerPostalCode.value
-    fisicalCity.value = registerCity.value
-    fisicalCountry.value = registerCountry.value
-
-    if (fisicalState.value.length > 0) {
-      fisicalState.value = registerState.value
-    }
-  } else {
-    fisicalStreetOne.value = ''
-    fisicalStreetTwo.value = ''
-    fisicalPostalCode.value = ''
-    fisicalCity.value = ''
-    fisicalState.value = ''
-    fisicalCountry.value = ''
-  }
-}
-
 const saveData = () => {
   submitting.value = true
 
   if (validateFields()) {
-    const formData = ref()
-
-    formData.value = {
-      informationCompany: {
-        name: name.value,
-        email: email.value,
-        registerNumber: registerNumber.value,
-        naics: naics.value,
-        naicsDescription: naicsDescription.value,
-        establishedDate: convertISODateToYYYYMMDD(establishedDate.value),
-        webSite: website.value,
-        phoneCountry: phoneCountry.value,
-        phoneNumber: phoneNumber.value,
-        registeredAddress: {
-          streetOne: registerStreetOne.value,
-          streetTwo: registerStreetTwo.value,
-          postalCode: registerPostalCode.value,
-          city: registerCity.value,
-          region: registerState.value,
-          country: registerCountry.value,
-        },
-        physicalAddress: {
-          streetOne: fisicalStreetOne.value,
-          streetTwo: fisicalStreetTwo.value,
-          postalCode: fisicalPostalCode.value,
-          city: fisicalCity.value,
-          region: fisicalState.value,
-          country: fisicalCountry.value,
-        },
-      },
-      partners: [],
-    }
-
-    localStorage.setItem('companyData', JSON.stringify(formData.value))
-
     router.push('/onboarding/business/new-shareholder')
-  } else {
-    submitting.value = false
-    toast.add({
-      severity: 'error',
-      summary: t('warningAllFieldRequired'),
-      detail: t('warningDetailAllFieldRequired'),
-      life: 4000,
-    })
+    return
   }
+  submitting.value = false
+  toast.add({
+    severity: 'error',
+    summary: t('warningAllFieldRequired'),
+    detail: t('warningDetailAllFieldRequired'),
+    life: 4000,
+  })
 }
 </script>
 <style lang="scss">

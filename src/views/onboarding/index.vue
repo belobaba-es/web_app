@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main">
+  <section class="section-main mt-sm-5 mt-lg-0">
     <div class="flex align-items-center" style="height: 580px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
@@ -45,21 +45,6 @@ interface tabItem {
 
 const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1)
-
-const menuItems = ref<tabItem[]>([
-  {
-    label: 'Deposit',
-    to: '/deposit',
-  },
-  {
-    label: 'Accionistas',
-    to: '/deposit/crypto',
-  },
-  {
-    label: 'Perfil',
-    to: '/deposit/fiat',
-  },
-])
 </script>
 
 <style lang="css" scoped>
