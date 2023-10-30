@@ -31,16 +31,15 @@
     v-model:display="displayEditOpportunity"
     v-model:businessOpportunityEdit="businessOpportunityEdit"
     @update="onUpdateOpportunity"
-  >
-  </ModalEditBusinessOpportunity>
+  />
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { defineProps, ref } from 'vue'
 import ModalEditBusinessOpportunity from './ModalEditBusinessOpportunity.vue'
-import UserIconImg from '../../../assets/icons/icon-user.svg'
-import { BusinessOpportunity } from '../types/businessOpportunity'
+import UserIconImg from '../../../../assets/icons/icon-user.svg'
+import { BusinessOpportunity } from '../../types/businessOpportunity'
 
 const props = defineProps<{
   businessOpportunities: BusinessOpportunity[]

@@ -17,7 +17,6 @@ export interface FeeWire {
 }
 
 interface Client {
-  clientId: string
   dateBirth: Date
   dni: string
   feeSwap: FeeSwap

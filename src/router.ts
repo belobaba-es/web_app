@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './views/profile/Index.vue'
-import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
@@ -8,9 +7,6 @@ import Withdraw from './views/withdraw/Withdraw.vue'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
-import DocumentsPerson from './views/profile/DocumentsPerson.vue'
-import DocumentsCompany from './views/profile/DocumentsCompany.vue'
-import NewPartner from './views/profile/NewPartner.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 
@@ -38,7 +34,7 @@ import TransactionHistoryWallet from './views/wallet/Transaction.vue'
 
 import TransactionHistory from './views/transaction-history/Index.vue'
 import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
-import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
+import BusinessPartners from './views/profile/businessAllie/BusinessPartners.vue'
 
 import UploadDocumentsIndex from './views/onboarding/index.vue'
 
@@ -83,30 +79,6 @@ const routes: RouteRecordRaw[] = [
           {
             path: '',
             component: ProfileIndex,
-          },
-          {
-            path: 'partners',
-            component: () => import('./views/profile/Partners.vue'),
-          },
-          {
-            path: 'partners/create',
-            component: NewPartner,
-          },
-          {
-            path: 'partners/show/:contactId',
-            component: ProfileIndex,
-          },
-          {
-            path: 'partners/edit/:contactId',
-            component: Edit,
-          },
-          {
-            path: 'documentation/person',
-            component: DocumentsPerson,
-          },
-          {
-            path: 'documentation/company',
-            component: DocumentsCompany,
           },
           {
             path: 'settings',

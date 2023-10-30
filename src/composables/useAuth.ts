@@ -1,5 +1,5 @@
-import { computed, reactive, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { fetchLogin } from '../views/login/services/fetchLogin'
 import { UserAuth } from '../views/login/types/login.interface'
 import { useAuthStore } from '../stores/useAuthStore'
