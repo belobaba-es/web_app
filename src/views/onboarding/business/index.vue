@@ -13,29 +13,35 @@
     </router-view>
   </section>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { WithdrawForm } from '../../withdraw/types/withdraw'
-import { useRouter } from 'vue-router'
-import { useToast } from 'primevue/usetoast'
+<script setup lang="ts">
 import Steps from 'primevue/steps'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n({ useScope: 'global' })
+import { useToast } from 'primevue/usetoast'
+import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
+import { useAuth } from '../../../composables/useAuth'
 
-const router = useRouter()
+const { fetchDataToClient } = useOnboardingCompany()
+const { getClientId } = useAuth()
 const toast = useToast()
-const formObject = ref<WithdrawForm | any>({})
-
+const router = useRouter()
 const items = ref([
   {
-    label: 'Personal data',
-    to: `/onboarding/personal/step1`,
+    label: 'Company information',
+    to: `/onboarding/business/step1`,
+  },
+  {
+    label: 'Add shareholders',
+    to: `/onboarding/business/step2`,
+  },
+  {
+    label: 'Account purpose',
+    to: `/onboarding/business/step3`,
   },
   {
     label: 'Upload documents',
-    to: `/onboarding/personal/step2`,
+    to: `/onboarding/business/step4`,
   },
 ])
 
@@ -53,4 +59,11 @@ const complete = () => {
 
   router.push('/dashboard')
 }
+
+onMounted(() => {
+  console.log('getClientId', getClientId())
+  if (getClientId()) {
+    fetchDataToClient()
+  }
+})
 </script>

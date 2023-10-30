@@ -19,7 +19,7 @@
             :options="countries"
             optionLabel="name"
             option-value="country_code"
-            :loading="loadingCountiesField"
+            :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
             class="w-full"
@@ -90,7 +90,7 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 const {
   countries,
   fetchCountries,
-  loadingCountiesField,
+  loadingCountriesField,
   countriesInputIsEmpty,
   statesInputIsEmpty,
   loadingStatesField,

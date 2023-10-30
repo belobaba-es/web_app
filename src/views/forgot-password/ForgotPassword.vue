@@ -74,16 +74,27 @@ const router = useRouter()
 
 const handleSubmit = () => {
   submitting.value = true
-  new ForgotPasswordService().sendEmail(form.email.toLowerCase()).then(response => {
-    submitting.value = false
-    toast.add({
-      severity: 'success',
-      summary: t('successfulOperation'),
-      life: 4000,
-      detail: response.message,
+  new ForgotPasswordService()
+    .sendEmail(form.email.toLowerCase())
+    .then(response => {
+      submitting.value = false
+      toast.add({
+        severity: 'success',
+        summary: t('successfulOperation'),
+        life: 4000,
+        detail: response.message,
+      })
+      router.push('/')
     })
-    router.push('/')
-  })
+    .catch(e => {
+      submitting.value = false
+      toast.add({
+        severity: 'error',
+        summary: t('error'),
+        life: 4000,
+        detail: e.response.data.message,
+      })
+    })
 }
 </script>
 

@@ -9,10 +9,10 @@
   />
 
   <!-- register as business allie -->
-  <RegisterAsBusinessAllie v-if="businessAllieStatus === ''" @create="onUpdateAllieStatus"></RegisterAsBusinessAllie>
+  <RegisterAsBusinessAllie v-if="businessAllieStatus === ''" @create="onUpdateAllieStatus" />
 
   <!-- awaiting for approval -->
-  <AwaitingApproval v-if="businessAllieStatus === 'PENDING_REVISION'"> </AwaitingApproval>
+  <AwaitingApproval v-if="businessAllieStatus === 'PENDING_REVISION'" />
 
   <!--List of Business Opportunities -->
   <div v-if="businessAllieStatus === 'APPROVED'" class="grid gray-container">
@@ -38,32 +38,29 @@
 
     <!--  List  -->
     <div class="align-right col-8 sm:col-8 md:col-9 lg:col-9 xl:col-9">
-      <ListBusinessPartners :businessOpportunities="businessOpportunities"></ListBusinessPartners>
+      <ListBusinessPartners :businessOpportunities="businessOpportunities" />
     </div>
   </div>
 
-  <ModalNewBusinessOpportunity v-model:display="displayNewOpportunity" @create="onCreateOpportunity">
-  </ModalNewBusinessOpportunity>
+  <ModalNewBusinessOpportunity v-model:display="displayNewOpportunity" @create="onCreateOpportunity" />
 </template>
 <script setup lang="ts">
-import { useAccount } from '../../../composables/useAccount'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import { BusinessAllieService } from '../services/businessAllieService'
 import { useToast } from 'primevue/usetoast'
 import ProgressSpinner from 'primevue/progressspinner'
-import ListBusinessPartners from '../components/ListBusinessPartners.vue'
-import ModalNewBusinessOpportunity from '../components/ModalNewBusinessOpportunity.vue'
+import ListBusinessPartners from './components/ListBusinessPartners.vue'
+import ModalNewBusinessOpportunity from './components/ModalNewBusinessOpportunity.vue'
 import UserAddIcon from '../../../assets/icons/user-add.svg'
-import RegisterAsBusinessAllie from '../components/RegisterAsBusinessAllie.vue'
+import RegisterAsBusinessAllie from './components/RegisterAsBusinessAllie.vue'
 import AwaitingApproval from '../components/AwaitingApproval.vue'
 import { BusinessOpportunity } from '../types/businessOpportunity'
 
 const businessAllieService = new BusinessAllieService()
 const submitting = ref(false)
 const { t } = useI18n({ useScope: 'global' })
-const { getFullName } = useAccount()
 const router = useRouter()
 const isApprovedAsBusinessPartner = ref(false)
 const businessAllieStatus = ref('initialState')

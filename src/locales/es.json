@@ -56,6 +56,7 @@
   "addressLabel2": "Dirección 2",
   "addressPlaceholder2": "Dirección 2",
   "postalCodeLabel": "Código postal",
+  "documentAlreadyVerified": "Tus documentos ya fueron verificados",
   "documents": "Documentos",
   "businessTitle": "EMPRESA - CARGA DE DOCUMENTOS",
   "businessDocumentLabel": "Documentos constitutivo de la empresa",
@@ -64,6 +65,8 @@
   "fileDescription": "Cargue el archivo del documento aquí (Formato admitido JPG, PNG o PDF)",
   "messageImageSize": "El archivo supera los 4Mb.",
   "shareholders": "Accionistas",
+  "shareholderInformationLabel": "*Solo para accionista con más de 25% de acciones.",
+  "shareholdersAdded": "Accionistas Añadidos",
   "shareholderTitle": "ACCIONISTAS - CARGA DE DOCUMENTOS",
   "shareholderFileFrontLabel": "Anverso",
   "shareholderFileBackLabel": "Reverso",
@@ -152,6 +155,7 @@
   "documentsPersonTitle": "Verificar los documentos",
   "documentsPersonText": "Vamos a comenzar con el proceso de carga de documentos para su verificación",
   "addNewShareHolder": "Añadir nuevo accionista",
+  "addShareHolder": "Añadir el accionista",
   "personalData": "Datos personales",
   "dni": "Documento de identidad",
   "contactInfo": "Información de contacto",
@@ -213,6 +217,7 @@
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
   "transactionHistory": "Histórico de transacciones",
   "extractGenerated": "Extracto Generado",
+  "extracts": "Extractos",
   "chooseExtract": "Seleccion el extracto que quiere consultar",
   "transactionType": "Tipo de transaccion",
   "assetType": "Tipo de asset",
@@ -431,5 +436,8 @@
   "anticipatedMonthlyTransactionsOutgoingLabel": "Transacciones Mensuales Anticipadas Salientes",
   "anticipatedMonthlyTransactionsOutgoingHelpText": "Estime el volumen de transacciones que espera hacer mensualmente. Ejemplo: de 1 a 49, de 50 a 99, de 100 a 499, etc.",
   "natureBusinessCompanyLabel": "Nature Business of the Company",
-  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business."
+  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business.",
+  "titleFinishOnboarding": "Gracias por su registro",
+  "descriptionFinishOnboarding": "Una vez aprobada tu cuenta te estaremos enviado un correo con la validación de su cuenta.",
+  "duplicateCompanyPhysicalAddress": "Click aquí si la dirección fisica es igual que la dirección de registro"
 }

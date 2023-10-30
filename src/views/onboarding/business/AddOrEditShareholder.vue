@@ -1,16 +1,15 @@
 <template>
-  <section class="section-main pt-6">
+  <section class="section-main">
+    <div class="mb-4">
+      <p class="text-3xl mt-0 mb-0 font-medium">{{ t('titleBusinessAccount') }} - {{ t('addNewShareHolder') }}</p>
+      <p class="font-light mt-2 text-primary">{{ t('shareholderInformationLabel') }}</p>
+    </div>
+
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('nameLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText
-            type="text"
-            v-model="onboardingPersonal.firstName"
-            :value="onboardingPersonal.firstName"
-            class="w-full"
-            required
-          />
+          <InputText type="text" v-model="partner.firstName" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextName') }}</span>
@@ -20,7 +19,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('secondNameLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.middleName" class="w-full" required />
+          <InputText type="text" v-model="partner.middleName" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextMiddleName') }}</span>
@@ -30,50 +29,17 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('surnameLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.lastName" class="w-full" required />
+          <InputText type="text" v-model="partner.lastName" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextSurname') }}</span>
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }}</label>
-        <div class="p-inputgroup">
-          <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
-        </div>
-      </div>
-
-      <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 phone-input">
-        <label>{{ t('phoneLabel') }}</label>
-        <div class="field grid">
-          <div class="col-2">
-            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
-          </div>
-          <div class="col-10">
-            <InputText id="phoneNumber" type="text" class="" v-model="onboardingPersonal.phoneNumber" required />
-            <div>
-              <span class="help-text">{{ t('helpTextPhone') }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
-        <label>{{ t('emailLabel') }}</label>
-        <div class="p-inputgroup">
-          <!-- //FIX readonly -->
-          <InputText type="text" v-model="onboardingPersonal.email" class="w-full" readonly required />
-        </div>
-      </div>
-
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('docTypeLabelPassport') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
+          <InputText type="text" v-model="partner.passport" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextPassport') }}</span>
@@ -83,7 +49,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('documentLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
+          <InputText type="text" v-model="partner.dni" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextIdNumber') }}</span>
@@ -93,14 +59,42 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('taxIdLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
+          <InputText type="text" v-model="partner.taxId" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
         </div>
       </div>
 
-      <br />
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
+        <label>{{ t('birthdateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('emailLabel') }}</label>
+        <div class="p-inputgroup">
+          <!-- //FIX readonly -->
+          <InputText type="text" v-model="partner.email" class="w-full" required />
+        </div>
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
+        <label>{{ t('phoneLabel') }}</label>
+        <div class="field grid">
+          <div class="col-4">
+            <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
+          </div>
+          <div class="col-8">
+            <InputText id="phoneNumber" type="text" class="" v-model="partner.phoneNumber" required />
+            <div>
+              <span class="help-text">{{ t('helpTextPhone') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
       <Divider class="mt-0"></Divider>
@@ -109,7 +103,7 @@
           <label>{{ t('countryLabel') }}</label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="onboardingPersonal.country"
+              v-model="partner.country"
               :options="countries"
               optionLabel="name"
               option-value="country_code"
@@ -117,7 +111,6 @@
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
-              @change="onChangeCountryHandler"
               required
             />
           </div>
@@ -129,7 +122,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('stateLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingPersonal.region" class="w-full" />
+            <InputText type="text" v-model="partner.region" class="w-full" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextState') }}</span>
@@ -139,7 +132,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('cityLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingPersonal.city" class="w-full" required />
+            <InputText type="text" v-model="partner.city" class="w-full" required />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -149,7 +142,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddress') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingPersonal.streetOne" />
+            <InputText type="text" v-model="partner.streetOne" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -159,7 +152,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingPersonal.streetTwo" />
+            <InputText type="text" v-model="partner.streetTwo" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -169,7 +162,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('postalCodeLabel') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingPersonal.postalCode" />
+            <InputText type="text" v-model="partner.postalCode" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -177,15 +170,32 @@
         </div>
       </div>
 
-      <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveDataAndNextPag()" :loading="submitting" />
+      <div class="field col-12 container-flex mt-5">
+        <div class="float-left w-25">
+          <Button
+            v-show="showButtonForCancel()"
+            type="button"
+            :label="t('cancel')"
+            class="font-light w-100 border-300 p-button-outlined"
+            @click="redirectToStep2"
+          />
+        </div>
+        <div class="float-right w-25">
+          <Button
+            :label="t('addShareHolder')"
+            class="px-5 mt-2 btn-submit"
+            iconPos="right"
+            :loading="submitting"
+            @click="addNewShareholder()"
+          />
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -195,36 +205,36 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
-import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
-
+import { useShareholder } from '../../../composables/useShareholder'
+import { useRoute } from 'vue-router'
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-} = useWorld()
-
-const { onboardingPersonal, saveData, submitting, saveDataAndNextPag } = useOnboardingPersonal()
+  partner,
+  submitting,
+  loadingDataToShareholder,
+  addNewShareholder,
+  redirectToStep2,
+  showButtonForCancel,
+  enableDataForCreateNewShareholder,
+} = useShareholder()
+const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
+  verifyRoute()
+  watch(
+    () => route.name,
+    () => {
+      verifyRoute()
+    }
+  )
 })
+
+const verifyRoute = () => {
+  if (route.name === undefined) return
+  if (route.name === 'new-shareholder') enableDataForCreateNewShareholder()
+  else if (route.name === 'edit-shareholder') loadingDataToShareholder(route.params.dni)
+}
 </script>
-<style lang="scss">
-.phone-input {
-  margin-top: 7px;
-}
-
-.btn-submit {
-  @media only screen and (max-width: 992px) {
-    width: 100% !important;
-  }
-}
-
-#phoneNumber {
-  width: 97%;
-}
-</style>
+<style lang="scss"></style>

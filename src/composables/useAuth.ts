@@ -1,9 +1,8 @@
-import { computed, reactive, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { fetchLogin } from '../views/login/services/fetchLogin'
 import { UserAuth } from '../views/login/types/login.interface'
 import { useAuthStore } from '../stores/useAuthStore'
-import { useI18n } from 'vue-i18n'
 
 export const useAuth = () => {
   const submitting = ref(false)
@@ -14,7 +13,7 @@ export const useAuth = () => {
     remember: false,
   })
 
-  const { setInitialUserAuth, getClientId, getAccountType } = useAuthStore()
+  const { setInitialUserAuth, getAccountType } = useAuthStore()
 
   const makeLogin = async (): Promise<UserAuth | undefined> => {
     submitting.value = true
@@ -43,7 +42,7 @@ export const useAuth = () => {
     if (getAccountType() === 'NATURAL_PERSON') {
       router.push(`/onboarding/personal/step1`)
     } else {
-      router.push(`/onboarding/personal/step1`)
+      router.push(`/onboarding/business/step1`)
     }
   }
 

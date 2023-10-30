@@ -44,15 +44,53 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import { useAccount } from '../../../composables/useAccount'
+import { ProfileService } from '../services/profile'
+import { useAuth } from '../../../composables/useAuth'
+import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({
   useScope: 'global',
 })
 
-const { submitUpdatePassword, submitting, newPassword, confirmNewPassword, currentPassword } = useAccount()
+const toast = useToast()
+const { getUserName, getUserEmail } = useAuth()
 
+const currentPassword = ref<string>('')
+const newPassword = ref<string>('')
+const confirmNewPassword = ref<string>('')
+const submitting = ref<boolean>(false)
 const showPassword = ref<boolean>(false)
+
+const submitUpdatePassword = async () => {
+  submitting.value = true
+  new ProfileService()
+    .updatePassword(getUserEmail(), newPassword.value, currentPassword.value)
+    .then(() => {
+      submitting.value = false
+      clearUpdatePasswordForm()
+      toast.add({
+        severity: 'info',
+        summary: t('successfulOperation'),
+        detail: t('updatePasswordSuccessMessage'),
+        life: 6000,
+      })
+    })
+    .catch(error => {
+      submitting.value = false
+      toast.add({
+        severity: 'error',
+        summary: t('somethingWentWrong'),
+        detail: error.response.data.message,
+        life: 4000,
+      })
+    })
+}
+
+const clearUpdatePasswordForm = () => {
+  newPassword.value = ''
+  confirmNewPassword.value = ''
+  currentPassword.value = ''
+}
 
 const toggleShowPassword = () => {
   showPassword.value = !showPassword.value

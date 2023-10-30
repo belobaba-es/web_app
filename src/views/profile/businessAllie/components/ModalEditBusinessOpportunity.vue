@@ -85,10 +85,10 @@ import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import BusinessOpportunitiesImg from '../../../assets/img/be_business_partner.png'
+import BusinessOpportunitiesImg from '../../../../assets/img/be_business_partner.png'
 import { useToast } from 'primevue/usetoast'
-import { BusinessAllieService } from '../services/businessAllieService'
-import { BusinessOpportunity } from '../types/businessOpportunity'
+import { BusinessAllieService } from '../../services/businessAllieService'
+import { BusinessOpportunity } from '../../types/businessOpportunity'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })

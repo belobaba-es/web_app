@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
+import { useAuth } from '../composables/useAuth'
+const { getUserEmail } = useAuth()
 
 export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStore', {
   state: (): OnboardingPersonal => ({
     firstName: '',
     middleName: '',
     lastName: '',
-    email: '',
+    email: getUserEmail(),
     dateBirth: '',
     dni: '',
     taxId: '',
@@ -23,7 +25,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     referredByAccountId: '',
   }),
   actions: {
-    setInitialOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
+    setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
       this.firstName = onboardingPersonal.firstName
       this.middleName = onboardingPersonal.middleName
       this.lastName = onboardingPersonal.lastName
@@ -42,6 +44,28 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.country = onboardingPersonal.country
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
+    },
+    dataOnboardingPersonal(): OnboardingPersonal {
+      return {
+        firstName: this.firstName,
+        middleName: this.middleName,
+        lastName: this.lastName,
+        email: this.email,
+        dateBirth: this.dateBirth,
+        dni: this.dni,
+        taxId: this.taxId,
+        passport: this.passport,
+        phoneCountry: this.phoneCountry,
+        phoneNumber: this.phoneNumber,
+        streetOne: this.streetOne,
+        streetTwo: this.streetTwo,
+        postalCode: this.postalCode,
+        city: this.city,
+        region: this.region,
+        country: this.country,
+        type: this.type,
+        referredByAccountId: this.referredByAccountId,
+      }
     },
   },
 })

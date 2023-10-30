@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar />
     <!--    todo uncomment-->
     <!--    <AccountValidationProcess />-->
     <!--    <PageLayout :title="t('swap')" v-show="useUser.swapModuleIsActive()">-->

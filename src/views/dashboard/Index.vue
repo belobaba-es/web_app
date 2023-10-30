@@ -1,6 +1,6 @@
 <template>
   <section class="section-main">
-    <FinishRegisterWarningBar></FinishRegisterWarningBar>
+    <FinishRegisterWarningBar />
 
     <CardWallet :carousel="true" />
 
