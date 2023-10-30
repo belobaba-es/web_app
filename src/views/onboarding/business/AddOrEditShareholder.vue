@@ -69,7 +69,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }}</label>
         <div class="p-inputgroup">
-          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
         </div>
       </div>
 
@@ -170,8 +170,25 @@
         </div>
       </div>
 
-      <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('addShareHolder')" class="px-5 mt-2 btn-submit" @click="addNewShareholder()" />
+      <div class="field col-12 container-flex mt-5">
+        <div class="float-left w-25">
+          <Button
+            v-show="showButtonForCancel()"
+            type="button"
+            :label="t('cancel')"
+            class="font-light w-100 border-300 p-button-outlined"
+            @click="redirectToStep2"
+          />
+        </div>
+        <div class="float-right w-25">
+          <Button
+            :label="t('addShareHolder')"
+            class="px-5 mt-2 btn-submit"
+            iconPos="right"
+            :loading="submitting"
+            @click="addNewShareholder()"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -191,13 +208,33 @@ import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
-const { partner, addNewShareholder } = useShareholder()
+const {
+  partner,
+  submitting,
+  loadingDataToShareholder,
+  addNewShareholder,
+  redirectToStep2,
+  showButtonForCancel,
+  enableDataForCreateNewShareholder,
+} = useShareholder()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
-  console.log('aaa')
   await fetchCountries()
+  verifyRoute()
+  watch(
+    () => route.name,
+    () => {
+      verifyRoute()
+    }
+  )
 })
+
+const verifyRoute = () => {
+  if (route.name === undefined) return
+  if (route.name === 'new-shareholder') enableDataForCreateNewShareholder()
+  else if (route.name === 'edit-shareholder') loadingDataToShareholder(route.params.dni)
+}
 </script>
 <style lang="scss"></style>

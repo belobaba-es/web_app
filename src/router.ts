@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './views/profile/Index.vue'
-import Settings from './views/profile/settings/Index.vue'
 import Edit from './views/profile/Edit.vue'
 import Deposit from './views/deposit/Deposit.vue'
 import DepositCrypto from './views/deposit/Crypto.vue'
@@ -22,8 +21,6 @@ import StepIntermediaryBank from './views/withdraw/components/NewBeneficiary/Ste
 import StepBankNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepBankNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-import DashboardIndex from './views/dashboard/Index.vue'
-import ForgotPassword from './views/forgot-password/ForgotPassword.vue'
 
 import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/StepAccounts.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
@@ -44,13 +41,6 @@ import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
 import BusinessPartners from './views/profile/BusinessPartners/BusinessPartners.vue'
 
 import UploadDocumentsIndex from './views/onboarding/index.vue'
-
-import BusinessStep1 from './views/onboarding/business/Step1.vue'
-import BusinessStep2 from './views/onboarding/business/Step2.vue'
-import BusinessStep3 from './views/onboarding/business/Step3.vue'
-import BusinessStep4 from './views/onboarding/business/Step4.vue'
-import NewSharedHolder from './views/onboarding/business/AddOrEditShareholder.vue'
-import EditSharedHolder from './views/onboarding/business/editNewShareHolder.vue'
 
 import CreateUser from './views/register/CreateUser.vue'
 import ConfirmEmail from './views/register/ConfirmEmail.vue'
@@ -120,7 +110,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'settings',
-            component: Settings,
+            component: () => import('./views/profile/settings/Index.vue'),
           },
           {
             path: 'business-partners',
@@ -236,24 +226,6 @@ const routes: RouteRecordRaw[] = [
             path: 'fiat/international/successful',
             component: StepSuccessful,
           },
-          // {
-          //   path: 'fiat/international',
-          //   component: WithdrawFiatInternational,
-          //   children: [
-          //     {
-          //       path: '',
-          //       component: WithdrawFiatStepAccounts,
-          //     },
-          //     {
-          //       path: 'amount',
-          //       component: WithdrawFiatStepAmount,
-          //     },
-          //     {
-          //       path: 'confirmation',
-          //       component: WithdrawFiatStepConfirmation,
-          //     },
-          //   ],
-          // },
           {
             path: 'crypto/other',
             component: OtherPlatFormsWallets,
@@ -326,6 +298,9 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/onboarding/personal',
+        meta: {
+          noCache: true,
+        },
         children: [
           {
             path: '',
@@ -349,6 +324,9 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/onboarding/business',
+        meta: {
+          noCache: true,
+        },
         children: [
           {
             path: '',
@@ -375,11 +353,12 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('./views/onboarding/business/Step4.vue'),
               },
               {
-                path: 'new-shareholder',
+                path: 'step2/new-shareholder',
+                name: 'new-shareholder',
                 component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
               },
               {
-                path: 'edit-shareholder/:dni',
+                path: 'step2/edit-shareholder/:dni',
                 name: 'edit-shareholder',
                 component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
               },

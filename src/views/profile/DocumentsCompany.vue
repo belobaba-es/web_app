@@ -35,6 +35,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
 const { getMembers } = useAccount()
+alert('ss')
 </script>
 
 <style scoped lang="scss">

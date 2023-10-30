@@ -37,12 +37,6 @@ import personal from '../../assets/icons/userAccount.svg'
 
 import Divider from 'primevue/divider'
 
-interface tabItem {
-  label: string
-  icon?: string
-  to: string
-}
-
 const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1)
 </script>

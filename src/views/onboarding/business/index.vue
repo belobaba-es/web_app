@@ -15,11 +15,15 @@
 </template>
 <script setup lang="ts">
 import Steps from 'primevue/steps'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
+import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
+import { useAuth } from '../../../composables/useAuth'
 
+const { fetchDataToClient } = useOnboardingCompany()
+const { getClientId } = useAuth()
 const toast = useToast()
 const router = useRouter()
 const items = ref([
@@ -55,4 +59,11 @@ const complete = () => {
 
   router.push('/dashboard')
 }
+
+onMounted(() => {
+  console.log('getClientId', getClientId())
+  if (getClientId()) {
+    fetchDataToClient()
+  }
+})
 </script>

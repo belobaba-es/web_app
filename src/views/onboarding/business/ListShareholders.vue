@@ -46,10 +46,10 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
-import UserAdd from '../../../../assets/icons/user-add.svg'
-import PartnerItem from './PartnerItem.vue'
-import { useShareholder } from '../../../../composables/useShareholder'
+import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
+import UserAdd from '../../../assets/icons/user-add.svg'
+import PartnerItem from './components/PartnerItem.vue'
+import { useShareholder } from '../../../composables/useShareholder'
 
 const { t } = useI18n({ useScope: 'global' })
 

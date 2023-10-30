@@ -5,7 +5,7 @@
 
 <script lang="ts" setup>
 import AddNewShareHolder from './AddOrEditShareholder.vue'
-import ListShareholders from './components/ListShareholders.vue'
+import ListShareholders from './ListShareholders.vue'
 
 import { useShareholder } from '../../../composables/useShareholder'
 

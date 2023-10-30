@@ -23,6 +23,8 @@
       placeholder="Top"
       v-tooltip.top="'Edit shareholder'"
       class="w-50 pr-3 pl-3"
+      iconPos="right"
+      :loading="submitting"
       @click="editShareholder(dni)"
     />
   </span>
@@ -42,7 +44,7 @@ defineProps<{
 }>()
 
 const { t } = useI18n({ useScope: 'global' })
-const { deleteShareholder, editShareholder } = useShareholder()
+const { deleteShareholder, editShareholder, submitting } = useShareholder()
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,28 +1,70 @@
 import showMessage from '../shared/showMessageArray'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { OnboardingCompany, Partner } from '../types/onboardingCompany'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { validateObject } from '../shared/validateObject'
+import { OnboardingService } from '../views/onboarding/services/onboarding'
+import { Store } from 'pinia'
 
 export const useOnboardingCompany = () => {
   const router = useRouter()
   const toast = useToast()
   const submitting = ref(false)
-  const isUpdateData = ref<boolean>(false)
 
   const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
   const { getClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
 
-  const addPartner = (partner: Partner) => {}
+  const useOnboardingCompanyState = useOnboardingCompanyStore()
 
-  const saveData = () => {}
+  useOnboardingCompanyState.$subscribe((mutation, state) => {
+    onboardingCompany.value = state
+  })
 
-  const validateStepOne = (): boolean => {
+  const saveData = () => {
+    if (!validateStep3()) {
+      return
+    }
+
+    requestToBackendForUpdateOnboardingCompany()
+      .then(resp => {
+        submitting.value = false
+        router.push('/onboarding/business/step4')
+      })
+      .catch(e => {
+        submitting.value = false
+
+        showMessage(toast, e.response.data)
+      })
+  }
+
+  const requestToBackendForUpdateOnboardingCompany = (): Promise<any> => {
+    return new OnboardingService().openingAccountBussiness(onboardingCompany.value, getClientId() !== undefined)
+  }
+
+  const validateStep3 = (): boolean => {
+    const fieldsToValidate: any = {
+      purposeAccount: onboardingCompany.value.accountQuestionnaire.purposeAccount,
+      sourceAssetsAndIncome: onboardingCompany.value.accountQuestionnaire.sourceAssetsAndIncome,
+      intendedUseAccount: onboardingCompany.value.accountQuestionnaire.intendedUseAccount,
+      anticipatedTypesAssets: onboardingCompany.value.accountQuestionnaire.anticipatedTypesAssets,
+      anticipatedMonthlyCashVolume: onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyCashVolume,
+      anticipatedTradingPatterns: onboardingCompany.value.accountQuestionnaire.anticipatedTradingPatterns,
+      anticipatedMonthlyTransactionsIncoming:
+        onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyTransactionsIncoming,
+      anticipatedMonthlyTransactionsOutgoing:
+        onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyTransactionsOutgoing,
+      natureBusinessCompany: onboardingCompany.value.accountQuestionnaire.natureBusinessCompany,
+    }
+
+    return validateObject(toast, fieldsToValidate)
+  }
+
+  const validateStep2 = (): boolean => {
     const fieldsToValidate: any = {
       'informationCompany.name': onboardingCompany.value.informationCompany.name,
       email: onboardingCompany.value.email,
@@ -81,14 +123,12 @@ export const useOnboardingCompany = () => {
     onboardingCompany.value.informationCompany.physicalAddress.postalCode = ''
   }
 
-  const fetchDataToClient = () => {
+  const fetchDataToClientCompany = () => {
     submitting.value = true
     new ProfileService()
       .getAccountByClientId(getClientId())
       .then((resp: any) => {
-        isUpdateData.value = true
-        onboardingCompany.value = resp.clientData as unknown as OnboardingCompany
-        setStateOnboardingCompany(onboardingCompany.value)
+        setStateOnboardingCompany(resp.clientData as unknown as OnboardingCompany)
         submitting.value = false
       })
       .catch(e => {
@@ -97,14 +137,10 @@ export const useOnboardingCompany = () => {
       })
   }
 
-  const nextStepTwo = () => {
-    if (validateStepOne()) {
+  const nextStep2 = () => {
+    if (validateStep2()) {
       router.push(`/onboarding/business/step2`)
     }
-  }
-
-  if (getClientId()) {
-    fetchDataToClient()
   }
 
   const hasPartner = computed((): boolean => {
@@ -123,8 +159,11 @@ export const useOnboardingCompany = () => {
     ...useOnboardingCompanyStore(),
     hasPartner,
     onboardingCompany,
+    fetchDataToClient: fetchDataToClientCompany,
+    requestToBackendForUpdateOnboardingCompany,
+    saveData,
     nextStep3,
     physicalAddressIsSameRegisteredAddress,
-    nextStepTwo,
+    nextStep2,
   }
 }

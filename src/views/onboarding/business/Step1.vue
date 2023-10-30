@@ -68,7 +68,7 @@
           <Calendar
             v-model="onboardingCompany.informationCompany.establishedDate"
             placeholder="0000/00/00"
-            dateFormat="yy/mm/dd"
+            dateFormat="yy-mm-dd"
           />
         </div>
         <div>
@@ -300,37 +300,33 @@
         </div>
       </div>
 
-      <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="nextStepTwo()" :loading="submitting" />
+      <div class="field mt-4 col-12 flex align-items-center justify-content-end">
+        <Button
+          :label="t('continue')"
+          icon="pi pi-angle-right"
+          iconPos="right"
+          class="px-5 mt-2 btn-submit"
+          @click="nextStep2()"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch, ref } from 'vue'
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
+import { onMounted, ref } from 'vue'
+import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Calendar from 'primevue/calendar'
 import Divider from 'primevue/divider'
 import Checkbox from 'primevue/checkbox'
-
-import { useToast } from 'primevue/usetoast'
-
 import { useI18n } from 'vue-i18n'
-
 import { useWorld } from '../../../composables/useWorld'
-
-import router from '../../../router'
-import { useAuth } from '../../../composables/useAuth'
-import { convertISODateToYYYYMMDD } from '../../../shared/formatDate'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 
-const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, loadingStatesField, calling_code } =
-  useWorld()
-
-const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStepTwo } = useOnboardingCompany()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
+const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()
 
 const { t } = useI18n({ useScope: 'global' })
 

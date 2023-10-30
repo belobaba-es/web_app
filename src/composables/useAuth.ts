@@ -42,7 +42,7 @@ export const useAuth = () => {
     if (getAccountType() === 'NATURAL_PERSON') {
       router.push(`/onboarding/personal/step1`)
     } else {
-      router.push(`/onboarding/personal/step1`)
+      router.push(`/onboarding/business/step1`)
     }
   }
 

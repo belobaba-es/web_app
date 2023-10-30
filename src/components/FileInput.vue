@@ -23,6 +23,8 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import FileUpload from '../views/profile/components/FileUploaded.vue'
 import { useAuth } from '../composables/useAuth'
+import showMessageArray from '../shared/showMessageArray'
+import showMessage from '../shared/showMessageArray'
 
 const toast = useToast()
 const { markDataSubmitted } = useAuth()
@@ -130,16 +132,18 @@ const handleUpload = async (event: any) => {
     })
     .catch(error => {
       setLoading(false)
-      formData.forEach((value, key) => {
-        if (error.response.data[key]) {
-          toast.add({
-            severity: 'error',
-            summary: t('somethingWentWrong'),
-            detail: error.response.data[key].message,
-            life: 4000,
-          })
-        }
-      })
+
+      if (error.response.data.message) {
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: error.response.data.message,
+          life: 4000,
+        })
+        return
+      }
+
+      showMessage(toast, error.response.data)
     })
 }
 

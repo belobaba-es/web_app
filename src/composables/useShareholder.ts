@@ -5,33 +5,37 @@ import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { useOnboardingCompany } from './useOnboardingCompany'
 import { useRoute, useRouter } from 'vue-router'
+import showMessage from '../shared/showMessageArray'
 
 export const useShareholder = () => {
   const router = useRouter()
-  const route = useRoute()
   const toast = useToast()
-  const { hasPartner, getPartners } = useOnboardingCompany()
+  const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
-  const initStatePartner = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: '',
-    dateBirth: '',
-    dni: '',
-    taxId: '',
-    passport: '',
-    phoneCountry: '',
-    phoneNumber: '',
-    streetOne: '',
-    streetTwo: '',
-    postalCode: '',
-    city: '',
-    region: '',
-    country: '',
+  const submitting = ref(false)
+
+  const initStatePartner = () => {
+    return {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: '',
+      dateBirth: '',
+      dni: '',
+      taxId: '',
+      passport: '',
+      phoneCountry: '',
+      phoneNumber: '',
+      streetOne: '',
+      streetTwo: '',
+      postalCode: '',
+      city: '',
+      region: '',
+      country: '',
+    }
   }
 
-  const partner = ref<Partner>(initStatePartner)
+  const partner = ref<Partner>(initStatePartner())
 
   const validateShareholder = (): boolean => {
     const fieldsToValidate: any = {
@@ -66,9 +70,16 @@ export const useShareholder = () => {
     }
 
     addNewPartner(partner.value)
-    partner.value = initStatePartner
-
-    router.push('/onboarding/business/step2')
+    submitting.value = true
+    requestToBackendForUpdateOnboardingCompany()
+      .then(() => {
+        submitting.value = false
+        router.push('/onboarding/business/step2')
+      })
+      .catch(e => {
+        submitting.value = false
+        showMessage(toast, e.response.data)
+      })
   }
 
   const isShowAddNewShareholder = computed(() => {
@@ -76,13 +87,25 @@ export const useShareholder = () => {
   })
 
   const onCreateNewShareholder = () => {
-    router.push('/onboarding/business/new-shareholder')
+    router.push('/onboarding/business/step2/new-shareholder')
   }
 
-  const deleteShareholder = (dni: string) => {}
+  const deleteShareholder = (dni: string) => {
+    deletePartner(dni)
+
+    submitting.value = true
+    requestToBackendForUpdateOnboardingCompany()
+      .then(() => {
+        router.push('/onboarding/business/step2')
+      })
+      .catch(e => {
+        submitting.value = false
+        showMessage(toast, e.response.data)
+      })
+  }
 
   const editShareholder = (dni: string) => {
-    router.push(`/onboarding/business/edit-shareholder/${dni}`)
+    router.push(`/onboarding/business/step2/edit-shareholder/${dni}`)
   }
   const loadingDataToShareholder = (dni: any) => {
     getPartners().forEach(p => {
@@ -92,16 +115,27 @@ export const useShareholder = () => {
     })
   }
 
-  watch(
-    () => route.params.dni,
-    () => {
-      loadingDataToShareholder(route.params.dni)
-    }
-  )
+  const redirectToStep2 = () => {
+    router.push('/onboarding/business/step2')
+  }
+
+  const showButtonForCancel = (): boolean => {
+    return hasPartner.value
+  }
+
+  const enableDataForCreateNewShareholder = () => {
+    partner.value = initStatePartner()
+  }
+
   return {
     isShowAddNewShareholder,
     partner,
+    submitting,
+    enableDataForCreateNewShareholder,
+    loadingDataToShareholder,
+    showButtonForCancel,
     deleteShareholder,
+    redirectToStep2,
     editShareholder,
     onCreateNewShareholder,
     addNewShareholder,
