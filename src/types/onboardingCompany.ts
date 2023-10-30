@@ -1,3 +1,32 @@
+export enum DocumentSide {
+  BACK = 'BACK',
+  FRONT = 'FRONT',
+}
+export enum DocumentType {
+  PASSPORT = 'passport',
+  DRIVERS_LICENSE = 'drivers_license',
+  GOVERNMENT_ID = 'government_id',
+  RESIDENCE_PERMIT = 'residence_permit',
+  UTILITY_BILL = 'utility_bill',
+  STATEMENT = 'statements',
+  OTHER = 'other',
+  MONTHLY_UTILITY = 'monthly_utility',
+  RENTAL_LEASE_AGREEMENT = 'rental_lease_agreement',
+  VEHICLE_REGISTRATION = 'vehicle_registration',
+  REAL_ESTATE_PROPERTY_TITLE = 'real_estate_property_title',
+  PROPERTY_TAX_BILL = 'property_tax_bill',
+  ACCOUNT_AGREEMENT = 'account_agreement',
+  BENEFICIAL_OWNERSHIP_CERTIFICATE = 'beneficial_ownership_certificate',
+  INCORPORATION_DOCUMENT = 'incorporation_document',
+  W2 = 'w2',
+}
+
+export type Documents = {
+  documentId: string
+  documentSide: DocumentSide
+  documentType: DocumentType
+  patch: string
+}
 export type Partner = {
   firstName: string
   middleName: string
@@ -9,6 +38,7 @@ export type Partner = {
   passport: string
   phoneCountry: string
   phoneNumber: string
+  documents: Documents[]
   streetOne: string
   streetTwo: string
   postalCode: string

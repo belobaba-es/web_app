@@ -1,6 +1,6 @@
 <template>
-  <div class="field">
-    <p class="text-1xl font-medium">Documents of - {{ props.name }}</p>
+  <div class="field" v-show="!hasDocuments()">
+    <p class="text-1xl font-medium text-capitalize">Documents of - {{ props.name }}</p>
     <div class="grid">
       <div class="col-12">
         <div class="field col-12">
@@ -14,7 +14,6 @@
                 :placeholder="t('documentTypePlaceHolder')"
                 class="w-full"
                 v-model="identifyDocument"
-                @change="selectedIdentifyDocument"
               />
             </div>
           </div>
@@ -58,7 +57,6 @@
                     option-value="value"
                     :placeholder="t('documentTypePlaceHolder')"
                     class="w-full"
-                    @change="selectedProofOfAddress"
                     v-model="typeDocumentAddress"
                   />
                 </div>
@@ -80,17 +78,18 @@
 
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
-import { ref, onBeforeMount, defineProps } from 'vue'
-import { useAccount } from '../../../../composables/useAccount'
+import { ref, defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../../components/FileInput.vue'
 import { useDocuments } from '../../../../composables/useDocuments'
 import { useToast } from 'primevue/usetoast'
+import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
 
 const { t } = useI18n({ useScope: 'global' })
-const { getOwner, accountId, getFullName, findMember, submitProfileForm } = useAccount()
+
 const toast = useToast()
 const { documentTypeProofOfAddress, documentTypeOptions } = useDocuments()
+const { getPartners } = useOnboardingCompany()
 
 const identifyDocument = ref<string>('')
 const documentSide = ref<string>('')
@@ -108,19 +107,15 @@ const props = defineProps({
   },
 })
 
-const member = ref()
-
-onBeforeMount(() => {
-  member.value = findMember(props.dni)
-})
-
 const shouldShowFrontBank = () => {
   return ['drivers_license', 'government_id', 'residence_permit'].includes(identifyDocument.value)
 }
 
-const selectedIdentifyDocument = (e: any) => {}
-
-const selectedProofOfAddress = (e: any) => {}
-
+const hasDocuments = (): boolean => {
+  const partner = getPartners().find(
+    partner => partner.dni === props.dni && partner.documents !== undefined && partner?.documents.length > 0
+  )
+  return !!partner
+}
 //router.push('/personal/completed')
 </script>

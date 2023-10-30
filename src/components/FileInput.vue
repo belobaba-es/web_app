@@ -23,7 +23,6 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import FileUpload from '../views/profile/components/FileUploaded.vue'
 import { useAuth } from '../composables/useAuth'
-import showMessageArray from '../shared/showMessageArray'
 import showMessage from '../shared/showMessageArray'
 
 const toast = useToast()

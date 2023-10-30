@@ -24,6 +24,12 @@ export const useOnboardingPersonal = () => {
 
   const isUpdateData = ref<boolean>(false)
 
+  const useOnboardingPersonalState = useOnboardingPersonalStore()
+
+  useOnboardingPersonalState.$subscribe((mutation, state) => {
+    onboardingPersonal.value = state
+  })
+
   const isPassportOrTaxIdEmpty = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
   }
@@ -31,7 +37,7 @@ export const useOnboardingPersonal = () => {
   const saveData = () => {
     return new Promise((resolve, reject) => {
       submitting.value = true
-      setStateOnboardingPersonal(onboardingPersonal.value)
+      // setStateOnboardingPersonal(onboardingPersonal.value)
       if (isPassportOrTaxIdEmpty()) {
         toast.add({
           severity: 'error',
@@ -78,6 +84,11 @@ export const useOnboardingPersonal = () => {
       })
   }
   const saveDataAndNextPag = async () => {
+    if (!getClientId()) {
+      router.push('/onboarding/personal/step2')
+      return
+    }
+
     saveData().then(() => {
       router.push('/onboarding/personal/step2')
     })

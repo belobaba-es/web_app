@@ -1,11 +1,7 @@
-import { storeToRefs } from 'pinia'
-import { useDocumentAddStorage } from '../stores/documents'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 export const useDocuments = () => {
-  const documentsStore = storeToRefs(useDocumentAddStorage())
-
   const { t } = useI18n({ useScope: 'global' })
 
   const documentTypeProofOfAddress = ref([

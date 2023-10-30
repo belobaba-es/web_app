@@ -13,7 +13,7 @@
         </div>
         <div class="p-toggleable-content" role="region">
           <div class="p-panel-content">
-            <div class="p-scrollpanel p-component custom" style="height: 400px">
+            <div class="p-scrollpanel p-component custom" style="height: 434px">
               <div class="p-scrollpanel-wrapper">
                 <div class="p-scrollpanel-content">
                   <div class="px-3 pt-3 pb-0" v-for="(shareholder, idx) in getPartners()" :key="idx">
@@ -26,18 +26,35 @@
         </div>
       </div>
     </div>
+
+    <div class="field mt-4 col-12 flex align-items-center justify-content-end">
+      <Button
+        :label="t('continue')"
+        icon="pi pi-angle-right"
+        iconPos="right"
+        class="px-5 mt-2 btn-submit"
+        @click="finish()"
+      />
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import DocumentsPartners from './components/DocumentsPartners.vue'
 import DocumentsCompany from './components/DocumentsCompany.vue'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n({ useScope: 'global' })
+const router = useRouter()
 
 const { onboardingCompany, getPartners } = useOnboardingCompany()
+
+const finish = () => {
+  router.push('/onboarding/business/completed')
+}
 
 //router.push('/personal/completed')
 </script>

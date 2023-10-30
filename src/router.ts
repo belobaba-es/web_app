@@ -362,6 +362,10 @@ const routes: RouteRecordRaw[] = [
                 name: 'edit-shareholder',
                 component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
               },
+              {
+                path: 'completed',
+                component: () => import('./views/onboarding/components/CompletedDocument.vue'),
+              },
             ],
           },
         ],
