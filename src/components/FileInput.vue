@@ -39,7 +39,7 @@ const props = defineProps({
   },
   dni: {
     type: String,
-    required: true,
+    required: false,
   },
   registerNumber: {
     type: String,

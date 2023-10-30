@@ -32,6 +32,7 @@ export const useShareholder = () => {
       city: '',
       region: '',
       country: '',
+      documents: [],
     }
   }
 
