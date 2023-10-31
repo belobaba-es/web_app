@@ -32,10 +32,10 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import BusinessPartnersImg from '../../../assets/img/business_opportunities.png'
+import BusinessPartnersImg from '../../../../assets/img/business_opportunities.png'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { BusinessAllieService } from '../services/businessAllieService'
+import { BusinessAllieService } from '../../services/businessAllieService'
 import { useToast } from 'primevue/usetoast'
 
 const referredBy = ref('')

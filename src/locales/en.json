@@ -65,6 +65,8 @@
   "fileDescription": "Upload the document file here (supported format JPG, PNG or PDF)",
   "messageImageSize": "The file surpasses 4MB",
   "shareholders": "Shareholders",
+  "shareholderInformationLabel": "*Only for shareholders with more than 25% of the shares.",
+  "shareholdersAdded": "Added Shareholders",
   "shareholderTitle": "SHAREHOLDERS - UPLOAD OF DOCUMENTS",
   "shareholderFileFrontLabel": "Front side",
   "shareholderFileBackLabel": "Back side",
@@ -128,6 +130,7 @@
   "updatePasswordSuccessMessage": "Password successfully updated",
   "successfulOperation": "Successful operation",
   "shareholderDataSuccessSend": "Shareholder data sent correctly",
+  "documentAlreadyVerified": "documents have already been verified",
   "continue": "Continue",
   "addBeneficiaries": "Add Beneficiaries",
   "streetAddress": "Street Address",
@@ -154,6 +157,7 @@
   "documentsPersonTitle": "Verify Documents",
   "documentsPersonText": "We are going to start with the document upload process for verification",
   "addNewShareHolder": "Add New Shareholder",
+  "addShareHolder": "Add Shareholder",
   "personalData": "Personal data",
   "dni": "Identity document",
   "contactInfo": "Contact information",
@@ -440,5 +444,8 @@
   "anticipatedMonthlyTransactionsOutgoingLabel": "Outgoing Anticipated Monthly Transactions",
   "anticipatedMonthlyTransactionsOutgoingHelpText": "Estimate the volume of transactions you expect to make monthly. Example: from 1 to 49, from 50 to 99, from 100 to 499, etc.",
   "natureBusinessCompanyLabel": "Nature Business of the Company",
-  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business."
+  "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business.",
+  "titleFinishOnboarding": "Thank you for your registration",
+  "descriptionFinishOnboarding": "Once your account is approved we will send you an email with the validation of your account.",
+  "duplicateCompanyPhysicalAddress": "Click here if the physical address is the same as the registration address"
 }

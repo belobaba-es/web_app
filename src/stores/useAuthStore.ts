@@ -19,6 +19,7 @@ export const useAuthStore = defineStore('useAuthStore', {
       client: {
         name: '',
         dateBirth: new Date(),
+
         postalCode: '',
         region: '',
         city: '',
@@ -26,8 +27,8 @@ export const useAuthStore = defineStore('useAuthStore', {
         phoneNumber: '',
         phoneCountry: '',
         streetOne: '',
+
         dni: '',
-        clientId: '',
         twoFactorActive: false,
         status: AccountStatus.REGISTERED,
         type: '',

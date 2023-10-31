@@ -59,12 +59,12 @@
             </div>
           </div>
 
-          <!--          <Button-->
-          <!--            type="button"-->
-          <!--            :label="t('noAccount')"-->
-          <!--            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"-->
-          <!--            @click="redirectSigning()"-->
-          <!--          />-->
+          <Button
+            type="button"
+            :label="t('noAccount')"
+            class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
+            @click="redirectSigning()"
+          />
         </form>
       </div>
     </div>
@@ -103,13 +103,13 @@ const handleSubmit = async () => {
       return
     }
 
-    if (userAuth.client.clientId == undefined || userAuth.client.status === AccountStatus.REGISTERED) {
+    if (userAuth.clientId == undefined || userAuth.client.status === AccountStatus.REGISTERED) {
       window.location.href = '/onboarding'
       return
     }
 
     if (userAuth.client.status === AccountStatus.SUBMITTED) {
-      window.location.href = `/profile/${userAuth.client.clientId}`
+      window.location.href = `/profile/${userAuth.clientId}`
 
       return
     }
