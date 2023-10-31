@@ -239,7 +239,6 @@ const nextPage = () => {
     purpose: purpose.value,
   }
 
-  console.log(purpose.value)
   emit('nextPage', {
     pageIndex: page,
     formData: formData,
