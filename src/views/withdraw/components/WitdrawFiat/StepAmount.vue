@@ -64,7 +64,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="purpose"
-            :options="WithdrawalPurpose()"
+            :options="WithdrawalPurpose(isAccountSegregated())"
             optionLabel="name"
             option-value="value"
             class="w-full"
@@ -121,6 +121,7 @@ const props = defineProps<{
   formData: any
 }>()
 const emit = defineEmits(['nextPage'])
+const { isAccountSegregated } = useAuth()
 const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')

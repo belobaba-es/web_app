@@ -68,7 +68,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="purpose"
-            :options="WithdrawalPurpose()"
+            :options="WithdrawalPurpose(isAccountSegregated())"
             optionLabel="name"
             option-value="value"
             class="w-full"
@@ -118,12 +118,14 @@ import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { UserAccount } from '../../types/account'
 import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
 import Dropdown from 'primevue/dropdown'
+import { useAuth } from '../../../../composables/useAuth'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
+const { isAccountSegregated } = useAuth()
 
 const props = defineProps<{
   formData: any

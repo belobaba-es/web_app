@@ -1,8 +1,5 @@
-import { useAuth } from '../composables/useAuth'
-
-const { isAccountSegregated } = useAuth()
-export const WithdrawalPurpose = () => {
-  if (isAccountSegregated()) {
+export const WithdrawalPurpose = (isAccountSegregated: boolean) => {
+  if (isAccountSegregated) {
     return [
       { value: 'INVESTMENT', name: 'INVESTMENT' },
       { value: 'REAL_ESTATE', name: 'REAL_ESTATE' },
