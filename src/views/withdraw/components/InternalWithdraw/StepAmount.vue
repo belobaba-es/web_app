@@ -64,6 +64,22 @@
 
     <div class="col-12 field p-fluid">
       <div class="col-8">
+        <label for="">{{ t('purposeWithdrawal') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="purpose"
+            :options="WithdrawalPurpose(isAccountSegregated())"
+            optionLabel="name"
+            option-value="value"
+            class="w-full"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 field p-fluid">
+      <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText
           type="text"
@@ -100,12 +116,16 @@ import { Asset } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { UserAccount } from '../../types/account'
+import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
+import Dropdown from 'primevue/dropdown'
+import { useAuth } from '../../../../composables/useAuth'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
+const { isAccountSegregated } = useAuth()
 
 const props = defineProps<{
   formData: any
@@ -122,6 +142,7 @@ const asset = ref('USD')
 const assetSymbol = ref('USD')
 const balance = ref(0)
 const total = ref(0)
+const purpose = ref('')
 const isAsset = route.params.type === 'crypto'
 
 const showAmount = ref(!isAsset)
@@ -204,6 +225,7 @@ const nextPage = () => {
     asset: asset.value,
     assetCode: assetSymbol.value,
     total: total.value,
+    purpose: purpose.value,
   }
   emit('nextPage', {
     pageIndex: page,

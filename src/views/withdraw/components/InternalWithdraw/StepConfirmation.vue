@@ -145,6 +145,7 @@ function makeTransaction() {
           amount: props.formData.amount,
           reference: props.formData.reference,
           assetCode: props.formData.assetCode,
+          purpose: props.formData.purpose,
         })
         .then((res: any) => {
           transactionId.value = res.data.transactionId

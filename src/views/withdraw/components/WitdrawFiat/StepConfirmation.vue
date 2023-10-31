@@ -112,6 +112,7 @@ function makeTransaction() {
       amount: props.formData.amount,
       beneficiaryId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
+      purpose: props.formData.purpose,
     })
     .then((res: any) => {
       isCompleted.value = true

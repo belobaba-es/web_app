@@ -24,8 +24,6 @@ import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFia
 import SwapIndexVue from './views/swap/Index.vue'
 import SwapSuccess from './views/swap/Success.vue'
 import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
-import WithdrawOtherPlatformsStepAccounts from './views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'
-import WithdrawOtherPlatformsStepAmount from './views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
@@ -204,11 +202,11 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: WithdrawOtherPlatformsStepAccounts,
+                component: () => import('./views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'),
               },
               {
                 path: 'amount',
-                component: WithdrawOtherPlatformsStepAmount,
+                component: () => import('./views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'),
               },
               {
                 path: 'confirmation',

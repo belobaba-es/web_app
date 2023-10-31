@@ -57,6 +57,23 @@
         </template>
       </Timeline>
     </div>
+
+    <div class="col-12 field p-fluid">
+      <div class="col-8">
+        <label for="">{{ t('purposeWithdrawal') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="purpose"
+            :options="WithdrawalPurpose(isAccountSegregated())"
+            optionLabel="name"
+            option-value="value"
+            class="w-full"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
     <div class="col-12 field p-fluid">
       <div class="col-6">
         <label for="">{{ t('Reference') }}</label>
@@ -92,8 +109,9 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
-import { twoFactorAuthenticationIsActiveRemotely } from '../../../../shared/services/remoteConfig'
 import { useAuth } from '../../../../composables/useAuth'
+import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
+import Dropdown from 'primevue/dropdown'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
@@ -103,10 +121,13 @@ const props = defineProps<{
   formData: any
 }>()
 const emit = defineEmits(['nextPage'])
+const { isAccountSegregated } = useAuth()
 const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
+const purpose = ref('')
+
 const { getUserFeeWire } = useAuth()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
@@ -147,6 +168,17 @@ const amountFee = computed(() => {
 })
 
 const validateField = (): boolean => {
+  if (purpose.value == '') {
+    toast.add({
+      severity: 'warn',
+      summary: 'Order structure',
+      detail: 'Please selected Purpose of the withdrawal.',
+      life: 4000,
+    })
+
+    return false
+  }
+
   if (amount.value == 0) {
     toast.add({
       severity: 'warn',
@@ -184,6 +216,7 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     amountFee: amountFee,
+    purpose: purpose.value,
   }
   emit('nextPage', {
     pageIndex: page,

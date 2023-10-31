@@ -16,17 +16,16 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { WithdrawForm } from '../../withdraw/types/withdraw'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import Steps from 'primevue/steps'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n({ useScope: 'global' })
 
 const router = useRouter()
 const toast = useToast()
-const formObject = ref<WithdrawForm | any>({})
 
 const items = ref([
   {

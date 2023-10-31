@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('useAuthStore', {
       client: {
         name: '',
         dateBirth: new Date(),
-
+        isSegregated: true,
         postalCode: '',
         region: '',
         city: '',
@@ -131,6 +131,9 @@ export const useAuthStore = defineStore('useAuthStore', {
 
         sessionStorage.setItem('user', new CryptoService().encrypt(JSON.stringify({ ...user })))
       }
+    },
+    isAccountSegregated(): boolean {
+      return this.client.isSegregated ?? true
     },
   },
 })
