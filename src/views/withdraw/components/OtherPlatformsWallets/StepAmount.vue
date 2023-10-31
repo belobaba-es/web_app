@@ -69,6 +69,22 @@
 
     <div class="col-12 field p-fluid">
       <div class="col-8">
+        <label for="">{{ t('purposeWithdrawal') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="purpose"
+            :options="WithdrawalPurpose()"
+            optionLabel="name"
+            option-value="value"
+            class="w-full"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 field p-fluid">
+      <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText
           type="text"
@@ -100,9 +116,10 @@ import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
-import { Asset } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import Dropdown from 'primevue/dropdown'
+import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -126,9 +143,9 @@ const assetSymbol = ref('')
 const balance = ref(0)
 const total = ref(0)
 const showAmount = ref(true)
+const purpose = ref('')
 
 onMounted(() => {
-  console.log(props.formData.beneficiary)
   asset.value = props.formData.beneficiary.assetCode
   assetId.value = props.formData.beneficiary.assetId
   balance.value = getBalanceByCode(asset.value)
@@ -169,6 +186,16 @@ const events = computed(() => {
 })
 
 const validateField = (): boolean => {
+  if (purpose.value == '') {
+    toast.add({
+      severity: 'warn',
+      summary: 'Order structure',
+      detail: 'Please selected Purpose of the withdrawal.',
+      life: 4000,
+    })
+
+    return false
+  }
   if (amount.value === 0) {
     toast.add({
       severity: 'warn',
@@ -209,21 +236,14 @@ const nextPage = () => {
     symbol: assetSymbol.value,
     assetId: assetId.value,
     total: total.value,
+    purpose: purpose.value,
   }
+
+  console.log(purpose.value)
   emit('nextPage', {
     pageIndex: page,
     formData: formData,
   })
-}
-
-const selectedAsset = (evt: Asset) => {
-  console.log('SELEEEEEE', evt)
-  showAmount.value = true
-  assetSymbol.value = evt.code
-
-  balance.value = getBalanceByCode(evt.code)
-  fee.value = evt.fee
-  assetId.value = evt.assetId
 }
 </script>
 

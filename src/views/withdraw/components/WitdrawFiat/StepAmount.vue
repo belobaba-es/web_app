@@ -92,7 +92,6 @@ import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
-import { twoFactorAuthenticationIsActiveRemotely } from '../../../../shared/services/remoteConfig'
 import { useAuth } from '../../../../composables/useAuth'
 
 const { getBalanceByCode } = useBalanceWallet()
@@ -107,7 +106,7 @@ const amount = ref(0)
 const fee = ref(0)
 const reference = ref('')
 const balance = ref(0)
-const { getUserFeeWire } = useAuth()
+const { getUserFeeWire, isAccountSegregated } = useAuth()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')

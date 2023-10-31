@@ -32,6 +32,7 @@ interface Client {
   city: string
   country: string
   streetOne: string
+  isSegregated: boolean
 }
 
 export interface UserAuth {
