@@ -40,7 +40,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }}</label>
         <div class="p-inputgroup">
-          <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy/mm/dd" />
+          <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy-mm-dd" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
