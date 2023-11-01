@@ -1,20 +1,19 @@
 import showMessage from '../shared/showMessageArray'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
-import { OnboardingCompany, Partner } from '../types/onboardingCompany'
-import { computed, ref, watch } from 'vue'
+import { OnboardingCompany } from '../types/onboardingCompany'
+import { computed, ref } from 'vue'
 import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { validateObject } from '../shared/validateObject'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
-import { Store } from 'pinia'
 
 export const useOnboardingCompany = () => {
   const router = useRouter()
   const toast = useToast()
   const submitting = ref(false)
-
+  const isUpdateData = ref<boolean>(false)
   const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
   const { getClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
@@ -43,7 +42,7 @@ export const useOnboardingCompany = () => {
   }
 
   const requestToBackendForUpdateOnboardingCompany = (): Promise<any> => {
-    return new OnboardingService().openingAccountBussiness(onboardingCompany.value, getClientId() !== undefined)
+    return new OnboardingService().openingAccountBussiness(onboardingCompany.value, isUpdateData.value)
   }
 
   const validateStep3 = (): boolean => {
@@ -130,6 +129,7 @@ export const useOnboardingCompany = () => {
       .then((resp: any) => {
         setStateOnboardingCompany(resp.clientData as unknown as OnboardingCompany)
         submitting.value = false
+        isUpdateData.value = true
       })
       .catch(e => {
         submitting.value = false

@@ -84,11 +84,6 @@ export const useOnboardingPersonal = () => {
       })
   }
   const saveDataAndNextPag = async () => {
-    if (!getClientId()) {
-      router.push('/onboarding/personal/step2')
-      return
-    }
-
     saveData().then(() => {
       router.push('/onboarding/personal/step2')
     })

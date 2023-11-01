@@ -439,5 +439,6 @@
   "natureBusinessCompanyHelpText": "Describe the industry and segment in which your company conducts business.",
   "titleFinishOnboarding": "Gracias por su registro",
   "descriptionFinishOnboarding": "Una vez aprobada tu cuenta te estaremos enviado un correo con la validación de su cuenta.",
-  "duplicateCompanyPhysicalAddress": "Click aquí si la dirección fisica es igual que la dirección de registro"
+  "duplicateCompanyPhysicalAddress": "Click aquí si la dirección fisica es igual que la dirección de registro",
+  "purposeWithdrawal": "Objeto del retiro."
 }

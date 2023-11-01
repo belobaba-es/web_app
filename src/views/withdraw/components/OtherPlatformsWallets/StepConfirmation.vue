@@ -123,6 +123,7 @@ async function makeTransaction() {
       amount: props.formData.total,
       beneficiaryAssetId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
+      purpose: props.formData.purpose,
     })
     .then((res: any) => {
       transactionId.value = res.data.transactionId
