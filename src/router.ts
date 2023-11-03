@@ -36,8 +36,6 @@ import BusinessPartners from './views/profile/businessAllie/BusinessPartners.vue
 
 import UploadDocumentsIndex from './views/onboarding/index.vue'
 
-import CreateUser from './views/register/CreateUser.vue'
-import ConfirmEmail from './views/register/ConfirmEmail.vue'
 import { useAuth } from './composables/useAuth'
 
 const routes: RouteRecordRaw[] = [
@@ -55,11 +53,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/create-user',
-    component: CreateUser,
+    component: () => import('./views/register/CreateUser.vue'),
   },
   {
     path: '/confirm-email',
-    component: ConfirmEmail,
+    component: () => import('./views/register/ConfirmEmail.vue'),
   },
 
   {

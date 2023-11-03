@@ -9,38 +9,54 @@
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
+            <label class="font-light">{{ t('emailLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText size="large" type="text" v-model="form.email" required />
+            </div>
+          </div>
+
+          <div class="field">
             <label class="font-light">{{ t('codeEmailLabel') }}</label>
             <div class="p-inputgroup">
               <InputText
                 class="center-text font-size-code"
-                size="large"
                 type="text"
-                v-model="inputValueFormat"
+                maxlength="6"
+                v-model="form.code"
                 required
-                @input="updateValue"
                 :placeholder="t('confirmEmailCodePlaceholder')"
               />
             </div>
           </div>
 
           <div class="container-flex">
-            <div class="mt-3 w-100">
+            <div class="float-right w-50">
               <Button
                 type="submit"
                 icon="pi pi-angle-right"
+                iconPos="right"
                 :label="t('confirmTextEmailCode')"
-                class="font-light with-buttons"
+                class="font-light with-buttons mt-3"
                 :loading="submitting"
               />
             </div>
-          </div>
 
+            <div class="float-left w-25">
+              <Button
+                type="button"
+                :label="t('resendCode')"
+                class="font-light mt-3 with-buttons p-button-outlined border-300"
+                @click="resendCode()"
+                :loading="submittingResendTheCode"
+              />
+            </div>
+          </div>
           <Button
             type="button"
-            :label="t('resendCode')"
-            class="font-light mt-3 with-buttons p-button-outlined border-300"
-            @click="resendCode()"
-            :loading="submittingResendTheCode"
+            :label="t('alreadyAccount')"
+            icon="pi pi-angle-left"
+            class="font-light mt-3 with-buttons p-button-outlined border-300 mt-5"
+            @click="redirectLogin()"
           />
         </form>
       </div>
@@ -75,26 +91,10 @@ const email = localStorage.getItem('noba@user-email')
 
 const form = reactive({
   code: '',
+  email: localStorage.getItem('noba@user-email'),
 })
 
 const router = useRouter()
-
-const updateValue = (event: Event) => {
-  const input = event.target as HTMLInputElement | null
-  if (input) {
-    const value = input.value
-
-    form.code = value
-    // Elimina guiones actuales del valor antes de dar formato
-    const cleanedValue = value.replace(/-/g, '')
-
-    // Agrega un guión cada 3 caracteres
-    const newValue = cleanedValue.match(/.{1,3}/g)?.join('-') || ''
-
-    // Actualiza la referencia reactiva con el valor formateado
-    inputValueFormat.value = newValue
-  }
-}
 
 const resendCode = () => {
   submittingResendTheCode.value = true
@@ -102,7 +102,7 @@ const resendCode = () => {
   let typeValidation = 'email'
 
   new RegisterService()
-    .resendEmailCode(email || '', typeValidation)
+    .resendEmailCode(form.email ?? '', typeValidation)
     .then(data => {
       submittingResendTheCode.value = false
 
@@ -114,7 +114,7 @@ const resendCode = () => {
       })
     })
     .catch(e => {
-      submitting.value = false
+      submittingResendTheCode.value = false
       toast.add({
         severity: 'error',
         summary: t('somethingWentWrong'),
@@ -128,7 +128,7 @@ const handleSubmit = () => {
   submitting.value = true
 
   new RegisterService()
-    .confirmCode(form.code, email || '')
+    .confirmCode(form.code, form.email || '')
     .then(data => {
       submitting.value = false
 
@@ -151,6 +151,10 @@ const handleSubmit = () => {
         life: 4000,
       })
     })
+}
+
+const redirectLogin = () => {
+  router.push('/')
 }
 </script>
 
@@ -179,7 +183,8 @@ const handleSubmit = () => {
   width: 142px;
   height: 64px;
 }
-.p-dialog .p-dialog-header {
+
+.p-dialog {
   background-color: black !important;
 }
 
@@ -188,6 +193,6 @@ const handleSubmit = () => {
 }
 
 .font-size-code {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 </style>
