@@ -12,7 +12,7 @@ import { useRouter } from 'vue-router'
 
 export const useOnboardingPersonal = () => {
   const router = useRouter()
-  const { getClientId } = useAuth()
+  const { getClientId, setClientId } = useAuth()
 
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
@@ -59,6 +59,7 @@ export const useOnboardingPersonal = () => {
           })
 
           isUpdateData.value = true
+          setClientId(resp.clientId)
 
           resolve(resp)
         })
