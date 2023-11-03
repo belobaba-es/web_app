@@ -9,11 +9,17 @@
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
+            <label class="font-light">{{ t('emailLabel') }}</label>
+            <div class="p-inputgroup">
+              <InputText size="large" type="text" v-model="form.email" required />
+            </div>
+          </div>
+
+          <div class="field">
             <label class="font-light">{{ t('codeEmailLabel') }}</label>
             <div class="p-inputgroup">
               <InputText
                 class="center-text font-size-code"
-                size="large"
                 type="text"
                 v-model="inputValueFormat"
                 required
@@ -24,23 +30,33 @@
           </div>
 
           <div class="container-flex">
-            <div class="mt-3 w-100">
+            <div class="float-right w-50">
               <Button
                 type="submit"
                 icon="pi pi-angle-right"
+                iconPos="right"
                 :label="t('confirmTextEmailCode')"
-                class="font-light with-buttons"
+                class="font-light with-buttons mt-3"
                 :loading="submitting"
               />
             </div>
-          </div>
 
+            <div class="float-left w-25">
+              <Button
+                type="button"
+                :label="t('resendCode')"
+                class="font-light mt-3 with-buttons p-button-outlined border-300"
+                @click="resendCode()"
+                :loading="submittingResendTheCode"
+              />
+            </div>
+          </div>
           <Button
             type="button"
-            :label="t('resendCode')"
-            class="font-light mt-3 with-buttons p-button-outlined border-300"
-            @click="resendCode()"
-            :loading="submittingResendTheCode"
+            :label="t('alreadyAccount')"
+            icon="pi pi-angle-left"
+            class="font-light mt-3 with-buttons p-button-outlined border-300 mt-5"
+            @click="redirectLogin()"
           />
         </form>
       </div>
@@ -75,6 +91,7 @@ const email = localStorage.getItem('noba@user-email')
 
 const form = reactive({
   code: '',
+  email: localStorage.getItem('noba@user-email'),
 })
 
 const router = useRouter()
@@ -102,7 +119,7 @@ const resendCode = () => {
   let typeValidation = 'email'
 
   new RegisterService()
-    .resendEmailCode(email || '', typeValidation)
+    .resendEmailCode(form.email ?? '', typeValidation)
     .then(data => {
       submittingResendTheCode.value = false
 
@@ -114,7 +131,7 @@ const resendCode = () => {
       })
     })
     .catch(e => {
-      submitting.value = false
+      submittingResendTheCode.value = false
       toast.add({
         severity: 'error',
         summary: t('somethingWentWrong'),
@@ -152,6 +169,10 @@ const handleSubmit = () => {
       })
     })
 }
+
+const redirectLogin = () => {
+  router.push('/')
+}
 </script>
 
 <style lang="css" scoped>
@@ -179,7 +200,8 @@ const handleSubmit = () => {
   width: 142px;
   height: 64px;
 }
-.p-dialog .p-dialog-header {
+
+.p-dialog {
   background-color: black !important;
 }
 
@@ -188,6 +210,6 @@ const handleSubmit = () => {
 }
 
 .font-size-code {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 </style>

@@ -440,5 +440,6 @@
   "titleFinishOnboarding": "Gracias por su registro",
   "descriptionFinishOnboarding": "Una vez aprobada tu cuenta te estaremos enviado un correo con la validación de su cuenta.",
   "duplicateCompanyPhysicalAddress": "Click aquí si la dirección fisica es igual que la dirección de registro",
-  "purposeWithdrawal": "Objeto del retiro."
+  "purposeWithdrawal": "Objeto del retiro.",
+  "alreadyRegistered": "Ya me registre quiero validar mi correo"
 }

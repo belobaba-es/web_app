@@ -108,24 +108,33 @@
               </div>
             </template>
           </Dialog>
-
-          <div class="container-flex">
-            <div class="mt-3 w-100">
+          <br />
+          <div class="container-flex w-100">
+            <div class="float-left w-50">
+              <Button
+                type="button"
+                :label="t('alreadyAccount')"
+                icon="pi pi-angle-left"
+                class="font-light mt-3 with-buttons p-button-outlined border-300"
+                @click="redirectLogin()"
+              />
+            </div>
+            <div class="float-right w-25">
               <Button
                 type="submit"
                 icon="pi pi-angle-right"
+                iconPos="right"
                 :label="t('save')"
-                class="font-light with-buttons"
+                class="font-light with-buttons mt-3"
                 :loading="submitting"
               />
             </div>
           </div>
-
           <Button
             type="button"
-            :label="t('alreadyAccount')"
-            class="font-light mt-3 with-buttons p-button-outlined border-300"
-            @click="redirectLogin()"
+            :label="t('alreadyRegistered')"
+            class="font-light mt-3 with-buttons p-button-outlined border-300 mt-5"
+            @click="alreadyRegisteredSendCodeVerifyEmail()"
           />
         </form>
       </div>
@@ -300,6 +309,10 @@ const handleSubmit = () => {
       })
     })
 }
+
+const alreadyRegisteredSendCodeVerifyEmail = () => {
+  router.push('/confirm-email')
+}
 </script>
 
 <style lang="css" scoped>
@@ -327,6 +340,7 @@ const handleSubmit = () => {
   width: 142px;
   height: 64px;
 }
+
 .p-dialog .p-dialog-header {
   background-color: black !important;
 }
