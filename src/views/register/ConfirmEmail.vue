@@ -21,9 +21,9 @@
               <InputText
                 class="center-text font-size-code"
                 type="text"
-                v-model="inputValueFormat"
+                maxlength="6"
+                v-model="form.code"
                 required
-                @input="updateValue"
                 :placeholder="t('confirmEmailCodePlaceholder')"
               />
             </div>
@@ -96,23 +96,6 @@ const form = reactive({
 
 const router = useRouter()
 
-const updateValue = (event: Event) => {
-  const input = event.target as HTMLInputElement | null
-  if (input) {
-    const value = input.value
-
-    form.code = value
-    // Elimina guiones actuales del valor antes de dar formato
-    const cleanedValue = value.replace(/-/g, '')
-
-    // Agrega un guión cada 3 caracteres
-    const newValue = cleanedValue.match(/.{1,3}/g)?.join('-') || ''
-
-    // Actualiza la referencia reactiva con el valor formateado
-    inputValueFormat.value = newValue
-  }
-}
-
 const resendCode = () => {
   submittingResendTheCode.value = true
 
@@ -145,7 +128,7 @@ const handleSubmit = () => {
   submitting.value = true
 
   new RegisterService()
-    .confirmCode(form.code, email || '')
+    .confirmCode(form.code, form.email || '')
     .then(data => {
       submitting.value = false
 
