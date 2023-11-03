@@ -396,7 +396,7 @@
   "helpTextSurname": "Please write your last name.",
   "helpTextSecondSurname": "Please write your other last name.",
   "helpTextIdNumber": "Enter your personal identification number.",
-  "helpTextTaxIDNumber": "Write your TAX ID number. (SSN, ITIN).",
+  "helpTextTaxIDNumber": "Write your TAX ID number. (SSN, ITIN). For US residents or citizens only.",
   "helpTextIDCountry": "Select the country that issued your ID document.",
   "helpTextDateOfBirth": "Date of Birth should match the individual's identity document.",
   "helpTextPhone": "Please fill in a contact phone number.",

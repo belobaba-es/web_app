@@ -31,6 +31,7 @@ export const useOnboardingCompany = () => {
 
     requestToBackendForUpdateOnboardingCompany()
       .then(resp => {
+        isUpdateData.value = true
         submitting.value = false
         router.push('/onboarding/business/step4')
       })

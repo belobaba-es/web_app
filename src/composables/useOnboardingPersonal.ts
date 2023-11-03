@@ -37,7 +37,7 @@ export const useOnboardingPersonal = () => {
   const saveData = () => {
     return new Promise((resolve, reject) => {
       submitting.value = true
-      // setStateOnboardingPersonal(onboardingPersonal.value)
+
       if (isPassportOrTaxIdEmpty()) {
         toast.add({
           severity: 'error',
@@ -57,6 +57,8 @@ export const useOnboardingPersonal = () => {
             detail: resp.message,
             life: 4000,
           })
+
+          isUpdateData.value = true
 
           resolve(resp)
         })
