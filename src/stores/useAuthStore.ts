@@ -135,5 +135,8 @@ export const useAuthStore = defineStore('useAuthStore', {
     isAccountSegregated(): boolean {
       return this.client.isSegregated ?? true
     },
+    setClientId(clientId: string) {
+      this.clientId = clientId
+    },
   },
 })

@@ -15,7 +15,7 @@ export const useOnboardingCompany = () => {
   const submitting = ref(false)
   const isUpdateData = ref<boolean>(false)
   const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
-  const { getClientId } = useAuth()
+  const { getClientId, setClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
 
   const useOnboardingCompanyState = useOnboardingCompanyStore()
@@ -32,12 +32,12 @@ export const useOnboardingCompany = () => {
     requestToBackendForUpdateOnboardingCompany()
       .then(resp => {
         isUpdateData.value = true
+        setClientId(resp.clientId)
         submitting.value = false
         router.push('/onboarding/business/step4')
       })
       .catch(e => {
         submitting.value = false
-
         showMessage(toast, e.response.data)
       })
   }
