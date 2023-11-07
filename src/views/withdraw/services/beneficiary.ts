@@ -14,11 +14,10 @@ export class BeneficiaryService {
     )
   }
 
-  async listBeneficiary(beneficiaryType: BeneficiaryType, nextPag = 1) {
-      const tipoBanco = beneficiaryType == 'DOMESTIC'?'internal':'external';
-
-      return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(`beneficiary/banking/${tipoBanco}/${nextPag}`);
-
+  async listBeneficiaryBankingExternal(beneficiaryType: BeneficiaryType, nextPag = 1) {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(
+      `beneficiary/banking/external/${nextPag}?withdrawalType=${beneficiaryType}`
+    )
   }
 
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
@@ -26,6 +25,7 @@ export class BeneficiaryService {
       `beneficiary/${type}/internal/${nextPag === 0 ? 1 : nextPag}`
     )
   }
+
   async saveBeneficiary(payload: any): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/banking`, payload)
   }
