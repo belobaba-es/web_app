@@ -2,7 +2,6 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
 import { Beneficiary, BeneficiaryType } from '../types/beneficiary.interface'
 import { UserAccount } from '../types/account'
-import { useAuth } from '../../../composables/useAuth'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -19,7 +18,7 @@ export const useBeneficiary = () => {
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
 
-    await new BeneficiaryService().listBeneficiary(beneficiaryType, listNextPag.value).then(resp => {
+    await new BeneficiaryService().listBeneficiaryBankingExternal(beneficiaryType, listNextPag.value).then(resp => {
       resp.results.forEach((element: any) => {
         listBeneficiary.value.push(element)
       })
