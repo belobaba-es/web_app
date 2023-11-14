@@ -1,18 +1,31 @@
 <template>
   <div class="container">
-    <div
-      class="flex justify-content-between align-items-center asset-item"
-      v-for="item in listBeneficiary"
-      @click="emit('select', item)"
-    >
-      <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
-      <!-- <span class="ml-4 mt-2 mb-2">{{item.assetId}}</span>-->
-      <Button icon="pi pi-angle-right" class="p-button-text p-button-primary" label="" />
+    <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiary">
+      <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
+        <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+      </div>
+      <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
+        <Button
+          icon="pi pi-pencil"
+          class="p-button-text p-button-primary"
+          label=""
+          v-tooltip.top="'Edit'"
+          placeholder="Top"
+        />
+      </div>
+      <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
+        <Button
+          icon="pi pi-angle-right"
+          class="p-button-text p-button-primary"
+          label=""
+          @click="emit('select', item)"
+        />
+      </div>
     </div>
 
-    <div class="mt-4" v-if="listNextPag.toString() !== ''">
+    <div class="mt-5" v-if="listNextPag.toString() !== ''">
       <div class="grid flex justify-content-end">
-        <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <Button
             icon="pi pi-angle-right"
             iconPos="right"

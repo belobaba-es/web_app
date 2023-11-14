@@ -3,7 +3,7 @@
     <div class="field">
       <label>{{ t('depositNameOnBank') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="name" />
+        <InputText type="text" v-model="formObject.informationOwner.name" />
       </div>
       <small>Make sure it exactly as it appears on your bank account</small>
     </div>
@@ -15,7 +15,7 @@
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="country"
+            v-model="formObject.informationOwner.address.country"
             :options="countries"
             optionLabel="name"
             option-value="country_code"
@@ -23,7 +23,6 @@
             :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
             class="w-full"
-            @change="onChangeCountryHandler"
             required
           />
         </div>
@@ -32,35 +31,35 @@
       <div class="field col-12">
         <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="streetOne" />
+          <InputText type="text" v-model="formObject.informationOwner.address.streetOne" />
         </div>
       </div>
 
       <div class="field col-12">
         <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="streetTwo" />
+          <InputText type="text" v-model="formObject.informationOwner.address.streetTwo" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('cityLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="city" class="w-full" required />
+          <InputText type="text" v-model="formObject.informationOwner.address.city" class="w-full" required />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="state" />
+          <InputText type="text" v-model="formObject.informationOwner.address.region" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="postalCode" />
+          <InputText type="text" v-model="formObject.informationOwner.address.postalCode" />
         </div>
       </div>
     </div>
@@ -71,7 +70,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
@@ -80,84 +78,43 @@ import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
+import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
-
+const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  states,
-  onChangeCountryHandler,
-  onChangeStateHandler,
-} = useWorld()
-
-const {
-  countries: bankCountries,
-  statesInputIsEmpty: bankStatesInputIsEmpty,
-  loadingStatesField: bankLoadingStatesField,
-  states: bankStates,
-  onChangeCountryHandler: onBankChangeCountryHandler,
-  onChangeStateHandler: onBankChangeStateHandler,
-} = useWorld()
-
-const props = defineProps<{
-  formData: object
-}>()
-
-const name = ref<string>('')
-const country = ref<string>('')
-const streetOne = ref<string>('')
-const streetTwo = ref<string>('')
-const city = ref<string>('')
-const state = ref<string>('')
-const postalCode = ref<string>('')
-
-onMounted(() => {
-  fetchCountries(true).then(() => {
-    bankCountries.value = countries.value
-  })
-})
+const { countries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
 
 const validateFields = () => {
-  return [name, country, streetOne, city, state, postalCode].every(field => field.value.trim() !== '')
+  const owner = formObject.value.informationOwner
+  return [
+    owner.name,
+    owner.address.country,
+    owner.address.streetOne,
+    owner.address.city,
+    owner.address.region,
+    owner.address.postalCode,
+  ].every(field => field.trim() !== '')
 }
 
 const nextPage = () => {
-  if (validateFields()) {
-    const formData = ref({
-      ...props.formData,
-      informationOwner: {
-        name: name.value,
-        address: {
-          streetOne: streetOne.value,
-          streetTwo: streetTwo.value,
-          postalCode: postalCode.value,
-          region: state.value,
-          city: city.value,
-          country: country.value,
-        },
-      },
-    })
-    const page = 1
-    emit('nextPage', {
-      pageIndex: page,
-      formData: formData.value,
-    })
-  } else {
+  if (!validateFields()) {
     toast.add({
       severity: 'warn',
       summary: t('warningAllFieldRequired'),
       detail: t('warningDetailAllFieldRequired'),
       life: 4000,
     })
+
+    return
   }
+
+  const page = 1
+  emit('nextPage', {
+    pageIndex: page,
+  })
 }
 </script>

@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="field" v-if="typeBeneficiaryBankWithdrawal !== 'DOMESTIC'">
+    <div class="field" v-if="typeBeneficiary !== 'DOMESTIC'">
       <label>{{ t('swiftCode') }}</label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="swiftCode" />
@@ -22,8 +22,8 @@
     </div>
 
     <div class="field">
-      <label v-show="typeBeneficiaryBankWithdrawal == 'DOMESTIC'">ABA Fedwire</label>
-      <label v-show="typeBeneficiaryBankWithdrawal == 'INTERNATIONAL'">{{ t('iban') }} </label>
+      <label v-show="typeBeneficiary == 'DOMESTIC'">ABA Fedwire</label>
+      <label v-show="typeBeneficiary == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="routingNumberOrIBAN" />
       </div>
@@ -36,15 +36,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import Button from 'primevue/button'
-import RadioButton from 'primevue/radiobutton'
 import InputText from 'primevue/inputtext'
 
 import { useToast } from 'primevue/usetoast'
 import { useRoute, useRouter } from 'vue-router'
+import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
@@ -55,26 +55,18 @@ const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 const route = useRoute()
 
+const { typeBeneficiary } = useNewOrEditBeneficiary()
+
 const bankName = ref<string>('')
 const accountNumber = ref<string>('')
 const swiftCode = ref<string>('')
 const routingNumberOrIBAN = ref<string>('')
-const typeBeneficiaryBankWithdrawal = ref<string>('')
 
 const formData = ref()
 
-const props = defineProps<{
-  typeBeneficiary: any
-  formData: any
-}>()
-
-onMounted(async () => {
-  typeBeneficiaryBankWithdrawal.value = props.typeBeneficiary
-})
-
 const validateFields = () => {
   let isSwiftCodeValid = true
-  if (typeBeneficiaryBankWithdrawal.value === 'INTERNATIONAL') {
+  if (typeBeneficiary.value === 'INTERNATIONAL') {
     isSwiftCodeValid = swiftCode.value.trim() !== ''
   }
   const isBankNameValid = bankName.value.trim() !== ''
@@ -100,7 +92,7 @@ const nextStep = () => {
 
   formData.value = {
     informationBank: {
-      typeBeneficiaryBankWithdrawal: typeBeneficiaryBankWithdrawal,
+      typeBeneficiaryBankWithdrawal: typeBeneficiary.value,
       accountNumber: accountNumber,
       bankName: bankName,
       swiftCode: '',
@@ -110,10 +102,10 @@ const nextStep = () => {
   }
 
   //Iban / Swift - International | Routing number Domestic
-  if (typeBeneficiaryBankWithdrawal.value === 'INTERNATIONAL') {
+  if (typeBeneficiary.value === 'INTERNATIONAL') {
     formData.value.informationBank.iban = routingNumberOrIBAN
     formData.value.informationBank.swiftCode = swiftCode
-  } else if (typeBeneficiaryBankWithdrawal.value === 'DOMESTIC') {
+  } else if (typeBeneficiary.value === 'DOMESTIC') {
     formData.value.informationBank.routingNumber = routingNumberOrIBAN
     delete formData.value.informationBank.iban
     delete formData.value.informationBank.swiftCode

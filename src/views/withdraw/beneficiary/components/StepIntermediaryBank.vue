@@ -3,14 +3,14 @@
     <div class="field">
       <label>{{ t('intermediaryBankName') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="intermediaryBankName" />
+        <InputText type="text" v-model="formObject.informationIntermediaryBank.bankName" />
       </div>
     </div>
 
     <div class="field">
       <label>{{ t('intermediarySwiftCode') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="intermediaryBankSwiftCode" />
+        <InputText type="text" v-model="formObject.informationIntermediaryBank.swiftCode" />
       </div>
     </div>
 
@@ -21,7 +21,7 @@
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="intermediaryBankCountry"
+            v-model="formObject.informationIntermediaryBank.address.country"
             :options="countries"
             optionLabel="name"
             option-value="country_code"
@@ -38,35 +38,40 @@
       <div class="field col-12">
         <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="intermediaryBankStreetOne" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.streetOne" />
         </div>
       </div>
 
       <div class="field col-12">
         <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="intermediaryBankStreetTwo" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.streetTwo" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('cityLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="intermediaryBankCity" class="w-full" required />
+          <InputText
+            type="text"
+            v-model="formObject.informationIntermediaryBank.address.city"
+            class="w-full"
+            required
+          />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="intermediaryBankState" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.region" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="intermediaryBankPostalCode" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.postalCode" />
         </div>
       </div>
     </div>
@@ -77,7 +82,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
@@ -86,94 +90,42 @@ import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
+import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
 
 const { t } = useI18n({ useScope: 'global' })
-
 const toast = useToast()
-
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  states,
-  onChangeCountryHandler,
-  onChangeStateHandler,
-} = useWorld()
-
-const {
-  countries: bankCountries,
-  statesInputIsEmpty: bankStatesInputIsEmpty,
-  loadingStatesField: bankLoadingStatesField,
-  states: bankStates,
-  onChangeCountryHandler: onBankChangeCountryHandler,
-  onChangeStateHandler: onBankChangeStateHandler,
-} = useWorld()
-
-const props = defineProps<{
-  formData: object
-}>()
-
-const intermediaryBankName = ref<string>('')
-const intermediaryBankSwiftCode = ref<string>('')
-const intermediaryBankCountry = ref<string>('')
-const intermediaryBankStreetOne = ref<string>('')
-const intermediaryBankStreetTwo = ref<string>('')
-const intermediaryBankCity = ref<string>('')
-const intermediaryBankState = ref<string>('')
-const intermediaryBankPostalCode = ref<string>('')
-
-onMounted(() => {
-  fetchCountries(true).then(() => {
-    bankCountries.value = countries.value
-  })
-})
+const { countries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler, onChangeStateHandler } =
+  useWorld()
+const { formObject } = useNewOrEditBeneficiary()
 
 const validateFields = () => {
+  const intermediaryBank = formObject.value.informationIntermediaryBank
   return [
-    intermediaryBankName,
-    intermediaryBankSwiftCode,
-    intermediaryBankCountry,
-    intermediaryBankStreetOne,
-    intermediaryBankCity,
-    intermediaryBankState,
-    intermediaryBankPostalCode,
-  ] //.every(field => field.value.trim() !== '')
+    intermediaryBank.bankName,
+    intermediaryBank.swiftCode,
+    intermediaryBank.address.country,
+    intermediaryBank.address.streetOne,
+    intermediaryBank.address.postalCode,
+    intermediaryBank.address.region,
+    intermediaryBank.address.city,
+  ].every(field => field.trim() !== '')
 }
 
 const nextPage = () => {
-  if (validateFields()) {
-    const formData = ref({
-      ...props.formData,
-      informationIntermediaryBank: {
-        bankName: intermediaryBankName.value,
-        swiftCode: intermediaryBankSwiftCode.value,
-        address: {
-          streetOne: intermediaryBankStreetOne.value,
-          streetTwo: intermediaryBankStreetTwo.value,
-          postalCode: intermediaryBankPostalCode.value,
-          region: intermediaryBankState.value,
-          city: intermediaryBankCity.value,
-          country: intermediaryBankCountry.value,
-        },
-      },
-    })
-    const page = 2
-    emit('nextPage', {
-      pageIndex: page,
-      formData: formData.value,
-    })
-  } else {
+  if (!validateFields()) {
     toast.add({
       severity: 'warn',
       summary: t('warningAllFieldRequired'),
       detail: t('warningDetailAllFieldRequired'),
       life: 4000,
     })
+    return
   }
+
+  emit('nextPage', {
+    pageIndex: 2,
+  })
 }
 </script>

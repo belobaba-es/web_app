@@ -140,3 +140,46 @@ export interface BeneficiaryAsset {
     country: string
   }
 }
+
+export type NewBeneficiary = {
+  informationOwner: {
+    name: string
+    address: {
+      streetOne: string
+      streetTwo: string
+      postalCode: string
+      region: string
+      city: string
+      country: string
+    }
+  }
+  informationIntermediaryBank: {
+    bankName: string
+    swiftCode: string
+    address: {
+      streetOne: string
+      streetTwo: string
+      postalCode: string
+      region: string
+      city: string
+      country: string
+    }
+  }
+
+  informationBank: {
+    typeBeneficiaryBankWithdrawal: string
+    accountNumber: string
+    bankName: string
+    swiftCode: string
+    routingNumber: string
+    iban: string
+    address: {
+      streetOne: string
+      streetTwo: string
+      postalCode: string
+      region: string
+      city: string
+      country: string
+    }
+  }
+}
