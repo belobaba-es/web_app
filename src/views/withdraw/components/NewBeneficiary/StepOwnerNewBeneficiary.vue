@@ -16,7 +16,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="country"
-            :options="countries"
+            :options="allowed_countries"
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
@@ -89,7 +89,9 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
   countries,
+  allowed_countries,
   fetchCountries,
+  fetchCountriesJson,
   loadingCountriesField,
   countriesInputIsEmpty,
   statesInputIsEmpty,
@@ -101,6 +103,7 @@ const {
 
 const {
   countries: bankCountries,
+  allowed_countries:bankCountries2,
   statesInputIsEmpty: bankStatesInputIsEmpty,
   loadingStatesField: bankLoadingStatesField,
   states: bankStates,
@@ -122,7 +125,11 @@ const postalCode = ref<string>('')
 
 onMounted(() => {
   fetchCountries(true).then(() => {
+    //console.log('angel',countries);
     bankCountries.value = countries.value
+  })
+  fetchCountriesJson(true).then(() => {
+    //console.log('paso', allowed_countries);
   })
 })
 

@@ -2,6 +2,7 @@ import { WorldService } from '../shared/services/world'
 import { computed, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
 import { deletedCountries } from '../shared/jsons/deletedCountries'
+import datos from "../assets/paises/paises_permitidos.json";
 
 export interface Country {
   country_code: string
@@ -9,7 +10,10 @@ export interface Country {
   calling_code: string
   name: string
 }
-
+export interface CountryPermitidos {
+  country_code: string
+  name: string
+}
 export interface State {
   country_id: string
   id: number
@@ -23,6 +27,7 @@ export enum CountryID {
 export const useWorld = () => {
   const calling_code = ref<string[]>([''])
   const countries = ref<Country[]>([])
+  const allowed_countries = ref<CountryPermitidos[]>([])
   const states = ref<State[]>([])
   const statesTwo = ref<State[]>([])
 
@@ -50,6 +55,14 @@ export const useWorld = () => {
 
       loadingCountriesField.value = false
     })
+  }
+  const fetchCountriesJson = async (DeleteBannedCountries:boolean) => {
+    allowed_countries.value = datos
+    if (DeleteBannedCountries) {
+      allowed_countries.value = deleteUnavailableCountriesP(datos)
+    }
+    return allowed_countries;
+
   }
 
   const fetchStates = async () => {
@@ -104,9 +117,13 @@ export const useWorld = () => {
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
     return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
   }
+  const deleteUnavailableCountriesP = (countries: CountryPermitidos[]): any => {
+    return countries.filter(CountryPermitidos => !deletedCountries().countries.includes(CountryPermitidos.name.toUpperCase().trim()))
+  }
 
   return {
     countries,
+    allowed_countries,
     states,
     statesTwo,
     statesInputIsEmpty,
@@ -118,6 +135,7 @@ export const useWorld = () => {
     state,
     calling_code,
     fetchCountries,
+    fetchCountriesJson,
     fetchStates,
     setCountry,
     setState,
