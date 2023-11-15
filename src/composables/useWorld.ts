@@ -58,9 +58,7 @@ export const useWorld = () => {
   }
   const fetchCountriesJson = async (DeleteBannedCountries:boolean) => {
     allowed_countries.value = datos
-    if (DeleteBannedCountries) {
-      allowed_countries.value = deleteUnavailableCountriesP(datos)
-    }
+
     return allowed_countries;
 
   }
