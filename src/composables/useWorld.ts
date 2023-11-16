@@ -2,7 +2,8 @@ import { WorldService } from '../shared/services/world'
 import { computed, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
 import { deletedCountries } from '../shared/jsons/deletedCountries'
-import datos from "../assets/paises/paises_permitidos.json";
+import data_countries from "../assets/countries/allowed_countries.json";
+import state_data from "../assets/cities/cities_us.json"
 
 export interface Country {
   country_code: string
@@ -13,6 +14,12 @@ export interface Country {
 export interface CountryPermitidos {
   country_code: string
   name: string
+}
+
+export interface StateUS {
+  state_code: string
+  name: string,
+  country_id: string
 }
 export interface State {
   country_id: string
@@ -28,6 +35,7 @@ export const useWorld = () => {
   const calling_code = ref<string[]>([''])
   const countries = ref<Country[]>([])
   const allowed_countries = ref<CountryPermitidos[]>([])
+  const state_us = ref<StateUS[]>([])
   const states = ref<State[]>([])
   const statesTwo = ref<State[]>([])
 
@@ -35,11 +43,15 @@ export const useWorld = () => {
   const state = ref<State | null>(null)
 
   const loadingCountriesField = ref<boolean>(false)
+  const loadingStateField = ref<boolean>(false)
+
   const loadingStatesField = ref<boolean>(false)
   const loadingStatesFieldTwo = ref<boolean>(false)
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
   const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
+  const stateInputIsEmpty = computed<boolean>(() => state_us.value.length === 0)
+  const showCombo = ref<boolean>(false)
 
   const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
     loadingCountriesField.value = true
@@ -57,8 +69,14 @@ export const useWorld = () => {
     })
   }
   const fetchAllowedCountries= async () => {
-    allowed_countries.value = datos
+    allowed_countries.value = data_countries
     return allowed_countries;
+
+  }
+  const fetchStatesUS = async () => {
+
+    return state_us;
+
 
   }
 
@@ -91,7 +109,11 @@ export const useWorld = () => {
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
     const country = countries.value.find(country => country.country_code === event.value)
-
+    if (event.value == 'US'){
+      state_us.value = state_data
+      loadingStateField.value = true
+      showCombo.value = true;
+    }
     if (!country) return
     setCountry(country)
     await fetchStates()
@@ -119,11 +141,14 @@ export const useWorld = () => {
   return {
     countries,
     allowed_countries,
+    state_us,
     states,
     statesTwo,
     statesInputIsEmpty,
     countriesInputIsEmpty,
+    stateInputIsEmpty,
     loadingCountriesField: loadingCountriesField,
+    loadingStateField,
     loadingStatesField,
     loadingStatesFieldTwo,
     country,
@@ -131,11 +156,13 @@ export const useWorld = () => {
     calling_code,
     fetchCountries,
     fetchAllowedCountries,
+    fetchStatesUS,
     fetchStates,
     setCountry,
     setState,
     onChangeCountryHandler,
     onChangeCountryHandlerTwo,
+    showCombo,
     onChangeStateHandler,
   }
 }

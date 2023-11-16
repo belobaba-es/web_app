@@ -50,10 +50,26 @@
         </div>
       </div>
 
-      <div class="field col-4">
+      <div class="field col-4" v-if="!showCombo">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="state" />
+        </div>
+      </div>
+      <div class="field col-4" v-if="showCombo">
+        <label>{{ t('stateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+              v-model="state"
+              :options="state_us"
+              optionLabel="name"
+              option-value="state_code"
+              :loading="loadingStatesField"
+              :placeholder="t('countryPlaceholder')"
+              :disabled="stateInputIsEmpty"
+              class="w-full"
+              required
+          />
         </div>
       </div>
 
@@ -89,10 +105,15 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
   allowed_countries,
+  state_us,
   fetchAllowedCountries,
+  fetchStatesUS,
   loadingCountriesField,
+  stateInputIsEmpty,
+  loadingStatesField,
   countriesInputIsEmpty,
   onChangeCountryHandler,
+  showCombo,
 } = useWorld()
 
 const {
@@ -116,8 +137,9 @@ const state = ref<string>('')
 const postalCode = ref<string>('')
 
 onMounted(() => {
-
+console.log(allowed_countries)
   fetchAllowedCountries();
+  fetchStatesUS();
 })
 
 const validateFields = () => {
