@@ -140,12 +140,12 @@ const saveBeneficiary = () => {
     .saveBeneficiary(formData)
     .then(resp => {
       submitting.value = false
-      router.push('/withdraw/fiat/international')
       toast.add({
         severity: 'success',
         detail: resp.data.message,
         life: 4000,
       })
+      router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}`)
     })
     .catch(e => {
       submitting.value = false

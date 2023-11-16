@@ -100,30 +100,7 @@ const { countries, loadingCountriesField, countriesInputIsEmpty, onChangeCountry
   useWorld()
 const { formObject } = useNewOrEditBeneficiary()
 
-// const validateFields = () => {
-//   const intermediaryBank = formObject.value.informationIntermediaryBank!
-//   return [
-//     intermediaryBank.bankName,
-//     intermediaryBank.swiftCode,
-//     intermediaryBank.address.country,
-//     intermediaryBank.address.streetOne,
-//     intermediaryBank.address.postalCode,
-//     intermediaryBank.address.region,
-//     intermediaryBank.address.city,
-//   ].every(field => field.trim() !== '')
-// }
-
 const nextPage = () => {
-  // if (!validateFields()) {
-  //   toast.add({
-  //     severity: 'warn',
-  //     summary: t('warningAllFieldRequired'),
-  //     detail: t('warningDetailAllFieldRequired'),
-  //     life: 4000,
-  //   })
-  //   return
-  // }
-
   emit('nextPage', {
     pageIndex: 2,
   })
