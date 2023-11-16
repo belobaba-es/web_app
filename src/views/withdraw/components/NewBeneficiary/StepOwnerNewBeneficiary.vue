@@ -137,7 +137,6 @@ const state = ref<string>('')
 const postalCode = ref<string>('')
 
 onMounted(() => {
-console.log(allowed_countries)
   fetchAllowedCountries();
   fetchStatesUS();
 })

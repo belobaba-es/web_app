@@ -49,7 +49,7 @@ export const useWorld = () => {
   const loadingStatesFieldTwo = ref<boolean>(false)
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
-  const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
+  const countriesInputIsEmpty = computed<boolean>(() => allowed_countries.value.length === 0)
   const stateInputIsEmpty = computed<boolean>(() => state_us.value.length === 0)
   const showCombo = ref<boolean>(false)
 
