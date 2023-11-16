@@ -14,7 +14,7 @@
             option-value="country_code"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
-            :disabled="countriesInputIsEmpty"
+            :disabled="disableCountry()"
             class="w-full"
             required
           />
@@ -86,7 +86,7 @@ import { NewBeneficiary } from '../../types/beneficiary.interface'
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
-const { formObject } = useNewOrEditBeneficiary()
+const { formObject, typeBeneficiary } = useNewOrEditBeneficiary()
 const { countries, loadingCountriesField, countriesInputIsEmpty, fetchCountries } = useWorld()
 const { getUserName } = useAuth()
 
@@ -109,6 +109,15 @@ const validateFields = () => {
     informationBank.address.postalCode,
     informationBank.address.streetOne,
   ].every(field => field.trim() !== '')
+}
+
+const disableCountry = () => {
+  if (typeBeneficiary.value === 'DOMESTIC') {
+    formObject.value.informationBank.address.country = 'US'
+    return true
+  }
+
+  return false
 }
 
 const saveBeneficiary = () => {

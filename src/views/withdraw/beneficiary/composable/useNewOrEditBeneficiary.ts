@@ -4,6 +4,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { NewBeneficiary } from '../../types/beneficiary.interface'
 
+const typeBeneficiary = ref<string>('')
+
 const formObject = ref<NewBeneficiary>({
   profileType: 'INDIVIDUAL',
   informationOwner: {
@@ -52,32 +54,34 @@ export const useNewOrEditBeneficiary = () => {
   const router = useRouter()
   const route = useRoute()
   const toast = useToast()
-  const typeBeneficiary = ref<string>('')
-  const { t } = useI18n({ useScope: 'global' })
 
-  const itemSteps = ref([
-    {
-      label: t('informationAccountText'),
-      to: `/withdraw/fiat/international/new`,
-    },
-    {
-      label: t('beneficiaryInformation'),
-      to: `/withdraw/fiat/international/new/owner`,
-    },
-    {
-      label: t('bankAccountInformation'),
-      to: `/withdraw/fiat/international/new/bank-information`,
-    },
-  ])
+  const { t } = useI18n({ useScope: 'global' })
 
   if (route.path.includes('domestic')) {
     typeBeneficiary.value = 'DOMESTIC'
   } else if (route.path.includes('international')) {
     typeBeneficiary.value = 'INTERNATIONAL'
+  }
 
+  const itemSteps = ref([
+    {
+      label: t('informationAccountText'),
+      to: `/withdraw/fiat/${typeBeneficiary.value}/new`,
+    },
+    {
+      label: t('beneficiaryInformation'),
+      to: `/withdraw/fiat/${typeBeneficiary.value}/new/owner`,
+    },
+    {
+      label: t('bankAccountInformation'),
+      to: `/withdraw/fiat/${typeBeneficiary.value}/new/bank-information`,
+    },
+  ])
+
+  if (typeBeneficiary.value === 'INTERNATIONAL') {
     const nuevoItem = {
       label: t('intermediaryBank'),
-      to: `/withdraw/fiat/international/new/intermediary-bank`,
+      to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
     }
 
     itemSteps.value.splice(itemSteps.value.length - 1, 0, nuevoItem)
