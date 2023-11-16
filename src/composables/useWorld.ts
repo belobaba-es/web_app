@@ -56,9 +56,8 @@ export const useWorld = () => {
       loadingCountriesField.value = false
     })
   }
-  const fetchCountriesJson = async (DeleteBannedCountries:boolean) => {
+  const fetchAllowedCountries= async () => {
     allowed_countries.value = datos
-
     return allowed_countries;
 
   }
@@ -115,9 +114,7 @@ export const useWorld = () => {
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
     return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
   }
-  const deleteUnavailableCountriesP = (countries: CountryPermitidos[]): any => {
-    return countries.filter(CountryPermitidos => !deletedCountries().countries.includes(CountryPermitidos.name.toUpperCase().trim()))
-  }
+
 
   return {
     countries,
@@ -133,7 +130,7 @@ export const useWorld = () => {
     state,
     calling_code,
     fetchCountries,
-    fetchCountriesJson,
+    fetchAllowedCountries,
     fetchStates,
     setCountry,
     setState,
