@@ -88,21 +88,14 @@ const toast = useToast()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
-  countries,
   allowed_countries,
-  fetchCountries,
   fetchAllowedCountries,
   loadingCountriesField,
   countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  states,
   onChangeCountryHandler,
-  onChangeStateHandler,
 } = useWorld()
 
 const {
-  countries: bankCountries,
   statesInputIsEmpty: bankStatesInputIsEmpty,
   loadingStatesField: bankLoadingStatesField,
   states: bankStates,
@@ -123,12 +116,8 @@ const state = ref<string>('')
 const postalCode = ref<string>('')
 
 onMounted(() => {
-  fetchCountries(true).then(() => {
-    bankCountries.value = countries.value
-  })
-  fetchAllowedCountries().then(() => {
 
-  })
+  fetchAllowedCountries();
 })
 
 const validateFields = () => {
