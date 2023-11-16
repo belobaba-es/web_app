@@ -20,9 +20,11 @@ export enum CountryID {
   Usa = 'USA',
 }
 
+const countries = ref<Country[]>([])
+
 export const useWorld = () => {
   const calling_code = ref<string[]>([''])
-  const countries = ref<Country[]>([])
+
   const states = ref<State[]>([])
   const statesTwo = ref<State[]>([])
 

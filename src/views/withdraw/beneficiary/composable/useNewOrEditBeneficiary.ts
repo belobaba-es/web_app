@@ -5,6 +5,7 @@ import { useToast } from 'primevue/usetoast'
 import { NewBeneficiary } from '../../types/beneficiary.interface'
 
 const formObject = ref<NewBeneficiary>({
+  profileType: 'INDIVIDUAL',
   informationOwner: {
     name: '',
     address: {

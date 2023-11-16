@@ -81,12 +81,13 @@ import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '../../../../composables/useAuth'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
+import { NewBeneficiary } from '../../types/beneficiary.interface'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 const { formObject } = useNewOrEditBeneficiary()
-const { countries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
+const { countries, loadingCountriesField, countriesInputIsEmpty, fetchCountries } = useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
@@ -96,6 +97,8 @@ const submitting = ref(false)
 const props = defineProps<{
   formData: any
 }>()
+
+fetchCountries()
 
 const validateFields = () => {
   const informationBank = formObject.value.informationBank
@@ -109,81 +112,7 @@ const validateFields = () => {
 }
 
 const saveBeneficiary = () => {
-  if (validateFields()) {
-    submitting.value = true
-
-    const formData = ref()
-
-    if (props.formData.informationBank.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL') {
-      formData.value = {
-        typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
-        informationBank: {
-          ...props.formData.informationBank,
-          address: {
-            streetOne: bankStreetOne.value,
-            streetTwo: bankStreetTwo.value,
-            postalCode: postalCode.value,
-            region: bankState.value,
-            city: bankCity.value,
-            country: bankCountry.value,
-          },
-        },
-        informationOwner: {
-          ...props.formData.informationOwner,
-        },
-        informationIntermediaryBank: {
-          ...props.formData.informationIntermediaryBank,
-        },
-      }
-    } else {
-      formData.value = {
-        typeBeneficiaryBankWithdrawal: props.formData.typeBeneficiaryBankWithdrawal,
-        informationBank: {
-          ...props.formData.informationBank,
-          address: {
-            streetOne: bankStreetOne.value,
-            streetTwo: bankStreetTwo.value,
-            postalCode: postalCode.value,
-            region: bankState.value,
-            city: bankCity.value,
-            country: bankCountry.value,
-          },
-        },
-        informationOwner: {
-          ...props.formData.informationOwner,
-        },
-      }
-    }
-
-    new BeneficiaryService()
-      .saveBeneficiary(formData.value)
-      .then(resp => {
-        submitting.value = false
-        router.push('/withdraw/fiat/international')
-        toast.add({
-          severity: 'success',
-          detail: resp.data.message,
-          life: 4000,
-        })
-      })
-      .catch(e => {
-        submitting.value = false
-
-        if (e.response.data.data?.warning) {
-          e.response.data.data.warning.forEach((element: any) => {
-            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-          })
-          return
-        }
-
-        if (e.response.data.message) {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-          return
-        }
-
-        showMessage(toast, e.response.data)
-      })
-  } else {
+  if (!validateFields()) {
     toast.add({
       severity: 'warn',
       summary: t('warningAllFieldRequired'),
@@ -191,5 +120,40 @@ const saveBeneficiary = () => {
       life: 4000,
     })
   }
+  submitting.value = true
+
+  let formData: NewBeneficiary = formObject.value as NewBeneficiary
+  if (props.formData.informationBank.typeBeneficiaryBankWithdrawal !== 'INTERNATIONAL') {
+    delete formData.informationIntermediaryBank
+  }
+
+  new BeneficiaryService()
+    .saveBeneficiary(formData)
+    .then(resp => {
+      submitting.value = false
+      router.push('/withdraw/fiat/international')
+      toast.add({
+        severity: 'success',
+        detail: resp.data.message,
+        life: 4000,
+      })
+    })
+    .catch(e => {
+      submitting.value = false
+
+      if (e.response.data.data?.warning) {
+        e.response.data.data.warning.forEach((element: any) => {
+          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
+        })
+        return
+      }
+
+      if (e.response.data.message) {
+        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
+        return
+      }
+
+      showMessage(toast, e.response.data)
+    })
 }
 </script>

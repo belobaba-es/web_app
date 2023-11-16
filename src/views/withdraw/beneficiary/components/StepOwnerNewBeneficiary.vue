@@ -1,5 +1,18 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
+    <div class="field mb-4">
+      <label>{{ t('beneficiaryType') }}</label>
+      <div class="p-inputgroup">
+        <Dropdown
+          v-model="formObject.profileType"
+          :options="accountType"
+          optionLabel="name"
+          option-value="description"
+          class="w-full md:w-14rem"
+        />
+      </div>
+    </div>
+
     <div class="field">
       <label>{{ t('depositNameOnBank') }}</label>
       <div class="p-inputgroup">
@@ -64,7 +77,7 @@
       </div>
     </div>
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('nextButtonText')" class="px-5" @click="nextPage" iconPos="right" />
+      <Button :label="t('nextButtonText')" class="px-5" @click="next" iconPos="right" />
     </div>
   </div>
 </template>
@@ -79,6 +92,7 @@ import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
+import { ref } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -87,6 +101,11 @@ const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const { countries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
+
+const accountType = ref([
+  { name: 'CORPORATION', description: 'CORPORATION' },
+  { name: 'INDIVIDUAL', description: 'INDIVIDUAL' },
+])
 
 const validateFields = () => {
   const owner = formObject.value.informationOwner
@@ -100,7 +119,7 @@ const validateFields = () => {
   ].every(field => field.trim() !== '')
 }
 
-const nextPage = () => {
+const next = () => {
   if (!validateFields()) {
     toast.add({
       severity: 'warn',

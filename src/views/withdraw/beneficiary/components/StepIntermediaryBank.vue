@@ -3,14 +3,14 @@
     <div class="field">
       <label>{{ t('intermediaryBankName') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationIntermediaryBank.bankName" />
+        <InputText type="text" v-model="formObject.informationIntermediaryBank!.bankName" />
       </div>
     </div>
 
     <div class="field">
       <label>{{ t('intermediarySwiftCode') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationIntermediaryBank.swiftCode" />
+        <InputText type="text" v-model="formObject.informationIntermediaryBank!.swiftCode" />
       </div>
     </div>
 
@@ -21,7 +21,7 @@
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="formObject.informationIntermediaryBank.address.country"
+            v-model="formObject.informationIntermediaryBank!.address.country"
             :options="countries"
             optionLabel="name"
             option-value="country_code"
@@ -38,14 +38,14 @@
       <div class="field col-12">
         <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.streetOne" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank!.address.streetOne" />
         </div>
       </div>
 
       <div class="field col-12">
         <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.streetTwo" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank!.address.streetTwo" />
         </div>
       </div>
 
@@ -54,7 +54,7 @@
         <div class="p-inputgroup">
           <InputText
             type="text"
-            v-model="formObject.informationIntermediaryBank.address.city"
+            v-model="formObject.informationIntermediaryBank!.address.city"
             class="w-full"
             required
           />
@@ -64,14 +64,14 @@
       <div class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.region" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank!.address.region" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationIntermediaryBank.address.postalCode" />
+          <InputText type="text" v-model="formObject.informationIntermediaryBank!.address.postalCode" />
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ const { countries, loadingCountriesField, countriesInputIsEmpty, onChangeCountry
 const { formObject } = useNewOrEditBeneficiary()
 
 const validateFields = () => {
-  const intermediaryBank = formObject.value.informationIntermediaryBank
+  const intermediaryBank = formObject.value.informationIntermediaryBank!
   return [
     intermediaryBank.bankName,
     intermediaryBank.swiftCode,

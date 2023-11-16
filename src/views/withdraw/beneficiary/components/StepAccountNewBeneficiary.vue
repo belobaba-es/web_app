@@ -3,21 +3,21 @@
     <div class="field">
       <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="bankName" />
+        <InputText type="text" v-model="formObject.informationBank.bankName" />
       </div>
     </div>
 
     <div class="field">
       <label>{{ t('accountNumber') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="accountNumber" />
+        <InputText type="text" v-model="formObject.informationBank.accountNumber" />
       </div>
     </div>
 
     <div class="field" v-if="typeBeneficiary !== 'DOMESTIC'">
       <label>{{ t('swiftCode') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="swiftCode" />
+        <InputText type="text" v-model="formObject.informationBank.swiftCode" />
       </div>
     </div>
 
@@ -38,12 +38,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-
 import { useToast } from 'primevue/usetoast'
-import { useRoute, useRouter } from 'vue-router'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
@@ -52,25 +49,18 @@ const toast = useToast()
 
 const { t } = useI18n({ useScope: 'global' })
 
-const router = useRouter()
-const route = useRoute()
-
 const { typeBeneficiary } = useNewOrEditBeneficiary()
 
-const bankName = ref<string>('')
-const accountNumber = ref<string>('')
-const swiftCode = ref<string>('')
 const routingNumberOrIBAN = ref<string>('')
 
-const formData = ref()
-
+const { formObject } = useNewOrEditBeneficiary()
 const validateFields = () => {
   let isSwiftCodeValid = true
   if (typeBeneficiary.value === 'INTERNATIONAL') {
-    isSwiftCodeValid = swiftCode.value.trim() !== ''
+    isSwiftCodeValid = formObject.value.informationBank.swiftCode!.trim() !== ''
   }
-  const isBankNameValid = bankName.value.trim() !== ''
-  const isAccountNumberValid = accountNumber.value.trim() !== ''
+  const isBankNameValid = formObject.value.informationBank.bankName.trim() !== ''
+  const isAccountNumberValid = formObject.value.informationBank.accountNumber.trim() !== ''
 
   const isIntermediaryNumberValid = routingNumberOrIBAN.value.trim() !== ''
 
@@ -90,30 +80,18 @@ const nextStep = () => {
 
   const page = 0
 
-  formData.value = {
-    informationBank: {
-      typeBeneficiaryBankWithdrawal: typeBeneficiary.value,
-      accountNumber: accountNumber,
-      bankName: bankName,
-      swiftCode: '',
-      routingNumber: '',
-      iban: '',
-    },
-  }
-
+  formObject.value.informationBank.typeBeneficiaryBankWithdrawal = typeBeneficiary.value
   //Iban / Swift - International | Routing number Domestic
   if (typeBeneficiary.value === 'INTERNATIONAL') {
-    formData.value.informationBank.iban = routingNumberOrIBAN
-    formData.value.informationBank.swiftCode = swiftCode
+    formObject.value.informationBank.iban = routingNumberOrIBAN.value
   } else if (typeBeneficiary.value === 'DOMESTIC') {
-    formData.value.informationBank.routingNumber = routingNumberOrIBAN
-    delete formData.value.informationBank.iban
-    delete formData.value.informationBank.swiftCode
+    formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
+    delete formObject.value.informationBank.iban
+    delete formObject.value.informationBank.swiftCode
   }
 
   emit('nextPage', {
     pageIndex: page,
-    formData: formData.value,
   })
 }
 </script>

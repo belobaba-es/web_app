@@ -44,10 +44,14 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Steps from 'primevue/steps'
 import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
+import { useWorld } from '../../../composables/useWorld'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const { itemSteps, typeBeneficiary, formObject, complete, nextPage, prevPage } = useNewOrEditBeneficiary()
+const { fetchCountries } = useWorld()
+
+fetchCountries()
 </script>
 
 <style scoped></style>
