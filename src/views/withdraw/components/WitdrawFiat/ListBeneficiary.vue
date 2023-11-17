@@ -5,21 +5,16 @@
         <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
-        <Button
-          icon="pi pi-pencil"
-          class="p-button-text p-button-primary"
-          label=""
-          v-tooltip.top="'Edit'"
-          placeholder="Top"
-        />
+        <!--        <Button-->
+        <!--          icon="pi pi-pencil"-->
+        <!--          class="p-button-text p-button-primary"-->
+        <!--          label=""-->
+        <!--          v-tooltip.top="'Edit'"-->
+        <!--          placeholder="Top"-->
+        <!--        />-->
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
-        <Button
-          icon="pi pi-angle-right"
-          class="p-button-text p-button-primary"
-          label=""
-          @click="emit('select', item)"
-        />
+        <Button icon="pi pi-angle-right" label="" outlined @click="emit('select', item)" />
       </div>
     </div>
 
