@@ -20,7 +20,6 @@ import SwapIndexVue from './views/swap/Index.vue'
 import SwapSuccess from './views/swap/Success.vue'
 import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
-import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
 import WalletIndex from './views/wallet/Wallet.vue'
 import TransactionHistoryWallet from './views/wallet/Transaction.vue'
@@ -94,7 +93,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'crypto/:assetCode?',
-            component: DepositCrypto,
+            component: () => import('./views/deposit/Crypto.vue'),
           },
         ],
       },
@@ -143,7 +142,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/new',
-            component: NewBeneficiary,
+            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
@@ -165,7 +164,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/international/new',
-            component: NewBeneficiary,
+            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
@@ -209,7 +208,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'crypto/other/add-beneficiary',
-            component: AddBeneficiary,
+            component: () => import('./views/withdraw/crypto/AddBeneficiary.vue'),
           },
         ],
         meta: {

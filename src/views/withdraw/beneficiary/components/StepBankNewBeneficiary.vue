@@ -9,7 +9,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationBank.address.country"
-            :options="countries"
+            :options="allowed_countries"
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
@@ -42,10 +42,25 @@
         </div>
       </div>
 
-      <div class="field col-4">
+      <div class="field col-4" v-if="!showCombo">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationBank.address.region" />
+          <InputText type="text" v-model="formObject.informationOwner.address.region" />
+        </div>
+      </div>
+      <div class="field col-4" v-if="showCombo">
+        <label>{{ t('stateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="formObject.informationBank.address.region"
+            :options="state_us"
+            optionLabel="name"
+            option-value="state_code"
+            :placeholder="t('countryPlaceholder')"
+            class="w-full"
+            required
+            @change="changeCountryHandler"
+          />
         </div>
       </div>
 
@@ -75,7 +90,7 @@ import showExceptionError from '../../../../shared/showExceptionError'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 
 import { useToast } from 'primevue/usetoast'
@@ -87,7 +102,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 const { formObject, typeBeneficiary } = useNewOrEditBeneficiary()
-const { countries, loadingCountriesField, countriesInputIsEmpty, fetchCountries } = useWorld()
+const { allowed_countries, loadingCountriesField, showCombo, state_us, onChangeCountryHandler, fetchCountries } =
+  useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
@@ -99,6 +115,13 @@ const props = defineProps<{
 }>()
 
 fetchCountries()
+
+const changeCountryHandler = (event: DropdownChangeEvent) => {
+  onChangeCountryHandler(event)
+  if (!showCombo.value) {
+    formObject.value.informationBank.address.country = ''
+  }
+}
 
 const validateFields = () => {
   const informationBank = formObject.value.informationBank
@@ -114,6 +137,7 @@ const validateFields = () => {
 const disableCountry = () => {
   if (typeBeneficiary.value === 'DOMESTIC') {
     formObject.value.informationBank.address.country = 'US'
+    showCombo.value = true
     return true
   }
 
