@@ -111,7 +111,7 @@ export const useNewOrEditBeneficiary = () => {
     router.push('/withdraw')
   }
 
-  const setDataBeneficiary = (beneficiary: NewBeneficiary) => {
+  const setDataBeneficiary = (beneficiary: any) => {
     isUpdateBeneficiary.value = true
     console.log(beneficiary)
     formObject.value = beneficiary

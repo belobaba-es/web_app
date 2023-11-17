@@ -11,7 +11,7 @@
           label=""
           v-tooltip.top="'Edit'"
           placeholder="Top"
-          @click="setDataBeneficiary(item as NewBeneficiary)"
+          @click="setDataBeneficiary(item)"
         />
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
