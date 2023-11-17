@@ -1,10 +1,10 @@
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { Partner } from '../types/onboardingCompany'
 import { validateObject } from '../shared/validateObject'
 import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { useOnboardingCompany } from './useOnboardingCompany'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import showMessage from '../shared/showMessageArray'
 
 export const useShareholder = () => {
