@@ -86,16 +86,6 @@ export const useWorld = () => {
     })
   }
 
-  const fetchStatesTwo = async () => {
-    loadingStatesFieldTwo.value = true
-
-    if (!country.value?.country_id) return
-    await new WorldService().getStates(country.value?.country_id).then(resp => {
-      statesTwo.value = resp
-      loadingStatesFieldTwo.value = false
-    })
-  }
-
   const setCountry = (payload: Country) => {
     country.value = payload
   }

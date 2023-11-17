@@ -35,7 +35,7 @@
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
-            @change="changeCountryHandler"
+            @change="onChangeCountryHandler"
             class="w-full"
             required
           />
@@ -133,13 +133,6 @@ const validateFields = () => {
     owner.address.region,
     owner.address.postalCode,
   ].every(field => field.trim() !== '')
-}
-
-const changeCountryHandler = (event: DropdownChangeEvent) => {
-  onChangeCountryHandler(event)
-  if (!showCombo.value) {
-    formObject.value.informationOwner.address.country = ''
-  }
 }
 
 const next = () => {
