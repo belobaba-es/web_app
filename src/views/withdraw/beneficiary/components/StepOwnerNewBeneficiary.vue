@@ -29,12 +29,13 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.country"
-            :options="countries"
+            :options="allowed_countries"
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
+            @change="changeCountryHandler"
             class="w-full"
             required
           />
@@ -62,10 +63,24 @@
         </div>
       </div>
 
-      <div class="field col-4">
+      <div class="field col-4" v-if="!showCombo">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="formObject.informationOwner.address.region" />
+        </div>
+      </div>
+      <div class="field col-4" v-if="showCombo">
+        <label>{{ t('stateLabel') }}</label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="formObject.informationOwner.address.region"
+            :options="state_us"
+            optionLabel="name"
+            option-value="state_code"
+            :placeholder="t('countryPlaceholder')"
+            class="w-full"
+            required
+          />
         </div>
       </div>
 
@@ -88,7 +103,7 @@ import { useWorld } from '../../../../composables/useWorld'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
@@ -100,7 +115,8 @@ const toast = useToast()
 const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { countries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
+const { allowed_countries, showCombo, state_us, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } =
+  useWorld()
 
 const accountType = ref([
   { name: 'CORPORATION', description: 'CORPORATION' },
@@ -117,6 +133,13 @@ const validateFields = () => {
     owner.address.region,
     owner.address.postalCode,
   ].every(field => field.trim() !== '')
+}
+
+const changeCountryHandler = (event: DropdownChangeEvent) => {
+  onChangeCountryHandler(event)
+  if (!showCombo.value) {
+    formObject.value.informationOwner.address.country = ''
+  }
 }
 
 const next = () => {

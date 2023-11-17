@@ -1,0 +1,262 @@
+[
+  {
+    "state_code": "AA",
+    "name": "ARMED FORCES US",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "AL",
+    "name": "ALABAMA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "AK",
+    "name": "ALASKA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "AZ",
+    "name": "ARIZONA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "AR",
+    "name": "ARKANSAS",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "CA",
+    "name": "CALIFORNIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "CO",
+    "name": "COLORADO",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "CT",
+    "name": "CONNECTICUT",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "DE",
+    "name": "DELAWARE",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "DC",
+    "name": "DISTRITO DE COLUMBIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "FL",
+    "name": "FLORIDA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "GA",
+    "name": "GEORGIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "HI",
+    "name": "HAWAII",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "ID",
+    "name": "IDAHO",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "IL",
+    "name": "ILLINOIS",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "IN",
+    "name": "INDIANA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "IA",
+    "name": "IOWA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "KS",
+    "name": "KANSAS",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "KY",
+    "name": "KENTUCKY",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "LA",
+    "name": "LOUISIANA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "ME",
+    "name": "MAINE",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MD",
+    "name": "MARYLAND",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MA",
+    "name": "MASSACHUSETTS",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MI",
+    "name": "MICHIGAN",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MN",
+    "name": "MINNESOTA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MS",
+    "name": "MISSISSIPPI",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MO",
+    "name": "MISSOURI",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "MT",
+    "name": "MONTANA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NE",
+    "name": "NEBRASKA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NV",
+    "name": "NEVADA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NH",
+    "name": "NEW HAMPSHIRE",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NJ",
+    "name": "NEW JERSEY",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NM",
+    "name": "NEW MEXICO",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NY",
+    "name": "NEW YORK",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "NC",
+    "name": "NORTH CAROLINA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "ND",
+    "name": "NORTH DAKOTA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "OH",
+    "name": "OHIO",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "OK",
+    "name": "OKLAHOMA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "OR",
+    "name": "OREGON",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "PA",
+    "name": "PENNSYLVANIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "RI",
+    "name": "RHODE ISLAND",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "SC",
+    "name": "SOUTH CAROLINA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "SD",
+    "name": "SOUTH DAKOTA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "TN",
+    "name": "TENNESSEE",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "TX",
+    "name": "TEXAS",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "UT",
+    "name": "UTAH",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "VT",
+    "name": "VERMONT",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "VA",
+    "name": "VIRGINIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "WA",
+    "name": "WASHINGTON",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "WV",
+    "name": "WEST VIRGINIA",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "WI",
+    "name": "WISCONSIN",
+    "country_id": "USA"
+  },
+  {
+    "state_code": "WY",
+    "name": "WYOMING",
+    "country_id": "USA"
+  }
+]
