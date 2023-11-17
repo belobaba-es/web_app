@@ -72,21 +72,14 @@
       </div>
     </div>
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('saveNewPayee')" class="px-5" @click="saveBeneficiary" :loading="submitting" iconPos="right" />
+      <Button :label="t('saveNewPayee')" class="px-5" @click="save" :loading="submitting" iconPos="right" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
-import { BeneficiaryService } from '../../services/beneficiary'
-
-import router from '../../../../router'
-
-import showMessage from '../../../../shared/showMessageArray'
-import showExceptionError from '../../../../shared/showExceptionError'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -96,25 +89,20 @@ import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '../../../../composables/useAuth'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
-import { NewBeneficiary } from '../../types/beneficiary.interface'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
-const { formObject, typeBeneficiary } = useNewOrEditBeneficiary()
+const { formObject, typeBeneficiary, saveBeneficiary, submitting } = useNewOrEditBeneficiary()
 const { allowed_countries, loadingCountriesField, showCombo, state_us, onChangeCountryHandler, fetchCountries } =
   useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const submitting = ref(false)
-
 const props = defineProps<{
   formData: any
 }>()
-
-fetchCountries()
 
 const changeCountryHandler = (event: DropdownChangeEvent) => {
   onChangeCountryHandler(event)
@@ -144,7 +132,7 @@ const disableCountry = () => {
   return false
 }
 
-const saveBeneficiary = () => {
+const save = () => {
   if (!validateFields()) {
     toast.add({
       severity: 'warn',
@@ -152,41 +140,9 @@ const saveBeneficiary = () => {
       detail: t('warningDetailAllFieldRequired'),
       life: 4000,
     })
-  }
-  submitting.value = true
-
-  let formData: NewBeneficiary = formObject.value as NewBeneficiary
-  if (props.formData.informationBank.typeBeneficiaryBankWithdrawal !== 'INTERNATIONAL') {
-    delete formData.informationIntermediaryBank
+    return
   }
 
-  new BeneficiaryService()
-    .saveBeneficiary(formData)
-    .then(resp => {
-      submitting.value = false
-      toast.add({
-        severity: 'success',
-        detail: resp.data.message,
-        life: 4000,
-      })
-      router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}`)
-    })
-    .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.data?.warning) {
-        e.response.data.data.warning.forEach((element: any) => {
-          showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
-        })
-        return
-      }
-
-      if (e.response.data.message) {
-        showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
-        return
-      }
-
-      showMessage(toast, e.response.data)
-    })
+  saveBeneficiary()
 }
 </script>

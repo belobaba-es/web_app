@@ -81,6 +81,7 @@ export interface BeneficiaryAsset {
 }
 
 export type NewBeneficiary = {
+  counterpartyId?: string
   profileType: 'INDIVIDUAL' | 'CORPORATION'
   informationOwner: {
     name: string

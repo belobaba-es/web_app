@@ -31,7 +31,7 @@ export interface StateUS {
 
 const countries = ref<Country[]>([])
 const allowed_countries = ref<CountryAllowed[]>(data_countries)
-const state_us = ref<StateUS[]>([])
+const state_us = ref<StateUS[]>(state_data)
 const showCombo = ref<boolean>(false)
 const loadingStateField = ref<boolean>(false)
 
@@ -68,11 +68,6 @@ export const useWorld = () => {
     })
   }
 
-  const fetchAllowedCountries = async () => {
-    allowed_countries.value = data_countries
-    return allowed_countries
-  }
-
   const fetchStatesUS = async () => {
     return state_us
   }
@@ -98,7 +93,6 @@ export const useWorld = () => {
     showCombo.value = false
 
     if (event.value == 'US') {
-      state_us.value = state_data
       showCombo.value = true
     }
   }
@@ -127,7 +121,6 @@ export const useWorld = () => {
     country,
     state,
     calling_code,
-    fetchAllowedCountries,
     fetchStatesUS,
     fetchCountries,
     fetchStates,

@@ -3,10 +3,15 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { NewBeneficiary } from '../../types/beneficiary.interface'
+import { BeneficiaryService } from '../../services/beneficiary'
+import showExceptionError from '../../../../shared/showExceptionError'
+import showMessage from '../../../../shared/showMessageArray'
 
+const isUpdateBeneficiary = ref<boolean>(false)
 const typeBeneficiary = ref<string>('')
-
+const submitting = ref<boolean>(false)
 const formObject = ref<NewBeneficiary>({
+  counterpartyId: '',
   profileType: 'INDIVIDUAL',
   informationOwner: {
     name: '',
@@ -66,19 +71,19 @@ export const useNewOrEditBeneficiary = () => {
   const itemSteps = ref([
     {
       label: t('informationAccountText'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new`,
+      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
     },
     {
       label: t('beneficiaryInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new/owner`,
+      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
     },
     {
       label: t('bankAccountInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new/bank-information`,
+      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
     },
   ])
 
-  if (typeBeneficiary.value === 'INTERNATIONAL') {
+  if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
     const nuevoItem = {
       label: t('intermediaryBank'),
       to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
@@ -88,10 +93,6 @@ export const useNewOrEditBeneficiary = () => {
   }
 
   const nextPage = (event: any) => {
-    // for (let field in event.formData) {
-    //   formObject.value[field] = event.formData[field]
-    // }
-
     router.push(itemSteps.value[event.pageIndex + 1].to)
   }
 
@@ -110,10 +111,65 @@ export const useNewOrEditBeneficiary = () => {
     router.push('/withdraw')
   }
 
+  const setDataBeneficiary = (beneficiary: NewBeneficiary) => {
+    isUpdateBeneficiary.value = true
+    console.log(beneficiary)
+    formObject.value = beneficiary
+    formObject.value.counterpartyId = beneficiary.counterpartyId
+
+    router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
+  }
+
+  const saveBeneficiary = () => {
+    let formData: NewBeneficiary = formObject.value as NewBeneficiary
+    if (typeBeneficiary.value !== 'INTERNATIONAL') {
+      delete formData.informationIntermediaryBank
+    }
+
+    if (!isUpdateBeneficiary.value) {
+      delete formData.counterpartyId
+    }
+
+    submitting.value = true
+
+    new BeneficiaryService()
+      .saveBeneficiary(formData)
+      .then(resp => {
+        submitting.value = false
+        toast.add({
+          severity: 'success',
+          detail: resp.data.message,
+          life: 4000,
+        })
+        isUpdateBeneficiary.value = false
+        router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}`)
+      })
+      .catch(e => {
+        submitting.value = false
+
+        if (e.response.data.data?.warning) {
+          e.response.data.data.warning.forEach((element: any) => {
+            showExceptionError(toast, 'error', t('somethingWentWrong'), `${element.field} ${element.message}`, 4000)
+          })
+          return
+        }
+
+        if (e.response.data.message) {
+          showExceptionError(toast, 'error', t('somethingWentWrong'), e.response.data.message, 4000)
+          return
+        }
+
+        showMessage(toast, e.response.data)
+      })
+  }
+
   return {
+    submitting,
     itemSteps,
     typeBeneficiary,
     formObject,
+    setDataBeneficiary,
+    saveBeneficiary,
     complete,
     nextPage,
     prevPage,

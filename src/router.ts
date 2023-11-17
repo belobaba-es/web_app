@@ -1,16 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './views/profile/Index.vue'
 import Deposit from './views/deposit/Deposit.vue'
-import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
-import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
-
-import NewBeneficiary from './views/withdraw/beneficiary/NewBeneficiary.vue'
 import StepAccountNewBeneficiary from './views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
@@ -114,7 +110,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'amount',
-                component: StepAmount,
+                component: () => import('./views/withdraw/components/InternalWithdraw/StepAmount.vue'),
               },
               {
                 path: 'confirmation',
@@ -146,7 +142,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: StepAccountNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',
@@ -168,7 +164,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: StepAccountNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',

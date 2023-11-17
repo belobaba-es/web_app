@@ -5,13 +5,14 @@
         <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
-        <!--        <Button-->
-        <!--          icon="pi pi-pencil"-->
-        <!--          class="p-button-text p-button-primary"-->
-        <!--          label=""-->
-        <!--          v-tooltip.top="'Edit'"-->
-        <!--          placeholder="Top"-->
-        <!--        />-->
+        <Button
+          icon="pi pi-pencil"
+          class="p-button-text p-button-primary"
+          label=""
+          v-tooltip.top="'Edit'"
+          placeholder="Top"
+          @click="setDataBeneficiary(item as NewBeneficiary)"
+        />
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
         <Button icon="pi pi-angle-right" label="" outlined @click="emit('select', item)" />
@@ -37,15 +38,17 @@
 
 <script lang="ts" setup>
 import Button from 'primevue/button'
-import { BeneficiaryType } from '../../types/beneficiary.interface'
+import { BeneficiaryType, NewBeneficiary } from '../types/beneficiary.interface'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-import { useBeneficiary } from '../../composables/useBeneficiary'
+import { useBeneficiary } from '../composables/useBeneficiary'
+import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 const { submitting, listNextPag, listBeneficiary, fetchBeneficiaries } = useBeneficiary()
+const { setDataBeneficiary } = useNewOrEditBeneficiary()
 
 const emit = defineEmits(['select'])
 

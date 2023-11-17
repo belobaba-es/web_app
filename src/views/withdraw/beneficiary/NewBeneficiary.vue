@@ -9,7 +9,7 @@
         <router-link to="/withdraw">
           <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
         </router-link>
-        <span class="text-xl" v-if="typeBeneficiary === 'DOMESTIC'">
+        <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'DOMESTIC'">
           {{ t('domesticWire') }}
         </span>
         <span class="text-xl" v-else>
