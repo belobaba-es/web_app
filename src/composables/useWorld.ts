@@ -108,15 +108,17 @@ export const useWorld = () => {
   }
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
+    showCombo.value = false;
     const country = countries.value.find(country => country.country_code === event.value)
+
     if (event.value == 'US'){
       state_us.value = state_data
       loadingStateField.value = true
       showCombo.value = true;
     }
     if (!country) return
-    setCountry(country)
-    await fetchStates()
+      setCountry(country)
+      await fetchStates()
   }
 
   const onChangeCountryHandlerTwo = async (event: DropdownChangeEvent) => {
