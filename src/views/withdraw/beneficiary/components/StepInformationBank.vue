@@ -45,7 +45,7 @@
       <div class="field col-4" v-if="!showCombo">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.region" />
+          <InputText type="text" v-model="formObject.informationBank.address.region" />
         </div>
       </div>
       <div class="field col-4" v-if="showCombo">

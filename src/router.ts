@@ -154,7 +154,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'bank-information',
-                component: () => import('./views/withdraw/beneficiary/components/StepBankNewBeneficiary.vue'),
+                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
@@ -180,7 +180,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'bank-information',
-                component: () => import('./views/withdraw/beneficiary/components/StepBankNewBeneficiary.vue'),
+                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
