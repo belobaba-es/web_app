@@ -10,15 +10,10 @@ import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 
-import NewBeneficiary from './views/withdraw/components/NewBeneficiary.vue'
-import StepAccountNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepAccountNewBeneficiary.vue'
-import StepOwnerNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'
-import StepIntermediaryBank from './views/withdraw/components/NewBeneficiary/StepIntermediaryBank.vue'
-import StepBankNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepBankNewBeneficiary.vue'
+import NewBeneficiary from './views/withdraw/beneficiary/NewBeneficiary.vue'
+import StepAccountNewBeneficiary from './views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-
-import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/StepAccounts.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 import SwapIndexVue from './views/swap/Index.vue'
@@ -134,7 +129,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: WithdrawFiatStepAccounts,
+                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
               },
               {
                 path: 'amount',
@@ -156,11 +151,11 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'owner',
-                component: () => import('./views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'),
+                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'bank-information',
-                component: StepBankNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepBankNewBeneficiary.vue'),
               },
             ],
           },
@@ -178,15 +173,15 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'owner',
-                component: StepOwnerNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'intermediary-bank',
-                component: StepIntermediaryBank,
+                component: () => import('./views/withdraw/beneficiary/components/StepIntermediaryBank.vue'),
               },
               {
                 path: 'bank-information',
-                component: StepBankNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepBankNewBeneficiary.vue'),
               },
             ],
           },
