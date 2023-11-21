@@ -238,7 +238,7 @@ const nextPage = () => {
     symbol: assetSymbol.value,
     assetId: assetId.value,
     total: total.value,
-    purpose: purpose.value,
+    purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
   }
 
   emit('nextPage', {

@@ -216,7 +216,7 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     amountFee: amountFee,
-    purpose: purpose.value,
+    purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
   }
   emit('nextPage', {
     pageIndex: page,

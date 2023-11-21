@@ -282,9 +282,10 @@ const handleSubmit = () => {
   }
 
   submitting.value = true
-
+  let email = form.email.toLowerCase().trim();
+  let password = form.password.trim();
   new RegisterService()
-    .register(form.email.toLowerCase(), form.password)
+    .register(email, password)
     .then(data => {
       submitting.value = false
 
@@ -329,7 +330,7 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
   background: white;
   border-radius: 20px;
   padding: 2.5rem;
-  box-shadow: 0px 0px 60px rgb(0 0 0 / 5%);
+  box-shadow: 0 0 60px rgb(0 0 0 / 5%);
 }
 
 .with-buttons {
@@ -341,7 +342,4 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
   height: 64px;
 }
 
-.p-dialog .p-dialog-header {
-  background-color: black !important;
-}
 </style>
