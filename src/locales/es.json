@@ -389,7 +389,7 @@
   "helpTextSurname": "Por favor escriba su apellido.",
   "helpTextSecondSurname": "Por favor escriba su segundo apellido.",
   "helpTextIdNumber": "Escriba su número de identificación personal.",
-  "helpTextTaxIDNumber": "Escriba su número de identificación fiscal (SSN, ITIN). únicamente para residentes o ciudadanos de USA.",
+  "helpTextTaxIDNumber": "Escriba su número de identificación fiscal de su país. (SSN, ITIN)",
   "helpTextIDCountry": "Seleccione el país que emitió su documento de identidad.",
   "helpTextDateOfBirth": "La fecha de nacimiento debe coincidir con el documento de identidad de la persona.",
   "helpTextPhone": "Por favor llene un número de teléfono de contacto.",
