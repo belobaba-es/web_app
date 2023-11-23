@@ -1,6 +1,6 @@
 <template v-show="isVisible">
   <router-link v-show="isVisible" to="/onboarding">
-    <Message severity="warn" :closable="false">{{ t('uploadDocuments') }}!</Message>
+    <Message severity="warn" :closable="false">{{ t('descriptionFinishOnboarding') }}!</Message>
   </router-link>
 </template>
 
