@@ -8,7 +8,7 @@
       </p>
 
       <Button
-        :label="t('continuar')"
+        :label="t('continue')"
         icon="pi pi-angle-right"
         icon-pos="right"
         class="px-5 mt-5 btn-submit"
