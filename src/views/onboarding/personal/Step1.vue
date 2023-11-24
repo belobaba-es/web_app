@@ -154,7 +154,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddressTwo') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.streetTwo" />
           </div>
