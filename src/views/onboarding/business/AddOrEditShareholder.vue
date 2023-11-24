@@ -7,7 +7,7 @@
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('nameLabel') }}</label>
+        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.firstName" class="w-full" required />
         </div>
@@ -17,7 +17,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('secondNameLabel') }}</label>
+        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.middleName" class="w-full" required />
         </div>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('surnameLabel') }}</label>
+        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.lastName" class="w-full" required />
         </div>
@@ -39,7 +39,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('docTypeLabelPassport') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.passport" class="w-full" required />
+          <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextPassport') }}</span>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }}</label>
+        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.dni" class="w-full" required />
         </div>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }}</label>
+        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.taxId" class="w-full" required />
         </div>
@@ -67,14 +67,14 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }}</label>
+        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('emailLabel') }}</label>
+        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
           <InputText type="text" v-model="partner.email" class="w-full" required />
@@ -82,7 +82,7 @@
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }}</label>
+        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
         <div class="field grid">
           <div class="col-4">
             <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
@@ -100,7 +100,7 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }}</label>
+          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="partner.country"
@@ -120,7 +120,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }}</label>
+          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.region" class="w-full" />
           </div>
@@ -130,7 +130,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }}</label>
+          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.city" class="w-full" required />
           </div>
@@ -140,7 +140,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }}</label>
+          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.streetOne" />
           </div>
@@ -160,12 +160,12 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }}</label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.postalCode" />
           </div>
           <div>
-            <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
+            <span class="help-text">{{ t('helpTextAddressPostalCode') }} </span>
           </div>
         </div>
       </div>
@@ -237,4 +237,9 @@ const verifyRoute = () => {
   else if (route.name === 'edit-shareholder') loadingDataToShareholder(route.params.dni)
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.bg-red{
+  color: red;
+  font-weight: bold;
+}
+</style>
