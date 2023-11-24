@@ -6,7 +6,7 @@
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('businessNameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('businessNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingCompany.informationCompany.name" class="w-full" required />
         </div>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelDocumentCompany') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('labelDocumentCompany') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText
             type="text"
@@ -38,7 +38,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelNaics') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('labelNaics') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingCompany.informationCompany.naics" class="w-full" required />
         </div>
@@ -48,7 +48,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelnaicsDescription') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('labelnaicsDescription') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText
             type="text"
@@ -63,7 +63,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <Calendar
             v-model="onboardingCompany.informationCompany.establishedDate"
@@ -77,7 +77,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('labelWebsite') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('labelWebsite') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingCompany.informationCompany.webSite" class="w-full" />
         </div>
@@ -87,7 +87,7 @@
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-4">
             <Dropdown
@@ -115,7 +115,7 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingCompany.informationCompany.registeredAddress.country"
@@ -135,7 +135,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -150,7 +150,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -165,7 +165,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -189,7 +189,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -221,7 +221,7 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingCompany.informationCompany.physicalAddress.country"
@@ -241,7 +241,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -255,7 +255,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText
               type="text"
@@ -270,7 +270,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.streetOne" required />
           </div>
@@ -290,7 +290,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.postalCode" required />
           </div>

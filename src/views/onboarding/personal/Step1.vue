@@ -2,7 +2,7 @@
   <section class="section-main pt-6">
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText
             type="text"
@@ -18,7 +18,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.middleName" class="w-full" required />
         </div>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.lastName" class="w-full" required />
         </div>
@@ -38,14 +38,14 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy-mm-dd" />
         </div>
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-2">
             <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
@@ -60,7 +60,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
-        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
           <InputText type="text" v-model="onboardingPersonal.email" class="w-full" readonly required />
@@ -78,7 +78,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
         </div>
@@ -88,7 +88,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
         </div>
@@ -103,7 +103,7 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingPersonal.country"
@@ -124,7 +124,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.region" class="w-full" />
           </div>
@@ -134,7 +134,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.city" class="w-full" required />
           </div>
@@ -144,7 +144,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.streetOne" />
           </div>
@@ -154,7 +154,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddressTwo') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('streetAddressTwo') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.streetTwo" />
           </div>
@@ -164,7 +164,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red"  v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.postalCode" />
           </div>

@@ -7,7 +7,7 @@
 
     <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.firstName" class="w-full" required />
         </div>
@@ -17,7 +17,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.middleName" class="w-full" required />
         </div>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.lastName" class="w-full" required />
         </div>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.dni" class="w-full" required />
         </div>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="partner.taxId" class="w-full" required />
         </div>
@@ -67,14 +67,14 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
           <InputText type="text" v-model="partner.email" class="w-full" required />
@@ -82,7 +82,7 @@
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-4">
             <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
@@ -100,7 +100,7 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="partner.country"
@@ -120,7 +120,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.region" class="w-full" />
           </div>
@@ -130,7 +130,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.city" class="w-full" required />
           </div>
@@ -140,7 +140,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.streetOne" />
           </div>
@@ -160,7 +160,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Required information'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.postalCode" />
           </div>
