@@ -51,7 +51,8 @@
             <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
           </div>
           <div class="col-10">
-            <InputText id="phoneNumber" type="text" class="" v-model="onboardingPersonal.phoneNumber" required />
+            <InputText id="phoneNumber" type="number" class="" v-model="onboardingPersonal.phoneNumber" required />
+
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
             </div>
