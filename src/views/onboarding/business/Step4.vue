@@ -16,8 +16,8 @@
             <div class="p-scrollpanel p-component custom" style="height: 434px">
               <div class="p-scrollpanel-wrapper">
                 <div class="p-scrollpanel-content">
-                  <div class="px-3 pt-3 pb-0" v-for="(shareholder, idx) in getPartners()" :key="idx">
-                    <DocumentsPartners :name="shareholder.firstName + shareholder.lastName" :dni="shareholder.dni" />
+                  <div class="px-3 pt-3 pb-0">
+                    <DocumentsPartners />
                   </div>
                 </div>
               </div>
