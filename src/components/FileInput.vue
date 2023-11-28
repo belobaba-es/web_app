@@ -94,7 +94,7 @@ const handleUpload = async (event: any) => {
   formData.append('documentType', props.type)
 
   if (props.registerNumber) {
-    formData.append('registerNumber', props.registerNumber)
+    formData.append('dni', props.registerNumber)
   } else {
     formData.append('dni', props.dni ? props.dni : '')
   }
