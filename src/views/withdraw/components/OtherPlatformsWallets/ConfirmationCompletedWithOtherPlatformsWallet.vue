@@ -71,7 +71,7 @@ const generatePDFTransactionReceipt = () => {
   const date = new Date()
   const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const formattedDate = formatter.format(date)
-  transactionPDF[t('userName')] = `${getUserName}`
+  transactionPDF[t('userName')] = `${getUserName()}`
   transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
   transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.informationOwner.name}`
   transactionPDF[t('assetType')] = props.formData.symbol

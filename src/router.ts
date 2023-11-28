@@ -1,31 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from './views/profile/Index.vue'
 import Deposit from './views/deposit/Deposit.vue'
-import DepositCrypto from './views/deposit/Crypto.vue'
 import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
-import StepAmount from './views/withdraw/components/InternalWithdraw/StepAmount.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
-
-import NewBeneficiary from './views/withdraw/components/NewBeneficiary.vue'
-import StepAccountNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepAccountNewBeneficiary.vue'
-import StepOwnerNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'
-import StepIntermediaryBank from './views/withdraw/components/NewBeneficiary/StepIntermediaryBank.vue'
-import StepBankNewBeneficiary from './views/withdraw/components/NewBeneficiary/StepBankNewBeneficiary.vue'
+import StepAccountNewBeneficiary from './views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-
-import WithdrawFiatStepAccounts from './views/withdraw/components/WitdrawFiat/StepAccounts.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 import SwapIndexVue from './views/swap/Index.vue'
 import SwapSuccess from './views/swap/Success.vue'
 import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
-import AddBeneficiary from './views/withdraw/crypto/AddBeneficiary.vue'
 
 import WalletIndex from './views/wallet/Wallet.vue'
 import TransactionHistoryWallet from './views/wallet/Transaction.vue'
@@ -99,7 +89,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'crypto/:assetCode?',
-            component: DepositCrypto,
+            component: () => import('./views/deposit/Crypto.vue'),
           },
         ],
       },
@@ -120,7 +110,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'amount',
-                component: StepAmount,
+                component: () => import('./views/withdraw/components/InternalWithdraw/StepAmount.vue'),
               },
               {
                 path: 'confirmation',
@@ -134,7 +124,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: WithdrawFiatStepAccounts,
+                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
               },
               {
                 path: 'amount',
@@ -148,19 +138,19 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/domestic/new',
-            component: NewBeneficiary,
+            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
-                component: StepAccountNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',
-                component: () => import('./views/withdraw/components/NewBeneficiary/StepOwnerNewBeneficiary.vue'),
+                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'bank-information',
-                component: StepBankNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
@@ -170,23 +160,23 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/international/new',
-            component: NewBeneficiary,
+            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
-                component: StepAccountNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',
-                component: StepOwnerNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'intermediary-bank',
-                component: StepIntermediaryBank,
+                component: () => import('./views/withdraw/beneficiary/components/StepIntermediaryBank.vue'),
               },
               {
                 path: 'bank-information',
-                component: StepBankNewBeneficiary,
+                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
@@ -214,7 +204,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'crypto/other/add-beneficiary',
-            component: AddBeneficiary,
+            component: () => import('./views/withdraw/crypto/AddBeneficiary.vue'),
           },
         ],
         meta: {

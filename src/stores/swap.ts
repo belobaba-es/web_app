@@ -69,7 +69,7 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const swapBtnText = computed(() => {
-    return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'ASSET SWAP'
+    return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'EXECUTE SWAP'
   })
 
   const createExchange = async () => {

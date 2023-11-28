@@ -396,7 +396,7 @@
   "helpTextSurname": "Please write your last name.",
   "helpTextSecondSurname": "Please write your other last name.",
   "helpTextIdNumber": "Enter your personal identification number.",
-  "helpTextTaxIDNumber": "Write your TAX ID number. (SSN, ITIN). For US residents or citizens only.",
+  "helpTextTaxIDNumber": "Write your TAX ID number from your country. (SSN, ITIN).",
   "helpTextIDCountry": "Select the country that issued your ID document.",
   "helpTextDateOfBirth": "Date of Birth should match the individual's identity document.",
   "helpTextPhone": "Please fill in a contact phone number.",
@@ -449,5 +449,6 @@
   "descriptionFinishOnboarding": "Once your account is approved we will send you an email with the validation of your account.",
   "duplicateCompanyPhysicalAddress": "Click here if the physical address is the same as the registration address",
   "purposeWithdrawal": "Purpose of the withdrawal.",
-  "alreadyRegistered": "I have already registered I want to validate my email"
+  "alreadyRegistered": "I have already registered I want to validate my email",
+  "beneficiaryType": "Beneficiary type"
 }

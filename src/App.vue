@@ -13,6 +13,5 @@ import Toast from 'primevue/toast'
 </template>
 
 <style scoped>
-#app {
-}
+
 </style>
