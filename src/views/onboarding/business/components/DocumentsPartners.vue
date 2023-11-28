@@ -113,7 +113,7 @@ const shouldShowFrontBank = () => {
 
 const hasDocuments = (): boolean => {
   const partner = getPartners().find(
-    partner => partner.dni === props.dni && partner.documents !== undefined && partner?.documents.length > 0
+    partner => partner.dni === props.dni && partner.documents !== undefined && partner?.documents.length > 0 && partner?.documents.length !== 2
   )
   return !!partner
 }
