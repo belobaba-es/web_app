@@ -48,11 +48,10 @@
         <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-2">
-            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
+            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" filter option-value="calling_code" optionLabel="calling_code" :options="countries" />
           </div>
           <div class="col-10">
             <InputText id="phoneNumber" type="number" class="" v-model="onboardingPersonal.phoneNumber" required />
-
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
             </div>
