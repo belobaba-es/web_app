@@ -1,7 +1,7 @@
 <template>
-  <DocumentsPartners v-if="getAccountStatus() !== AccountStatus.APPROVED"/>
+  <DocumentsPartners v-if="getAccountStatus() !== AccountStatus.APPROVED && getAccountStatus() !== AccountStatus.REJECTED"/>
 
-  <DocumentsAlreadyVerified v-if="getAccountStatus() === AccountStatus.APPROVED" />
+  <DocumentsAlreadyVerified v-if="getAccountStatus() === AccountStatus.APPROVED || getAccountStatus() === AccountStatus.REJECTED " />
 
 </template>
 <script setup lang="ts">
