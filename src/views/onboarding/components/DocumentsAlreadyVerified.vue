@@ -1,8 +1,8 @@
 <template>
-  <div class="completion-view">
+  <div class="completion-view" v-if="shouldShowCompletionView">
     <div class="center-content">
-      <img src="../../../assets/icons/check.svg" alt="Imagen de finalización" />
-      <p class="title-text">{{ t('documentAlreadyVerified') }}</p>
+      <img :src="getCompletionImage()" alt="Imagen de finalización" />
+      <p class="title-text">{{getCompletionText()}}</p>
 
       <Button
         :label="t('continuar')"
@@ -18,10 +18,37 @@
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import router from '../../../router'
+import {AccountStatus} from "../../../types/accountStatus.enum";
+import {useAuth} from "../../../composables/useAuth";
+import checkImage from '../../../assets/icons/check.svg'
+import rejectedImage from '../../../assets/icons/cross.png'
+
+
 const { t } = useI18n({ useScope: 'global' })
+const { getAccountStatus } = useAuth()
 
 const redirectToHome = () => {
   router.push('/')
+}
+
+const shouldShowCompletionView = () => {
+  return getAccountStatus() === AccountStatus.APPROVED || getAccountStatus() === AccountStatus.REJECTED
+}
+
+const getCompletionImage = () => {
+  if (getAccountStatus() === AccountStatus.APPROVED) {
+    return checkImage
+  } else if (getAccountStatus() === AccountStatus.REJECTED) {
+    return rejectedImage
+  }
+}
+
+const getCompletionText = () => {
+  if (getAccountStatus() === AccountStatus.APPROVED) {
+    return t('documentAlreadyVerified')
+  } else if (getAccountStatus() === AccountStatus.REJECTED) {
+    return t('documentAlreadyReject')
+  }
 }
 </script>
 

@@ -131,6 +131,7 @@
   "successfulOperation": "Successful operation",
   "shareholderDataSuccessSend": "Shareholder data sent correctly",
   "documentAlreadyVerified": "documents have already been verified",
+  "documentAlreadyReject": "Your documents were rejected",
   "continue": "Continue",
   "addBeneficiaries": "Add Beneficiaries",
   "streetAddress": "Street Address",
