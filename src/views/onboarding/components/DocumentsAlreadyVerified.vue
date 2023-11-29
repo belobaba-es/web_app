@@ -1,5 +1,5 @@
 <template>
-  <div class="completion-view" v-if="shouldShowCompletionView">
+  <div class="completion-view" v-if="shouldShowCompletionView()">
     <div class="center-content">
       <img :src="getCompletionImage()" alt="Imagen de finalización" />
       <p class="title-text">{{getCompletionText()}}</p>
