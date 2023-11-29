@@ -70,7 +70,6 @@ import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import showMessage from '../../../../shared/showMessageArray'
 
 const toast = useToast()
-const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const submitting = ref(false)
 const isCompleted = ref(false)
@@ -118,7 +117,6 @@ function makeTransaction() {
       isCompleted.value = true
       transactionId.value = res.data.transactionId
       submitting.value = false
-      updateBlockedBalanceWalletByCode('USD', props.formData.amount)
     })
     .catch(e => {
       submitting.value = false

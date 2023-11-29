@@ -38,6 +38,7 @@ export const useBalanceWallet = () => {
     return balanceWalletStore.getWalletByAssetCode(assetCode)
   }
 
+  //TODO - Este metodo debe ser analizado para saber si es necesario implementarlo, por ahora no se usara y el balance se actualizara desde el backend
   const updateBlockedBalanceWalletByCode = (assetCode: string, blockedBalance: number): void => {
     balanceWalletStore.updateBlockedBalanceWalletByCode(assetCode, blockedBalance)
   }
@@ -69,6 +70,5 @@ export const useBalanceWallet = () => {
     getBalanceByCode,
     getWalletByAssetCode,
     getAllWallets,
-    updateBlockedBalanceWalletByCode,
   }
 }
