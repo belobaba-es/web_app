@@ -57,6 +57,7 @@
   "addressPlaceholder2": "Dirección 2",
   "postalCodeLabel": "Código postal",
   "documentAlreadyVerified": "Tus documentos ya fueron verificados",
+  "documentAlreadyReject": "Tus documentos fueron rechazados",
   "documents": "Documentos",
   "businessTitle": "EMPRESA - CARGA DE DOCUMENTOS",
   "businessDocumentLabel": "Documentos constitutivo de la empresa",

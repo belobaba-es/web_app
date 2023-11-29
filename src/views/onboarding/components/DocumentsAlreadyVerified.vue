@@ -45,9 +45,9 @@ const getCompletionImage = () => {
 
 const getCompletionText = () => {
   if (getAccountStatus() === AccountStatus.APPROVED) {
-    return t('Tus documentos ya fueron verificados')
+    return t('documentAlreadyVerified')
   } else if (getAccountStatus() === AccountStatus.REJECTED) {
-    return t('Tus documentos fueron rechazados')
+    return t('documentAlreadyReject')
   }
 }
 </script>
