@@ -82,7 +82,6 @@ const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAu
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const router = useRouter()
-const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
 const submitting = ref(false)
 const props = defineProps<{
   formData: any
@@ -127,7 +126,6 @@ async function makeTransaction() {
     })
     .then((res: any) => {
       transactionId.value = res.data.transactionId
-      updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.total)
       isCompleted.value = true
       submitting.value = false
     })

@@ -79,7 +79,6 @@ const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
-const { updateBlockedBalanceWalletByCode } = useBalanceWallet()
 const transactionId = ref('')
 const submitting = ref(false)
 const isCompleted = ref(false)
@@ -125,7 +124,6 @@ function makeTransaction() {
           transactionId.value = res.data.transactionId
           submitting.value = false
           isCompleted.value = true
-          updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
         })
         .catch(e => {
           submitting.value = false
@@ -151,7 +149,6 @@ function makeTransaction() {
           transactionId.value = res.data.transactionId
           submitting.value = false
           isCompleted.value = true
-          updateBlockedBalanceWalletByCode(props.formData.symbol, props.formData.amount)
         })
         .catch(e => {
           submitting.value = false
