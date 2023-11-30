@@ -46,7 +46,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/register/CreateUser.vue'),
   },
   {
-    path: '/confirm-email',
+    path: '/confirm-email/:view',
     component: () => import('./views/register/ConfirmEmail.vue'),
   },
 
@@ -342,7 +342,7 @@ router.beforeEach((to, from, next) => {
   if (
     to.path !== '/' &&
     to.path !== '/create-user' &&
-    to.path !== '/confirm-email' &&
+    to.path !== '/confirm-email:view' &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
     getUserEmail() === ''

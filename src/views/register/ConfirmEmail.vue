@@ -11,7 +11,7 @@
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText size="large" type="text" v-model="form.email" required />
+              <InputText size="large" type="text"  `${view}` v-model="form.email" required />
             </div>
           </div>
 
@@ -78,7 +78,7 @@ import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { RegisterService } from './services/register'
-import { useRouter } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 
 const submitting = ref(false)
@@ -95,6 +95,9 @@ const form = reactive({
 })
 
 const router = useRouter()
+router.
+const route = useRoute()
+const view = route.params.view === 'create-user' ? 'readonly': ''
 
 const resendCode = () => {
   submittingResendTheCode.value = true

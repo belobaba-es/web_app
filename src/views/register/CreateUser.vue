@@ -130,12 +130,7 @@
               />
             </div>
           </div>
-          <Button
-            type="button"
-            :label="t('alreadyRegistered')"
-            class="font-light mt-3 with-buttons p-button-outlined border-300 mt-5"
-            @click="alreadyRegisteredSendCodeVerifyEmail()"
-          />
+
         </form>
       </div>
     </div>
@@ -298,7 +293,7 @@ const handleSubmit = () => {
 
       localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
 
-      router.push('/confirm-email')
+      router.push('/confirm-emai/create-use/')
     })
     .catch(e => {
       submitting.value = false
@@ -311,9 +306,7 @@ const handleSubmit = () => {
     })
 }
 
-const alreadyRegisteredSendCodeVerifyEmail = () => {
-  router.push('/confirm-email')
-}
+
 </script>
 
 <style lang="css" scoped>
