@@ -11,7 +11,7 @@
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText size="large" type="text"  `${view}` v-model="form.email" required />
+              <InputText size="large" type="text" v-model="form.email" required />
             </div>
           </div>
 
