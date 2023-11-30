@@ -11,7 +11,7 @@
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText size="large" type="text" v-model="form.email" required />
+              <InputText size="large" type="text" v-model="form.email" required :readonly="isReadonly" />
             </div>
           </div>
 
@@ -70,7 +70,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { isReadonly, reactive, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
@@ -78,15 +78,15 @@ import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { RegisterService } from './services/register'
-import {useRoute, useRouter} from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 
+const isReadonly = ref(true)
 const submitting = ref(false)
 const submittingResendTheCode = ref(false)
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const inputValueFormat = ref('')
 const email = localStorage.getItem('noba@user-email')
 
 const form = reactive({
@@ -96,7 +96,8 @@ const form = reactive({
 
 const router = useRouter()
 const route = useRoute()
-const view = route.params.view === 'create-user' ? 'readonly': ''
+
+route.params.view === 'create-user' ? (isReadonly.value = true) : (isReadonly.value = false)
 
 const resendCode = () => {
   submittingResendTheCode.value = true

@@ -7,7 +7,6 @@ import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
-import StepAccountNewBeneficiary from './views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'
 
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
@@ -342,11 +341,12 @@ router.beforeEach((to, from, next) => {
   if (
     to.path !== '/' &&
     to.path !== '/create-user' &&
-    to.path !== '/confirm-email:view' &&
+    !to.path.startsWith('/confirm-email/') &&
     to.path !== '/forgot-password' &&
     to.path !== '/recovery-two-factor-auth/' &&
     getUserEmail() === ''
   ) {
+    console.log('SSSSSS', to.path)
     next({ path: '/' })
   } else if (to.path === '/' && getUserEmail() !== '') {
     next({ path: '/dashboard' })
