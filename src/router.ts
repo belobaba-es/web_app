@@ -346,7 +346,6 @@ router.beforeEach((to, from, next) => {
     to.path !== '/recovery-two-factor-auth/' &&
     getUserEmail() === ''
   ) {
-    console.log('SSSSSS', to.path)
     next({ path: '/' })
   } else if (to.path === '/' && getUserEmail() !== '') {
     next({ path: '/dashboard' })

@@ -293,7 +293,7 @@ const handleSubmit = () => {
 
       localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
 
-      router.push('/confirm-emai/create-use/')
+      alreadyRegisteredSendCodeVerifyEmail()
     })
     .catch(e => {
       submitting.value = false
@@ -305,7 +305,9 @@ const handleSubmit = () => {
       })
     })
 }
-
+const alreadyRegisteredSendCodeVerifyEmail = () => {
+  router.push('/confirm-email/create-user')
+}
 
 </script>
 

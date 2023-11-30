@@ -131,7 +131,7 @@ const handleSubmit = async () => {
   }
 }
 const alreadyRegisteredSendCodeVerifyEmail = () => {
-  router.push('/confirm-email/enable-user/')
+  router.push('/confirm-email/enable-user')
 }
 </script>
 
