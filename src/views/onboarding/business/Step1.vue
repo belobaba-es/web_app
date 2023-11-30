@@ -65,11 +65,8 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <Calendar
-            v-model="onboardingCompany.informationCompany.establishedDate"
-            placeholder="0000/00/00"
-            dateFormat="yy-mm-dd"
-          />
+          <InputMask id="basic" v-model="onboardingCompany.informationCompany.establishedDate"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
+
         </div>
         <div>
           <span class="help-text">{{ t('helpTextEstablishedDate') }}</span>
@@ -93,7 +90,8 @@
             <Dropdown
               class="w-full"
               v-model="onboardingCompany.informationCompany.phoneCountry"
-              :options="calling_code"
+              :options="countries"
+              filter option-value="calling_code" optionLabel="calling_code"
             />
           </div>
           <div class="col-8">
@@ -122,6 +120,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
+              filter
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
@@ -318,12 +317,12 @@ import { onMounted, ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Calendar from 'primevue/calendar'
 import Divider from 'primevue/divider'
 import Checkbox from 'primevue/checkbox'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
+import InputMask from "primevue/inputmask";
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()
