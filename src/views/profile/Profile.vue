@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, computed } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import PageLayout from '../../components/PageLayout.vue'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '../../composables/useAuth'
@@ -46,15 +46,9 @@ const setMenuItems = () => {
       to: `/profile/${getClientId()}`,
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
-
     {
       label: t('setting'),
       to: `/profile/${getClientId()}/settings`,
-      canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
-    },
-    {
-      label: t('businessPartners'),
-      to: `/profile/${getClientId()}/business-partners`,
       canSee: checkCanSee('COMPANY', 'NATURAL_PERSON'),
     },
   ].filter(item => item.canSee)

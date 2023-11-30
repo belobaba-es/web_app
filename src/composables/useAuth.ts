@@ -18,7 +18,7 @@ export const useAuth = () => {
   const makeLogin = async (): Promise<UserAuth | undefined> => {
     submitting.value = true
 
-    const data: UserAuth = await fetchLogin(form.user.toLowerCase(), form.pass)
+    const data: UserAuth = await fetchLogin(form.user.toLowerCase().trim(), form.pass.trim())
     setInitialUserAuth(data)
     submitting.value = false
 
