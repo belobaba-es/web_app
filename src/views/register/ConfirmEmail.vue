@@ -95,7 +95,6 @@ const form = reactive({
 })
 
 const router = useRouter()
-router.
 const route = useRoute()
 const view = route.params.view === 'create-user' ? 'readonly': ''
 
