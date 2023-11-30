@@ -11,7 +11,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
       registerNumber: '',
       naics: '',
       naicsDescription: '',
-      establishedDate: new Date(),
+      establishedDate: '',
       webSite: '',
       phoneCountry: '',
       phoneNumber: '',

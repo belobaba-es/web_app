@@ -65,7 +65,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <InputMask id="basic" v-model="onboardingCompany.informationCompany.establishedDate"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
+          <InputMask v-model="onboardingCompany.informationCompany.establishedDate"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
 
         </div>
         <div>
