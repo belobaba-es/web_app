@@ -111,6 +111,7 @@
               :options="countries"
               optionLabel="name"
               option-value="country_code"
+              filter
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"

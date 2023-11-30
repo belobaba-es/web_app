@@ -61,7 +61,7 @@ export type informationCompany = {
   registerNumber: string
   naics: string
   naicsDescription: string
-  establishedDate: Date
+  establishedDate: string
   webSite: string
   phoneCountry: string
   phoneNumber: string
