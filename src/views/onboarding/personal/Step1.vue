@@ -40,7 +40,8 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <Calendar v-model="onboardingPersonal.dateBirth" placeholder="0000/00/00" dateFormat="yy-mm-dd" />
+          <InputMask id="basic" v-model="onboardingPersonal.dateBirth"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
+
         </div>
       </div>
 
@@ -48,11 +49,10 @@
         <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-2">
-            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" :options="calling_code" />
+            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" filter option-value="calling_code" optionLabel="calling_code" :options="countries" />
           </div>
           <div class="col-10">
             <InputText id="phoneNumber" type="number" class="" v-model="onboardingPersonal.phoneNumber" required />
-
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
             </div>
@@ -187,8 +187,8 @@ import { onMounted } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Calendar from 'primevue/calendar'
 import Divider from 'primevue/divider'
+import InputMask from 'primevue/inputmask';
 
 import { useI18n } from 'vue-i18n'
 
