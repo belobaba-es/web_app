@@ -296,7 +296,7 @@ const handleSubmit = () => {
         life: 5000,
       })
 
-      localStorage.setItem('noba@user-email', form.email.toLowerCase())
+      localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
 
       router.push('/confirm-email')
     })

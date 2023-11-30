@@ -75,7 +75,7 @@ const router = useRouter()
 const handleSubmit = () => {
   submitting.value = true
   new ForgotPasswordService()
-    .sendEmail(form.email.toLowerCase())
+    .sendEmail(form.email.toLowerCase().trim())
     .then(response => {
       submitting.value = false
       toast.add({
