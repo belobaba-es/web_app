@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { defineProps, ref, computed } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 import { ProfileService } from '../views/profile/services/profile'
 import { useToast } from 'primevue/usetoast'
 import FileUpload from '../views/profile/components/FileUploaded.vue'
@@ -83,6 +83,28 @@ const icon = computed(() => {
 
 const handleUpload = async (event: any) => {
   const file = event.target.files[0]
+
+  const fileSizeInMegabytes = file.size / (1024 * 1024)
+  if (props.type === '') {
+    toast.add({
+      severity: 'warn',
+      summary: t('somethingWentWrong'),
+      detail: t('typeFileNotSelected'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (fileSizeInMegabytes > 5) {
+    toast.add({
+      severity: 'warn',
+      summary: t('somethingWentWrong'),
+      detail: t('fileSizeError'),
+      life: 4000,
+    })
+    return
+  }
+
   doc.value = file
   setLoading(true)
 

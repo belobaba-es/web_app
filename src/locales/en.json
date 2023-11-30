@@ -63,7 +63,6 @@
   "businessAddressLabel": "Proof of address",
   "filePlaceholder": "Select File",
   "fileDescription": "Upload the document file here (supported format JPG, PNG or PDF)",
-  "messageImageSize": "The file surpasses 4MB",
   "shareholders": "Shareholders",
   "shareholderInformationLabel": "*Only for shareholders with more than 25% of the shares.",
   "shareholdersAdded": "Added Shareholders",
@@ -451,5 +450,7 @@
   "duplicateCompanyPhysicalAddress": "Click here if the physical address is the same as the registration address",
   "purposeWithdrawal": "Purpose of the withdrawal.",
   "alreadyRegistered": "I have already registered I want to validate my email",
-  "beneficiaryType": "Beneficiary type"
+  "beneficiaryType": "Beneficiary type",
+  "fileSizeError": "The file is larger than 5Mb.",
+  "typeFileNotSelected": "You must select the document type."
 }

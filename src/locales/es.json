@@ -64,7 +64,6 @@
   "businessAddressLabel": "Comprobante de domicilio fiscal",
   "filePlaceholder": "Seleccionar archivo",
   "fileDescription": "Cargue el archivo del documento aquí (Formato admitido JPG, PNG o PDF)",
-  "messageImageSize": "El archivo supera los 4Mb.",
   "shareholders": "Accionistas",
   "shareholderInformationLabel": "*Solo para accionista con más de 25% de acciones.",
   "shareholdersAdded": "Accionistas Añadidos",
@@ -443,5 +442,7 @@
   "duplicateCompanyPhysicalAddress": "Click aquí si la dirección fisica es igual que la dirección de registro",
   "purposeWithdrawal": "Objeto del retiro.",
   "alreadyRegistered": "Ya me registre quiero validar mi correo",
-  "beneficiaryType": "Tipo de beneficiario"
+  "beneficiaryType": "Tipo de beneficiario",
+  "fileSizeError": "El archivo supera los 5Mb.",
+  "typeFileNotSelected": "Debe seleccionar el tipo de documento."
 }
