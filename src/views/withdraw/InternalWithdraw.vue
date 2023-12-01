@@ -63,6 +63,7 @@ route.meta.noCache = true
 const formObject = ref<WithdrawForm | any>({})
 
 const nextPage = (event: any) => {
+  console.log(event,'componente')
   for (let field in event.formData) {
     formObject.value[field] = event.formData[field]
   }

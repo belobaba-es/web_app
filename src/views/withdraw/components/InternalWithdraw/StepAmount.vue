@@ -104,7 +104,7 @@
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import { computed, ref } from 'vue'
+import {computed, ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import Timeline from 'primevue/timeline'

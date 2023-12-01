@@ -70,12 +70,16 @@ const props = defineProps<{
 const { getUserId, getUserName } = useAuth()
 
 const goToWithdrawIndex = () => {
+
   if (props.formData.typeTransaction === 'international') {
-    router.push(`withdraw/fiat/international`)
+
+    window.location.href = '/withdraw/fiat/international'
+
   }
 
   if (props.formData.typeTransaction === 'domestic') {
-    router.push(`/withdraw/fiat/domestic`)
+    window.location.href = '/withdraw/fiat/domestic'
+
   }
 }
 const generatePDFTransactionReceipt = async () => {

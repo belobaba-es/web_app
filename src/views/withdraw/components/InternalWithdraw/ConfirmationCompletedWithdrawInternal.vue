@@ -76,10 +76,12 @@ const { getUserName, getUserId } = useAuth()
 const goToWithdrawIndex = () => {
   if (route.params.type === 'crypto') {
     router.push(`/withdraw/noba/crypto`)
+    //window.location.href = '/withdraw/noba/crypto'
   }
 
   if (route.params.type === 'fiat') {
     router.push(`/withdraw/noba/fiat`)
+    //window.location.href = '/withdraw/noba/fiat'
   }
 }
 

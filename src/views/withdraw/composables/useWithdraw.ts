@@ -1,7 +1,6 @@
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { BeneficiaryService } from '../services/beneficiary'
 import { WithdrawForm } from '../types/withdraw'
 
 export const useWithdraw = (items: any) => {
@@ -10,7 +9,9 @@ export const useWithdraw = (items: any) => {
   const toast = useToast()
 
   const nextStepPage = (event: any) => {
+
     for (let field in event.formData) {
+      console.log(field, 'paso de pagina');
       formObject.value[field] = event.formData[field]
     }
 

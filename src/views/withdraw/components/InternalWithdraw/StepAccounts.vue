@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref} from 'vue'
 import Divider from 'primevue/divider'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -69,8 +69,9 @@ onMounted(async () => {
   await loadMore()
 })
 
-const nextStep = (item: UserAccount) => {
+const nextStep =  (item: UserAccount) => {
   const page = 0
+
   const formData = {
     beneficiary: { ...item },
   }
@@ -79,6 +80,7 @@ const nextStep = (item: UserAccount) => {
     pageIndex: page,
     formData: formData,
   })
+
 }
 const loadMore = async () => {
   await fetchBeneficiariesInternal(type.value)

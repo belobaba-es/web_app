@@ -117,6 +117,7 @@ const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
+
 const props = defineProps<{
   formData: any
 }>()
@@ -147,6 +148,7 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
+
   fee.value = typeTransaction.value === 'domestic' ? getUserFeeWire().domestic.out : getUserFeeWire().international.out
 }
 const amountFee = computed(() => {
@@ -210,6 +212,8 @@ const nextPage = () => {
   }
 
   const page = 1
+
+
   const formData = {
     ...props.formData.value,
     amount: amount.value,
@@ -218,6 +222,7 @@ const nextPage = () => {
     amountFee: amountFee,
     purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
   }
+
   emit('nextPage', {
     pageIndex: page,
     formData: formData,

@@ -38,7 +38,6 @@ import Divider from 'primevue/divider'
 import ListBeneficiary from '../../beneficiary/ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
 import { useRoute, useRouter } from 'vue-router'
-
 import { useToast } from 'primevue/usetoast'
 import { Beneficiary } from '../../types/beneficiary.interface'
 
@@ -57,10 +56,12 @@ const search = ref('')
 const route = useRoute()
 
 const onSelect = (item: Beneficiary) => {
+
   const page = 0
   const formData = {
     beneficiary: item,
   }
+
   emit('update:beneficiary', item)
   emit('nextPage', {
     pageIndex: page,
