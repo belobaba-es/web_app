@@ -148,7 +148,6 @@ onMounted(async () => {
 })
 
 const getUserFee = () => {
-
   fee.value = typeTransaction.value === 'domestic' ? getUserFeeWire().domestic.out : getUserFeeWire().international.out
 }
 const amountFee = computed(() => {
@@ -212,7 +211,6 @@ const nextPage = () => {
   }
 
   const page = 1
-
 
   const formData = {
     ...props.formData.value,

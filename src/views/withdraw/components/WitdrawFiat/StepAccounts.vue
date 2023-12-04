@@ -56,7 +56,6 @@ const search = ref('')
 const route = useRoute()
 
 const onSelect = (item: Beneficiary) => {
-
   const page = 0
   const formData = {
     beneficiary: item,

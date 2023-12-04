@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import {ref} from 'vue'
+import { ref } from 'vue'
 import Button from 'primevue/button'
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
@@ -63,7 +63,6 @@ route.meta.noCache = true
 const formObject = ref<WithdrawForm | any>({})
 
 const nextPage = (event: any) => {
-
   for (let field in event.formData) {
     formObject.value[field] = event.formData[field]
   }

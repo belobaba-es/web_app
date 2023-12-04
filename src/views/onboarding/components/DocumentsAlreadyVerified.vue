@@ -2,7 +2,7 @@
   <div class="completion-view" v-if="shouldShowCompletionView()">
     <div class="center-content">
       <img :src="getCompletionImage()" alt="Imagen de finalización" />
-      <p class="title-text">{{getCompletionText()}}</p>
+      <p class="title-text">{{ getCompletionText() }}</p>
 
       <Button
         :label="t('continuar')"
@@ -18,11 +18,10 @@
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import router from '../../../router'
-import {AccountStatus} from "../../../types/accountStatus.enum";
-import {useAuth} from "../../../composables/useAuth";
+import { AccountStatus } from '../../../types/accountStatus.enum'
+import { useAuth } from '../../../composables/useAuth'
 import checkImage from '../../../assets/icons/check.svg'
 import rejectedImage from '../../../assets/icons/cross.png'
-
 
 const { t } = useI18n({ useScope: 'global' })
 const { getAccountStatus } = useAuth()

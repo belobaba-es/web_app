@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to {{ props.formData.name}}</p>
+      <p class="text-base">Your are sending to {{ props.formData.name }}</p>
     </div>
 
     <div class="col-12">
@@ -123,7 +123,6 @@ function makeTransaction() {
           transactionId.value = res.data.transactionId
           submitting.value = false
           isCompleted.value = true
-
         })
         .catch(e => {
           submitting.value = false
@@ -135,7 +134,6 @@ function makeTransaction() {
             life: 4000,
           })
         })
-
 
       break
     case 'crypto':

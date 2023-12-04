@@ -1,4 +1,3 @@
-
 <template>
   <div class="field">
     <p class="text-1xl font-medium text-capitalize">Documents of - {{ props.name }}</p>
@@ -9,12 +8,12 @@
             <label>{{ t('Document Type') }}</label>
             <div class="p-inputgroup">
               <Dropdown
-                  :options="documentTypeOptions"
-                  option-label="name"
-                  option-value="value"
-                  :placeholder="t('documentTypePlaceHolder')"
-                  class="w-full"
-                  v-model="identifyDocument"
+                :options="documentTypeOptions"
+                option-label="name"
+                option-value="value"
+                :placeholder="t('documentTypePlaceHolder')"
+                class="w-full"
+                v-model="identifyDocument"
               />
             </div>
           </div>
@@ -27,11 +26,11 @@
                 <label> {{ t('Document Front side') }}</label>
                 <div class="mt-2">
                   <FileInput
-                      side="front"
-                      :type="identifyDocument"
-                      :dni="dni"
-                      :isPartner="true"
-                      v-model="documentSide"
+                    side="front"
+                    :type="identifyDocument"
+                    :dni="dni"
+                    :isPartner="true"
+                    v-model="documentSide"
                   />
                 </div>
               </div>
@@ -53,20 +52,20 @@
                 <label>{{ t('utilityBillLabel') }}</label>
                 <div class="mt-2 mb-4">
                   <Dropdown
-                      :options="documentTypeProofOfAddress"
-                      option-label="name"
-                      option-value="value"
-                      :placeholder="t('documentTypePlaceHolder')"
-                      class="w-full"
-                      v-model="typeDocumentAddress"
+                    :options="documentTypeProofOfAddress"
+                    option-label="name"
+                    option-value="value"
+                    :placeholder="t('documentTypePlaceHolder')"
+                    class="w-full"
+                    v-model="typeDocumentAddress"
                   />
                 </div>
                 <FileInput
-                    side="front"
-                    :isPartner="true"
-                    :type="typeDocumentAddress"
-                    :dni="dni"
-                    v-model="documentFiscal"
+                  side="front"
+                  :isPartner="true"
+                  :type="typeDocumentAddress"
+                  :dni="dni"
+                  v-model="documentFiscal"
                 />
               </div>
             </div>
@@ -77,46 +76,46 @@
   </div>
 </template>
 
-  <script setup lang="ts">
-    import Dropdown from 'primevue/dropdown'
-    import { ref, defineProps } from 'vue'
-    import { useI18n } from 'vue-i18n'
-    import FileInput from '../../../../components/FileInput.vue'
-    import { useDocuments } from '../../../../composables/useDocuments'
-    import { useToast } from 'primevue/usetoast'
-    import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
+<script setup lang="ts">
+import Dropdown from 'primevue/dropdown'
+import { ref, defineProps } from 'vue'
+import { useI18n } from 'vue-i18n'
+import FileInput from '../../../../components/FileInput.vue'
+import { useDocuments } from '../../../../composables/useDocuments'
+import { useToast } from 'primevue/usetoast'
+import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
 
-    const { t } = useI18n({ useScope: 'global' })
+const { t } = useI18n({ useScope: 'global' })
 
-    const toast = useToast()
-    const { documentTypeProofOfAddress, documentTypeOptions } = useDocuments()
-    const { getPartners } = useOnboardingCompany()
+const toast = useToast()
+const { documentTypeProofOfAddress, documentTypeOptions } = useDocuments()
+const { getPartners } = useOnboardingCompany()
 
-    const identifyDocument = ref<string>('')
-    const documentSide = ref<string>('')
-    const documentFiscal = ref<string>('')
-    const typeDocumentAddress = ref<string>('')
+const identifyDocument = ref<string>('')
+const documentSide = ref<string>('')
+const documentFiscal = ref<string>('')
+const typeDocumentAddress = ref<string>('')
 
-    const props = defineProps({
-      dni: {
-        type: String,
-        required: true,
-      },
-      name: {
-        type: String,
-        required: false,
-      },
-    })
+const props = defineProps({
+  dni: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: false,
+  },
+})
 
-    const shouldShowFrontBank = () => {
-      return ['drivers_license', 'government_id', 'residence_permit'].includes(identifyDocument.value)
-    }
+const shouldShowFrontBank = () => {
+  return ['drivers_license', 'government_id', 'residence_permit'].includes(identifyDocument.value)
+}
 
-    // const hasDocuments = (): boolean => {
-    //   const partner = getPartners().find(
-    //       partner => partner.dni === props.dni && partner.documents !== undefined && partner?.documents.length > 0
-    //   )
-    //   return !!partner
-    // }
-    // //router.push('/personal/completed')
-  </script>
+// const hasDocuments = (): boolean => {
+//   const partner = getPartners().find(
+//       partner => partner.dni === props.dni && partner.documents !== undefined && partner?.documents.length > 0
+//   )
+//   return !!partner
+// }
+// //router.push('/personal/completed')
+</script>

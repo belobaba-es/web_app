@@ -9,9 +9,8 @@ export const useWithdraw = (items: any) => {
   const toast = useToast()
 
   const nextStepPage = (event: any) => {
-
     for (let field in event.formData) {
-      console.log(field, 'paso de pagina');
+      console.log(field, 'paso de pagina')
       formObject.value[field] = event.formData[field]
     }
 
