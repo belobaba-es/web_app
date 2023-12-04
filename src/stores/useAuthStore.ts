@@ -58,7 +58,6 @@ export const useAuthStore = defineStore('useAuthStore', {
       this.userId = userAuth.userId
       this.client = userAuth.client
 
-
       const cryptoService = new CryptoService()
       sessionStorage.setItem('user', cryptoService.encrypt(JSON.stringify({ ...userAuth })))
     },

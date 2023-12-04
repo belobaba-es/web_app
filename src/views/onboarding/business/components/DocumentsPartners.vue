@@ -17,7 +17,11 @@
               <div class="p-scrollpanel-wrapper">
                 <div class="p-scrollpanel-content">
                   <div class="px-3 pt-3 pb-0" v-for="(shareholder, idx) in getPartners()" :key="idx">
-                    <UploadDocumentNaturalCompany :name="shareholder.firstName + shareholder.lastName" :dni="shareholder.dni" v-if="getAccountStatus()"/>
+                    <UploadDocumentNaturalCompany
+                      :name="shareholder.firstName + shareholder.lastName"
+                      :dni="shareholder.dni"
+                      v-if="getAccountStatus()"
+                    />
                   </div>
                 </div>
               </div>
@@ -29,11 +33,11 @@
 
     <div class="field mt-4 col-12 flex align-items-center justify-content-end">
       <Button
-          :label="t('continue')"
-          icon="pi pi-angle-right"
-          iconPos="right"
-          class="px-5 mt-2 btn-submit"
-          @click="finish()"
+        :label="t('continue')"
+        icon="pi pi-angle-right"
+        iconPos="right"
+        class="px-5 mt-2 btn-submit"
+        @click="finish()"
       />
     </div>
   </section>
@@ -45,10 +49,10 @@ import { useI18n } from 'vue-i18n'
 
 import { useRouter } from 'vue-router'
 
-import UploadDocumentNaturalCompany from "./UploadDocumentNaturalCompany.vue";
-import {useAuth} from "../../../../composables/useAuth";
-import {useOnboardingCompany} from "../../../../composables/useOnboardingCompany";
-import DocumentsCompany from "./DocumentsCompany.vue";
+import UploadDocumentNaturalCompany from './UploadDocumentNaturalCompany.vue'
+import { useAuth } from '../../../../composables/useAuth'
+import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
+import DocumentsCompany from './DocumentsCompany.vue'
 
 const { getAccountStatus } = useAuth()
 const { getPartners } = useOnboardingCompany()
@@ -56,14 +60,11 @@ const { getPartners } = useOnboardingCompany()
 const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 
-const { onboardingCompany,  } = useOnboardingCompany()
+const { onboardingCompany } = useOnboardingCompany()
 
 const finish = () => {
   router.push('/onboarding/business/completed')
 }
-
 </script>
 
 <style scoped></style>
-
-

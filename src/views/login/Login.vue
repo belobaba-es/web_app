@@ -38,15 +38,15 @@
           </div>
 
           <div class="container-flex mt-lg-2">
-<!--            <div class="float-left w-25">-->
-<!--              <Button-->
-<!--                type="button"-->
-<!--                icon="pi pi-angle-left"-->
-<!--                :label="t('backButtonTitle')"-->
-<!--                class="font-light w-100 border-300 p-button-outlined"-->
-<!--                @click="redirectPage"-->
-<!--              />-->
-<!--            </div>-->
+            <!--            <div class="float-left w-25">-->
+            <!--              <Button-->
+            <!--                type="button"-->
+            <!--                icon="pi pi-angle-left"-->
+            <!--                :label="t('backButtonTitle')"-->
+            <!--                class="font-light w-100 border-300 p-button-outlined"-->
+            <!--                @click="redirectPage"-->
+            <!--              />-->
+            <!--            </div>-->
             <div class="float-right w-25">
               <Button
                 type="submit"
@@ -65,10 +65,10 @@
             @click="redirectSigning()"
           />
           <Button
-              type="button"
-              :label="t('alreadyRegistered')"
-              class="font-light mt-3 with-buttons p-button-outlined border-300"
-              @click="alreadyRegisteredSendCodeVerifyEmail()"
+            type="button"
+            :label="t('alreadyRegistered')"
+            class="font-light mt-3 with-buttons p-button-outlined border-300"
+            @click="alreadyRegisteredSendCodeVerifyEmail()"
           />
         </form>
       </div>

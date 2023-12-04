@@ -130,7 +130,6 @@
               />
             </div>
           </div>
-
         </form>
       </div>
     </div>
@@ -277,8 +276,8 @@ const handleSubmit = () => {
   }
 
   submitting.value = true
-  let email = form.email.toLowerCase().trim();
-  let password = form.password.trim();
+  let email = form.email.toLowerCase().trim()
+  let password = form.password.trim()
   new RegisterService()
     .register(email, password)
     .then(data => {
@@ -308,7 +307,6 @@ const handleSubmit = () => {
 const alreadyRegisteredSendCodeVerifyEmail = () => {
   router.push('/confirm-email/create-user')
 }
-
 </script>
 
 <style lang="css" scoped>
@@ -336,5 +334,4 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
   width: 142px;
   height: 64px;
 }
-
 </style>

@@ -65,8 +65,11 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <InputMask v-model="onboardingCompany.informationCompany.establishedDate"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
-
+          <InputMask
+            v-model="onboardingCompany.informationCompany.establishedDate"
+            mask="9999-99-99"
+            slotChar="yyyy/mm/dd"
+          />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextEstablishedDate') }}</span>
@@ -91,7 +94,9 @@
               class="w-full"
               v-model="onboardingCompany.informationCompany.phoneCountry"
               :options="countries"
-              filter option-value="calling_code" optionLabel="calling_code"
+              filter
+              option-value="calling_code"
+              optionLabel="calling_code"
             />
           </div>
           <div class="col-8">
@@ -322,7 +327,7 @@ import Checkbox from 'primevue/checkbox'
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
-import InputMask from "primevue/inputmask";
+import InputMask from 'primevue/inputmask'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()
@@ -345,7 +350,7 @@ onMounted(async () => {
     width: 100% !important;
   }
 }
-.bg-red{
+.bg-red {
   color: red;
   font-weight: bold;
 }
