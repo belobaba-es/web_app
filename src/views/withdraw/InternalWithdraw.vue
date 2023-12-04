@@ -18,7 +18,7 @@
         :formData="formObject"
         @prevPage="prevPage($event)"
         @nextPage="nextPage($event)"
-        @complete="complete"
+        @complete="complete()"
       >
         <keep-alive>
           <component :is="Component" />

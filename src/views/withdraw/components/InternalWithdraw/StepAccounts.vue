@@ -67,6 +67,7 @@ onMounted(async () => {
     type.value = TypeBeneficiaryInternal.ASSET
   }
   await loadMore()
+
 })
 
 const nextStep =  (item: UserAccount) => {

@@ -52,7 +52,7 @@ import Button from 'primevue/button'
 import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
 import { generateTransactionReceipt } from '../../../../shared/generatePdf'
 import logo from '../../../../assets/img/logo.png'
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { UserAccount } from '../../types/account'
@@ -73,7 +73,7 @@ const isGeneratingTransactionPDF = ref(false)
 
 const { getUserName, getUserId } = useAuth()
 
-const goToWithdrawIndex = () => {
+const goToWithdrawIndex = async () => {
   if (route.params.type === 'crypto') {
     router.push(`/withdraw/noba/crypto`)
     //window.location.href = '/withdraw/noba/crypto'
@@ -83,6 +83,10 @@ const goToWithdrawIndex = () => {
     router.push(`/withdraw/noba/fiat`)
     //window.location.href = '/withdraw/noba/fiat'
   }
+  await nextTick().then(()=>{
+    console.log('data', props.formData);
+
+  })
 }
 
 const generatePDFTransactionReceipt = () => {
