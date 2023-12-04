@@ -82,10 +82,6 @@ const goToWithdrawIndex = async () => {
   if (route.params.type === 'fiat') {
     window.location.href = '/withdraw/noba/fiat'
   }
-  await nextTick().then(()=>{
-    console.log('data', props.formData);
-
-  })
 }
 
 const generatePDFTransactionReceipt = () => {
@@ -110,7 +106,6 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
 
-  console.log(transactionPDF)
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false
