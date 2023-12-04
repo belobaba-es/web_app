@@ -35,7 +35,7 @@
     <Button
       class="w-50 p-button search-btn"
       iconPos="right"
-      :label="t('continue')"
+      :label="t('confirmWithdraw')"
       @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
       :loading="submitting"
     />
@@ -62,7 +62,6 @@ import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 import { WithdrawService } from '../../services/withdraw'
-import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
