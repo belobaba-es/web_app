@@ -12,6 +12,4 @@ import Toast from 'primevue/toast'
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

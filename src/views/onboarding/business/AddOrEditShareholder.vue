@@ -238,7 +238,7 @@ const verifyRoute = () => {
 }
 </script>
 <style lang="scss">
-.bg-red{
+.bg-red {
   color: red;
   font-weight: bold;
 }

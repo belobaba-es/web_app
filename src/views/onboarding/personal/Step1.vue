@@ -40,8 +40,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <InputMask id="basic" v-model="onboardingPersonal.dateBirth"  mask="9999-99-99" slotChar="yyyy/mm/dd" />
-
+          <InputMask id="basic" v-model="onboardingPersonal.dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
         </div>
       </div>
 
@@ -49,7 +48,14 @@
         <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="field grid">
           <div class="col-2">
-            <Dropdown class="w-full" v-model="onboardingPersonal.phoneCountry" filter option-value="calling_code" optionLabel="calling_code" :options="countries" />
+            <Dropdown
+              class="w-full"
+              v-model="onboardingPersonal.phoneCountry"
+              filter
+              option-value="calling_code"
+              optionLabel="calling_code"
+              :options="countries"
+            />
           </div>
           <div class="col-10">
             <InputText id="phoneNumber" type="number" class="" v-model="onboardingPersonal.phoneNumber" required />
@@ -71,7 +77,13 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('docTypeLabelPassport') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-tooltip.top="'not required'" v-model="onboardingPersonal.passport" class="w-full" required />
+          <InputText
+            type="text"
+            v-tooltip.top="'not required'"
+            v-model="onboardingPersonal.passport"
+            class="w-full"
+            required
+          />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextPassport') }}</span>
@@ -166,7 +178,7 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red"  v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.postalCode" />
           </div>
@@ -189,7 +201,7 @@ import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
-import InputMask from 'primevue/inputmask';
+import InputMask from 'primevue/inputmask'
 
 import { useI18n } from 'vue-i18n'
 
@@ -216,7 +228,7 @@ onMounted(async () => {
 .phone-input {
   margin-top: 7px;
 }
-.bg-red{
+.bg-red {
   color: red;
   font-weight: bold;
 }

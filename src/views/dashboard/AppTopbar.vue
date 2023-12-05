@@ -51,14 +51,6 @@ const items = ref([
     },
   },
   {
-    icon: 'pi',
-    class: 'icon-headset',
-    label: t('contact'),
-    command: () => {
-      window.open('https://api.whatsapp.com/send?phone=17863814293', '_blank')
-    },
-  },
-  {
     label: t('help'),
     icon: 'pi ',
     class: 'icon-help',

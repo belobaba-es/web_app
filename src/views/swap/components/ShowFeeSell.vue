@@ -7,14 +7,13 @@
       <div class="col-7">
         <span class="text-2xl font-light ml-lg-4 text-lg-left">{{ feeAmount }}%</span>
       </div>
-
     </div>
     <div class="col-12 pt-0 pb-0 grid">
       <div class="col-5">
         <span class="font-medium text-primary text-2xl">Sub total:</span>
       </div>
       <div class="col-7">
-        <span class="text-2xl font-light ml-lg-4 text-lg-left"><small>US$</small>  {{ totalAmount }}</span>
+        <span class="text-2xl font-light ml-lg-4 text-lg-left"><small>US$</small> {{ totalAmount }}</span>
       </div>
     </div>
     <div class="col-12 pt-0 grid">
@@ -22,18 +21,18 @@
         <span class="font-medium text-primary text-2xl">Total:</span>
       </div>
       <div class="col-7">
-        <span class="text-2xl font-light ml-lg-4 text-lg-right"><small>US$</small>  {{ total() }}</span>
+        <span class="text-2xl font-light ml-lg-4 text-lg-right"><small>US$</small> {{ total() }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {defineProps} from "vue";
+import { defineProps } from 'vue'
 
 interface Props {
-  feeAmount: number,
-  totalAmount: number,
+  feeAmount: number
+  totalAmount: number
   feeNoba: number
 }
 
