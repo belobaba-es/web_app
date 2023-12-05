@@ -58,7 +58,8 @@ const isGeneratingTransactionPDF = ref(false)
 const { getUserName, getUserId } = useAuth()
 
 const goToWithdrawIndex = () => {
-  router.push(`/withdraw/crypto/other`)
+  // TODO composable function
+  window.location.href = '/withdraw/crypto/other'
 }
 
 const generatePDFTransactionReceipt = () => {

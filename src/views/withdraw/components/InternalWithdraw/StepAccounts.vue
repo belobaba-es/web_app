@@ -71,6 +71,7 @@ onMounted(async () => {
 
 const nextStep = (item: UserAccount) => {
   const page = 0
+
   const formData = {
     beneficiary: { ...item },
   }

@@ -73,13 +73,14 @@ const isGeneratingTransactionPDF = ref(false)
 
 const { getUserName, getUserId } = useAuth()
 
-const goToWithdrawIndex = () => {
+const goToWithdrawIndex = async () => {
+  // TODO composable function
   if (route.params.type === 'crypto') {
-    router.push(`/withdraw/noba/crypto`)
+    window.location.href = '/withdraw/noba/crypto'
   }
 
   if (route.params.type === 'fiat') {
-    router.push(`/withdraw/noba/fiat`)
+    window.location.href = '/withdraw/noba/fiat'
   }
 }
 
@@ -104,8 +105,6 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
-
-  console.log(transactionPDF)
 
   generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
   isGeneratingTransactionPDF.value = false

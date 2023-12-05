@@ -117,6 +117,7 @@ const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
+
 const props = defineProps<{
   formData: any
 }>()
@@ -210,6 +211,7 @@ const nextPage = () => {
   }
 
   const page = 1
+
   const formData = {
     ...props.formData.value,
     amount: amount.value,
@@ -218,6 +220,7 @@ const nextPage = () => {
     amountFee: amountFee,
     purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
   }
+
   emit('nextPage', {
     pageIndex: page,
     formData: formData,

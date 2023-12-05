@@ -18,7 +18,7 @@
         :formData="formObject"
         @prevPage="prevPage($event)"
         @nextPage="nextPage($event)"
-        @complete="complete"
+        @complete="complete()"
       >
         <keep-alive>
           <component :is="Component" />
@@ -72,7 +72,6 @@ const nextPage = (event: any) => {
 const prevPage = (event: any) => {
   router.push(items.value[event.pageIndex - 1].to)
 }
-
 const complete = () => {
   toast.add({
     severity: 'success',

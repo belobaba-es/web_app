@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to {{ beneficiary.name }}</p>
+      <p class="text-base">Your are sending to {{ props.formData.name }}</p>
     </div>
 
     <div class="col-12">
@@ -52,7 +52,7 @@
 
   <ConfirmationCompletedWithdrawInternal
     v-if="isCompleted"
-    :beneficiary="beneficiary"
+    :beneficiary="props.formData.beneficiary"
     :form-data="props.formData"
     :transaction-id="transactionId"
   />
@@ -66,7 +66,6 @@ import Button from 'primevue/button'
 import { WithdrawService } from '../../services/withdraw'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
-import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import ConfirmationCompletedWithdrawInternal from './ConfirmationCompletedWithdrawInternal.vue'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
@@ -111,7 +110,7 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 
 function makeTransaction() {
   submitting.value = true
-  console.log(props.formData)
+
   switch (route.params.type) {
     case 'fiat':
       new WithdrawService()
@@ -135,6 +134,7 @@ function makeTransaction() {
             life: 4000,
           })
         })
+
       break
     case 'crypto':
       new WithdrawService()
