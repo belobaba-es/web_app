@@ -402,12 +402,6 @@ small {
     margin-top: 30%;
 }
 
-@media (max-width: 991px) {
-    #hubspot-messages-iframe-container {
-        bottom: 83px !important;
-
-    }
-}
 
 @media (max-width: 599px) {
     .p-hide-xs {
