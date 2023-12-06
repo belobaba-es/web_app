@@ -187,10 +187,7 @@ const verifyAmountForCreateQoute = () => {
 const maxCountInput = (typeCode: string) => {
   console.log('max', typeCode)
   if (typeCode === 'USD') {
-    amountAfterRemovingFee.value = 0.0
     amountAfterRemovingFee.value = getBalanceByCode('USD', false)
-
-    console.log('amountAfterRemovingFee', amountAfterRemovingFee.value)
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
