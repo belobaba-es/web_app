@@ -66,6 +66,7 @@ import { SummarySwap } from '../types/sumary'
 import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
 import { useSwap } from '../../../composables/useSwap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+
 const { calculateBalance } = useBalanceWallet()
 
 const { t } = useI18n({ useScope: 'global' })
@@ -81,7 +82,7 @@ const props = defineProps<Props>()
 const { unitCount } = useSwap()
 
 const formatFiat = (amount: number) => {
-  return calculateBalance('USD', amount, 0)
+  return calculateBalance('USD', amount, 0, true)
 }
 </script>
 

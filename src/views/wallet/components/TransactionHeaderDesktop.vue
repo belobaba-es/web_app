@@ -21,7 +21,7 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <div class="flex justify-content-start">
           <p class="text-balance-wallet-historic-desktop mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-            {{ calculateBalance(wallet.assetCode, wallet.balance, wallet.blockedBalance ?? 0) }}
+            {{ calculateBalance(wallet.assetCode, wallet.balance, wallet.blockedBalance ?? 0, true) }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
         </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
