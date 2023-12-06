@@ -31,9 +31,9 @@
               :disabled="disabledBtnSelectCrypto"
             >
               <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
-              <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">{{
-                assetName ? assetName : t('selectCrypto')
-              }}</span>
+              <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">
+                {{ assetName ? assetName : t('selectCrypto') }}
+              </span>
               <i class="pi pi-caret-down text-primary icon-down-cripto"></i>
             </Button>
           </template>
@@ -177,6 +177,7 @@ const verifyAmountForCreateQoute = () => {
       assetId.value &&
       !loading.value
     ) {
+      console.log('entro')
       await clearTimer()
       await createExchange()
     }
@@ -184,8 +185,12 @@ const verifyAmountForCreateQoute = () => {
 }
 
 const maxCountInput = (typeCode: string) => {
+  console.log('max', typeCode)
   if (typeCode === 'USD') {
-    amountAfterRemovingFee.value = getBalanceByCode('USD')
+    amountAfterRemovingFee.value = 0.0
+    amountAfterRemovingFee.value = getBalanceByCode('USD', false)
+
+    console.log('amountAfterRemovingFee', amountAfterRemovingFee.value)
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
