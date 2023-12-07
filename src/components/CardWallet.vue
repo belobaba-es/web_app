@@ -72,8 +72,7 @@
                 calculateBalance(
                   slotProps.data.assetCode,
                   slotProps.data.balance,
-                  slotProps.data.blockedBalance ?? 0,
-                  true
+                  slotProps.data.blockedBalance ?? 0
                 )
               }}
               <br />
@@ -109,7 +108,7 @@
         </div>
         <div class="col-6 flex justify-content-end align-content-end flex-wrap">
           <p class="text-balance-wallet">
-            {{ calculateBalance(item.assetCode, item.balance, item.blockedBalance ?? 0, true) }}
+            {{ calculateBalance(item.assetCode, item.balance, item.blockedBalance ?? 0) }}
             <br />
             <small>{{ item.assetCode }}</small>
           </p>

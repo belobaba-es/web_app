@@ -52,7 +52,7 @@ export const useBalanceWallet = () => {
     return balanceWallets.wallets.value.sort((a, b) => (a.assetCode === 'USD' ? -1 : b.assetCode === 'USD' ? 1 : 0))
   }
 
-  const calculateBalance = (assetCode: string, balance: number, blocked: number, format: boolean) => {
+  const calculateBalance = (assetCode: string, balance: number, blocked: number, format: boolean = true) => {
     const total = isNaN(balance + blocked) ? 0 : balance + blocked
     const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT'
     const decimalSeparator = locale.value === 'en' ? '.' : ','

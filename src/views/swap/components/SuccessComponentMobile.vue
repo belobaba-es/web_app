@@ -82,7 +82,7 @@ const props = defineProps<Props>()
 const { unitCount } = useSwap()
 
 const formatFiat = (amount: number) => {
-  return calculateBalance('USD', amount, 0, true)
+  return calculateBalance('USD', amount, 0)
 }
 </script>
 
