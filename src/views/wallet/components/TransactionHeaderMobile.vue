@@ -50,8 +50,6 @@ import { defineProps } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
-import WithdrawRouteSelect from './WithdrawRouteSelect.vue'
-import WithdrawRouteSelectCustom from './WithdrawRouteSelectDesktop.vue'
 import WithdrawRouteSelectMobile from './WithdrawRouteSelectMobile.vue'
 
 defineProps<{

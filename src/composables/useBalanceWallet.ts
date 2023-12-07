@@ -25,10 +25,15 @@ export const useBalanceWallet = () => {
     }, 10000)
   }
 
-  const getBalanceByCode = (assetCode: string): number => {
+  const getBalanceByCode = (assetCode: string, format = true): number => {
     const wallet = balanceWalletStore.getWalletByAssetCode(assetCode)
     if (wallet) {
-      return calculateBalance(wallet?.assetCode, wallet?.balance, wallet.blockedBalance ?? 0) as unknown as number
+      return calculateBalance(
+        wallet?.assetCode,
+        wallet?.balance,
+        wallet.blockedBalance ?? 0,
+        format
+      ) as unknown as number
     }
 
     return 0
@@ -47,12 +52,12 @@ export const useBalanceWallet = () => {
     return balanceWallets.wallets.value.sort((a, b) => (a.assetCode === 'USD' ? -1 : b.assetCode === 'USD' ? 1 : 0))
   }
 
-  const calculateBalance = (assetCode: string, balance: number, blocked: number) => {
+  const calculateBalance = (assetCode: string, balance: number, blocked: number, format: boolean = true) => {
     const total = isNaN(balance + blocked) ? 0 : balance + blocked
-
     const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT'
     const decimalSeparator = locale.value === 'en' ? '.' : ','
     const thousandSeparator = locale.value === 'en' ? ',' : '.'
+    if (!format) return total
 
     if (isUSD) {
       return total

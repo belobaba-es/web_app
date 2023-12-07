@@ -69,7 +69,11 @@
           <div class="col-6 flex justify-content-end align-content-end flex-wrap">
             <p class="text-balance">
               {{
-                calculateBalance(slotProps.data.assetCode, slotProps.data.balance, slotProps.data.blockedBalance ?? 0)
+                calculateBalance(
+                  slotProps.data.assetCode,
+                  slotProps.data.balance,
+                  slotProps.data.blockedBalance ?? 0
+                )
               }}
               <br />
               <small>{{ slotProps.data.assetCode }}</small>
@@ -126,6 +130,7 @@ import { useRouter } from 'vue-router'
 interface Props {
   carousel: boolean
 }
+
 const props = defineProps<Props>()
 
 const router = useRouter()
@@ -241,6 +246,7 @@ const responsiveOptions = ref([
   cursor: pointer;
   box-shadow: 0px 3px 5px rgb(0 0 0 / 2%), 0px 0px 2px rgb(0 0 0 / 5%), 0px 1px 4px rgb(0 0 0 / 8%) !important;
   transition: box-shadow 0.2s ease-in-out;
+
   &:hover {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
@@ -248,11 +254,13 @@ const responsiveOptions = ref([
 
 .card-blue {
   background: #134591;
+
   .name-cripto,
   .text-balance,
   .text-balance-wallet {
     color: white;
   }
+
   img {
     filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
   }
