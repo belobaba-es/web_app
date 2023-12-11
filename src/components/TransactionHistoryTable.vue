@@ -293,10 +293,14 @@ const lastDateFiltersRegistry: any = ref({
     endDate: null,
   },
 })
-
+// TODO ESTE CODIGO DEBE SER REFACTORIZADO, para usar composable function
 onMounted(async () => {
   await getAssets()
-  await getTransactions()
+  await getTransactions({
+    perPage: 10,
+    startDate: '',
+    page: 1,
+  })
 })
 
 const getAssets = async () => {
@@ -624,6 +628,7 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   display: flex;
   justify-content: center;
   align-items: start;
+
   h4 {
     margin: 0;
   }
