@@ -292,7 +292,13 @@ const lastDateFiltersRegistry: any = ref({
     startDate: null,
     endDate: null,
   },
+  nextPage: {
+    nextPage: false,
+    data: '',
+  },
 })
+
+const shouldClearPaginator = ref(true)
 // TODO ESTE CODIGO DEBE SER REFACTORIZADO, para usar composable function
 onMounted(async () => {
   await getAssets()
@@ -348,6 +354,7 @@ const getTransactions = async (filters: any = {}) => {
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
+  console.log('ge transaction filters', filters)
 
   // todo send nextPage as page into the payload
   await new TransactionHistoricService()
@@ -499,6 +506,9 @@ const prepareDatesFilterPDF = () => {
 }
 
 const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
+  // todo restart the paginator when no filter provided
+  // filters
+  console.log('-- registerSearchFilters filters', filters)
   lastDateFiltersRegistry.value = {
     transactions,
     dates: {
@@ -517,6 +527,17 @@ const search = async () => {
       life: 4000,
     })
   }
+
+  console.log('shouldClearPaginator.value', shouldClearPaginator.value)
+  if (shouldClearPaginator.value) {
+    console.log('----------- true')
+    shouldClearPaginator.value = false
+    nextPage.value.data = '1'
+    filters.page = '1'
+  } else {
+    console.log('-------------- false')
+  }
+  console.log('next', nextPage.value)
 
   await getTransactions(filters)
 }
