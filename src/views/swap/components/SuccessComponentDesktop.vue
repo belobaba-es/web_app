@@ -25,7 +25,7 @@
 
   <div class="flex align-items-center">
     <div class="swap-circle border-circle w-3rem h-3rem m-2 flex align-items-center justify-content-center">
-      <img :src="swapOneArrowIcon" />
+      <img alt="icon arrow" :src="swapOneArrowIcon" />
     </div>
   </div>
 
@@ -47,7 +47,7 @@
       </div>
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ usdName }}</div>
-        <div class="font-medium">{{ totalSell() }} {{ usdName }}</div>
+        <div class="font-medium">{{ formatFiat(transactionSummary.amountAfterRemovingFee ?? 0) }} {{ usdName }}</div>
       </div>
     </div>
   </div>
@@ -57,10 +57,11 @@
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { SummarySwap } from '../types/sumary'
-
 import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
+import { useSwap } from '../../../composables/useSwap'
 
 const { t } = useI18n({ useScope: 'global' })
+const { formatFiat } = useSwap()
 
 interface Props {
   summary: SummarySwap
