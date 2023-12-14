@@ -26,7 +26,7 @@
     <div class="col-12 mt-2">
       <div class="flex flex justify-content-center flex-wrap">
         <div class="swap-circle border-circle w-3rem h-3rem m-2 flex align-items-center justify-content-center">
-          <img class="swap-icon rotate-swap-icon" :src="swapOneArrowIcon" />
+          <img alt="icon arrow" class="swap-icon rotate-swap-icon" :src="swapOneArrowIcon" />
         </div>
       </div>
     </div>
@@ -64,11 +64,11 @@ import { useI18n } from 'vue-i18n'
 import { SummarySwap } from '../types/sumary'
 
 import swapOneArrowIcon from '../../../assets/icons/swap-one-arrow.svg'
-import { useSwap } from '../../../composables/useSwap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+import { useSwap } from '../../../composables/useSwap'
 
 const { calculateBalance } = useBalanceWallet()
-
+const { formatFiat } = useSwap()
 const { t } = useI18n({ useScope: 'global' })
 
 interface Props {
@@ -80,10 +80,6 @@ interface Props {
 
 const props = defineProps<Props>()
 const { unitCount } = useSwap()
-
-const formatFiat = (amount: number) => {
-  return calculateBalance('USD', amount, 0)
-}
 </script>
 
 <style scoped>

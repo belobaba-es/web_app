@@ -4,7 +4,7 @@
       <div class="grid container-success flex justify-content-center align-items-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-6 mb-5">
           <div class="flex justify-content-center mb-4">
-            <img :src="successIcon" />
+            <img alt="source icon" :src="successIcon" />
           </div>
           <h1 class="text-center">{{ t('swapSuccessfulTitle') }}</h1>
           <p class="text-center">{{ t('swapSuccessfulText') }}</p>
