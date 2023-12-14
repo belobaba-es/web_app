@@ -519,6 +519,7 @@ const registerSearchFilters = (transactions: TransactionHistory[], filters: any)
 }
 
 const search = async () => {
+  console.log('-- search filters', filters)
   if (!isValidDates()) {
     toast.add({
       severity: 'info',
@@ -528,8 +529,10 @@ const search = async () => {
     })
   }
 
+  verifyShouldClearPaginator()
+
   console.log('shouldClearPaginator.value', shouldClearPaginator.value)
-  if (shouldClearPaginator.value) {
+  if (shouldClearPaginator.value || verifyShouldClearPaginator()) {
     console.log('----------- true')
     shouldClearPaginator.value = false
     nextPage.value.data = '1'
@@ -537,9 +540,45 @@ const search = async () => {
   } else {
     console.log('-------------- false')
   }
+
   console.log('next', nextPage.value)
 
   await getTransactions(filters)
+}
+
+const isNullOrUndefinedOrEmpty = (value: any) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === 'string' && value.trim() === '') ||
+    (Array.isArray(value) && value.length === 0)
+  )
+}
+
+const verifyShouldClearPaginator = () => {
+  let shouldClear = false
+  console.log('verifyShouldClearPaginator')
+  if (isNullOrUndefinedOrEmpty(selectedTypeTransaction.value)) {
+    console.log('selectedTypeTransaction is undefined, null, empty, or has length 0')
+    shouldClear = true
+  }
+
+  if (isNullOrUndefinedOrEmpty(assetId.value)) {
+    console.log('assetId is undefined, null, empty, or has length 0')
+    shouldClear = true
+  }
+
+  if (isNullOrUndefinedOrEmpty(startDate.value)) {
+    console.log('startDate is undefined, null, empty, or has length 0')
+    shouldClear = true
+  }
+
+  if (isNullOrUndefinedOrEmpty(endDate.value)) {
+    console.log('endDate is undefined, null, empty, or has length 0')
+    shouldClear = true
+  }
+
+  return shouldClear
 }
 
 const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
