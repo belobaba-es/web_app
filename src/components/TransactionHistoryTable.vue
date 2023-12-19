@@ -516,7 +516,7 @@ const registerSearchFilters = (filters: any) => {
       endDate: filters.endDate,
       assetId: filters.assetId,
       assetType: filters.assetType,
-      selectedTransactionType: filters,
+      selectedTransactionType: filters.selectedTransactionType,
     },
   }
 }
@@ -531,77 +531,36 @@ const search = async () => {
     })
   }
 
-  const shouldResetPaginator = hasFiltersChanged()
-  console.log({
-    ///verifyShouldClearPaginator: verifyShouldClearPaginator(),
-    shouldResetPaginator: shouldResetPaginator,
-  })
+  const shouldResetPaginator = !areFiltersEqual()
 
+  // when filters has changed, should reset the paginator
   if (shouldResetPaginator) {
-    // if (verifyShouldClearPaginator() || shouldResetPaginator) {
-    console.log('----------- shouldResetPaginator yes')
     nextPage.value.data = '1'
     filters.page = '1'
-  } else {
-    console.log('-- shouldResetPaginator no ')
   }
 
   await getTransactions(filters)
 }
 
-const hasFiltersChanged = (): boolean => {
-  console.log('- hasFiltersChanged')
-  console.log('filters.value', filters.value)
-  console.log('lastFiltersApplied.value', lastFiltersApplied.value)
+const areFiltersEqual = (): boolean => {
+  const transactionType1 = selectedTypeTransaction.value ? selectedTypeTransaction.value : ''
+  const assetId1 = filters.assetId ? filters.assetId : ''
+  const startDate1 = filters.startDate ? filters.startDate : ''
+  const endDate1 = filters.endDate ? filters.endDate : ''
 
-  // transaction type
-  const transactionType1 = selectedTypeTransaction.value
+  const transactionType2 = lastFiltersApplied.value.data.selectedTransactionType
+    ? lastFiltersApplied.value.data.selectedTransactionType
+    : ''
+  const assetId2 = lastFiltersApplied.value.data.assetId ? lastFiltersApplied.value.data.assetId : ''
+  const startDate2 = lastFiltersApplied.value.data.startDate ? lastFiltersApplied.value.data.startDate : ''
+  const endDate2 = lastFiltersApplied.value.data.endDate ? lastFiltersApplied.value.data.endDate : ''
 
-  // Extract properties from the first structure
-  const { startDate: startDate1, endDate: endDate1, assetId: assetId1 } = filters
+  const areTransantionTypesEqual = transactionType1 === transactionType2
 
-  // Extract properties from the second structure
-  const {
-    startDate: startDate2,
-    endDate: endDate2,
-    assetId: assetId2,
-    selectedTypeTransaction: transactionType2,
-  } = lastFiltersApplied.value.data
+  const areAssetIdsEqual = assetId1 === assetId2
 
-  // Compare the extracted properties
-  // Check for null or undefined values
-  const areDatesEqual =
-    startDate1 !== null &&
-    startDate1 !== undefined &&
-    endDate1 !== null &&
-    endDate1 !== undefined &&
-    startDate2 !== null &&
-    startDate2 !== undefined &&
-    endDate2 !== null &&
-    endDate2 !== undefined &&
-    startDate1 === startDate2 &&
-    endDate1 === endDate2
-  console.log('endDate1 endDate2', endDate1, endDate2)
-  console.log('endDate1 endDate2', endDate1 === endDate2)
+  const areDatesEqual = startDate1 === startDate2 && endDate1 === endDate2
 
-  console.log('transactionType1 transactionType2', transactionType1, transactionType2)
-  console.log('transactionType1 transactionType2', transactionType1 === transactionType2)
-
-  const areAssetIdsEqual =
-    assetId1 !== null && assetId1 !== undefined && assetId2 !== null && assetId2 !== undefined && assetId1 === assetId2
-  console.log('assetId1 assetId2', assetId1, assetId2)
-  console.log('assetId1 assetId2', assetId1 === assetId2)
-
-  const areTransantionTypesEqual =
-    transactionType1 !== null &&
-    transactionType1 !== undefined &&
-    transactionType2 !== null &&
-    transactionType2 !== undefined &&
-    transactionType1 === transactionType2
-
-  console.log('areTransantionTypesEqual', areTransantionTypesEqual)
-
-  // Return true if all properties are equal, otherwise false
   return areDatesEqual && areAssetIdsEqual && areTransantionTypesEqual
 }
 
