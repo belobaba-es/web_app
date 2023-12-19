@@ -235,14 +235,18 @@ import {
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
-
 import { iconAsset } from '../shared/iconAsset'
-
 import { Asset } from '../views/deposit/types/asset.interface'
 import { getAsset } from '../shared/getAsset'
 import FinishRegisterWarningBar from './FinishRegisterWarningBar.vue'
 import { useAuth } from '../composables/useAuth'
 
+const props = defineProps({
+  isDashboard: {
+    type: Boolean,
+    required: true,
+  },
+})
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
@@ -267,6 +271,20 @@ const transactionTypes = ref([
   { name: t('depositTransactionName'), code: 'deposit' },
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
 ])
+const lastFiltersApplied: any = ref({
+  transactions: [],
+  data: {
+    startDate: null,
+    endDate: null,
+    assetId: '',
+    assetType: '',
+    selectedTransactionType: '',
+  },
+  nextPage: {
+    nextPage: false,
+    data: '',
+  },
+})
 const toast = useToast()
 const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
@@ -279,23 +297,6 @@ const modalTransactionDetail = ref<TransactionHistory>()
 const nextPage = ref({
   nextPage: false,
   data: '',
-})
-const props = defineProps({
-  isDashboard: {
-    type: Boolean,
-    required: true,
-  },
-})
-const lastDateFiltersRegistry: any = ref({
-  transactions: [],
-  data: {
-    startDate: null,
-    endDate: null,
-  },
-  nextPage: {
-    nextPage: false,
-    data: '',
-  },
 })
 
 const shouldClearPaginator = ref(true)
@@ -349,12 +350,11 @@ const getAssets = async () => {
 }
 
 const getTransactions = async (filters: any = {}) => {
-  registerSearchFilters([], {})
+  registerSearchFilters({})
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
   listTransaction.value = []
-  console.log('ge transaction filters', filters)
 
   // todo send nextPage as page into the payload
   await new TransactionHistoricService()
@@ -378,10 +378,16 @@ const getTransactions = async (filters: any = {}) => {
         nextPage.value.data = data.nextPag
       }
 
-      registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
+      registerSearchFilters({
+        assetId: filters.assetId,
+        assetType: filters.assetType,
+        startDate: startDate.value,
+        endDate: endDate.value,
+        selectedTransactionType: filters.transactionType,
+      })
     })
     .catch(() => {
-      registerSearchFilters([], {})
+      registerSearchFilters({})
     })
 }
 
@@ -498,28 +504,24 @@ const downloadExtract = () => {
 
 const prepareDatesFilterPDF = () => {
   return {
-    startDate: lastDateFiltersRegistry.value.dates.startDate
-      ? formatDate(lastDateFiltersRegistry.value.dates.startDate)
-      : '',
-    endDate: lastDateFiltersRegistry.value.dates.endDate ? formatDate(lastDateFiltersRegistry.value.dates.endDate) : '',
+    startDate: lastFiltersApplied.value.data.startDate ? formatDate(lastFiltersApplied.value.data.startDate) : '',
+    endDate: lastFiltersApplied.value.data.endDate ? formatDate(lastFiltersApplied.value.data.endDate) : '',
   }
 }
 
-const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
-  // todo restart the paginator when no filter provided
-  // filters
-  console.log('-- registerSearchFilters filters', filters)
-  lastDateFiltersRegistry.value = {
-    transactions,
-    dates: {
+const registerSearchFilters = (filters: any) => {
+  lastFiltersApplied.value = {
+    data: {
       startDate: filters.startDate,
       endDate: filters.endDate,
+      assetId: filters.assetId,
+      assetType: filters.assetType,
+      selectedTransactionType: filters,
     },
   }
 }
 
 const search = async () => {
-  console.log('-- search filters', filters)
   if (!isValidDates()) {
     toast.add({
       severity: 'info',
@@ -529,56 +531,78 @@ const search = async () => {
     })
   }
 
-  verifyShouldClearPaginator()
+  const shouldResetPaginator = hasFiltersChanged()
+  console.log({
+    ///verifyShouldClearPaginator: verifyShouldClearPaginator(),
+    shouldResetPaginator: shouldResetPaginator,
+  })
 
-  console.log('shouldClearPaginator.value', shouldClearPaginator.value)
-  if (shouldClearPaginator.value || verifyShouldClearPaginator()) {
-    console.log('----------- true')
-    shouldClearPaginator.value = false
+  if (shouldResetPaginator) {
+    // if (verifyShouldClearPaginator() || shouldResetPaginator) {
+    console.log('----------- shouldResetPaginator yes')
     nextPage.value.data = '1'
     filters.page = '1'
   } else {
-    console.log('-------------- false')
+    console.log('-- shouldResetPaginator no ')
   }
-
-  console.log('next', nextPage.value)
 
   await getTransactions(filters)
 }
 
-const isNullOrUndefinedOrEmpty = (value: any) => {
-  return (
-    value === undefined ||
-    value === null ||
-    (typeof value === 'string' && value.trim() === '') ||
-    (Array.isArray(value) && value.length === 0)
-  )
-}
+const hasFiltersChanged = (): boolean => {
+  console.log('- hasFiltersChanged')
+  console.log('filters.value', filters.value)
+  console.log('lastFiltersApplied.value', lastFiltersApplied.value)
 
-const verifyShouldClearPaginator = () => {
-  let shouldClear = false
-  console.log('verifyShouldClearPaginator')
-  if (isNullOrUndefinedOrEmpty(selectedTypeTransaction.value)) {
-    console.log('selectedTypeTransaction is undefined, null, empty, or has length 0')
-    shouldClear = true
-  }
+  // transaction type
+  const transactionType1 = selectedTypeTransaction.value
 
-  if (isNullOrUndefinedOrEmpty(assetId.value)) {
-    console.log('assetId is undefined, null, empty, or has length 0')
-    shouldClear = true
-  }
+  // Extract properties from the first structure
+  const { startDate: startDate1, endDate: endDate1, assetId: assetId1 } = filters
 
-  if (isNullOrUndefinedOrEmpty(startDate.value)) {
-    console.log('startDate is undefined, null, empty, or has length 0')
-    shouldClear = true
-  }
+  // Extract properties from the second structure
+  const {
+    startDate: startDate2,
+    endDate: endDate2,
+    assetId: assetId2,
+    selectedTypeTransaction: transactionType2,
+  } = lastFiltersApplied.value.data
 
-  if (isNullOrUndefinedOrEmpty(endDate.value)) {
-    console.log('endDate is undefined, null, empty, or has length 0')
-    shouldClear = true
-  }
+  // Compare the extracted properties
+  // Check for null or undefined values
+  const areDatesEqual =
+    startDate1 !== null &&
+    startDate1 !== undefined &&
+    endDate1 !== null &&
+    endDate1 !== undefined &&
+    startDate2 !== null &&
+    startDate2 !== undefined &&
+    endDate2 !== null &&
+    endDate2 !== undefined &&
+    startDate1 === startDate2 &&
+    endDate1 === endDate2
+  console.log('endDate1 endDate2', endDate1, endDate2)
+  console.log('endDate1 endDate2', endDate1 === endDate2)
 
-  return shouldClear
+  console.log('transactionType1 transactionType2', transactionType1, transactionType2)
+  console.log('transactionType1 transactionType2', transactionType1 === transactionType2)
+
+  const areAssetIdsEqual =
+    assetId1 !== null && assetId1 !== undefined && assetId2 !== null && assetId2 !== undefined && assetId1 === assetId2
+  console.log('assetId1 assetId2', assetId1, assetId2)
+  console.log('assetId1 assetId2', assetId1 === assetId2)
+
+  const areTransantionTypesEqual =
+    transactionType1 !== null &&
+    transactionType1 !== undefined &&
+    transactionType2 !== null &&
+    transactionType2 !== undefined &&
+    transactionType1 === transactionType2
+
+  console.log('areTransantionTypesEqual', areTransantionTypesEqual)
+
+  // Return true if all properties are equal, otherwise false
+  return areDatesEqual && areAssetIdsEqual && areTransantionTypesEqual
 }
 
 const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
@@ -593,6 +617,15 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   isLoadingTransactionDetails.value = false
 }
 
+const isNullOrUndefinedOrEmpty = (value: any) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === 'string' && value.trim() === '') ||
+    (Array.isArray(value) && value.length === 0)
+  )
+}
+
 // const loadTransactionDetail = async (transaction: TransactionHistory) => {
 //   await getTransactonHistoric
 //     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
@@ -601,13 +634,10 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
 //       // todo
 //       const nameTo = ``
 //
-//       console.log('loadTransactionDetail transaction', transaction)
-//       console.log('loadTransactionDetail data', data)
 //       displayModalTransactionDetail.value = true
 //       isLoadingTransactionDetails.value = false
 //       modalTransactionDetail.value = transaction
 //
-//       console.log('modalTransactionDetail.value', modalTransactionDetail.value)
 //     })
 // }
 </script>
