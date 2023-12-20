@@ -235,14 +235,18 @@ import {
 } from '../views/transaction-history/types/transaction-history-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { TransactionHistoricService } from '../views/transaction-history/services/transaction-history'
-
 import { iconAsset } from '../shared/iconAsset'
-
 import { Asset } from '../views/deposit/types/asset.interface'
 import { getAsset } from '../shared/getAsset'
 import FinishRegisterWarningBar from './FinishRegisterWarningBar.vue'
 import { useAuth } from '../composables/useAuth'
 
+const props = defineProps({
+  isDashboard: {
+    type: Boolean,
+    required: true,
+  },
+})
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
@@ -267,6 +271,20 @@ const transactionTypes = ref([
   { name: t('depositTransactionName'), code: 'deposit' },
   { name: t('withdrawTransactionName'), code: 'withdraw-funds' },
 ])
+const lastFiltersApplied: any = ref({
+  transactions: [],
+  data: {
+    startDate: null,
+    endDate: null,
+    assetId: '',
+    assetType: '',
+    selectedTransactionType: '',
+  },
+  nextPage: {
+    nextPage: false,
+    data: '',
+  },
+})
 const toast = useToast()
 const assets = ref<{ name: string; assetId: string }[]>([])
 const listAssets = ref<Asset[]>([])
@@ -280,19 +298,8 @@ const nextPage = ref({
   nextPage: false,
   data: '',
 })
-const props = defineProps({
-  isDashboard: {
-    type: Boolean,
-    required: true,
-  },
-})
-const lastDateFiltersRegistry: any = ref({
-  transactions: [],
-  data: {
-    startDate: null,
-    endDate: null,
-  },
-})
+
+const shouldClearPaginator = ref(true)
 // TODO ESTE CODIGO DEBE SER REFACTORIZADO, para usar composable function
 onMounted(async () => {
   await getAssets()
@@ -343,7 +350,7 @@ const getAssets = async () => {
 }
 
 const getTransactions = async (filters: any = {}) => {
-  registerSearchFilters([], {})
+  registerSearchFilters({})
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
@@ -371,10 +378,16 @@ const getTransactions = async (filters: any = {}) => {
         nextPage.value.data = data.nextPag
       }
 
-      registerSearchFilters(data.results, { startDate: startDate.value, endDate: endDate.value })
+      registerSearchFilters({
+        assetId: filters.assetId,
+        assetType: filters.assetType,
+        startDate: startDate.value,
+        endDate: endDate.value,
+        selectedTransactionType: filters.transactionType,
+      })
     })
     .catch(() => {
-      registerSearchFilters([], {})
+      registerSearchFilters({})
     })
 }
 
@@ -491,19 +504,19 @@ const downloadExtract = () => {
 
 const prepareDatesFilterPDF = () => {
   return {
-    startDate: lastDateFiltersRegistry.value.dates.startDate
-      ? formatDate(lastDateFiltersRegistry.value.dates.startDate)
-      : '',
-    endDate: lastDateFiltersRegistry.value.dates.endDate ? formatDate(lastDateFiltersRegistry.value.dates.endDate) : '',
+    startDate: lastFiltersApplied.value.data.startDate ? formatDate(lastFiltersApplied.value.data.startDate) : '',
+    endDate: lastFiltersApplied.value.data.endDate ? formatDate(lastFiltersApplied.value.data.endDate) : '',
   }
 }
 
-const registerSearchFilters = (transactions: TransactionHistory[], filters: any) => {
-  lastDateFiltersRegistry.value = {
-    transactions,
-    dates: {
+const registerSearchFilters = (filters: any) => {
+  lastFiltersApplied.value = {
+    data: {
       startDate: filters.startDate,
       endDate: filters.endDate,
+      assetId: filters.assetId,
+      assetType: filters.assetType,
+      selectedTransactionType: filters.selectedTransactionType,
     },
   }
 }
@@ -518,7 +531,37 @@ const search = async () => {
     })
   }
 
+  const shouldResetPaginator = !areFiltersEqual()
+
+  // when filters has changed, should reset the paginator
+  if (shouldResetPaginator) {
+    nextPage.value.data = '1'
+    filters.page = '1'
+  }
+
   await getTransactions(filters)
+}
+
+const areFiltersEqual = (): boolean => {
+  const transactionType1 = selectedTypeTransaction.value ? selectedTypeTransaction.value : ''
+  const assetId1 = filters.assetId ? filters.assetId : ''
+  const startDate1 = filters.startDate ? filters.startDate : ''
+  const endDate1 = filters.endDate ? filters.endDate : ''
+
+  const transactionType2 = lastFiltersApplied.value.data.selectedTransactionType
+    ? lastFiltersApplied.value.data.selectedTransactionType
+    : ''
+  const assetId2 = lastFiltersApplied.value.data.assetId ? lastFiltersApplied.value.data.assetId : ''
+  const startDate2 = lastFiltersApplied.value.data.startDate ? lastFiltersApplied.value.data.startDate : ''
+  const endDate2 = lastFiltersApplied.value.data.endDate ? lastFiltersApplied.value.data.endDate : ''
+
+  const areTransantionTypesEqual = transactionType1 === transactionType2
+
+  const areAssetIdsEqual = assetId1 === assetId2
+
+  const areDatesEqual = startDate1 === startDate2 && endDate1 === endDate2
+
+  return areDatesEqual && areAssetIdsEqual && areTransantionTypesEqual
 }
 
 const openModalTransactionDetails = (event: any, transaction: TransactionHistory) => {
@@ -533,6 +576,15 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
   isLoadingTransactionDetails.value = false
 }
 
+const isNullOrUndefinedOrEmpty = (value: any) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === 'string' && value.trim() === '') ||
+    (Array.isArray(value) && value.length === 0)
+  )
+}
+
 // const loadTransactionDetail = async (transaction: TransactionHistory) => {
 //   await getTransactonHistoric
 //     .findTransactionByTransactionId(transaction.transactionId, transaction.isInternal, transaction.assetCode)
@@ -541,13 +593,10 @@ const openModalTransactionDetails = (event: any, transaction: TransactionHistory
 //       // todo
 //       const nameTo = ``
 //
-//       console.log('loadTransactionDetail transaction', transaction)
-//       console.log('loadTransactionDetail data', data)
 //       displayModalTransactionDetail.value = true
 //       isLoadingTransactionDetails.value = false
 //       modalTransactionDetail.value = transaction
 //
-//       console.log('modalTransactionDetail.value', modalTransactionDetail.value)
 //     })
 // }
 </script>
