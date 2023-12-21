@@ -84,7 +84,7 @@ const onSelect = (item: Beneficiary) => {
       severity: 'error',
       summary: t('somethingWentWrong'),
       detail: t('beneficiaryPending'),
-      life: 4000,
+      life: 8000,
     })
 
     return
@@ -95,7 +95,7 @@ const onSelect = (item: Beneficiary) => {
       severity: 'error',
       summary: t('somethingWentWrong'),
       detail: t('beneficiaryRejected'),
-      life: 4000,
+      life: 8000,
     })
 
     return
