@@ -10,6 +10,13 @@ export enum CounterpartyType {
   FIAT = 'FIAT',
 }
 
+export enum CounterpartyStatus {
+  REGISTERED = 'REGISTERED',
+  PENDING = 'PENDING',
+  ACTIVE = 'ACTIVE',
+  REJECTED = 'REJECTED',
+}
+
 export type Beneficiary = {
   accountId: string
   assetCode: string
@@ -30,6 +37,7 @@ export type Beneficiary = {
     name: string
     countery: string
   }
+  status: CounterpartyStatus
 }
 
 export enum CounterpartyType {

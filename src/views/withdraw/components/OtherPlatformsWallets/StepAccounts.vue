@@ -59,7 +59,7 @@ import { useToast } from 'primevue/usetoast'
 import { useBeneficiary } from '../../composables/useBeneficiary'
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
-import { Beneficiary } from '../../types/beneficiary.interface'
+import { Beneficiary, CounterpartyStatus } from '../../types/beneficiary.interface'
 
 const router = useRouter()
 const toast = useToast()
@@ -75,14 +75,39 @@ const props = defineProps<{
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
 const onSelect = (item: Beneficiary) => {
-  const page = 0
-  const formData = {
-    beneficiary: item,
+  console.log('-- Beneficiary item', item.status)
+  if (item.status === CounterpartyStatus.PENDING) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('beneficiaryPending'),
+      life: 4000,
+    })
+
+    return
   }
-  emit('nextPage', {
-    pageIndex: page,
-    formData: formData,
-  })
+
+  if (item.status === CounterpartyStatus.REJECTED) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('beneficiaryRejected'),
+      life: 4000,
+    })
+
+    return
+  }
+
+  if (item.status === CounterpartyStatus.ACTIVE) {
+    const page = 0
+    const formData = {
+      beneficiary: item,
+    }
+    emit('nextPage', {
+      pageIndex: page,
+      formData: formData,
+    })
+  }
 }
 
 const getIcon = (assetCode: string) => {
