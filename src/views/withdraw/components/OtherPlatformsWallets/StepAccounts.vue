@@ -13,8 +13,11 @@
           v-for="item in listBeneficiary"
           @click="onSelect(item)"
         >
-          <img :src="getIcon(item.assetCode)" alt="" />
+          <img :src="getIcon(item.assetCode)" alt="" style="height: 56px" />
           <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+          <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{
+            item.status
+          }}</span>
           <div class="flex align-items-center">
             {{ t('withdraw') }}
             <i class="pi pi-angle-right"></i>
@@ -59,13 +62,14 @@ import { useToast } from 'primevue/usetoast'
 import { useBeneficiary } from '../../composables/useBeneficiary'
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
-import { Beneficiary } from '../../types/beneficiary.interface'
+import { Beneficiary, CounterpartyStatus } from '../../types/beneficiary.interface'
 
 const router = useRouter()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const { submitting, listNextPag, listBeneficiary, fetchBeneficiariesAssets } = useBeneficiary()
+const { submitting, listNextPag, listBeneficiary, fetchBeneficiariesAssets, getBeneficiaryStatusColor } =
+  useBeneficiary()
 
 const props = defineProps<{
   formData: any
@@ -75,14 +79,38 @@ const props = defineProps<{
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
 const onSelect = (item: Beneficiary) => {
-  const page = 0
-  const formData = {
-    beneficiary: item,
+  if (item.status === CounterpartyStatus.PENDING) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('beneficiaryPending'),
+      life: 8000,
+    })
+
+    return
   }
-  emit('nextPage', {
-    pageIndex: page,
-    formData: formData,
-  })
+
+  if (item.status === CounterpartyStatus.REJECTED) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: t('beneficiaryRejected'),
+      life: 8000,
+    })
+
+    return
+  }
+
+  if (item.status === CounterpartyStatus.ACTIVE) {
+    const page = 0
+    const formData = {
+      beneficiary: item,
+    }
+    emit('nextPage', {
+      pageIndex: page,
+      formData: formData,
+    })
+  }
 }
 
 const getIcon = (assetCode: string) => {
