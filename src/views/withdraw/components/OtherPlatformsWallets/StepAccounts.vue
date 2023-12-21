@@ -13,8 +13,11 @@
           v-for="item in listBeneficiary"
           @click="onSelect(item)"
         >
-          <img :src="getIcon(item.assetCode)" alt="" />
+          <img :src="getIcon(item.assetCode)" alt="" style="height: 56px" />
           <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+          <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{
+            item.status
+          }}</span>
           <div class="flex align-items-center">
             {{ t('withdraw') }}
             <i class="pi pi-angle-right"></i>
@@ -65,7 +68,8 @@ const router = useRouter()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
-const { submitting, listNextPag, listBeneficiary, fetchBeneficiariesAssets } = useBeneficiary()
+const { submitting, listNextPag, listBeneficiary, fetchBeneficiariesAssets, getBeneficiaryStatusColor } =
+  useBeneficiary()
 
 const props = defineProps<{
   formData: any

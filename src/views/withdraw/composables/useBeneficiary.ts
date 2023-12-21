@@ -1,6 +1,6 @@
 import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
-import { Beneficiary, BeneficiaryType } from '../types/beneficiary.interface'
+import { Beneficiary, BeneficiaryType, CounterpartyStatus } from '../types/beneficiary.interface'
 import { UserAccount } from '../types/account'
 
 export enum TypeBeneficiaryInternal {
@@ -58,6 +58,19 @@ export const useBeneficiary = () => {
     listBeneficiariesInternal.value = list
   }
 
+  const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
+    switch (status) {
+      case 'ACTIVE':
+        return '#00beb0'
+      case 'REJECTED':
+        return 'red'
+      case 'PENDING':
+        return '#b1b115'
+      default:
+        return 'black'
+    }
+  }
+
   return {
     fetchBeneficiariesInternal,
     fetchBeneficiariesAssets,
@@ -67,5 +80,6 @@ export const useBeneficiary = () => {
     listBeneficiary,
     listBeneficiariesInternal,
     fetchBeneficiaries,
+    getBeneficiaryStatusColor,
   }
 }

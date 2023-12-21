@@ -3,6 +3,7 @@
     <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiary">
       <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
         <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+        <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{ item.status }}</span>
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
         <Button
@@ -38,7 +39,7 @@
 
 <script lang="ts" setup>
 import Button from 'primevue/button'
-import { BeneficiaryType, NewBeneficiary } from '../types/beneficiary.interface'
+import { BeneficiaryType } from '../types/beneficiary.interface'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -47,7 +48,7 @@ import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
-const { submitting, listNextPag, listBeneficiary, fetchBeneficiaries } = useBeneficiary()
+const { submitting, listNextPag, listBeneficiary, fetchBeneficiaries, getBeneficiaryStatusColor } = useBeneficiary()
 const { setDataBeneficiary } = useNewOrEditBeneficiary()
 
 const emit = defineEmits(['select'])
