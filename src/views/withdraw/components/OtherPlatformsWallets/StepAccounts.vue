@@ -75,7 +75,6 @@ const props = defineProps<{
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
 const onSelect = (item: Beneficiary) => {
-  console.log('-- Beneficiary item', item.status)
   if (item.status === CounterpartyStatus.PENDING) {
     toast.add({
       severity: 'error',
