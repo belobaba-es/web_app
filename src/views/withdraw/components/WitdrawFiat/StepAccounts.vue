@@ -78,7 +78,7 @@ const onSelect = (item: Beneficiary) => {
     return
   }
 
-  if (item.status === CounterpartyStatus.ACTIVE) {
+  if (item.status === CounterpartyStatus.ACTIVE || item.status === undefined) {
     const page = 0
     const formData = {
       beneficiary: item,
