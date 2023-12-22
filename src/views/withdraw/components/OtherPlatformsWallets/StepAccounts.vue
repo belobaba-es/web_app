@@ -101,6 +101,7 @@ const onSelect = (item: Beneficiary) => {
     return
   }
 
+  // todo remove check for undefined
   if (item.status === CounterpartyStatus.ACTIVE || item.status === undefined) {
     const page = 0
     const formData = {
