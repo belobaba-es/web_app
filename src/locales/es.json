@@ -346,6 +346,7 @@
   "passwordOneCapitalLetter": "La contraseña debe tener al menos una letra mayúscula",
   "passwordOneSpecialCharacter": "La contraseña debe tener al menos un caracter especial",
   "confirmEmail": "Confirmar correo electrónico",
+  "invalidFormatEmail": "Correo electronico: Unicamente letras (a-z), numeros (0-9), punto (.), y guion (-)",
   "confirmEmailCodeText": "Por favor ingrese el código de verificación de 6 digitos que le enviamos a su correo electrónico",
   "confirmEmailCodePlaceholder": "Por favor ingrese el código de verificación de 6 digitos",
   "codeEmailLabel": "Código de verificación",

@@ -353,6 +353,7 @@
   "passwordOneCapitalLetter": "Password must have at least one capital letter",
   "passwordOneSpecialCharacter": "Password must have at least one special character",
   "confirmEmail": "Confirm email",
+  "invalidFormatEmail": "Email: Only letters (a-z), numbers (0-9), period (.), and hyphen (-)",
   "confirmEmailCodeText": "Enter the 6 digits code we sent to your email",
   "confirmEmailCodePlaceholder": "Enter the 6 digits code",
   "codeEmailLabel": "Code",

@@ -151,7 +151,6 @@ import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
-import { RegisterService } from './services/register'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import Checkbox from 'primevue/checkbox'
@@ -235,11 +234,11 @@ const handleSubmit = () => {
     return
   }
 
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password)) {
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.email)) {
     toast.add({
       severity: 'error',
       summary: t('somethingWentWrong'),
-      detail: t('passwordOneSpecialCharacter'),
+      detail: t('invalidFormatEmail'),
       life: 4000,
     })
     return
@@ -278,31 +277,31 @@ const handleSubmit = () => {
   submitting.value = true
   let email = form.email.toLowerCase().trim()
   let password = form.password.trim()
-  new RegisterService()
-    .register(email, password)
-    .then(data => {
-      submitting.value = false
-
-      toast.add({
-        severity: 'success',
-        summary: t('successfulOperation'),
-        detail: data.message,
-        life: 5000,
-      })
-
-      localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
-
-      alreadyRegisteredSendCodeVerifyEmail()
-    })
-    .catch(e => {
-      submitting.value = false
-      toast.add({
-        severity: 'info',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
-    })
+  // new RegisterService()
+  //   .register(email, password)
+  //   .then(data => {
+  //     submitting.value = false
+  //
+  //     toast.add({
+  //       severity: 'success',
+  //       summary: t('successfulOperation'),
+  //       detail: data.message,
+  //       life: 5000,
+  //     })
+  //
+  //     localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
+  //
+  //     alreadyRegisteredSendCodeVerifyEmail()
+  //   })
+  //   .catch(e => {
+  //     submitting.value = false
+  //     toast.add({
+  //       severity: 'info',
+  //       summary: t('somethingWentWrong'),
+  //       detail: e.response.data.message,
+  //       life: 4000,
+  //     })
+  //   })
 }
 const alreadyRegisteredSendCodeVerifyEmail = () => {
   router.push('/confirm-email/create-user')
