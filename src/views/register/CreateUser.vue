@@ -157,6 +157,7 @@ import Checkbox from 'primevue/checkbox'
 
 import patriotEs from './components/patriotEs.vue'
 import patriotEn from './components/patriotEn.vue'
+import { RegisterService } from './services/register'
 
 const submitting = ref(false)
 const visible = ref(false)
@@ -277,31 +278,31 @@ const handleSubmit = () => {
   submitting.value = true
   let email = form.email.toLowerCase().trim()
   let password = form.password.trim()
-  // new RegisterService()
-  //   .register(email, password)
-  //   .then(data => {
-  //     submitting.value = false
-  //
-  //     toast.add({
-  //       severity: 'success',
-  //       summary: t('successfulOperation'),
-  //       detail: data.message,
-  //       life: 5000,
-  //     })
-  //
-  //     localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
-  //
-  //     alreadyRegisteredSendCodeVerifyEmail()
-  //   })
-  //   .catch(e => {
-  //     submitting.value = false
-  //     toast.add({
-  //       severity: 'info',
-  //       summary: t('somethingWentWrong'),
-  //       detail: e.response.data.message,
-  //       life: 4000,
-  //     })
-  //   })
+  new RegisterService()
+    .register(email, password)
+    .then(data => {
+      submitting.value = false
+
+      toast.add({
+        severity: 'success',
+        summary: t('successfulOperation'),
+        detail: data.message,
+        life: 5000,
+      })
+
+      localStorage.setItem('noba@user-email', form.email.toLowerCase().trim())
+
+      alreadyRegisteredSendCodeVerifyEmail()
+    })
+    .catch(e => {
+      submitting.value = false
+      toast.add({
+        severity: 'info',
+        summary: t('somethingWentWrong'),
+        detail: e.response.data.message,
+        life: 4000,
+      })
+    })
 }
 const alreadyRegisteredSendCodeVerifyEmail = () => {
   router.push('/confirm-email/create-user')
