@@ -12,6 +12,7 @@ export type OnboardingPersonal = {
   streetOne: string
   streetTwo: string
   postalCode: string
+  documentCountry: string
   city: string
   region: string
   country: string

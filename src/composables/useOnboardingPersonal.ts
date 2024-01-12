@@ -96,6 +96,12 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
+  const documentCountry = (data: string) => {
+    if (data !== 'si') {
+      submitting.value = true
+    }
+  }
+
   // const watchChagedData = () => {
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
@@ -107,6 +113,7 @@ export const useOnboardingPersonal = () => {
   return {
     onboardingPersonal,
     submitting,
+    documentCountry,
     saveData,
     saveDataAndNextPag,
   }

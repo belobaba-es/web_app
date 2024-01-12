@@ -74,6 +74,31 @@
         </div>
       </div>
 
+      <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
+        <label>{{ t('docTypeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+
+        <div class="flex align-items-center">
+          <RadioButton
+            @change="documentCountry('si')"
+            v-model="onboardingPersonal.documentCountry"
+            inputId="si"
+            name="si"
+            value="si"
+          />
+          <label for="ingredient1" class="ml-2">{{ t('yes') }}</label>
+        </div>
+        <div class="flex align-items-center">
+          <RadioButton
+            @change="documentCountry('no')"
+            v-model="onboardingPersonal.documentCountry"
+            inputId="no"
+            name="no"
+            value="no"
+          />
+          <label for="ingredient2" class="ml-2">{{ t('no') }}</label>
+        </div>
+      </div>
+
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('docTypeLabelPassport') }}</label>
         <div class="p-inputgroup">
@@ -202,6 +227,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
+import RadioButton from 'primevue/radiobutton'
 
 import { useI18n } from 'vue-i18n'
 
@@ -217,7 +243,7 @@ const {
   calling_code,
 } = useWorld()
 
-const { onboardingPersonal, saveData, submitting, saveDataAndNextPag } = useOnboardingPersonal()
+const { onboardingPersonal, saveData, documentCountry, submitting, saveDataAndNextPag } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
@@ -228,10 +254,12 @@ onMounted(async () => {
 .phone-input {
   margin-top: 7px;
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 .btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;
