@@ -75,7 +75,7 @@
       </div>
 
       <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
-        <label>{{ t('docTypeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
 
         <div class="flex align-items-center">
           <RadioButton
@@ -99,46 +99,44 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('docTypeLabelPassport') }}</label>
-        <div class="p-inputgroup">
-          <InputText
-            type="text"
-            v-tooltip.top="'not required'"
-            v-model="onboardingPersonal.passport"
-            class="w-full"
-            required
-          />
+      <div class="flex" v-if="submitting">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
+          <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextPassport') }}</span>
+          </div>
         </div>
-        <div>
-          <span class="help-text">{{ t('helpTextPassport') }}</span>
-        </div>
-      </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+          </div>
         </div>
-        <div>
-          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
-        </div>
-      </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+          </div>
         </div>
       </div>
 
       <br />
 
-      <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
-      <Divider class="mt-0"></Divider>
+      <div class="col-12">
+        <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
+        <Divider class="mt-0"></Divider>
+      </div>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
@@ -243,7 +241,8 @@ const {
   calling_code,
 } = useWorld()
 
-const { onboardingPersonal, saveData, documentCountry, submitting, saveDataAndNextPag } = useOnboardingPersonal()
+const { onboardingPersonal, saveData, disabledInput, documentCountry, submitting, saveDataAndNextPag } =
+  useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {

@@ -1,29 +1,32 @@
 import { defineStore } from 'pinia'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
 import { useAuth } from '../composables/useAuth'
+
 const { getUserEmail } = useAuth()
 
 export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStore', {
-  state: (): OnboardingPersonal => ({
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: getUserEmail(),
-    dateBirth: '',
-    dni: '',
-    taxId: '',
-    passport: '',
-    phoneCountry: '',
-    phoneNumber: '',
-    streetOne: '',
-    streetTwo: '',
-    postalCode: '',
-    city: '',
-    region: '',
-    country: '',
-    type: '',
-    referredByAccountId: '',
-  }),
+  state: (): OnboardingPersonal =>
+    <OnboardingPersonal>{
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: getUserEmail(),
+      dateBirth: '',
+      dni: '',
+      taxId: '',
+      passport: '',
+      phoneCountry: '',
+      phoneNumber: '',
+      streetOne: '',
+      streetTwo: '',
+      postalCode: '',
+      city: '',
+      region: '',
+      country: '',
+      type: '',
+      documentCountry: '',
+      referredByAccountId: '',
+    },
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
       this.firstName = onboardingPersonal.firstName
@@ -40,6 +43,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.streetTwo = onboardingPersonal.streetTwo
       this.postalCode = onboardingPersonal.postalCode
       this.city = onboardingPersonal.city
+      this.documentCountry = onboardingPersonal.documentCountry
       this.region = onboardingPersonal.region
       this.country = onboardingPersonal.country
       this.type = onboardingPersonal.type
@@ -47,6 +51,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     },
     dataOnboardingPersonal(): OnboardingPersonal {
       return {
+        documentCountry: this.documentCountry,
         firstName: this.firstName,
         middleName: this.middleName,
         lastName: this.lastName,

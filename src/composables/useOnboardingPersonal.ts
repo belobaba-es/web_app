@@ -17,6 +17,8 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
+  const disabledInput = ref(false)
+
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
 
@@ -97,9 +99,8 @@ export const useOnboardingPersonal = () => {
   }
 
   const documentCountry = (data: string) => {
-    if (data !== 'si') {
-      submitting.value = true
-    }
+    submitting.value = true
+    disabledInput.value = data !== 'si'
   }
 
   // const watchChagedData = () => {
@@ -113,6 +114,7 @@ export const useOnboardingPersonal = () => {
   return {
     onboardingPersonal,
     submitting,
+    disabledInput,
     documentCountry,
     saveData,
     saveDataAndNextPag,

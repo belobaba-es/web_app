@@ -455,5 +455,6 @@
   "fileSizeError": "The file is larger than 5Mb.",
   "typeFileNotSelected": "You must select the document type.",
   "beneficiaryPending": "The user is being validated, we will let you know when is available.",
-  "beneficiaryRejected": "The beneficiary has being rejected, is not available."
+  "beneficiaryRejected": "The beneficiary has being rejected, is not available.",
+  "validDocument": "Do you have a valid identification document in the US?"
 }
