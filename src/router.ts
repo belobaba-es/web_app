@@ -184,6 +184,24 @@ const routes: RouteRecordRaw[] = [
             component: StepSuccessful,
           },
           {
+            path: 'fiat/ach/panama',
+            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
+            children: [
+              {
+                path: '',
+                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
+              },
+              {
+                path: 'owner',
+                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
+              },
+              {
+                path: 'bank-information',
+                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
+              },
+            ],
+          },
+          {
             path: 'crypto/other',
             component: OtherPlatFormsWallets,
             children: [
