@@ -34,7 +34,6 @@ export type Partner = {
   lastName: string
   email: string
   dateBirth: string
-  documentCountry: string
   dni: string
   taxId: string
   passport: string

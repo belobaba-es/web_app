@@ -71,15 +71,14 @@
 
         <div class="flex justify-content-center">
           <div class="flex gap-3">
-            <div v-for="category in typeDocument" :key="category.key" class="flex align-items-center">
+            <div v-for="data in typeDocumentPartner" :key="data.key" class="flex align-items-center">
               <RadioButton
-                v-model="partner.documentCountry"
-                :inputId="category.key"
+                :inputId="data.key"
                 name="dynamic"
-                @change="documentCountry(category.key)"
-                :value="category.key"
+                @change="documentCountryPartner(data.key)"
+                :value="data.key"
               />
-              <label :for="category.key" class="ml-2">{{ category.name }}</label>
+              <label :for="data.key" class="ml-2">{{ data.name }}</label>
             </div>
           </div>
         </div>
@@ -106,7 +105,7 @@
           </div>
         </div>
 
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-5">
           <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="partner.taxId" class="w-full" required />
@@ -239,8 +238,8 @@ const {
   addNewShareholder,
   redirectToStep2,
   disabledInput,
-  documentCountry,
-  typeDocument,
+  documentCountryPartner,
+  typeDocumentPartner,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
 } = useShareholder()

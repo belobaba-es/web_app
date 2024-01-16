@@ -22,7 +22,6 @@ export const useShareholder = () => {
       lastName: '',
       email: '',
       dateBirth: '',
-      documentCountry: '',
       dni: '',
       taxId: '',
       passport: '',
@@ -46,7 +45,6 @@ export const useShareholder = () => {
       lastName: partner.value.lastName,
       email: partner.value.email,
       dateBirth: partner.value.dateBirth,
-      documentCountry: partner.value.documentCountry,
       dni: partner.value.dni,
       phoneCountry: partner.value.phoneCountry,
       phoneNumber: partner.value.phoneNumber,
@@ -68,10 +66,16 @@ export const useShareholder = () => {
     return true
   }
 
-  const typeDocument = ref([
-    { name: 'Si', key: 'S' },
-    { name: 'No', key: 'N' },
+  const typeDocumentPartner = ref([
+    { name: 'Yes', key: 'US' },
+    { name: 'No', key: 'other' },
   ])
+
+  const documentCountryPartner = (data: string) => {
+    console.log('partner.value.documentCountry', data)
+    submitting.value = true
+    disabledInput.value = data !== 'US'
+  }
 
   const addNewShareholder = () => {
     if (!validateShareholder()) {
@@ -132,11 +136,6 @@ export const useShareholder = () => {
     return hasPartner.value
   }
 
-  const documentCountry = (data: string) => {
-    submitting.value = true
-    disabledInput.value = data !== 'S'
-  }
-
   const enableDataForCreateNewShareholder = () => {
     partner.value = initStatePartner()
   }
@@ -146,8 +145,8 @@ export const useShareholder = () => {
     partner,
     submitting,
     disabledInput,
-    typeDocument,
-    documentCountry,
+    typeDocumentPartner,
+    documentCountryPartner,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,

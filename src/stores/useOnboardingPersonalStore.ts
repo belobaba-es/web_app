@@ -24,8 +24,9 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       region: '',
       country: '',
       type: '',
-      documentCountry: '',
       referredByAccountId: '',
+
+      documentCountry: '',
     },
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
@@ -43,15 +44,15 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.streetTwo = onboardingPersonal.streetTwo
       this.postalCode = onboardingPersonal.postalCode
       this.city = onboardingPersonal.city
-      this.documentCountry = onboardingPersonal.documentCountry
       this.region = onboardingPersonal.region
       this.country = onboardingPersonal.country
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
+      this.documentCountry = onboardingPersonal.documentCountry
     },
+
     dataOnboardingPersonal(): OnboardingPersonal {
       return {
-        documentCountry: this.documentCountry,
         firstName: this.firstName,
         middleName: this.middleName,
         lastName: this.lastName,
@@ -70,6 +71,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
         country: this.country,
         type: this.type,
         referredByAccountId: this.referredByAccountId,
+        documentCountry: this.documentCountry,
       }
     },
   },

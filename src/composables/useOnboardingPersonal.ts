@@ -37,8 +37,8 @@ export const useOnboardingPersonal = () => {
   }
 
   const typeDocument = ref([
-    { name: 'Si', key: 'S' },
-    { name: 'No', key: 'N' },
+    { name: 'Yes', key: 'US' },
+    { name: 'No', key: 'other' },
   ])
 
   const saveData = () => {
@@ -103,9 +103,9 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
-  const documentCountry = (data: string) => {
+  const documentCountry = () => {
     submitting.value = true
-    disabledInput.value = data !== 'S'
+    disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
   }
 
   // const watchChagedData = () => {
