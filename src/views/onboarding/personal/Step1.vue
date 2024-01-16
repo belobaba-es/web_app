@@ -77,25 +77,19 @@
       <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
         <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
 
-        <div class="flex align-items-center">
-          <RadioButton
-            @change="documentCountry('si')"
-            v-model="onboardingPersonal.documentCountry"
-            inputId="si"
-            name="si"
-            value="si"
-          />
-          <label for="ingredient1" class="ml-2">{{ t('yes') }}</label>
-        </div>
-        <div class="flex align-items-center">
-          <RadioButton
-            @change="documentCountry('no')"
-            v-model="onboardingPersonal.documentCountry"
-            inputId="no"
-            name="no"
-            value="no"
-          />
-          <label for="ingredient2" class="ml-2">{{ t('no') }}</label>
+        <div class="flex justify-content-center">
+          <div class="flex gap-3">
+            <div v-for="category in typeDocument" :key="category.key" class="flex align-items-center">
+              <RadioButton
+                v-model="onboardingPersonal.documentCountry"
+                :inputId="category.key"
+                name="dynamic"
+                @change="documentCountry(category.key)"
+                :value="category.key"
+              />
+              <label :for="category.key" class="ml-2">{{ category.name }}</label>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -241,7 +235,7 @@ const {
   calling_code,
 } = useWorld()
 
-const { onboardingPersonal, saveData, disabledInput, documentCountry, submitting, saveDataAndNextPag } =
+const { onboardingPersonal, saveData, typeDocument, disabledInput, documentCountry, submitting, saveDataAndNextPag } =
   useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 

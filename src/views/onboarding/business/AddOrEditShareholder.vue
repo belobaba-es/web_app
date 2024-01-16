@@ -36,36 +36,57 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('docTypeLabelPassport') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextPassport') }}</span>
+      <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
+        <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+
+        <div class="flex justify-content-center">
+          <div class="flex gap-3">
+            <div v-for="category in typeDocument" :key="category.key" class="flex align-items-center">
+              <RadioButton
+                v-model="partner.documentCountry"
+                :inputId="category.key"
+                name="dynamic"
+                @change="documentCountry(category.key)"
+                :value="category.key"
+              />
+              <label :for="category.key" class="ml-2">{{ category.name }}</label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.dni" class="w-full" required />
+      <div class="flex" v-if="submitting">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
+          <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextPassport') }}</span>
+          </div>
         </div>
-        <div>
-          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.dni" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.taxId" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+          </div>
         </div>
       </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.taxId" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
-        </div>
-      </div>
-
+      <div class="col-12"></div>
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
@@ -207,6 +228,8 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
+import RadioButton from 'primevue/radiobutton'
+
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
   partner,
@@ -214,6 +237,9 @@ const {
   loadingDataToShareholder,
   addNewShareholder,
   redirectToStep2,
+  disabledInput,
+  documentCountry,
+  typeDocument,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
 } = useShareholder()

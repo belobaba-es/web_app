@@ -36,6 +36,11 @@ export const useOnboardingPersonal = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
   }
 
+  const typeDocument = ref([
+    { name: 'Si', key: 'S' },
+    { name: 'No', key: 'N' },
+  ])
+
   const saveData = () => {
     return new Promise((resolve, reject) => {
       submitting.value = true
@@ -100,7 +105,7 @@ export const useOnboardingPersonal = () => {
 
   const documentCountry = (data: string) => {
     submitting.value = true
-    disabledInput.value = data !== 'si'
+    disabledInput.value = data !== 'S'
   }
 
   // const watchChagedData = () => {
@@ -115,6 +120,7 @@ export const useOnboardingPersonal = () => {
     onboardingPersonal,
     submitting,
     disabledInput,
+    typeDocument,
     documentCountry,
     saveData,
     saveDataAndNextPag,

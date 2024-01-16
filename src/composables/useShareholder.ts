@@ -13,6 +13,7 @@ export const useShareholder = () => {
   const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
   const submitting = ref(false)
+  const disabledInput = ref(false)
 
   const initStatePartner = () => {
     return {
@@ -21,6 +22,7 @@ export const useShareholder = () => {
       lastName: '',
       email: '',
       dateBirth: '',
+      documentCountry: '',
       dni: '',
       taxId: '',
       passport: '',
@@ -44,6 +46,7 @@ export const useShareholder = () => {
       lastName: partner.value.lastName,
       email: partner.value.email,
       dateBirth: partner.value.dateBirth,
+      documentCountry: partner.value.documentCountry,
       dni: partner.value.dni,
       phoneCountry: partner.value.phoneCountry,
       phoneNumber: partner.value.phoneNumber,
@@ -64,6 +67,11 @@ export const useShareholder = () => {
 
     return true
   }
+
+  const typeDocument = ref([
+    { name: 'Si', key: 'S' },
+    { name: 'No', key: 'N' },
+  ])
 
   const addNewShareholder = () => {
     if (!validateShareholder()) {
@@ -124,6 +132,11 @@ export const useShareholder = () => {
     return hasPartner.value
   }
 
+  const documentCountry = (data: string) => {
+    submitting.value = true
+    disabledInput.value = data !== 'S'
+  }
+
   const enableDataForCreateNewShareholder = () => {
     partner.value = initStatePartner()
   }
@@ -132,6 +145,9 @@ export const useShareholder = () => {
     isShowAddNewShareholder,
     partner,
     submitting,
+    disabledInput,
+    typeDocument,
+    documentCountry,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,
