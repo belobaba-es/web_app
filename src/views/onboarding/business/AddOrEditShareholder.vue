@@ -36,7 +36,37 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
+        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <div class="p-inputgroup">
+          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <div class="p-inputgroup">
+          <!-- //FIX readonly -->
+          <InputText type="text" v-model="partner.email" class="w-full" required />
+        </div>
+      </div>
+
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
+        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <div class="field grid">
+          <div class="col-4">
+            <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
+          </div>
+          <div class="col-8">
+            <InputText id="phoneNumber" type="text" class="" v-model="partner.phoneNumber" required />
+            <div>
+              <span class="help-text">{{ t('helpTextPhone') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 col-12 mb-4 mt-4 align-content-center">
         <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
 
         <div class="flex justify-content-center">
@@ -87,35 +117,6 @@
         </div>
       </div>
       <div class="col-12"></div>
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <!-- //FIX readonly -->
-          <InputText type="text" v-model="partner.email" class="w-full" required />
-        </div>
-      </div>
-
-      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="field grid">
-          <div class="col-4">
-            <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
-          </div>
-          <div class="col-8">
-            <InputText id="phoneNumber" type="text" class="" v-model="partner.phoneNumber" required />
-            <div>
-              <span class="help-text">{{ t('helpTextPhone') }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
       <Divider class="mt-0"></Divider>
