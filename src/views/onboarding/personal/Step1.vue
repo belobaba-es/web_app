@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <div class="flex" v-if="submitting">
+      <div class="flex" v-if="disableSection">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
           <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
@@ -235,8 +235,15 @@ const {
   calling_code,
 } = useWorld()
 
-const { onboardingPersonal, typeDocument, disabledInput, documentCountry, submitting, saveDataAndNextPag } =
-  useOnboardingPersonal()
+const {
+  onboardingPersonal,
+  typeDocument,
+  disabledInput,
+  documentCountry,
+  disableSection,
+  submitting,
+  saveDataAndNextPag,
+} = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {

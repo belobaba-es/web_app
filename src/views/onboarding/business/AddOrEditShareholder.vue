@@ -84,7 +84,7 @@
         </div>
       </div>
 
-      <div class="flex" v-if="submitting">
+      <div class="flex" v-if="disableSection">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
           <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
@@ -234,6 +234,7 @@ const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty,
 const {
   partner,
   submitting,
+  disableSection,
   loadingDataToShareholder,
   addNewShareholder,
   redirectToStep2,

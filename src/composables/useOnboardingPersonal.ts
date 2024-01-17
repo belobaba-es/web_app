@@ -17,6 +17,7 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
+  const disableSection = ref(false)
   const disabledInput = ref(false)
 
   const toast = useToast()
@@ -104,7 +105,7 @@ export const useOnboardingPersonal = () => {
   }
 
   const documentCountry = () => {
-    submitting.value = true
+    disableSection.value = true
     disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
   }
 
@@ -119,6 +120,7 @@ export const useOnboardingPersonal = () => {
   return {
     onboardingPersonal,
     submitting,
+    disableSection,
     disabledInput,
     typeDocument,
     documentCountry,
