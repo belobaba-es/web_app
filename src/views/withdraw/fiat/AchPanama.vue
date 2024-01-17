@@ -6,7 +6,7 @@
       </p>
       <div class="flex align-items-center">
         <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
-        <span class="text-xl"> {{ type }} Wire hola</span>
+        <span class="text-xl"> {{ type }} Wire holasss</span>
       </div>
       <Steps class="stepper" :model="items" :readonly="false" />
 
@@ -43,7 +43,7 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
-const type = ref('ACHPanama')
+const type = ref('Panama')
 
 route.meta.noCache = true
 
@@ -76,9 +76,9 @@ const newBeneficiary = () => {
 }
 
 onMounted(async () => {
-  console.log('Domestic view', route.params.type)
-  if (route.params.type !== 'domestic') {
-    type.value = 'panama'
+  console.log('Domestic view asas', route.params.type)
+  if (route.params.type !== 'international' && route.params.type !== 'panama') {
+    type.value = 'Domestic'
   }
 })
 </script>

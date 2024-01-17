@@ -26,7 +26,6 @@ import BusinessPartners from './views/profile/businessAllie/BusinessPartners.vue
 import UploadDocumentsIndex from './views/onboarding/index.vue'
 
 import { useAuth } from './composables/useAuth'
-import WithdrawAchPanama from './views/withdraw/fiat/AchPanama.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -136,24 +135,24 @@ const routes: RouteRecordRaw[] = [
               },
             ],
           },
-          {
-            path: 'fiat/:type',
-            component: WithdrawAchPanama,
-            children: [
-              {
-                path: '',
-                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
-              },
-              {
-                path: 'amount',
-                component: WithdrawFiatStepAmount,
-              },
-              {
-                path: 'confirmation',
-                component: WithdrawFiatStepConfirmation,
-              },
-            ],
-          },
+          // {
+          //   path: 'fiat/:type',
+          //   component: WithdrawAchPanama,
+          //   children: [
+          //     {
+          //       path: '',
+          //       component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
+          //     },
+          //     {
+          //       path: 'amount',
+          //       component: WithdrawFiatStepAmount,
+          //     },
+          //     {
+          //       path: 'confirmation',
+          //       component: WithdrawFiatStepConfirmation,
+          //     },
+          //   ],
+          // },
           {
             path: 'fiat/domestic/new',
             component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
