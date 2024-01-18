@@ -15,6 +15,9 @@
         <span class="text-xl" v-else>
           {{ t('internationalWire') }}
         </span>
+        <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'Panama'">
+          {{ t('ACH Panama') }}
+        </span>
       </div>
 
       <div class="flex align-items-center">

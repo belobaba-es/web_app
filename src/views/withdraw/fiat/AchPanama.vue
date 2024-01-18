@@ -6,7 +6,7 @@
       </p>
       <div class="flex align-items-center">
         <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
-        <span class="text-xl"> {{ type }} Wire holasss</span>
+        <span class="text-xl"> {{ type }} Wire</span>
       </div>
       <Steps class="stepper" :model="items" :readonly="false" />
 
@@ -50,15 +50,15 @@ route.meta.noCache = true
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/domestic',
+    to: '/withdraw/fiat/panama',
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/domestic/amount',
+    to: '/withdraw/fiat/panama/amount',
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/domestic/confirmation',
+    to: '/withdraw/fiat/panama/confirmation',
   },
 ])
 
@@ -77,8 +77,8 @@ const newBeneficiary = () => {
 
 onMounted(async () => {
   console.log('Domestic view asas', route.params.type)
-  if (route.params.type !== 'international' && route.params.type !== 'panama') {
-    type.value = 'Domestic'
+  if (route.params.type !== 'international' && route.params.type !== 'Domestic') {
+    type.value = 'ACH Panama'
   }
 })
 </script>

@@ -5,6 +5,7 @@ import Login from './views/login/Index.vue'
 import Withdraw from './views/withdraw/Withdraw.vue'
 import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
 import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
+import WithdrawAchPanama from './views/withdraw/fiat/AchPanama.vue'
 import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
 import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 
@@ -135,24 +136,24 @@ const routes: RouteRecordRaw[] = [
               },
             ],
           },
-          // {
-          //   path: 'fiat/:type',
-          //   component: WithdrawAchPanama,
-          //   children: [
-          //     {
-          //       path: '',
-          //       component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
-          //     },
-          //     {
-          //       path: 'amount',
-          //       component: WithdrawFiatStepAmount,
-          //     },
-          //     {
-          //       path: 'confirmation',
-          //       component: WithdrawFiatStepConfirmation,
-          //     },
-          //   ],
-          // },
+          {
+            path: 'fiat/panama',
+            component: WithdrawAchPanama,
+            children: [
+              {
+                path: '',
+                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
+              },
+              {
+                path: 'amount',
+                component: WithdrawFiatStepAmount,
+              },
+              {
+                path: 'confirmation',
+                component: WithdrawFiatStepConfirmation,
+              },
+            ],
+          },
           {
             path: 'fiat/domestic/new',
             component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),

@@ -33,11 +33,9 @@ import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
-import { AccountService } from '../../../shared/services/account'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'
-import { useBeneficiary } from '../composables/useBeneficiary'
 
 const router = useRouter()
 const route = useRoute()
@@ -79,7 +77,7 @@ const newBeneficiary = () => {
 
 onMounted(async () => {
   console.log('Domestic view', route.params.type)
-  if (route.params.type !== 'domestic') {
+  if (route.params.type !== 'domestic' && route.params.type !== 'panama') {
     type.value = 'International'
   }
 })
