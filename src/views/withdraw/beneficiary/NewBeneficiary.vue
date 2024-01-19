@@ -12,10 +12,10 @@
         <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'DOMESTIC'">
           {{ t('domesticWire') }}
         </span>
-        <span class="text-xl" v-else>
+        <span class="text-xl" v-else-if="typeBeneficiary.toUpperCase() === 'INTERNATIONAL'">
           {{ t('internationalWire') }}
         </span>
-        <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'Panama'">
+        <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'PANAMA'">
           {{ t('ACH Panama') }}
         </span>
       </div>

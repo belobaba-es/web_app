@@ -1,10 +1,11 @@
 import axios from 'axios'
-import router from '../../router'
+import router from '../../router/router'
 import { useAuth } from '../../composables/useAuth'
 
 export interface payloadInterface {
   [key: string]: string | number | null | undefined
 }
+
 export class HttpService {
   constructor(private readonly urlAPI: string) {}
 

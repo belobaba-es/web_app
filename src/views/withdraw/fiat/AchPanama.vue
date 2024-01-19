@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
@@ -43,7 +43,7 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
-const type = ref('Panama')
+const type = ref('ACH Panama')
 
 route.meta.noCache = true
 
@@ -72,16 +72,8 @@ const {
 } = useWithdraw(items)
 
 const newBeneficiary = () => {
-  return router.push(`/withdraw/fiat/${route.params.type}/new`)
+  return router.push(`/withdraw/fiat/panama/new`)
 }
-console.log('ACH Panama view', route.params)
-
-onMounted(async () => {
-  if (route.params.type !== 'panama' && route.params.type !== 'Domestic') {
-    type.value = 'International'
-  }
-  console.log('ACH Panama view asas', route.params.type)
-})
 </script>
 
 <style scoped>

@@ -56,8 +56,10 @@ const emit = defineEmits(['select'])
 const loadMore = async () => {
   if (route.params.type === 'domestic') {
     await fetchBeneficiaries(BeneficiaryType.DOMESTIC)
-  } else {
+  } else if (route.params.type === 'international') {
     await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL)
+  } else {
+    await fetchBeneficiaries(BeneficiaryType.ACH_PAD)
   }
 }
 

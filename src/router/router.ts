@@ -1,32 +1,34 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import ProfileIndex from './views/profile/Index.vue'
-import Deposit from './views/deposit/Deposit.vue'
-import Login from './views/login/Index.vue'
-import Withdraw from './views/withdraw/Withdraw.vue'
-import InternalWithdraw from './views/withdraw/InternalWithdraw.vue'
-import WithdrawFiatDomestic from './views/withdraw/fiat/Domestic.vue'
-import WithdrawAchPanama from './views/withdraw/fiat/AchPanama.vue'
-import StepAccounts from './views/withdraw/components/InternalWithdraw/StepAccounts.vue'
-import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
+import ProfileIndex from '../views/profile/Index.vue'
+import Deposit from '../views/deposit/Deposit.vue'
+import Login from '../views/login/Index.vue'
+import Withdraw from '../views/withdraw/Withdraw.vue'
+import InternalWithdraw from '../views/withdraw/InternalWithdraw.vue'
+import WithdrawFiatDomestic from '../views/withdraw/fiat/Domestic.vue'
+import WithdrawAchPanama from '../views/withdraw/fiat/AchPanama.vue'
+import StepAccounts from '../views/withdraw/components/InternalWithdraw/StepAccounts.vue'
+import StepConfirmation from '../views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
 
-import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
-import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
-import SwapIndexVue from './views/swap/Index.vue'
-import SwapSuccess from './views/swap/Success.vue'
-import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
-import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
+import StepSuccessful from '../views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
+import WithdrawFiatStepAmount from '../views/withdraw/components/WitdrawFiat/StepAmount.vue'
+import WithdrawFiatStepConfirmation from '../views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
+import SwapIndexVue from '../views/swap/Index.vue'
+import SwapSuccess from '../views/swap/Success.vue'
+import OtherPlatFormsWallets from '../views/withdraw/crypto/OtherPlatformsWallets.vue'
+import WithdrawOtherPlatformsStepConfirmation from '../views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 
-import WalletIndex from './views/wallet/Wallet.vue'
-import TransactionHistoryWallet from './views/wallet/Transaction.vue'
+import WalletIndex from '../views/wallet/Wallet.vue'
+import TransactionHistoryWallet from '../views/wallet/Transaction.vue'
 
-import TransactionHistory from './views/transaction-history/Index.vue'
-import RecoveryTwoFactorAuth from './views/recovery-two-factor-auth/Index.vue'
-import BusinessPartners from './views/profile/businessAllie/BusinessPartners.vue'
+import TransactionHistory from '../views/transaction-history/Index.vue'
+import RecoveryTwoFactorAuth from '../views/recovery-two-factor-auth/Index.vue'
+import BusinessPartners from '../views/profile/businessAllie/BusinessPartners.vue'
 
-import UploadDocumentsIndex from './views/onboarding/index.vue'
+import UploadDocumentsIndex from '../views/onboarding/index.vue'
 
-import { useAuth } from './composables/useAuth'
+import { useAuth } from '../composables/useAuth'
+import { routerPanama } from './routerPanama'
+import { routerBeneficiaryPanama } from './routerBeneficiaryPanama'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -35,7 +37,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/forgot-password',
-    component: () => import('./views/forgot-password/ForgotPassword.vue'),
+    component: () => import('../views/forgot-password/ForgotPassword.vue'),
   },
   {
     path: '/recovery-two-factor-auth',
@@ -43,24 +45,24 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/create-user',
-    component: () => import('./views/register/CreateUser.vue'),
+    component: () => import('../views/register/CreateUser.vue'),
   },
   {
     path: '/confirm-email/:view',
-    component: () => import('./views/register/ConfirmEmail.vue'),
+    component: () => import('../views/register/ConfirmEmail.vue'),
   },
 
   {
     path: '/dashboard',
-    component: () => import('./views/dashboard/Dashboard.vue'),
+    component: () => import('../views/dashboard/Dashboard.vue'),
     children: [
       {
         path: '',
-        component: () => import('./views/dashboard/Index.vue'),
+        component: () => import('../views/dashboard/Index.vue'),
       },
       {
         path: '/profile/:accountId',
-        component: () => import('./views/profile/Profile.vue'),
+        component: () => import('../views/profile/Profile.vue'),
         children: [
           {
             path: '',
@@ -68,7 +70,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'settings',
-            component: () => import('./views/profile/settings/Index.vue'),
+            component: () => import('../views/profile/settings/Index.vue'),
           },
           {
             path: 'business-partners',
@@ -85,11 +87,11 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat',
-            component: () => import('./views/deposit/Fiat.vue'),
+            component: () => import('../views/deposit/Fiat.vue'),
           },
           {
             path: 'crypto/:assetCode?',
-            component: () => import('./views/deposit/Crypto.vue'),
+            component: () => import('../views/deposit/Crypto.vue'),
           },
         ],
       },
@@ -110,7 +112,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'amount',
-                component: () => import('./views/withdraw/components/InternalWithdraw/StepAmount.vue'),
+                component: () => import('../views/withdraw/components/InternalWithdraw/StepAmount.vue'),
               },
               {
                 path: 'confirmation',
@@ -124,7 +126,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
+                component: () => import('../views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
               },
               {
                 path: 'amount',
@@ -139,36 +141,28 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'fiat/panama',
             component: WithdrawAchPanama,
-            children: [
-              {
-                path: '',
-                component: () => import('./views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
-              },
-              {
-                path: 'amount',
-                component: WithdrawFiatStepAmount,
-              },
-              {
-                path: 'confirmation',
-                component: WithdrawFiatStepConfirmation,
-              },
-            ],
+            children: routerPanama,
+          },
+          {
+            path: 'fiat/panama/new',
+            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
+            children: routerBeneficiaryPanama,
           },
           {
             path: 'fiat/domestic/new',
-            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
+            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
-                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',
-                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'bank-information',
-                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
@@ -178,23 +172,23 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'fiat/international/new',
-            component: () => import('./views/withdraw/beneficiary/NewBeneficiary.vue'),
+            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
             children: [
               {
                 path: '',
-                component: () => import('./views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
               },
               {
                 path: 'owner',
-                component: () => import('./views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
               },
               {
                 path: 'intermediary-bank',
-                component: () => import('./views/withdraw/beneficiary/components/StepIntermediaryBank.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepIntermediaryBank.vue'),
               },
               {
                 path: 'bank-information',
-                component: () => import('./views/withdraw/beneficiary/components/StepInformationBank.vue'),
+                component: () => import('../views/withdraw/beneficiary/components/StepInformationBank.vue'),
               },
             ],
           },
@@ -208,11 +202,11 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: '',
-                component: () => import('./views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'),
+                component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'),
               },
               {
                 path: 'amount',
-                component: () => import('./views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'),
+                component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'),
               },
               {
                 path: 'confirmation',
@@ -222,7 +216,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'crypto/other/add-beneficiary',
-            component: () => import('./views/withdraw/crypto/AddBeneficiary.vue'),
+            component: () => import('../views/withdraw/crypto/AddBeneficiary.vue'),
           },
         ],
         meta: {
@@ -238,7 +232,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'history',
-            component: () => import('./views/swap/History.vue'),
+            component: () => import('../views/swap/History.vue'),
           },
           {
             path: 'success',
@@ -270,7 +264,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/onboarding',
-        component: () => import('./views/onboarding/index.vue'),
+        component: () => import('../views/onboarding/index.vue'),
       },
       {
         path: '/onboarding/personal',
@@ -280,19 +274,19 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('./views/onboarding/personal/index.vue'),
+            component: () => import('../views/onboarding/personal/index.vue'),
             children: [
               {
                 path: 'step1',
-                component: () => import('./views/onboarding/personal/Step1.vue'),
+                component: () => import('../views/onboarding/personal/Step1.vue'),
               },
               {
                 path: 'step2',
-                component: () => import('./views/onboarding/personal/Step2.vue'),
+                component: () => import('../views/onboarding/personal/Step2.vue'),
               },
               {
                 path: 'completed',
-                component: () => import('./views/onboarding/components/CompletedDocument.vue'),
+                component: () => import('../views/onboarding/components/CompletedDocument.vue'),
               },
             ],
           },
@@ -306,7 +300,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('./views/onboarding/business/index.vue'),
+            component: () => import('../views/onboarding/business/index.vue'),
             children: [
               {
                 path: '',
@@ -314,33 +308,33 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'step1',
-                component: () => import('./views/onboarding/business/Step1.vue'),
+                component: () => import('../views/onboarding/business/Step1.vue'),
               },
               {
                 path: 'step2',
-                component: () => import('./views/onboarding/business/Step2.vue'),
+                component: () => import('../views/onboarding/business/Step2.vue'),
               },
               {
                 path: 'step3',
-                component: () => import('./views/onboarding/business/Step3.vue'),
+                component: () => import('../views/onboarding/business/Step3.vue'),
               },
               {
                 path: 'step4',
-                component: () => import('./views/onboarding/business/Step4.vue'),
+                component: () => import('../views/onboarding/business/Step4.vue'),
               },
               {
                 path: 'step2/new-shareholder',
                 name: 'new-shareholder',
-                component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
+                component: () => import('../views/onboarding/business/AddOrEditShareholder.vue'),
               },
               {
                 path: 'step2/edit-shareholder/:dni',
                 name: 'edit-shareholder',
-                component: () => import('./views/onboarding/business/AddOrEditShareholder.vue'),
+                component: () => import('../views/onboarding/business/AddOrEditShareholder.vue'),
               },
               {
                 path: 'completed',
-                component: () => import('./views/onboarding/components/CompletedDocument.vue'),
+                component: () => import('../views/onboarding/components/CompletedDocument.vue'),
               },
             ],
           },

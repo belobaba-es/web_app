@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { NewBeneficiary } from '../../types/beneficiary.interface'
+import { NewBeneficiary, NewBeneficiaryPanama } from '../../types/beneficiary.interface'
 import { BeneficiaryService } from '../../services/beneficiary'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
@@ -54,6 +54,16 @@ const formObject = ref<NewBeneficiary>({
     },
   },
 })
+const formObjectPanama = ref<NewBeneficiaryPanama>({
+  bankName: '',
+  accountDestinationNumber: '',
+  holderEmail: '',
+  productType: '',
+  holderId: '',
+  holderName: '',
+  concept: '',
+  isInternal: false,
+})
 
 export const useNewOrEditBeneficiary = () => {
   const router = useRouter()
@@ -66,30 +76,42 @@ export const useNewOrEditBeneficiary = () => {
     typeBeneficiary.value = 'DOMESTIC'
   } else if (route.path.includes('international')) {
     typeBeneficiary.value = 'INTERNATIONAL'
+  } else if (route.path.includes('panama')) {
+    typeBeneficiary.value = 'PANAMA'
   }
+  console.log(typeBeneficiary.value)
 
-  const itemSteps = ref([
-    {
+  const itemSteps = ref<Array<{ label: string; to: string }>>([])
+
+  if (typeBeneficiary.value.toUpperCase() === 'PANAMA') {
+    itemSteps.value.push({
       label: t('informationAccountText'),
       to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
-    },
-    {
-      label: t('beneficiaryInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
-    },
-    {
-      label: t('bankAccountInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
-    },
-  ])
+    })
+  } else {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      }
+    )
 
-  if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
-    const nuevoItem = {
-      label: t('intermediaryBank'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+    if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
+      const nuevoItem = {
+        label: t('intermediaryBank'),
+        to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+      }
+
+      itemSteps.value.push(nuevoItem)
     }
-
-    itemSteps.value.splice(itemSteps.value.length - 1, 0, nuevoItem)
   }
 
   const nextPage = (event: any) => {
@@ -168,6 +190,7 @@ export const useNewOrEditBeneficiary = () => {
     itemSteps,
     typeBeneficiary,
     formObject,
+    formObjectPanama,
     setDataBeneficiary,
     saveBeneficiary,
     complete,

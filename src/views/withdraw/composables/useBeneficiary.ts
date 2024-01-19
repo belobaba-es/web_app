@@ -27,6 +27,20 @@ export const useBeneficiary = () => {
     })
   }
 
+  ;/TUDO: Refactor this method to use the same method as fetchBeneficiariesAchPanama/
+  const fetchBeneficiariesAchPanama = async (beneficiaryType: BeneficiaryType) => {
+    submitting.value = true
+
+    await new BeneficiaryService().listBeneficiaryAchPanama(beneficiaryType, listNextPag.value).then(resp => {
+      resp.results.forEach((element: any) => {
+        listBeneficiary.value.push(element)
+      })
+      submitting.value = false
+      listNextPag.value = Number(resp.nextPag)
+    })
+  }
+  ;/TUDO: Refactor this method to use the same method as fetchBeneficiariesAchPanama/
+
   const fetchBeneficiariesAssets = async () => {
     await new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
       resp.results.forEach(element => {
