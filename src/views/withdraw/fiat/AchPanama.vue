@@ -50,15 +50,15 @@ route.meta.noCache = true
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/panama',
+    to: `/withdraw/fiat/${route.params.type}`,
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/panama/amount',
+    to: `/withdraw/fiat/${route.params.type}/amount`,
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/panama/confirmation',
+    to: `/withdraw/fiat/${route.params.type}/confirmation`,
   },
 ])
 
@@ -74,12 +74,13 @@ const {
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)
 }
+console.log('ACH Panama view', route.params)
 
 onMounted(async () => {
-  console.log('Domestic view asas', route.params.type)
-  if (route.params.type !== 'international' && route.params.type !== 'Domestic') {
-    type.value = 'ACH Panama'
+  if (route.params.type !== 'panama' && route.params.type !== 'Domestic') {
+    type.value = 'International'
   }
+  console.log('ACH Panama view asas', route.params.type)
 })
 </script>
 
