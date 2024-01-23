@@ -21,6 +21,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
 
 export const useNewBeneficiaryPanama = () => {
   const toast = useToast()
+  const listBeneficiaryPanama = ref([])
   const { t } = useI18n({ useScope: 'global' })
 
   const productType = ref([
@@ -45,7 +46,7 @@ export const useNewBeneficiaryPanama = () => {
   const getBeneficiaryPanama = () => {
     new BeneficiaryService().listBeneficiaryAchPanama(BeneficiaryType.ACH_PAD).then(response => {
       if (response.status === 200) {
-        formObjectPanama.value = response.data
+        listBeneficiaryPanama.value = response.data
       } else {
         toast.add({
           severity: 'error',
@@ -89,6 +90,7 @@ export const useNewBeneficiaryPanama = () => {
   return {
     formObjectPanama,
     productType,
+    listBeneficiaryPanama,
     save,
   }
 }
