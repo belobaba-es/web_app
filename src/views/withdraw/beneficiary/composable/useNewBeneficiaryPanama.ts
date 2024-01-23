@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { NewBeneficiaryPanama } from '../../types/beneficiary.interface'
+import { BeneficiaryType, NewBeneficiaryPanama } from '../../types/beneficiary.interface'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { BeneficiaryService } from '../../services/beneficiary'
@@ -40,6 +40,21 @@ export const useNewBeneficiaryPanama = () => {
       achPanama.holderId,
       achPanama.holderEmail,
     ].every(field => field.toString() !== '')
+  }
+
+  const getBeneficiaryPanama = () => {
+    new BeneficiaryService().listBeneficiaryAchPanama(BeneficiaryType.ACH_PAD).then(response => {
+      if (response.status === 200) {
+        formObjectPanama.value = response.data
+      } else {
+        toast.add({
+          severity: 'error',
+          summary: t('error'),
+          detail: t('errorDetail'),
+          life: 4000,
+        })
+      }
+    })
   }
 
   const save = () => {
