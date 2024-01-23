@@ -93,11 +93,18 @@ export type NewBeneficiaryPanama = {
   bankName: string
   accountDestinationNumber: string
   holderEmail: string
-  productType: string
+  productType: productType
   holderId: string
   holderName: string
-  concept: string
-  isInternal: boolean
+  //concept: string
+  isInternal: false
+}
+
+export interface productType {
+  PACA: string
+  PACC: string
+  LOANP: string
+  ICCP: string
 }
 
 export type NewBeneficiary = {

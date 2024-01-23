@@ -447,5 +447,6 @@
   "fileSizeError": "El archivo supera los 5Mb.",
   "typeFileNotSelected": "Debe seleccionar el tipo de documento.",
   "beneficiaryPending": "Los datos del beneficiario estan siendo valdiados, le enviaremos un correo electronico tan pronto sea aprobado",
-  "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el."
+  "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el.",
+  "typeProduct": "Tipo de producto"
 }

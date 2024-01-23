@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { NewBeneficiary, NewBeneficiaryPanama } from '../../types/beneficiary.interface'
+import { NewBeneficiary } from '../../types/beneficiary.interface'
 import { BeneficiaryService } from '../../services/beneficiary'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
@@ -53,16 +53,6 @@ const formObject = ref<NewBeneficiary>({
       country: '',
     },
   },
-})
-const formObjectPanama = ref<NewBeneficiaryPanama>({
-  bankName: '',
-  accountDestinationNumber: '',
-  holderEmail: '',
-  productType: '',
-  holderId: '',
-  holderName: '',
-  concept: '',
-  isInternal: false,
 })
 
 export const useNewOrEditBeneficiary = () => {
@@ -190,7 +180,6 @@ export const useNewOrEditBeneficiary = () => {
     itemSteps,
     typeBeneficiary,
     formObject,
-    formObjectPanama,
     setDataBeneficiary,
     saveBeneficiary,
     complete,

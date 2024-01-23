@@ -4,6 +4,7 @@ import {
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
   BeneficiaryType,
+  NewBeneficiaryPanama,
 } from '../types/beneficiary.interface'
 import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
 
@@ -38,5 +39,9 @@ export class BeneficiaryService {
 
   async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/asset`, payload)
+  }
+
+  async saveBeneficiaryAchPanama(payload: NewBeneficiaryPanama): Promise<any> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach`, payload)
   }
 }
