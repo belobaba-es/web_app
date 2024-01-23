@@ -103,7 +103,7 @@ export type NewBeneficiaryPanama = {
 export interface productType {
   PACA: string
   PACC: string
-  LOANP: string
+  LOAN: string
   ICCP: string
 }
 

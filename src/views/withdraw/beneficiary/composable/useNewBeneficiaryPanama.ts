@@ -11,7 +11,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   productType: {
     PACA: '',
     PACC: '',
-    LOANP: '',
+    LOAN: '',
     ICCP: '',
   },
   holderId: '',
