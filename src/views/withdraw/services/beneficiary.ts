@@ -29,7 +29,7 @@ export class BeneficiaryService {
 
   async listBeneficiaryAchPanama(beneficiaryType: BeneficiaryType, nextPag = 1) {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(
-      `beneficiary/ach/${nextPag}?withdrawalType=${beneficiaryType}`
+      `beneficiary/ach/pab/?withdrawalType=${beneficiaryType}`
     )
   }
 
@@ -42,6 +42,6 @@ export class BeneficiaryService {
   }
 
   async saveBeneficiaryAchPanama(payload: NewBeneficiaryPanama): Promise<any> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach`, payload)
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach/pab`, payload)
   }
 }
