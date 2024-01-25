@@ -54,12 +54,13 @@ const { setDataBeneficiary } = useNewOrEditBeneficiary()
 const emit = defineEmits(['select'])
 
 const loadMore = async () => {
+  //console.log(route.params.type)
   if (route.params.type === 'domestic') {
     await fetchBeneficiaries(BeneficiaryType.DOMESTIC)
-  } else if (route.params.type === 'international') {
-    await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL)
-  } else {
+  } else if (route.params.type === 'PANAMA') {
     await fetchBeneficiaries(BeneficiaryType.ACH_PAD)
+  } else {
+    await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL)
   }
 }
 

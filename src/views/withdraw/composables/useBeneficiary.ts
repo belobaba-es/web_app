@@ -17,7 +17,7 @@ export const useBeneficiary = () => {
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
-
+    console.log('fetchBeneficiaries', beneficiaryType)
     await new BeneficiaryService().listBeneficiaryBankingExternal(beneficiaryType, listNextPag.value).then(resp => {
       resp.results.forEach((element: any) => {
         listBeneficiary.value.push(element)
