@@ -46,16 +46,16 @@
 </template>
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import DomesticTransferDetail from '../../../../components/DomesticTransferDetail.vue'
-import InternationalTransferDetail from '../../../../components/InternationalTransferDetail.vue'
+import DomesticTransferDetail from '../../../components/DomesticTransferDetail.vue'
+import InternationalTransferDetail from '../../../components/InternationalTransferDetail.vue'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
-import { generateTransactionReceipt } from '../../../../shared/generatePdf'
-import logo from '../../../../assets/img/logo.png'
+import transformCharactersIntoAsterics from '../../../shared/transformCharactersIntoAsterics'
+import { generateTransactionReceipt } from '../../../shared/generatePdf'
+import logo from '../../../assets/img/logo.png'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '../../../../composables/useAuth'
+import { useAuth } from '../../../composables/useAuth'
 
 const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })

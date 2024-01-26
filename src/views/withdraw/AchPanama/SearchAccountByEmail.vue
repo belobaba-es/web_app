@@ -16,7 +16,7 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
-import { AccountService } from '../../../../shared/services/account'
+import { AccountService } from '../../../shared/services/account'
 
 const toast = useToast()
 const emit = defineEmits(['listBeneficiaries'])

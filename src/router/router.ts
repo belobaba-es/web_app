@@ -28,7 +28,7 @@ import UploadDocumentsIndex from '../views/onboarding/index.vue'
 
 import { useAuth } from '../composables/useAuth'
 import { routerPanama } from './routerPanama'
-import { routerBeneficiaryPanama } from './routerBeneficiaryPanama'
+import NewBeneficiaryPanama from '../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -146,7 +146,12 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'fiat/panama/new',
             component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
-            children: routerBeneficiaryPanama,
+            children: [
+              {
+                path: '',
+                component: NewBeneficiaryPanama,
+              },
+            ],
           },
           {
             path: 'fiat/domestic/new',

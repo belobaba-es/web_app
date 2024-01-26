@@ -1,7 +1,7 @@
 <template>
   <div class="col-12 md:col-8 mt-5">
     <div class="field">
-      <label>Nombre del Banco</label>
+      <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="formObjectPanama.bankName" required />
       </div>

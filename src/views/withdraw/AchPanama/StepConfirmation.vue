@@ -61,12 +61,12 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import { ref } from 'vue'
-import { WithdrawService } from '../../services/withdraw'
+import { WithdrawService } from '../services/withdraw'
 import { useToast } from 'primevue/usetoast'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
-import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
-import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import showMessage from '../../../../shared/showMessageArray'
+import VeryCodeTwoFactorAuth from '../../../components/VeryCodeTwoFactorAuth.vue'
+import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
+import showMessage from '../../../shared/showMessageArray'
 
 const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()

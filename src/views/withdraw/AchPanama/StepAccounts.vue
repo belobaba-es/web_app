@@ -35,11 +35,11 @@ import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import ListBeneficiary from '../../beneficiary/ListBeneficiary.vue'
+import ListBeneficiary from '../beneficiary/ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { Beneficiary, CounterpartyStatus } from '../../types/beneficiary.interface'
+import { Beneficiary, CounterpartyStatus } from '../types/beneficiary.interface'
 
 const submitting = ref(false)
 
