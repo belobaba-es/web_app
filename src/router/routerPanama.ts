@@ -1,9 +1,5 @@
 export const routerPanama = [
   {
-    path: 'beneficiary',
-    component: () => import('../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'),
-  },
-  {
     path: '',
     component: () => import('../views/withdraw/fiat/AchPanama.vue'),
     children: [
@@ -20,5 +16,9 @@ export const routerPanama = [
         component: () => import('../views/withdraw/AchPanama/StepConfirmation.vue'),
       },
     ],
+  },
+  {
+    path: 'beneficiary',
+    component: () => import('../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'),
   },
 ]

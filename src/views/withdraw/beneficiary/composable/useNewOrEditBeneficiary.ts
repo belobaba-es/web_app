@@ -66,19 +66,12 @@ export const useNewOrEditBeneficiary = () => {
     typeBeneficiary.value = 'DOMESTIC'
   } else if (route.path.includes('international')) {
     typeBeneficiary.value = 'INTERNATIONAL'
-  } else if (route.path.includes('panama')) {
-    typeBeneficiary.value = 'PANAMA'
   }
   console.log(typeBeneficiary.value)
 
   const itemSteps = ref<Array<{ label: string; to: string }>>([])
 
-  if (typeBeneficiary.value.toUpperCase() === 'PANAMA') {
-    itemSteps.value.push({
-      label: t('informationAccountText'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
-    })
-  } else {
+  if (typeBeneficiary.value.toUpperCase() === 'DOMESTIC') {
     itemSteps.value.push(
       {
         label: t('informationAccountText'),

@@ -138,18 +138,14 @@ const events = ref<any>([
   { amount: '2,5', label: 'Fee', name: false },
   { amount: '2,5', label: `You send to `, name: true },
 ])
-const typeTransaction = ref('domestic')
+const typeTransaction = ref('panama')
 
 onMounted(async () => {
   if (props.formData.typeTransaction && props.formData.typeTransaction.toLowerCase() !== 'domestic') {
-    typeTransaction.value = 'international'
+    typeTransaction.value = 'panama'
   }
-  getUserFee()
 })
 
-const getUserFee = () => {
-  fee.value = typeTransaction.value === 'domestic' ? getUserFeeWire().domestic.out : getUserFeeWire().international.out
-}
 const amountFee = computed(() => {
   const total = isNaN(amount.value + fee.value) ? 0 : amount.value + fee.value
   if (total > balance.value) {
