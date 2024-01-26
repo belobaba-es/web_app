@@ -1,18 +1,23 @@
-import WithdrawFiatStepAmount from '../views/withdraw/AchPanama/StepAmount.vue'
-import WithdrawFiatStepConfirmation from '../views/withdraw/AchPanama/StepConfirmation.vue'
-
 export const routerPanama = [
   {
+    path: 'beneficiary',
+    component: () => import('../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'),
+  },
+  {
     path: '',
-    component: () => import('../views/withdraw/AchPanama/StepAccounts.vue'),
+    component: () => import('../views/withdraw/fiat/AchPanama.vue'),
     children: [
       {
+        path: '',
+        component: () => import('../views/withdraw/AchPanama/StepAccounts.vue'),
+      },
+      {
         path: 'amount',
-        component: WithdrawFiatStepAmount,
+        component: () => import('../views/withdraw/AchPanama/StepAmount.vue'),
       },
       {
         path: 'confirmation',
-        component: WithdrawFiatStepConfirmation,
+        component: () => import('../views/withdraw/AchPanama/StepConfirmation.vue'),
       },
     ],
   },

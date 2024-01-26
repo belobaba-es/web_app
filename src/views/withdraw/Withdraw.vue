@@ -12,9 +12,9 @@
 
           <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/fiat" />
 
-          <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/fiat/domestic" />
+          <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/usa/fiat/domestic" />
 
-          <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/fiat/international" />
+          <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/usa/fiat/international" />
 
           <CardButon class="m-4" :label="t('ACH Panama')" to="/withdraw/fiat/panama" />
         </div>

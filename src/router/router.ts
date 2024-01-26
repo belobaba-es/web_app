@@ -3,19 +3,8 @@ import ProfileIndex from '../views/profile/Index.vue'
 import Deposit from '../views/deposit/Deposit.vue'
 import Login from '../views/login/Index.vue'
 import Withdraw from '../views/withdraw/Withdraw.vue'
-import InternalWithdraw from '../views/withdraw/InternalWithdraw.vue'
-import WithdrawFiatDomestic from '../views/withdraw/fiat/Domestic.vue'
-import WithdrawAchPanama from '../views/withdraw/fiat/AchPanama.vue'
-import StepAccounts from '../views/withdraw/components/InternalWithdraw/StepAccounts.vue'
-import StepConfirmation from '../views/withdraw/components/InternalWithdraw/StepConfirmation.vue'
-
-import StepSuccessful from '../views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-import WithdrawFiatStepAmount from '../views/withdraw/components/WitdrawFiat/StepAmount.vue'
-import WithdrawFiatStepConfirmation from '../views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 import SwapIndexVue from '../views/swap/Index.vue'
 import SwapSuccess from '../views/swap/Success.vue'
-import OtherPlatFormsWallets from '../views/withdraw/crypto/OtherPlatformsWallets.vue'
-import WithdrawOtherPlatformsStepConfirmation from '../views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 
 import WalletIndex from '../views/wallet/Wallet.vue'
 import TransactionHistoryWallet from '../views/wallet/Transaction.vue'
@@ -27,8 +16,9 @@ import BusinessPartners from '../views/profile/businessAllie/BusinessPartners.vu
 import UploadDocumentsIndex from '../views/onboarding/index.vue'
 
 import { useAuth } from '../composables/useAuth'
+import { routerUSA } from './routerUSA'
 import { routerPanama } from './routerPanama'
-import NewBeneficiaryPanama from '../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'
+import { routerInternalTransfer } from './routerInternalTransfer'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -97,136 +87,22 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/withdraw',
-        children: [
-          {
-            path: '',
-            component: Withdraw,
-          },
-          {
-            path: 'noba/:type',
-            component: InternalWithdraw,
-            children: [
-              {
-                path: '',
-                component: StepAccounts,
-              },
-              {
-                path: 'amount',
-                component: () => import('../views/withdraw/components/InternalWithdraw/StepAmount.vue'),
-              },
-              {
-                path: 'confirmation',
-                component: StepConfirmation,
-              },
-            ],
-          },
-          {
-            path: 'fiat/:type',
-            component: WithdrawFiatDomestic,
-            children: [
-              {
-                path: '',
-                component: () => import('../views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
-              },
-              {
-                path: 'amount',
-                component: WithdrawFiatStepAmount,
-              },
-              {
-                path: 'confirmation',
-                component: WithdrawFiatStepConfirmation,
-              },
-            ],
-          },
-          {
-            path: 'fiat/panama',
-            component: WithdrawAchPanama,
-            children: routerPanama,
-          },
-          {
-            path: 'fiat/panama/new',
-            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
-            children: [
-              {
-                path: '',
-                component: NewBeneficiaryPanama,
-              },
-            ],
-          },
-          {
-            path: 'fiat/domestic/new',
-            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
-            children: [
-              {
-                path: '',
-                component: () => import('../views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
-              },
-              {
-                path: 'owner',
-                component: () => import('../views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
-              },
-              {
-                path: 'bank-information',
-                component: () => import('../views/withdraw/beneficiary/components/StepInformationBank.vue'),
-              },
-            ],
-          },
-          {
-            path: 'fiat/domestic/successful',
-            component: StepSuccessful,
-          },
-          {
-            path: 'fiat/international/new',
-            component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
-            children: [
-              {
-                path: '',
-                component: () => import('../views/withdraw/beneficiary/components/StepAccountNewBeneficiary.vue'),
-              },
-              {
-                path: 'owner',
-                component: () => import('../views/withdraw/beneficiary/components/StepOwnerNewBeneficiary.vue'),
-              },
-              {
-                path: 'intermediary-bank',
-                component: () => import('../views/withdraw/beneficiary/components/StepIntermediaryBank.vue'),
-              },
-              {
-                path: 'bank-information',
-                component: () => import('../views/withdraw/beneficiary/components/StepInformationBank.vue'),
-              },
-            ],
-          },
-          {
-            path: 'fiat/international/successful',
-            component: StepSuccessful,
-          },
-          {
-            path: 'crypto/other',
-            component: OtherPlatFormsWallets,
-            children: [
-              {
-                path: '',
-                component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'),
-              },
-              {
-                path: 'amount',
-                component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'),
-              },
-              {
-                path: 'confirmation',
-                component: WithdrawOtherPlatformsStepConfirmation,
-              },
-            ],
-          },
-          {
-            path: 'crypto/other/add-beneficiary',
-            component: () => import('../views/withdraw/crypto/AddBeneficiary.vue'),
-          },
-        ],
+        component: Withdraw,
+      },
+      {
+        path: '/withdraw/noba/',
+        children: routerInternalTransfer,
+      },
+      {
+        path: '/withdraw/usa/',
+        children: routerUSA,
         meta: {
           noCache: true,
         },
+      },
+      {
+        path: '/withdraw/panama/',
+        children: routerPanama,
       },
       {
         path: '/swap',

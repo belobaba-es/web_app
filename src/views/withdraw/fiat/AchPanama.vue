@@ -50,15 +50,15 @@ route.meta.noCache = true
 const items = ref([
   {
     label: 'Accounts',
-    to: `/withdraw/fiat/${route.params.type}`,
+    to: `/withdraw/panama/`,
   },
   {
     label: 'Amount',
-    to: `/withdraw/fiat/${route.params.type}/amount`,
+    to: `/withdraw/panama/amount`,
   },
   {
     label: 'Confirmation',
-    to: `/withdraw/fiat/${route.params.type}/confirmation`,
+    to: `/withdraw/panama/confirmation`,
   },
 ])
 
