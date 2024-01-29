@@ -5,6 +5,7 @@
     </p>
     <TabMenu :model="menuItems" v-model:activeIndex="active" />
 
+    <!-- Domestic   -->
     <div v-if="active == 0" class="mt-2">
       <div class="flex justify-content-start align-items-center">
         <i class="pi pi-exclamation-triangle"></i>
@@ -88,6 +89,7 @@
       </div>
     </div>
 
+    <!-- International   -->
     <div v-if="active == 1" class="mt-2">
       <div class="flex justify-content-start align-items-center">
         <i class="pi pi-exclamation-triangle"></i>
@@ -206,74 +208,64 @@
       </div>
     </div>
 
+    <!-- Panama   -->
     <div v-if="active == 2" class="mt-2">
       <div class="flex justify-content-start align-items-center">
         <i class="pi pi-exclamation-triangle"></i>
         <p class="grayed-text-warning">{{ t('depositAccountPanama') }}</p>
       </div>
 
-      <p class="font-medium text-sm mt-4">{{ t('depositBankName') }}</p>
+      <p class="font-medium text-sm">{{ t('fullName') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.bankName }}</p>
-        <i v-if="bankNational?.bankName" @click="copyToClipboard(bankNational?.bankName)" class="pi pi-clone"></i>
+        <p class="mb-0">{{ bankPanama?.holderName }}</p>
+        <i v-if="bankPanama?.holderName" @click="copyToClipboard(bankPanama?.holderName)" class="pi pi-clone"></i>
+      </div>
+
+      <p class="font-medium text-sm mt-4">{{ t('emailLabel') }}</p>
+      <div class="flex justify-content-between align-items-center">
+        <p class="mb-0">{{ bankPanama?.holderEmail }}</p>
+        <i v-if="bankPanama?.holderEmail" @click="copyToClipboard(bankPanama?.holderEmail)" class="pi pi-clone"></i>
       </div>
       <Divider type="solid" />
 
-      <p class="font-medium text-sm">ABA Fedwire</p>
+      <p class="font-medium text-sm">{{ t('documentLabel') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.routingNumber }}</p>
-        <i
-          v-if="bankNational?.routingNumber"
-          @click="copyToClipboard(bankNational?.routingNumber)"
-          class="pi pi-clone"
-        ></i>
+        <p class="mb-0">{{ bankPanama?.holderId }}</p>
+        <i v-if="bankPanama?.holderId" @click="copyToClipboard(bankPanama?.holderId)" class="pi pi-clone"></i>
       </div>
       <Divider type="solid" />
 
-      <p class="font-medium text-sm">{{ t('creditTo') }}</p>
+      <p class="font-medium text-sm">{{ t('bankNameLabel') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.creditTo }}</p>
-        <i v-if="bankNational?.creditTo" @click="copyToClipboard(bankNational?.creditTo)" class="pi pi-clone"></i>
-      </div>
-      <Divider type="solid" />
-
-      <p class="font-medium text-sm">{{ t('reference') }}</p>
-      <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.reference }}</p>
-        <i v-if="bankNational?.reference" @click="copyToClipboard(bankNational?.reference)" class="pi pi-clone"></i>
-      </div>
-      <Divider type="solid" />
-
-      <p class="font-medium text-sm">{{ t('address') }}</p>
-      <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.address }}</p>
-        <i v-if="bankNational?.address" @click="copyToClipboard(bankNational?.address)" class="pi pi-clone"></i>
+        <p class="mb-0">{{ bankPanama?.bankName }}</p>
+        <i v-if="bankPanama?.bankName" @click="copyToClipboard(bankPanama?.bankName)" class="pi pi-clone"></i>
       </div>
       <Divider type="solid" />
 
       <p class="font-medium text-sm">{{ t('accountNumber') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.accountNumber }}</p>
+        <p class="mb-0">{{ bankPanama?.accountDestinationNumber }}</p>
         <i
-          v-if="bankNational?.accountNumber"
-          @click="copyToClipboard(bankNational?.accountNumber)"
+          v-if="bankPanama?.accountDestinationNumber"
+          @click="copyToClipboard(bankPanama?.accountDestinationNumber)"
           class="pi pi-clone"
         ></i>
       </div>
       <Divider type="solid" />
 
-      <p class="font-medium text-sm">{{ t('bankAddress') }}</p>
+      <p class="font-medium text-sm">{{ t('typeProduct') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.bankAddress }}</p>
-        <i v-if="bankNational?.bankAddress" @click="copyToClipboard(bankNational?.bankAddress)" class="pi pi-clone"></i>
+        <p class="mb-0">{{ bankPanama?.productType }}</p>
+        <i v-if="bankPanama?.productType" @click="copyToClipboard(bankPanama?.productType)" class="pi pi-clone"></i>
       </div>
       <Divider type="solid" />
 
-      <p class="font-medium text-sm">{{ t('bankPhone') }}</p>
+      <p class="font-medium text-sm">{{ t('conceptLabel') }}</p>
       <div class="flex justify-content-between align-items-center">
-        <p class="mb-0">{{ bankNational?.bankPhone }}</p>
-        <i v-if="bankNational?.bankPhone" @click="copyToClipboard(bankNational?.bankPhone)" class="pi pi-clone"></i>
+        <p class="mb-0">{{ bankPanama?.concept }}</p>
+        <i v-if="bankPanama?.concept" @click="copyToClipboard(bankPanama?.concept)" class="pi pi-clone"></i>
       </div>
+      <Divider type="solid" />
 
       <div class="grid mt-2">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
@@ -283,7 +275,7 @@
             :loading="submitting"
             class="p-button download-btn"
             :label="t('downloadPdf')"
-            @click="generatePdfNationalData"
+            @click="generatePdfACHlData"
           />
         </div>
       </div>
@@ -321,12 +313,15 @@ const { getUserName } = useAuth()
 
 const username = getUserName()
 
-const dataBank = ref<BankData[]>([])
+// const dataBank = ref<BankData[]>([])
+const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
+const bankPanama = ref()
 
 const bankNationalPdf: any = {}
 const bankInternationalPdf: any = {}
+const bankACHPdf: any = {}
 const title = t('titleDespositFiat')
 const footerPdf = t('footerPdfNobaData')
 
@@ -335,10 +330,11 @@ new FiatService()
   .then(data => {
     submitting.value = false
     dataBank.value = data
-    bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
-    if (!bankNational.value) {
-      bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
-    }
+    /*bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
+                                                if (!bankNational.value) {
+                                                  bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
+                                                }*/
+    bankNational.value = dataBank.value.domestic
 
     bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
     bankNationalPdf['ABA Fedwire:'] = bankNational.value.routingNumber
@@ -349,7 +345,9 @@ new FiatService()
     bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
     bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
 
-    bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
+    // todo
+    //bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
+    bankInternational.value = dataBank.value.international
 
     bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
     bankInternationalPdf[t('swiftCode') + ':'] = bankInternational.value.swiftCode
@@ -359,6 +357,17 @@ new FiatService()
     bankInternationalPdf[t('accountNumber') + ':'] = bankInternational.value.accountNumber
     bankInternationalPdf[t('bankAddress') + ':'] = bankInternational.value.bankAddress
     bankInternationalPdf[t('bankPhone') + ':'] = bankInternational.value.bankPhone
+
+    bankPanama.value = dataBank.value.achInstructions
+
+    bankACHPdf[t('bankName') + ':'] = bankPanama.value.reference
+    bankACHPdf[t('email') + ':'] = bankPanama.value.address
+    bankACHPdf[t('accountNumber') + ':'] = bankPanama.value.accountDestinationNumber
+    bankACHPdf[t('fullName') + ':'] = bankPanama.value.holderName
+    bankACHPdf[t('emailLabel') + ':'] = bankPanama.value.holderEmail
+    bankACHPdf[t('conceptLabel') + ':'] = bankPanama.value.concept
+    bankACHPdf[t('dni') + ':'] = bankPanama.value.holderId
+    bankACHPdf[t('typeProduct') + ':'] = bankPanama.value.productType
   })
   .catch(() => (submitting.value = false))
 
@@ -384,6 +393,11 @@ const generatePdfNationalData = () => {
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
   generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
+}
+
+const generatePdfACHlData = () => {
+  const nameFile = `${username} ${t('namePdfDepositFiatPanamaACH')}`
+  generatePdf(nameFile, logo, title, bankACHPdf, footerPdf)
 }
 
 const copyToClipboard = (text: string) => {

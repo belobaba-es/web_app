@@ -456,6 +456,8 @@
   "typeFileNotSelected": "You must select the document type.",
   "beneficiaryPending": "The user is being validated, we will let you know when is available.",
   "beneficiaryRejected": "The beneficiary has being rejected, is not available.",
-  "typeProduct": "Kind of product",
-  "depositAccountPanama": "Deposits in this account must be made in Panama Dollars"
+  "typeProduct": "Product type",
+  "depositAccountPanama": "Deposits in this account must be made in Panama Dollars",
+  "conceptLabel": "Concept",
+  "bankNameLabel": "Bank name"
 }
