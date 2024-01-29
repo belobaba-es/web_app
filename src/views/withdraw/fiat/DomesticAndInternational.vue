@@ -65,7 +65,7 @@ const items = ref([
 const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
 
 const newBeneficiary = () => {
-  return router.push(`/withdraw/fiat/${route.params.type}/new`)
+  return router.push(`/withdraw/usa/fiat/${route.params.type}/new`)
 }
 
 onMounted(async () => {

@@ -3,6 +3,7 @@ import { NewBeneficiaryPanama } from '../../types/beneficiary.interface'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { BeneficiaryService } from '../../services/beneficiary'
+import { useRouter } from 'vue-router'
 
 const formObjectPanama = ref<NewBeneficiaryPanama>({
   bankName: '',
@@ -21,6 +22,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
 })
 
 export const useNewBeneficiaryPanama = () => {
+  const router = useRouter()
   const toast = useToast()
   //const listBeneficiaryPanama = ref<BeneficiaryAchPanama[]>([])
   const { t } = useI18n({ useScope: 'global' })
@@ -43,24 +45,6 @@ export const useNewBeneficiaryPanama = () => {
       achPanama.holderEmail,
     ].every(field => field.toString() !== '')
   }
-
-  // const getListBeneficiaryPanama = () => {
-  //   new BeneficiaryService().listBeneficiaryAchPanama().then(response => {
-  //     console.log('response', response)
-  //     listBeneficiaryPanama.value = response.data
-  //     // if (response.status === 200) {
-  //     //   listBeneficiaryPanama.value = response.data
-  //     //   console.log('listBeneficiaryPanama', listBeneficiaryPanama.value)
-  //     // } else {
-  //     //   toast.add({
-  //     //     severity: 'error',
-  //     //     summary: t('error'),
-  //     //     detail: t('errorDetail'),
-  //     //     life: 4000,
-  //     //   })
-  //     // }
-  //   })
-  // }
 
   const save = () => {
     if (!validateFields()) {
@@ -95,10 +79,15 @@ export const useNewBeneficiaryPanama = () => {
       })
   }
 
+  const toBack = () => {
+    router.back()
+  }
+
   return {
     formObjectPanama,
     productType,
     //listBeneficiaryPanama,
     save,
+    toBack,
   }
 }
