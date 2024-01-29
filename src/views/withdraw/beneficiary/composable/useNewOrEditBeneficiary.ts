@@ -74,22 +74,22 @@ export const useNewOrEditBeneficiary = () => {
     itemSteps.value.push(
       {
         label: t('informationAccountText'),
-        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
       },
       {
         label: t('beneficiaryInformation'),
-        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
       },
       {
         label: t('bankAccountInformation'),
-        to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
       }
     )
 
     if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
       const nuevoItem = {
         label: t('intermediaryBank'),
-        to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
       }
 
       itemSteps.value.push(nuevoItem)

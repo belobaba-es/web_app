@@ -129,7 +129,6 @@ const reference = ref('')
 const balance = ref(0)
 const purpose = ref('')
 
-const { getUserFeeWire } = useAuth()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
 balance.value = getBalanceByCode('USD')

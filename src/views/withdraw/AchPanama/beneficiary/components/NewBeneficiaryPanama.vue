@@ -85,7 +85,7 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
-import { useNewBeneficiaryPanama } from '../../../beneficiary/composable/useNewBeneficiaryPanama'
+import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
 
 const { t } = useI18n({ useScope: 'global' })
 
