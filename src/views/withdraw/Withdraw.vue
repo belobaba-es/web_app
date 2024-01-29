@@ -16,7 +16,7 @@
 
           <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/usa/fiat/international" />
 
-          <CardButon class="m-4" :label="t('ACH Panama')" to="/withdraw/fiat/panama" />
+          <CardButon class="m-4" :label="t('ACH Panama')" to="/withdraw/panama" />
         </div>
 
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center">

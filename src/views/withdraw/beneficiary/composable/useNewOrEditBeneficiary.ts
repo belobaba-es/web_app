@@ -67,7 +67,6 @@ export const useNewOrEditBeneficiary = () => {
   } else if (route.path.includes('international')) {
     typeBeneficiary.value = 'INTERNATIONAL'
   }
-  console.log(typeBeneficiary.value)
 
   const itemSteps = ref<Array<{ label: string; to: string }>>([])
 

@@ -18,7 +18,7 @@ export const routerPanama = [
     ],
   },
   {
-    path: 'beneficiary',
-    component: () => import('../views/withdraw/beneficiary/components/NewBeneficiaryPanama.vue'),
+    path: 'new',
+    component: () => import('../views/withdraw/AchPanama/beneficiary/components/NewBeneficiaryPanama.vue'),
   },
 ]
