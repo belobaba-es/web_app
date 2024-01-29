@@ -4,13 +4,11 @@ import { useRouter } from 'vue-router'
 import { WithdrawForm } from '../types/withdraw'
 
 export const useWithdraw = (items: any) => {
-  console.log('STEPPER', items)
   const formObject = ref<WithdrawForm | any>({})
   const router = useRouter()
   const toast = useToast()
 
   const nextStepPage = (event: any) => {
-    console.log(event.formData)
     for (let field in event.formData) {
       console.log(field, 'paso de pagina')
       formObject.value[field] = event.formData[field]

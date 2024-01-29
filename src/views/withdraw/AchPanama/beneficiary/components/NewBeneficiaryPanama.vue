@@ -1,5 +1,9 @@
 <template>
-  <div class="col-12 md:col-8 mt-5">
+  <div class="col-12 md:col-8 mt-5 pt-5">
+    <div class="flex align-items-center">
+      <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
+      <span class="text-xl"> ACH Panama Wire</span>
+    </div>
     <div class="field">
       <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
@@ -44,6 +48,13 @@
     </div>
 
     <div class="field">
+      <label>{{ t('concept') }}</label>
+      <div class="p-inputgroup">
+        <InputText type="text" v-model="formObjectPanama.concept" required />
+      </div>
+    </div>
+
+    <div class="field">
       <label>{{ t('emailLabel') }}</label>
       <div class="p-inputgroup">
         <InputText type="text" v-model="formObjectPanama.holderEmail" />
@@ -61,7 +72,7 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
-import { useNewBeneficiaryPanama } from '../composable/useNewBeneficiaryPanama'
+import { useNewBeneficiaryPanama } from '../../../beneficiary/composable/useNewBeneficiaryPanama'
 
 const { t } = useI18n({ useScope: 'global' })
 

@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { BeneficiaryType, NewBeneficiaryPanama } from '../../types/beneficiary.interface'
+import { NewBeneficiaryPanama } from '../../types/beneficiary.interface'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { BeneficiaryService } from '../../services/beneficiary'
@@ -16,12 +16,13 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   },
   holderId: '',
   holderName: '',
+  concept: '',
   isInternal: false,
 })
 
 export const useNewBeneficiaryPanama = () => {
   const toast = useToast()
-  const listBeneficiaryPanama = ref([])
+  //const listBeneficiaryPanama = ref<BeneficiaryAchPanama[]>([])
   const { t } = useI18n({ useScope: 'global' })
 
   const productType = ref([
@@ -43,20 +44,23 @@ export const useNewBeneficiaryPanama = () => {
     ].every(field => field.toString() !== '')
   }
 
-  const getBeneficiaryPanama = () => {
-    new BeneficiaryService().listBeneficiaryAchPanama(BeneficiaryType.ACH_PAD).then(response => {
-      if (response.status === 200) {
-        listBeneficiaryPanama.value = response.data
-      } else {
-        toast.add({
-          severity: 'error',
-          summary: t('error'),
-          detail: t('errorDetail'),
-          life: 4000,
-        })
-      }
-    })
-  }
+  // const getListBeneficiaryPanama = () => {
+  //   new BeneficiaryService().listBeneficiaryAchPanama().then(response => {
+  //     console.log('response', response)
+  //     listBeneficiaryPanama.value = response.data
+  //     // if (response.status === 200) {
+  //     //   listBeneficiaryPanama.value = response.data
+  //     //   console.log('listBeneficiaryPanama', listBeneficiaryPanama.value)
+  //     // } else {
+  //     //   toast.add({
+  //     //     severity: 'error',
+  //     //     summary: t('error'),
+  //     //     detail: t('errorDetail'),
+  //     //     life: 4000,
+  //     //   })
+  //     // }
+  //   })
+  // }
 
   const save = () => {
     if (!validateFields()) {
@@ -68,29 +72,33 @@ export const useNewBeneficiaryPanama = () => {
       })
       return
     }
-    new BeneficiaryService().saveBeneficiaryAchPanama(formObjectPanama.value).then(response => {
-      if (response.status === 200) {
-        toast.add({
-          severity: 'success',
-          summary: t('success'),
-          detail: t('successDetail'),
-          life: 4000,
-        })
-      } else {
-        toast.add({
-          severity: 'error',
-          summary: t('error'),
-          detail: t('errorDetail'),
-          life: 4000,
-        })
-      }
-    })
+    new BeneficiaryService()
+      .saveBeneficiaryAchPanama({
+        achInstructions: formObjectPanama.value,
+      })
+      .then(response => {
+        if (response.status === 200) {
+          toast.add({
+            severity: 'success',
+            summary: t('success'),
+            detail: t('successDetail'),
+            life: 4000,
+          })
+        } else {
+          toast.add({
+            severity: 'error',
+            summary: t('error'),
+            detail: t('errorDetail'),
+            life: 4000,
+          })
+        }
+      })
   }
 
   return {
     formObjectPanama,
     productType,
-    listBeneficiaryPanama,
+    //listBeneficiaryPanama,
     save,
   }
 }

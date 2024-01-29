@@ -25,7 +25,7 @@
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
-      <ListBeneficiary @select="onSelect($event)" />
+      <ListBeneficiaryPanama @select="onSelect($event)" />
     </div>
   </div>
 </template>
@@ -35,11 +35,11 @@ import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import ListBeneficiary from '../beneficiary/ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { Beneficiary, CounterpartyStatus } from '../types/beneficiary.interface'
+import ListBeneficiaryPanama from './beneficiary/components/ListBeneficiaryPanama.vue'
 
 const submitting = ref(false)
 

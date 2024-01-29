@@ -62,14 +62,7 @@ const items = ref([
   },
 ])
 
-const {
-  formObject,
-
-  nextStepPage,
-  prevStepPage,
-  stepComplete,
-  toBack,
-} = useWithdraw(items)
+const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/fiat/${route.params.type}/new`)
@@ -77,7 +70,7 @@ const newBeneficiary = () => {
 
 onMounted(async () => {
   console.log('Domestic view', route.params.type)
-  if (route.params.type !== 'domestic' && route.params.type !== 'panama') {
+  if (route.params.type !== 'domestic') {
     type.value = 'International'
   }
 })

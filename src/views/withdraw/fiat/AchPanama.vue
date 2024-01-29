@@ -72,7 +72,7 @@ const {
 } = useWithdraw(items)
 
 const newBeneficiary = () => {
-  return router.push(`/withdraw/fiat/panama/new`)
+  return router.push(`/withdraw/panama/new`)
 }
 </script>
 

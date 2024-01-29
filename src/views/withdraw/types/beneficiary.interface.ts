@@ -41,6 +41,20 @@ export type Beneficiary = {
   status: CounterpartyStatus
 }
 
+export type BeneficiaryAchPanama = {
+  achInstructions: {
+    accountDestinationNumber: string
+    bankName: string
+    concept: string
+    holderEmail: string
+    holderId: string
+    holderName: string
+    productType: productType
+  }
+  status: CounterpartyStatus
+  isInternal: string
+}
+
 export enum CounterpartyType {
   CRYPTO_BTC = 'CRYPTO',
   FIAT_US = 'FIAT_US',
@@ -96,7 +110,7 @@ export type NewBeneficiaryPanama = {
   productType: productType
   holderId: string
   holderName: string
-  //concept: string
+  concept: string
   isInternal: false
 }
 

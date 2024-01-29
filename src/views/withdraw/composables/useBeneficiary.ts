@@ -1,6 +1,6 @@
 import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
-import { Beneficiary, BeneficiaryType, CounterpartyStatus } from '../types/beneficiary.interface'
+import { Beneficiary, BeneficiaryAchPanama, BeneficiaryType, CounterpartyStatus } from '../types/beneficiary.interface'
 import { UserAccount } from '../types/account'
 
 export enum TypeBeneficiaryInternal {
@@ -10,6 +10,7 @@ export enum TypeBeneficiaryInternal {
 
 export const useBeneficiary = () => {
   const listBeneficiary = ref<Beneficiary[]>([])
+  const listBeneficiaryAchPanama = ref<BeneficiaryAchPanama[]>([])
   const listNextPag = ref(1)
   const submitting = ref(false)
   const nextPag = ref(1)
@@ -27,22 +28,22 @@ export const useBeneficiary = () => {
     })
   }
 
-  ;/TUDO: Refactor this method to use the same method as fetchBeneficiariesAchPanama/
-  const fetchBeneficiariesAchPanama = async (beneficiaryType: BeneficiaryType) => {
+  const fetchBeneficiariesAchPanama = async () => {
     submitting.value = true
-
-    await new BeneficiaryService().listBeneficiaryAchPanama(beneficiaryType, listNextPag.value).then(resp => {
-      resp.results.forEach((element: any) => {
-        listBeneficiary.value.push(element)
-      })
+    console.log('fetchBeneficiariesAchPanama')
+    new BeneficiaryService().listBeneficiaryAchPanama().then(resp => {
+      console.log('resp__', resp)
+      // resp.results.forEach((element: any) => {
+      //   listBeneficiaryAchPanama.value.push(element)
+      // })
       submitting.value = false
-      listNextPag.value = Number(resp.nextPag)
+      //listNextPag.value = Number(resp.nextPag)
     })
   }
-  ;/TUDO: Refactor this method to use the same method as fetchBeneficiariesAchPanama/
 
   const fetchBeneficiariesAssets = async () => {
-    await new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
+    new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
+      console.log('resp', resp)
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })
@@ -88,10 +89,12 @@ export const useBeneficiary = () => {
   return {
     fetchBeneficiariesInternal,
     fetchBeneficiariesAssets,
+    fetchBeneficiariesAchPanama,
     nextPag,
     submitting,
     listNextPag,
     listBeneficiary,
+    listBeneficiaryAchPanama,
     listBeneficiariesInternal,
     fetchBeneficiaries,
     getBeneficiaryStatusColor,
