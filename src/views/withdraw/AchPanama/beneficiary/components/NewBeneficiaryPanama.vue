@@ -38,7 +38,7 @@
             v-model="formObjectPanama.productType"
             :options="productType"
             optionLabel="name"
-            optionValue="code"
+            optionValue="name"
             :placeholder="t('selectAnAsset')"
             :showClear="true"
           />
@@ -60,7 +60,7 @@
       </div>
 
       <div class="field">
-        <label>{{ t('concept') }}</label>
+        <label>{{ t('conceptLabel') }}</label>
         <div class="p-inputgroup">
           <InputText type="text" v-model="formObjectPanama.concept" required />
         </div>
