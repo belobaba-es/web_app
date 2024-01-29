@@ -313,7 +313,6 @@ const { getUserName } = useAuth()
 
 const username = getUserName()
 
-// const dataBank = ref<BankData[]>([])
 const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
@@ -330,10 +329,7 @@ new FiatService()
   .then(data => {
     submitting.value = false
     dataBank.value = data
-    /*bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'DOMESTIC')
-                                                if (!bankNational.value) {
-                                                  bankNational.value = dataBank.value.find(bank => bank.typeBankingData == 'NATIONAL')
-                                                }*/
+
     bankNational.value = dataBank.value.domestic
 
     bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
@@ -345,8 +341,6 @@ new FiatService()
     bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
     bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
 
-    // todo
-    //bankInternational.value = dataBank.value.find(bank => bank.typeBankingData == 'INTERNATIONAL')
     bankInternational.value = dataBank.value.international
 
     bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
@@ -360,14 +354,13 @@ new FiatService()
 
     bankPanama.value = dataBank.value.achInstructions
 
-    bankACHPdf[t('bankName') + ':'] = bankPanama.value.reference
-    bankACHPdf[t('email') + ':'] = bankPanama.value.address
-    bankACHPdf[t('accountNumber') + ':'] = bankPanama.value.accountDestinationNumber
     bankACHPdf[t('fullName') + ':'] = bankPanama.value.holderName
     bankACHPdf[t('emailLabel') + ':'] = bankPanama.value.holderEmail
-    bankACHPdf[t('conceptLabel') + ':'] = bankPanama.value.concept
-    bankACHPdf[t('dni') + ':'] = bankPanama.value.holderId
+    bankACHPdf[t('documentLabel') + ':'] = bankPanama.value.holderId
+    bankACHPdf[t('bankNameLabel') + ':'] = bankPanama.value.bankName
+    bankACHPdf[t('accountNumber') + ':'] = bankPanama.value.accountDestinationNumber
     bankACHPdf[t('typeProduct') + ':'] = bankPanama.value.productType
+    bankACHPdf[t('conceptLabel') + ':'] = bankPanama.value.concept
   })
   .catch(() => (submitting.value = false))
 
