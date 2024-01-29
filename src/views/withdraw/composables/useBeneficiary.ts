@@ -18,7 +18,6 @@ export const useBeneficiary = () => {
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
-    console.log('fetchBeneficiaries', beneficiaryType)
     await new BeneficiaryService().listBeneficiaryBankingExternal(beneficiaryType, listNextPag.value).then(resp => {
       resp.results.forEach((element: any) => {
         listBeneficiary.value.push(element)
@@ -30,20 +29,17 @@ export const useBeneficiary = () => {
 
   const fetchBeneficiariesAchPanama = async () => {
     submitting.value = true
-    console.log('fetchBeneficiariesAchPanama')
     new BeneficiaryService().listBeneficiaryAchPanama().then(resp => {
-      console.log('resp__', resp)
-      // resp.results.forEach((element: any) => {
-      //   listBeneficiaryAchPanama.value.push(element)
-      // })
+      resp.results.forEach((element: any) => {
+        listBeneficiaryAchPanama.value.push(element)
+      })
       submitting.value = false
-      //listNextPag.value = Number(resp.nextPag)
+      listNextPag.value = Number(resp.nextPag)
     })
   }
 
   const fetchBeneficiariesAssets = async () => {
     new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
-      console.log('resp', resp)
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })

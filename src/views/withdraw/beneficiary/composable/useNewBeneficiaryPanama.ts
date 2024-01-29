@@ -24,7 +24,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
 export const useNewBeneficiaryPanama = () => {
   const router = useRouter()
   const toast = useToast()
-  //const listBeneficiaryPanama = ref<BeneficiaryAchPanama[]>([])
+  const submitting = ref(false)
   const { t } = useI18n({ useScope: 'global' })
 
   const productType = ref([
@@ -56,27 +56,29 @@ export const useNewBeneficiaryPanama = () => {
       })
       return
     }
-    new BeneficiaryService()
-      .saveBeneficiaryAchPanama({
-        achInstructions: formObjectPanama.value,
-      })
-      .then(response => {
-        if (response.status === 200) {
+    submitting.value = true
+    try {
+      new BeneficiaryService()
+        .saveBeneficiaryAchPanama({
+          achInstructions: formObjectPanama.value,
+        })
+        .then(response => {
           toast.add({
             severity: 'success',
             summary: t('success'),
-            detail: t('successDetail'),
+            detail: t(response.data.message),
             life: 4000,
           })
-        } else {
-          toast.add({
-            severity: 'error',
-            summary: t('error'),
-            detail: t('errorDetail'),
-            life: 4000,
-          })
-        }
+        })
+    } catch (error) {
+      toast.add({
+        severity: 'error',
+        summary: t('error'),
+        detail: t('errorDetail'),
+        life: 4000,
       })
+      submitting.value = false
+    }
   }
 
   const toBack = () => {
@@ -86,7 +88,6 @@ export const useNewBeneficiaryPanama = () => {
   return {
     formObjectPanama,
     productType,
-    //listBeneficiaryPanama,
     save,
     toBack,
   }
