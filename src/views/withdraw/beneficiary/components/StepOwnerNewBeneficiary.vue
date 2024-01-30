@@ -29,7 +29,8 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.country"
-            :options="allowed_countries"
+            :options="countries"
+            filter
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
@@ -103,7 +104,7 @@ import { useWorld } from '../../../../composables/useWorld'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
+import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
@@ -115,7 +116,7 @@ const toast = useToast()
 const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { allowed_countries, showCombo, state_us, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } =
+const { countries, showCombo, state_us, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } =
   useWorld()
 
 const accountType = ref([
