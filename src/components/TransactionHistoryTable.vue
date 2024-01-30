@@ -319,12 +319,12 @@ const getAssets = async () => {
       assetId: '',
     }
 
-    // Initialize the variable to store the "USD" asset
+    // Initialize the variable to stores the "USD" asset
     let usdAsset = null
 
     data.forEach(asset => {
       if (asset.code === 'USD') {
-        // If the asset's assetId is "USD", store it in the usdAsset variable
+        // If the asset's assetId is "USD", stores it in the usdAsset variable
         usdAsset = {
           name: asset.name,
           assetId: asset.assetId,

@@ -24,7 +24,7 @@
 
       <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
         <p class="text-base text-amount">
-          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} USD</b>
+          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} PAB</b>
         </p>
       </div>
     </div>
@@ -40,7 +40,7 @@
           v-model="amount"
           :placeholder="t('amount')"
         />
-        <span class="p-inputgroup-addon symbol text-capitalize">$</span>
+        <span class="p-inputgroup-addon symbol text-capitalize">PAB</span>
       </div>
     </div>
 
@@ -48,9 +48,9 @@
       <Timeline :value="events">
         <template #content="slotProps">
           {{ slotProps.item.label }}
-          <span v-if="slotProps.item.name">{{ formData.beneficiary?.realName }}</span>
+          <span v-if="slotProps.item.holderName">{{ formData.holderName }}</span>
 
-          <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>USD</small></p>
+          <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>PAB</small></p>
           <p v-else>
             <small>{{ fee }}</small>
           </p>
@@ -100,7 +100,7 @@
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import Timeline from 'primevue/timeline'
@@ -109,14 +109,17 @@ import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../components/MessageAlertActiveTwoFactorAuth.vue'
-import { useAuth } from '../../../composables/useAuth'
 import { WithdrawalPurpose } from '../../../shared/propuseWithdrawal'
 import Dropdown from 'primevue/dropdown'
+import { useAuth } from '../../../composables/useAuth'
+import { useTransactionPab } from './composable/useTransactionPab'
 
 const { getBalanceByCode } = useBalanceWallet()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
+
+const { transactionData, events, validateField } = useTransactionPab()
 
 const props = defineProps<{
   formData: any
@@ -129,22 +132,9 @@ const reference = ref('')
 const balance = ref(0)
 const purpose = ref('')
 
-const { getUserFeeWire } = useAuth()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 
-balance.value = getBalanceByCode('USD')
-
-const events = ref<any>([
-  { amount: '2,5', label: 'Fee', name: false },
-  { amount: '2,5', label: `You send to `, name: true },
-])
-const typeTransaction = ref('panama')
-
-onMounted(async () => {
-  if (props.formData.typeTransaction && props.formData.typeTransaction.toLowerCase() !== 'domestic') {
-    typeTransaction.value = 'panama'
-  }
-})
+balance.value = getBalanceByCode('PAB')
 
 const amountFee = computed(() => {
   const total = isNaN(amount.value + fee.value) ? 0 : amount.value + fee.value
@@ -164,43 +154,6 @@ const amountFee = computed(() => {
   return total
 })
 
-const validateField = (): boolean => {
-  if (purpose.value == '') {
-    toast.add({
-      severity: 'warn',
-      summary: 'Order structure',
-      detail: 'Please selected Purpose of the withdrawal.',
-      life: 4000,
-    })
-
-    return false
-  }
-
-  if (amount.value == 0) {
-    toast.add({
-      severity: 'warn',
-      summary: 'Order structure',
-      detail: 'Please enter the amount you wish to send.',
-      life: 4000,
-    })
-
-    return false
-  }
-
-  if (reference.value.trim().length === 0) {
-    toast.add({
-      severity: 'warn',
-      summary: 'Order structure',
-      detail: 'Please include a reference.',
-      life: 4000,
-    })
-
-    return false
-  }
-
-  return true
-}
-
 const nextPage = () => {
   if (!validateField()) {
     return
@@ -214,7 +167,6 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     amountFee: amountFee,
-    purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
   }
 
   emit('nextPage', {

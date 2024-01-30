@@ -111,7 +111,7 @@ export type NewBeneficiaryPanama = {
   holderId: string
   holderName: string
   concept: string
-  isInternal: false
+  isInternal: string
 }
 
 export interface productType {

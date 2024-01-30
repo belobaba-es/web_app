@@ -3,6 +3,7 @@ import { NewBeneficiaryPanama } from '../../types/beneficiary.interface'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { BeneficiaryService } from '../../services/beneficiary'
+import { useRouter } from 'vue-router'
 
 const formObjectPanama = ref<NewBeneficiaryPanama>({
   bankName: '',
@@ -17,12 +18,13 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   holderId: '',
   holderName: '',
   concept: '',
-  isInternal: false,
+  isInternal: '',
 })
 
 export const useNewBeneficiaryPanama = () => {
+  const router = useRouter()
   const toast = useToast()
-  //const listBeneficiaryPanama = ref<BeneficiaryAchPanama[]>([])
+  const submitting = ref(false)
   const { t } = useI18n({ useScope: 'global' })
 
   const productType = ref([
@@ -44,24 +46,6 @@ export const useNewBeneficiaryPanama = () => {
     ].every(field => field.toString() !== '')
   }
 
-  // const getListBeneficiaryPanama = () => {
-  //   new BeneficiaryService().listBeneficiaryAchPanama().then(response => {
-  //     console.log('response', response)
-  //     listBeneficiaryPanama.value = response.data
-  //     // if (response.status === 200) {
-  //     //   listBeneficiaryPanama.value = response.data
-  //     //   console.log('listBeneficiaryPanama', listBeneficiaryPanama.value)
-  //     // } else {
-  //     //   toast.add({
-  //     //     severity: 'error',
-  //     //     summary: t('error'),
-  //     //     detail: t('errorDetail'),
-  //     //     life: 4000,
-  //     //   })
-  //     // }
-  //   })
-  // }
-
   const save = () => {
     if (!validateFields()) {
       toast.add({
@@ -72,33 +56,39 @@ export const useNewBeneficiaryPanama = () => {
       })
       return
     }
-    new BeneficiaryService()
-      .saveBeneficiaryAchPanama({
-        achInstructions: formObjectPanama.value,
-      })
-      .then(response => {
-        if (response.status === 200) {
+    submitting.value = true
+    try {
+      new BeneficiaryService()
+        .saveBeneficiaryAchPanama({
+          achInstructions: formObjectPanama.value,
+        })
+        .then(response => {
           toast.add({
             severity: 'success',
             summary: t('success'),
-            detail: t('successDetail'),
+            detail: t(response.data.message),
             life: 4000,
           })
-        } else {
-          toast.add({
-            severity: 'error',
-            summary: t('error'),
-            detail: t('errorDetail'),
-            life: 4000,
-          })
-        }
+        })
+    } catch (error) {
+      toast.add({
+        severity: 'error',
+        summary: t('error'),
+        detail: t('errorDetail'),
+        life: 4000,
       })
+      submitting.value = false
+    }
+  }
+
+  const toBack = () => {
+    router.back()
   }
 
   return {
     formObjectPanama,
     productType,
-    //listBeneficiaryPanama,
     save,
+    toBack,
   }
 }

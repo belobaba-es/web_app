@@ -3,33 +3,39 @@
     <div class="col-12">
       <span class="mt-4">{{ t('Confirm wire information') }}</span>
       <Divider></Divider>
-    </div>
-    <div>
-      <p class="title-beneficiary">{{ formData.beneficiary.informationOwner.name }}</p>
-      <p class="font-ligth text-base">{{ formData?.beneficiary?.informationBank.accountNumber }}</p>
+      <div>
+        <p class="title-beneficiary">{{ formData?.beneficiary.achInstructions.holderName }}</p>
+        <p class="font-ligth text-base">{{ formData?.beneficiary.achInstructions.accountDestinationNumber }}</p>
+      </div>
     </div>
     <Divider></Divider>
-
     <div class="col-12 field p-fluid">
       <div class="field col-12">
         <label for="name1">{{ t('Amount') }}</label>
         <p class="green-color">{{ formData.amountFee }} USD</p>
       </div>
+    </div>
+
+    <div class="col-12 field p-fluid">
+      <div class="field col-12">
+        <label for="name1">{{ t('Amount') }}</label>
+        <p class="green-color">{{ formData.amountFee }} PAD</p>
+      </div>
 
       <div class="field col-12">
         <small>{{ t('fee') }}</small>
         <p class="green-color mt-0">
-          <small>{{ formData.fee }} USD</small>
+          <small>{{ formData.fee }} PAD</small>
         </p>
       </div>
     </div>
 
     <div class="col-12 mb-2">
-      <p class="text-base">Your are sending to {{ formData?.beneficiary?.informationOwner.name }}</p>
+      <p class="text-base">Your are sending to {{ formData?.achInstructions.holderName }}</p>
     </div>
 
     <div class="col-12 mb-2">
-      <p class="font-medium green-color">{{ formData.amount }} USD</p>
+      <p class="font-medium green-color">{{ formData.amount }} PAD</p>
     </div>
 
     <Button
@@ -56,17 +62,15 @@
 
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
-import Button from 'primevue/button'
 import { ref } from 'vue'
 import { WithdrawService } from '../services/withdraw'
 import { useToast } from 'primevue/usetoast'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
-import VeryCodeTwoFactorAuth from '../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 import showMessage from '../../../shared/showMessageArray'
+import VeryCodeTwoFactorAuth from '../../../components/VeryCodeTwoFactorAuth.vue'
 
 const toast = useToast()
 const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
@@ -82,6 +86,7 @@ const router = useRouter()
 const props = defineProps<{
   formData: any
 }>()
+console.log('props.formData', props.formData)
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
