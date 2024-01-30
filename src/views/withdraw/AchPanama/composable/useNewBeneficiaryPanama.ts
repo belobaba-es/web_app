@@ -18,7 +18,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   holderId: '',
   holderName: '',
   concept: '',
-  isInternal: false,
+  isInternal: '',
 })
 
 export const useNewBeneficiaryPanama = () => {

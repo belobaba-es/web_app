@@ -85,15 +85,25 @@ export const useNewOrEditBeneficiary = () => {
         to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
       }
     )
-
-    if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
-      const nuevoItem = {
+  } else {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      },
+      {
         label: t('intermediaryBank'),
         to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
       }
-
-      itemSteps.value.push(nuevoItem)
-    }
+    )
   }
 
   const nextPage = (event: any) => {
