@@ -1,26 +1,22 @@
 import { defineStore } from 'pinia'
-import { BeneficiaryAchPanama, CounterpartyStatus, productType } from '../../types/beneficiary.interface'
+import { MakeFiatExternalTransfer } from '../../types/withdraw'
 
 export const useTransactionAchPabStore = defineStore('useTransactionPab', {
-  state: (): BeneficiaryAchPanama => ({
-    achInstructions: {
-      accountDestinationNumber: '',
-      bankName: '',
-      concept: '',
-      holderEmail: '',
-      holderId: '',
-      holderName: '',
-      productType: {} as productType,
-    },
-    isInternal: '',
-    status: {} as CounterpartyStatus,
+  state: (): MakeFiatExternalTransfer => ({
+    amount: 0,
+    beneficiaryId: '',
+    reference: '',
+    purpose: '',
   }),
 
   actions: {
-    setInitialTransactionAchPab(beneficiaryAchPanama: BeneficiaryAchPanama) {
-      this.achInstructions = beneficiaryAchPanama.achInstructions
-      this.isInternal = beneficiaryAchPanama.isInternal
-      this.status = beneficiaryAchPanama.status
+    dataTransactionAchPab(): MakeFiatExternalTransfer {
+      return {
+        amount: this.amount,
+        beneficiaryId: this.beneficiaryId,
+        reference: this.reference,
+        purpose: this.purpose,
+      }
     },
   },
 })

@@ -19,7 +19,15 @@
       <div class="field mt-1">
         <label>{{ t('bankName') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.bankName" required />
+          <Dropdown
+            class="select-asset"
+            v-model="formObjectPanama.bankName"
+            :options="allowed_banks"
+            optionLabel="name"
+            optionValue="name"
+            :placeholder="t('bankName')"
+            :showClear="true"
+          />
         </div>
       </div>
 
@@ -36,10 +44,10 @@
           <Dropdown
             class="select-asset"
             v-model="formObjectPanama.productType"
-            :options="productType"
+            :options="productAccountType"
             optionLabel="name"
             optionValue="name"
-            :placeholder="t('selectAnAsset')"
+            :placeholder="t('typeProduct')"
             :showClear="true"
           />
         </div>
@@ -85,9 +93,12 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
+import data_banks from '../../../../../assets/panama_banks/banks.json'
 import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
+import { ref } from 'vue'
 
+const allowed_banks = ref(data_banks)
 const { t } = useI18n({ useScope: 'global' })
 
-const { formObjectPanama, productType, save, toBack } = useNewBeneficiaryPanama()
+const { formObjectPanama, save, toBack, productAccountType } = useNewBeneficiaryPanama()
 </script>

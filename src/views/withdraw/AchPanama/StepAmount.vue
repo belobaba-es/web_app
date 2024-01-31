@@ -37,7 +37,7 @@
           :minFractionDigits="2"
           :maxFractionDigits="2"
           class="p-inputtext p-component b-gray w-full btn-amount"
-          v-model="amount"
+          v-model="transactionData.amount"
           :placeholder="t('amount')"
         />
         <span class="p-inputgroup-addon symbol text-capitalize">PAB</span>
@@ -50,9 +50,9 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.holderName">{{ formData.holderName }}</span>
 
-          <p class="font-medium" v-if="slotProps.item.name">{{ amount }} <small>PAB</small></p>
+          <p class="font-medium" v-if="slotProps.item.name">{{ transactionData.amount }} <small>PAB</small></p>
           <p v-else>
-            <small>{{ fee }}</small>
+            <small>{{ amount }}</small>
           </p>
         </template>
       </Timeline>
@@ -63,7 +63,7 @@
         <label for="">{{ t('purposeWithdrawal') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            v-model="purpose"
+            v-model="transactionData.purpose"
             :options="WithdrawalPurpose(isAccountSegregated())"
             optionLabel="name"
             option-value="value"
@@ -82,7 +82,7 @@
           maxlength="60"
           type="text"
           class="p-inputtext p-component b-gray"
-          v-model="reference"
+          v-model="transactionData.concept"
           :placeholder="t('reference')"
         />
       </div>
@@ -100,13 +100,9 @@
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
 import Timeline from 'primevue/timeline'
 import Button from 'primevue/button'
-import { useBalanceWallet } from '../../../composables/useBalanceWallet'
-import { useToast } from 'primevue/usetoast'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { WithdrawalPurpose } from '../../../shared/propuseWithdrawal'
@@ -114,45 +110,18 @@ import Dropdown from 'primevue/dropdown'
 import { useAuth } from '../../../composables/useAuth'
 import { useTransactionPab } from './composable/useTransactionPab'
 
-const { getBalanceByCode } = useBalanceWallet()
-const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
-const route = useRoute()
 
-const { transactionData, events, validateField } = useTransactionPab()
+const { transactionData, events, validateField, amountFee, balance, amount, fee } = useTransactionPab()
 
 const props = defineProps<{
   formData: any
 }>()
 const emit = defineEmits(['nextPage'])
+
 const { isAccountSegregated } = useAuth()
-const amount = ref(0)
-const fee = ref(0)
-const reference = ref('')
-const balance = ref(0)
-const purpose = ref('')
 
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
-
-balance.value = getBalanceByCode('PAB')
-
-const amountFee = computed(() => {
-  const total = isNaN(amount.value + fee.value) ? 0 : amount.value + fee.value
-  if (total > balance.value) {
-    toast.add({
-      severity: 'warn',
-      summary: 'Order structure',
-      detail: 'Please enter the amount you wish to send.',
-      life: 4000,
-    })
-
-    amount.value = 0
-
-    return 0
-  }
-
-  return total
-})
 
 const nextPage = () => {
   if (!validateField()) {
@@ -163,9 +132,9 @@ const nextPage = () => {
 
   const formData = {
     ...props.formData.value,
-    amount: amount.value,
-    fee: fee.value,
-    reference: reference.value,
+    amount: transactionData.value.amount,
+    fee: 0,
+    reference: transactionData.value.concept,
     amountFee: amountFee,
   }
 

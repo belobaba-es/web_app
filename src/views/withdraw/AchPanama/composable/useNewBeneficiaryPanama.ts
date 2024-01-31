@@ -18,7 +18,7 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   holderId: '',
   holderName: '',
   concept: '',
-  isInternal: '',
+  isInternal: 'S',
 })
 
 export const useNewBeneficiaryPanama = () => {
@@ -27,7 +27,7 @@ export const useNewBeneficiaryPanama = () => {
   const submitting = ref(false)
   const { t } = useI18n({ useScope: 'global' })
 
-  const productType = ref([
+  const productAccountType = ref([
     { name: 'PACA-Cuenta Ahorro', code: 'PACA' },
     { name: 'PACC-Cuenta Corriente', code: 'PACC' },
     { name: 'LOAN-Prestamo', code: 'LOAN' },
@@ -87,7 +87,7 @@ export const useNewBeneficiaryPanama = () => {
 
   return {
     formObjectPanama,
-    productType,
+    productAccountType,
     save,
     toBack,
   }

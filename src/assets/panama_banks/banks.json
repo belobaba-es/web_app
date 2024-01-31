@@ -1,50 +1,146 @@
 [
-  "Atlas Bank",
-  "Bac Credomatic",
-  "Banco Aliado",
-  "Banco Azteca",
-  "Banco Delta",
-  "Banco Ficohsa",
-  "Banco General",
-  "Banco LAFISE",
-  "Banco La Hipotecaria",
-  "Banco Nacional de Panamá",
-  "Banco Pichincha",
-  "Bancolombia",
-  "Banesco",
-  "Banisi",
-  "Banistmo",
-  "Bank of China",
-  "BBP Bank",
-  "BCT Bank",
-  "Bibank Panamá",
-  "Bicsa",
-  "Caja de Ahorros",
-  "Canal Bank",
-  "Capital Bank",
-  "Citibank N.A.",
-  "COOPACC",
-  "COOPRAC",
-  "COOPEDUC",
-  "CACECHI",
-  "COEDUCO",
-  "COOESAN",
-  "COOPEVE",
-  "ECASESO",
-  "EDIOACC",
-  "Cooperativa Profesionales, R.L.",
-  "Credicorp Bank",
-  "Davivienda",
-  "Federal Reserve Bank",
-  "Global Bank",
-  "Mercantil Bank",
-  "Metrobank",
-  "MMG Bank",
-  "Multibank",
-  "Pacific Bank",
-  "Prival Bank",
-  "Scotiabank",
-  "St. Georges Bank",
-  "Tower Bank",
-  "Unibank"
+  {
+    "name": "Atlas Bank"
+  },
+  {
+    "name": "Bac Credomatic"
+  },
+  {
+    "name": "Banco Aliado"
+  },
+  {
+    "name": "Banco Azteca"
+  },
+  {
+    "name": "Banco Delta"
+  },
+  {
+    "name": "Banco Ficohsa"
+  },
+  {
+    "name": "Banco General"
+  },
+  {
+    "name": "Banco LAFISE"
+  },
+  {
+    "name": "Banco La Hipotecaria"
+  },
+  {
+    "name": "Banco Nacional de Panamá"
+  },
+  {
+    "name": "Banco Pichincha"
+  },
+  {
+    "name": "Bancolombia"
+  },
+  {
+    "name": "Banesco"
+  },
+  {
+    "name": "Banisi"
+  },
+  {
+    "name": "Banistmo"
+  },
+  {
+    "name": "Bank of China"
+  },
+  {
+    "name": "BBP Bank"
+  },
+  {
+    "name": "BCT Bank"
+  },
+  {
+    "name": "Bibank Panamá"
+  },
+  {
+    "name": "Bicsa"
+  },
+  {
+    "name": "Caja de Ahorros"
+  },
+  {
+    "name": "Canal Bank"
+  },
+  {
+    "name": "Capital Bank"
+  },
+  {
+    "name": "Citibank N.A."
+  },
+  {
+    "name": "COOPACC"
+  },
+  {
+    "name": "COOPRAC"
+  },
+  {
+    "name": "COOPEDUC"
+  },
+  {
+    "name": "CACECHI"
+  },
+  {
+    "name": "COEDUCO"
+  },
+  {
+    "name": "COOESAN"
+  },
+  {
+    "name": "COOPEVE"
+  },
+  {
+    "name": "ECASESO"
+  },
+  {
+    "name": "EDIOACC"
+  },
+  {
+    "name": "Cooperativa Profesionales, R.L."
+  },
+  {
+    "name": "Credicorp Bank"
+  },
+  {
+    "name": "Davivienda"
+  },
+  {
+    "name": "Federal Reserve Bank"
+  },
+  {
+    "name": "Global Bank"
+  },
+  {
+    "name": "Mercantil Bank"
+  },
+  {
+    "name": "Metrobank"
+  },
+  {
+    "name": "MMG Bank"
+  },
+  {
+    "name": "Multibank"
+  },
+  {
+    "name": "Pacific Bank"
+  },
+  {
+    "name": "Prival Bank"
+  },
+  {
+    "name": "Scotiabank"
+  },
+  {
+    "name": "St. Georges Bank"
+  },
+  {
+    "name": "Tower Bank"
+  },
+  {
+    "name": "Unibank"
+  }
 ]
