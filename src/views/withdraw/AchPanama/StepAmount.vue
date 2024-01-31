@@ -7,7 +7,7 @@
 
     <div class="grid col-12 mb-4">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="title-beneficiary text-capitalize">{{ formData?.beneficiary?.realName }}</p>
+        <p class="title-beneficiary text-capitalize">{{ formData?.beneficiary?.achInstructions.holderName }}</p>
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
@@ -118,6 +118,8 @@ const props = defineProps<{
   formData: any
 }>()
 const emit = defineEmits(['nextPage'])
+
+console.log('formData', props.formData)
 
 const { isAccountSegregated } = useAuth()
 

@@ -3,10 +3,10 @@
     <div class="col-12">
       <span class="mt-4">{{ t('Confirm wire information') }}</span>
       <Divider></Divider>
-      <!--      <div>-->
-      <!--        <p class="title-beneficiary">{{ formData.beneficiary.achInstructions.holderName }}</p>-->
-      <!--        <p class="font-ligth text-base">{{ formData.beneficiary.achInstructions.accountDestinationNumber }}</p>-->
-      <!--      </div>-->
+      <div>
+        <p class="title-beneficiary">{{ formData?.beneficiary?.achInstructions.holderName }}</p>
+        <p class="font-ligth text-base">{{ formData?.beneficiary?.achInstructions.accountDestinationNumber }}</p>
+      </div>
     </div>
     <Divider></Divider>
     <div class="col-12 field p-fluid">
@@ -30,9 +30,9 @@
       </div>
     </div>
 
-    <!--    <div class="col-12 mb-2">-->
-    <!--      <p class="text-base">Your are sending to {{ formData?.achInstructions.holderName }}</p>-->
-    <!--    </div>-->
+    <div class="col-12 mb-2">
+      <p class="text-base">Your are sending to {{ formData?.beneficiary?.achInstructions.holderName }}</p>
+    </div>
 
     <div class="col-12 mb-2">
       <p class="font-medium green-color">{{ formData.amount }} PAD</p>
