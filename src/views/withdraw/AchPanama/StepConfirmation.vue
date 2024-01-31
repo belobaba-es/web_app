@@ -9,12 +9,12 @@
       </div>
     </div>
     <Divider></Divider>
-    <div class="col-12 field p-fluid">
-      <div class="field col-12">
-        <label for="name1">{{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amountFee }} USD</p>
-      </div>
-    </div>
+    <!--    <div class="col-12 field p-fluid">-->
+    <!--      <div class="field col-12">-->
+    <!--        <label for="name1">{{ t('Amount') }}</label>-->
+    <!--        <p class="green-color">{{ formData.amountFee }} USD</p>-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <div class="col-12 field p-fluid">
       <div class="field col-12">
@@ -111,11 +111,11 @@ function makeTransaction() {
   submitting.value = true
 
   new WithdrawService()
-    .makeFiatExternalTransfer({
+    .makeFiatExternalTransferAchPab({
       amount: props.formData.amount,
       beneficiaryId: props.formData.beneficiary.counterpartyId,
-      reference: props.formData.reference,
-      purpose: props.formData.purpose,
+      concept: props.formData.concept,
+      reference: props.formData.purpose,
     })
     .then((res: any) => {
       isCompleted.value = true

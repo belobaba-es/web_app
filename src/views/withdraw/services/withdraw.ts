@@ -3,6 +3,7 @@ import {
   MakeAssetExternalTransfer,
   MakeAssetInternalTransfer,
   MakeFiatExternalTransfer,
+  MakeFiatExternalTransferPab,
   MakeFiatInternalTransfer,
 } from '../types/withdraw'
 
@@ -22,6 +23,13 @@ export class WithdrawService {
   }
 
   async makeFiatExternalTransfer(transaction: MakeFiatExternalTransfer): Promise<void> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
+      `banking/withdrawal/external`,
+      transaction
+    )
+  }
+
+  async makeFiatExternalTransferAchPab(transaction: MakeFiatExternalTransferPab): Promise<void> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
       `banking/withdrawal/external`,
       transaction

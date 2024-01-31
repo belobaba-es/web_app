@@ -13,7 +13,6 @@ export const useTransactionPab = () => {
   const amount = ref(0)
   balance.value = getBalanceByCode('PAB')
 
-  console.log('balance', balance.value)
   const events = ref<any>([
     { amount: '2,5', label: 'Fee', name: false },
     { amount: '2,5', label: `You send to `, name: true },

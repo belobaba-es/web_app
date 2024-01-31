@@ -11,26 +11,14 @@
     </div>
 
     <InternationalTransferDetail
-      v-if="props.formData.typeTransaction === 'international'"
-      :realName="props.formData.beneficiary.informationOwner.name"
-      :account="props.formData.beneficiary.informationBank.accountNumber"
+      :realName="props.formData.beneficiary.achInstructions.holderName"
+      :account="props.formData.beneficiary.achInstructions.accountDestinationNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amountFee"
       :fee="props.formData.fee"
       :transactionId="transactionId"
-      :assetCode="props.formData.assetCode ?? 'USD'"
+      :assetCode="props.formData.assetCode ?? 'PAD'"
     ></InternationalTransferDetail>
-
-    <DomesticTransferDetail
-      v-if="props.formData.typeTransaction === 'domestic'"
-      :realName="props.formData.beneficiary.informationOwner.name"
-      :account="props.formData.beneficiary.informationBank.accountNumber"
-      :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
-      :fee="props.formData.fee"
-      :transactionId="transactionId"
-      :assetCode="props.formData.assetCode ?? 'USD'"
-    ></DomesticTransferDetail>
 
     <div class="col-12 btn-container">
       <Button class="w-50 p-button mt-5 btn-routing" :label="t('newTransfer')" @click="goToWithdrawIndex()" />
@@ -46,7 +34,6 @@
 </template>
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import DomesticTransferDetail from '../../../components/DomesticTransferDetail.vue'
 import InternationalTransferDetail from '../../../components/InternationalTransferDetail.vue'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'

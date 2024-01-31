@@ -135,9 +135,10 @@ const nextPage = () => {
   const formData = {
     ...props.formData.value,
     amount: transactionData.value.amount,
-    fee: 0,
-    reference: transactionData.value.concept,
+    fee: fee.value,
+    concept: transactionData.value.concept,
     amountFee: amountFee,
+    reference: transactionData.value.reference,
   }
 
   emit('nextPage', {
