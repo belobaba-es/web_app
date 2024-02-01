@@ -7,11 +7,11 @@
 
     <div class="grid col-12 mb-4">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="title-beneficiary text-capitalize">{{ formData?.beneficiary?.achInstructions.holderName }}</p>
+        <p class="title-beneficiary text-capitalize">{{ formData.beneficiary.achInstructions.holderName }}</p>
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="text-base">{{ formData?.beneficiary?.accountNumber }}</p>
+        <p class="text-base">{{ formData.beneficiary.achInstructions.accountDestinationNumber }}</p>
       </div>
     </div>
 
@@ -82,7 +82,7 @@
           maxlength="60"
           type="text"
           class="p-inputtext p-component b-gray"
-          v-model="transactionData.concept"
+          v-model="transactionData.reference"
           :placeholder="t('reference')"
         />
       </div>
@@ -136,9 +136,9 @@ const nextPage = () => {
     ...props.formData.value,
     amount: transactionData.value.amount,
     fee: fee.value,
-    concept: transactionData.value.concept,
-    amountFee: amountFee,
     reference: transactionData.value.reference,
+    amountFee: amountFee,
+    purpose: transactionData.value.purpose,
   }
 
   emit('nextPage', {

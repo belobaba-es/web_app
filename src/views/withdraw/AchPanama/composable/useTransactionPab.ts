@@ -48,7 +48,7 @@ export const useTransactionPab = () => {
       return false
     }
 
-    if (transactionData.value.concept.trim().length === 0) {
+    if (transactionData.value.reference.trim().length === 0) {
       toast.add({
         severity: 'warn',
         summary: 'Order structure',

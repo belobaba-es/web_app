@@ -111,11 +111,12 @@ function makeTransaction() {
   submitting.value = true
 
   new WithdrawService()
-    .makeFiatExternalTransferAchPab({
+    .makeFiatExternalTransfer({
       amount: props.formData.amount,
       beneficiaryId: props.formData.beneficiary.counterpartyId,
-      concept: props.formData.concept,
-      reference: props.formData.purpose,
+      //Reference es el concepto
+      reference: props.formData.reference,
+      purpose: props.formData.purpose,
     })
     .then((res: any) => {
       isCompleted.value = true

@@ -22,13 +22,6 @@ export type MakeFiatExternalTransfer = {
   purpose: string
 }
 
-export type MakeFiatExternalTransferPab = {
-  beneficiaryId: number
-  amount: number
-  concept: string
-  reference: string
-}
-
 export type MakeAssetInternalTransfer = {
   amount: string
   clientIdDestination: string
