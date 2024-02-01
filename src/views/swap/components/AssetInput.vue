@@ -241,7 +241,7 @@ const getUsdIcon = () => {
 }
 
 .text-max {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   color: #000;
 }
 

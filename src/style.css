@@ -1,66 +1,57 @@
 @font-face {
-    font-family: KanitLight;
-    src: url('/src/assets/fonts/Kanit-Light.ttf');
+    font-family: RedHatDisplayLight;
+    src: url('/src/assets/fonts/RedHatDisplay-Light.ttf');
 }
-
 @font-face {
-    font-family: KanitExtraLight;
-    src: url('/src/assets/fonts/Kanit-ExtraLight.ttf');
+    font-family: RedHatDisplayRegular;
+    src: url('/src/assets/fonts/RedHatDisplay-Regular.ttf');
 }
-
 @font-face {
-    font-family: KanitRegular;
-    src: url('/src/assets/fonts/Kanit-Regular.ttf');
+    font-family: RedHatDisplayMedium;
+    src: url('/src/assets/fonts/RedHatDisplay-Medium.ttf');
 }
-
 @font-face {
-    font-family: KanitMedium;
-    src: url('/src/assets/fonts/Kanit-Medium.ttf');
+    font-family: RedHatDisplayBold;
+    src: url('/src/assets/fonts/RedHatDisplay-Bold.ttf');
 }
-
 @font-face {
-    font-family: KanitSemiBold;
-    src: url('/src/assets/fonts/Kanit-SemiBold.ttf');
-}
-
-@font-face {
-    font-family: KanitBold;
-    src: url('/src/assets/fonts/Kanit-Bold.ttf');
+    font-family: RedHatDisplaySemiBold;
+    src: url('/src/assets/fonts/RedHatDisplay-SemiBold.ttf');
 }
 
 .font-light {
-    font-family: KanitLight !important;
+    font-family: RedHatDisplayLight !important;
     font-weight: 0 !important;
 }
 
 .font-extra-light {
-    font-family: KanitExtraLight !important;
+    font-family: RedHatDisplayLight !important;
     font-weight: 0 !important;
 }
 
 .font-regular {
-    font-family: KanitRegular !important;
+    font-family: RedHatDisplayRegular !important;
     font-weight: 0 !important;
 }
 
 .font-medium {
-    font-family: KanitMedium !important;
+    font-family: RedHatDisplayMedium !important;
     font-weight: 0 !important;
 }
 
 .font-semi-bold {
     font-weight: 0 !important;
-    font-family: KanitSemiBold !important;
+    font-family: RedHatDisplaySemiBold !important;
 }
 
 .font-bold {
     font-weight: 0 !important;
-    font-family: KanitBold !important;
+    font-family: RedHatDisplayBold !important;
 }
 
 html,
 body {
-    font-family: KanitLight;
+    font-family: RedHatDisplayLight;
     font-size: 10pt;
 }
 
@@ -178,13 +169,13 @@ h2 {
 .p-dropdown.p-component.p-inputwrapper {
     border: 1px solid #ececec;
     box-sizing: initial;
-    font-family: KanitLight;
+    font-family: RedHatDisplayLight;
     font-size: 1.1rem;
 }
 
 label {
     font-size: 1.1rem;
-    font-family: KanitLight;
+    font-family: RedHatDisplayLight;
 }
 
 .container-end {

@@ -55,7 +55,7 @@ const secondsToDate = (seconds: number) => {
 
 <style lang="scss">
 .name_to {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   color: var(--primary-color);
 
@@ -72,7 +72,7 @@ const secondsToDate = (seconds: number) => {
 }
 
 .date {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */
@@ -88,7 +88,7 @@ const secondsToDate = (seconds: number) => {
 }
 
 .reference {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   word-wrap: break-word;
   overflow: hidden;
@@ -106,7 +106,7 @@ const secondsToDate = (seconds: number) => {
 }
 
 .amount {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */

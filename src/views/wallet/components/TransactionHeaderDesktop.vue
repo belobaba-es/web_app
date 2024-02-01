@@ -79,7 +79,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
 <style lang="scss">
 .text-balance-wallet-historic-desktop {
   margin-left: 4%;
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   width: fit-content;
 
   @media only screen and (min-width: 991px) {

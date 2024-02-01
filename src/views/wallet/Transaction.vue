@@ -59,7 +59,7 @@ const getAssetCode = () => {
 }
 
 .container-data {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   padding: 1rem;
   margin: 0.5rem;
 
@@ -83,7 +83,7 @@ const getAssetCode = () => {
 }
 
 .name-cripto {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
 }
 
 .text-header {
@@ -111,7 +111,7 @@ const getAssetCode = () => {
 }
 
 .text-balance-wallet-historic {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   margin: auto;
   width: fit-content;
 
@@ -149,7 +149,7 @@ const getAssetCode = () => {
 }
 
 .text-link-historic {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   margin: auto;
   width: fit-content;
 
@@ -176,7 +176,7 @@ const getAssetCode = () => {
 }
 
 .title-historic {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   font-weight: bold !important;
   width: fit-content;
 

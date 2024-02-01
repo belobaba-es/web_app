@@ -51,7 +51,7 @@ const { getUserName } = useAuth()
 
 <style lang="scss">
 .name_to {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   color: var(--primary-color);
 
@@ -68,7 +68,7 @@ const { getUserName } = useAuth()
 }
 
 .date {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */
@@ -84,7 +84,7 @@ const { getUserName } = useAuth()
 }
 
 .reference {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   word-wrap: break-word;
   overflow: hidden;
@@ -102,7 +102,7 @@ const { getUserName } = useAuth()
 }
 
 .amount {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */

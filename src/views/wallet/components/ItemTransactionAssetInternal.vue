@@ -62,7 +62,7 @@ const secondsToDate = (seconds: number) => {
   color: red;
 }
 .name_to {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   color: var(--primary-color);
 
@@ -78,7 +78,7 @@ const secondsToDate = (seconds: number) => {
   font-size: var(--responsive);
 }
 .status {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   font-weith: bold;
   width: fit-content;
   @media only screen and (min-width: 992px) {
@@ -92,7 +92,7 @@ const secondsToDate = (seconds: number) => {
   font-size: var(--responsive);
 }
 .date {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */
@@ -108,7 +108,7 @@ const secondsToDate = (seconds: number) => {
 }
 
 .reference {
-  font-family: KanitLight !important;
+  font-family: RedHatDisplayLight !important;
   width: fit-content;
   word-wrap: break-word;
   overflow: hidden;
@@ -126,7 +126,7 @@ const secondsToDate = (seconds: number) => {
 }
 
 .amount {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   width: fit-content;
 
   /* Set max and min font sizes in mobile view */
