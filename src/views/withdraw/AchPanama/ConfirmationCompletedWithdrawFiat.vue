@@ -80,7 +80,7 @@ const generatePDFTransactionReceipt = async () => {
 
   transactionPDF[t('userName')] = `${getUserName()}`
   transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountId}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.informationOwner.name}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.achInstructions.holderName}`
   transactionPDF[t('amount')] = `${props.formData.amount} USD`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`

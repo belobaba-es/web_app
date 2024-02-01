@@ -9,17 +9,11 @@
       </div>
     </div>
     <Divider></Divider>
-    <!--    <div class="col-12 field p-fluid">-->
-    <!--      <div class="field col-12">-->
-    <!--        <label for="name1">{{ t('Amount') }}</label>-->
-    <!--        <p class="green-color">{{ formData.amountFee }} USD</p>-->
-    <!--      </div>-->
-    <!--    </div>-->
 
     <div class="col-12 field p-fluid">
       <div class="field col-12">
         <label for="name1">{{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amountFee }} PAD</p>
+        <p class="green-color">{{ formData.amount }} PAD</p>
       </div>
 
       <div class="field col-12">
@@ -63,30 +57,30 @@
 <script setup lang="ts">
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
-import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { WithdrawService } from '../services/withdraw'
 import { useToast } from 'primevue/usetoast'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
-import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
-import showMessage from '../../../shared/showMessageArray'
 import VeryCodeTwoFactorAuth from '../../../components/VeryCodeTwoFactorAuth.vue'
+import { useTransactionPab } from './composable/useTransactionPab'
+import { WithdrawService } from '../services/withdraw'
+import showMessage from '../../../shared/showMessageArray'
+import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
-const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const submitting = ref(false)
 const isCompleted = ref(false)
 
+const { transactionId } = useTransactionPab()
+const { isEnabledButtonToProceedWithdrawal, twoFactorIsActive } = useTwoFactorAuth()
 const visibleModalVeryCodeTwoFactor = ref(false)
 
-const transactionId = ref('')
 const { t } = useI18n({ useScope: 'global' })
-const route = useRoute()
-const router = useRouter()
+
 const props = defineProps<{
   formData: any
 }>()
-console.log('props.formData', props.formData)
+
+console.log('formData', props.formData)
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
@@ -113,8 +107,7 @@ function makeTransaction() {
   new WithdrawService()
     .makeFiatExternalTransfer({
       amount: props.formData.amount,
-      beneficiaryId: props.formData.beneficiary.counterpartyId,
-      //Reference es el concepto
+      beneficiaryId: props.formData.counterpartyId,
       reference: props.formData.reference,
       purpose: props.formData.purpose,
     })
@@ -129,7 +122,7 @@ function makeTransaction() {
       if (e.response.data.message) {
         toast.add({
           severity: 'error',
-          summary: t('somethingWentWrong'),
+          summary: e.response.data.error || 'Something went wrong',
           detail: e.response.data.message,
           life: 4000,
         })

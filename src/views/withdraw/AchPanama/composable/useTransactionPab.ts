@@ -1,16 +1,19 @@
 import { computed, ref } from 'vue'
-import { MakeFiatExternalTransferPab } from '../../types/withdraw'
+import { MakeFiatExternalTransfer } from '../../types/withdraw'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 
-const transactionData = ref<MakeFiatExternalTransferPab>({} as MakeFiatExternalTransferPab)
+const transactionData = ref<MakeFiatExternalTransfer>({} as MakeFiatExternalTransfer)
 
 export const useTransactionPab = () => {
+  const transactionId = ref('')
+
   const toast = useToast()
   const { getBalanceByCode } = useBalanceWallet()
   const fee = ref(0)
   const balance = ref(0)
   const amount = ref(0)
+
   balance.value = getBalanceByCode('PAB')
 
   const events = ref<any>([
@@ -70,5 +73,6 @@ export const useTransactionPab = () => {
     balance,
     amount,
     fee,
+    transactionId,
   }
 }
