@@ -12,6 +12,15 @@
         <i class="pi pi-chevron-down mt-2"></i>
       </div>
     </div>
+    <div class="col-12" v-if="networkAddress">
+      <Message severity="warn" :closable="false">
+        {{ t('warningSendAsset', { asset: nameAsset }) }}
+      </Message>
+
+      <p class="text-base font-bold text-uppercase">
+        {{ t('warningAssetNetwork', { networkName: networkAddress }) }}
+      </p>
+    </div>
   </section>
 
   <ModalAssetSelector
@@ -24,17 +33,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Asset } from '../views/deposit/types/asset.interface'
+import { Asset } from '../views/deposit/types/asset.interface';
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from './ModalAssetSelector.vue'
+import Message from 'primevue/message';
 
 const showModal = ref(false)
 const nameAsset = ref('')
-// const iconAsset = ref('https://storage.googleapis.com/noba-dev/798debbc-ec84-43ea-8096-13e2ebcf4749.svg')
 const iconAsset = ref('')
-
+const networkAddress = ref('')
 const { t } = useI18n({ useScope: 'global' })
-
 const emit = defineEmits(['selectedAsset'])
 
 const modal = (b: boolean) => {
@@ -43,8 +51,10 @@ const modal = (b: boolean) => {
 
 const selectedAsset = (asset: Asset) => {
   emit('selectedAsset', asset)
+
   nameAsset.value = asset.name
   iconAsset.value = asset.icon
+  networkAddress.value = asset.networkName + ' ' + asset.network
 
   showModal.value = false
 }
@@ -64,4 +74,17 @@ const selectedAsset = (asset: Asset) => {
   font-weight: 800;
   color: black;
 }
+
+.p-message.p-message-warn {
+  background: #ffee002b;
+  border: solid #ffcd00;
+  border-top-width: medium;
+  border-right-width: medium;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-width: 1px 1px 1px 1px;
+  color: #000000;
+  border-radius: 13px;
+}
+
 </style>
