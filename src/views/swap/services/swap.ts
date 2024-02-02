@@ -52,8 +52,11 @@ export class SwapService {
 
   async execute(exchangeId: string): Promise<any> {
     const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await encryptData(getClientId()))
-    return await this.getClient().post<any>(`/exchanges/accept/${exchangeId}`, {}, headerRequest)
+    
+    const headerRequest = await this.getHeader(await encryptData({ clientId: getClientId() }))
+    const response = await this.getClient().post<any>(`/exchanges/accept/${exchangeId}`, {}, headerRequest)
+
+    return response.data
   }
 
   async exchanges(nextPag: number = 1) {

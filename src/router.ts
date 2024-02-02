@@ -11,7 +11,6 @@ import StepConfirmation from './views/withdraw/components/InternalWithdraw/StepC
 import StepSuccessful from './views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
 import WithdrawFiatStepAmount from './views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from './views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
-import SwapSuccess from './views/swap/Success.vue'
 import OtherPlatFormsWallets from './views/withdraw/crypto/OtherPlatformsWallets.vue'
 import WithdrawOtherPlatformsStepConfirmation from './views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 
@@ -222,7 +221,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'success',
-            component: SwapSuccess,
+            component: () => import('./views/swap/Success.vue'),
           },
         ],
       },
