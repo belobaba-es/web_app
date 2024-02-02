@@ -5,6 +5,7 @@ import { useAuth } from '../../composables/useAuth'
 export interface payloadInterface {
   [key: string]: string | number | null | undefined
 }
+
 export class HttpService {
   constructor(private readonly urlAPI: string) {}
 
@@ -20,6 +21,7 @@ export class HttpService {
       await router.push('/')
       return
     }
+
     const type = isFormData ? 'multipart/form-data' : 'application/json'
     return {
       headers: {
