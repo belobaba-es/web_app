@@ -59,9 +59,7 @@ const { getUserId, getUserName } = useAuth()
 console.log('formData', props.formData)
 
 const goToWithdrawIndex = () => {
-  if (props.formData.typeTransaction === 'panama') {
-    window.location.href = '/withdraw/panama'
-  }
+  window.location.href = '/withdraw/panama'
 }
 const generatePDFTransactionReceipt = async () => {
   isGeneratingTransactionPDF.value = true
