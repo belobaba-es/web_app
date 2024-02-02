@@ -455,6 +455,8 @@
   "fileSizeError": "The file is larger than 5Mb.",
   "typeFileNotSelected": "You must select the document type.",
   "beneficiaryPending": "The user is being validated, we will let you know when is available.",
+  "textValidateDocument": "File type not supported",
+  "typeDocumentAdmitted": "Supported Documents, JPG, JPEG, PNG or PDF",
   "beneficiaryRejected": "The beneficiary has being rejected, is not available.",
   "typeProduct": "Product type",
   "depositAccountPanama": "Deposits in this account must be made in Panama Dollars",

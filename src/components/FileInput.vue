@@ -32,6 +32,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const emit = defineEmits(['uploadComplete'])
 
+const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'pdf']
+
 const props = defineProps({
   type: {
     type: String,
@@ -83,6 +85,19 @@ const icon = computed(() => {
 
 const handleUpload = async (event: any) => {
   const file = event.target.files[0]
+
+  // Validar la extensión del archivo
+  const fileExtension = file.name.split('.').pop()?.toLowerCase()
+
+  if (!props.isProofOfAddress && !allowedImageExtensions.includes(fileExtension)) {
+    toast.add({
+      severity: 'warn',
+      summary: t('textValidateDocument'),
+      detail: t('typeDocumentAdmitted'),
+      life: 4000,
+    })
+    return
+  }
 
   const fileSizeInMegabytes = file.size / (1024 * 1024)
   if (props.type === '') {

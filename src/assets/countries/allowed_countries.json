@@ -22,9 +22,222 @@
   {
     "country_code": "CR",
     "name": "Costa Rica"
-  },{
-    "country_code": "EU",
-    "name": "Europe"
+  },
+  {
+    "country_code": "AD",
+    "name": "Andorra",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "BE",
+    "name": "Belgium",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "BG",
+    "name": "Bulgaria",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "HR",
+    "name": "Croatia",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "CZ",
+    "name": "Czech Republic",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "EE",
+    "name": "Estonia",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "DK",
+    "name": "Denmark",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "FI",
+    "name": "Finland",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "FR",
+    "name": "France",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "DE",
+    "name": "Germany",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "GR",
+    "name": "Greece",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "HU",
+    "name": "Hungary",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "IR",
+    "name": "Ireland",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "IT",
+    "name": "Italy",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "LI",
+    "name": "Liechtenstein",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "LT",
+    "name": "Lithuania",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "LU",
+    "name": "Luxembourg",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "MC",
+    "name": "Monaco",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "ME",
+    "name": "Montenegro",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "NO",
+    "name": "Norway",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "NL",
+    "name": "Netherlands",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "PT",
+    "name": "Portugal",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "RO",
+    "name": "Romania",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "SE",
+    "name": "Sweden",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "UA",
+    "name": "Ukraine",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "VA",
+    "name": "Vatican City",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "ES",
+    "name": "Spain",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "rail": [
+      "SWIFT"
+    ]
   },
   {
     "country_code": "GT",
@@ -49,7 +262,8 @@
   {
     "country_code": "JP",
     "name": "Japan"
-  },{
+  },
+  {
     "country_code": "MY",
     "name": "Malaysia"
   },
@@ -90,7 +304,7 @@
     "name": "United Arab Emirates"
   },
   {
-      "country_code": "US",
-      "name": "United States"
+    "country_code": "US",
+    "name": "United States"
   }
 ]
