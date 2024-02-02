@@ -59,6 +59,7 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import Button from 'primevue/button'
 import ConfirmationCompletedWithdrawFiat from './ConfirmationCompletedWithdrawFiat.vue'
 import VeryCodeTwoFactorAuth from '../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTransactionPab } from './composable/useTransactionPab'
@@ -79,8 +80,6 @@ const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   formData: any
 }>()
-
-console.log('formData', props.formData)
 
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
@@ -107,11 +106,17 @@ function makeTransaction() {
   new WithdrawService()
     .makeFiatExternalTransfer({
       amount: props.formData.amount,
-      beneficiaryId: props.formData.counterpartyId,
+      beneficiaryId: props.formData.beneficiary.counterpartyId,
       reference: props.formData.reference,
       purpose: props.formData.purpose,
     })
     .then((res: any) => {
+      toast.add({
+        severity: 'success',
+        summary: t('success'),
+        detail: res.message,
+        life: 4000,
+      })
       isCompleted.value = true
       transactionId.value = res.data.transactionId
       submitting.value = false

@@ -14,7 +14,7 @@
       :realName="props.formData.beneficiary.achInstructions.holderName"
       :account="props.formData.beneficiary.achInstructions.accountDestinationNumber"
       :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
+      :amountFee="props.formData.amount"
       :fee="props.formData.fee"
       :transactionId="transactionId"
       :assetCode="props.formData.assetCode ?? 'PAD'"
@@ -56,13 +56,11 @@ const props = defineProps<{
 
 const { getUserId, getUserName } = useAuth()
 
+console.log('formData', props.formData)
+
 const goToWithdrawIndex = () => {
-  // TODO refactorizar composable function
-  if (props.formData.typeTransaction === 'international') {
-    window.location.href = '/withdraw/fiat/international'
-  }
-  if (props.formData.typeTransaction === 'domestic') {
-    window.location.href = '/withdraw/fiat/domestic'
+  if (props.formData.typeTransaction === 'panama') {
+    window.location.href = '/withdraw/panama'
   }
 }
 const generatePDFTransactionReceipt = async () => {
@@ -79,9 +77,9 @@ const generatePDFTransactionReceipt = async () => {
   const formattedDate = formatter.format(date)
 
   transactionPDF[t('userName')] = `${getUserName()}`
-  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountId}`
+  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.achInstructions.accountDestinationNumber}`
   transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.achInstructions.holderName}`
-  transactionPDF[t('amount')] = `${props.formData.amount} USD`
+  transactionPDF[t('amount')] = `${props.formData.amount} PAD`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
