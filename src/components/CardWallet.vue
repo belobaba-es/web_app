@@ -267,7 +267,7 @@ const responsiveOptions = ref([
 }
 
 .name-cripto {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   font-weight: bold !important;
   margin: auto;
   width: fit-content;
@@ -289,7 +289,7 @@ const responsiveOptions = ref([
 }
 
 .text-balance {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   margin: auto;
   width: fit-content;
 
@@ -319,7 +319,7 @@ const responsiveOptions = ref([
 }
 
 .text-balance-wallet {
-  font-family: KanitMedium !important;
+  font-family: RedHatDisplayMedium !important;
   margin: auto;
   width: fit-content;
 
