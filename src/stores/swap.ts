@@ -4,14 +4,13 @@ import { SwapService } from '../views/swap/services/swap'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
-import { useBalanceWallet } from '../composables/useBalanceWallet'
 import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
-  const { fetchBalanceWallets } = useBalanceWallet()
+
   const router = useRouter()
   const toast = useToast()
   const baseAmount = ref(0.0)
@@ -31,7 +30,7 @@ export const useSwapStore = defineStore('swap', () => {
   const progressBarPercent = ref(0)
   const progressBarSeconds = ref(10)
   const loading = ref(false)
-  let timer: number
+  let timer: any
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
   const destinationWalletId = ref()
@@ -69,6 +68,10 @@ export const useSwapStore = defineStore('swap', () => {
   }
 
   const swapBtnText = computed(() => {
+    if (!shouldRefreshQuote.value && totalAmount.value === 0.0) {
+      return 'REQUEST QUOTE'
+    }
+
     return shouldRefreshQuote.value ? 'REFRESH QUOTE' : 'EXECUTE SWAP'
   })
 
