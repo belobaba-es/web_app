@@ -84,7 +84,7 @@ const { unitCount } = useSwap()
 
 <style scoped>
 .swap-circle {
-  background-color: #bfefeb;
+  background-color: #ede5ce;
 }
 
 .rotate-swap-icon {

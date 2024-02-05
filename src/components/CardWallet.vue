@@ -253,16 +253,19 @@ const responsiveOptions = ref([
 }
 
 .card-blue {
-  background: #134591;
+  background: #000000;
 
   .name-cripto,
   .text-balance,
   .text-balance-wallet {
     color: white;
   }
+  small {
+    color: #aa9872;
+  }
 
   img {
-    filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
+    filter: invert(161%) sepia(0%) brightness(120%) contrast(95%);
   }
 }
 

@@ -132,7 +132,7 @@ onUnmounted(() => {
 }
 
 .swap-circle {
-  background-color: #bfefeb;
+  background-color: #ede5ce;;
 }
 
 .swap-circle > img {

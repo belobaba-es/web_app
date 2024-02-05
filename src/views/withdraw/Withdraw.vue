@@ -6,7 +6,7 @@
     <section class="container-center">
       <div class="grid justify-content-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center line">
-          <img src="../../assets/icons/cash-back.svg" alt="" srcset="" />
+          <img src="../../assets/icons/withdraw-fiat.png" alt="" srcset="" />
           <p class="text-2xl font-medium p-3">{{ t('withdrawFiat') }}</p>
           <p class="text-base">{{ t('withdrawFiatSelectMsg') }}</p>
 
@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center">
-          <img src="../../assets/icons/blockchain.svg" alt="" srcset="" />
+          <img src="../../assets/icons/withdraw-cryto.png" alt="" srcset="" />
           <p class="text-2xl font-medium p-3">{{ t('withdrawCrypto') }}</p>
           <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
 
@@ -46,11 +46,11 @@ const active = ref<number>(1)
 <style lang="scss">
 .line {
   @media only screen and (min-width: 992px) {
-    border-right: 2px solid #e5f6eb;
+    border-right: 2px solid #f4f4f4;
   }
 
   @media only screen and (max-width: 991px) {
-    border-bottom: 2px solid #e5f6eb;
+    border-bottom: 2px solid #f4f4f4;
     margin-bottom: 2rem;
   }
 }

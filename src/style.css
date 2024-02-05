@@ -85,7 +85,7 @@ h2 {
 
     --surface-overlay: #F9F9F9;
     --surface-ground: #f9f9f9;
-    --primary-color: #00beb0;
+    --primary-color: #aa9872;
     --text-color: #1b1b19;
 }
 
@@ -170,7 +170,7 @@ h2 {
 .p-inputgroup input:focus,
 .p-dropdown.p-component.p-inputwrapper:hover,
 .p-dropdown.p-component.p-inputwrapper:focus {
-    border: 1px solid #00beb0 !important;
+    border: 1px solid #aa9872 !important;
     outline: none;
 }
 
@@ -181,6 +181,11 @@ h2 {
     font-family: KanitLight;
     font-size: 1.1rem;
 }
+
+.p-inputtext:nth-last-child(-n+2):hover {
+    border: 1px solid #aa9872 !important;
+    outline: none;
+  }
 
 label {
     font-size: 1.1rem;
@@ -400,6 +405,10 @@ small {
     margin-left: 33%;
     z-index: 999;
     margin-top: 30%;
+}
+
+.border {
+    border: 2px solid #aa9872 !important;
 }
 
 

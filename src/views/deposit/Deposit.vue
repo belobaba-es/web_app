@@ -36,8 +36,8 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
-import saveMoney from '../../assets/icons/save-money.svg'
-import ewallet from '../../assets/icons/ewallet.svg'
+import saveMoney from '../../assets/icons/fiat-wallet.svg'
+import ewallet from '../../assets/icons/crypto-wallet.svg'
 import Divider from 'primevue/divider'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 
