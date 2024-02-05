@@ -75,7 +75,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
 import { useI18n } from 'vue-i18n'
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo.png'
 import Lang from '../../components/Lang.vue'
 import { RegisterService } from './services/register'
 import { useRoute, useRouter } from 'vue-router'

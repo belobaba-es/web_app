@@ -15,14 +15,21 @@ defineProps({
 })
 </script>
 
-<style scoped>
+<style lang="scss">
 .card {
   text-align: center;
   padding: 2rem 3rem;
-  border: 1px solid #00beb0;
-  background: #f7fdfd 0% 0% no-repeat padding-box;
+  border: 1px solid #aa9872;
+  background: #fff0d7 0% 0% no-repeat padding-box;
   width: 288px;
   height: 180px;
+}
+.card:hover {
+  background: #dca854;
+  box-shadow: 0px 3px 30px #ecb95663;
+  img, p{
+    filter: invert(50%) sepia(90%) brightness(200%) contrast(100%);
+  }
 }
 .card > div {
   height: 80px;

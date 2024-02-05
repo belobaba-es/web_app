@@ -26,13 +26,13 @@ const toRoute = () => {
 <style scoped>
 .card-button {
   display: flex;
-  color: var(--surface-900);
+  color: #e4b677;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 0.5rem;
-  border: 1px solid #00beb0;
-  background: #f7fdfd 0% 0% no-repeat padding-box;
+  border: 1px solid #aa9872;
+  background: #fff0d7 0% 0% no-repeat padding-box;
   min-width: 280px;
   min-height: 60px;
   border-radius: 20px;
@@ -41,7 +41,7 @@ const toRoute = () => {
 
 .card-button:hover {
   background: #fff;
-  box-shadow: 0px 3px 30px #4cd1c733;
+  box-shadow: 0px 3px 30px #ecb95663;;
 }
 .card-button > div {
   height: 80px;

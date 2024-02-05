@@ -149,7 +149,7 @@ import Button from 'primevue/button'
 
 import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo.png'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'

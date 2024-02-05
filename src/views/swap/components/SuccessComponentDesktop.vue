@@ -83,6 +83,6 @@ const totalSell = () => {
 
 <style scoped>
 .swap-circle {
-  background-color: #bfefeb;
+  background-color: #ede5ce;
 }
 </style>

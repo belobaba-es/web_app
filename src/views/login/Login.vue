@@ -85,7 +85,7 @@
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo.png'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import Checkbox from 'primevue/checkbox'
@@ -157,7 +157,7 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 }
 
 .logo-noba {
-  width: 142px;
+  width: 220px;
   height: 64px;
 }
 </style>

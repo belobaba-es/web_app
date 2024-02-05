@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main">
+  <section class="section-main background-wallet">
     <FinishRegisterWarningBar />
 
     <CardWallet :carousel="true" />
@@ -16,3 +16,10 @@ import AccountValidationProcess from '../../components/AccountValidationProcess.
 import TransactionHistoryTable from '../../components/TransactionHistoryTable.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 </script>
+
+
+<style lang="scss">
+  .background-wallet {
+    background:#efe4ce;
+  }
+</style>
