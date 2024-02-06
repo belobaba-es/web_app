@@ -215,7 +215,7 @@
 
   <ModalTransactionDetails
     v-model:display="displayModalTransactionDetail"
-    :transaction="modalTransactionDetail ?? {}"
+    :transaction="modalTransactionDetail as TransactionHistory ?? {} as TransactionHistory"
   ></ModalTransactionDetails>
 </template>
 
