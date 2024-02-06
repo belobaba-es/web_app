@@ -3,7 +3,7 @@
     <div class="pl-4">
       <h2 class="font-bold mt-0">Active la autenticación de doble factor</h2>
       Por seguridad es necesario que active la autenticación de doble factor para confirmar retiros en tu cuenta
-      Belobaba
+      BELOBABA
       <div class="mt-5 float-right">
         <Button
           class="font-regular"

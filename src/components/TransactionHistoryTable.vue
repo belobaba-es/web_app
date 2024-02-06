@@ -489,7 +489,7 @@ const downloadExtract = () => {
     generateTransactionHistory(
       nameFile,
       logo,
-      'Belobaba',
+      'BELOBABA',
       footerPdf,
       jsPDFOptionsOrientationEnum.LANDSCAPE,
       extractPDFInfo,
