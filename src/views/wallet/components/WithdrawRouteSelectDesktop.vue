@@ -2,12 +2,12 @@
   <div class="col-4 flex justify-content-start container-link-historic-desktop">
     <div class="dropdown-wrapper">
       <router-link class="link-historic-desktop" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
-        <h5 class="text-link-historic-desktop">Withdraw <span class="p-2 pi pi-angle-down primary-color"></span></h5>
+        <h5 class="text-link-historic-desktop font-semi-bold">Withdraw <span class="p-2 pi pi-angle-down primary-color"></span></h5>
       </router-link>
 
       <div v-if="isDropdownOpen" class="dropdown">
         <ul>
-          <li v-for="option in links" :key="option.id" @click="handleOptionClick(option)">
+          <li class="font-semi-bold" v-for="option in links" :key="option.id" @click="handleOptionClick(option)">
             {{ option.name }}
           </li>
         </ul>
@@ -24,7 +24,7 @@ const props = defineProps<{
   isFiat: boolean
 }>()
 const fiatLinks = [
-  { name: 'Transfer between noba accounts', link: '/withdraw/noba/fiat' },
+  { name: 'Transfer between Belobaba accounts', link: '/withdraw/noba/fiat' },
   { name: 'Domestic Wire', link: '/withdraw/fiat/domestic' },
   { name: 'International Wire', link: '/withdraw/fiat/international' },
 ]

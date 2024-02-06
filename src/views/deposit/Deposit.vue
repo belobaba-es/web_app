@@ -2,13 +2,13 @@
   <section class="section-main">
     <FinishRegisterWarningBar />
 
-    <p class="text-3xl font-medium">{{ t('deposit') }}</p>
+    <h2 class="text-3xl font-bold ml-6">{{ t('deposit') }}</h2>
 
-    <div class="flex align-items-center" style="height: 580px">
+    <div class="flex align-items-center" style="height: 500px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
-          <span class="text-center txt-border-bottom text-2xl"
-            >{{ t('selectCurrency') }} <b> {{ t('currency') }}</b></span
+          <span class="text-center txt-border-bottom text-2xl font-semi-bold"
+            >{{ t('selectCurrency') }} <b class="font-bold"> {{ t('currency') }}</b></span
           >
 
           <div class="grid flex justify-content-center">
@@ -69,9 +69,11 @@ const menuItems = ref<tabItem[]>([
 <style lang="css" scoped>
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
+  border-width: medium;
 }
 
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
+  border-width: medium;
 }
 </style>

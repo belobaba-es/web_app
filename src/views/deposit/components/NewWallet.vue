@@ -100,5 +100,6 @@ const selectAsset = (asset: Asset) => {
 }
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
+  border-width: medium;
 }
 </style>

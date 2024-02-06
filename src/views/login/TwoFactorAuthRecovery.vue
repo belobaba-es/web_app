@@ -168,7 +168,7 @@ const redirectToLogin = () => {
 }
 
 .logo-noba {
-  width: 142px;
+  width: 265px;
   height: 64px;
 }
 

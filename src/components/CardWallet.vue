@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-medium">{{ t('wallet') }}</h2>
+  <h2 class="font-bold ml-6">{{ t('wallet') }}</h2>
 
   <Carousel
     v-if="submitting === true && carousel"

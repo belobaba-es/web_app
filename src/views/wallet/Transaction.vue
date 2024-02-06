@@ -61,7 +61,7 @@ const getAssetCode = () => {
 .container-data {
   font-family: RedHatDisplayLight !important;
   padding: 1rem;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
 
   border: 1px solid #ebebeb;
   background-color: #fff;
@@ -107,7 +107,15 @@ const getAssetCode = () => {
 }
 
 .is-fiat {
-  background-color: #134591 !important;
+  padding: 1rem;
+  background-color: #e4cea1 !important;
+  color: #000;
+  a {
+    color: #000;
+    h5{
+      color: #000;
+    }
+  }
 }
 
 .text-balance-wallet-historic {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-2xl">
+    <h1 class="text-2xl font-bold ml-3">
       {{ props.title }}
     </h1>
     <div v-if="$slots.contentHeader">

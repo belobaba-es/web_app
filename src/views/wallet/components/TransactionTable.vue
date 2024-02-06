@@ -1,6 +1,6 @@
 <template>
   <div class="container-data mb-0 pb-0">
-    <p class="title-historic">{{ t('historicTransactionsTitle') }}</p>
+    <p class="font-bold text-xl">{{ t('historicTransactionsTitle') }}</p>
 
     <ProgressSpinner
       v-if="isLoadingTransactionDetails"
@@ -11,7 +11,7 @@
       aria-label="Custom ProgressSpinner"
     />
 
-    <ScrollPanel style="width: 100%; max-height: 580px; overflow: auto" class="mt-4">
+    <ScrollPanel style="width: 100%; max-height: 500px; overflow: auto" class="mt-4">
       <div class="grid">
         <div v-for="item in listTransaction" class="col-12 grid">
           <div class="col-12" @click="modal(true)">

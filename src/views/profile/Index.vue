@@ -2,7 +2,7 @@
   <section class="section-main pt-0">
     <WarningKYC />
     <div class="flex justify-content-between align-items-center">
-      <h1 class="text-2xl">{{ t('personalData') }}</h1>
+      <h1 class="text-2xl font-semi-bold">{{ t('personalData') }}</h1>
       <template v-if="submitting">
         <Skeleton width="6rem" height="2rem" class="px-3 mb-3"></Skeleton>
       </template>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="pt-5 flex justify-content-between align-items-center">
-      <h1 class="text-2xl">{{ t('contactInfo') }}</h1>
+      <h1 class="text-2xl font-semi-bold">{{ t('contactInfo') }}</h1>
     </div>
     <div class="card">
       <template v-if="submitting">

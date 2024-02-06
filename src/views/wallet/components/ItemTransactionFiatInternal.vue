@@ -1,8 +1,8 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ item.counterparty.informationOwner.name }}</p>
-      <p class="date">
+      <p class="font-bold">{{ item.counterparty.informationOwner.name }}</p>
+      <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">
         {{ item.counterparty.createdAt }}
       </p>
     </div>

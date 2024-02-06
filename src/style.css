@@ -40,7 +40,7 @@
 }
 
 .font-semi-bold {
-    font-weight: 0 !important;
+    font-weight: 400 !important;
     font-family: RedHatDisplaySemiBold !important;
 }
 
@@ -76,7 +76,7 @@ h2 {
 
     --surface-overlay: #F9F9F9;
     --surface-ground: #f9f9f9;
-    --primary-color: #aa9872;
+    --primary-color: #e4cea1;
     --text-color: #1b1b19;
 }
 
@@ -127,7 +127,7 @@ h2 {
 
 .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
 .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
-    color: #00beb0;
+    color: var(--primary-color);
 }
 
 .p-tieredmenu
@@ -399,7 +399,7 @@ small {
 }
 
 .border {
-    border: 2px solid #aa9872 !important;
+    border: 1px solid #aa9872 !important;
 }
 
 

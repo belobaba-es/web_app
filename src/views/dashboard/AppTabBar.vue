@@ -59,7 +59,7 @@ const onMenuItemClick = (event: any) => {
 }
 
 .active {
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .icon {

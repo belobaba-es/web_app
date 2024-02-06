@@ -1,6 +1,6 @@
 <template>
   <section class="section-main mt-sm-5 mt-lg-0">
-    <div class="flex align-items-center" style="height: 580px">
+    <div class="flex align-items-center" style="height: 500px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
           <h1 class="text-1xl">{{ t('onboardingTitle') }}</h1>
@@ -44,9 +44,11 @@ const active = ref<number>(1)
 <style lang="css" scoped>
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
+  border-width: medium;
 }
 
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
+  border-width: medium;
 }
 </style>

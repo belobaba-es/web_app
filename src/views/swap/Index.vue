@@ -11,7 +11,7 @@
             <Button
               type="button"
               :label="t('viewSwapHistory')"
-              class="font-light mt-lg-5 border-300 bg-white text-black-alpha-80 btn-historic"
+              class="font-semi-bold mt-lg-5 border-300 bg-white text-black-alpha-80 btn-historic"
               icon="pi pi-history"
               icon-pos="right"
               @click="router.push('/swap/history')"
@@ -51,6 +51,7 @@
               <Button
                 :label="swapBtnText"
                 class="w-full py-3 text-uppercase"
+                style="color: #000; fontWeight: 700;"
                 :disabled="loading || (!exchangeId && !shouldRefreshQuote)"
                 @click="swapHandler"
                 :loading="loading"
