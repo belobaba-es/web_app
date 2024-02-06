@@ -1,16 +1,17 @@
 <template>
-  <div class="main-container" v-bind:class="{ 'is-fiat': wallet?.assetCode === 'USD' }">
+  <div class="is-fiat" v-bind:class="{ 'is-fiat': wallet?.assetCode === 'USD' }">
     <div class="flex justify-content-start flex-wrap container-name-cripto">
-      <h1 class="text-header name-cripto">
+      <h1 class="text-header name-cripto font-bold">
         Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
       </h1>
       <div>
-        <div class="flex align-items-center mt-3">
+        <div class="flex align-items-center mt-3 font-bold">
           <Button
             label=""
             icon="pi pi-angle-left"
             iconPos="left"
             class="p-button-text to-back-desktop"
+            style="color: #000"
             @click="emit('toBack')"
           />
           <h2>{{ wallet?.name }}</h2>
@@ -20,7 +21,7 @@
     <div class="grid">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <div class="flex justify-content-start">
-          <p class="text-balance-wallet-historic-desktop mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
+          <p class="text-balance-wallet-historic-desktop mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 font-semi-bold">
             {{ calculateBalance(wallet.assetCode, wallet.balance, wallet.blockedBalance ?? 0) }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
@@ -32,13 +33,13 @@
           <div class="grid flex justify-content-start flex-column">
             <div class="col-4 flex justify-content-start container-link-historic-desktop">
               <router-link class="link-historic-desktop" :to="depositURL" exact role="menuitem" v-ripple>
-                <h5 class="text-link-historic-desktop">Deposit</h5>
+                <h5 class="text-link-historic-desktop font-semi-bold">Deposit</h5>
               </router-link>
             </div>
             <WithdrawRouteSelectDesktop :isFiat="wallet?.assetCode === 'USD'"></WithdrawRouteSelectDesktop>
             <div class="col-4 justify-content-start container-link-historic-desktop">
               <router-link class="link-historic-desktop" to="/swap" exact role="menuitem" v-ripple>
-                <h5 class="text-link-historic-desktop">Swap</h5>
+                <h5 class="text-link-historic-desktop font-semi-bold">Swap</h5>
               </router-link>
             </div>
           </div>
@@ -98,7 +99,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   margin-top: 5px;
   margin-left: 4%;
 
-  border: 1px solid #fff;
+  border: 1px solid #000;
   width: 30%;
 }
 
@@ -136,7 +137,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   position: relative;
   top: -40px;
   border-radius: 50%;
-  filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
+  filter: brightness(0.1);;
 
   @media only screen and (min-width: 992px) {
     max-width: 250px !important;

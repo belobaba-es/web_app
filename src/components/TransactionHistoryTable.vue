@@ -2,7 +2,7 @@
   <section class="section-main">
     <FinishRegisterWarningBar v-if="!props.isDashboard" />
 
-    <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p>
+    <!-- <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p> -->
 
     <ProgressSpinner
       v-if="isLoadingTransactionDetails"
@@ -20,22 +20,22 @@
           <router-link to="/dashboard">
             <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
           </router-link>
-          <span class="text-xl">{{ t('extracts') }}</span>
+          <h1 class="text-3xl font-bold ml-3 my-0">{{ t('extracts') }}</h1>
         </div>
       </div>
 
-      <div class="mt-4 mb-25">
+      <div class="ml-3 mb-25">
         <div class="flex align-items-center">
-          <p class="text-2xl">{{ t('chooseExtract') }}</p>
+          <p class="text-2xl ">{{ t('chooseExtract') }}</p>
         </div>
       </div>
 
-      <div class="col-12">
-        <div class="grid">
+      <div class="col-12 ml-3">
+        <div class="grid pt-2">
           <div :class="{ 'p-col-3 p-md-col-6': true }">
             <div class="grid">
               <div class="col-6">
-                <label class="label-search">{{ t('transactionType') }}</label>
+                <label class="label-search line-height-4 font-semi-bold">{{ t('transactionType') }}</label>
                 <Dropdown
                   class="dropdown-full"
                   v-model="selectedTypeTransaction"
@@ -46,7 +46,7 @@
                 />
               </div>
               <div class="col-6">
-                <label class="label-search">{{ t('assetType') }}</label>
+                <label class="label-search line-height-4 font-semi-bold">{{ t('assetType') }}</label>
                 <Dropdown
                   class="dropdown-full"
                   v-model="assetId"
@@ -60,7 +60,7 @@
           </div>
 
           <div :class="{ 'p-col-3 p-md-col-6 lg:ml-4': true }">
-            <label class="label-search">{{ t('datePicker') }}</label>
+            <label class="label-search line-height-4 font-semi-bold">{{ t('datePicker') }}</label>
             <div class="grid">
               <div class="col-6 m-0">
                 <Calendar v-model="startDate" showTime dateFormat="dd/mm/yy" hourFormat="24" />
@@ -91,7 +91,7 @@
         </div>
       </div>
 
-      <div class="col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3 mt-3 pl-0">
+      <div class="col-12 sm:col-12 md:col-6 lg:col-4 xl:col-3 pl-0 ml-3">
         <div class="flex align-items-center">
           <Button
             class="p-button"
@@ -106,13 +106,13 @@
       <!--          -->
     </section>
 
-    <div class="container-data mb-0 pb-0">
+    <div class="container-data mb-0 pb-0 ml-3">
       <div class="grid">
         <div class="col-6 flex justify-content-start align-items-center">
-          <span class="text-xl">{{ t('historicTransactionsTitle') }}</span>
+          <span class="font-bold text-xl">{{ t('historicTransactionsTitle') }}</span>
         </div>
         <div v-if="props.isDashboard" class="col-6 flex justify-content-end align-items-center">
-          <span class="text-xl">{{ t('viewAllTransactions') }}</span>
+          <span class="text-xl font-bold">{{ t('viewAllTransactions') }}</span>
           <router-link to="/transaction-history">
             <Button label="" icon="pi pi-angle-right" iconPos="left" class="p-button-text" />
           </router-link>
@@ -133,8 +133,8 @@
                     />
                   </div>
                   <div class="col-8">
-                    <p class="name_to">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
-                    <p class="date">
+                    <p class="font-bold">{{ item.counterparty?.informationOwner?.name ?? '' }}</p>
+                    <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">
                       {{ item.formatedDate }}
                     </p>
                   </div>
@@ -142,11 +142,16 @@
               </div>
 
               <div class="col sm:col-3 md:col-3 lg:col-3 xl:col-3 data-hidden">
-                <p class="reference">{{ item.reference }}</p>
+                <p
+                  class="font-bold"
+                  style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f"
+                >
+                  {{ item.reference }}
+                </p>
               </div>
 
               <div class="col sm:col-4 md:col-4 lg:col-3 xl:col-2">
-                <p class="amount-x font-semi-bold">
+                <p class="amount-x font-bold">
                   {{ item.amount }}
                   <small>{{ getAsset(item.assetId, listAssets).code }}</small> &nbsp;
                   <i
@@ -158,7 +163,7 @@
               </div>
 
               <div class="col sm:col-4 md:col-3 lg:col-2 xl:col-2 data-hidden">
-                <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'">
+                <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'" style='font-weight: 700 !important'>
                   {{ item.status }}
                 </p>
               </div>
@@ -210,7 +215,7 @@
 
   <ModalTransactionDetails
     v-model:display="displayModalTransactionDetail"
-    :transaction="modalTransactionDetail as TransactionHistory ?? {} as TransactionHistory"
+    :transaction="modalTransactionDetail ?? {}"
   ></ModalTransactionDetails>
 </template>
 
@@ -484,7 +489,7 @@ const downloadExtract = () => {
     generateTransactionHistory(
       nameFile,
       logo,
-      'noba.cash',
+      'Belobaba',
       footerPdf,
       jsPDFOptionsOrientationEnum.LANDSCAPE,
       extractPDFInfo,
@@ -615,12 +620,11 @@ const isNullOrUndefinedOrEmpty = (value: any) => {
 }
 
 .container-data {
-  margin: -14px;
   margin-top: 30px;
 }
 
 .padding-search-div {
-  padding-top: 1.62rem !important;
+  padding-top: 2.2rem !important;
   padding-left: 0.5rem;
 }
 
@@ -645,7 +649,7 @@ const isNullOrUndefinedOrEmpty = (value: any) => {
 }
 
 .amount-x {
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 .pi-chevron-right {
@@ -664,6 +668,7 @@ const isNullOrUndefinedOrEmpty = (value: any) => {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--bluegray-300);
 }
 
 .p-progress-spinner {
@@ -676,7 +681,7 @@ const isNullOrUndefinedOrEmpty = (value: any) => {
 .details-mobile {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 
   h4 {
     margin: 0;

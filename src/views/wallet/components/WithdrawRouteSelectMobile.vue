@@ -26,12 +26,12 @@ const props = defineProps<{
   isFiat: boolean
 }>()
 const fiatLinks = [
-  { name: 'Transfer between noba accounts', link: '/withdraw/noba/fiat' },
+  { name: 'Transfer between Belobaba accounts', link: '/withdraw/noba/fiat' },
   { name: 'Domestic Wire', link: '/withdraw/fiat/domestic' },
   { name: 'International Wire', link: '/withdraw/fiat/international' },
 ]
 const assetLinks = [
-  { name: 'Between Noba Crypto Wallets', link: '/withdraw/noba/crypto' },
+  { name: 'Between Belobaba Crypto Wallets', link: '/withdraw/noba/crypto' },
   { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other' },
 ]
 const links: any = ref()

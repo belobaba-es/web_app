@@ -1,13 +1,13 @@
 <template>
   <div class="grid">
     <div class="col-6 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <p class="name_to">{{ item.to.realName }}</p>
-      <p class="date">
+      <p class="font-bold">{{ item.to.realName }}</p>
+      <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">
         {{ item.createdAt }}
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
-      <p class="reference">{{ item.reference }}</p>
+      <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">{{ item.reference }}</p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">

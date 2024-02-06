@@ -26,13 +26,14 @@ const toRoute = () => {
 <style scoped>
 .card-button {
   display: flex;
-  color: #e4b677;
+  color: #000;
+  font-weight: 700;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 0.5rem;
-  border: 1px solid #aa9872;
-  background: #fff0d7 0% 0% no-repeat padding-box;
+  border: 1px solid #e4b574;
+  background: #e4cea1 0% 0% no-repeat padding-box;
   min-width: 280px;
   min-height: 60px;
   border-radius: 20px;

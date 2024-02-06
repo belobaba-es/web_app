@@ -75,7 +75,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
 import { useI18n } from 'vue-i18n'
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/logo-login.png'
 import Lang from '../../components/Lang.vue'
 import { RegisterService } from './services/register'
 import { useRoute, useRouter } from 'vue-router'
@@ -183,7 +183,7 @@ const redirectLogin = () => {
 }
 
 .logo-noba {
-  width: 142px;
+  width: 265px;
   height: 64px;
 }
 

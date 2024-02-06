@@ -20,7 +20,7 @@
       </template>
     </div>
 
-    <div class="p-3 mt-2 border border-yellow-100 border-solid border-round-lg bg-gray-100">
+    <div class="p-3 mt-2 border border-yellow-100 border-solid border-round-lg" style="background: #e4cea13b">
       <div class="grid">
         <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">

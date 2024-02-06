@@ -2,7 +2,7 @@
   <div class="container-new-wallet">
     <div class="grid">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <p class="text-btn-new-wallet">{{ t('textNewWalletAddress') }}</p>
+        <p class="text-btn-new-wallet font-semi-bold mb-3">{{ t('textNewWalletAddress') }}</p>
         <div class="container-btn-add-wallet">
           <Button class="p-button wallet-btn" :label="t('newWallet')" @click="displayNew = !displayNew" />
         </div>

@@ -3,7 +3,7 @@
     <PageLayout :title="t('profile')" class="profile">
       <div class="grid gap-4 py-4">
         <div v-for="(item, idx) in menuItems" :key="idx" class="col-auto">
-          <RouterLink :to="item.to" class="p-button profile-navigation" exact>
+          <RouterLink :to="item.to" class="p-button profile-navigation ml-3" exact>
             {{ item.label }}
           </RouterLink>
         </div>

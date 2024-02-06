@@ -30,7 +30,7 @@
             v-ripple
           >
             <i :class="item.icon"></i>
-            <span>{{ item.label }} </span>
+            <span class="font-bold">{{ item.label }} </span>
             <i v-if="item.items" class="pi pi-fw pi-angle-down menuitem-toggle-icon"></i>
             <!-- <Badge v-if="item.badge" :value="item.badge"></Badge> -->
           </router-link>

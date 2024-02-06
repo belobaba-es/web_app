@@ -4,8 +4,8 @@
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
-      <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
-      <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
+      <h1 class="font-semi-bold text-center mb-0">{{ t('loginTitle') }}</h1>
+      <h2 class=" text-center mb-0">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">
@@ -85,7 +85,7 @@
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/logo-login.png'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import Checkbox from 'primevue/checkbox'
@@ -157,7 +157,7 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 }
 
 .logo-noba {
-  width: 220px;
+  width: 265px;
   height: 64px;
 }
 </style>

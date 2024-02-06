@@ -1,7 +1,7 @@
 <template>
   <section class="section-main">
     <div class="col-8">
-      <p class="text-3xl font-medium mb-4">
+      <p class="text-3xl font-bold mb-4">
         {{ t('withdraw') }} / <span class="text-primary">{{ t('crypto') }} </span>
       </p>
       <div class="flex align-items-center">

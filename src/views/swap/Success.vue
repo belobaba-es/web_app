@@ -6,7 +6,7 @@
           <div class="flex justify-content-center mb-4">
             <img alt="source icon" :src="successIcon" />
           </div>
-          <h1 class="text-center">{{ t('swapSuccessfulTitle') }}</h1>
+          <h1 class="text-center font-semi-bold">{{ t('swapSuccessfulTitle') }}</h1>
           <p class="text-center">{{ t('swapSuccessfulText') }}</p>
           <p class="text-center">{{ t('swapSuccessDelayWarning') }}</p>
 
