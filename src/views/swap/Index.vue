@@ -35,7 +35,7 @@
               <AssetInput type="fiat" v-else />
             </div>
 
-            <ShowQuotePrice v-if="exchangeId"></ShowQuotePrice>
+            <ShowQuotePrice v-if="exchangeId" />
 
             <div class="flex-row justify-content-center align-items-center" v-if="progressBarPercent > 0">
               <div class="grid">

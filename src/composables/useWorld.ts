@@ -30,7 +30,7 @@ export interface StateUS {
 }
 
 const countries = ref<Country[]>([])
-const allowed_countries = ref<CountryAllowed[]>(data_countries)
+const allowed_countries = ref<CountryAllowed[]>(data_countries.sort((a, b) => a.name.localeCompare(b.name)))
 const state_us = ref<StateUS[]>(state_data)
 const showCombo = ref<boolean>(false)
 const loadingStateField = ref<boolean>(false)
