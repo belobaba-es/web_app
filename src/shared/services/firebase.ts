@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app'
-import { getDatabase, off, onValue, ref } from 'firebase/database'
+import { initializeApp } from '@firebase/app'
+import { getDatabase, off, onValue, ref, DataSnapshot } from '@firebase/database';
 import { BehaviorSubject, Observable } from 'rxjs'
 import { BalanceWallet } from '../../views/deposit/types/asset.interface'
 import { AssetsService } from '../../views/deposit/services/assets'
@@ -52,7 +52,7 @@ export class FirebaseService {
     const db = await FirebaseService.initFirebase()
     const userBalances = ref(db, this.accountId)
 
-    onValue(userBalances, async snapshot => {
+    onValue(userBalances, async (snapshot: DataSnapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val() as BalanceWallet[]
         await this.setBalances(data)

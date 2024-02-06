@@ -1,9 +1,9 @@
-import { initializeApp } from 'firebase/app'
-import { fetchConfig, getAll, getBoolean, getRemoteConfig } from 'firebase/remote-config'
+import { initializeApp } from '@firebase/app'
+import { fetchConfig, getAll, getBoolean, getRemoteConfig } from '@firebase/remote-config'
 import { RemoteConfig } from '@firebase/remote-config'
-import { getValue } from 'firebase/remote-config'
+import { getValue } from '@firebase/remote-config'
 import { FirebaseService } from './firebase'
-import { onValue, ref } from 'firebase/database'
+import { onValue, ref } from '@firebase/database'
 
 const initRemoteConfig = async (): Promise<RemoteConfig> => {
   const config = {
