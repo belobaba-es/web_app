@@ -17,7 +17,7 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
-  const disableSection = ref(false)
+  const disableSection = ref(true)
   const disabledInput = ref(false)
 
   const toast = useToast()
@@ -108,14 +108,10 @@ export const useOnboardingPersonal = () => {
     disableSection.value = true
     disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
   }
-
-  // const watchChagedData = () => {
+  console.log('onboardingPersonal', setStateOnboardingPersonal(onboardingPersonal.value))
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
   })
-  // }
-
-  // watchChagedData()
 
   return {
     onboardingPersonal,
