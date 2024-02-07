@@ -24,7 +24,7 @@ const props = defineProps<{
   isFiat: boolean
 }>()
 const fiatLinks = [
-  { name: 'Transfer between Belobaba accounts', link: '/withdraw/noba/fiat' },
+  { name: 'Transfer between BELOBABA accounts', link: '/withdraw/noba/fiat' },
   { name: 'Domestic Wire', link: '/withdraw/fiat/domestic' },
   { name: 'International Wire', link: '/withdraw/fiat/international' },
 ]
