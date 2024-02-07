@@ -18,7 +18,7 @@ export const useOnboardingPersonal = () => {
 
   const submitting = ref(false)
   const disableSection = ref(true)
-  const disabledInput = ref(false)
+  const disabledInput = ref(true)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -108,7 +108,7 @@ export const useOnboardingPersonal = () => {
     disableSection.value = true
     disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
   }
-  console.log('onboardingPersonal', setStateOnboardingPersonal(onboardingPersonal.value))
+
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
   })

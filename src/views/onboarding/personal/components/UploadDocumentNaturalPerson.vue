@@ -116,9 +116,13 @@ const submissionCompletedDocuments = ref<{
 })
 
 if (onboardingPersonal.value.documentCountry !== 'US') {
-  documentTypeOptions.value = documentTypeOptions.value.filter(item => item.value === 'passport')
+  documentTypeOptions.value = documentTypeOptions.value.filter(
+    item => item.value === 'passport' || item.value === 'dni'
+  )
 } else {
-  documentTypeOptions.value = documentTypeOptions.value.filter(item => item.value !== 'passport')
+  documentTypeOptions.value = documentTypeOptions.value.filter(
+    item => item.value !== 'passport' && item.value !== 'dni'
+  )
 }
 
 const completed = (response: { side: string; dni: string; registerNumber: string }) => {
