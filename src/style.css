@@ -135,7 +135,7 @@ h2 {
 > .p-menuitem-content:hover
 .p-menuitem-link
 .p-menuitem-ico {
-    color: #00beb0;
+    color: #e4b574;
     background: #e9ecef;
 }
 
@@ -332,7 +332,7 @@ small {
 }
 
 .p-progressbar.p-component.p-progressbar-determinate.swap > .p-progressbar-value.p-progressbar-value-animate {
-    background: #00beb0;
+    background: #e4cea1;
 }
 
 .input-mount .p-inputtext {

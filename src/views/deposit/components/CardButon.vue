@@ -23,6 +23,9 @@ defineProps({
   background: #e4cea1 0% 0% no-repeat padding-box;
   width: 288px;
   height: 180px;
+  border-radius: 12px;
+  color: #000;
+  font-weight: 700;
 }
 .card-deposit:hover {
   background: #dca854;

@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="114" height="114" viewBox="0 0 114 114">
   <g id="Grupo_64780" data-name="Grupo 64780" transform="translate(-710 -470)">
-    <g id="Elipse_351" data-name="Elipse 351" transform="translate(710 470)" fill="#fff" stroke="#00beb0" stroke-width="5">
+    <g id="Elipse_351" data-name="Elipse 351" transform="translate(710 470)" fill="#fff" stroke="#e4cea1" stroke-width="5">
       <circle cx="57" cy="57" r="57" stroke="none"/>
       <circle cx="57" cy="57" r="54.5" fill="none"/>
     </g>
-    <path id="Icon_feather-check" data-name="Icon feather-check" d="M78.565,9,28.677,58.888,6,36.212" transform="translate(724.241 492.721)" fill="none" stroke="#00beb0" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+    <path id="Icon_feather-check" data-name="Icon feather-check" d="M78.565,9,28.677,58.888,6,36.212" transform="translate(724.241 492.721)" fill="none" stroke="#e4cea1" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
   </g>
 </svg>

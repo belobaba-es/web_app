@@ -61,7 +61,7 @@ export const useBeneficiary = () => {
   const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
     switch (status) {
       case 'ACTIVE':
-        return '#00beb0'
+        return '#e4cea1'
       case 'REJECTED':
         return 'red'
       case 'PENDING':
