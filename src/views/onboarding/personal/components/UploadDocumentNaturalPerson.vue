@@ -117,11 +117,11 @@ const submissionCompletedDocuments = ref<{
 
 if (onboardingPersonal.value.documentCountry !== 'US') {
   documentTypeOptions.value = documentTypeOptions.value.filter(
-    item => item.value === 'passport' || item.value === 'dni'
+    item => item.value === 'passport' || item.value === 'government_id'
   )
 } else {
   documentTypeOptions.value = documentTypeOptions.value.filter(
-    item => item.value !== 'passport' && item.value !== 'dni'
+    item => item.value !== 'passport' && item.value !== 'government_id'
   )
 }
 

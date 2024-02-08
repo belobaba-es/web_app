@@ -16,7 +16,6 @@ export const useDocuments = () => {
 
   const documentTypeOptions = ref([
     { value: 'passport', name: t('docTypeLabelPassport') },
-    { value: 'dni', name: 'Dni' },
     { value: 'drivers_license', name: t('docTypeLabelDriversLicense') },
     { value: 'government_id', name: t('docTypeLabelGovernmentId') },
     { value: 'residence_permit', name: 'Residence Permit' },
