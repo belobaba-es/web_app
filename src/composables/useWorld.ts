@@ -29,11 +29,11 @@ export interface StateUS {
     country_id: string
 }
 
-const countriesSourt = [];
 const countries = ref<Country[]>([])
-countriesSourt.push(data_countries.sort((a, b) => a.name.localeCompare(b.name)));
-const allowed_countries = ref<CountryAllowed[]>([data_countries.sort((a, b) => a.name.localeCompare(b.name))])
-const state_us = ref<StateUS[]>([state_data])
+const allowed_countries = ref<CountryAllowed[]>([])
+allowed_countries.value = data_countries.sort((a, b) => a.name.localeCompare(b.name));
+const state_us = ref<StateUS[]>([])
+state_us.value = state_data;
 const showCombo = ref<boolean>(false)
 const loadingStateField = ref<boolean>(false)
 console.log('data_countries', data_countries)
