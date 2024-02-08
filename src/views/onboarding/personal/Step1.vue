@@ -84,7 +84,7 @@
                 v-model="onboardingPersonal.documentCountry"
                 :inputId="data.key"
                 name="dynamic"
-                @change="documentCountry"
+                @change="documentCountry()"
                 :value="data.key"
               />
               <label :for="data.key" class="ml-2">{{ data.name }}</label>
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!disabledInput">
           <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />

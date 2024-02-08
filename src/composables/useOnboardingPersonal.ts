@@ -17,8 +17,8 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
-  const disableSection = ref(true)
-  const disabledInput = ref(true)
+  const disableSection = ref(false)
+  const disabledInput = ref(false)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -88,6 +88,12 @@ export const useOnboardingPersonal = () => {
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
+
+        if (onboardingPersonal.value.documentCountry !== 'US') {
+          disableSection.value = true
+          disabledInput.value = false
+        }
+        documentCountry()
       })
       .catch(e => {
         submitting.value = false
