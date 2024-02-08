@@ -1,19 +1,7 @@
 import { HttpService } from '../../../shared/services/http'
-import {
-  MakeAssetExternalTransfer,
-  MakeAssetInternalTransfer,
-  MakeFiatExternalTransfer,
-  MakeFiatInternalTransfer,
-} from '../types/withdraw'
+import { MakeAssetExternalTransfer, MakeAssetInternalTransfer, MakeFiatExternalTransfer } from '../types/withdraw'
 
 export class WithdrawService {
-  async makeFiatInternalTransfer(transaction: MakeFiatInternalTransfer): Promise<void> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
-      `banking/withdrawal/internal`,
-      transaction
-    )
-  }
-
   async makeAssetInternalTransfer(transaction: MakeAssetInternalTransfer): Promise<void> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(
       `assets/withdrawal/internal`,
