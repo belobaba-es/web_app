@@ -111,64 +111,34 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 function makeTransaction() {
   submitting.value = true
 
-  switch (route.params.type) {
-    case 'fiat':
-      new WithdrawService()
-        .makeFiatInternalTransfer({
-          amount: props.formData.amount,
-          clientIdDestination: props.formData.beneficiary.clientId,
-          reference: props.formData.reference,
-        })
-        .then((res: any) => {
-          transactionId.value = res.data.transactionId
-          submitting.value = false
-          isCompleted.value = true
-        })
-        .catch(e => {
-          submitting.value = false
-
-          toast.add({
-            severity: 'error',
-            summary: t('somethingWentWrong'),
-            detail: e.response.data.message,
-            life: 4000,
-          })
-        })
-
-      break
-    case 'crypto':
-      new WithdrawService()
-        .makeAssetInternalTransfer({
-          clientIdDestination: props.formData.beneficiary.clientId,
-          amount: props.formData.amount,
-          reference: props.formData.reference,
-          assetCode: props.formData.assetCode,
-          purpose: props.formData.purpose,
-        })
-        .then((res: any) => {
-          transactionId.value = res.data.transactionId
-          submitting.value = false
-          isCompleted.value = true
-        })
-        .catch(e => {
-          submitting.value = false
-
-          if (e.response.data.message) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: e.response.data.message,
-              life: 4000,
-            })
-            return
-          }
-
-          showMessage(toast, e.response.data)
-        })
-      break
-    default:
+  new WithdrawService()
+    .makeAssetInternalTransfer({
+      clientIdDestination: props.formData.beneficiary.clientId,
+      amount: props.formData.amount,
+      reference: props.formData.reference,
+      assetCode: props.formData.assetCode,
+      purpose: props.formData.purpose,
+    })
+    .then((res: any) => {
+      transactionId.value = res.data.transactionId
       submitting.value = false
-  }
+      isCompleted.value = true
+    })
+    .catch(e => {
+      submitting.value = false
+
+      if (e.response.data.message) {
+        toast.add({
+          severity: 'error',
+          summary: t('somethingWentWrong'),
+          detail: e.response.data.message,
+          life: 4,
+        })
+        return
+      }
+
+      showMessage(toast, e.response.data)
+    })
 }
 </script>
 
