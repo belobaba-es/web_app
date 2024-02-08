@@ -1,9 +1,9 @@
 <template>
-  <div class="card">
+  <div class="card-deposit">
     <div class="flex">
       <img :src="icon" alt="" />
     </div>
-    <p class="text-2xl font-normal">{{ label }}</p>
+    <p class="text-2xl font-medium">{{ label }}</p>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ defineProps({
 .card {
   text-align: center;
   padding: 2rem 3rem;
-  border: 1px solid #00beb0;
+  border: 1px solid #e4cea1;
   background: #fff 0% 0% no-repeat padding-box;
   width: 288px;
 }
@@ -34,7 +34,7 @@ defineProps({
 .card:hover {
   color: #fff;
   cursor: pointer;
-  background: #00beb0 0% 0% no-repeat padding-box;
+  background: #e4cea1 0% 0% no-repeat padding-box;
   transition: background-color 0.5s ease;
 }
 .card:hover img {

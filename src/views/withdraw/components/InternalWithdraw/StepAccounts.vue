@@ -93,7 +93,7 @@ const loadMore = async () => {
 }
 
 .asset-item:hover {
-  color: #00beb0;
+  color: #e4cea1;
   background: #fbfbfb;
 }
 </style>
