@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Asset } from '../views/deposit/types/asset.interface';
+import { Asset } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from './ModalAssetSelector.vue'
-import Message from 'primevue/message';
+import Message from 'primevue/message'
 
 const showModal = ref(false)
 const nameAsset = ref('')
@@ -56,6 +56,7 @@ const selectedAsset = (asset: Asset) => {
   iconAsset.value = asset.icon
   networkAddress.value = asset.networkName + ' ' + asset.network
 
+  console.log(networkAddress.value)
   showModal.value = false
 }
 </script>
@@ -86,5 +87,4 @@ const selectedAsset = (asset: Asset) => {
   color: #000000;
   border-radius: 13px;
 }
-
 </style>
