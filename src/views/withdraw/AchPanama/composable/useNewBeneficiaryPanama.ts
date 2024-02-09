@@ -21,6 +21,8 @@ const formObjectPanama = ref<NewBeneficiaryPanama>({
   isInternal: 'S',
 })
 
+const isUpdateBeneficiary = ref<boolean>(false)
+
 export const useNewBeneficiaryPanama = () => {
   const router = useRouter()
   const toast = useToast()
@@ -33,6 +35,15 @@ export const useNewBeneficiaryPanama = () => {
     { name: 'LOAN-Prestamo', code: 'LOAN' },
     { name: 'ICCP-Tarjeta de crédito', code: 'ICCP' },
   ])
+
+  const setDataBeneficiary = (beneficiary: any) => {
+    console.log(beneficiary)
+    isUpdateBeneficiary.value = true
+    formObjectPanama.value = beneficiary
+    formObjectPanama.value.holderId = beneficiary.holderId
+
+    router.push(`/withdraw/panama/new`)
+  }
 
   const validateFields = () => {
     const achPanama = formObjectPanama.value
@@ -70,6 +81,9 @@ export const useNewBeneficiaryPanama = () => {
             life: 4000,
           })
         })
+      setTimeout(() => {
+        router.push(`/withdraw/panama`)
+      }, 2000)
     } catch (error) {
       toast.add({
         severity: 'error',
@@ -90,5 +104,7 @@ export const useNewBeneficiaryPanama = () => {
     productAccountType,
     save,
     toBack,
+    setDataBeneficiary,
+    submitting,
   }
 }

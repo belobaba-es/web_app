@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiaryAchPanama">
-      <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
+      <div class="col-12 sm:col-12 md:col-8 lg:col-11 xl:col-11">
         <span class="ml-4 mt-2 mb-2">{{ item.achInstructions.holderName }}</span>
         <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{ item.status }}</span>
       </div>
@@ -44,13 +44,14 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 import { useBeneficiary } from '../../../composables/useBeneficiary'
-import { useNewOrEditBeneficiary } from '../../../beneficiary/composable/useNewOrEditBeneficiary'
+import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 const { submitting, listNextPag, listBeneficiaryAchPanama, fetchBeneficiariesAchPanama, getBeneficiaryStatusColor } =
   useBeneficiary()
-const { setDataBeneficiary } = useNewOrEditBeneficiary()
+
+const { setDataBeneficiary } = useNewBeneficiaryPanama()
 
 const emit = defineEmits(['select'])
 

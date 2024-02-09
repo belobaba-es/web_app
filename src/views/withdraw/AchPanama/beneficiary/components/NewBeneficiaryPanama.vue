@@ -82,7 +82,7 @@
       </div>
 
       <div class="field mt-5 flex justify-content-end">
-        <Button :label="t('saveNewPayee')" class="px-5" @click="save" iconPos="right" />
+        <Button :label="t('saveNewPayee')" class="px-5" @click="save" :loading="submitting" iconPos="right" />
       </div>
     </div>
   </section>
@@ -100,5 +100,5 @@ import { ref } from 'vue'
 const allowed_banks = ref(data_banks)
 const { t } = useI18n({ useScope: 'global' })
 
-const { formObjectPanama, save, toBack, productAccountType } = useNewBeneficiaryPanama()
+const { formObjectPanama, save, toBack, productAccountType, submitting } = useNewBeneficiaryPanama()
 </script>
