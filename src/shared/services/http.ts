@@ -21,6 +21,7 @@ export class HttpService {
       await router.push('/')
       return
     }
+
     const type = isFormData ? 'multipart/form-data' : 'application/json'
     return {
       headers: {
