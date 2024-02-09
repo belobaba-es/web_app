@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!disabledInput">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
