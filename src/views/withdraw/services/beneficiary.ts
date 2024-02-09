@@ -41,7 +41,7 @@ export class BeneficiaryService {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/asset`, payload)
   }
 
-  async saveBeneficiaryAchPanama(payload: { achInstructions: NewBeneficiaryPanama }): Promise<any> {
+  async saveBeneficiaryAchPanama(payload: NewBeneficiaryPanama): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach/pab`, payload)
   }
 }

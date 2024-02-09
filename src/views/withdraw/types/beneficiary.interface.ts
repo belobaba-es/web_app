@@ -104,14 +104,19 @@ export interface BeneficiaryAsset {
 }
 
 export type NewBeneficiaryPanama = {
-  bankName: string
+  achInstructions: AchInstructions
+  counterpartyId?: string
+  isInternal: string
+}
+
+export interface AchInstructions {
   accountDestinationNumber: string
+  bankName: string
+  concept: string
   holderEmail: string
-  productType: productType
   holderId: string
   holderName: string
-  concept: string
-  isInternal: string
+  productType: productType
 }
 
 export interface productType {

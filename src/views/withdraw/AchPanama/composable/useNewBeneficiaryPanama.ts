@@ -6,19 +6,22 @@ import { BeneficiaryService } from '../../services/beneficiary'
 import { useRouter } from 'vue-router'
 
 const formObjectPanama = ref<NewBeneficiaryPanama>({
-  bankName: '',
-  accountDestinationNumber: '',
-  holderEmail: '',
-  productType: {
-    PACA: '',
-    PACC: '',
-    LOAN: '',
-    ICCP: '',
+  counterpartyId: '',
+  achInstructions: {
+    accountDestinationNumber: '',
+    bankName: '',
+    concept: '',
+    holderEmail: '',
+    holderId: '',
+    holderName: '',
+    productType: {
+      PACA: '',
+      PACC: '',
+      LOAN: '',
+      ICCP: '',
+    },
   },
-  holderId: '',
-  holderName: '',
-  concept: '',
-  isInternal: 'S',
+  isInternal: '',
 })
 
 const isUpdateBeneficiary = ref<boolean>(false)
@@ -36,27 +39,25 @@ export const useNewBeneficiaryPanama = () => {
     { name: 'ICCP-Tarjeta de crédito', code: 'ICCP' },
   ])
 
-  const setDataBeneficiary = (beneficiary: any) => {
-    console.log(beneficiary)
-    isUpdateBeneficiary.value = true
-    formObjectPanama.value = beneficiary
-    formObjectPanama.value.holderId = beneficiary.holderId
-
-    router.push(`/withdraw/panama/new`)
-  }
-
   const validateFields = () => {
     const achPanama = formObjectPanama.value
     return [
-      achPanama.bankName,
-      achPanama.accountDestinationNumber,
-      achPanama.productType,
-      achPanama.holderName,
-      achPanama.holderId,
-      achPanama.holderEmail,
+      achPanama.achInstructions.bankName,
+      achPanama.achInstructions.accountDestinationNumber,
+      achPanama.achInstructions.productType,
+      achPanama.achInstructions.holderName,
+      achPanama.achInstructions.holderId,
+      achPanama.achInstructions.holderEmail,
     ].every(field => field.toString() !== '')
   }
 
+  const setDataBeneficiary = (beneficiary: any) => {
+    isUpdateBeneficiary.value = true
+    formObjectPanama.value = beneficiary
+    formObjectPanama.value.counterpartyId = beneficiary.counterpartyId
+
+    router.push(`/withdraw/panama/new`)
+  }
   const save = () => {
     if (!validateFields()) {
       toast.add({
@@ -67,23 +68,23 @@ export const useNewBeneficiaryPanama = () => {
       })
       return
     }
+    if (!isUpdateBeneficiary.value) {
+      delete formObjectPanama.value.counterpartyId
+    }
     submitting.value = true
     try {
-      new BeneficiaryService()
-        .saveBeneficiaryAchPanama({
-          achInstructions: formObjectPanama.value,
+      new BeneficiaryService().saveBeneficiaryAchPanama(formObjectPanama.value).then(response => {
+        toast.add({
+          severity: 'success',
+          summary: t('success'),
+          detail: t(response.data.message),
+          life: 4000,
         })
-        .then(response => {
-          toast.add({
-            severity: 'success',
-            summary: t('success'),
-            detail: t(response.data.message),
-            life: 4000,
-          })
-        })
-      setTimeout(() => {
-        router.push(`/withdraw/panama`)
-      }, 2000)
+        isUpdateBeneficiary.value = false
+        setTimeout(() => {
+          router.push(`/withdraw/panama`)
+        }, 2000)
+      })
     } catch (error) {
       toast.add({
         severity: 'error',

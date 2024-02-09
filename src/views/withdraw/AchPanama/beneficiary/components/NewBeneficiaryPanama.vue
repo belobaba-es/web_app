@@ -21,7 +21,7 @@
         <div class="p-inputgroup">
           <Dropdown
             class="select-asset"
-            v-model="formObjectPanama.bankName"
+            v-model="formObjectPanama.achInstructions.bankName"
             :options="allowed_banks"
             optionLabel="name"
             optionValue="name"
@@ -34,7 +34,7 @@
       <div class="field">
         <label>{{ t('accountNumber') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.accountDestinationNumber" required />
+          <InputText type="text" v-model="formObjectPanama.achInstructions.accountDestinationNumber" required />
         </div>
       </div>
 
@@ -43,7 +43,7 @@
         <div class="p-inputgroup">
           <Dropdown
             class="select-asset"
-            v-model="formObjectPanama.productType"
+            v-model="formObjectPanama.achInstructions.productType"
             :options="productAccountType"
             optionLabel="name"
             optionValue="name"
@@ -56,28 +56,28 @@
       <div class="field">
         <label>{{ t('beneficiaryName') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderName" required />
+          <InputText type="text" v-model="formObjectPanama.achInstructions.holderName" required />
         </div>
       </div>
 
       <div class="field">
         <label>{{ t('dni') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderId" required />
+          <InputText type="text" v-model="formObjectPanama.achInstructions.holderId" required />
         </div>
       </div>
 
       <div class="field">
         <label>{{ t('conceptLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.concept" required />
+          <InputText type="text" v-model="formObjectPanama.achInstructions.concept" required />
         </div>
       </div>
 
       <div class="field">
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderEmail" />
+          <InputText type="text" v-model="formObjectPanama.achInstructions.holderEmail" />
         </div>
       </div>
 
