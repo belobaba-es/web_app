@@ -449,5 +449,6 @@
   "beneficiaryPending": "Los datos del beneficiario estan siendo valdiados, le enviaremos un correo electronico tan pronto sea aprobado",
   "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el.",
   "textValidateDocument": "Tipo de Archivo no soportado",
-  "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF"
+  "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF",
+  "transactionConfirmation": "Confirmar transferencia"
 }

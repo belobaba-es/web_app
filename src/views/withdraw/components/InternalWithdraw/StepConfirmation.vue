@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isCompleted" class="formgrid grid mt-5 mb-5">
     <div class="col-12">
-      <span class="mt-4">{{ t('Confirm wire information') }}</span>
+      <span class="mt-4">{{ t('transactionConfirmation') }}</span>
       <Divider></Divider>
     </div>
     <div>
@@ -120,6 +120,13 @@ function makeTransaction() {
       purpose: props.formData.purpose,
     })
     .then((res: any) => {
+      toast.add({
+        severity: 'success',
+        summary: t('transactionCompleted'),
+        detail: res.message,
+        life: 4,
+      })
+
       transactionId.value = res.data.transactionId
       submitting.value = false
       isCompleted.value = true
