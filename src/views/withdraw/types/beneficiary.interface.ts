@@ -36,6 +36,7 @@ export type Beneficiary = {
     address: OwnerAddress
     name: string
     countery: string
+    email: string
   }
   status: CounterpartyStatus
 }
