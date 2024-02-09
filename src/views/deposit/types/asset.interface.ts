@@ -14,6 +14,7 @@ export interface Asset {
   qr?: string
   paymentAddress: string
   networkName?: string
+  network?: string
 }
 
 export interface EventCreatePaymentAddress extends CreatePaymentAddress {

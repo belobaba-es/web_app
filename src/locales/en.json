@@ -142,7 +142,7 @@
   "newBeneficiary": "New Beneficiary",
   "beneficiaryAddress": "Beneficiary Address",
   "docTypeLabelDriversLicense": "Driver License",
-  "docTypeLabelGovernmentId": "Identity Card",
+  "docTypeLabelGovernmentId": "GovernmentId",
   "docTypeLabelPassport": "Passport",
   "docTypeLabelResidencePermit": "Residence Permit",
   "youSendTo": "You send to ",
@@ -221,8 +221,8 @@
   "titleDespositFiat": "Deposit Instructions",
   "downloadPdf": "Download PDF File",
   "footerPdfFiatData": "Noba.cash TM 2023 - All rights reserved.",
-  "namePdfDepositFiatDomestic": "Domestic Deposit Instructions",
-  "namePdfDepositFiatInternational": "International Deposit Instructions",
+  "namePdfDepositFiatDomestic": "ABA Fedwire Deposit Instructions",
+  "namePdfDepositFiatInternational": "SWIFT Deposit Instructions",
   "transactionHistory": "Transaction history",
   "extractGenerated": "Generated Extract",
   "extracts": "Extracts",
@@ -456,5 +456,6 @@
   "typeFileNotSelected": "You must select the document type.",
   "beneficiaryPending": "The user is being validated, we will let you know when is available.",
   "beneficiaryRejected": "The beneficiary has being rejected, is not available.",
-  "validDocument": "Do you have a valid identification document in the US?"
+  "textValidateDocument": "File type not supported",
+  "typeDocumentAdmitted": "Supported Documents, JPG, JPEG, PNG or PDF"
 }

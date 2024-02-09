@@ -140,7 +140,7 @@
   "newBeneficiary": "Nuevo Beneficiario",
   "beneficiaryAddress": "Dirección del beneficiario",
   "docTypeLabelDriversLicense": "Licencia de conducir",
-  "docTypeLabelGovernmentId": "Documento de identificación",
+  "docTypeLabelGovernmentId": "Identificación del Gobierno",
   "docTypeLabelPassport": "Pasaporte",
   "docTypeLabelResidencePermit": "Permiso de residencia",
   "youSendTo": "Enviaras para ",
@@ -211,8 +211,8 @@
   "titleDespositFiat": "Instrucciones de depósito",
   "downloadPdf": "Descargar archivo PDF",
   "footerPdfFiatData": "Noba.cash TM 2023 - Todos los derechos reservados.",
-  "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico",
-  "namePdfDepositFiatInternational": "Instrucciones de depósito internacional",
+  "namePdfDepositFiatDomestic": "Instrucciones de depósito doméstico ABA Fedwire",
+  "namePdfDepositFiatInternational": "Instrucciones de depósito SWIFT",
   "depositBankName": "Nombre del banco a depositar",
   "textNewWalletAddress": "En Noba solo se puede tener una billetera por activo asociado.",
   "transactionHistory": "Histórico de transacciones",
@@ -448,5 +448,6 @@
   "typeFileNotSelected": "Debe seleccionar el tipo de documento.",
   "beneficiaryPending": "Los datos del beneficiario estan siendo valdiados, le enviaremos un correo electronico tan pronto sea aprobado",
   "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el.",
-  "validDocument": "¿Posee un Documento de identificación válido en EE.UU?"
+  "textValidateDocument": "Tipo de Archivo no soportado",
+  "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF"
 }

@@ -21,13 +21,13 @@
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
+            filter
             v-model="formObject.informationIntermediaryBank!.address.country"
-            :options="countries"
+            :options="allowed_countries"
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
-            :disabled="countriesInputIsEmpty"
             class="w-full"
             @change="onChangeCountryHandler"
             required
@@ -96,8 +96,13 @@ const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { countries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler, onChangeStateHandler } =
-  useWorld()
+const {
+  allowed_countries,
+  loadingCountriesField,
+  countriesInputIsEmpty,
+  onChangeCountryHandler,
+  onChangeStateHandler,
+} = useWorld()
 const { formObject } = useNewOrEditBeneficiary()
 
 const nextPage = () => {

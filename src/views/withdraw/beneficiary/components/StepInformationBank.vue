@@ -10,6 +10,7 @@
           <Dropdown
             v-model="formObject.informationBank.address.country"
             :options="allowed_countries"
+            filter
             optionLabel="name"
             option-value="country_code"
             :loading="loadingCountriesField"
