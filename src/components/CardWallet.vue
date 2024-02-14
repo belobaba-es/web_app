@@ -264,9 +264,6 @@ const responsiveOptions = ref([
     color: #aa9872;
   }
 
-  img {
-    filter: invert(161%) sepia(0%) brightness(120%) contrast(95%);
-  }
 }
 
 .name-cripto {
