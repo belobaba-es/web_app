@@ -3,7 +3,7 @@
     <div class="flex align-items-center" style="height: 500px">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
-          <h1 class="text-1xl">{{ t('onboardingTitle') }}</h1>
+          <h1 class="text-1xl font-semi-bold">{{ t('onboardingTitle') }}</h1>
           <h3 class="text-center txt-border-bottom text-2xl mb-0">{{ t('subtitleUploadDocuments') }}</h3>
 
           <div class="grid flex justify-content-center">
