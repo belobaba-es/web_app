@@ -91,7 +91,7 @@ const nextStep = () => {
   //Iban / Swift - International | Routing number Domestic
   if (typeBeneficiary.value === 'INTERNATIONAL') {
     formObject.value.informationBank.iban = routingNumberOrIBAN.value
-    delete formObject.value.informationBank.routingNumber
+   
   } else if (typeBeneficiary.value === 'DOMESTIC') {
     formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
     delete formObject.value.informationBank.iban
