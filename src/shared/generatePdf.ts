@@ -37,7 +37,7 @@ type fillPayload = {
 }
 export default (nameFile: string, logo: string, title: string, data: any, footer: string) => {
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
+  pdf.value.addImage(logo, 'PNG', 15, 10, 70, 20)
 
   pdf.value.setFontSize(18)
   pdf.value.text(title, 75, 40)
@@ -182,7 +182,7 @@ export const generateTransactionReceipt = (
   console.log('footer:', footer)
 
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, 'PNG', 85, 10, 40, 20)
+  pdf.value.addImage(logo, 'PNG', 85, 10, 70, 20)
   createText({ fontSize: 28, textColor: black, xPosition: 65, yPosition: 45, text: title }, pdf)
 
   let i = 1
@@ -221,7 +221,7 @@ export const generateTransactionReceipt = (
 }
 
 const setHeader = (pdf: any, logo: string, title: string) => {
-  pdf.value.addImage(logo, 'PNG', 15, 10, 40, 20)
+  pdf.value.addImage(logo, 'PNG', 15, 10, 70, 20)
 
   const headerXPos: number = 245
   const headerYPos: number = 25
