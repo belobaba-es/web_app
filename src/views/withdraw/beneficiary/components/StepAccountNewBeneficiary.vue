@@ -24,11 +24,8 @@
     <div class="field">
       <label v-show="typeBeneficiary == 'DOMESTIC'">ABA Fedwire</label>
       <label v-show="typeBeneficiary == 'INTERNATIONAL'">{{ t('iban') }} </label>
-      <div class="p-inputgroup" v-if="typeBeneficiary == 'DOMESTIC'">
-        <InputText type="text" v-model="formObject.informationBank.routingNumber"/>
-      </div>
-      <div class="p-inputgroup" v-if="typeBeneficiary == 'INTERNATIONAL'">
-        <InputText type="text" v-model="formObject.informationBank.iban"/>
+      <div class="p-inputgroup">
+        <InputText type="text" v-model="routingNumberOrIBAN"/>
       </div>
     </div>
 
@@ -60,13 +57,12 @@ const {formObject} = useNewOrEditBeneficiary()
 const validateFields = () => {
   let isSwiftCodeValid = true
   let isIbanValid = true
-  let nameField = ''
   const isBankNameValid = formObject.value.informationBank.bankName.trim() !== ''
   let isAccountNumberValid = formObject.value.informationBank.accountNumber.trim() !== ''
+  isIbanValid = routingNumberOrIBAN.value?.trim() !== ''
 
   if (typeBeneficiary.value === 'INTERNATIONAL') {
     isSwiftCodeValid = formObject.value.informationBank.swiftCode!.trim() !== ''
-    isIbanValid = formObject.value.informationBank.iban?.trim() !== ''
     if (isAccountNumberValid && !isIbanValid) {
       isIbanValid = true
     }
@@ -94,10 +90,10 @@ const nextStep = () => {
   formObject.value.informationBank.typeBeneficiaryBankWithdrawal = typeBeneficiary.value
   //Iban / Swift - International | Routing number Domestic
   if (typeBeneficiary.value === 'INTERNATIONAL') {
-    //formObject.value.informationBank.iban = routingNumberOrIBAN.value
+    formObject.value.informationBank.iban = routingNumberOrIBAN.value
     delete formObject.value.informationBank.routingNumber
   } else if (typeBeneficiary.value === 'DOMESTIC') {
-    //formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
+    formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
     delete formObject.value.informationBank.iban
     delete formObject.value.informationBank.swiftCode
   }
