@@ -18,7 +18,6 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
-  const disableSection = ref(false)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -89,8 +88,6 @@ export const useOnboardingPersonal = () => {
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
 
-        disableSection.value = true
-
         if (onboardingPersonal.value.passport !== '') {
           isHaveDocumentUS.value = false
         }
@@ -117,7 +114,6 @@ export const useOnboardingPersonal = () => {
   return {
     onboardingPersonal,
     submitting,
-    disableSection,
     typeDocument,
     saveData,
     isHaveDocumentUS,
