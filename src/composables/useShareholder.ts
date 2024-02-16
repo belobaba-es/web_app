@@ -13,6 +13,7 @@ export const useShareholder = () => {
   const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
   const submitting = ref(false)
+  const isHaveDocumentUS = ref(true)
 
   const initStatePartner = () => {
     return {
@@ -65,6 +66,11 @@ export const useShareholder = () => {
     return true
   }
 
+  const typeDocumentPartner = ref([
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
+  ])
+
   const addNewShareholder = () => {
     if (!validateShareholder()) {
       return
@@ -75,6 +81,9 @@ export const useShareholder = () => {
     requestToBackendForUpdateOnboardingCompany()
       .then(() => {
         submitting.value = false
+        if (partner.value.passport !== '') {
+          isHaveDocumentUS.value = false
+        }
         router.push('/onboarding/business/step2')
       })
       .catch(e => {
@@ -132,6 +141,8 @@ export const useShareholder = () => {
     isShowAddNewShareholder,
     partner,
     submitting,
+    typeDocumentPartner,
+    isHaveDocumentUS,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,

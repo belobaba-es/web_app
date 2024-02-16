@@ -142,7 +142,7 @@
   "newBeneficiary": "New Beneficiary",
   "beneficiaryAddress": "Beneficiary Address",
   "docTypeLabelDriversLicense": "Driver License",
-  "docTypeLabelGovernmentId": "GovernmentId",
+  "docTypeLabelGovernmentId": "Identity Card",
   "docTypeLabelPassport": "Passport",
   "docTypeLabelResidencePermit": "Residence Permit",
   "youSendTo": "You send to ",
@@ -457,5 +457,6 @@
   "beneficiaryPending": "The user is being validated, we will let you know when is available.",
   "beneficiaryRejected": "The beneficiary has being rejected, is not available.",
   "textValidateDocument": "File type not supported",
-  "typeDocumentAdmitted": "Supported Documents, JPG, JPEG, PNG or PDF"
+  "typeDocumentAdmitted": "Supported Documents, JPG, JPEG, PNG or PDF",
+  "validDocument": "Do you have a valid identification document in the US?"
 }
