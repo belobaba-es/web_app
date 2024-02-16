@@ -80,21 +80,15 @@
         <div class="flex justify-content-center">
           <div class="flex gap-3">
             <div v-for="data in typeDocument" :key="data.key" class="flex align-items-center">
-              <RadioButton
-                v-model="onboardingPersonal.documentCountry"
-                :inputId="data.key"
-                name="dynamic"
-                @change="documentCountry()"
-                :value="data.key"
-              />
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.key" name="dynamic" :value="data.key" />
               <label :for="data.key" class="ml-2">{{ data.name }}</label>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="flex" v-if="disableSection">
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
+      <div class="flex">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
           <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
@@ -213,7 +207,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -225,29 +219,20 @@ import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
+import { useDocuments } from '../../../composables/useDocuments'
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-} = useWorld()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
-const {
-  onboardingPersonal,
-  typeDocument,
-  disabledInput,
-  documentCountry,
-  disableSection,
-  submitting,
-  saveDataAndNextPag,
-} = useOnboardingPersonal()
+const { onboardingPersonal, typeDocument, disableSection, submitting, saveDataAndNextPag } = useOnboardingPersonal()
+const { isHaveDocumentUS } = useDocuments()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
+
+  watch(isHaveDocumentUS, newV => {
+    disableSection.value = true
+  })
 })
 </script>
 <style lang="scss">

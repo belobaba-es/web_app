@@ -1,5 +1,7 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+const isHaveDocumentUS = ref(true)
 
 export const useDocuments = () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -14,15 +16,21 @@ export const useDocuments = () => {
     { value: 'w2', name: t('documentProofOfAddress7') },
   ])
 
-  const documentTypeOptions = ref([
-    { value: 'passport', name: t('docTypeLabelPassport') },
-    { value: 'drivers_license', name: t('docTypeLabelDriversLicense') },
-    { value: 'government_id', name: t('docTypeLabelGovernmentId') },
-    { value: 'residence_permit', name: 'Residence Permit' },
-  ])
+  const documentTypeOptions = computed(() => {
+    if (isHaveDocumentUS.value) {
+      return [{ value: 'drivers_license', name: t('docTypeLabelDriversLicense') }]
+    } else {
+      return [
+        { value: 'passport', name: t('docTypeLabelPassport') },
+        { value: 'drivers_license', name: t('docTypeLabelDriversLicense') },
+        { value: 'government_id', name: t('docTypeLabelGovernmentId') },
+      ]
+    }
+  })
 
   return {
     documentTypeProofOfAddress,
     documentTypeOptions,
+    isHaveDocumentUS,
   }
 }

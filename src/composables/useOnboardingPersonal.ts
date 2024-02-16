@@ -9,16 +9,17 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
+import { useDocuments } from './useDocuments'
 
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
+  const { isHaveDocumentUS } = useDocuments()
 
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
   const disableSection = ref(false)
-  const disabledInput = ref(false)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -38,8 +39,8 @@ export const useOnboardingPersonal = () => {
   }
 
   const typeDocument = ref([
-    { name: 'Yes', key: 'US' },
-    { name: 'No', key: 'other' },
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
   ])
 
   const saveData = () => {
@@ -89,11 +90,11 @@ export const useOnboardingPersonal = () => {
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
 
-        if (onboardingPersonal.value.documentCountry !== 'US') {
-          disableSection.value = true
-          disabledInput.value = false
+        disableSection.value = true
+
+        if (onboardingPersonal.value.passport === '') {
+          isHaveDocumentUS.value = false
         }
-        documentCountry()
       })
       .catch(e => {
         submitting.value = false
@@ -110,11 +111,6 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
-  const documentCountry = () => {
-    disableSection.value = true
-    disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
-  }
-
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
   })
@@ -123,9 +119,7 @@ export const useOnboardingPersonal = () => {
     onboardingPersonal,
     submitting,
     disableSection,
-    disabledInput,
     typeDocument,
-    documentCountry,
     saveData,
     saveDataAndNextPag,
   }
