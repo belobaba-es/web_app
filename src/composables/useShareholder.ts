@@ -68,8 +68,8 @@ export const useShareholder = () => {
   }
 
   const typeDocumentPartner = ref([
-    { name: 'Yes', key: 'US' },
-    { name: 'No', key: 'other' },
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
   ])
 
   const documentCountryPartner = (data: string) => {

@@ -72,20 +72,15 @@
         <div class="flex justify-content-center">
           <div class="flex gap-3">
             <div v-for="data in typeDocumentPartner" :key="data.key" class="flex align-items-center">
-              <RadioButton
-                :inputId="data.key"
-                name="dynamic"
-                @change="documentCountryPartner(data.key)"
-                :value="data.key"
-              />
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.key" name="dynamic" :value="data.key" />
               <label :for="data.key" class="ml-2">{{ data.name }}</label>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="flex" v-if="disableSection">
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
+      <div class="flex">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
           <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
@@ -229,6 +224,7 @@ import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
+import { useDocuments } from '../../../composables/useDocuments'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
@@ -239,11 +235,12 @@ const {
   addNewShareholder,
   redirectToStep2,
   disabledInput,
-  documentCountryPartner,
   typeDocumentPartner,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
 } = useShareholder()
+
+const { isHaveDocumentUS } = useDocuments()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
