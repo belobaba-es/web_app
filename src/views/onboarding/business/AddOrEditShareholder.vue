@@ -224,7 +224,6 @@ import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
-import { useDocuments } from '../../../composables/useDocuments'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
@@ -236,9 +235,9 @@ const {
   typeDocumentPartner,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
+  isHaveDocumentUS,
 } = useShareholder()
 
-const { isHaveDocumentUS } = useDocuments()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 

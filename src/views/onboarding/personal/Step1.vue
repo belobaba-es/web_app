@@ -207,7 +207,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -222,12 +222,17 @@ import { useOnboardingPersonal } from '../../../composables/useOnboardingPersona
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
-const { onboardingPersonal, typeDocument, submitting, saveDataAndNextPag, isHaveDocumentUS } = useOnboardingPersonal()
+const { onboardingPersonal, typeDocument, disableSection, submitting, saveDataAndNextPag, isHaveDocumentUS } =
+  useOnboardingPersonal()
 
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
+
+  watch(isHaveDocumentUS, newV => {
+    disableSection.value = true
+  })
 })
 </script>
 <style lang="scss">
