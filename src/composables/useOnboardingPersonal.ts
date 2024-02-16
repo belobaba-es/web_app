@@ -9,18 +9,17 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
+import { useDocuments } from './useDocuments'
 
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
+  const { isHaveDocumentUS } = useDocuments()
 
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
-  const radioTypeDocument = ref('')
-
   const submitting = ref(false)
   const disableSection = ref(false)
-  const disabledInput = ref(false)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
@@ -40,8 +39,8 @@ export const useOnboardingPersonal = () => {
   }
 
   const typeDocument = ref([
-    { name: 'Yes', key: 'US' },
-    { name: 'No', key: 'other' },
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
   ])
 
   const saveData = () => {
@@ -81,19 +80,21 @@ export const useOnboardingPersonal = () => {
     })
   }
 
-  const fetchDataToClient = async () => {
+  const fetchDataToClient = () => {
     submitting.value = true
-    await new ProfileService()
+    new ProfileService()
       .getAccountByClientId(getClientId())
       .then((resp: any) => {
         isUpdateData.value = true
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
-        console.log(onboardingPersonal.value.radioTypeDocument)
 
-        // @ts-ignore
-        documentCountry()
+        disableSection.value = true
+
+        if (onboardingPersonal.value.passport === '') {
+          isHaveDocumentUS.value = false
+        }
       })
       .catch(e => {
         submitting.value = false
@@ -110,12 +111,6 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
-  const documentCountry = (e: string) => {
-    console.log(e)
-    disableSection.value = e !== ''
-    disabledInput.value = e === 'US' ? true : false
-  }
-
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
   })
@@ -124,10 +119,7 @@ export const useOnboardingPersonal = () => {
     onboardingPersonal,
     submitting,
     disableSection,
-    disabledInput,
     typeDocument,
-    radioTypeDocument,
-    documentCountry,
     saveData,
     saveDataAndNextPag,
   }

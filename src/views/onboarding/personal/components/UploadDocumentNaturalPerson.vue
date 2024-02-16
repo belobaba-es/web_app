@@ -115,16 +115,6 @@ const submissionCompletedDocuments = ref<{
   proofOfAddress: false,
 })
 
-if (onboardingPersonal.value.radioTypeDocument !== 'US') {
-  documentTypeOptions.value = documentTypeOptions.value.filter(
-    item => item.value === 'passport' || item.value === 'government_id'
-  )
-} else {
-  documentTypeOptions.value = documentTypeOptions.value.filter(
-    item => item.value !== 'passport' && item.value !== 'government_id'
-  )
-}
-
 const completed = (response: { side: string; dni: string; registerNumber: string }) => {
   if (typeDocumentIdentify.value === 'passport') {
     submissionCompletedDocuments.value.back = true
