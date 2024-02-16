@@ -18,5 +18,6 @@ export type OnboardingPersonal = {
   type: string
   referredByAccountId: string
 
-  documentCountry: string
+  // documentCountry: string
+  radioTypeDocument: string
 }

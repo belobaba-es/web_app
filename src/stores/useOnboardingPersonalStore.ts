@@ -25,8 +25,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       country: '',
       type: '',
       referredByAccountId: '',
-
-      documentCountry: '',
+      radioTypeDocument: '',
     },
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
@@ -48,7 +47,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.country = onboardingPersonal.country
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
-      this.documentCountry = onboardingPersonal.documentCountry
+      this.radioTypeDocument = onboardingPersonal.radioTypeDocument
     },
 
     dataOnboardingPersonal(): OnboardingPersonal {
@@ -71,7 +70,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
         country: this.country,
         type: this.type,
         referredByAccountId: this.referredByAccountId,
-        documentCountry: this.documentCountry,
+        radioTypeDocument: this.radioTypeDocument,
       }
     },
   },

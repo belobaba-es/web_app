@@ -115,7 +115,7 @@ const submissionCompletedDocuments = ref<{
   proofOfAddress: false,
 })
 
-if (onboardingPersonal.value.documentCountry !== 'US') {
+if (onboardingPersonal.value.radioTypeDocument !== 'US') {
   documentTypeOptions.value = documentTypeOptions.value.filter(
     item => item.value === 'passport' || item.value === 'government_id'
   )

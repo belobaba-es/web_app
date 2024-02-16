@@ -81,10 +81,10 @@
           <div class="flex gap-3">
             <div v-for="data in typeDocument" :key="data.key" class="flex align-items-center">
               <RadioButton
-                v-model="onboardingPersonal.documentCountry"
+                v-model="onboardingPersonal.radioTypeDocument"
                 :inputId="data.key"
                 name="dynamic"
-                @change="documentCountry()"
+                @change="documentCountry(data.key)"
                 :value="data.key"
               />
               <label :for="data.key" class="ml-2">{{ data.name }}</label>
@@ -94,7 +94,7 @@
       </div>
 
       <div class="flex" v-if="disableSection">
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="disabledInput">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!disabledInput">
           <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
@@ -241,6 +241,7 @@ const {
   disabledInput,
   documentCountry,
   disableSection,
+  radioTypeDocument,
   submitting,
   saveDataAndNextPag,
 } = useOnboardingPersonal()

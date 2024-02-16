@@ -16,6 +16,8 @@ export const useOnboardingPersonal = () => {
 
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
+  const radioTypeDocument = ref('')
+
   const submitting = ref(false)
   const disableSection = ref(false)
   const disabledInput = ref(false)
@@ -79,20 +81,18 @@ export const useOnboardingPersonal = () => {
     })
   }
 
-  const fetchDataToClient = () => {
+  const fetchDataToClient = async () => {
     submitting.value = true
-    new ProfileService()
+    await new ProfileService()
       .getAccountByClientId(getClientId())
       .then((resp: any) => {
         isUpdateData.value = true
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
+        console.log(onboardingPersonal.value.radioTypeDocument)
 
-        if (onboardingPersonal.value.documentCountry !== 'US') {
-          disableSection.value = true
-          disabledInput.value = false
-        }
+        // @ts-ignore
         documentCountry()
       })
       .catch(e => {
@@ -110,9 +110,10 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
-  const documentCountry = () => {
-    disableSection.value = true
-    disabledInput.value = onboardingPersonal.value.documentCountry !== 'US'
+  const documentCountry = (e: string) => {
+    console.log(e)
+    disableSection.value = e !== ''
+    disabledInput.value = e === 'US' ? true : false
   }
 
   watch(onboardingPersonal.value, () => {
@@ -125,6 +126,7 @@ export const useOnboardingPersonal = () => {
     disableSection,
     disabledInput,
     typeDocument,
+    radioTypeDocument,
     documentCountry,
     saveData,
     saveDataAndNextPag,
