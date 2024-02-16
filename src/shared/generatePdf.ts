@@ -182,7 +182,7 @@ export const generateTransactionReceipt = (
   console.log('footer:', footer)
 
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, 'PNG', 85, 10, 70, 20)
+  pdf.value.addImage(logo, 'PNG', 70, 10, 70, 20)
   createText({ fontSize: 28, textColor: black, xPosition: 65, yPosition: 45, text: title }, pdf)
 
   let i = 1
