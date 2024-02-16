@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <PageLayout :title="t('profile')" class="profile">
       <div class="grid gap-4 py-4">
         <div v-for="(item, idx) in menuItems" :key="idx" class="col-auto">
@@ -23,6 +24,7 @@ import { onBeforeMount, ref } from 'vue'
 import PageLayout from '../../components/PageLayout.vue'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '../../composables/useAuth'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
