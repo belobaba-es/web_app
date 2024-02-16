@@ -15,6 +15,7 @@ export const useShareholder = () => {
   const submitting = ref(false)
   const disableSection = ref(false)
   const disabledInput = ref(false)
+  const isHaveDocumentUS = ref(true)
 
   const initStatePartner = () => {
     return {
@@ -72,11 +73,6 @@ export const useShareholder = () => {
     { name: 'No', key: false },
   ])
 
-  const documentCountryPartner = (data: string) => {
-    disableSection.value = true
-    disabledInput.value = data !== 'US'
-  }
-
   const addNewShareholder = () => {
     if (!validateShareholder()) {
       return
@@ -87,6 +83,9 @@ export const useShareholder = () => {
     requestToBackendForUpdateOnboardingCompany()
       .then(() => {
         submitting.value = false
+        if (partner.value.passport !== '') {
+          isHaveDocumentUS.value = false
+        }
         router.push('/onboarding/business/step2')
       })
       .catch(e => {
@@ -147,7 +146,7 @@ export const useShareholder = () => {
     disableSection,
     disabledInput,
     typeDocumentPartner,
-    documentCountryPartner,
+    isHaveDocumentUS,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,

@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-const isHaveDocumentUS = ref(true)
+import { useOnboardingPersonal } from './useOnboardingPersonal'
 
 export const useDocuments = () => {
+  const { isHaveDocumentUS } = useOnboardingPersonal()
   const { t } = useI18n({ useScope: 'global' })
 
   const documentTypeProofOfAddress = ref([
@@ -31,6 +31,5 @@ export const useDocuments = () => {
   return {
     documentTypeProofOfAddress,
     documentTypeOptions,
-    isHaveDocumentUS,
   }
 }

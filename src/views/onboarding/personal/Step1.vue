@@ -219,12 +219,12 @@ import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
-import { useDocuments } from '../../../composables/useDocuments'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
-const { onboardingPersonal, typeDocument, disableSection, submitting, saveDataAndNextPag } = useOnboardingPersonal()
-const { isHaveDocumentUS } = useDocuments()
+const { onboardingPersonal, typeDocument, disableSection, submitting, saveDataAndNextPag, isHaveDocumentUS } =
+  useOnboardingPersonal()
+
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {

@@ -9,12 +9,11 @@ import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
-import { useDocuments } from './useDocuments'
 
+const isHaveDocumentUS = ref(true)
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
-  const { isHaveDocumentUS } = useDocuments()
 
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
@@ -92,7 +91,7 @@ export const useOnboardingPersonal = () => {
 
         disableSection.value = true
 
-        if (onboardingPersonal.value.passport === '') {
+        if (onboardingPersonal.value.passport !== '') {
           isHaveDocumentUS.value = false
         }
       })
@@ -121,6 +120,7 @@ export const useOnboardingPersonal = () => {
     disableSection,
     typeDocument,
     saveData,
+    isHaveDocumentUS,
     saveDataAndNextPag,
   }
 }
