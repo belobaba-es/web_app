@@ -71,9 +71,9 @@
 
         <div class="flex justify-content-center">
           <div class="flex gap-3">
-            <div v-for="data in typeDocumentPartner" :key="data.key" class="flex align-items-center">
-              <RadioButton v-model="isHaveDocumentUS" :inputId="data.key" name="dynamic" :value="data.key" />
-              <label :for="data.key" class="ml-2">{{ data.name }}</label>
+            <div v-for="data in typeDocumentPartner" :key="data.name" class="flex align-items-center">
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.name" name="dynamic" :value="data.key" />
+              <label :for="data.name" class="ml-2">{{ data.name }}</label>
             </div>
           </div>
         </div>
@@ -230,11 +230,9 @@ const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty,
 const {
   partner,
   submitting,
-  disableSection,
   loadingDataToShareholder,
   addNewShareholder,
   redirectToStep2,
-  disabledInput,
   typeDocumentPartner,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
