@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <FinishRegisterWarningBar />
 
     <CardWallet :carousel="true" />
@@ -15,4 +16,5 @@ import CardWallet from '../../components/CardWallet.vue'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 import TransactionHistoryTable from '../../components/TransactionHistoryTable.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 </script>

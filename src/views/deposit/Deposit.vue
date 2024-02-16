@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <FinishRegisterWarningBar />
 
     <p class="text-3xl font-medium">{{ t('deposit') }}</p>
@@ -40,6 +41,7 @@ import saveMoney from '../../assets/icons/save-money.svg'
 import ewallet from '../../assets/icons/ewallet.svg'
 import Divider from 'primevue/divider'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 interface tabItem {
   label: string
