@@ -36,36 +36,6 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('docTypeLabelPassport') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextPassport') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.dni" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
-        </div>
-      </div>
-
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.taxId" class="w-full" required />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
-        </div>
-      </div>
-
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
@@ -95,6 +65,52 @@
           </div>
         </div>
       </div>
+
+      <div class="flex flex-wrap gap-3 col-12 mb-4 mt-4 align-content-center">
+        <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+
+        <div class="flex justify-content-center">
+          <div class="flex gap-3">
+            <div v-for="data in typeDocumentPartner" :key="data.key" class="flex align-items-center">
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.key" name="dynamic" :value="data.key" />
+              <label :for="data.key" class="ml-2">{{ data.name }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
+          <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextPassport') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.dni" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-5">
+          <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="partner.taxId" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12"></div>
 
       <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
       <Divider class="mt-0"></Divider>
@@ -207,16 +223,24 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
+import RadioButton from 'primevue/radiobutton'
+import { useDocuments } from '../../../composables/useDocuments'
+
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
   partner,
   submitting,
+  disableSection,
   loadingDataToShareholder,
   addNewShareholder,
   redirectToStep2,
+  disabledInput,
+  typeDocumentPartner,
   showButtonForCancel,
   enableDataForCreateNewShareholder,
 } = useShareholder()
+
+const { isHaveDocumentUS } = useDocuments()
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 

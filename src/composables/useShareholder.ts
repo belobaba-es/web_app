@@ -13,6 +13,8 @@ export const useShareholder = () => {
   const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
   const submitting = ref(false)
+  const disableSection = ref(false)
+  const disabledInput = ref(false)
 
   const initStatePartner = () => {
     return {
@@ -63,6 +65,16 @@ export const useShareholder = () => {
     }
 
     return true
+  }
+
+  const typeDocumentPartner = ref([
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
+  ])
+
+  const documentCountryPartner = (data: string) => {
+    disableSection.value = true
+    disabledInput.value = data !== 'US'
   }
 
   const addNewShareholder = () => {
@@ -132,6 +144,10 @@ export const useShareholder = () => {
     isShowAddNewShareholder,
     partner,
     submitting,
+    disableSection,
+    disabledInput,
+    typeDocumentPartner,
+    documentCountryPartner,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,
