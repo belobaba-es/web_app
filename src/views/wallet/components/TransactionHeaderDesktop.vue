@@ -137,7 +137,6 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   position: relative;
   top: -40px;
   border-radius: 50%;
-  filter: brightness(0.1);;
 
   @media only screen and (min-width: 992px) {
     max-width: 250px !important;
