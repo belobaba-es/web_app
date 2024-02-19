@@ -3,21 +3,21 @@
     <div class="field">
       <label>{{ t('bankName') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationBank.bankName"/>
+        <InputText type="text" v-model="formObject.informationBank.bankName" />
       </div>
     </div>
 
     <div class="field">
       <label>{{ t('accountNumber') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationBank.accountNumber"/>
+        <InputText type="text" v-model="formObject.informationBank.accountNumber" />
       </div>
     </div>
 
     <div class="field" v-if="typeBeneficiary !== 'DOMESTIC'">
       <label>{{ t('swiftCode') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationBank.swiftCode"/>
+        <InputText type="text" v-model="formObject.informationBank.swiftCode" />
       </div>
     </div>
 
@@ -25,35 +25,35 @@
       <label v-show="typeBeneficiary == 'DOMESTIC'">ABA Fedwire</label>
       <label v-show="typeBeneficiary == 'INTERNATIONAL'">{{ t('iban') }} </label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="routingNumberOrIBAN"/>
+        <InputText type="text" v-model="routingNumberOrIBAN" />
       </div>
     </div>
 
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep()" iconPos="right"/>
+      <Button :label="t('nextButtonText')" class="px-5" @click="nextStep()" iconPos="right" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import {useI18n} from 'vue-i18n'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import {useToast} from 'primevue/usetoast'
-import {useNewOrEditBeneficiary} from '../composable/useNewOrEditBeneficiary'
+import { useToast } from 'primevue/usetoast'
+import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const toast = useToast()
 
-const {t} = useI18n({useScope: 'global'})
+const { t } = useI18n({ useScope: 'global' })
 
-const {typeBeneficiary} = useNewOrEditBeneficiary()
+const { typeBeneficiary } = useNewOrEditBeneficiary()
 
 const routingNumberOrIBAN = ref<string>('')
 
-const {formObject} = useNewOrEditBeneficiary()
+const { formObject } = useNewOrEditBeneficiary()
 const validateFields = () => {
   let isSwiftCodeValid = true
   let isIbanValid = true
@@ -91,7 +91,6 @@ const nextStep = () => {
   //Iban / Swift - International | Routing number Domestic
   if (typeBeneficiary.value === 'INTERNATIONAL') {
     formObject.value.informationBank.iban = routingNumberOrIBAN.value
-   
   } else if (typeBeneficiary.value === 'DOMESTIC') {
     formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
     delete formObject.value.informationBank.iban
