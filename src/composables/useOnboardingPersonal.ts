@@ -10,6 +10,7 @@ import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore
 import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
 
+const isHaveDocumentUS = ref(true)
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
@@ -17,6 +18,7 @@ export const useOnboardingPersonal = () => {
   const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
 
   const submitting = ref(false)
+
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
 
@@ -33,6 +35,11 @@ export const useOnboardingPersonal = () => {
   const isPassportOrTaxIdEmpty = () => {
     return !onboardingPersonal.value.passport && !onboardingPersonal.value.taxId
   }
+
+  const typeDocument = ref([
+    { name: 'Yes', key: true },
+    { name: 'No', key: false },
+  ])
 
   const saveData = () => {
     return new Promise((resolve, reject) => {
@@ -80,6 +87,10 @@ export const useOnboardingPersonal = () => {
         onboardingPersonal.value = resp.clientData as unknown as OnboardingPersonal
         setStateOnboardingPersonal(onboardingPersonal.value)
         submitting.value = false
+
+        if (onboardingPersonal.value.passport !== '') {
+          isHaveDocumentUS.value = false
+        }
       })
       .catch(e => {
         submitting.value = false
@@ -96,18 +107,16 @@ export const useOnboardingPersonal = () => {
     fetchDataToClient()
   }
 
-  // const watchChagedData = () => {
   watch(onboardingPersonal.value, () => {
     setStateOnboardingPersonal(onboardingPersonal.value)
   })
-  // }
-
-  // watchChagedData()
 
   return {
     onboardingPersonal,
     submitting,
+    typeDocument,
     saveData,
+    isHaveDocumentUS,
     saveDataAndNextPag,
   }
 }
