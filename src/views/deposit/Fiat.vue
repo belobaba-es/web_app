@@ -104,18 +104,6 @@
         ></i>
       </div>
       <Divider type="solid" />
-
-      <p class="font-medium text-sm">{{ t('routingNumber') }}</p>
-      <div class="flex justify-content-between align-items-center">
-        <p class="">{{ bankInternational?.routingNumber }}</p>
-        <i
-          v-if="bankInternational?.routingNumber"
-          @click="copyToClipboard(bankInternational?.routingNumber)"
-          class="pi pi-clone"
-        ></i>
-      </div>
-      <Divider type="solid" />
-
       <p class="font-medium text-sm">{{ t('swiftCode') }}</p>
       <div class="flex justify-content-between align-items-center">
         <p class="">{{ bankInternational?.swiftCode }}</p>
@@ -209,7 +197,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Divider from 'primevue/divider'
 import TabMenu from 'primevue/tabmenu'
 import Button from 'primevue/button'
@@ -228,6 +216,7 @@ interface tabItem {
   icon?: string
   to?: string
 }
+
 const toast = useToast()
 
 const submitting = ref(false)
@@ -243,7 +232,8 @@ const bankInternational = ref()
 
 const bankNationalPdf: any = {}
 const bankInternationalPdf: any = {}
-const title = t('titleDespositFiat')
+const title = t('namePdfDepositFiatDomestic')
+const titleInternacional = t('namePdfDepositFiatInternational')
 const footerPdf = t('footerPdfNobaData')
 
 new FiatService()
@@ -291,12 +281,14 @@ const menuItems = ref<tabItem[]>([
 
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
+
   generatePdf(nameFile, logo, title, bankNationalPdf, footerPdf)
 }
 
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
-  generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
+
+  generatePdf(nameFile, logo, titleInternacional, bankInternationalPdf, footerPdf)
 }
 
 const copyToClipboard = (text: string) => {
@@ -316,11 +308,13 @@ const copyToClipboard = (text: string) => {
   border: 1px solid #dee2e6;
   border-width: 0 0 2px 0;
 }
+
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
   background: transparent !important;
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
+
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
   border: solid #dee2e6;
   border-width: 0 0 2px 0;
@@ -334,6 +328,7 @@ const copyToClipboard = (text: string) => {
   transition: box-shadow 0.2s;
   margin: 0 0 -2px 0;
 }
+
 p {
   margin: 0 0 6px 0;
 }
@@ -341,6 +336,7 @@ p {
 .download-btn {
   width: 100% !important;
 }
+
 .grayed-text-warning {
   color: #6c757d !important;
   margin: 0 0 0 4px;

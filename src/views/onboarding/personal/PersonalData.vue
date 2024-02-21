@@ -75,7 +75,20 @@
           </div>
         </div>
 
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
+          <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+
+          <div class="flex justify-content-center">
+            <div class="flex gap-3">
+              <div v-for="data in typeDocument" :key="data.name" class="flex align-items-center">
+                <RadioButton v-model="isHaveDocumentUS" :inputId="data.name" name="dynamic" :value="data.key" />
+                <label :for="data.name" class="ml-2">{{ data.name }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
           <label>{{ t('docTypeLabelPassport') }}</label>
           <div class="p-inputgroup">
             <InputText
@@ -114,6 +127,7 @@
 
       <br />
 
+
       <div class="grid col-12">
         <p class="mt-4 mb-0 text-uppercase">{{ t('employmentInformation') }}</p>
         <Divider class="mt-0"></Divider>
@@ -127,11 +141,8 @@
                 optionLabel="name"
                 option-value="value"
                 filter
-                :loading="loadingEmploymentStatusField"
                 :placeholder="t('employmentStatusPlaceholder')"
-                :disabled="employmentStatusInputIsEmpty"
                 class="w-full"
-                @change="onChangeEmploymentStatus"
                 required
               />
             </div>
@@ -229,7 +240,12 @@
       </div>
 
       <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('save')" class="px-5 mt-2 btn-submit" @click="saveDataAndNextInvestmentProfile()" :loading="submitting" />
+        <Button
+          :label="t('save')"
+          class="px-5 mt-2 btn-submit"
+          @click="saveDataAndNextInvestmentProfile()"
+          :loading="submitting"
+        />
       </div>
     </div>
   </section>
@@ -242,12 +258,13 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
+import RadioButton from 'primevue/radiobutton'
 
 import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
-import { useEmployment } from '../../../composables/useEmployment';
+import { useEmployment } from '../../../composables/useEmployment'
 
 const {
   countries,
@@ -258,16 +275,14 @@ const {
   calling_code,
 } = useWorld()
 
-const { 
-  employmentStatusList,
-} = useEmployment()
+const { employmentStatusList } = useEmployment()
 
-const { onboardingPersonal, saveData, submitting, saveDataAndNextInvestmentProfile } = useOnboardingPersonal()
+const { onboardingPersonal, saveData, submitting, saveDataAndNextInvestmentProfile, typeDocument, isHaveDocumentUS } =
+  useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
-  await fetchEmploymentStatus()
 })
 </script>
 <style lang="scss">

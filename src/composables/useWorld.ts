@@ -56,7 +56,6 @@ export const useWorld = () => {
 
     new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
-
       if (shouldDeleteBannedCountries) {
         countries.value = deleteUnavailableCountries(resp)
       }
@@ -105,7 +104,9 @@ export const useWorld = () => {
   }
 
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
-    return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
+    return countries
+      .filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
+      .sort((a, b) => a.name.localeCompare(b.name))
   }
 
   return {

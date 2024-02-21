@@ -4,7 +4,7 @@
       <div class="grid col-12 mt-2">
         <div
           v-for="(item, key) in investmentData"
-          :key="item"
+          :key="item.label"
           class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4"
         >
           <div>
@@ -16,9 +16,8 @@
                 optionLabel="name"
                 option-value="value"
                 filter
-                :placeholder="t('employmentStatusPlaceholder')"
+                :placeholder="t('helpTextSelectAOption')"
                 class="w-full"
-                @change="onChangeEmploymentStatus"
                 required
               />
             </div>
@@ -31,18 +30,18 @@
     </div>
 
     <div>
-      <p class="mt-4 mb-0 text-uppercase">{{ t('employmentInformation') }}</p>
+      <p class="mt-4 mb-0 text-uppercase">{{ t('profileKyc') }}</p>
       <Divider class="mt-0"></Divider>
     </div>
 
     <div class="grid col-12 mt-2">
-      <div :key="item" class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
         <div>
           <label>{{t('fundsSendReceiveJurisdictions')}}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <MultiSelect
-              v-model="onboardingPersonal.funds_send_receive_jurisdictions"
-              :options="countries"
+              v-model="onboardingPersonal.fundsSendReceiveJurisdictions"
+              :options="allowed_countries"
               optionLabel="name"
               option-value="country_code"
               :loading="loadingCountriesField"
@@ -58,12 +57,12 @@
           </div>
         </div>
       </div>
-      <div :key="item" class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
         <div>
           <label>{{t('engageInActivities')}}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
-              v-model="onboardingPersonal.engage_in_activities"
+              v-model="onboardingPersonal.engageInActivities"
               :options="engageInActivities"
               optionLabel="name"
               option-value="value"
@@ -112,7 +111,7 @@ import { useInvestment } from '../../../composables/useInvestment'
 const { t } = useI18n({ useScope: 'global' })
 
 const {
-  countries,
+  allowed_countries,
   fetchCountries,
   loadingCountriesField,
   countriesInputIsEmpty,
@@ -120,11 +119,10 @@ const {
   calling_code,
 } = useWorld()
 const { investmentData, engageInActivities } = useInvestment()
-const { onboardingPersonal, saveDataAndNextPag, saveDataAndNextUploadFIle } = useOnboardingPersonal()
+const { onboardingPersonal, saveDataAndNextUploadFIle, submitting } = useOnboardingPersonal()
 
 onMounted(async () => {
   await fetchCountries()
-  await fetchEmploymentStatus()
 })
 </script>
 
