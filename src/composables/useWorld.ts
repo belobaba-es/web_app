@@ -90,6 +90,7 @@ export const useWorld = () => {
   }
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
+
     showCombo.value = false
 
     if (event.value == 'US') {

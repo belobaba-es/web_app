@@ -1,0 +1,84 @@
+{
+  "primary_source_of_funds": [
+    {"name": "Employment", "value": "EMPLOYMENT"},
+    {"name": "Investments", "value": "INVESTMENTS"},
+    {"name": "Business", "value": "BUSINESS"},
+    {"name": "Crypto", "value": "CRYPTO"},
+    {"name": "Other", "value": "OTHER"},
+    {"name": "company", "value": "COMPANY"},
+    {"name": "company_capital", "value": "COMPANY_CAPITAL"},
+    {"name": "loan", "value": "LOAN"},
+    {"name": "private_capital", "value": "PRIVATE_CAPITAL"},
+    {"name": "grant", "value": "GRANT"}
+  ],
+  "usd_value_of_fiat": [
+    {"name": "Upto 10k", "value": "UPTO_10K"},
+    {"name": "10k to 100k", "value": "TEN_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 10m", "value": "ONE_TO_10M"},
+    {"name": "10m to 50m", "value": "TEN_TO_50M"},
+    {"name": "50m to 250m", "value": "FIFTY_TO_250M"},
+    {"name": "More than 250m", "value": "MORE_THAN_250M"}
+  ],
+  "usd_value_of_crypto": [
+    {"name": "Upto 10k", "value": "UPTO_10K"},
+    {"name": "10k to 100k", "value": "TEN_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 10m", "value": "ONE_TO_10M"},
+    {"name": "10m to 50m", "value": "TEN_TO_50M"},
+    {"name": "50m to 250m", "value": "FIFTY_TO_250M"},
+    {"name": "More than 250m", "value": "MORE_THAN_250M"}
+  ],
+  "monthly_deposits": [
+    {"name": "Upto 5", "value": "UPTO_5"},
+    {"name": "5 to 10", "value": "FIVE_TO_10"},
+    {"name": "10 to 25", "value": "TEN_TO_25"},
+    {"name": "More than 25", "value": "MORE_THAN_25"}
+  ],
+  "monthly_crypto_deposits": [
+    {"name": "Upto 5", "value": "UPTO_5"},
+    {"name": "5 to 10", "value": "FIVE_TO_10"},
+    {"name": "10 to 25", "value": "TEN_TO_25"},
+    {"name": "More than 25", "value": "MORE_THAN_25"}
+  ],
+  "monthly_investment_deposit": [
+    {"name": "Upto 1k", "value": "UPTO_1K"},
+    {"name": "1k to 100k", "value": "ONE_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 5m", "value": "MILLION_TO_5M"},
+    {"name": "More than 5m", "value": "MORE_THAN_5M"}
+  ],
+  "monthly_crypto_investment_deposit": [
+    {"name": "Upto 1k", "value": "UPTO_1K"},
+    {"name": "1k to 100k", "value": "ONE_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 5m", "value": "MILLION_TO_5M"},
+    {"name": "More than 5m", "value": "MORE_THAN_5M"}
+  ],
+  "monthly_withdrawals": [
+    {"name": "Upto 5", "value": "UPTO_5"},
+    {"name": "5 to 10", "value": "FIVE_TO_10"},
+    {"name": "10 to 25", "value": "TEN_TO_25"},
+    {"name": "More than 25", "value": "MORE_THAN_25"}
+  ],
+  "monthly_crypto_withdrawals": [
+    {"name": "Upto 5", "value": "UPTO_5"},
+    {"name": "5 to 10", "value": "FIVE_TO_10"},
+    {"name": "10 to 25", "value": "TEN_TO_25"},
+    {"name": "More than 25", "value": "MORE_THAN_25"}
+  ],
+  "monthly_investment_withdrawal": [
+    {"name": "Upto 1k", "value": "UPTO_1K"},
+    {"name": "1k to 100k", "value": "ONE_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 5m", "value": "MILLION_TO_5M"},
+    {"name": "More than 5m", "value": "MORE_THAN_5M"}
+  ],
+  "monthly_crypto_investment_withdrawal": [
+    {"name": "Upto 1k", "value": "UPTO_1K"},
+    {"name": "1k to 100k", "value": "ONE_TO_100K"},
+    {"name": "100k to 1m", "value": "ONEHUNDREDK_TO_1M"},
+    {"name": "1m to 5m", "value": "MILLION_TO_5M"},
+    {"name": "More than 5m", "value": "MORE_THAN_5M"}
+  ]
+}

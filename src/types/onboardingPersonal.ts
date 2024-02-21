@@ -17,4 +17,19 @@ export type OnboardingPersonal = {
   country: string
   type: string
   referredByAccountId: string
+  employmentStatus: string
+  occupation: string
+  primary_source_of_funds: string
+  usd_value_of_fiat: string
+  usd_value_of_crypto: string
+  monthly_deposits: string
+  monthly_crypto_deposits: string
+  monthly_investment_deposit: string
+  monthly_crypto_investment_deposit: string
+  monthly_withdrawals: string
+  monthly_crypto_withdrawals: string
+  monthly_investment_withdrawal: string
+  monthly_crypto_investment_withdrawal: string
+  funds_send_receive_jurisdictions: string[]
+  engage_in_activities: string
 }
