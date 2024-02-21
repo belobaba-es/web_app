@@ -21,7 +21,7 @@
       <small>Make sure it exactly as it appears on your bank account</small>
     </div>
 
-    <p class="mt-4 mb-0 text-uppercase">{{ t('beneficiaryAddress') }}</p>
+    <p class="mt-4 mb-0 text-uppercase">{{ t('residenceBeneficiaryAddress') }}</p>
     <Divider class="mt-0"></Divider>
     <div class="grid mt-2">
       <div class="field col-12">
@@ -108,7 +108,7 @@ import Dropdown from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -116,14 +116,23 @@ const toast = useToast()
 const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { countries, showCombo, state_us, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } =
-  useWorld()
+const {
+  countries,
+  showCombo,
+  state_us,
+  loadingCountriesField,
+  countriesInputIsEmpty,
+  onChangeCountryHandler,
+  fetchCountries,
+} = useWorld()
 
 const accountType = ref([
   { name: 'CORPORATION', description: 'CORPORATION' },
   { name: 'INDIVIDUAL', description: 'INDIVIDUAL' },
 ])
-
+onMounted(async () => {
+  await fetchCountries(true)
+})
 const validateFields = () => {
   const owner = formObject.value.informationOwner
   return [
