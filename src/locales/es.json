@@ -119,7 +119,7 @@
   "accountNumber": "Número de cuenta",
   "bankAddress": "Dirección del banco",
   "bankPhone": "Teléfono del banco",
-  "swiftCode": "Codigo Swift ",
+  "swiftCode": "Código SWIFT / BIC",
   "statePlaceHolder": "Seleccionar estado",
   "cityPlaceHolder": "Seleccionar ciudad",
   "youBeneficiaries": "Tus beneficiarios",
@@ -139,8 +139,9 @@
   "intermediarySwiftCode": "Swift Code intermediario",
   "newBeneficiary": "Nuevo Beneficiario",
   "beneficiaryAddress": "Dirección del beneficiario",
+  "residenceBeneficiaryAddress": "Dirección de Residencia del Beneficiario",
   "docTypeLabelDriversLicense": "Licencia de conducir",
-  "docTypeLabelGovernmentId": "Identificación del Gobierno",
+  "docTypeLabelGovernmentId": "Documento de identificación",
   "docTypeLabelPassport": "Pasaporte",
   "docTypeLabelResidencePermit": "Permiso de residencia",
   "youSendTo": "Enviaras para ",
@@ -450,5 +451,6 @@
   "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el.",
   "textValidateDocument": "Tipo de Archivo no soportado",
   "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF",
+  "validDocument": "¿Posee un Documento de identificación válido en EE.UU?",
   "transactionConfirmation": "Confirmar transferencia"
 }

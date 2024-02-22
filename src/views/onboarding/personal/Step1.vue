@@ -74,46 +74,57 @@
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('docTypeLabelPassport') }}</label>
-        <div class="p-inputgroup">
-          <InputText
-            type="text"
-            v-tooltip.top="'not required'"
-            v-model="onboardingPersonal.passport"
-            class="w-full"
-            required
-          />
-        </div>
-        <div>
-          <span class="help-text">{{ t('helpTextPassport') }}</span>
+      <div class="flex flex-wrap gap-3 col-12 mb-5 mt-5 align-content-center">
+        <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+
+        <div class="flex justify-content-center">
+          <div class="flex gap-3">
+            <div v-for="data in typeDocument" :key="data.name" class="flex align-items-center">
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.name" name="dynamic" :value="data.key" />
+              <label :for="data.name" class="ml-2">{{ data.name }}</label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
+      <div class="flex">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
+          <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.passport" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextPassport') }}</span>
+          </div>
         </div>
-        <div>
-          <span class="help-text">{{ t('helpTextIdNumber') }}</span>
-        </div>
-      </div>
 
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.dni" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextIdNumber') }}</span>
+          </div>
         </div>
-        <div>
-          <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-5">
+          <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <div class="p-inputgroup">
+            <InputText type="text" v-model="onboardingPersonal.taxId" class="w-full" required />
+          </div>
+          <div>
+            <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
+          </div>
         </div>
       </div>
 
       <br />
 
-      <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
-      <Divider class="mt-0"></Divider>
+      <div class="col-12">
+        <p class="mt-4 mb-0 text-uppercase">{{ t('divisorLabel') }}</p>
+        <Divider class="mt-0"></Divider>
+      </div>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
@@ -202,22 +213,17 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
+import RadioButton from 'primevue/radiobutton'
 
 import { useI18n } from 'vue-i18n'
 
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-} = useWorld()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
-const { onboardingPersonal, saveData, submitting, saveDataAndNextPag } = useOnboardingPersonal()
+const { onboardingPersonal, typeDocument, submitting, saveDataAndNextPag, isHaveDocumentUS } = useOnboardingPersonal()
+
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
@@ -228,10 +234,12 @@ onMounted(async () => {
 .phone-input {
   margin-top: 7px;
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 .btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;

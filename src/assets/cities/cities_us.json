@@ -200,6 +200,11 @@
     "country_id": "USA"
   },
   {
+    "state_code": "PR",
+    "name": "Puerto Rico",
+    "country_id": "USA"
+  },
+  {
     "state_code": "RI",
     "name": "Rhode Island",
     "country_id": "USA"
