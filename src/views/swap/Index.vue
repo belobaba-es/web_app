@@ -1,6 +1,5 @@
 <template>
   <section class="section-main">
-    <CreditCardBanner />
     <FinishRegisterWarningBar />
     <!--    todo uncomment-->
     <!--    <AccountValidationProcess />-->
@@ -52,7 +51,7 @@
               <Button
                 :label="swapBtnText"
                 class="w-full py-3 text-uppercase"
-                style="color: #000; fontWeight: 700;"
+                style="color: #000; fontweight: 700"
                 :disabled="loading || (!exchangeId && !shouldRefreshQuote)"
                 @click="swapHandler"
                 :loading="loading"
@@ -88,7 +87,6 @@ import { storeToRefs } from 'pinia'
 import { onUnmounted } from 'vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
-import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 const {
   assetIcon,
@@ -135,7 +133,7 @@ onUnmounted(() => {
 }
 
 .swap-circle {
-  background-color: #ede5ce;;
+  background-color: #ede5ce;
 }
 
 .swap-circle > img {

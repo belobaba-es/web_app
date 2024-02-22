@@ -1,6 +1,5 @@
 <template>
   <section class="section-main">
-    <CreditCardBanner />
     <div class="flex align-items-center">
       <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
       <span class="text-xl">Onboarding</span>
@@ -22,7 +21,6 @@ import Button from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import { useAuth } from '../../../composables/useAuth'
-import CreditCardBanner from '../../../components/CreditCardBanner.vue'
 
 const { fetchDataToClient } = useOnboardingCompany()
 const { getClientId } = useAuth()
