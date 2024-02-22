@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <FinishRegisterWarningBar />
     <!--    todo uncomment-->
     <!--    <AccountValidationProcess />-->
@@ -87,6 +88,7 @@ import { storeToRefs } from 'pinia'
 import { onUnmounted } from 'vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 const {
   assetIcon,

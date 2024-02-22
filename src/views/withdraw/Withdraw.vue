@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <FinishRegisterWarningBar />
 
     <h2 class="text-3xl font-bold ml-6">{{ t('withdraw') }}</h2>
@@ -38,6 +39,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1)

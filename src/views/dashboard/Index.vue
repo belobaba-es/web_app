@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main background-wallet">
+  <section class="section-main">
     <FinishRegisterWarningBar />
 
     <CardWallet :carousel="true" />
