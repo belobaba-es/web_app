@@ -24,7 +24,7 @@
 
       <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
         <p class="text-base text-amount">
-          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} PAB</b>
+          {{ t('currentBalance') }}: <b class="font-medium">{{ balance }} USD PA</b>
         </p>
       </div>
     </div>
@@ -40,7 +40,7 @@
           v-model="transactionData.amount"
           :placeholder="t('amount')"
         />
-        <span class="p-inputgroup-addon symbol text-capitalize">PAB</span>
+        <span class="p-inputgroup-addon symbol text-capitalize">USD PA</span>
       </div>
     </div>
 
@@ -50,9 +50,9 @@
           {{ slotProps.item.label }}
           <span v-if="slotProps.item.holderName">{{ formData.holderName }}</span>
 
-          <p class="font-medium" v-if="slotProps.item.name">{{ transactionData.amount }} <small>PAB</small></p>
+          <p class="font-medium" v-if="slotProps.item.name">{{ transactionData.amount }} <small>USD PA</small></p>
           <p v-else>
-            <small>{{ amount }}</small>
+            <small> {{ fee }}</small>
           </p>
         </template>
       </Timeline>

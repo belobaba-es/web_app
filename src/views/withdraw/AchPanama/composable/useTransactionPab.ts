@@ -14,7 +14,7 @@ export const useTransactionPab = () => {
   const balance = ref(0)
   const amount = ref(0)
 
-  balance.value = getBalanceByCode('PAB')
+  balance.value = getBalanceByCode('USD_PA')
 
   const events = ref<any>([
     { amount: '2,5', label: 'Fee', name: false },
@@ -22,6 +22,7 @@ export const useTransactionPab = () => {
   ])
 
   const amountFee = computed(() => {
+    fee.value = fee.value ?? 0
     const total = isNaN(transactionData.value.amount + fee.value) ? 0 : amount.value + fee.value
     if (total > balance.value) {
       toast.add({
