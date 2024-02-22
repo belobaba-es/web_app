@@ -52,7 +52,7 @@
 
           <p class="font-medium" v-if="slotProps.item.name">{{ transactionData.amount }} <small>USD PA</small></p>
           <p v-else>
-            <small> {{ fee }}</small>
+            <small> {{ slotProps.item.amount }}</small>
           </p>
         </template>
       </Timeline>
