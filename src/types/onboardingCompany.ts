@@ -2,6 +2,7 @@ export enum DocumentSide {
   BACK = 'BACK',
   FRONT = 'FRONT',
 }
+
 export enum DocumentType {
   PASSPORT = 'passport',
   DRIVERS_LICENSE = 'drivers_license',
