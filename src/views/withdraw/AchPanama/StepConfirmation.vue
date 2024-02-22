@@ -19,7 +19,7 @@
       <div class="field col-12">
         <small>{{ t('fee') }}</small>
         <p class="green-color mt-0">
-          <small>{{ formData.fee }} PAD</small>
+          <small>{{ formData.fee }} USD PA</small>
         </p>
       </div>
     </div>
@@ -80,7 +80,7 @@ const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   formData: any
 }>()
-
+console.log('props.formData', props.formData)
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
     if (twoFactorIsActive()) {

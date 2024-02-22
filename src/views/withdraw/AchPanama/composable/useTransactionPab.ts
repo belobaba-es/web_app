@@ -13,12 +13,12 @@ export const useTransactionPab = () => {
   const fee = ref(0)
   const balance = ref(0)
   const amount = ref(0)
-
+  
   balance.value = getBalanceByCode('USD_PA')
 
   const events = ref<any>([
-    { amount: '2,5', label: 'Fee', name: false },
-    { amount: '2,5', label: `You send to `, name: true },
+    { amount: '15', label: 'Fee', name: false },
+    { amount: '10', label: `You send to `, name: true },
   ])
 
   const amountFee = computed(() => {
