@@ -1,5 +1,6 @@
 <template>
   <section class="section-main">
+    <CreditCardBanner />
     <div class="flex align-items-center">
       <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
       <span class="text-xl">Onboarding</span>
@@ -21,6 +22,7 @@ import { useToast } from 'primevue/usetoast'
 import Steps from 'primevue/steps'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
+import CreditCardBanner from '../../../components/CreditCardBanner.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 

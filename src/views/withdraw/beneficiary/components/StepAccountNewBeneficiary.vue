@@ -56,15 +56,22 @@ const routingNumberOrIBAN = ref<string>('')
 const { formObject } = useNewOrEditBeneficiary()
 const validateFields = () => {
   let isSwiftCodeValid = true
+  let isIbanValid = true
+  const isBankNameValid = formObject.value.informationBank.bankName.trim() !== ''
+  let isAccountNumberValid = formObject.value.informationBank.accountNumber.trim() !== ''
+  isIbanValid = routingNumberOrIBAN.value?.trim() !== ''
+
   if (typeBeneficiary.value === 'INTERNATIONAL') {
     isSwiftCodeValid = formObject.value.informationBank.swiftCode!.trim() !== ''
+    if (isAccountNumberValid && !isIbanValid) {
+      isIbanValid = true
+    }
+    if (isIbanValid && !isAccountNumberValid) {
+      isAccountNumberValid = true
+    }
   }
-  const isBankNameValid = formObject.value.informationBank.bankName.trim() !== ''
-  const isAccountNumberValid = formObject.value.informationBank.accountNumber.trim() !== ''
-
-  const isIntermediaryNumberValid = routingNumberOrIBAN.value.trim() !== ''
-
-  return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIntermediaryNumberValid
+  console.log(isBankNameValid + '&&' + isAccountNumberValid + '&&' + isSwiftCodeValid + '&&' + isIbanValid)
+  return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIbanValid
 }
 
 const nextStep = () => {

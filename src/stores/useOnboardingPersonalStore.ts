@@ -1,29 +1,31 @@
 import { defineStore } from 'pinia'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
 import { useAuth } from '../composables/useAuth'
+
 const { getUserEmail } = useAuth()
 
 export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStore', {
-  state: (): OnboardingPersonal => ({
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    email: getUserEmail(),
-    dateBirth: '',
-    dni: '',
-    taxId: '',
-    passport: '',
-    phoneCountry: '',
-    phoneNumber: '',
-    streetOne: '',
-    streetTwo: '',
-    postalCode: '',
-    city: '',
-    region: '',
-    country: '',
-    type: '',
-    referredByAccountId: '',
-  }),
+  state: (): OnboardingPersonal =>
+    <OnboardingPersonal>{
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      email: getUserEmail(),
+      dateBirth: '',
+      dni: '',
+      taxId: '',
+      passport: '',
+      phoneCountry: '',
+      phoneNumber: '',
+      streetOne: '',
+      streetTwo: '',
+      postalCode: '',
+      city: '',
+      region: '',
+      country: '',
+      type: '',
+      referredByAccountId: '',
+    },
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
       this.firstName = onboardingPersonal.firstName
@@ -45,6 +47,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
     },
+
     dataOnboardingPersonal(): OnboardingPersonal {
       return {
         firstName: this.firstName,
