@@ -1,11 +1,13 @@
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { MakeFiatExternalTransfer } from '../../types/withdraw'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
+import { useAuth } from '../../../../composables/useAuth'
 
 const transactionData = ref<MakeFiatExternalTransfer>({} as MakeFiatExternalTransfer)
 
 export const useTransactionPab = () => {
+  const { getUserFeeACHPA } = useAuth()
   const transactionId = ref('')
 
   const toast = useToast()
@@ -21,8 +23,14 @@ export const useTransactionPab = () => {
     { amount: '10', label: `You send to `, name: true },
   ])
 
+  onMounted( async () =>{
+    getUserFee()
+  })
+
+  const getUserFee = () => {
+    fee.value = getUserFeeACHPA().out
+  }
   const amountFee = computed(() => {
-    fee.value = fee.value ?? 0
     const total = isNaN(transactionData.value.amount + fee.value) ? 0 : amount.value + fee.value
     if (total > balance.value) {
       toast.add({

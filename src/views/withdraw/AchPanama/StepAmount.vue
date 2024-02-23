@@ -52,7 +52,7 @@
 
           <p class="font-medium" v-if="slotProps.item.name">{{ transactionData.amount }} <small>USD PA</small></p>
           <p v-else>
-            <small> {{ slotProps.item.amount }} </small>
+            <small> {{ fee }} </small>
           </p>
         </template>
       </Timeline>
@@ -116,7 +116,6 @@ const { t } = useI18n({ useScope: 'global' })
 const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 const { transactionData, events, validateField, amountFee, balance, amount, fee } = useTransactionPab()
 const asset = ref('')
-const assetSymbol = ref('')
 const props = defineProps<{
   formData: any
 }>()
@@ -125,11 +124,6 @@ const emit = defineEmits(['nextPage'])
 const { isAccountSegregated } = useAuth()
 
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
-
-onMounted(() => {
-  fee.value = props.formData.beneficiary.fee
-})
-console.log('formData holamundo', props.formData.beneficiary)
 
 const nextPage = () => {
   if (!validateField()) {

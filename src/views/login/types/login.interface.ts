@@ -4,6 +4,10 @@ interface FeeSwap {
   swapBuy: number
   swapSell: number
 }
+export interface FeeACH{
+  in: number
+  out: number
+}
 
 export interface FeeWire {
   domestic: {
@@ -21,6 +25,7 @@ interface Client {
   dni: string
   feeSwap: FeeSwap
   feeWire: FeeWire
+  feeACHPAB: FeeACH
   status: AccountStatus
   twoFactorActive: boolean
   phoneNumber: string
