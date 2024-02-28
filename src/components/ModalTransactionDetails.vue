@@ -89,7 +89,7 @@ import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import transformCharactersIntoAsterics from '../shared/transformCharactersIntoAsterics'
 import { generateTransactionReceipt } from '../shared/generatePdf'
-import logo from '../assets/img/logo.png'
+import logo from '../assets/img/logo-login.png'
 import { TransactionHistory } from '../views/transaction-history/types/transaction-history-response.interface'
 import { useAuth } from '../composables/useAuth'
 

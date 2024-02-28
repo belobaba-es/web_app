@@ -37,7 +37,7 @@ import CryptoTransferDetail from '../../../../components/CryptoTransferDetail.vu
 import Button from 'primevue/button'
 import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
 import { generateTransactionReceipt } from '../../../../shared/generatePdf'
-import logo from '../../../../assets/img/logo.png'
+import logo from '../../../../assets/img/logo-login.png'
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
