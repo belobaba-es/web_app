@@ -7,6 +7,8 @@ import { useI18n } from 'vue-i18n'
 import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
+import { AssetsService } from '../views/deposit/services/assets'
+import { Asset } from '../views/deposit/types/asset.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -57,7 +59,13 @@ export const useSwapStore = defineStore('swap', () => {
   const feeTradeDesk = ref(0.0)
   const totalSpend = ref(0.0)
   const exchange = ref<ExchangeData>()
-
+  const filteredListAssetCrypto = ref<Asset[]>([])
+  const listAssets = async () => {
+    await new AssetsService().list().then(data => {
+      filteredListAssetCrypto.value = data.filter(list => list.assetClassification != 'FIAT')
+    })
+  }
+  listAssets()
   const setFeeTradeDesk = () => {
     // feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
     if (transactionType.value === 'buy') {
@@ -330,5 +338,6 @@ export const useSwapStore = defineStore('swap', () => {
     destinationWalletId,
     sourceWalletId,
     amountAfterRemovingFee,
+    filteredListAssetCrypto,
   }
 })

@@ -15,6 +15,7 @@ export interface Asset {
   paymentAddress: string
   networkName?: string
   network?: string
+  assetClassification: string
 }
 
 export interface EventCreatePaymentAddress extends CreatePaymentAddress {
