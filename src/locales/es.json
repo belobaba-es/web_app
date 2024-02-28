@@ -23,7 +23,7 @@
   "fiat": "Fiat",
   "crypto": "Cripto",
   "cryptoWallet": "Billetera Cripto",
-  "selectCrypto": "Seleccione una cripto",
+  "selectCrypto": "Seleccione una Asset",
   "search": "Buscar",
   "createWallet": "Crear billetera",
   "searchWallet": "Buscar billetera cripto",
@@ -451,5 +451,6 @@
   "beneficiaryRejected": "El beneficiario fue rechazado, no sera posible hacer transacciones con el.",
   "textValidateDocument": "Tipo de Archivo no soportado",
   "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF",
-  "validDocument": "¿Posee un Documento de identificación válido en EE.UU?"
+  "validDocument": "¿Posee un Documento de identificación válido en EE.UU?",
+  "transactionConfirmation": "Confirmar transferencia"
 }
