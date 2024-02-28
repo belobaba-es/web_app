@@ -6,7 +6,7 @@ import * as jose from 'jose'
 import { importSPKI } from 'jose'
 import { useAuth } from '../../../composables/useAuth'
 
-const encryptData = async (payload: any) => {
+const generateToken = async (payload: any) => {
   const decoder = new TextDecoder('utf-8')
   const publicKeyPEM = decoder.decode(
     new Uint8Array(
@@ -44,7 +44,7 @@ export class SwapService {
 
   async createExchange(payload: any): Promise<createExchangeResponse> {
     const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await encryptData({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
 
     const data = await this.getClient().post<createExchangeResponse>(`/exchanges`, payload, headerRequest)
     return data.data
@@ -53,7 +53,7 @@ export class SwapService {
   async execute(exchangeId: string): Promise<any> {
     const { getClientId } = useAuth()
 
-    const headerRequest = await this.getHeader(await encryptData({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
     const response = await this.getClient().post<any>(`/exchanges/accept/${exchangeId}`, {}, headerRequest)
 
     return response.data
@@ -61,7 +61,7 @@ export class SwapService {
 
   async exchanges(nextPag: number = 1) {
     const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await encryptData({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
 
     const data = await this.getClient().get<any>(
       `/exchanges/${nextPag}/20`,
