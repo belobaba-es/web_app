@@ -52,11 +52,6 @@ const filteredListAsset = ref<Asset[]>([])
 const search = ref('')
 
 onMounted(async () => {
-  /* await new AssetsService().list().then(data => {
-     listAsset.value = data
-     filteredListAsset.value = data
-   })*/
-
   watchSearchChange()
 })
 
