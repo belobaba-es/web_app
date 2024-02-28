@@ -55,7 +55,7 @@ const items = ref([
     icon: 'pi ',
     class: 'icon-help',
     command: () => {
-      window.open('https://noba.cash/faq', '_blank')
+      window.open('https://belobaba.io/faq', '_blank')
     },
   },
   {
