@@ -230,7 +230,7 @@ import Skeleton from 'primevue/skeleton'
 import ModalTransactionDetails from '../components/ModalTransactionDetails.vue'
 import Dropdown from 'primevue/dropdown'
 import { generateTransactionHistory, jsPDFOptionsOrientationEnum } from '../shared/generatePdf'
-import logo from '../assets/img/logo.png'
+import logo from '../assets/img/logo-login.png'
 import { useToast } from 'primevue/usetoast'
 import { formatDate } from '../shared/formatDate'
 import {

@@ -205,7 +205,7 @@ import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
 
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/logo-login.png'
 
 import generatePdf from '../../shared/generatePdf'
 import { useToast } from 'primevue/usetoast'
