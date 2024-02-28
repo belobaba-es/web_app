@@ -67,7 +67,6 @@ export const useSwapStore = defineStore('swap', () => {
   }
   listAssets()
   const setFeeTradeDesk = () => {
-    // feeTradeDesk.value = Number((baseAmount.value - unitCount.value).toFixed(2))
     if (transactionType.value === 'buy') {
       totalSpend.value = baseAmount.value + feeAmount.value
     } else {
