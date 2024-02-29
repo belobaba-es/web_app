@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isCompleted" class="formgrid grid mt-5 mb-5">
     <div class="col-12">
-      <span class="mt-4">{{ t('transactionConfirmation') }}</span>
+      <span class="mt-4">{{ t('Confirm wire information') }}</span>
       <Divider></Divider>
     </div>
     <div>
@@ -111,41 +111,64 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 function makeTransaction() {
   submitting.value = true
 
-  new WithdrawService()
-    .makeAssetInternalTransfer({
-      clientIdDestination: props.formData.beneficiary.clientId,
-      amount: props.formData.amount,
-      reference: props.formData.reference,
-      assetCode: props.formData.assetCode,
-      purpose: props.formData.purpose,
-    })
-    .then((res: any) => {
-      toast.add({
-        severity: 'success',
-        summary: t('transactionCompleted'),
-        detail: res.message,
-        life: 4,
-      })
-
-      transactionId.value = res.data.transactionId
-      submitting.value = false
-      isCompleted.value = true
-    })
-    .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.message) {
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: e.response.data.message,
-          life: 4,
+  switch (route.params.type) {
+    case 'fiat':
+      new WithdrawService()
+        .makeFiatInternalTransfer({
+          amount: props.formData.amount,
+          clientIdDestination: props.formData.beneficiary.clientId,
+          reference: props.formData.reference,
         })
-        return
-      }
+        .then((res: any) => {
+          transactionId.value = res.data.transactionId
+          submitting.value = false
+          isCompleted.value = true
+        })
+        .catch(e => {
+          submitting.value = false
 
-      showMessage(toast, e.response.data)
-    })
+          toast.add({
+            severity: 'error',
+            summary: t('somethingWentWrong'),
+            detail: e.response.data.message,
+            life: 4000,
+          })
+        })
+
+      break
+    case 'crypto':
+      new WithdrawService()
+        .makeAssetInternalTransfer({
+          clientIdDestination: props.formData.beneficiary.clientId,
+          amount: props.formData.amount,
+          reference: props.formData.reference,
+          assetCode: props.formData.assetCode,
+          purpose: props.formData.purpose,
+        })
+        .then((res: any) => {
+          transactionId.value = res.data.transactionId
+          submitting.value = false
+          isCompleted.value = true
+        })
+        .catch(e => {
+          submitting.value = false
+
+          if (e.response.data.message) {
+            toast.add({
+              severity: 'error',
+              summary: t('somethingWentWrong'),
+              detail: e.response.data.message,
+              life: 4000,
+            })
+            return
+          }
+
+          showMessage(toast, e.response.data)
+        })
+      break
+    default:
+      submitting.value = false
+  }
 }
 </script>
 

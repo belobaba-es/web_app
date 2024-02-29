@@ -7,7 +7,6 @@
 
     <div class="col-6">
       <p>{{ props.realName }}</p>
-      <p>{{ props.realEmail }}</p>
     </div>
 
     <Divider type="dashed"></Divider>
@@ -43,10 +42,6 @@ import Divider from 'primevue/divider'
 
 const props = defineProps({
   realName: {
-    type: String,
-    required: true,
-  },
-  realEmail: {
     type: String,
     required: true,
   },

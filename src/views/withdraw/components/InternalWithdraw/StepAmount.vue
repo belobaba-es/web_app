@@ -9,11 +9,15 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <p class="title-beneficiary text-capitalize">{{ beneficiary.name }}</p>
       </div>
+
+      <!--      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">-->
+      <!--        <p class="text-base text-end">{{ beneficiary.email }}</p>-->
+      <!--      </div>-->
     </div>
 
-    <SelectedAssets @selectedAsset="selectedAsset" />
+    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset" />
 
-    <div class="grid col-12 mb-2">
+    <div v-if="showAmount" class="grid col-12 mb-2">
       <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
         <p>
           <label for="amount">{{ t('Amount') }}</label>
@@ -27,7 +31,7 @@
       </div>
     </div>
 
-    <div class="grid col-12 flex w-full">
+    <div v-if="showAmount" class="grid col-12 flex w-full">
       <div class="flex w-full">
         <InputNumber
           id="amount"
@@ -42,7 +46,7 @@
       </div>
     </div>
 
-    <div class="col-12 field mt-4">
+    <div v-if="showAmount" class="col-12 field mt-4">
       <Timeline :value="events">
         <template #content="slotProps">
           {{ slotProps.item.label }}
@@ -139,6 +143,10 @@ const assetSymbol = ref('USD')
 const balance = ref(0)
 const total = ref(0)
 const purpose = ref('')
+const isAsset = route.params.type === 'crypto'
+
+const showAmount = ref(!isAsset)
+const showSelectedAsset = ref(isAsset)
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -164,17 +172,11 @@ const amountFee = computed(() => {
     total.value = 0
   }
 
-  //TODO Esto debe cambiar, validando si el asset es un stable coin o un fiat.
-  if (
-    assetSymbol.value === 'USD' ||
-    assetSymbol.value === 'USDT' ||
-    assetSymbol.value === 'USDC' ||
-    assetSymbol.value === 'PAB'
-  ) {
+  if (assetSymbol.value === 'USD') {
     total.value = Number(t.toFixed(2))
-  } else {
-    total.value = Number(t.toFixed(8))
   }
+
+  total.value = Number(t.toFixed(8))
 
   return Number(t.toFixed(8))
 })
@@ -204,7 +206,11 @@ const validateField = (): boolean => {
 
   return true
 }
-
+const onInput = (event: any) => {
+  if (event.target.value.startsWith('00')) {
+    amount.value = 0
+  }
+}
 const nextPage = () => {
   if (!validateField()) {
     return
@@ -228,6 +234,7 @@ const nextPage = () => {
 }
 
 const selectedAsset = (evt: Asset) => {
+  showAmount.value = true
   assetSymbol.value = evt.code
 
   balance.value = getBalanceByCode(evt.code)

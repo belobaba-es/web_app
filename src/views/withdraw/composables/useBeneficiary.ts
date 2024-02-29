@@ -52,7 +52,6 @@ export const useBeneficiary = () => {
       list.push({
         name: listElement.informationOwner.name,
         clientId: listElement.counterpartyId,
-        email: listElement.informationOwner.email,
       })
     }
 
