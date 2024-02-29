@@ -142,7 +142,7 @@ const generatePDFTransactionReceipt = () => {
   }`
   transactionPDF[t('datePicker')] = `${transaction.formatedDate}`
 
-  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  generateTransactionReceipt(fileName, logo, title, transactionPDF)
   isGeneratingTransactionPDF.value = false
 }
 </script>
