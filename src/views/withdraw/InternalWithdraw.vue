@@ -41,7 +41,7 @@ const router = useRouter()
 const route = useRoute()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
-const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('asset')
+const typeAsset = route.params.type === 'fiat' ? t('fiat') : t('crypto')
 const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 const items = ref([
   {

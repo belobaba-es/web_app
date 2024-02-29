@@ -12,14 +12,7 @@
         <i class="pi pi-chevron-down mt-2"></i>
       </div>
     </div>
-    <div
-      class="col-12"
-      v-if="
-        networkAddress !== 'US Dollar DEPOSIT_FORT_FIAT' &&
-        networkAddress !== 'Panama PAB DEPOSIT_FORT_FIAT' &&
-        networkAddress !== ''
-      "
-    >
+    <div class="col-12" v-if="networkAddress">
       <Message severity="warn" :closable="false">
         {{ t('warningSendAsset', { asset: nameAsset }) }}
       </Message>
@@ -62,7 +55,7 @@ const selectedAsset = (asset: Asset) => {
   nameAsset.value = asset.name
   iconAsset.value = asset.icon
   networkAddress.value = asset.networkName + ' ' + asset.network
-  
+
   showModal.value = false
 }
 </script>
