@@ -183,9 +183,9 @@ const redirectLogin = () => {
 }
 
 const getTheLinkToTermsAndConditions = () => {
-  let linkSpanish = 'https://noba.cash/es/termino-de-uso/'
+  let linkSpanish = 'https://belobaba.io/terms-of-use'
 
-  let linkEnglish = 'https://noba.cash/en/termino-de-uso/'
+  let linkEnglish = 'https://belobaba.io/terms-of-use'
 
   if (lang === 'es') {
     return linkSpanish
@@ -199,9 +199,9 @@ const getTheLinkToTermsAndConditions = () => {
 }
 
 const getTheLinkToPoliticsAndPrivacy = () => {
-  let linkSpanish = 'https://noba.cash/es/politicas-de-privacidad/'
+  let linkSpanish = 'https://belobaba.io/privacy-policy'
 
-  let linkEnglish = 'https://noba.cash/en/politicas-de-privacidad/'
+  let linkEnglish = 'https://belobaba.io/privacy-policy'
 
   if (lang === 'es') {
     return linkSpanish
