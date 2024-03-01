@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 import jsPDF from 'jspdf'
+import footerImg from '../assets/img/footer.png'
+import footerImgLg from '../assets/img/footer-lg.png'
 
 export enum jsPDFOptionsOrientationEnum {
   PORTRAIT = 'p',
@@ -35,9 +37,10 @@ type fillPayload = {
   endPosition: number
   height: number
 }
-export default (nameFile: string, logo: string, title: string, data: any, footer: string) => {
+export default (nameFile: string, logo: string, title: string, data: any) => {
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, 'PNG', 15, 10, 70, 20)
+  pdf.value.addImage(logo, 'PNG', 15, 15, 45, 10)
+  pdf.value.addImage(footerImg, "PNG", 10, 270, 195, 25);
 
   pdf.value.setFontSize(18)
   pdf.value.text(title, 75, 40)
@@ -59,7 +62,6 @@ export default (nameFile: string, logo: string, title: string, data: any, footer
 
   pdf.value.setFontSize(12)
   pdf.value.setTextColor(0, 0, 0)
-  pdf.value.text(footer, 15, 285)
 
   pdf.value.save(`${nameFile}.pdf`)
 }
@@ -68,7 +70,6 @@ export const generateTransactionHistory = (
   nameFile: string,
   logo: string,
   title: string,
-  footer: string,
   orientation: jsPDFOptionsOrientationEnum = jsPDFOptionsOrientationEnum.PORTRAIT,
   data: any,
   owner: any,
@@ -85,6 +86,7 @@ export const generateTransactionHistory = (
   )
 
   setHeader(pdf, logo, title)
+  setFooter(pdf, footerImgLg)
   setSubHeader(pdf, owner, translations, dateFilters)
 
   let i: number = 1
@@ -96,7 +98,7 @@ export const generateTransactionHistory = (
   data.map((element: any) => {
     i = i + 0.15
 
-    const rowHeightPosition: number = 70 * i
+    const rowHeightPosition: number = 60 * i
     const backgroundRowHeigthPosition: number = rowHeightPosition - 6
     createFill(
       {
@@ -160,7 +162,9 @@ export const generateTransactionHistory = (
       rowCounter = 0
       i = 1
       pdf.value.addPage()
+
       setHeader(pdf, logo, title)
+      setFooter(pdf, footerImg)
       setSubHeader(pdf, owner, translations, dateFilters)
     }
   })
@@ -173,16 +177,16 @@ export const generateTransactionReceipt = (
   logo: string,
   title: string,
   data: any,
-  footer: string
 ) => {
   console.log('nameFile:', nameFile)
   console.log('logo:', logo)
   console.log('title:', title)
   console.log('data:', data)
-  console.log('footer:', footer)
+  console.log('footer:', footerImg)
 
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, 'PNG', 70, 10, 70, 20)
+  pdf.value.addImage(logo, "PNG", 70, 10, 80, 20);
+  pdf.value.addImage(footerImg, "PNG", 10, 270, 195, 25);
   createText({ fontSize: 28, textColor: black, xPosition: 65, yPosition: 45, text: title }, pdf)
 
   let i = 1
@@ -216,16 +220,20 @@ export const generateTransactionReceipt = (
     i = i + 0.1
   })
 
-  createText({ fontSize: 16, textColor: black, xPosition: 15, yPosition: 285, text: footer }, pdf)
+  // createText({ fontSize: 16, textColor: black, xPosition: 15, yPosition: 285, text: footer }, pdf)
   pdf.value.save(`${nameFile}.pdf`)
 }
 
 const setHeader = (pdf: any, logo: string, title: string) => {
-  pdf.value.addImage(logo, 'PNG', 15, 10, 70, 20)
+  pdf.value.addImage(logo, 'PNG', 15, 15, 45, 10)
 
   const headerXPos: number = 245
   const headerYPos: number = 25
   createText({ fontSize: 18, textColor: primaryColor, xPosition: headerXPos, yPosition: headerYPos, text: title }, pdf)
+}
+
+const setFooter = (pdf: any, footerImg: string) => {
+  pdf.value.addImage(footerImg, "PNG", 10, 180, 270, 20);
 }
 
 const setSubHeader = (pdf: any, owner: any, transaltions: any, dateFilters?: any) => {

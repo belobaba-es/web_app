@@ -282,13 +282,13 @@ const menuItems = ref<tabItem[]>([
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
 
-  generatePdf(nameFile, logo, title, bankNationalPdf, footerPdf)
+  generatePdf(nameFile, logo, title, bankNationalPdf)
 }
 
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
 
-  generatePdf(nameFile, logo, titleInternacional, bankInternationalPdf, footerPdf)
+  generatePdf(nameFile, logo, titleInternacional, bankInternationalPdf)
 }
 
 const copyToClipboard = (text: string) => {

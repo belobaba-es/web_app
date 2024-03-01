@@ -490,7 +490,6 @@ const downloadExtract = () => {
       nameFile,
       logo,
       'BELOBABA',
-      footerPdf,
       jsPDFOptionsOrientationEnum.LANDSCAPE,
       extractPDFInfo,
       owner,

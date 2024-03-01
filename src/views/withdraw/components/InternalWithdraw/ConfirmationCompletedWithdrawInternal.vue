@@ -106,7 +106,7 @@ const generatePDFTransactionReceipt = () => {
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
 
-  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  generateTransactionReceipt(fileName, logo, title, transactionPDF)
   isGeneratingTransactionPDF.value = false
 }
 </script>
