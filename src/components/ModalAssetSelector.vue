@@ -17,7 +17,6 @@
         <Button :label="'search'" class="w-full border-noround-left" @click="onSearch" />
       </div>
     </div>
-
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
         <div v-for="item in filteredListAssetCrypto" class="col-12 grid selectCypto" @click="selectedAsset(item)">
