@@ -262,12 +262,16 @@ const routes: RouteRecordRaw[] = [
             component: () => import('./views/onboarding/personal/index.vue'),
             children: [
               {
-                path: 'step1',
-                component: () => import('./views/onboarding/personal/Step1.vue'),
+                path: 'personal-data',
+                component: () => import('./views/onboarding/personal/PersonalData.vue'),
               },
               {
-                path: 'step2',
-                component: () => import('./views/onboarding/personal/Step2.vue'),
+                path: 'investment-data',
+                component: () => import('./views/onboarding/personal/InvestmentData.vue'),
+              },
+              {
+                path: 'upload-documents',
+                component: () => import('./views/onboarding/personal/UploadDocuments.vue'),
               },
               {
                 path: 'completed',

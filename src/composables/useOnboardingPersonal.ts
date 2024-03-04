@@ -57,24 +57,24 @@ export const useOnboardingPersonal = () => {
 
       new OnboardingService()
         .openingAccountPersonal(onboardingPersonal.value, isUpdateData.value)
-        .then(resp => {
-          submitting.value = false
-          toast.add({
-            severity: 'success',
-            detail: resp.message,
-            life: 4000,
-          })
+         .then(resp => {
+           submitting.value = false
+           toast.add({
+             severity: 'success',
+             detail: resp.message,
+             life: 4000,
+           })
 
-          isUpdateData.value = true
-          setClientId(resp.clientId)
+           isUpdateData.value = true
+           setClientId(resp.clientId)
 
-          resolve(resp)
-        })
-        .catch(e => {
-          submitting.value = false
-          processException(toast, t, e.response.data)
-          reject(e)
-        })
+           resolve(resp)
+         })
+         .catch(e => {
+           submitting.value = false
+           processException(toast, t, e.response.data)
+           reject(e)
+         })
     })
   }
 
@@ -97,9 +97,13 @@ export const useOnboardingPersonal = () => {
         showMessage(toast, e.response.data)
       })
   }
-  const saveDataAndNextPag = async () => {
+  const saveDataAndNextInvestmentProfile = async () => {
+    router.push('/onboarding/personal/investment-data')
+  }
+
+  const saveDataAndNextUploadFIle = async () => {
     saveData().then(() => {
-      router.push('/onboarding/personal/step2')
+      router.push('/onboarding/personal/upload-documents')
     })
   }
 
@@ -116,7 +120,8 @@ export const useOnboardingPersonal = () => {
     submitting,
     typeDocument,
     saveData,
+    saveDataAndNextInvestmentProfile,
+    saveDataAndNextUploadFIle,
     isHaveDocumentUS,
-    saveDataAndNextPag,
   }
 }
