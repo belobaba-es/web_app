@@ -38,7 +38,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     monthlyInvestmentWithdrawal: '',
     monthlyCryptoInvestmentWithdrawal: '',
     fundsSendReceiveJurisdictions: [],
-    engageInActivities: ''
+    engageInActivities: [],
   }),
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
