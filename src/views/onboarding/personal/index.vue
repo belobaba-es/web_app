@@ -30,11 +30,15 @@ const toast = useToast()
 const items = ref([
   {
     label: 'Personal data',
-    to: `/onboarding/personal/step1`,
+    to: `/onboarding/personal/personal-data`,
   },
   {
+    label: 'Investment profile',
+    to: `/onboarding/personal/investment-data`,
+  },
+    {
     label: 'Upload documents',
-    to: `/onboarding/personal/step2`,
+    to: `/onboarding/personal/upload-documents`,
   },
 ])
 

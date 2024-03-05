@@ -40,7 +40,7 @@ export const useAuth = () => {
 
   const editProfile = () => {
     if (getAccountType() === 'NATURAL_PERSON') {
-      router.push(`/onboarding/personal/step1`)
+      router.push(`/onboarding/personal/personal-data`)
     } else {
       router.push(`/onboarding/business/step1`)
     }

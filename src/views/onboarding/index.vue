@@ -17,7 +17,7 @@
           <CardButon class="m-4 pt-5 pb-5" :icon="business" :label="t('businessAccount')" />
         </router-link>
 
-        <router-link to="/onboarding/personal/step1">
+        <router-link to="/onboarding/personal/personal-data">
           <CardButon class="m-4 pt-5 pb-5" :icon="personal" :label="t('personalAccount')" />
         </router-link>
       </div>
