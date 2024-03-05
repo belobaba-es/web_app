@@ -1,5 +1,11 @@
 <template>
-  <Dialog v-model:visible="props.showModal" :modal="true" closeIcon="pi pi-times-circle" class="modal-asset-selector">
+  <Dialog
+    v-model:visible="props.showModal"
+    :modal="true"
+    closeIcon="pi pi-times-circle"
+    class="modal-asset-selector"
+    :style="{ width: '50rem' }"
+  >
     <template #header>
       <h3 class="font-medium">{{ t('selectCrypto') }}</h3>
     </template>
@@ -11,10 +17,9 @@
         <Button :label="'search'" class="w-full border-noround-left" @click="onSearch" />
       </div>
     </div>
-
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in filteredListAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in filteredListAssetCrypto" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -29,17 +34,20 @@
 
 <script setup lang="ts">
 import Dialog from 'primevue/dialog'
-import { defineProps, ref, onMounted, watch } from 'vue'
-import { AssetsService } from '../views/deposit/services/assets'
+import { defineProps, onMounted, ref, watch } from 'vue'
 import { Asset } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ScrollPanel from 'primevue/scrollpanel'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
+import { storeToRefs } from 'pinia'
+import { useSwapStore } from '../stores/swap'
 
 interface Props {
   showModal: boolean
 }
+
+const { filteredListAssetCrypto } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
@@ -49,11 +57,6 @@ const filteredListAsset = ref<Asset[]>([])
 const search = ref('')
 
 onMounted(async () => {
-  await new AssetsService().list().then(data => {
-    listAsset.value = data
-    filteredListAsset.value = data
-  })
-
   watchSearchChange()
 })
 
@@ -63,20 +66,20 @@ const selectedAsset = (asset: Asset) => {
 
 const watchSearchChange = () => {
   watch(search, newVal => {
-    newVal.trim().length === 0 ? (filteredListAsset.value = listAsset.value) : null
+    newVal.trim().length === 0 ? (filteredListAssetCrypto.value = listAsset.value) : null
   })
 }
 
 const onSearch = () => {
   const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
-    filteredListAsset.value = listAsset.value
+    filteredListAssetCrypto.value = listAsset.value
     return
   }
   const newArray: Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
-  filteredListAsset.value = []
+  filteredListAssetCrypto.value = []
   if (!newArray) return
-  filteredListAsset.value = newArray
+  filteredListAssetCrypto.value = newArray
 }
 </script>
 
@@ -89,6 +92,7 @@ const onSearch = () => {
   background: #f9f9f9 0% 0% no-repeat padding-box;
   border: 1px solid #ececec;
 }
+
 .p-dialog.p-component.p-ripple-disabled.modal-asset-selector .p-dialog-content {
   overflow-y: visible !important;
 }
