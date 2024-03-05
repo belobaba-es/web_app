@@ -31,5 +31,5 @@ export type OnboardingPersonal = {
   monthlyInvestmentWithdrawal: string
   monthlyCryptoInvestmentWithdrawal: string
   fundsSendReceiveJurisdictions: string[]
-  engageInActivities: string
+  engageInActivities: string[]
 }

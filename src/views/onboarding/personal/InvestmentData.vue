@@ -48,7 +48,6 @@
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
               class="w-full"
-              @change="onChangeCountryHandler"
               required
             />
           </div>
@@ -61,17 +60,15 @@
         <div>
           <label>{{t('engageInActivities')}}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
-            <Dropdown
+            <MultiSelect
               v-model="onboardingPersonal.engageInActivities"
               :options="engageInActivities"
               optionLabel="name"
               option-value="value"
               filter
               :loading="loadingCountriesField"
-              :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
+              :placeholder="t('engageInActivities')"
               class="w-full"
-              @change="onChangeCountryHandler"
               required
             />
           </div>
