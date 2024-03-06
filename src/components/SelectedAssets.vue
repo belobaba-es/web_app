@@ -12,6 +12,7 @@
         <i class="pi pi-chevron-down mt-2"></i>
       </div>
     </div>
+
     <div class="col-12" v-if="networkAddress">
       <Message severity="warn" :closable="false">
         {{ t('warningSendAsset', { asset: nameAsset }) }}

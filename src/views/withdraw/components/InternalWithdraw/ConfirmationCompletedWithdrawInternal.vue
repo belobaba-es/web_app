@@ -11,26 +11,26 @@
     </div>
 
     <InternalFiatDetails
-      v-if="route.params.type === 'fiat'"
-      :realName="beneficiary.name"
+      :realName="props.formData.beneficiary.name"
+      :realEmail="props.formData.beneficiary.email || 'N/A'"
       :account="props.formData.beneficiary.accountNumber"
-      :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
+      :amountFee="props.formData.amountFee || props.formData.amount"
       :fee="props.formData.fee"
-      :transactionId="transactionId"
+      :amount="props.formData.amount"
       :assetCode="props.formData.assetCode ?? 'USD'"
+      :transactionId="transactionId"
     ></InternalFiatDetails>
 
-    <CryptoTransferDetail
-      v-if="route.params.type === 'crypto'"
-      :realName="props.formData.beneficiary.name"
-      :wallet="props.formData.symbol"
-      :amount="props.formData.amount"
-      :amountFee="props.formData.amountFee"
-      :fee="props.formData.fee"
-      :transactionId="transactionId"
-      :assetCode="props.formData.assetCode"
-    ></CryptoTransferDetail>
+    <!--    <CryptoTransferDetail-->
+    <!--      v-if="route.params.type === 'crypto'"-->
+    <!--      :realName="props.formData.beneficiary.name"-->
+    <!--      :wallet="props.formData.symbol"-->
+    <!--      :amount="props.formData.amount"-->
+    <!--      :amountFee="props.formData.amountFee"-->
+    <!--      :fee="props.formData.fee"-->
+    <!--      :transactionId="transactionId"-->
+    <!--      :assetCode="props.formData.assetCode"-->
+    <!--    ></CryptoTransferDetail>-->
 
     <div class="col-12 btn-container">
       <Button class="w-50 p-button mt-5 btn-routing" :label="t('newTransfer')" @click="goToWithdrawIndex()" />
@@ -46,7 +46,6 @@
 </template>
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import CryptoTransferDetail from '../../../../components/CryptoTransferDetail.vue'
 import InternalFiatDetails from '../../../../components/InternalFiatDetails.vue'
 import Button from 'primevue/button'
 import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
@@ -75,13 +74,7 @@ const { getUserName, getUserId } = useAuth()
 
 const goToWithdrawIndex = async () => {
   // TODO composable function
-  if (route.params.type === 'crypto') {
-    window.location.href = '/withdraw/noba/crypto'
-  }
-
-  if (route.params.type === 'fiat') {
-    window.location.href = '/withdraw/noba/fiat'
-  }
+  window.location.href = '/withdraw/'
 }
 
 const generatePDFTransactionReceipt = () => {
