@@ -5,27 +5,41 @@ import { useAuth } from '../composables/useAuth'
 const { getUserEmail } = useAuth()
 
 export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStore', {
-  state: (): OnboardingPersonal =>
-    <OnboardingPersonal>{
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      email: getUserEmail(),
-      dateBirth: '',
-      dni: '',
-      taxId: '',
-      passport: '',
-      phoneCountry: '',
-      phoneNumber: '',
-      streetOne: '',
-      streetTwo: '',
-      postalCode: '',
-      city: '',
-      region: '',
-      country: '',
-      type: '',
-      referredByAccountId: '',
-    },
+  state: (): OnboardingPersonal => ({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: getUserEmail(),
+    dateBirth: '',
+    dni: '',
+    taxId: '',
+    passport: '',
+    phoneCountry: '',
+    phoneNumber: '',
+    streetOne: '',
+    streetTwo: '',
+    postalCode: '',
+    city: '',
+    region: '',
+    country: '',
+    type: '',
+    referredByAccountId: '',
+    employmentStatus: '',
+    occupation: '',
+    primarySourceOfFunds: '',
+    usdValueOfFiat: '',
+    usdValueOfCrypto: '',
+    monthlyDeposits: '',
+    monthlyCryptoDeposits: '',
+    monthlyInvestmentDeposit: '',
+    monthlyCryptoInvestmentDeposit: '',
+    monthlyWithdrawals: '',
+    monthlyCryptoWithdrawals: '',
+    monthlyInvestmentWithdrawal: '',
+    monthlyCryptoInvestmentWithdrawal: '',
+    fundsSendReceiveJurisdictions: [],
+    engageInActivities: [],
+  }),
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
       this.firstName = onboardingPersonal.firstName
@@ -46,6 +60,21 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.country = onboardingPersonal.country
       this.type = onboardingPersonal.type
       this.referredByAccountId = onboardingPersonal.referredByAccountId
+      this.employmentStatus = onboardingPersonal.employmentStatus
+      this.occupation = onboardingPersonal.occupation
+      this.primarySourceOfFunds = onboardingPersonal.primarySourceOfFunds
+      this.usdValueOfFiat = onboardingPersonal.usdValueOfFiat
+      this.usdValueOfCrypto = onboardingPersonal.usdValueOfCrypto
+      this.monthlyDeposits = onboardingPersonal.monthlyDeposits
+      this.monthlyCryptoDeposits = onboardingPersonal.monthlyCryptoDeposits
+      this.monthlyInvestmentDeposit = onboardingPersonal.monthlyInvestmentDeposit
+      this.monthlyCryptoInvestmentDeposit = onboardingPersonal.monthlyCryptoInvestmentDeposit
+      this.monthlyWithdrawals = onboardingPersonal.monthlyWithdrawals
+      this.monthlyCryptoWithdrawals = onboardingPersonal.monthlyCryptoWithdrawals
+      this.monthlyInvestmentWithdrawal = onboardingPersonal.monthlyInvestmentWithdrawal
+      this.monthlyCryptoInvestmentWithdrawal = onboardingPersonal.monthlyCryptoInvestmentWithdrawal
+      this.fundsSendReceiveJurisdictions = onboardingPersonal.fundsSendReceiveJurisdictions
+      this.engageInActivities = onboardingPersonal.engageInActivities
     },
 
     dataOnboardingPersonal(): OnboardingPersonal {
@@ -68,6 +97,21 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
         country: this.country,
         type: this.type,
         referredByAccountId: this.referredByAccountId,
+        employmentStatus: this.employmentStatus,
+        occupation: this.occupation,
+        primarySourceOfFunds: this.primarySourceOfFunds,
+        usdValueOfFiat: this.usdValueOfFiat,
+        usdValueOfCrypto: this.usdValueOfCrypto,
+        monthlyDeposits: this.monthlyDeposits,
+        monthlyCryptoDeposits: this.monthlyCryptoDeposits,
+        monthlyInvestmentDeposit: this.monthlyInvestmentDeposit,
+        monthlyCryptoInvestmentDeposit: this.monthlyCryptoInvestmentDeposit,
+        monthlyWithdrawals: this.monthlyWithdrawals,
+        monthlyCryptoWithdrawals: this.monthlyCryptoWithdrawals,
+        monthlyInvestmentWithdrawal: this.monthlyInvestmentWithdrawal,
+        monthlyCryptoInvestmentWithdrawal: this.monthlyCryptoInvestmentWithdrawal,
+        fundsSendReceiveJurisdictions: this.fundsSendReceiveJurisdictions,
+        engageInActivities: this.engageInActivities
       }
     },
   },
