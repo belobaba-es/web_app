@@ -26,6 +26,12 @@ export class BeneficiaryService {
     )
   }
 
+  async listBeneficiaryInternalV2(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_V2).get<BeneficiariesInternalResponse>(
+      `beneficiary/internal/${nextPag === 0 ? 1 : nextPag}`
+    )
+  }
+
   async saveBeneficiary(payload: any): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/banking`, payload)
   }

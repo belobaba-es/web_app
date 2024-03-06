@@ -59,6 +59,27 @@ export const useBeneficiary = () => {
     listBeneficiariesInternal.value = list
   }
 
+  const fetchBeneficiariesInternalV2 = async (type: TypeBeneficiaryInternal): Promise<void> => {
+    submitting.value = true
+
+    const result = await new BeneficiaryService().listBeneficiaryInternalV2(type, nextPag.value)
+
+    nextPag.value = Number(result.nextPag === null ? 0 : result.nextPag)
+
+    submitting.value = false
+
+    const list = []
+    for (const listElement of result.results) {
+      list.push({
+        name: listElement.informationOwner.name,
+        clientId: listElement.counterpartyId,
+        email: listElement.informationOwner.email,
+      })
+    }
+
+    listBeneficiariesInternal.value = list
+  }
+
   const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
     switch (status) {
       case 'ACTIVE':
@@ -74,6 +95,7 @@ export const useBeneficiary = () => {
 
   return {
     fetchBeneficiariesInternal,
+    fetchBeneficiariesInternalV2,
     fetchBeneficiariesAssets,
     nextPag,
     submitting,
