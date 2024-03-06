@@ -171,7 +171,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: 'completed',
-                component: () => import('./views/onboarding/components/CompletedDocument.vue'),
+                component: () => import('../views/onboarding/components/CompletedDocument.vue'),
               },
             ],
           },
