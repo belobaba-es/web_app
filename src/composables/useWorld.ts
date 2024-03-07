@@ -58,7 +58,10 @@ export const useWorld = () => {
       countries.value = resp
       if (shouldDeleteBannedCountries) {
         countries.value = deleteUnavailableCountries(resp)
+
       }
+
+      countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
 
       const arrayCallingCode = resp.map(c => c.calling_code).sort()
       calling_code.value = [...new Set(arrayCallingCode)]
@@ -106,7 +109,7 @@ export const useWorld = () => {
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
     return countries
       .filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
-      .sort((a, b) => a.name.localeCompare(b.name))
+
   }
 
   return {

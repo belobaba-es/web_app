@@ -1,5 +1,12 @@
 [
   {
+    "country_code": "AR",
+    "name": "Argentina",
+    "assetCountry": "FIAT_MAINNET_BSD",
+    "counterpartyType": "FIAT_BS",
+    "rail": ["SWIFT"]
+  },
+  {
     "country_code": "BS",
     "name": "Bahamas"
   },
