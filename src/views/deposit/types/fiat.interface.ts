@@ -1,4 +1,4 @@
-export interface BankData {
+export type bankInstructionDetail = {
   id: string
   swiftCode: string
   reference: string
@@ -11,4 +11,22 @@ export interface BankData {
   typeBankingData: string
   bankPhone: string
   accountId?: string
+}
+
+export type InstructionsAchPabType = {
+  id?: string
+  label: string
+  holderName: string
+  holderEmail: string
+  holderId: string
+  bankName: string
+  accountDestinationNumber: string
+  productType: string
+  concept: string
+}
+
+export interface BankData {
+  domestic: bankInstructionDetail
+  international: bankInstructionDetail
+  achInstructions?: InstructionsAchPabType
 }
