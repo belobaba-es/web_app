@@ -71,6 +71,7 @@ import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.
 import Dialog from 'primevue/dialog'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import showMessage from '../../../../shared/showMessageArray'
+import { AssetClassificationEnum } from '../../../deposit/types/asset.interface'
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
@@ -107,11 +108,37 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   }
 }
 
-function makeTransaction() {
+async function makeTransaction() {
   submitting.value = true
 
-  // todo remove asset code when is FIAT
-  new WithdrawService()
+  if (props.formData.assetClassification === AssetClassificationEnum.FIAT) {
+    await fiatTransaction()
+  }
+
+  if (props.formData.assetClassification !== AssetClassificationEnum.FIAT) {
+    await cryptoTransaction()
+  }
+}
+
+const fiatTransaction = async () => {
+  await new WithdrawService()
+    .makeFiatInternalTransfer({
+      clientIdDestination: props.formData.beneficiary.clientId,
+      amount: props.formData.amount,
+      reference: props.formData.reference,
+      assetCode: props.formData.assetCode,
+      purpose: props.formData.purpose,
+    })
+    .then((res: any) => {
+      transactionId.value = res.data.transactionId
+      handleSuccess(res.message, res.data.transactionId)
+    })
+    .catch(e => {
+      handleError(e)
+    })
+}
+const cryptoTransaction = async () => {
+  await new WithdrawService()
     .makeAssetInternalTransfer({
       clientIdDestination: props.formData.beneficiary.clientId,
       amount: props.formData.amount,
@@ -120,32 +147,39 @@ function makeTransaction() {
       purpose: props.formData.purpose,
     })
     .then((res: any) => {
-      toast.add({
-        severity: 'success',
-        summary: t('transactionCompleted'),
-        detail: res.message,
-        life: 4,
-      })
-
-      transactionId.value = res.data.transactionId
-      submitting.value = false
-      isCompleted.value = true
+      handleSuccess(res.message, res.data.transactionId)
     })
     .catch(e => {
-      submitting.value = false
-
-      if (e.response.data.message) {
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: e.response.data.message,
-          life: 4,
-        })
-        return
-      }
-
-      showMessage(toast, e.response.data)
+      handleError(e)
     })
+}
+
+const handleSuccess = (message: any, transactionId: string) => {
+  submitting.value = false
+  isCompleted.value = true
+
+  toast.add({
+    severity: 'success',
+    summary: t('transactionCompleted'),
+    detail: message,
+    life: 4,
+  })
+}
+
+const handleError = (e: any) => {
+  submitting.value = false
+
+  if (e.response.data.message) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: e.response.data.message,
+      life: 4,
+    })
+    return
+  }
+
+  showMessage(toast, e.response.data)
 }
 </script>
 

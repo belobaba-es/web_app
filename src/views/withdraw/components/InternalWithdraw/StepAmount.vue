@@ -139,6 +139,7 @@ const assetSymbol = ref('USD')
 const balance = ref(0)
 const total = ref(0)
 const purpose = ref('')
+const assetClassification = ref()
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -164,7 +165,6 @@ const amountFee = computed(() => {
     total.value = 0
   }
 
-  //TODO Esto debe cambiar, validando si el asset es un stable coin o un fiat.
   if (
     assetSymbol.value === 'USD' ||
     assetSymbol.value === 'USDT' ||
@@ -220,6 +220,7 @@ const nextPage = () => {
     assetCode: assetSymbol.value,
     total: total.value,
     purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
+    assetClassification: assetClassification.value,
   }
   emit('nextPage', {
     pageIndex: page,
@@ -233,6 +234,7 @@ const selectedAsset = (evt: Asset) => {
   balance.value = getBalanceByCode(evt.code)
   fee.value = evt.fee
   assetId.value = evt.assetId
+  assetClassification.value = evt.assetClassification
 }
 </script>
 
