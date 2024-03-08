@@ -67,6 +67,7 @@
         :show-modal="showModalAssetSelector"
         @update:visible="modal($event)"
         @selected-asset="selectedAsset"
+        :show-all-asset-types="false"
       />
     </PageLayout>
   </section>

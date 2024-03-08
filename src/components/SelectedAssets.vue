@@ -29,6 +29,7 @@
     @update:visible="modal($event)"
     closeIcon="pi pi-times-circle"
     @selected-asset="selectedAsset"
+    :show-all-asset-types="true"
   />
 </template>
 

@@ -19,7 +19,7 @@
     </div>
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in listAllAssets" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in assetsPrepared" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -45,19 +45,28 @@ import { useSwapStore } from '../stores/swap'
 
 interface Props {
   showModal: boolean
+  showAllAssetTypes: boolean
 }
 
-const { filteredListAssetCrypto, listAllAssets } = storeToRefs(useSwapStore())
+const { filteredListAssetCrypto, allAssets } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
 
-const listAsset = ref<Asset[]>([])
-const filteredListAsset = ref<Asset[]>([])
+const assets = ref<Asset[]>([])
+const assetsPrepared = ref<Asset[]>([])
 const search = ref('')
 
 onMounted(async () => {
   watchSearchChange()
+
+  assets.value = filteredListAssetCrypto.value
+
+  if (props.showAllAssetTypes) {
+    assets.value = allAssets.value
+  }
+
+  assetsPrepared.value = assets.value
 })
 
 const selectedAsset = (asset: Asset) => {
@@ -66,23 +75,23 @@ const selectedAsset = (asset: Asset) => {
 
 const watchSearchChange = () => {
   watch(search, newVal => {
-    newVal.trim().length === 0 ? (listAllAssets.value = listAsset.value) : null
+    newVal.trim().length === 0 ? (assetsPrepared.value = assets.value) : null
   })
 }
 
 const onSearch = () => {
   const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
-    listAllAssets.value = listAsset.value
+    assetsPrepared.value = assets.value
     return
   }
 
-  const newArray: Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
-  listAllAssets.value = []
+  const newArray: Asset[] = assets.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
+  assetsPrepared.value = []
 
   if (!newArray) return
 
-  listAllAssets.value = newArray
+  assetsPrepared.value = newArray
 }
 </script>
 

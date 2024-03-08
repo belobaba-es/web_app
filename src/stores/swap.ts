@@ -60,10 +60,10 @@ export const useSwapStore = defineStore('swap', () => {
   const totalSpend = ref(0.0)
   const exchange = ref<ExchangeData>()
   const filteredListAssetCrypto = ref<Asset[]>([])
-  const listAllAssets = ref<Asset[]>([])
+  const allAssets = ref<Asset[]>([])
   const listAssets = async () => {
     await new AssetsService().list().then(data => {
-      listAllAssets.value = data
+      allAssets.value = data
       filteredListAssetCrypto.value = data.filter(list => list.assetClassification != AssetClassificationEnum.FIAT)
     })
   }
@@ -340,6 +340,6 @@ export const useSwapStore = defineStore('swap', () => {
     sourceWalletId,
     amountAfterRemovingFee,
     filteredListAssetCrypto,
-    listAllAssets,
+    allAssets,
   }
 })
