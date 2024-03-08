@@ -140,6 +140,7 @@ const balance = ref(0)
 const total = ref(0)
 const purpose = ref('')
 const assetClassification = ref()
+const assetCode = ref()
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -166,10 +167,10 @@ const amountFee = computed(() => {
   }
 
   if (
-    assetSymbol.value === 'USD' ||
-    assetSymbol.value === 'USDT' ||
-    assetSymbol.value === 'USDC' ||
-    assetSymbol.value === 'PAB'
+    assetCode.value === 'USD' ||
+    assetCode.value === 'USDT' ||
+    assetCode.value === 'USDC' ||
+    assetCode.value === 'PAB'
   ) {
     total.value = Number(t.toFixed(2))
   } else {
@@ -217,7 +218,8 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     asset: asset.value,
-    assetCode: assetSymbol.value,
+    assetCode: assetCode.value,
+    assetSymbol: assetSymbol.value,
     total: total.value,
     purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
     assetClassification: assetClassification.value,
@@ -230,11 +232,13 @@ const nextPage = () => {
 
 const selectedAsset = (evt: Asset) => {
   assetSymbol.value = evt.name
+  assetCode.value = evt.code
 
   balance.value = getBalanceByCode(evt.code)
   fee.value = evt.fee
   assetId.value = evt.assetId
   assetClassification.value = evt.assetClassification
+  console.log('evt', { ...evt })
 }
 </script>
 

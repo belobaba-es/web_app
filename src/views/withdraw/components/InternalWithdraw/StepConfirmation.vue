@@ -12,13 +12,13 @@
     <div class="col-12 field p-fluid">
       <div class="field col-12">
         <label for="name1">{{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amount }} {{ formData.assetCode }}</p>
+        <p class="green-color">{{ formData.amount }} {{ formData.assetSymbol }}</p>
       </div>
       <div class="field col-12">
         <small>{{ t('fee') }}</small>
 
         <p class="green-color mt-0">
-          <small>{{ formData.fee }} {{ formData.assetCode }}</small>
+          <small>{{ formData.fee }} {{ formData.assetSymbol }}</small>
         </p>
       </div>
     </div>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-12">
-      <p class="font-medium green-color">{{ formData.total }} {{ formData.assetCode }}</p>
+      <p class="font-medium green-color">{{ formData.total }} {{ formData.assetSymbol }}</p>
     </div>
 
     <Button
