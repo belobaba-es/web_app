@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="col-12" v-if="networkAddress">
+    <div v-show="!isFiat" class="col-12" v-if="networkAddress">
       <Message severity="warn" :closable="false">
         {{ t('warningSendAsset', { asset: nameAsset }) }}
       </Message>
@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Asset } from '../views/deposit/types/asset.interface'
+import { Asset, AssetClassificationEnum } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from './ModalAssetSelector.vue'
 import Message from 'primevue/message'
@@ -43,6 +43,7 @@ const showModal = ref(false)
 const nameAsset = ref('')
 const iconAsset = ref('')
 const networkAddress = ref('')
+const isFiat = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['selectedAsset'])
 
@@ -52,6 +53,8 @@ const modal = (b: boolean) => {
 
 const selectedAsset = (asset: Asset) => {
   emit('selectedAsset', asset)
+
+  isFiat.value = asset.assetClassification === AssetClassificationEnum.FIAT
 
   nameAsset.value = asset.name
   iconAsset.value = asset.icon

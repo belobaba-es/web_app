@@ -8,7 +8,7 @@ import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-res
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
 import { AssetsService } from '../views/deposit/services/assets'
-import { Asset } from '../views/deposit/types/asset.interface'
+import { Asset, AssetClassificationEnum } from '../views/deposit/types/asset.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -60,9 +60,11 @@ export const useSwapStore = defineStore('swap', () => {
   const totalSpend = ref(0.0)
   const exchange = ref<ExchangeData>()
   const filteredListAssetCrypto = ref<Asset[]>([])
+  const listAllAssets = ref<Asset[]>([])
   const listAssets = async () => {
     await new AssetsService().list().then(data => {
-      filteredListAssetCrypto.value = data.filter(list => list.assetClassification != 'FIAT')
+      listAllAssets.value = data
+      filteredListAssetCrypto.value = data.filter(list => list.assetClassification != AssetClassificationEnum.FIAT)
     })
   }
   listAssets()
@@ -338,5 +340,6 @@ export const useSwapStore = defineStore('swap', () => {
     sourceWalletId,
     amountAfterRemovingFee,
     filteredListAssetCrypto,
+    listAllAssets,
   }
 })

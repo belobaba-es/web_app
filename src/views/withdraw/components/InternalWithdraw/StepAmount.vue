@@ -228,7 +228,7 @@ const nextPage = () => {
 }
 
 const selectedAsset = (evt: Asset) => {
-  assetSymbol.value = evt.code
+  assetSymbol.value = evt.name
 
   balance.value = getBalanceByCode(evt.code)
   fee.value = evt.fee

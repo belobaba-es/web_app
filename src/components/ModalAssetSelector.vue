@@ -19,7 +19,7 @@
     </div>
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in filteredListAssetCrypto" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in listAllAssets" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -47,7 +47,7 @@ interface Props {
   showModal: boolean
 }
 
-const { filteredListAssetCrypto } = storeToRefs(useSwapStore())
+const { filteredListAssetCrypto, listAllAssets } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
@@ -66,20 +66,23 @@ const selectedAsset = (asset: Asset) => {
 
 const watchSearchChange = () => {
   watch(search, newVal => {
-    newVal.trim().length === 0 ? (filteredListAssetCrypto.value = listAsset.value) : null
+    newVal.trim().length === 0 ? (listAllAssets.value = listAsset.value) : null
   })
 }
 
 const onSearch = () => {
   const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
-    filteredListAssetCrypto.value = listAsset.value
+    listAllAssets.value = listAsset.value
     return
   }
+
   const newArray: Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
-  filteredListAssetCrypto.value = []
+  listAllAssets.value = []
+
   if (!newArray) return
-  filteredListAssetCrypto.value = newArray
+
+  listAllAssets.value = newArray
 }
 </script>
 
