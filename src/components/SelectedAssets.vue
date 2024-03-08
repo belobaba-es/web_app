@@ -29,13 +29,13 @@
     @update:visible="modal($event)"
     closeIcon="pi pi-times-circle"
     @selected-asset="selectedAsset"
-    :show-all-asset-types="true"
+    :asset-classification-filter="AssetClassificationFilter.ALL"
   />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Asset, AssetClassificationEnum } from '../views/deposit/types/asset.interface'
+import { Asset, AssetClassification, AssetClassificationFilter } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from './ModalAssetSelector.vue'
 import Message from 'primevue/message'
@@ -55,7 +55,7 @@ const modal = (b: boolean) => {
 const selectedAsset = (asset: Asset) => {
   emit('selectedAsset', asset)
 
-  isFiat.value = asset.assetClassification === AssetClassificationEnum.FIAT
+  isFiat.value = asset.assetClassification === AssetClassification.FIAT
 
   nameAsset.value = asset.name
   iconAsset.value = asset.icon

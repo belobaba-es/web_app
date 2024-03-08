@@ -71,7 +71,7 @@ import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.
 import Dialog from 'primevue/dialog'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import showMessage from '../../../../shared/showMessageArray'
-import { AssetClassificationEnum } from '../../../deposit/types/asset.interface'
+import { AssetClassification } from '../../../deposit/types/asset.interface'
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
@@ -111,11 +111,11 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
 async function makeTransaction() {
   submitting.value = true
 
-  if (props.formData.assetClassification === AssetClassificationEnum.FIAT) {
+  if (props.formData.assetClassification === AssetClassification.FIAT) {
     await fiatTransaction()
   }
 
-  if (props.formData.assetClassification !== AssetClassificationEnum.FIAT) {
+  if (props.formData.assetClassification !== AssetClassification.FIAT) {
     await cryptoTransaction()
   }
 }

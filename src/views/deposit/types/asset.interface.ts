@@ -1,9 +1,15 @@
 import { Pagination } from '../../../types/pagination'
 
-export enum AssetClassificationEnum {
+export enum AssetClassification {
   'FIAT' = 'FIAT',
   'STABLE' = 'STABLE',
   'CRYPTO' = 'CRYPTO',
+}
+
+export enum AssetClassificationFilter {
+  ALL = 'ALL',
+  CRYPTO_STABLE_COIN = 'CRYPT_STABLE_COIN',
+  FIAT = 'FIAT',
 }
 
 export interface Asset {
@@ -21,7 +27,7 @@ export interface Asset {
   paymentAddress: string
   networkName?: string
   network?: string
-  assetClassification: AssetClassificationEnum
+  assetClassification: AssetClassification
 }
 
 export interface EventCreatePaymentAddress extends CreatePaymentAddress {

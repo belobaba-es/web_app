@@ -19,7 +19,7 @@
     </div>
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in assetsPrepared" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in filteredListAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -35,20 +35,18 @@
 <script setup lang="ts">
 import Dialog from 'primevue/dialog'
 import { defineProps, onMounted, ref, watch } from 'vue'
-import { Asset } from '../views/deposit/types/asset.interface'
+import { Asset, AssetClassification, AssetClassificationFilter } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ScrollPanel from 'primevue/scrollpanel'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
-import { storeToRefs } from 'pinia'
-import { useSwapStore } from '../stores/swap'
+import { AssetsService } from '../views/deposit/services/assets'
 
 interface Props {
   showModal: boolean
-  showAllAssetTypes: boolean
+  assetClassificationFilter: AssetClassificationFilter
 }
 
-const { filteredListAssetCrypto, allAssets } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
@@ -57,16 +55,24 @@ const assets = ref<Asset[]>([])
 const assetsPrepared = ref<Asset[]>([])
 const search = ref('')
 
+const filteredListAsset = ref<Asset[]>([])
+
 onMounted(async () => {
+  await new AssetsService().list().then(data => {
+    switch (props.assetClassificationFilter) {
+      case AssetClassificationFilter.ALL:
+        filteredListAsset.value = data
+        break
+      case AssetClassificationFilter.CRYPTO_STABLE_COIN:
+        filteredListAsset.value = data.filter(asset => asset.assetClassification !== AssetClassification.FIAT)
+        break
+      default:
+        filteredListAsset.value = data.filter(asset => asset.assetClassification === AssetClassification.FIAT)
+        break
+    }
+  })
+
   watchSearchChange()
-
-  assets.value = filteredListAssetCrypto.value
-
-  if (props.showAllAssetTypes) {
-    assets.value = allAssets.value
-  }
-
-  assetsPrepared.value = assets.value
 })
 
 const selectedAsset = (asset: Asset) => {
