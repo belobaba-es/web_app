@@ -19,7 +19,7 @@
     </div>
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in filteredListAsset" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in assetsPrepared" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -71,6 +71,9 @@ onMounted(async () => {
         break
     }
   })
+
+  assets.value = filteredListAsset.value
+  assetsPrepared.value = filteredListAsset.value
 
   watchSearchChange()
 })
