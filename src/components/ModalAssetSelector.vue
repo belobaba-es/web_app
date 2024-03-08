@@ -82,7 +82,7 @@ const watchSearchChange = () => {
 const onSearch = () => {
   const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
-    assetsPrepared.value = assets.value
+    assetsPrepared.value = [...assets.value]
     return
   }
 
@@ -91,7 +91,7 @@ const onSearch = () => {
 
   if (!newArray) return
 
-  assetsPrepared.value = newArray
+  assetsPrepared.value = [...newArray]
 }
 </script>
 
