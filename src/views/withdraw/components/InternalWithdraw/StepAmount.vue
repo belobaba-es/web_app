@@ -13,7 +13,7 @@
 
     <SelectedAssets @selectedAsset="selectedAsset" />
 
-    <div class="grid col-12 mb-2">
+    <div v-show="isAssetSelected" class="grid col-12 mb-2">
       <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
         <p>
           <label for="amount">{{ t('Amount') }}</label>
@@ -27,9 +27,10 @@
       </div>
     </div>
 
-    <div class="grid col-12 flex w-full">
-      <div class="flex w-full">
+    <div v-show="isAssetSelected" class="grid col-12 flex w-full">
+      <div v-show="isAssetSelected" class="flex w-full">
         <InputNumber
+          v-show="isAssetSelected"
           id="amount"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
@@ -38,11 +39,11 @@
           :maxFractionDigits="8"
         />
 
-        <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
+        <span v-show="isAssetSelected" class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
       </div>
     </div>
 
-    <div class="col-12 field mt-4">
+    <div v-show="isAssetSelected" class="col-12 field mt-4">
       <Timeline :value="events">
         <template #content="slotProps">
           {{ slotProps.item.label }}
@@ -58,7 +59,7 @@
       </Timeline>
     </div>
 
-    <div class="col-12 field p-fluid">
+    <div v-show="isAssetSelected" class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('purposeWithdrawal') }}</label>
         <div class="p-inputgroup">
@@ -74,7 +75,7 @@
       </div>
     </div>
 
-    <div class="col-12 field p-fluid">
+    <div v-show="isAssetSelected" class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText
@@ -90,7 +91,7 @@
 
     <MessageAlertActiveTwoFactorAuth />
 
-    <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
+    <div v-show="isAssetSelected" class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
@@ -141,6 +142,7 @@ const total = ref(0)
 const purpose = ref('')
 const assetClassification = ref()
 const assetCode = ref()
+const isAssetSelected = ref(false)
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -231,6 +233,7 @@ const nextPage = () => {
 }
 
 const selectedAsset = (evt: Asset) => {
+  isAssetSelected.value = true
   assetSymbol.value = evt.name
   assetCode.value = evt.code
 
@@ -238,7 +241,6 @@ const selectedAsset = (evt: Asset) => {
   fee.value = evt.fee
   assetId.value = evt.assetId
   assetClassification.value = evt.assetClassification
-  console.log('evt', { ...evt })
 }
 </script>
 
