@@ -79,7 +79,6 @@ export const useNewBeneficiaryPanama = () => {
       })
     } catch (error) {
       submitting.value = false
-      console.log(error)
       toast.add({
         severity: 'error',
         summary: t('error'),
