@@ -12,7 +12,7 @@
     </div>
 
     <SelectedAssets @selectedAsset="selectedAsset" />
-
+    
     <div v-show="isAssetSelected" class="grid col-12 mb-2">
       <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
         <p>
@@ -28,7 +28,7 @@
     </div>
 
     <div v-show="isAssetSelected" class="grid col-12 flex w-full">
-      <div v-show="isAssetSelected" class="flex w-full">
+      <div class="flex w-full">
         <InputNumber
           v-show="isAssetSelected"
           id="amount"
@@ -59,7 +59,7 @@
       </Timeline>
     </div>
 
-    <div v-show="isAssetSelected" class="col-12 field p-fluid">
+    <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('purposeWithdrawal') }}</label>
         <div class="p-inputgroup">
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <div v-show="isAssetSelected" class="col-12 field p-fluid">
+    <div class="col-12 field p-fluid">
       <div class="col-8">
         <label for="">{{ t('Reference') }}</label>
         <InputText
@@ -91,7 +91,7 @@
 
     <MessageAlertActiveTwoFactorAuth />
 
-    <div v-show="isAssetSelected" class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
+    <div class="col-6" v-if="isEnabledButtonToProceedWithdrawal">
       <Button class="w-100 p-button" :label="t('continue')" @click="nextPage" />
     </div>
   </div>
