@@ -67,13 +67,6 @@
         </div>
       </div>
 
-      <!--      <div class="field">-->
-      <!--        <label>{{ t('conceptLabel') }}</label>-->
-      <!--        <div class="p-inputgroup">-->
-      <!--          <InputText type="text" v-model="formObjectPanama.concept" required />-->
-      <!--        </div>-->
-      <!--      </div>-->
-
       <div class="field">
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
