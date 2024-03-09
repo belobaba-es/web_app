@@ -54,15 +54,17 @@ const type = ref(TypeBeneficiaryInternal.FIAT)
 
 const route = useRoute()
 
-const { fetchBeneficiariesInternal, listBeneficiariesInternal, submitting, nextPag } = useBeneficiary()
+const { fetchBeneficiariesInternalV2, listBeneficiariesInternal, submitting, nextPag } = useBeneficiary()
 
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 
 const setListBeneficiaries = (list: UserAccount[]) => {
+  console.log('-- setListBeneficiaries')
   listBeneficiariesInternal.value = list
 }
 
 onMounted(async () => {
+  console.log('route.params.type', route.params.type)
   if (route.params.type === 'crypto') {
     type.value = TypeBeneficiaryInternal.ASSET
   }
@@ -82,7 +84,7 @@ const nextStep = (item: UserAccount) => {
   })
 }
 const loadMore = async () => {
-  await fetchBeneficiariesInternal(type.value)
+  await fetchBeneficiariesInternalV2(type.value)
 }
 </script>
 

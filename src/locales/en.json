@@ -48,12 +48,12 @@
   "birthdateLabel": "Date of Birth",
   "birthdatePlaceholder": "dd / mm / yyyy",
   "divisorLabel": "Address",
-  "employmentInformation":"Employment information",
-  "employmentStatus":"Employment status",
-  "employmentStatusPlaceholder":"Select status",
-  "helpTextEmploymentStatus":"Select your employment status",
+  "employmentInformation": "Employment information",
+  "employmentStatus": "Employment status",
+  "employmentStatusPlaceholder": "Select status",
+  "helpTextEmploymentStatus": "Select your employment status",
   "occupationLabel": "Occupation",
-  "helpTextOccupation":"Write your occupation",
+  "helpTextOccupation": "Write your occupation",
   "phoneLabel": "Telephone",
   "phonePlaceholder": "Telephone",
   "acceptSMSLabel": "Accept SMS?",
@@ -517,7 +517,8 @@
   "marijuana": "Marijuana",
   "tumbling": "Tumbling",
   "helpTextEngageInActivities": "Describe the activities in which you are involved.",
-  "helpTextSelectAOption":"Select an option",
+  "helpTextSelectAOption": "Select an option",
   "validDocument": "Do you have a valid identification document in the US?",
-  "profileKyc": "Profile KYC"
+  "profileKyc": "Profile KYC",
+  "transactionConfirmation": "Confirm transaction"
 }

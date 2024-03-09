@@ -19,7 +19,7 @@
     </div>
     <ScrollPanel style="width: 100%; height: 400px" class="custom">
       <div class="grid py-3 mt-2">
-        <div v-for="item in filteredListAssetCrypto" class="col-12 grid selectCypto" @click="selectedAsset(item)">
+        <div v-for="item in assetsPrepared" class="col-12 grid selectCypto" @click="selectedAsset(item)">
           <div class="col-2">
             <img width="30" :src="item.icon" />
           </div>
@@ -35,28 +35,46 @@
 <script setup lang="ts">
 import Dialog from 'primevue/dialog'
 import { defineProps, onMounted, ref, watch } from 'vue'
-import { Asset } from '../views/deposit/types/asset.interface'
+import { Asset, AssetClassification, AssetClassificationFilter } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ScrollPanel from 'primevue/scrollpanel'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
-import { storeToRefs } from 'pinia'
-import { useSwapStore } from '../stores/swap'
+import { AssetsService } from '../views/deposit/services/assets'
 
 interface Props {
   showModal: boolean
+  assetClassificationFilter: AssetClassificationFilter
 }
 
-const { filteredListAssetCrypto } = storeToRefs(useSwapStore())
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
 
-const listAsset = ref<Asset[]>([])
-const filteredListAsset = ref<Asset[]>([])
+const assets = ref<Asset[]>([])
+const assetsPrepared = ref<Asset[]>([])
 const search = ref('')
 
+const filteredListAsset = ref<Asset[]>([])
+
 onMounted(async () => {
+  await new AssetsService().list().then(data => {
+    switch (props.assetClassificationFilter) {
+      case AssetClassificationFilter.ALL:
+        filteredListAsset.value = data
+        break
+      case AssetClassificationFilter.CRYPTO_STABLE_COIN:
+        filteredListAsset.value = data.filter(asset => asset.assetClassification !== AssetClassification.FIAT)
+        break
+      default:
+        filteredListAsset.value = data.filter(asset => asset.assetClassification === AssetClassification.FIAT)
+        break
+    }
+  })
+
+  assets.value = filteredListAsset.value
+  assetsPrepared.value = filteredListAsset.value
+
   watchSearchChange()
 })
 
@@ -66,20 +84,23 @@ const selectedAsset = (asset: Asset) => {
 
 const watchSearchChange = () => {
   watch(search, newVal => {
-    newVal.trim().length === 0 ? (filteredListAssetCrypto.value = listAsset.value) : null
+    newVal.trim().length === 0 ? (assetsPrepared.value = assets.value) : null
   })
 }
 
 const onSearch = () => {
   const searchAsset = search.value.trim().toLowerCase()
   if (searchAsset.length === 0) {
-    filteredListAssetCrypto.value = listAsset.value
+    assetsPrepared.value = [...assets.value]
     return
   }
-  const newArray: Asset[] = listAsset.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
-  filteredListAssetCrypto.value = []
+
+  const newArray: Asset[] = assets.value.filter(asset => asset.code.toLowerCase().includes(searchAsset))
+  assetsPrepared.value = []
+
   if (!newArray) return
-  filteredListAssetCrypto.value = newArray
+
+  assetsPrepared.value = [...newArray]
 }
 </script>
 
