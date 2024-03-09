@@ -14,7 +14,6 @@
           style="border-top-left-radius: 0; border-bottom-left-radius: 0"
           class="p-button search-btn w-25"
           :label="t('search')"
-          @click="onSearch"
           :loading="submitting"
         />
       </span>
@@ -90,26 +89,10 @@ const onSelect = (item: Beneficiary) => {
     })
   }
 }
-// const beneficiaryAssets = ref<BeneficiaryFiat[]>([])
 
 onMounted(async () => {
   props.formData.typeTransaction = route.params.type
 })
-
-const onSearch = () => {
-  // accountService.getAccountByEmail(search.value).then(resp=>{
-  //     console.log(resp)
-  //     beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
-  // }).catch(error=>{
-  //     console.log(error.response)
-  //     toast.add({
-  //       severity: 'error',
-  //       summary: t('somethingWentWrong'),
-  //       detail: error.response.data.message,
-  //       life: 4000,
-  //     })1
-  // })
-}
 </script>
 
 <style scoped>

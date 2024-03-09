@@ -80,7 +80,6 @@ const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<{
   formData: any
 }>()
-console.log('props.formData', props.formData)
 const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   if (isEnabledButtonToProceedWithdrawal.value) {
     if (twoFactorIsActive()) {

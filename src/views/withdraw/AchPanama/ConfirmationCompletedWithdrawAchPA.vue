@@ -17,7 +17,7 @@
       :amountFee="props.formData.amount"
       :fee="props.formData.fee"
       :transactionId="transactionId"
-      :assetCode="props.formData.assetCode ?? 'PAD'"
+      :assetCode="props.formData.assetCode ?? 'USD_PA'"
     ></InternationalTransferDetail>
 
     <div class="col-12 btn-container">

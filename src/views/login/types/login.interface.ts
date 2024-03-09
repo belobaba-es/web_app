@@ -4,7 +4,8 @@ interface FeeSwap {
   swapBuy: number
   swapSell: number
 }
-export interface FeeACH{
+
+export interface FeeACH {
   in: number
   out: number
 }
