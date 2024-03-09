@@ -21,17 +21,6 @@
       :transactionId="transactionId"
     ></InternalFiatDetails>
 
-    <!--    <CryptoTransferDetail-->
-    <!--      v-if="route.params.type === 'crypto'"-->
-    <!--      :realName="props.formData.beneficiary.name"-->
-    <!--      :wallet="props.formData.symbol"-->
-    <!--      :amount="props.formData.amount"-->
-    <!--      :amountFee="props.formData.amountFee"-->
-    <!--      :fee="props.formData.fee"-->
-    <!--      :transactionId="transactionId"-->
-    <!--      :assetCode="props.formData.assetCode"-->
-    <!--    ></CryptoTransferDetail>-->
-
     <div class="col-12 btn-container">
       <Button class="w-50 p-button mt-5 btn-routing" :label="t('newTransfer')" @click="goToWithdrawIndex()" />
 
