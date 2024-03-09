@@ -1,10 +1,10 @@
 import { HttpService } from '../../../shared/services/http'
 import {
-  AchInstructions,
   BeneficiariesInternalResponse,
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
   BeneficiaryType,
+  RegisterCounterpartyAchPanama,
 } from '../types/beneficiary.interface'
 import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
 import { UnwrapRef } from 'vue'
@@ -42,7 +42,7 @@ export class BeneficiaryService {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/asset`, payload)
   }
 
-  async saveBeneficiaryAchPanama(payload: UnwrapRef<AchInstructions>): Promise<any> {
+  async saveBeneficiaryAchPanama(payload: UnwrapRef<RegisterCounterpartyAchPanama>): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach/pab`, payload)
   }
 }

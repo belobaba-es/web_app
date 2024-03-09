@@ -53,6 +53,7 @@ export const useNewBeneficiaryPanama = () => {
     router.push(`/withdraw/panama/new`)
   }
   const save = () => {
+    submitting.value = true
     if (!validateFields()) {
       toast.add({
         severity: 'warn',
@@ -62,7 +63,6 @@ export const useNewBeneficiaryPanama = () => {
       })
       return
     }
-    submitting.value = true
     try {
       new BeneficiaryService().saveBeneficiaryAchPanama(formObjectPanama.value).then(response => {
         isUpdateBeneficiary.value = false
@@ -78,6 +78,7 @@ export const useNewBeneficiaryPanama = () => {
         }, 2000)
       })
     } catch (error) {
+      submitting.value = false
       console.log(error)
       toast.add({
         severity: 'error',
@@ -86,7 +87,6 @@ export const useNewBeneficiaryPanama = () => {
         life: 4000,
       })
     }
-    submitting.value = false
   }
 
   const toBack = () => {
