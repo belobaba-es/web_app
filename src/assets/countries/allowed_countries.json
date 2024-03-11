@@ -1,10 +1,48 @@
 [
   {
+    "country_code": "AD",
+    "name": "Andorra",
+    "assetCountry": "FIAT_MAINNET_EUR",
+    "counterpartyType": "FIAT_EU",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
     "country_code": "AR",
     "name": "Argentina",
     "assetCountry": "FIAT_MAINNET_BSD",
     "counterpartyType": "FIAT_BS",
-    "rail": ["SWIFT"]
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "DO",
+    "name": "Dominican Republic",
+    "assetCountry": "FIAT_MAINNET_BSD",
+    "counterpartyType": "FIAT_BSD",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "BO",
+    "name": "Bolivia",
+    "assetCountry": "FIAT_MAINNET_BSD",
+    "counterpartyType": "FIAT_BS",
+    "rail": [
+      "SWIFT"
+    ]
+  },
+  {
+    "country_code": "SV",
+    "name": "El salvador",
+    "assetCountry": "FIAT_MAINNET_BSD",
+    "counterpartyType": "FIAT_BS",
+    "rail": [
+      "SWIFT"
+    ]
   },
   {
     "country_code": "BS",
