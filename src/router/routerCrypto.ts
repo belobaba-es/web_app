@@ -1,5 +1,6 @@
 import OtherPlatFormsWallets from '../views/withdraw/crypto/OtherPlatformsWallets.vue'
 import WithdrawOtherPlatformsStepConfirmation from '../views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
+import AddBeneficiary from '../views/withdraw/crypto/AddBeneficiary.vue'
 
 export const routerCrypto = [
   {
@@ -21,7 +22,7 @@ export const routerCrypto = [
     ],
   },
   {
-    path: 'crypto/other/add-beneficiary',
-    component: () => import('../views/withdraw/crypto/AddBeneficiary.vue'),
+    path: '/withdraw/crypto/other/add-beneficiary',
+    component: AddBeneficiary,
   },
 ]
