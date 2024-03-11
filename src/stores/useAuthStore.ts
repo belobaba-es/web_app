@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { FeeWire, UserAuth } from '../views/login/types/login.interface'
+import { FeeACH, FeeWire, UserAuth } from '../views/login/types/login.interface'
 import { AccountStatus } from '../types/accountStatus.enum'
 import { CryptoService } from '../shared/services/crypto'
 
@@ -35,6 +35,10 @@ export const useAuthStore = defineStore('useAuthStore', {
         feeSwap: {
           swapBuy: 0,
           swapSell: 0,
+        },
+        feeACHPAB:{
+          in:0,
+          out:0
         },
         feeWire: {
           domestic: {
@@ -84,6 +88,9 @@ export const useAuthStore = defineStore('useAuthStore', {
     },
     getUserFeeWire(): FeeWire {
       return this.client.feeWire
+    },
+    getUserFeeACHPA(): FeeACH{
+      return this.client.feeACHPAB
     },
     isUserActive(): boolean {
       return this.active

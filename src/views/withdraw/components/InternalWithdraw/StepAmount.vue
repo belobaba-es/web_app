@@ -11,8 +11,8 @@
       </div>
     </div>
 
-    <SelectedAssets @selectedAsset="selectedAsset" />
-    
+    <SelectedAssets @selectedAsset="selectedAsset" :asset-classification-filter="AssetClassificationFilter.ALL" />
+
     <div v-show="isAssetSelected" class="grid col-12 mb-2">
       <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
         <p>
@@ -109,7 +109,7 @@ import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import SelectedAssets from '../../../../components/SelectedAssets.vue'
-import { Asset } from '../../../deposit/types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { UserAccount } from '../../types/account'

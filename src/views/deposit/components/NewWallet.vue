@@ -18,8 +18,9 @@
         </div>
       </div>
       <div class="field col-12 mt-4">
-        <SelectedAssets @selectedAsset="selectAsset" />
+        <SelectedAssets @selectedAsset="selectAsset" :asset-classification-filter="AssetClassificationFilter.ALL" />
       </div>
+      
       <div class="field col-12" style="display: grid">
         <label for="name" class="black-bold-text">{{ t('nameWallet') }}</label>
         <InputText id="name" type="text" v-model="label" />
@@ -46,7 +47,7 @@ import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
-import { Asset } from '../types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../types/asset.interface'
 import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { AssetsService } from '../services/assets'
 import { useToast } from 'primevue/usetoast'

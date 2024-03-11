@@ -10,7 +10,6 @@ export const useWithdraw = (items: any) => {
 
   const nextStepPage = (event: any) => {
     for (let field in event.formData) {
-      console.log(field, 'paso de pagina')
       formObject.value[field] = event.formData[field]
     }
 

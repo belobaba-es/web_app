@@ -14,7 +14,6 @@
           style="border-top-left-radius: 0; border-bottom-left-radius: 0"
           class="p-button search-btn w-25"
           :label="t('search')"
-          @click="onSearch"
           :loading="submitting"
         />
       </span>
@@ -25,7 +24,7 @@
     <span class="mt-4">{{ t('youBeneficiaries') }}</span>
     <Divider></Divider>
     <div class="col-10">
-      <ListBeneficiary @select="onSelect($event)" />
+      <ListBeneficiaryPanama @select="onSelect($event)" />
     </div>
   </div>
 </template>
@@ -35,11 +34,11 @@ import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
-import ListBeneficiary from '../../beneficiary/ListBeneficiary.vue'
 import InputText from 'primevue/inputtext'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { Beneficiary, CounterpartyStatus } from '../../types/beneficiary.interface'
+import { Beneficiary, CounterpartyStatus } from '../types/beneficiary.interface'
+import ListBeneficiaryPanama from './beneficiary/components/ListBeneficiaryPanama.vue'
 
 const submitting = ref(false)
 
@@ -92,24 +91,8 @@ const onSelect = (item: Beneficiary) => {
 }
 
 onMounted(async () => {
-  console.log(route.params.type)
   props.formData.typeTransaction = route.params.type
 })
-
-const onSearch = () => {
-  // accountService.getAccountByEmail(search.value).then(resp=>{
-  //     console.log(resp)
-  //     beneficiaryAssets.value = [{label: resp.name, accountId: resp.email, assetId: resp.email,  id:'', walletAddress: '', assetTransferMethod:''}]
-  // }).catch(error=>{
-  //     console.log(error.response)
-  //     toast.add({
-  //       severity: 'error',
-  //       summary: t('somethingWentWrong'),
-  //       detail: error.response.data.message,
-  //       life: 4000,
-  //     })1
-  // })
-}
 </script>
 
 <style scoped>

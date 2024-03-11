@@ -8,6 +8,7 @@ import { getBalanceWallets } from '../views/deposit/services/fetchAsset'
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
   const balanceWalletStore = useBalanceWalletStore()
+  const { isExistsWallet } = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
   const { getClientId } = useAuth()
 
@@ -54,7 +55,7 @@ export const useBalanceWallet = () => {
 
   const calculateBalance = (assetCode: string, balance: number, blocked: number, format: boolean = true) => {
     const total = isNaN(balance + blocked) ? 0 : balance + blocked
-    const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT'
+    const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT' || assetCode === 'USD_PA'
     const decimalSeparator = locale.value === 'en' ? '.' : ','
     const thousandSeparator = locale.value === 'en' ? ',' : '.'
     if (!format) return total
@@ -70,6 +71,7 @@ export const useBalanceWallet = () => {
   }
 
   return {
+    isExistsWallet,
     calculateBalance,
     fetchBalanceWallets,
     getBalanceByCode,

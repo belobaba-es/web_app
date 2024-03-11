@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiary">
-      <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
-        <span class="ml-4 mt-2 mb-2">{{ item.informationOwner.name }}</span>
+    <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiaryAchPanama">
+      <div class="col-12 sm:col-12 md:col-8 lg:col-11 xl:col-11">
+        <span class="ml-4 mt-2 mb-2">{{ item.holderName }}</span>
         <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{ item.status }}</span>
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">
@@ -39,27 +39,24 @@
 
 <script lang="ts" setup>
 import Button from 'primevue/button'
-import { BeneficiaryType } from '../types/beneficiary.interface'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-import { useBeneficiary } from '../composables/useBeneficiary'
-import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
+
+import { useBeneficiary } from '../../../composables/useBeneficiary'
+import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
-const { submitting, listNextPag, listBeneficiary, fetchBeneficiaries, getBeneficiaryStatusColor } = useBeneficiary()
-const { setDataBeneficiary } = useNewOrEditBeneficiary()
+const { submitting, listNextPag, listBeneficiaryAchPanama, fetchBeneficiariesAchPanama, getBeneficiaryStatusColor } =
+  useBeneficiary()
+
+const { setDataBeneficiary } = useNewBeneficiaryPanama()
 
 const emit = defineEmits(['select'])
 
 const loadMore = async () => {
-  //console.log(route.params.type)
-  if (route.params.type === 'domestic') {
-    await fetchBeneficiaries(BeneficiaryType.DOMESTIC)
-  } else {
-    await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL)
-  }
+  await fetchBeneficiariesAchPanama()
 }
 
 onMounted(async () => {

@@ -42,5 +42,8 @@ export const useBalanceWalletStore = defineStore('balanceWallet', {
         }
       }
     },
+    isExistsWallet(assetCode: string): boolean {
+      return this.wallets.some(w => w.assetCode === assetCode)
+    },
   },
 })

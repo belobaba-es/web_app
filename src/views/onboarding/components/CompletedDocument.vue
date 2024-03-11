@@ -20,8 +20,9 @@
 
 <script setup lang="ts">
 import Button from 'primevue/button'
-import router from '../../../router'
+import router from '../../../router/router'
 import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n({ useScope: 'global' })
 
 const redirectToHome = () => {
@@ -43,6 +44,7 @@ const redirectToHome = () => {
       font-size: 38px;
       margin-top: 20px;
     }
+
     .sub-title {
       font-size: 28px;
     }

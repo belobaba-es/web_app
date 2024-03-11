@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import router from '../../../router'
+import router from '../../../router/router'
 import { AccountStatus } from '../../../types/accountStatus.enum'
 import { useAuth } from '../../../composables/useAuth'
 import checkImage from '../../../assets/icons/check.svg'
@@ -65,6 +65,7 @@ const getCompletionText = () => {
       font-size: 38px;
       margin-top: 20px;
     }
+
     .sub-title {
       font-size: 28px;
     }

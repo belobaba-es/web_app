@@ -3,6 +3,7 @@ import { Pagination } from '../../../types/pagination'
 export enum BeneficiaryType {
   INTERNATIONAL = 'INTERNATIONAL',
   DOMESTIC = 'DOMESTIC',
+  ACH_PAD = 'ACH_PAD',
 }
 
 export enum CounterpartyType {
@@ -39,6 +40,18 @@ export type Beneficiary = {
     email: string
   }
   status: CounterpartyStatus
+}
+
+export type BeneficiaryAchPanama = {
+  accountDestinationNumber: string
+  bankName: string
+  holderEmail: string
+  holderId: string
+  holderName: string
+  productType: productType
+
+  status: CounterpartyStatus
+  isInternal: string
 }
 
 export enum CounterpartyType {
@@ -87,6 +100,28 @@ export interface BeneficiaryAsset {
     name: string
     country: string
   }
+}
+
+export type NewBeneficiaryPanama = {
+  achInstructions: RegisterCounterpartyAchPanama
+  counterpartyId?: string
+  isInternal: string
+}
+
+export type RegisterCounterpartyAchPanama = {
+  accountDestinationNumber: string
+  bankName: string
+  holderEmail: string
+  holderId: string
+  holderName: string
+  productType: productType
+}
+
+export type productType = {
+  PACA: string
+  PACC: string
+  LOAN: string
+  ICCP: string
 }
 
 export type NewBeneficiary = {

@@ -68,28 +68,42 @@ export const useNewOrEditBeneficiary = () => {
     typeBeneficiary.value = 'INTERNATIONAL'
   }
 
-  const itemSteps = ref([
-    {
-      label: t('informationAccountText'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
-    },
-    {
-      label: t('beneficiaryInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
-    },
-    {
-      label: t('bankAccountInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
-    },
-  ])
+  const itemSteps = ref<Array<{ label: string; to: string }>>([])
 
-  if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
-    const nuevoItem = {
-      label: t('intermediaryBank'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
-    }
-
-    itemSteps.value.splice(itemSteps.value.length - 1, 0, nuevoItem)
+  if (typeBeneficiary.value.toUpperCase() === 'DOMESTIC') {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      }
+    )
+  } else {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      },
+      {
+        label: t('intermediaryBank'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+      }
+    )
   }
 
   const nextPage = (event: any) => {

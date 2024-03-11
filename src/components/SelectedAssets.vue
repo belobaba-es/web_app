@@ -29,12 +29,12 @@
     @update:visible="modal($event)"
     closeIcon="pi pi-times-circle"
     @selected-asset="selectedAsset"
-    :asset-classification-filter="AssetClassificationFilter.ALL"
+    :asset-classification-filter="assetClassificationFilter"
   />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineProps, ref } from 'vue'
 import { Asset, AssetClassification, AssetClassificationFilter } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from './ModalAssetSelector.vue'
@@ -47,6 +47,10 @@ const networkAddress = ref('')
 const isFiat = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['selectedAsset'])
+
+const props = defineProps<{
+  assetClassificationFilter: AssetClassificationFilter
+}>()
 
 const modal = (b: boolean) => {
   showModal.value = b
