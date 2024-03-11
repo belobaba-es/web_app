@@ -2,6 +2,8 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { ref } from 'vue'
 import { Beneficiary, BeneficiaryAchPanama, BeneficiaryType, CounterpartyStatus } from '../types/beneficiary.interface'
 import { UserAccount } from '../types/account'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -10,6 +12,8 @@ export enum TypeBeneficiaryInternal {
 
 export const useBeneficiary = () => {
   const listBeneficiary = ref<Beneficiary[]>([])
+  const { t } = useI18n({ useScope: 'global' })
+  const toast = useToast()
   const listBeneficiaryAchPanama = ref<BeneficiaryAchPanama[]>([])
   const listNextPag = ref(1)
   const submitting = ref(false)
@@ -29,13 +33,22 @@ export const useBeneficiary = () => {
 
   const fetchBeneficiariesAchPanama = async () => {
     submitting.value = true
-    new BeneficiaryService().listBeneficiaryAchPanama().then(resp => {
-      resp.results.forEach((element: any) => {
-        listBeneficiaryAchPanama.value.push(element)
+    try {
+      new BeneficiaryService().listBeneficiaryAchPanama().then(resp => {
+        resp.results.forEach((element: any) => {
+          listBeneficiaryAchPanama.value.push(element)
+        })
+        submitting.value = false
+        listNextPag.value = Number(resp.nextPag)
       })
-      submitting.value = false
-      listNextPag.value = Number(resp.nextPag)
-    })
+    } catch (error) {
+      toast.add({
+        severity: 'error',
+        summary: 'Something went wrong',
+        detail: 'Please try again later',
+        life: 4000,
+      })
+    }
   }
 
   const fetchBeneficiariesAssets = async () => {

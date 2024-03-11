@@ -18,9 +18,6 @@
           <p class="text-2xl font-medium p-3">{{ t('withdrawFiat') }}</p>
           <p class="text-base">{{ t('withdrawFiatSelectMsg') }}</p>
 
-          <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/fiat/domestic" />
-          <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/fiat" />
-
           <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/usa/fiat/domestic" />
 
           <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/usa/fiat/international" />
@@ -33,7 +30,7 @@
           <p class="text-2xl font-medium p-3">{{ t('withdrawCrypto') }}</p>
           <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
 
-          <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto/other" />
+          <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/noba/other" />
         </div>
       </div>
     </section>

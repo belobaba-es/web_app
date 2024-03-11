@@ -3,16 +3,15 @@
     <p class="text-3xl font-medium mb-4">
       <span class="text-primary">Your transfer has been successful</span>
     </p>
-
-    <!--      transaction summary-->
+    
     <div class="col-12">
       <span class="mt-4">transaction summary</span>
       <Divider></Divider>
     </div>
 
     <InternationalTransferDetail
-      :realName="props.formData.beneficiary.achInstructions.holderName"
-      :account="props.formData.beneficiary.achInstructions.accountDestinationNumber"
+      :realName="props.formData.beneficiary.holderName"
+      :account="props.formData.beneficiary.accountDestinationNumber"
       :amount="props.formData.amount"
       :amountFee="props.formData.amount"
       :fee="props.formData.fee"
@@ -56,8 +55,6 @@ const props = defineProps<{
 
 const { getUserId, getUserName } = useAuth()
 
-console.log('formData', props.formData)
-
 const goToWithdrawIndex = () => {
   window.location.href = '/withdraw/panama'
 }
@@ -75,8 +72,8 @@ const generatePDFTransactionReceipt = async () => {
   const formattedDate = formatter.format(date)
 
   transactionPDF[t('userName')] = `${getUserName()}`
-  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.achInstructions.accountDestinationNumber}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.achInstructions.holderName}`
+  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountDestinationNumber}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.holderName}`
   transactionPDF[t('amount')] = `${props.formData.amount} PAD`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`

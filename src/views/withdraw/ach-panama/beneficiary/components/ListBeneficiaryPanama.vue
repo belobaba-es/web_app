@@ -2,7 +2,7 @@
   <div class="container">
     <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiaryAchPanama">
       <div class="col-12 sm:col-12 md:col-8 lg:col-11 xl:col-11">
-        <span class="ml-4 mt-2 mb-2">{{ item.achInstructions.holderName }}</span>
+        <span class="ml-4 mt-2 mb-2">{{ item.holderName }}</span>
         <span class="ml-4 mt-2 mb-2" :style="{ color: getBeneficiaryStatusColor(item.status) }">{{ item.status }}</span>
       </div>
       <div class="col-2 sm:col-2 md:col-2 lg:col-2 xl:col-2">

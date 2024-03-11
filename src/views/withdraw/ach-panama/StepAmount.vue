@@ -7,11 +7,11 @@
 
     <div class="grid col-12 mb-4">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="title-beneficiary text-capitalize">{{ formData.beneficiary.achInstructions.holderName }}</p>
+        <p class="title-beneficiary text-capitalize">{{ formData.beneficiary.holderName }}</p>
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <p class="text-base">{{ formData.beneficiary.achInstructions.accountDestinationNumber }}</p>
+        <p class="text-base">{{ formData.beneficiary.accountDestinationNumber }}</p>
       </div>
     </div>
 
@@ -109,11 +109,9 @@ import { WithdrawalPurpose } from '../../../shared/propuseWithdrawal'
 import Dropdown from 'primevue/dropdown'
 import { useAuth } from '../../../composables/useAuth'
 import { useTransactionPab } from './composable/useTransactionPab'
-import { onMounted, ref } from 'vue'
-import { useBalanceWallet } from '../../../composables/useBalanceWallet'
+import { ref } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
-const { getBalanceByCode, getWalletByAssetCode } = useBalanceWallet()
 const { transactionData, events, validateField, amountFee, balance, amount, fee } = useTransactionPab()
 const asset = ref('')
 const props = defineProps<{

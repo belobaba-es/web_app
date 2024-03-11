@@ -43,14 +43,13 @@ export type Beneficiary = {
 }
 
 export type BeneficiaryAchPanama = {
-  achInstructions: {
-    accountDestinationNumber: string
-    bankName: string
-    holderEmail: string
-    holderId: string
-    holderName: string
-    productType: productType
-  }
+  accountDestinationNumber: string
+  bankName: string
+  holderEmail: string
+  holderId: string
+  holderName: string
+  productType: productType
+
   status: CounterpartyStatus
   isInternal: string
 }
