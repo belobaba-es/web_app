@@ -281,7 +281,7 @@
   "opportunityWithActiveAccount": "Oportunindades con cuenta activa",
   "affiliateLink": "Tu link de afiliado",
   "twoFactor": "Autenticación en dos (2) pasos",
-  "enableTwoFactor": "Habilia la autenticación en dos (2) pasos (2FA)",
+  "enableTwoFactor": "Habilita la autenticación en dos (2) pasos (2FA)",
   "authenticatorApp": "Setup authenticator app",
   "downloadYourRecoveryCodes": "Descarga tus códigos de recuperación",
   "textDownloadRecoveryCodes": "Puede usar códigos de recuperación como un segundo factor de autenticación en caso de que pierda el acceso a su dispositivo. nosotros recomendamos guardarlos en un administrador de contraseñas seguro como 1Password, Authy o Keeper",

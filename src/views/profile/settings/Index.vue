@@ -1,10 +1,10 @@
 <template>
   <TabView class="mt-5 mb-5">
-    <TabPanel :header="t('twoFactor')">
-      <TwoFactorSettings v-if="!twoFactorIsActive()" />
+    <!--    <TabPanel :header="t('twoFactor')">-->
+    <!--      <TwoFactorSettings v-if="!twoFactorIsActive()" />-->
 
-      <TwoFactorActiveSuccess v-if="twoFactorIsActive()" />
-    </TabPanel>
+    <!--      <TwoFactorActiveSuccess v-if="twoFactorIsActive()" />-->
+    <!--    </TabPanel>-->
     <TabPanel :header="t('changePassword')">
       <ChangePassword />
     </TabPanel>
@@ -26,9 +26,7 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import ChangePassword from './ChangePassword.vue'
 import Lang from '../../../components/Lang.vue'
-import TwoFactorSettings from './twofactor/TwoFactorSettings.vue'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
-import TwoFactorActiveSuccess from './twofactor/TwoFactorActiveSuccess.vue'
 
 const { t } = useI18n({
   useScope: 'global',
