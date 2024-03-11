@@ -209,7 +209,7 @@
     </div>
 
     <!-- Panama   -->
-    <div v-if="active == 2" class="mt-2">
+    <div v-if="active == 2" v-show="isExistsWallet('USD_PA')" class="mt-2">
       <div class="flex justify-content-start align-items-center">
         <i class="pi pi-exclamation-triangle"></i>
         <p class="grayed-text-warning">{{ t('depositAccountPanama') }}</p>
@@ -267,24 +267,24 @@
       </div>
       <Divider type="solid" />
 
-      <!--      <div class="grid mt-2">-->
-      <!--        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">-->
-      <!--          <Button-->
-      <!--            icon="pi pi-angle-right"-->
-      <!--            iconPos="right"-->
-      <!--            :loading="submitting"-->
-      <!--            class="p-button download-btn"-->
-      <!--            :label="t('downloadPdf')"-->
-      <!--            @click="generatePdfACHlData"-->
-      <!--          />-->
-      <!--        </div>-->
-      <!--      </div>-->
+      <div class="grid mt-2">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
+          <Button
+            icon="pi pi-angle-right"
+            iconPos="right"
+            :loading="submitting"
+            class="p-button download-btn"
+            :label="t('downloadPdf')"
+            @click="generatePdfACHlData"
+          />
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Divider from 'primevue/divider'
 import TabMenu from 'primevue/tabmenu'
 import Button from 'primevue/button'
@@ -292,17 +292,12 @@ import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
 
-import logo from '../../assets/img/logo-login.png'
+import logo from '../../assets/img/logo.png'
 
 import generatePdf from '../../shared/generatePdf'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '../../composables/useAuth'
-
-interface tabItem {
-  label: string
-  icon?: string
-  to?: string
-}
+import { useBalanceWallet } from '../../composables/useBalanceWallet'
 
 const toast = useToast()
 
@@ -310,19 +305,19 @@ const submitting = ref(false)
 
 const { t } = useI18n({ useScope: 'global' })
 const { getUserName } = useAuth()
+const { isExistsWallet } = useBalanceWallet()
 
 const username = getUserName()
 
-const dataBank = ref<BankData[]>([])
+const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
 const bankPanama = ref()
 
 const bankNationalPdf: any = {}
-const bankACHPdf: any = {}
 const bankInternationalPdf: any = {}
-const title = t('namePdfDepositFiatDomestic')
-const titleInternacional = t('namePdfDepositFiatInternational')
+const bankACHPdf: any = {}
+const title = t('titleDespositFiat')
 const footerPdf = t('footerPdfNobaData')
 
 new FiatService()
@@ -331,9 +326,7 @@ new FiatService()
     submitting.value = false
     dataBank.value = data
 
-    if ('domestic' in dataBank.value) {
-      bankNational.value = dataBank.value.domestic
-    }
+    bankNational.value = dataBank.value.domestic
 
     bankNationalPdf[t('depositBankName') + ':'] = bankNational.value.bankName
     bankNationalPdf['ABA Fedwire:'] = bankNational.value.routingNumber
@@ -344,9 +337,7 @@ new FiatService()
     bankNationalPdf[t('bankAddress') + ':'] = bankNational.value.bankAddress
     bankNationalPdf[t('bankPhone') + ':'] = bankNational.value.bankPhone
 
-    if ('international' in dataBank.value) {
-      bankInternational.value = dataBank.value.international
-    }
+    bankInternational.value = dataBank.value.international
 
     bankInternationalPdf[t('depositBankName') + ':'] = bankInternational.value.bankName
     bankInternationalPdf[t('swiftCode') + ':'] = bankInternational.value.swiftCode
@@ -357,9 +348,7 @@ new FiatService()
     bankInternationalPdf[t('bankAddress') + ':'] = bankInternational.value.bankAddress
     bankInternationalPdf[t('bankPhone') + ':'] = bankInternational.value.bankPhone
 
-    if ('achInstructions' in dataBank.value) {
-      bankPanama.value = dataBank.value.achInstructions
-    }
+    bankPanama.value = dataBank.value.achInstructions
 
     bankACHPdf[t('fullName') + ':'] = bankPanama.value.holderName
     bankACHPdf[t('emailLabel') + ':'] = bankPanama.value.holderEmail
@@ -373,28 +362,44 @@ new FiatService()
 
 const active = ref<number>(0)
 
-const menuItems = ref<tabItem[]>([
+const menuItems = ref<{ label: string }[]>([
   {
-    label: 'US Domestic'
+    label: 'US Domestic',
   },
   {
-    label: 'Internacional'
-  }
-  // {
-  //   label: 'ACH Panama'
-  // }
+    label: 'Internacional',
+  },
 ])
+
+onMounted(() => {
+  if (isExistsWallet('USD_PA')) {
+    menuItems.value = [
+      {
+        label: 'US Domestic',
+      },
+      {
+        label: 'Internacional',
+      },
+      {
+        label: 'ACH Panama',
+      },
+    ]
+  }
+})
 
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
-
-  generatePdf(nameFile, logo, title, bankNationalPdf)
+  generatePdf(nameFile, logo, title, bankNationalPdf, footerPdf)
 }
 
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
+  generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
+}
 
-  generatePdf(nameFile, logo, titleInternacional, bankInternationalPdf)
+const generatePdfACHlData = () => {
+  const nameFile = `${username} ${t('namePdfDepositFiatPanamaACH')}`
+  generatePdf(nameFile, logo, title, bankACHPdf, footerPdf)
 }
 
 const copyToClipboard = (text: string) => {
@@ -402,16 +407,10 @@ const copyToClipboard = (text: string) => {
     toast.add({
       severity: 'info',
       detail: t('textCopySuccessful'),
-      life: 4000
+      life: 4000,
     })
   })
 }
-
-//TODO CUANDO SE HAGA DEPLOY DE ACH PANAMA HABILITAR ESTA FUNCION
-// const generatePdfACHlData = () => {
-//   const nameFile = `${username} ${t('namePdfDepositFiatPanamaACH')}`
-//   generatePdf(nameFile, logo, title, bankACHPdf, footerPdf)
-// }
 </script>
 
 <style lang="css">
