@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isCompleted" class="formgrid grid mt-5 mb-5">
     <div class="col-12">
-      <span class="mt-4">{{ t('Confirm wire information') }}</span>
+      <span class="mt-4">{{ t('transactionConfirmation') }}</span>
       <Divider></Divider>
     </div>
     <div>
@@ -12,13 +12,13 @@
     <div class="col-12 field p-fluid">
       <div class="field col-12">
         <label for="name1">{{ t('Amount') }}</label>
-        <p class="green-color">{{ formData.amount }} {{ formData.symbol }}</p>
+        <p class="green-color">{{ formData.amount }} {{ formData.assetSymbol }}</p>
       </div>
       <div class="field col-12">
         <small>{{ t('fee') }}</small>
 
         <p class="green-color mt-0">
-          <small>{{ formData.fee }} {{ formData.symbol }}</small>
+          <small>{{ formData.fee }} {{ formData.assetSymbol }}</small>
         </p>
       </div>
     </div>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-12">
-      <p class="font-medium green-color">{{ formData.total }} {{ assetSymbol }}</p>
+      <p class="font-medium green-color">{{ formData.total }} {{ formData.assetSymbol }}</p>
     </div>
 
     <Button
@@ -71,6 +71,7 @@ import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.
 import Dialog from 'primevue/dialog'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import showMessage from '../../../../shared/showMessageArray'
+import { AssetClassification } from '../../../deposit/types/asset.interface'
 
 const visibleModalVeryCodeTwoFactor = ref(false)
 
@@ -84,7 +85,6 @@ const isCompleted = ref(false)
 const props = defineProps<{
   formData: any
 }>()
-const assetSymbol = props.formData.symbol
 const beneficiary = props.formData.beneficiary
 const emit = defineEmits(['complete'])
 const router = useRouter()
@@ -108,67 +108,78 @@ const showModalVeryCodeTwoFactorOrMakeTransaction = () => {
   }
 }
 
-function makeTransaction() {
+async function makeTransaction() {
   submitting.value = true
 
-  switch (route.params.type) {
-    case 'fiat':
-      new WithdrawService()
-        .makeFiatInternalTransfer({
-          amount: props.formData.amount,
-          clientIdDestination: props.formData.beneficiary.clientId,
-          reference: props.formData.reference,
-        })
-        .then((res: any) => {
-          transactionId.value = res.data.transactionId
-          submitting.value = false
-          isCompleted.value = true
-        })
-        .catch(e => {
-          submitting.value = false
-
-          toast.add({
-            severity: 'error',
-            summary: t('somethingWentWrong'),
-            detail: e.response.data.message,
-            life: 4000,
-          })
-        })
-
-      break
-    case 'crypto':
-      new WithdrawService()
-        .makeAssetInternalTransfer({
-          clientIdDestination: props.formData.beneficiary.clientId,
-          amount: props.formData.amount,
-          reference: props.formData.reference,
-          assetCode: props.formData.assetCode,
-          purpose: props.formData.purpose,
-        })
-        .then((res: any) => {
-          transactionId.value = res.data.transactionId
-          submitting.value = false
-          isCompleted.value = true
-        })
-        .catch(e => {
-          submitting.value = false
-
-          if (e.response.data.message) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: e.response.data.message,
-              life: 4000,
-            })
-            return
-          }
-
-          showMessage(toast, e.response.data)
-        })
-      break
-    default:
-      submitting.value = false
+  if (props.formData.assetClassification === AssetClassification.FIAT) {
+    await fiatTransaction()
   }
+
+  if (props.formData.assetClassification !== AssetClassification.FIAT) {
+    await cryptoTransaction()
+  }
+}
+
+const fiatTransaction = async () => {
+  await new WithdrawService()
+    .makeFiatInternalTransfer({
+      clientIdDestination: props.formData.beneficiary.clientId,
+      amount: props.formData.amount,
+      reference: props.formData.reference,
+      assetCode: props.formData.assetCode,
+      purpose: props.formData.purpose,
+    })
+    .then((res: any) => {
+      transactionId.value = res.data.transactionId
+      handleSuccess(res.message, res.data.transactionId)
+    })
+    .catch(e => {
+      handleError(e)
+    })
+}
+const cryptoTransaction = async () => {
+  await new WithdrawService()
+    .makeAssetInternalTransfer({
+      clientIdDestination: props.formData.beneficiary.clientId,
+      amount: props.formData.amount,
+      reference: props.formData.reference,
+      assetCode: props.formData.assetCode,
+      purpose: props.formData.purpose,
+    })
+    .then((res: any) => {
+      handleSuccess(res.message, res.data.transactionId)
+    })
+    .catch(e => {
+      handleError(e)
+    })
+}
+
+const handleSuccess = (message: any, transactionId: string) => {
+  submitting.value = false
+  isCompleted.value = true
+
+  toast.add({
+    severity: 'success',
+    summary: t('transactionCompleted'),
+    detail: message,
+    life: 4,
+  })
+}
+
+const handleError = (e: any) => {
+  submitting.value = false
+
+  if (e.response.data.message) {
+    toast.add({
+      severity: 'error',
+      summary: t('somethingWentWrong'),
+      detail: e.response.data.message,
+      life: 4,
+    })
+    return
+  }
+
+  showMessage(toast, e.response.data)
 }
 </script>
 

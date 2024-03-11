@@ -13,10 +13,11 @@
     <div class="formgrid grid mt-3">
       <div class="col-12">
         <span class="text-xl txt-border-bottom mb-2 black-bold-text">{{ t('newWallet') }}</span>
-        <div><Divider></Divider></div>
+        <div>
+          <Divider></Divider>
+        </div>
       </div>
       <div class="field col-12 mt-4">
-        <!--                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />-->
         <SelectedAssets @selectedAsset="selectAsset" />
       </div>
       <div class="field col-12" style="display: grid">
@@ -98,6 +99,7 @@ const selectAsset = (asset: Asset) => {
   font-weight: 800;
   color: black;
 }
+
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
 }

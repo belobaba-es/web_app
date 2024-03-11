@@ -17,8 +17,8 @@
 import { ref } from 'vue'
 import Button from 'primevue/button'
 import NewWallet from '../views/deposit/components/NewWallet.vue'
-import { Asset, PaymentAddress, PaymentAddressResponse } from '../views/deposit/types/asset.interface'
-import { AssetsService } from '../views//deposit/services/assets'
+import { Asset, PaymentAddressResponse } from '../views/deposit/types/asset.interface'
+import { AssetsService } from '../views/deposit/services/assets'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -103,6 +103,7 @@ const onCreateAddress = (event: any) => {
     width: 80%;
   }
 }
+
 .container-btn-add-wallet {
   display: flex;
   justify-content: center;

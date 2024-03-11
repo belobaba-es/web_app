@@ -28,6 +28,12 @@ export class BeneficiaryService {
     )
   }
 
+  async listBeneficiaryInternalV2(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_V2).get<BeneficiariesInternalResponse>(
+      `beneficiary/internal/${nextPag === 0 ? 1 : nextPag}`
+    )
+  }
+
   async listBeneficiaryAchPanama(nextPag = 1) {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(
       `beneficiary/ach/pab/?type=EXTERNAL&page=${nextPag}`

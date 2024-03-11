@@ -4,6 +4,13 @@
     <FinishRegisterWarningBar />
 
     <p class="text-3xl font-medium">{{ t('withdraw') }}</p>
+
+    <section class="container-center">
+      <div class="grid justify-content-center">
+        <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/asset" />
+      </div>
+    </section>
+
     <section class="container-center">
       <div class="grid justify-content-center">
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center line">
@@ -11,6 +18,7 @@
           <p class="text-2xl font-medium p-3">{{ t('withdrawFiat') }}</p>
           <p class="text-base">{{ t('withdrawFiatSelectMsg') }}</p>
 
+          <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/fiat/domestic" />
           <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/fiat" />
 
           <CardButon class="m-4" :label="t('domesticWire')" to="/withdraw/usa/fiat/domestic" />
@@ -24,8 +32,6 @@
           <img src="../../assets/icons/blockchain.svg" alt="" srcset="" />
           <p class="text-2xl font-medium p-3">{{ t('withdrawCrypto') }}</p>
           <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
-
-          <CardButon class="m-4 crypto" :label="t('betweenNOBACrypto')" to="/withdraw/noba/crypto" />
 
           <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto/other" />
         </div>
