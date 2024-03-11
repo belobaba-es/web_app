@@ -30,7 +30,7 @@
           <p class="text-2xl font-medium p-3">{{ t('withdrawCrypto') }}</p>
           <p class="text-base">{{ t('withdrawCryptoSelectMsg') }}</p>
 
-          <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/noba/other" />
+          <CardButon class="m-4" :label="t('otherPlatformCrypto')" to="/withdraw/crypto/other" />
         </div>
       </div>
     </section>

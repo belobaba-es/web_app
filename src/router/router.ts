@@ -19,6 +19,7 @@ import { useAuth } from '../composables/useAuth'
 import { routerUSA } from './routerUSA'
 import { routerPanama } from './routerPanama'
 import { routerInternalTransfer } from './routerInternalTransfer'
+import { routerCrypto } from './routerCrypto'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -99,6 +100,10 @@ const routes: RouteRecordRaw[] = [
         meta: {
           noCache: true,
         },
+      },
+      {
+        path: '/withdraw/crypto/',
+        children: routerCrypto,
       },
       {
         path: '/withdraw/panama/',

@@ -2,8 +2,6 @@ import WithdrawFiatDomestic from '../views/withdraw/fiat/DomesticAndInternationa
 import WithdrawFiatStepAmount from '../views/withdraw/components/WitdrawFiat/StepAmount.vue'
 import WithdrawFiatStepConfirmation from '../views/withdraw/components/WitdrawFiat/StepConfirmation.vue'
 import StepSuccessful from '../views/withdraw/components/InternalWithdraw/StepSuccessful.vue'
-import OtherPlatFormsWallets from '../views/withdraw/crypto/OtherPlatformsWallets.vue'
-import WithdrawOtherPlatformsStepConfirmation from '../views/withdraw/components/OtherPlatformsWallets/StepConfirmation.vue'
 
 export const routerUSA = [
   {
@@ -71,27 +69,5 @@ export const routerUSA = [
   {
     path: 'fiat/international/successful',
     component: StepSuccessful,
-  },
-  {
-    path: 'crypto/other',
-    component: OtherPlatFormsWallets,
-    children: [
-      {
-        path: '',
-        component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAccounts.vue'),
-      },
-      {
-        path: 'amount',
-        component: () => import('../views/withdraw/components/OtherPlatformsWallets/StepAmount.vue'),
-      },
-      {
-        path: 'confirmation',
-        component: WithdrawOtherPlatformsStepConfirmation,
-      },
-    ],
-  },
-  {
-    path: 'crypto/other/add-beneficiary',
-    component: () => import('../views/withdraw/crypto/AddBeneficiary.vue'),
   },
 ]
