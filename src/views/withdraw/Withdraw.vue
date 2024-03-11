@@ -22,7 +22,7 @@
 
           <CardButon class="m-4" :label="t('internationalWire')" to="/withdraw/usa/fiat/international" />
 
-          <CardButon class="m-4" :label="t('ACH Panama')" to="/withdraw/panama" />
+          <CardButon v-show="isExistsWallet('USD_PA')" class="m-4" :label="t('ACH Panama')" to="/withdraw/panama" />
         </div>
 
         <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 text-center">
@@ -45,9 +45,12 @@ import { useI18n } from 'vue-i18n'
 import CardButon from './components/CardButon.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 import CreditCardBanner from '../../components/CreditCardBanner.vue'
+import { useBalanceWallet } from '../../composables/useBalanceWallet'
 
 const { t } = useI18n({ useScope: 'global' })
 const active = ref<number>(1)
+
+const { isExistsWallet } = useBalanceWallet()
 </script>
 
 <style lang="scss">

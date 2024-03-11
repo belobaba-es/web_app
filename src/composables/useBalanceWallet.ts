@@ -8,6 +8,7 @@ import { getBalanceWallets } from '../views/deposit/services/fetchAsset'
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
   const balanceWalletStore = useBalanceWalletStore()
+  const { isExistsWallet } = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
   const { getClientId } = useAuth()
 
@@ -70,6 +71,7 @@ export const useBalanceWallet = () => {
   }
 
   return {
+    isExistsWallet,
     calculateBalance,
     fetchBalanceWallets,
     getBalanceByCode,

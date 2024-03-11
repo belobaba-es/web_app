@@ -209,7 +209,7 @@
     </div>
 
     <!-- Panama   -->
-    <div v-if="active == 2" class="mt-2">
+    <div v-if="active == 2" v-show="isExistsWallet('USD_PA')" class="mt-2">
       <div class="flex justify-content-start align-items-center">
         <i class="pi pi-exclamation-triangle"></i>
         <p class="grayed-text-warning">{{ t('depositAccountPanama') }}</p>
@@ -284,7 +284,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Divider from 'primevue/divider'
 import TabMenu from 'primevue/tabmenu'
 import Button from 'primevue/button'
@@ -297,12 +297,7 @@ import logo from '../../assets/img/logo.png'
 import generatePdf from '../../shared/generatePdf'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '../../composables/useAuth'
-
-interface tabItem {
-  label: string
-  icon?: string
-  to?: string
-}
+import { useBalanceWallet } from '../../composables/useBalanceWallet'
 
 const toast = useToast()
 
@@ -310,6 +305,7 @@ const submitting = ref(false)
 
 const { t } = useI18n({ useScope: 'global' })
 const { getUserName } = useAuth()
+const { isExistsWallet } = useBalanceWallet()
 
 const username = getUserName()
 
@@ -366,17 +362,30 @@ new FiatService()
 
 const active = ref<number>(0)
 
-const menuItems = ref<tabItem[]>([
+const menuItems = ref<{ label: string }[]>([
   {
     label: 'US Domestic',
   },
   {
     label: 'Internacional',
   },
-  {
-    label: 'ACH Panama',
-  },
 ])
+
+onMounted(() => {
+  if (isExistsWallet('USD_PA')) {
+    menuItems.value = [
+      {
+        label: 'US Domestic',
+      },
+      {
+        label: 'Internacional',
+      },
+      {
+        label: 'ACH Panama',
+      },
+    ]
+  }
+})
 
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
