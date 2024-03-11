@@ -15,7 +15,10 @@
     <div class="formgrid grid mt-4 p-3">
       <div class="col-8">
         <div class="field">
-          <SelectedAssets @selectedAsset="selectAsset" />
+          <SelectedAssets
+            @selectedAsset="selectAsset"
+            :asset-classification-filter="AssetClassificationFilter.CRYPTO_STABLE_COIN"
+          />
         </div>
       </div>
 
@@ -181,6 +184,7 @@ import { BeneficiaryService } from '../services/beneficiary'
 import { useRouter } from 'vue-router'
 import { BeneficiaryAsset } from '../types/beneficiary.interface'
 import showMessageArray from '../../../shared/showMessageArray'
+import { AssetClassificationFilter } from '../../deposit/types/asset.interface'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
