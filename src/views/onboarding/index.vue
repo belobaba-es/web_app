@@ -1,6 +1,6 @@
 <template>
   <section class="section-main mt-sm-5 mt-lg-0">
-    <div class="flex align-items-center" style="height: 500px">
+    <div class="flex align-items-center" style="height: 100%; paddingBottom: 2rem">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
           <h1 class="text-1xl font-semi-bold">{{ t('onboardingTitle') }}</h1>

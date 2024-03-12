@@ -1,5 +1,5 @@
 <template>
-  <div class="container-new-wallet">
+  <div class="container-new-wallet" style="height: 172px; paddingBottom: 2rem">
     <div class="grid">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <p class="text-btn-new-wallet font-semi-bold mb-3">{{ t('textNewWalletAddress') }}</p>

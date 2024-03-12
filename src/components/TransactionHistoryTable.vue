@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main">
+  <section class="section-main" style="height: 100%; paddingBottom: 5rem">
     <FinishRegisterWarningBar v-if="!props.isDashboard" />
 
     <!-- <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p> -->
