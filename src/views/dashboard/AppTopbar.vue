@@ -28,7 +28,7 @@ import SplitButton from 'primevue/splitbutton'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/logo-blanco.png'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
 
