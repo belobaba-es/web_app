@@ -4,7 +4,7 @@
 
     <h2 class="text-3xl font-bold ml-6">{{ t('deposit') }}</h2>
 
-    <div class="flex align-items-center" style="height: 500px">
+    <div class="flex align-items-center" style="height: 600px; paddingBottom: 5rem">
       <div class="grid justify-content-center w-100">
         <div class="col-12 text-center mb-5">
           <span class="text-center txt-border-bottom text-2xl font-semi-bold"
