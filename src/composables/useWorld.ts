@@ -42,6 +42,7 @@ export const useWorld = () => {
   const statesTwo = ref<State[]>([])
 
   const country = ref<Country | null>(null)
+  const countriesLayer = ref<CountryAllowed | null>(null)
   const state = ref<State | null>(null)
 
   const loadingCountriesField = ref<boolean>(false)
@@ -54,11 +55,16 @@ export const useWorld = () => {
   const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
     loadingCountriesField.value = true
 
+    // Fetch countries layer
+    new WorldService().getCountryLayer().then((resp: any) => {
+      countriesLayer.value = resp
+      console.log('countriesLayer', countriesLayer.value)
+    })
+
     new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
       if (shouldDeleteBannedCountries) {
         countries.value = deleteUnavailableCountries(resp)
-
       }
 
       countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
@@ -92,7 +98,6 @@ export const useWorld = () => {
   }
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
-
     showCombo.value = false
 
     if (event.value == 'US') {
@@ -107,9 +112,7 @@ export const useWorld = () => {
   }
 
   const deleteUnavailableCountries = (countries: Country[]): Country[] => {
-    return countries
-      .filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
-
+    return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
   }
 
   return {
@@ -120,7 +123,7 @@ export const useWorld = () => {
     statesTwo,
     statesInputIsEmpty,
     countriesInputIsEmpty,
-    loadingCountriesField: loadingCountriesField,
+    loadingCountriesField,
     loadingStatesField,
     loadingStatesFieldTwo,
     country,
@@ -134,5 +137,6 @@ export const useWorld = () => {
     onChangeCountryHandler,
     showCombo,
     onChangeStateHandler,
+    countriesLayer,
   }
 }

@@ -127,7 +127,6 @@
 
       <br />
 
-
       <div class="grid col-12">
         <p class="mt-4 mb-0 text-uppercase">{{ t('employmentInformation') }}</p>
         <Divider class="mt-0"></Divider>
@@ -171,7 +170,7 @@
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingPersonal.country"
-              :options="countries"
+              :options="countriesLayer"
               optionLabel="name"
               option-value="country_code"
               filter
@@ -273,6 +272,7 @@ const {
   countriesInputIsEmpty,
   onChangeCountryHandler,
   calling_code,
+  countriesLayer,
 } = useWorld()
 
 const { employmentStatusList } = useEmployment()
@@ -289,10 +289,12 @@ onMounted(async () => {
 .phone-input {
   margin-top: 7px;
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 .btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;

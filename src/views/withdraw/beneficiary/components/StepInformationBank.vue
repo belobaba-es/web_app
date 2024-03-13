@@ -2,14 +2,14 @@
   <div class="col-12 md:col-8 mt-5">
     <p class="mb-0 text-uppercase">{{ t('bankAddress') }}</p>
     <Divider class="mt-0"></Divider>
-
+    
     <div class="grid mt-2">
       <div class="field col-12">
         <label>{{ t('countryLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationBank.address.country"
-            :options="allowed_countries"
+            :options="countriesLayer || allowed_countries"
             filter
             optionLabel="name"
             option-value="country_code"
@@ -95,8 +95,15 @@ const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 const { formObject, typeBeneficiary, saveBeneficiary, submitting } = useNewOrEditBeneficiary()
-const { allowed_countries, loadingCountriesField, showCombo, state_us, onChangeCountryHandler, fetchCountries } =
-  useWorld()
+const {
+  allowed_countries,
+  loadingCountriesField,
+  showCombo,
+  state_us,
+  onChangeCountryHandler,
+  fetchCountries,
+  countriesLayer,
+} = useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
