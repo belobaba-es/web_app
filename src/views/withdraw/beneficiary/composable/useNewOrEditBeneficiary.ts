@@ -7,6 +7,7 @@ import { BeneficiaryService } from '../../services/beneficiary'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
 
+const routingNumberOrIBAN = ref<string>('')
 const isUpdateBeneficiary = ref<boolean>(false)
 const typeBeneficiary = ref<string>('')
 const submitting = ref<boolean>(false)
@@ -127,9 +128,14 @@ export const useNewOrEditBeneficiary = () => {
 
   const setDataBeneficiary = (beneficiary: any) => {
     isUpdateBeneficiary.value = true
-    console.log(beneficiary)
     formObject.value = beneficiary
     formObject.value.counterpartyId = beneficiary.counterpartyId
+
+    if (beneficiary.informationBank.routingNumber) {
+      routingNumberOrIBAN.value = beneficiary.informationBank.routingNumber
+    } else {
+      routingNumberOrIBAN.value = beneficiary.informationBank.iban
+    }
 
     router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
   }
@@ -182,6 +188,7 @@ export const useNewOrEditBeneficiary = () => {
     itemSteps,
     typeBeneficiary,
     formObject,
+    routingNumberOrIBAN,
     setDataBeneficiary,
     saveBeneficiary,
     complete,

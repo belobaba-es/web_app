@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -49,11 +48,8 @@ const toast = useToast()
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { typeBeneficiary } = useNewOrEditBeneficiary()
+const { formObject, typeBeneficiary, routingNumberOrIBAN } = useNewOrEditBeneficiary()
 
-const routingNumberOrIBAN = ref<string>('')
-
-const { formObject } = useNewOrEditBeneficiary()
 const validateFields = () => {
   let isSwiftCodeValid = true
   let isIbanValid = true
@@ -70,7 +66,7 @@ const validateFields = () => {
       isAccountNumberValid = true
     }
   }
-  console.log(isBankNameValid + '&&' + isAccountNumberValid + '&&' + isSwiftCodeValid + '&&' + isIbanValid)
+
   return isBankNameValid && isAccountNumberValid && isSwiftCodeValid && isIbanValid
 }
 
