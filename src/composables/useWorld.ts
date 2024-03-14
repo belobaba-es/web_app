@@ -32,6 +32,7 @@ export interface StateUS {
 const countries = ref<Country[]>([])
 const allowed_countries = ref<CountryAllowed[]>(data_countries.sort((a, b) => a.name.localeCompare(b.name)))
 const state_us = ref<StateUS[]>(state_data)
+const countriesLayer = ref<CountryAllowed[]>()
 const showCombo = ref<boolean>(false)
 const loadingStateField = ref<boolean>(false)
 
@@ -42,7 +43,6 @@ export const useWorld = () => {
   const statesTwo = ref<State[]>([])
 
   const country = ref<Country | null>(null)
-  const countriesLayer = ref<CountryAllowed | null>(null)
   const state = ref<State | null>(null)
 
   const loadingCountriesField = ref<boolean>(false)
