@@ -29,7 +29,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.country"
-            :options="countriesLayer"
+            :options="countryAllowedForUSA"
             filter
             optionLabel="name"
             option-value="country_code"
@@ -118,7 +118,7 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
   countries,
-  countriesLayer,
+  countryAllowedForUSA,
   showCombo,
   state_us,
   loadingCountriesField,

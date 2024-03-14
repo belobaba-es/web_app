@@ -9,7 +9,7 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationBank.address.country"
-            :options="countriesLayer"
+            :options="countryAllowedForUSA"
             filter
             optionLabel="name"
             option-value="country_code"
@@ -102,7 +102,7 @@ const {
   state_us,
   onChangeCountryHandler,
   fetchCountries,
-  countriesLayer,
+  countryAllowedForUSA,
 } = useWorld()
 const { getUserName } = useAuth()
 
