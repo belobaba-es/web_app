@@ -96,12 +96,12 @@ export const useNewOrEditBeneficiary = () => {
         to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
       },
       {
-        label: t('bankAccountInformation'),
-        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
-      },
-      {
         label: t('intermediaryBank'),
         to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
       }
     )
   }
