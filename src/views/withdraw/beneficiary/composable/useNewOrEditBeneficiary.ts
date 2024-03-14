@@ -96,12 +96,12 @@ export const useNewOrEditBeneficiary = () => {
         to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
       },
       {
-        label: t('bankAccountInformation'),
-        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
-      },
-      {
         label: t('intermediaryBank'),
         to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
       }
     )
   }
@@ -131,7 +131,7 @@ export const useNewOrEditBeneficiary = () => {
     formObject.value = beneficiary
     formObject.value.counterpartyId = beneficiary.counterpartyId
 
-    router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
+    router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
   }
 
   const saveBeneficiary = () => {
@@ -156,7 +156,7 @@ export const useNewOrEditBeneficiary = () => {
           life: 4000,
         })
         isUpdateBeneficiary.value = false
-        router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}`)
+        router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}`)
       })
       .catch(e => {
         submitting.value = false
