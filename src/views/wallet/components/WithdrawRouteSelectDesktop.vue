@@ -2,7 +2,8 @@
   <div class="col-4 flex justify-content-start container-link-historic-desktop">
     <div class="dropdown-wrapper">
       <router-link class="link-historic-desktop" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
-        <h5 class="text-link-historic-desktop font-semi-bold">Withdraw <span class="p-2 pi pi-angle-down primary-color"></span></h5>
+        <h5 class="text-link-historic-desktop font-semi-bold">Withdraw <span
+          class="p-2 pi pi-angle-down primary-color"></span></h5>
       </router-link>
 
       <div v-if="isDropdownOpen" class="dropdown">
@@ -26,11 +27,11 @@ const props = defineProps<{
 const fiatLinks = [
   { name: 'Transfer between BELOBABA accounts', link: '/withdraw/noba/fiat' },
   { name: 'Domestic Wire', link: '/withdraw/fiat/domestic' },
-  { name: 'International Wire', link: '/withdraw/fiat/international' },
+  { name: 'International Wire', link: '/withdraw/fiat/international' }
 ]
 const assetLinks = [
-  { name: 'Between Noba Crypto Wallets', link: '/withdraw/noba/crypto' },
-  { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other' },
+  { name: 'Between BELOBABA Crypto Wallets', link: '/withdraw/noba/crypto' },
+  { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other' }
 ]
 const links: any = ref()
 const router = useRouter()
@@ -91,6 +92,7 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 .container-link-historic-desktop {
   margin-left: 4%;
 }
+
 .link-historic-desktop {
   color: white;
 }

@@ -9,7 +9,7 @@
         <router-link to="/withdraw">
           <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
         </router-link>
-        <span class="text-xl">Between NOBA {{ typeWallet }}</span>
+        <span class="text-xl">Between BELOBABA {{ typeWallet }}</span>
       </div>
 
       <Steps :model="items" :readonly="false" />
@@ -46,16 +46,16 @@ const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 const items = ref([
   {
     label: 'Accounts',
-    to: `/withdraw/noba/${route.params.type}`,
+    to: `/withdraw/noba/${route.params.type}`
   },
   {
     label: 'Amount',
-    to: `/withdraw/noba/${route.params.type}/amount`,
+    to: `/withdraw/noba/${route.params.type}/amount`
   },
   {
     label: 'Confirmation',
-    to: `/withdraw/noba/${route.params.type}/confirmation`,
-  },
+    to: `/withdraw/noba/${route.params.type}/confirmation`
+  }
 ])
 
 route.meta.noCache = true
@@ -77,7 +77,7 @@ const complete = () => {
     severity: 'success',
     summary: 'Order submitted',
     detail: formObject.value.beneficiary.name + ' your order completed.',
-    life: 4000,
+    life: 4000
   })
 
   router.push('/withdraw')
