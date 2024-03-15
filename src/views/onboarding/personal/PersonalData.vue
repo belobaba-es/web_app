@@ -170,7 +170,7 @@
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingPersonal.country"
-              :options="countriesLayer"
+              :options="countryAllowedForUSA"
               optionLabel="name"
               option-value="country_code"
               filter
@@ -272,7 +272,7 @@ const {
   countriesInputIsEmpty,
   onChangeCountryHandler,
   calling_code,
-  countriesLayer,
+  countryAllowedForUSA,
 } = useWorld()
 
 const { employmentStatusList } = useEmployment()
