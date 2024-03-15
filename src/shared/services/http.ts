@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../../router'
+import router from '../../router/router'
 import { useAuth } from '../../composables/useAuth'
 
 export interface payloadInterface {
@@ -7,11 +7,12 @@ export interface payloadInterface {
 }
 
 export class HttpService {
-  constructor(private readonly urlAPI: string) {}
+  constructor(private readonly urlAPI: string) {
+  }
 
   getClient() {
     return axios.create({
-      baseURL: this.urlAPI,
+      baseURL: this.urlAPI
     })
   }
 
@@ -26,8 +27,8 @@ export class HttpService {
     return {
       headers: {
         'Content-Type': type,
-        Authorization: 'Bearer ' + getToken(),
-      },
+        Authorization: 'Bearer ' + getToken()
+      }
     }
   }
 

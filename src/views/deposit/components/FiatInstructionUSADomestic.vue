@@ -116,7 +116,6 @@ const props = defineProps<{
 const bankNationalPdf: any = {}
 
 const title = t('titleDespositFiat')
-const footerPdf = t('footerPdfNobaData')
 
 bankNationalPdf[t('depositBankName') + ':'] = props.bankNational?.bankName
 bankNationalPdf['ABA Fedwire:'] = props.bankNational?.routingNumber
@@ -129,6 +128,6 @@ bankNationalPdf[t('bankPhone') + ':'] = props.bankNational?.bankPhone
 
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`
-  generatePdf(nameFile, logo, title, bankNationalPdf, footerPdf)
+  generatePdf(nameFile, logo, title, bankNationalPdf)
 }
 </script>

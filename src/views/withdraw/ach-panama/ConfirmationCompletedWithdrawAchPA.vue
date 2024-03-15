@@ -3,7 +3,7 @@
     <p class="text-3xl font-medium mb-4">
       <span class="text-primary">Your transfer has been successful</span>
     </p>
-    
+
     <div class="col-12">
       <span class="mt-4">transaction summary</span>
       <Divider></Divider>
@@ -79,7 +79,7 @@ const generatePDFTransactionReceipt = async () => {
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
 
-  generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+  generateTransactionReceipt(fileName, logo, title, transactionPDF)
   isGeneratingTransactionPDF.value = false
 }
 </script>

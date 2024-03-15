@@ -43,32 +43,33 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
-const type = ref('International')
+const type = ref('Domestic')
 
 route.meta.noCache = true
 
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/international',
+    to: `/withdraw/usa/fiat/${route.params.type}`,
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/international/amount',
+    to: `/withdraw/usa/fiat/${route.params.type}/amount`,
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/international/confirmation',
+    to: `/withdraw/usa/fiat/${route.params.type}/confirmation`,
   },
 ])
 
 const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
 
 const newBeneficiary = () => {
-  return router.push(`/withdraw/fiat/${route.params.type}/new`)
+  return router.push(`/withdraw/usa/fiat/${route.params.type}/new`)
 }
 
 onMounted(async () => {
+  console.log('Domestic view', route.params.type)
   if (route.params.type !== 'domestic') {
     type.value = 'International'
   }

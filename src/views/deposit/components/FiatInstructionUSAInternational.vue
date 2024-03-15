@@ -118,7 +118,6 @@ const props = defineProps<{
 const bankInternationalPdf: any = {}
 
 const title = t('titleDespositFiat')
-const footerPdf = t('footerPdfNobaData')
 
 bankInternationalPdf[t('depositBankName') + ':'] = props.bankInternational.bankName
 bankInternationalPdf[t('swiftCode') + ':'] = props.bankInternational.swiftCode
@@ -129,6 +128,6 @@ bankInternationalPdf[t('accountNumber') + ':'] = props.bankInternational.account
 bankInternationalPdf[t('bankAddress') + ':'] = props.bankInternational.bankAddress
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
-  generatePdf(nameFile, logo, title, bankInternationalPdf, footerPdf)
+  generatePdf(nameFile, logo, title, bankInternationalPdf)
 }
 </script>

@@ -8,7 +8,7 @@ import './assets/styles/layout.scss'
 import './style.css'
 
 import App from './App.vue'
-import Router from './router'
+import Router from './router/router'
 import PrimeVue from 'primevue/config'
 import BadgeDirective from 'primevue/badgedirective'
 import StyleClass from 'primevue/styleclass'
@@ -18,6 +18,7 @@ import Tooltip from 'primevue/tooltip'
 import ConfirmationService from 'primevue/confirmationservice'
 import i18n from './i18n'
 import ToastService from 'primevue/toastservice'
+
 const pinia = createPinia()
 
 createApp(App)

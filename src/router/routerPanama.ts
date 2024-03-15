@@ -5,20 +5,20 @@ export const routerPanama = [
     children: [
       {
         path: '',
-        component: () => import('../views/withdraw/AchPanama/StepAccounts.vue'),
+        component: () => import('../views/withdraw/ach-panama/StepAccounts.vue'),
       },
       {
         path: 'amount',
-        component: () => import('../views/withdraw/AchPanama/StepAmount.vue'),
+        component: () => import('../views/withdraw/ach-panama/StepAmount.vue'),
       },
       {
         path: 'confirmation',
-        component: () => import('../views/withdraw/AchPanama/StepConfirmation.vue'),
+        component: () => import('../views/withdraw/ach-panama/StepConfirmation.vue'),
       },
     ],
   },
   {
     path: 'new',
-    component: () => import('../views/withdraw/AchPanama/beneficiary/components/NewBeneficiaryPanama.vue'),
+    component: () => import('../views/withdraw/ach-panama/beneficiary/components/NewBeneficiaryPanama.vue'),
   },
 ]

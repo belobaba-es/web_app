@@ -80,7 +80,6 @@ const submitting = ref<boolean>(false)
 const username = getUserName()
 const { t } = useI18n({ useScope: 'global' })
 const title = t('titleDespositFiat')
-const footerPdf = t('footerPdfNobaData')
 
 const props = defineProps<{
   bankPanama: any
@@ -95,6 +94,6 @@ bankACHPdf[t('conceptLabel') + ':'] = props.bankPanama.concept
 
 const generatePdfACHlData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatPanamaACH')}`
-  generatePdf(nameFile, logo, title, bankACHPdf, footerPdf)
+  generatePdf(nameFile, logo, title, bankACHPdf)
 }
 </script>
