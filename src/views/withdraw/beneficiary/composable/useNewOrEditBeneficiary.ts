@@ -7,6 +7,7 @@ import { BeneficiaryService } from '../../services/beneficiary'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
 
+const routingNumberOrIBAN = ref<string>('')
 const isUpdateBeneficiary = ref<boolean>(false)
 const typeBeneficiary = ref<string>('')
 const submitting = ref<boolean>(false)
@@ -68,28 +69,42 @@ export const useNewOrEditBeneficiary = () => {
     typeBeneficiary.value = 'INTERNATIONAL'
   }
 
-  const itemSteps = ref([
-    {
-      label: t('informationAccountText'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
-    },
-    {
-      label: t('beneficiaryInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
-    },
-    {
-      label: t('bankAccountInformation'),
-      to: `/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
-    },
-  ])
+  const itemSteps = ref<Array<{ label: string; to: string }>>([])
 
-  if (typeBeneficiary.value.toUpperCase() === 'INTERNATIONAL') {
-    const nuevoItem = {
-      label: t('intermediaryBank'),
-      to: `/withdraw/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
-    }
-
-    itemSteps.value.splice(itemSteps.value.length - 1, 0, nuevoItem)
+  if (typeBeneficiary.value.toUpperCase() === 'DOMESTIC') {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      }
+    )
+  } else {
+    itemSteps.value.push(
+      {
+        label: t('informationAccountText'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`,
+      },
+      {
+        label: t('beneficiaryInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/owner`,
+      },
+      {
+        label: t('intermediaryBank'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value}/new/intermediary-bank`,
+      },
+      {
+        label: t('bankAccountInformation'),
+        to: `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new/bank-information`,
+      }
+    )
   }
 
   const nextPage = (event: any) => {
@@ -113,11 +128,16 @@ export const useNewOrEditBeneficiary = () => {
 
   const setDataBeneficiary = (beneficiary: any) => {
     isUpdateBeneficiary.value = true
-    console.log(beneficiary)
     formObject.value = beneficiary
     formObject.value.counterpartyId = beneficiary.counterpartyId
 
-    router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
+    if (beneficiary.informationBank.routingNumber) {
+      routingNumberOrIBAN.value = beneficiary.informationBank.routingNumber
+    } else {
+      routingNumberOrIBAN.value = beneficiary.informationBank.iban
+    }
+
+    router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
   }
 
   const saveBeneficiary = () => {
@@ -142,7 +162,7 @@ export const useNewOrEditBeneficiary = () => {
           life: 4000,
         })
         isUpdateBeneficiary.value = false
-        router.push(`/withdraw/fiat/${typeBeneficiary.value.toLowerCase()}`)
+        router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}`)
       })
       .catch(e => {
         submitting.value = false
@@ -168,6 +188,7 @@ export const useNewOrEditBeneficiary = () => {
     itemSteps,
     typeBeneficiary,
     formObject,
+    routingNumberOrIBAN,
     setDataBeneficiary,
     saveBeneficiary,
     complete,

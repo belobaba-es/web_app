@@ -27,8 +27,8 @@ const props = defineProps<{
 }>()
 const fiatLinks = [
   { name: 'Transfer between BELOBABA accounts', link: '/withdraw/noba/fiat' },
-  { name: 'Domestic Wire', link: '/withdraw/fiat/domestic' },
-  { name: 'International Wire', link: '/withdraw/fiat/international' },
+  { name: 'Domestic Wire', link: '/withdraw/usa/fiat/domestic' },
+  { name: 'International Wire', link: '/withdraw/usa/fiat/international' },
 ]
 const assetLinks = [
   { name: 'Between BELOBABA Crypto Wallets', link: '/withdraw/noba/crypto' },
@@ -93,6 +93,7 @@ const handleOptionClick = (option: { name: any; link: string }) => {
 .container-link-historic-desktop {
   margin-left: 4%;
 }
+
 .link-historic-desktop {
   color: white;
 }

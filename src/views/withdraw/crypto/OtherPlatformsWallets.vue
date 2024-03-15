@@ -31,12 +31,11 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
-import { AccountService } from '../../../shared/services/account'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'
@@ -68,33 +67,6 @@ const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWith
 const newBeneficiary = () => {
   return router.push(`/`)
 }
-
-// const onSearch = () => {
-//   new AccountService()
-//     .getAccountByEmail(search.value.toLowerCase())
-//     .then(resp => {
-//       console.log(resp)
-//       beneficiaryAssets.value = [
-//         {
-//           label: resp.name,
-//           accountId: resp.email,
-//           assetId: resp.email,
-//           id: '',
-//           walletAddress: '',
-//           assetTransferMethod: '',
-//         },
-//       ]
-//     })
-//     .catch(error => {
-//       console.log(error.response)
-//       toast.add({
-//         severity: 'error',
-//         summary: t('somethingWentWrong'),
-//         detail: error.response.data.message,
-//         life: 4000,
-//       })
-//     })
-// }
 </script>
 
 <style scoped>

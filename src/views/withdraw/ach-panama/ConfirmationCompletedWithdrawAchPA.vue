@@ -4,22 +4,20 @@
       <span class="text-primary">Your transfer has been successful</span>
     </p>
 
-    <!--      transaction summary-->
     <div class="col-12">
       <span class="mt-4">transaction summary</span>
       <Divider></Divider>
     </div>
 
-    <InternalFiatDetails
-      :realName="props.formData.beneficiary.name"
-      :realEmail="props.formData.beneficiary.email || 'N/A'"
-      :account="props.formData.beneficiary.accountNumber"
-      :amountFee="props.formData.amountFee || props.formData.amount"
-      :fee="props.formData.fee"
+    <InternationalTransferDetail
+      :realName="props.formData.beneficiary.holderName"
+      :account="props.formData.beneficiary.accountDestinationNumber"
       :amount="props.formData.amount"
-      :assetCode="props.formData.assetCode ?? 'USD'"
+      :amountFee="props.formData.amount"
+      :fee="props.formData.fee"
       :transactionId="transactionId"
-    ></InternalFiatDetails>
+      :assetCode="props.formData.assetCode ?? 'USD_PA'"
+    ></InternationalTransferDetail>
 
     <div class="col-12 btn-container">
       <Button class="w-50 p-button mt-5 btn-routing" :label="t('newTransfer')" @click="goToWithdrawIndex()" />
@@ -35,38 +33,32 @@
 </template>
 <script setup lang="ts">
 import Divider from 'primevue/divider'
-import InternalFiatDetails from '../../../../components/InternalFiatDetails.vue'
+import InternationalTransferDetail from '../../../components/InternationalTransferDetail.vue'
 import Button from 'primevue/button'
-import transformCharactersIntoAsterics from '../../../../shared/transformCharactersIntoAsterics'
-import { generateTransactionReceipt } from '../../../../shared/generatePdf'
-import logo from '../../../../assets/img/logo-login.png'
-import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { UserAccount } from '../../types/account'
-import { useAuth } from '../../../../composables/useAuth'
+import transformCharactersIntoAsterics from '../../../shared/transformCharactersIntoAsterics'
+import { generateTransactionReceipt } from '../../../shared/generatePdf'
+import logo from '../../../assets/img/logo.png'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth } from '../../../composables/useAuth'
 
+const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })
+
+const isGeneratingTransactionPDF = ref(false)
 
 const props = defineProps<{
   formData: any
   transactionId: string
-  beneficiary: UserAccount
 }>()
 
-const router = useRouter()
-const route = useRoute()
+const { getUserId, getUserName } = useAuth()
 
-const isGeneratingTransactionPDF = ref(false)
-
-const { getUserName, getUserId } = useAuth()
-
-const goToWithdrawIndex = async () => {
-  // TODO composable function
-  window.location.href = '/withdraw/'
+const goToWithdrawIndex = () => {
+  window.location.href = '/withdraw/panama'
 }
-
-const generatePDFTransactionReceipt = () => {
+const generatePDFTransactionReceipt = async () => {
   isGeneratingTransactionPDF.value = true
   const userAccountNumber = transformCharactersIntoAsterics(getUserId())
 
@@ -80,10 +72,9 @@ const generatePDFTransactionReceipt = () => {
   const formattedDate = formatter.format(date)
 
   transactionPDF[t('userName')] = `${getUserName()}`
-  transactionPDF[t('senderAccountId')] = `${userAccountNumber}`
-  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.name}`
-  transactionPDF[t('assetType')] = props.formData.assetCode
-  transactionPDF[t('amount')] = `${props.formData.total}`
+  transactionPDF[t('senderAccountId')] = `${props.formData.beneficiary.accountDestinationNumber}`
+  transactionPDF[t('beneficiaryName')] = `${props.formData.beneficiary.holderName}`
+  transactionPDF[t('amount')] = `${props.formData.amount} PAD`
   transactionPDF[t('transactionNumber')] = props.transactionId
   transactionPDF[t('reference')] = `${props.formData.reference}`
   transactionPDF[t('datePicker')] = `${formattedDate}`
@@ -92,7 +83,6 @@ const generatePDFTransactionReceipt = () => {
   isGeneratingTransactionPDF.value = false
 }
 </script>
-
 <style scoped>
 .btn-container {
   display: flex;

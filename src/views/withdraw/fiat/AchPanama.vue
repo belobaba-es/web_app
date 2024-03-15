@@ -28,16 +28,14 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Button from 'primevue/button'
 
 import Steps from 'primevue/steps'
 import { useRoute, useRouter } from 'vue-router'
-import { AccountService } from '../../../shared/services/account'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'
-import { useBeneficiary } from '../composables/useBeneficiary'
 
 const router = useRouter()
 const route = useRoute()
@@ -45,22 +43,22 @@ const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 
 const search = ref('')
-const type = ref('Domestic')
+const type = ref('ACH Panama')
 
 route.meta.noCache = true
 
 const items = ref([
   {
     label: 'Accounts',
-    to: '/withdraw/fiat/domestic',
+    to: `/withdraw/panama/`,
   },
   {
     label: 'Amount',
-    to: '/withdraw/fiat/domestic/amount',
+    to: `/withdraw/panama/amount`,
   },
   {
     label: 'Confirmation',
-    to: '/withdraw/fiat/domestic/confirmation',
+    to: `/withdraw/panama/confirmation`,
   },
 ])
 
@@ -74,15 +72,8 @@ const {
 } = useWithdraw(items)
 
 const newBeneficiary = () => {
-  return router.push(`/withdraw/fiat/${route.params.type}/new`)
+  return router.push(`/withdraw/panama/new`)
 }
-
-onMounted(async () => {
-  console.log('Domestic view', route.params.type)
-  if (route.params.type !== 'domestic') {
-    type.value = 'International'
-  }
-})
 </script>
 
 <style scoped>

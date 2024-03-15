@@ -1,5 +1,5 @@
 import { useAuth } from '../../composables/useAuth'
-import router from '../../router'
+import router from '../../router/router'
 
 export default async (isFormData: boolean = false) => {
   const { getToken } = useAuth()
@@ -11,7 +11,7 @@ export default async (isFormData: boolean = false) => {
   return {
     headers: {
       'Content-Type': type,
-      Authorization: 'Bearer ' + getToken(),
-    },
+      Authorization: 'Bearer ' + getToken()
+    }
   }
 }

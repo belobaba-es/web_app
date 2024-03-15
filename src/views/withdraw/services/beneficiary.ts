@@ -4,8 +4,10 @@ import {
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
   BeneficiaryType,
+  RegisterCounterpartyAchPanama,
 } from '../types/beneficiary.interface'
 import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
+import { UnwrapRef } from 'vue'
 
 export class BeneficiaryService {
   async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
@@ -26,11 +28,27 @@ export class BeneficiaryService {
     )
   }
 
+  async listBeneficiaryInternalV2(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_V2).get<BeneficiariesInternalResponse>(
+      `beneficiary/internal/${nextPag === 0 ? 1 : nextPag}`
+    )
+  }
+
+  async listBeneficiaryAchPanama(nextPag = 1) {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<any>(
+      `beneficiary/ach/pab/?type=EXTERNAL&page=${nextPag}`
+    )
+  }
+
   async saveBeneficiary(payload: any): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/banking`, payload)
   }
 
   async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/asset`, payload)
+  }
+
+  async saveBeneficiaryAchPanama(payload: UnwrapRef<RegisterCounterpartyAchPanama>): Promise<any> {
+    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<any>(`beneficiary/ach/pab`, payload)
   }
 }

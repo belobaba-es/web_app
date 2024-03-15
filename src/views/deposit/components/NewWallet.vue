@@ -13,12 +13,14 @@
     <div class="formgrid grid mt-3">
       <div class="col-12">
         <span class="text-xl txt-border-bottom mb-2 black-bold-text">{{ t('newWallet') }}</span>
-        <div><Divider></Divider></div>
+        <div>
+          <Divider></Divider>
+        </div>
       </div>
       <div class="field col-12 mt-4">
-        <!--                <Dropdown id="select-crypto" v-model="assetSelect"  :options="assets" optionLabel="name"  placeholder="" />-->
-        <SelectedAssets @selectedAsset="selectAsset" />
+        <SelectedAssets @selectedAsset="selectAsset" :asset-classification-filter="AssetClassificationFilter.ALL" />
       </div>
+      
       <div class="field col-12" style="display: grid">
         <label for="name" class="black-bold-text">{{ t('nameWallet') }}</label>
         <InputText id="name" type="text" v-model="label" />
@@ -45,7 +47,7 @@ import { useI18n } from 'vue-i18n'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
-import { Asset } from '../types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../types/asset.interface'
 import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { AssetsService } from '../services/assets'
 import { useToast } from 'primevue/usetoast'
@@ -98,8 +100,8 @@ const selectAsset = (asset: Asset) => {
   font-weight: 800;
   color: black;
 }
+
 .p-divider-solid.p-divider-horizontal:before {
   border-color: var(--primary-color);
-  border-width: medium;
 }
 </style>

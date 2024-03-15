@@ -9,15 +9,11 @@
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <p class="title-beneficiary text-capitalize">{{ beneficiary.name }}</p>
       </div>
-
-      <!--      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">-->
-      <!--        <p class="text-base text-end">{{ beneficiary.email }}</p>-->
-      <!--      </div>-->
     </div>
 
-    <SelectedAssets v-if="showSelectedAsset" @selectedAsset="selectedAsset" />
+    <SelectedAssets @selectedAsset="selectedAsset" :asset-classification-filter="AssetClassificationFilter.ALL" />
 
-    <div v-if="showAmount" class="grid col-12 mb-2">
+    <div v-show="isAssetSelected" class="grid col-12 mb-2">
       <div class="col-4 sm:col-4 md:col-4 lg:col-4 xl:col-4">
         <p>
           <label for="amount">{{ t('Amount') }}</label>
@@ -31,9 +27,10 @@
       </div>
     </div>
 
-    <div v-if="showAmount" class="grid col-12 flex w-full">
+    <div v-show="isAssetSelected" class="grid col-12 flex w-full">
       <div class="flex w-full">
         <InputNumber
+          v-show="isAssetSelected"
           id="amount"
           class="p-inputtext p-component b-gray w-full btn-amount"
           v-model="amount"
@@ -42,11 +39,11 @@
           :maxFractionDigits="8"
         />
 
-        <span class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
+        <span v-show="isAssetSelected" class="p-inputgroup-addon symbol text-capitalize">{{ assetSymbol }}</span>
       </div>
     </div>
 
-    <div v-if="showAmount" class="col-12 field mt-4">
+    <div v-show="isAssetSelected" class="col-12 field mt-4">
       <Timeline :value="events">
         <template #content="slotProps">
           {{ slotProps.item.label }}
@@ -112,7 +109,7 @@ import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useToast } from 'primevue/usetoast'
 import SelectedAssets from '../../../../components/SelectedAssets.vue'
-import { Asset } from '../../../deposit/types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import { UserAccount } from '../../types/account'
@@ -143,10 +140,9 @@ const assetSymbol = ref('USD')
 const balance = ref(0)
 const total = ref(0)
 const purpose = ref('')
-const isAsset = route.params.type === 'crypto'
-
-const showAmount = ref(!isAsset)
-const showSelectedAsset = ref(isAsset)
+const assetClassification = ref()
+const assetCode = ref()
+const isAssetSelected = ref(false)
 
 balance.value = getBalanceByCode(asset.value)
 assetSymbol.value = getWalletByAssetCode(asset.value)?.assetCode ?? 'USD'
@@ -172,11 +168,16 @@ const amountFee = computed(() => {
     total.value = 0
   }
 
-  if (assetSymbol.value === 'USD') {
+  if (
+    assetCode.value === 'USD' ||
+    assetCode.value === 'USDT' ||
+    assetCode.value === 'USDC' ||
+    assetCode.value === 'PAB'
+  ) {
     total.value = Number(t.toFixed(2))
+  } else {
+    total.value = Number(t.toFixed(8))
   }
-
-  total.value = Number(t.toFixed(8))
 
   return Number(t.toFixed(8))
 })
@@ -206,11 +207,7 @@ const validateField = (): boolean => {
 
   return true
 }
-const onInput = (event: any) => {
-  if (event.target.value.startsWith('00')) {
-    amount.value = 0
-  }
-}
+
 const nextPage = () => {
   if (!validateField()) {
     return
@@ -223,9 +220,11 @@ const nextPage = () => {
     fee: fee.value,
     reference: reference.value,
     asset: asset.value,
-    assetCode: assetSymbol.value,
+    assetCode: assetCode.value,
+    assetSymbol: assetSymbol.value,
     total: total.value,
     purpose: isAccountSegregated() ? 'LOAN' : purpose.value,
+    assetClassification: assetClassification.value,
   }
   emit('nextPage', {
     pageIndex: page,
@@ -234,12 +233,14 @@ const nextPage = () => {
 }
 
 const selectedAsset = (evt: Asset) => {
-  showAmount.value = true
-  assetSymbol.value = evt.code
+  isAssetSelected.value = true
+  assetSymbol.value = evt.name
+  assetCode.value = evt.code
 
   balance.value = getBalanceByCode(evt.code)
   fee.value = evt.fee
   assetId.value = evt.assetId
+  assetClassification.value = evt.assetClassification
 }
 </script>
 
