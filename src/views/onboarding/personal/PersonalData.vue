@@ -127,7 +127,6 @@
 
       <br />
 
-
       <div class="grid col-12">
         <p class="mt-4 mb-0 text-uppercase">{{ t('employmentInformation') }}</p>
         <Divider class="mt-0"></Divider>
@@ -240,12 +239,14 @@
       </div>
 
       <div class="field col-12 flex align-items-center justify-content-end">
-        <Button
-          :label="t('save')"
-          class="px-5 mt-2 btn-submit"
-          @click="saveDataAndNextInvestmentProfile()"
-          :loading="submitting"
-        />
+        <router-link to="/onboarding/personal/investment-data" custom v-slot="{ navigate }">
+          <Button
+            :label="t('nextButtonText')"
+            class="px-5 mt-2 btn-submit"
+            @click="saveData(navigate)"
+            :loading="submitting"
+          />
+        </router-link>
       </div>
     </div>
   </section>
@@ -254,7 +255,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Dropdown from 'primevue/dropdown'
-import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
@@ -265,6 +265,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 import { useEmployment } from '../../../composables/useEmployment'
+import Button from 'primevue/button'
 
 const {
   countries,
@@ -277,8 +278,7 @@ const {
 
 const { employmentStatusList } = useEmployment()
 
-const { onboardingPersonal, saveData, submitting, saveDataAndNextInvestmentProfile, typeDocument, isHaveDocumentUS } =
-  useOnboardingPersonal()
+const { onboardingPersonal, submitting, saveData, typeDocument, isHaveDocumentUS } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
@@ -289,10 +289,12 @@ onMounted(async () => {
 .phone-input {
   margin-top: 7px;
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 .btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;

@@ -11,6 +11,8 @@ import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
 
 const isHaveDocumentUS = ref(true)
+const isUpdateData = ref<boolean>(false)
+
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
@@ -23,8 +25,6 @@ export const useOnboardingPersonal = () => {
   const { t } = useI18n({ useScope: 'global' })
 
   const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
-
-  const isUpdateData = ref<boolean>(false)
 
   const useOnboardingPersonalState = useOnboardingPersonalStore()
 
@@ -41,7 +41,7 @@ export const useOnboardingPersonal = () => {
     { name: 'No', key: false },
   ])
 
-  const saveData = () => {
+  const saveData = (navigate?: Function) => {
     return new Promise((resolve, reject) => {
       submitting.value = true
 
@@ -57,24 +57,26 @@ export const useOnboardingPersonal = () => {
 
       new OnboardingService()
         .openingAccountPersonal(onboardingPersonal.value, isUpdateData.value)
-         .then(resp => {
-           submitting.value = false
-           toast.add({
-             severity: 'success',
-             detail: resp.message,
-             life: 4000,
-           })
+        .then(resp => {
+          submitting.value = false
+          toast.add({
+            severity: 'success',
+            detail: resp.message,
+            life: 4000,
+          })
 
-           isUpdateData.value = true
-           setClientId(resp.clientId)
+          if (navigate) navigate()
 
-           resolve(resp)
-         })
-         .catch(e => {
-           submitting.value = false
-           processException(toast, t, e.response.data)
-           reject(e)
-         })
+          isUpdateData.value = true
+          setClientId(resp.clientId)
+
+          resolve(resp)
+        })
+        .catch(e => {
+          submitting.value = false
+          processException(toast, t, e.response.data)
+          reject(e)
+        })
     })
   }
 
@@ -97,15 +99,6 @@ export const useOnboardingPersonal = () => {
         showMessage(toast, e.response.data)
       })
   }
-  const saveDataAndNextInvestmentProfile = async () => {
-    router.push('/onboarding/personal/investment-data')
-  }
-
-  const saveDataAndNextUploadFIle = async () => {
-    saveData().then(() => {
-      router.push('/onboarding/personal/upload-documents')
-    })
-  }
 
   if (getClientId()) {
     fetchDataToClient()
@@ -120,8 +113,6 @@ export const useOnboardingPersonal = () => {
     submitting,
     typeDocument,
     saveData,
-    saveDataAndNextInvestmentProfile,
-    saveDataAndNextUploadFIle,
     isHaveDocumentUS,
   }
 }
