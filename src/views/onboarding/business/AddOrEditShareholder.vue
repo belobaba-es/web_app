@@ -39,7 +39,11 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <Calendar v-model="partner.dateBirth" placeholder="0000/00/00" dateFormat="yyyy/mm/dd" :manualInput="false" />
+          <InputMask
+           v-model="partner.dateBirth" 
+            mask="9999-99-99"
+            slotChar="yyyy/mm/dd"
+          />
         </div>
       </div>
 
@@ -224,6 +228,7 @@ import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
+import InputMask from 'primevue/inputmask';
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
