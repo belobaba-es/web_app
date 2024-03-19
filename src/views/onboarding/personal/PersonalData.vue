@@ -127,7 +127,6 @@
 
       <br />
 
-
       <div class="grid col-12">
         <p class="mt-4 mb-0 text-uppercase">{{ t('employmentInformation') }}</p>
         <Divider class="mt-0"></Divider>
@@ -240,12 +239,11 @@
       </div>
 
       <div class="field col-12 flex align-items-center justify-content-end">
-        <Button
-          :label="t('save')"
-          class="px-5 mt-2 btn-submit"
-          @click="saveDataAndNextInvestmentProfile()"
-          :loading="submitting"
-        />
+        <Button :label="t('nextButtonText')" class="px-5 mt-2 btn-submit">
+          <router-link to="/onboarding/personal/investment-data" @click.native="saveDataAndNextInvestmentProfile">
+            {{ t('nextButtonText') }}
+          </router-link>
+        </Button>
       </div>
     </div>
   </section>
@@ -285,14 +283,21 @@ onMounted(async () => {
   await fetchCountries()
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+button > a {
+  color: white;
+  font-size: 1.2rem;
+}
+
 .phone-input {
   margin-top: 7px;
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 .btn-submit {
   @media only screen and (max-width: 992px) {
     width: 100% !important;
