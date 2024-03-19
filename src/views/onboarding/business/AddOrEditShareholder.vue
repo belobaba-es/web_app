@@ -39,18 +39,13 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <InputMask
-           v-model="partner.dateBirth" 
-            mask="9999-99-99"
-            slotChar="yyyy/mm/dd"
-          />
+          <InputMask v-model="dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <!-- //FIX readonly -->
           <InputText type="text" v-model="partner.email" class="w-full" required />
         </div>
       </div>
@@ -215,11 +210,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Calendar from 'primevue/calendar'
 import Divider from 'primevue/divider'
 
 import { useI18n } from 'vue-i18n'
@@ -228,7 +222,7 @@ import { useWorld } from '../../../composables/useWorld'
 import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
-import InputMask from 'primevue/inputmask';
+import InputMask from 'primevue/inputmask'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const {
@@ -245,6 +239,13 @@ const {
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
+
+/////////////////// PALIATIVO PARA EL INPUTMASK
+const dateBirth = ref(partner.value.dateBirth)
+watch(dateBirth, value => {
+  partner.value.dateBirth = value
+})
+///////////////////////////////////////////////
 
 onMounted(async () => {
   await fetchCountries()
