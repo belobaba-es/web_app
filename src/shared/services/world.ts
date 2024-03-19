@@ -9,7 +9,7 @@ export class WorldService {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get(`world/states/${countryId}`)
   }
 
-  async getCountryLayer(): Promise<any> {
+  async getCountryAllowedForUsa(): Promise<any> {
     return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get(`banking/countries-allowed-for-usa`)
   }
 }

@@ -1,7 +1,6 @@
 import { WorldService } from '../shared/services/world'
 import { computed, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
-import { deletedCountries } from '../shared/jsons/deletedCountries'
 import data_countries from '../assets/countries/allowed_countries.json'
 import state_data from '../assets/cities/cities_us.json'
 
@@ -32,7 +31,7 @@ export interface StateUS {
 const countries = ref<Country[]>([])
 const allowed_countries = ref<CountryAllowed[]>(data_countries.sort((a, b) => a.name.localeCompare(b.name)))
 const state_us = ref<StateUS[]>(state_data)
-const countryAllowedForUSA = ref<CountryAllowed[]>()
+const countryAllowedForUSA = ref<CountryAllowed[]>([])
 const showCombo = ref<boolean>(false)
 const loadingStateField = ref<boolean>(false)
 
@@ -50,21 +49,25 @@ export const useWorld = () => {
   const loadingStatesFieldTwo = ref<boolean>(false)
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
-  const countriesInputIsEmpty = computed<boolean>(() => countries.value.length === 0)
+  const countriesInputIsEmpty = computed<boolean>(() => countryAllowedForUSA.value.length === 0)
 
-  const fetchCountries = async (shouldDeleteBannedCountries: boolean = false) => {
+  const fetchCountries = async () => {
     loadingCountriesField.value = true
 
     // Fetch countries layer
-    new WorldService().getCountryLayer().then((resp: any) => {
+    new WorldService().getCountryAllowedForUsa().then((resp: any) => {
       countryAllowedForUSA.value = resp
+      countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
+
+      console.log(countryAllowedForUSA.value)
+      // const arrayCallingCode = resp.map(c => c.calling_code).sort()
+      // calling_code.value = [...new Set(arrayCallingCode)]
+
+      loadingCountriesField.value = false
     })
 
     new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
-      if (shouldDeleteBannedCountries) {
-        countries.value = deleteUnavailableCountries(resp)
-      }
 
       countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
 
@@ -108,10 +111,6 @@ export const useWorld = () => {
     const state = states.value.find(state => state.name === event.value)
     if (!state) return
     setState(state)
-  }
-
-  const deleteUnavailableCountries = (countries: Country[]): Country[] => {
-    return countries.filter(country => !deletedCountries().countries.includes(country.name.toUpperCase().trim()))
   }
 
   return {
