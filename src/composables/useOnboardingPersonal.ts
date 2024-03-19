@@ -11,6 +11,8 @@ import { processException } from '../shared/processException'
 import { useRouter } from 'vue-router'
 
 const isHaveDocumentUS = ref(true)
+const isUpdateData = ref<boolean>(false)
+
 export const useOnboardingPersonal = () => {
   const router = useRouter()
   const { getClientId, setClientId } = useAuth()
@@ -23,8 +25,6 @@ export const useOnboardingPersonal = () => {
   const { t } = useI18n({ useScope: 'global' })
 
   const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
-
-  const isUpdateData = ref<boolean>(false)
 
   const useOnboardingPersonalState = useOnboardingPersonalStore()
 
@@ -41,7 +41,7 @@ export const useOnboardingPersonal = () => {
     { name: 'No', key: false },
   ])
 
-  const saveData = () => {
+  const saveData = (navigate?: Function) => {
     return new Promise((resolve, reject) => {
       submitting.value = true
 
@@ -64,6 +64,8 @@ export const useOnboardingPersonal = () => {
             detail: resp.message,
             life: 4000,
           })
+
+          if (navigate) navigate()
 
           isUpdateData.value = true
           setClientId(resp.clientId)
@@ -97,15 +99,6 @@ export const useOnboardingPersonal = () => {
         showMessage(toast, e.response.data)
       })
   }
-  const saveDataAndNextInvestmentProfile = async () => {
-    await saveData()
-  }
-
-  const saveDataAndNextUploadFIle = async () => {
-    saveData().then(() => {
-      router.push('/onboarding/personal/upload-documents')
-    })
-  }
 
   if (getClientId()) {
     fetchDataToClient()
@@ -120,8 +113,6 @@ export const useOnboardingPersonal = () => {
     submitting,
     typeDocument,
     saveData,
-    saveDataAndNextInvestmentProfile,
-    saveDataAndNextUploadFIle,
     isHaveDocumentUS,
   }
 }

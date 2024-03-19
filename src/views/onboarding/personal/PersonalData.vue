@@ -239,11 +239,14 @@
       </div>
 
       <div class="field col-12 flex align-items-center justify-content-end">
-        <Button :label="t('nextButtonText')" class="px-5 mt-2 btn-submit">
-          <router-link to="/onboarding/personal/investment-data" @click.native="saveDataAndNextInvestmentProfile">
-            {{ t('nextButtonText') }}
-          </router-link>
-        </Button>
+        <router-link to="/onboarding/personal/investment-data" custom v-slot="{ navigate }">
+          <Button
+            :label="t('nextButtonText')"
+            class="px-5 mt-2 btn-submit"
+            @click="saveData(navigate)"
+            :loading="submitting"
+          />
+        </router-link>
       </div>
     </div>
   </section>
@@ -252,7 +255,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Dropdown from 'primevue/dropdown'
-import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
@@ -263,6 +265,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 import { useEmployment } from '../../../composables/useEmployment'
+import Button from 'primevue/button'
 
 const {
   countries,
@@ -275,20 +278,14 @@ const {
 
 const { employmentStatusList } = useEmployment()
 
-const { onboardingPersonal, saveData, submitting, saveDataAndNextInvestmentProfile, typeDocument, isHaveDocumentUS } =
-  useOnboardingPersonal()
+const { onboardingPersonal, submitting, saveData, typeDocument, isHaveDocumentUS } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {
   await fetchCountries()
 })
 </script>
-<style lang="scss" scoped>
-button > a {
-  color: white;
-  font-size: 1.2rem;
-}
-
+<style lang="scss">
 .phone-input {
   margin-top: 7px;
 }

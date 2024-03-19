@@ -37,7 +37,9 @@
     <div class="grid col-12 mt-2">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
         <div>
-          <label>{{t('fundsSendReceiveJurisdictions')}}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label
+            >{{ t('fundsSendReceiveJurisdictions') }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label
+          >
           <div class="p-inputgroup">
             <MultiSelect
               v-model="onboardingPersonal.fundsSendReceiveJurisdictions"
@@ -58,7 +60,7 @@
       </div>
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
         <div>
-          <label>{{t('engageInActivities')}}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('engageInActivities') }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
           <div class="p-inputgroup">
             <MultiSelect
               v-model="onboardingPersonal.engageInActivities"
@@ -80,12 +82,14 @@
     </div>
 
     <div class="field col-12 flex align-items-center justify-content-end">
-      <Button
-        :label="t('save')"
-        class="px-5 mt-2 btn-submit"
-        @click="saveDataAndNextUploadFIle()"
-        :loading="submitting"
-      />
+      <router-link to="/onboarding/personal/upload-documents" custom v-slot="{ navigate }">
+        <Button
+          :label="t('nextButtonText')"
+          class="px-5 mt-2 btn-submit"
+          @click="saveData(navigate)"
+          :loading="submitting"
+        />
+      </router-link>
     </div>
   </section>
 </template>
@@ -93,11 +97,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import Dropdown from 'primevue/dropdown'
-import MultiSelect from 'primevue/multiselect';
+import MultiSelect from 'primevue/multiselect'
 import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
-import InputMask from 'primevue/inputmask'
 
 import { useI18n } from 'vue-i18n'
 
@@ -107,16 +109,9 @@ import { useInvestment } from '../../../composables/useInvestment'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const {
-  allowed_countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-} = useWorld()
+const { allowed_countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
 const { investmentData, engageInActivities } = useInvestment()
-const { onboardingPersonal, saveDataAndNextUploadFIle, submitting } = useOnboardingPersonal()
+const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 
 onMounted(async () => {
   await fetchCountries()
