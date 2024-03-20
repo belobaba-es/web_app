@@ -170,7 +170,7 @@
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingPersonal.country"
-              :options="countryAllowedForUSA"
+              :options="countries"
               optionLabel="name"
               option-value="country_code"
               filter
@@ -267,15 +267,7 @@ import { useOnboardingPersonal } from '../../../composables/useOnboardingPersona
 import { useEmployment } from '../../../composables/useEmployment'
 import Button from 'primevue/button'
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-  countryAllowedForUSA,
-} = useWorld()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
 const { employmentStatusList } = useEmployment()
 
