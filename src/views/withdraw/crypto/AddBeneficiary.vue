@@ -234,7 +234,7 @@ const form = ref<BeneficiaryAsset>({
 })
 
 onMounted(() => {
-  fetchCountries(true).then(() => {
+  fetchCountries().then(() => {
     bankCountries.value = countries.value
   })
 })
