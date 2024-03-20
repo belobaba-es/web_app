@@ -12,7 +12,7 @@
             :options="countryAllowedForUSA"
             filter
             optionLabel="name"
-            option-value="country_code"
+            option-value="name"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="disableCountry()"
@@ -95,15 +95,8 @@ const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 const { formObject, typeBeneficiary, saveBeneficiary, submitting } = useNewOrEditBeneficiary()
-const {
-  allowed_countries,
-  loadingCountriesField,
-  showCombo,
-  state_us,
-  onChangeCountryHandler,
-  fetchCountries,
-  countryAllowedForUSA,
-} = useWorld()
+const { loadingCountriesField, showCombo, state_us, onChangeCountryHandler, fetchCountries, countryAllowedForUSA } =
+  useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])

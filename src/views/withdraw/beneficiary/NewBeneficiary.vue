@@ -49,9 +49,10 @@ import { useWorld } from '../../../composables/useWorld'
 const { t } = useI18n({ useScope: 'global' })
 
 const { itemSteps, typeBeneficiary, formObject, complete, nextPage, prevPage } = useNewOrEditBeneficiary()
-const { fetchCountries } = useWorld()
+const { fetchCountries, fetchCountryAllowUsa } = useWorld()
 
 fetchCountries()
+fetchCountryAllowUsa()
 </script>
 
 <style scoped></style>

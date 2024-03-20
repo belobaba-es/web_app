@@ -54,27 +54,22 @@ export const useWorld = () => {
   const fetchCountries = async () => {
     loadingCountriesField.value = true
 
-    // Fetch countries layer
-    new WorldService().getCountryAllowedForUsa().then((resp: any) => {
-      countryAllowedForUSA.value = resp
-      countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
-
-      console.log(countryAllowedForUSA.value)
-      // const arrayCallingCode = resp.map(c => c.calling_code).sort()
-      // calling_code.value = [...new Set(arrayCallingCode)]
-
-      loadingCountriesField.value = false
-    })
-
     new WorldService().getCountries().then((resp: Country[]) => {
       countries.value = resp
-
       countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
 
       const arrayCallingCode = resp.map(c => c.calling_code).sort()
       calling_code.value = [...new Set(arrayCallingCode)]
 
       loadingCountriesField.value = false
+    })
+  }
+
+  const fetchCountryAllowUsa = async () => {
+    // Fetch countries layer
+    new WorldService().getCountryAllowedForUsa().then((resp: any) => {
+      countryAllowedForUSA.value = resp
+      countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
     })
   }
 
@@ -132,6 +127,7 @@ export const useWorld = () => {
     fetchStates,
     setCountry,
     setState,
+    fetchCountryAllowUsa,
     onChangeCountryHandler,
     showCombo,
     onChangeStateHandler,
