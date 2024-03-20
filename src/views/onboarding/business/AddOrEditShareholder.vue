@@ -122,7 +122,7 @@
               v-model="partner.country"
               :options="countries"
               optionLabel="name"
-              option-value="country_code"
+              option-value="name"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"

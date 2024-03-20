@@ -49,7 +49,7 @@ export const useWorld = () => {
   const loadingStatesFieldTwo = ref<boolean>(false)
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
-  const countriesInputIsEmpty = computed<boolean>(() => countryAllowedForUSA.value.length === 0)
+  const countriesInputIsEmpty = computed<boolean>(() => allowed_countries.value.length === 0)
 
   const fetchCountries = async () => {
     loadingCountriesField.value = true
