@@ -8,12 +8,17 @@ import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { validateObject } from '../shared/validateObject'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
+import { useI18n } from 'vue-i18n'
+import { processException } from '../shared/processException'
+
+const isUpdateData = ref<boolean>(false)
 
 export const useOnboardingCompany = () => {
   const router = useRouter()
   const toast = useToast()
   const submitting = ref(false)
-  const isUpdateData = ref<boolean>(false)
+  const { t } = useI18n({ useScope: 'global' })
+
   const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
   const { getClientId, setClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
@@ -38,7 +43,7 @@ export const useOnboardingCompany = () => {
       })
       .catch(e => {
         submitting.value = false
-        showMessage(toast, e.response.data)
+        processException(toast, t, e.response.data)
       })
   }
 
@@ -134,7 +139,7 @@ export const useOnboardingCompany = () => {
       })
       .catch(e => {
         submitting.value = false
-        showMessage(toast, e.response.data)
+        processException(toast, t, e.response.data)
       })
   }
 
