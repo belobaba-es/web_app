@@ -46,15 +46,15 @@ const typeWallet = route.params.type === 'fiat' ? t('account') : t('wallet')
 const items = ref([
   {
     label: 'Accounts',
-    to: `/withdraw/noba/${route.params.type}`
+    to: `/withdraw/belobaba/${route.params.type}`
   },
   {
     label: 'Amount',
-    to: `/withdraw/noba/${route.params.type}/amount`
+    to: `/withdraw/belobaba/${route.params.type}/amount`
   },
   {
     label: 'Confirmation',
-    to: `/withdraw/noba/${route.params.type}/confirmation`
+    to: `/withdraw/belobaba/${route.params.type}/confirmation`
   }
 ])
 

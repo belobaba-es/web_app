@@ -91,7 +91,7 @@ const routes: RouteRecordRaw[] = [
         component: Withdraw,
       },
       {
-        path: '/withdraw/noba/',
+        path: '/withdraw/belobaba/',
         children: routerInternalTransfer,
       },
       {

@@ -6,7 +6,7 @@
 
     <section class="container-center">
       <div class="grid justify-content-center">
-        <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/noba/asset" />
+        <CardButon class="m-4" :label="t('betweenNOBA')" to="/withdraw/belobaba/asset" />
       </div>
     </section>
 
