@@ -70,7 +70,6 @@ export const useWorld = () => {
     loadingCountriesField.value = true
     new WorldService().getCountryAllowedForUsa().then((resp: any) => {
       countryAllowedForUSA.value = resp
-      console.log('countryAllowedForUSA', countryAllowedForUSA.value)
       countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
       loadingCountriesField.value = false
     })
