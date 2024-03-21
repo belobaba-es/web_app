@@ -162,7 +162,7 @@ export const useNewOrEditBeneficiary = () => {
           life: 4000,
         })
         isUpdateBeneficiary.value = false
-        router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}`)
+        window.location.href = `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}`
       })
       .catch(e => {
         submitting.value = false

@@ -96,7 +96,7 @@ const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { countryAllowedForUSA, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
+const { countryAllowedForUSA, loadingCountriesField, onChangeCountryHandler } = useWorld()
 const { formObject } = useNewOrEditBeneficiary()
 
 const nextPage = () => {

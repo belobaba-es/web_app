@@ -125,7 +125,6 @@
               option-value="country_code"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
               required
             />
@@ -225,7 +224,7 @@ import { useShareholder } from '../../../composables/useShareholder'
 import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
 
-const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
+const { countries, fetchCountries, loadingCountriesField, calling_code } = useWorld()
 const {
   partner,
   submitting,

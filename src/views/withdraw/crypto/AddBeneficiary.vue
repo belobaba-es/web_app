@@ -41,15 +41,14 @@
           <label>{{ t('beneficiaryCountry') }}</label>
           <div class="p-inputgroup">
             <Dropdown
+              filter
               v-model="form.informationOwner.country"
-              :options="countries"
+              :options="countryAllowedForUSA"
               optionLabel="name"
-              option-value="country_code"
+              option-value="countryCode"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
-              @change="onChangeCountryHandler"
               required
             />
           </div>
@@ -91,20 +90,26 @@
         <div v-if="showInstitutionSection">
           <p class="mt-5 mb-0 text-uppercase">{{ t('institutionAddress') }}</p>
           <Divider class="mt-0"></Divider>
-          <div class="grid mt-3">
+          <div class="grid mt-5">
+            <div class="field col-12">
+              <label>{{ t('institutionName') }}</label>
+              <div class="p-inputgroup">
+                <InputText v-model="form.informationWallet.institutionName" class="w-full" required />
+              </div>
+            </div>
+
             <div class="field col-12">
               <label>{{ t('countryLabel') }}</label>
               <div class="p-inputgroup">
                 <Dropdown
+                  filter
                   v-model="form.informationWallet.institutionAddress.country"
-                  :options="countries"
+                  :options="countryAllowedForUSA"
                   optionLabel="name"
-                  option-value="country_code"
+                  option-value="countryCode"
                   :loading="loadingCountriesField"
                   :placeholder="t('countryPlaceholder')"
-                  :disabled="countriesInputIsEmpty"
                   class="w-full"
-                  @change="onChangeCountryHandler"
                   required
                 />
               </div>
@@ -113,17 +118,7 @@
             <div class="field col-4">
               <label>{{ t('stateLabel') }}</label>
               <div class="p-inputgroup">
-                <Dropdown
-                  v-model="form.informationWallet.institutionAddress.region"
-                  :options="states"
-                  optionLabel="name"
-                  option-value="state_code"
-                  :loading="loadingStatesField"
-                  :placeholder="t('statePlaceHolder')"
-                  :disabled="statesInputIsEmpty"
-                  class="w-full"
-                  @change="onChangeStateHandler"
-                />
+                <InputText v-model="form.informationWallet.institutionAddress.region" />
               </div>
             </div>
 
@@ -191,20 +186,9 @@ const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 const { toBack } = useWithdraw([])
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  statesInputIsEmpty,
-  loadingStatesField,
-  states,
-  onChangeCountryHandler,
-  onChangeStateHandler,
-} = useWorld()
+const { fetchCountryAllowUsa, fetchCountries, loadingCountriesField, countryAllowedForUSA } = useWorld()
 
 const {
-  countries: bankCountries,
   statesInputIsEmpty: bankStatesInputIsEmpty,
   loadingStatesField: bankLoadingStatesField,
   states: bankStates,
@@ -234,9 +218,7 @@ const form = ref<BeneficiaryAsset>({
 })
 
 onMounted(() => {
-  fetchCountries().then(() => {
-    bankCountries.value = countries.value
-  })
+  fetchCountryAllowUsa()
 })
 const OTHER = t('other')
 const INSTITUTION = t('institution')

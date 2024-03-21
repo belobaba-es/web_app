@@ -375,6 +375,7 @@
   "other": "Other",
   "institution": "INSTITUTION",
   "institutionAddress": "Institution address",
+  "institutionName": "Institution name",
   "beneficiaryCountry": "Country of residence of the beneficiary",
   "unknown": "UNKNOWN",
   "ex_spouse": "EX_SPOUSE",

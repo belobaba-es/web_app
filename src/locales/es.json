@@ -364,6 +364,7 @@
   "relationshipConsumer": "¿Que relación tiene con este beneficiario?",
   "beneficiaryCountry": "País de residencia del beneficiario",
   "institutionAddress": "Dirección de la institución",
+  "institutionName": "Nombre de la institución",
   "typeBeneficiary": "Tipo de Beneficiario",
   "other": "OTRO",
   "institution": "INSTITUCIÓN",
