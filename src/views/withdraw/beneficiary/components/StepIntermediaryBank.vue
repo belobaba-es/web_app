@@ -23,9 +23,9 @@
           <Dropdown
             filter
             v-model="formObject.informationIntermediaryBank!.address.country"
-            :options="allowed_countries"
+            :options="countryAllowedForUSA"
             optionLabel="name"
-            option-value="country_code"
+            option-value="countryCode"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             class="w-full"
@@ -96,7 +96,7 @@ const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
-const { allowed_countries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
+const { countryAllowedForUSA, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 const { formObject } = useNewOrEditBeneficiary()
 
 const nextPage = () => {

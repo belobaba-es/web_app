@@ -12,7 +12,7 @@
             :options="countryAllowedForUSA"
             filter
             optionLabel="name"
-            option-value="name"
+            option-value="countryCode"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="disableCountry()"
