@@ -176,7 +176,6 @@
               filter
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
               @change="onChangeCountryHandler"
               required
@@ -267,7 +266,7 @@ import { useOnboardingPersonal } from '../../../composables/useOnboardingPersona
 import { useEmployment } from '../../../composables/useEmployment'
 import Button from 'primevue/button'
 
-const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
+const { countries, fetchCountries, loadingCountriesField, onChangeCountryHandler } = useWorld()
 
 const { employmentStatusList } = useEmployment()
 
