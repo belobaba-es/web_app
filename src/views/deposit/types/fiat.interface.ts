@@ -1,4 +1,4 @@
-export interface BankData {
+export type bankInstructionDetail = {
   id: string
   swiftCode: string
   reference: string
