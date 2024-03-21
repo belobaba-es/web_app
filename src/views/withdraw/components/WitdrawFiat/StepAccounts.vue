@@ -90,9 +90,9 @@ const onSelect = (item: Beneficiary) => {
     })
   }
 }
-// const beneficiaryAssets = ref<BeneficiaryFiat[]>([])
 
 onMounted(async () => {
+  console.log(route.params.type)
   props.formData.typeTransaction = route.params.type
 })
 

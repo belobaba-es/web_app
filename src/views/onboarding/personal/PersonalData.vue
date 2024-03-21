@@ -255,7 +255,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Dropdown from 'primevue/dropdown'
-import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
 import InputMask from 'primevue/inputmask'
@@ -266,19 +265,13 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 import { useEmployment } from '../../../composables/useEmployment'
+import Button from 'primevue/button'
 
-const {
-  countries,
-  fetchCountries,
-  loadingCountriesField,
-  countriesInputIsEmpty,
-  onChangeCountryHandler,
-  calling_code,
-} = useWorld()
+const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, onChangeCountryHandler } = useWorld()
 
 const { employmentStatusList } = useEmployment()
 
-const { onboardingPersonal, saveData, submitting, typeDocument, isHaveDocumentUS } = useOnboardingPersonal()
+const { onboardingPersonal, submitting, saveData, typeDocument, isHaveDocumentUS } = useOnboardingPersonal()
 const { t } = useI18n({ useScope: 'global' })
 
 onMounted(async () => {

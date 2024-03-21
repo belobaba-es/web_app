@@ -29,10 +29,10 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.country"
-            :options="countries"
+            :options="countryAllowedForUSA"
             filter
             optionLabel="name"
-            option-value="country_code"
+            option-value="countryCode"
             :loading="loadingCountriesField"
             :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
@@ -117,7 +117,7 @@ const { formObject } = useNewOrEditBeneficiary()
 const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
-  countries,
+  countryAllowedForUSA,
   showCombo,
   state_us,
   loadingCountriesField,
@@ -131,7 +131,7 @@ const accountType = ref([
   { name: 'INDIVIDUAL', description: 'INDIVIDUAL' },
 ])
 onMounted(async () => {
-  await fetchCountries(true)
+  await fetchCountries()
 })
 const validateFields = () => {
   const owner = formObject.value.informationOwner

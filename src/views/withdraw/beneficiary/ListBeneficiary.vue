@@ -54,6 +54,7 @@ const { setDataBeneficiary } = useNewOrEditBeneficiary()
 const emit = defineEmits(['select'])
 
 const loadMore = async () => {
+  //console.log(route.params.type)
   if (route.params.type === 'domestic') {
     await fetchBeneficiaries(BeneficiaryType.DOMESTIC)
   } else {

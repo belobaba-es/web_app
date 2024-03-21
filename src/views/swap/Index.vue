@@ -67,6 +67,7 @@
         :show-modal="showModalAssetSelector"
         @update:visible="modal($event)"
         @selected-asset="selectedAsset"
+        :asset-classification-filter="AssetClassificationFilter.CRYPTO_STABLE_COIN"
       />
     </PageLayout>
   </section>
@@ -78,7 +79,7 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import AssetInput from './components/AssetInput.vue'
 import swapIcon from '../../assets/icons/swap.svg'
-import { Asset } from '../deposit/types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../deposit/types/asset.interface'
 import ModalAssetSelector from '../../components/ModalAssetSelector.vue'
 import ProgressBar from 'primevue/progressbar'
 import { useRouter } from 'vue-router'
