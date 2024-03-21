@@ -72,10 +72,10 @@ const { getUserId, getUserName } = useAuth()
 const goToWithdrawIndex = () => {
   // TODO refactorizar composable function
   if (props.formData.typeTransaction === 'international') {
-    window.location.href = '/withdraw/fiat/international'
+    window.location.href = '/withdraw/usa/fiat/international'
   }
   if (props.formData.typeTransaction === 'domestic') {
-    window.location.href = '/withdraw/fiat/domestic'
+    window.location.href = '/withdraw/usa/fiat/domestic'
   }
 }
 const generatePDFTransactionReceipt = async () => {

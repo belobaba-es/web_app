@@ -43,9 +43,9 @@
           <div class="p-inputgroup">
             <MultiSelect
               v-model="onboardingPersonal.fundsSendReceiveJurisdictions"
-              :options="allowed_countries"
+              :options="countryAllowedForUSA"
               optionLabel="name"
-              option-value="country_code"
+              option-value="countryCode"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
               :disabled="countriesInputIsEmpty"
@@ -109,7 +109,7 @@ import { useInvestment } from '../../../composables/useInvestment'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { allowed_countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
+const { countryAllowedForUSA, fetchCountries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
 const { investmentData, engageInActivities } = useInvestment()
 const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 

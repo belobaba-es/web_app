@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isCompleted" class="formgrid grid mt-5 mb-5">
     <div class="col-12">
-      <span class="mt-4">{{ t('Confirm wire information') }}</span>
+      <span class="mt-4">{{ t('transactionConfirmation') }}</span>
       <Divider></Divider>
     </div>
     <div>

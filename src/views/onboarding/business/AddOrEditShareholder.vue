@@ -124,7 +124,6 @@
               option-value="country_code"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
               required
             />
@@ -224,7 +223,7 @@ import { useRoute } from 'vue-router'
 import RadioButton from 'primevue/radiobutton'
 import InputMask from 'primevue/inputmask'
 
-const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
+const { countries, fetchCountries, loadingCountriesField, calling_code } = useWorld()
 const {
   partner,
   submitting,

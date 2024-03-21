@@ -111,7 +111,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
         monthlyInvestmentWithdrawal: this.monthlyInvestmentWithdrawal,
         monthlyCryptoInvestmentWithdrawal: this.monthlyCryptoInvestmentWithdrawal,
         fundsSendReceiveJurisdictions: this.fundsSendReceiveJurisdictions,
-        engageInActivities: this.engageInActivities
+        engageInActivities: this.engageInActivities,
       }
     },
   },
