@@ -48,7 +48,6 @@
               option-value="countryCode"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
               required
             />
@@ -109,12 +108,13 @@ import { useInvestment } from '../../../composables/useInvestment'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { countryAllowedForUSA, fetchCountries, loadingCountriesField, countriesInputIsEmpty } = useWorld()
+const { countryAllowedForUSA, fetchCountries,fetchCountryAllowUsa, loadingCountriesField } = useWorld()
 const { investmentData, engageInActivities } = useInvestment()
 const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 
 onMounted(async () => {
   await fetchCountries()
+  await fetchCountryAllowUsa()
 })
 </script>
 
