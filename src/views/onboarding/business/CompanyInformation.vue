@@ -4,7 +4,7 @@
       <p class="text-3xl mt-0 font-medium">{{ t('titleBusinessAccount') }}</p>
     </div>
 
-    <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+    <div class="formgrid grid col-12">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('businessNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
@@ -34,6 +34,25 @@
         </div>
         <div>
           <span class="help-text">{{ t('helpTextCompanyTax') }}</span>
+        </div>
+      </div>
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+        <label>{{ t('companyType') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <div class="p-inputgroup">
+          <Dropdown
+            v-model="onboardingCompany.informationCompany.companyType"
+            :options="companyType"
+            optionLabel="name"
+            option-value="value"
+            filter
+            :placeholder="t('helpTextSelectAOption')"
+            class="w-full"
+            required
+          />
+        </div>
+        <div>
+          <span class="help-text">{{ t('helpTextCompanyType') }}</span>
         </div>
       </div>
 
@@ -233,7 +252,6 @@
               option-value="country_code"
               :loading="loadingCountriesField"
               :placeholder="t('countryPlaceholder')"
-              :disabled="countriesInputIsEmpty"
               class="w-full"
               required
             />
@@ -327,9 +345,11 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import InputMask from 'primevue/inputmask'
+import { useOptionsAccounts } from '../../../composables/useOptionsAccounts';
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()
+const { companyType } = useOptionsAccounts()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -357,3 +377,4 @@ onMounted(async () => {
   width: 97%;
 }
 </style>
+../../../composables/useOptionsAccounts

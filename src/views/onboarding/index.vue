@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        <router-link to="/onboarding/business/step1">
+        <router-link to="/onboarding/business/company-information">
           <CardButon class="m-4 pt-5 pb-5" :icon="business" :label="t('businessAccount')" />
         </router-link>
 

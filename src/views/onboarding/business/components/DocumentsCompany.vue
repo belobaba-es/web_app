@@ -18,6 +18,17 @@
                 />
               </div>
             </div>
+            <div class="col-10 p-0 pt-4">
+              <label> {{ t('articleIncorporation') }}</label>
+              <div class="mt-2">
+                <FileInput
+                  side="front"
+                  type="article_incorporation"
+                  :isPartner="false"
+                  :registerNumber="onboardingCompany.informationCompany.registerNumber"
+                />
+              </div>
+            </div>
 
             <div class="col-10 p-0 pt-4">
               <label>{{ t('utilityBillLabel') }}</label>

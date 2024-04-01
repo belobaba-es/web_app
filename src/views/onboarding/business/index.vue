@@ -21,6 +21,7 @@ import Button from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import { useAuth } from '../../../composables/useAuth'
+import CreditCardBanner from '../../../components/CreditCardBanner.vue'
 
 const { fetchDataToClient } = useOnboardingCompany()
 const { getClientId } = useAuth()
@@ -29,19 +30,19 @@ const router = useRouter()
 const items = ref([
   {
     label: 'Company information',
-    to: `/onboarding/business/step1`,
+    to: `/onboarding/business/company-information`,
   },
   {
     label: 'Add shareholders',
-    to: `/onboarding/business/step2`,
+    to: `/onboarding/business/add-shareholders`,
   },
   {
     label: 'Account purpose',
-    to: `/onboarding/business/step3`,
+    to: `/onboarding/business/account-purpose`,
   },
   {
     label: 'Upload documents',
-    to: `/onboarding/business/step4`,
+    to: `/onboarding/business/upload-documents`,
   },
 ])
 
@@ -60,10 +61,4 @@ const complete = () => {
   router.push('/dashboard')
 }
 
-onMounted(() => {
-  console.log('getClientId', getClientId())
-  if (getClientId()) {
-    fetchDataToClient()
-  }
-})
 </script>

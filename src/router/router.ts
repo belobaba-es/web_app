@@ -197,28 +197,28 @@ const routes: RouteRecordRaw[] = [
                 component: UploadDocumentsIndex,
               },
               {
-                path: 'step1',
-                component: () => import('../views/onboarding/business/Step1.vue'),
+                path: 'company-information',
+                component: () => import('../views/onboarding/business/CompanyInformation.vue'),
               },
               {
-                path: 'step2',
-                component: () => import('../views/onboarding/business/Step2.vue'),
+                path: 'add-shareholders',
+                component: () => import('../views/onboarding/business/AddShareholders.vue'),
               },
               {
-                path: 'step3',
-                component: () => import('../views/onboarding/business/Step3.vue'),
+                path: 'account-purpose',
+                component: () => import('../views/onboarding/business/AccountPurpose.vue'),
               },
               {
-                path: 'step4',
-                component: () => import('../views/onboarding/business/Step4.vue'),
+                path: 'upload-documents',
+                component: () => import('../views/onboarding/business/UploadDocuments.vue'),
               },
               {
-                path: 'step2/new-shareholder',
+                path: 'add-shareholders/new-shareholder',
                 name: 'new-shareholder',
                 component: () => import('../views/onboarding/business/AddOrEditShareholder.vue'),
               },
               {
-                path: 'step2/edit-shareholder/:dni',
+                path: 'add-shareholders/edit-shareholder/:dni',
                 name: 'edit-shareholder',
                 component: () => import('../views/onboarding/business/AddOrEditShareholder.vue'),
               },

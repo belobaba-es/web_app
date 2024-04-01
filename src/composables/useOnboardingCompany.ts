@@ -8,8 +8,8 @@ import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { validateObject } from '../shared/validateObject'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
-import { useI18n } from 'vue-i18n'
 import { processException } from '../shared/processException'
+import { useI18n } from 'vue-i18n'
 
 const isUpdateData = ref<boolean>(false)
 
@@ -36,10 +36,16 @@ export const useOnboardingCompany = () => {
 
     requestToBackendForUpdateOnboardingCompany()
       .then(resp => {
+        submitting.value = false
+        toast.add({
+          severity: 'success',
+          detail: resp.message,
+          life: 4000,
+        })
+
         isUpdateData.value = true
         setClientId(resp.clientId)
-        submitting.value = false
-        router.push('/onboarding/business/step4')
+        router.push('/onboarding/business/upload-documents')
       })
       .catch(e => {
         submitting.value = false
@@ -53,17 +59,17 @@ export const useOnboardingCompany = () => {
 
   const validateStep3 = (): boolean => {
     const fieldsToValidate: any = {
-      purposeAccount: onboardingCompany.value.accountQuestionnaire.purposeAccount,
-      sourceAssetsAndIncome: onboardingCompany.value.accountQuestionnaire.sourceAssetsAndIncome,
-      intendedUseAccount: onboardingCompany.value.accountQuestionnaire.intendedUseAccount,
-      anticipatedTypesAssets: onboardingCompany.value.accountQuestionnaire.anticipatedTypesAssets,
-      anticipatedMonthlyCashVolume: onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyCashVolume,
-      anticipatedTradingPatterns: onboardingCompany.value.accountQuestionnaire.anticipatedTradingPatterns,
-      anticipatedMonthlyTransactionsIncoming:
-        onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyTransactionsIncoming,
-      anticipatedMonthlyTransactionsOutgoing:
-        onboardingCompany.value.accountQuestionnaire.anticipatedMonthlyTransactionsOutgoing,
-      natureBusinessCompany: onboardingCompany.value.accountQuestionnaire.natureBusinessCompany,
+      primarySourceOfFunds: onboardingCompany.value.investmentProfile.primarySourceOfFunds,
+      usdValueOfFiat: onboardingCompany.value.investmentProfile.usdValueOfFiat,
+      usdValueOfCrypto: onboardingCompany.value.investmentProfile.usdValueOfCrypto,
+      monthlyDeposits: onboardingCompany.value.investmentProfile.monthlyDeposits,
+      monthlyCryptoDeposits: onboardingCompany.value.investmentProfile.monthlyCryptoDeposits,
+      investmentProfile: onboardingCompany.value.investmentProfile.monthlyInvestmentDeposit,
+      monthlyCryptoInvestmentDeposit: onboardingCompany.value.investmentProfile.monthlyCryptoInvestmentDeposit,
+      monthlyWithdrawals: onboardingCompany.value.investmentProfile.monthlyWithdrawals,
+      monthlyCryptoWithdrawals: onboardingCompany.value.investmentProfile.monthlyCryptoWithdrawals,
+      monthlyInvestmentWithdrawal: onboardingCompany.value.investmentProfile.monthlyInvestmentWithdrawal,
+      monthlyCryptoInvestmentWithdrawal: onboardingCompany.value.investmentProfile.monthlyCryptoInvestmentWithdrawal,
     }
 
     return validateObject(toast, fieldsToValidate)
@@ -128,10 +134,11 @@ export const useOnboardingCompany = () => {
     onboardingCompany.value.informationCompany.physicalAddress.postalCode = ''
   }
 
-  const fetchDataToClientCompany = () => {
+  const fetchDataToClientCompany = (clientId?: string) => {
+    console.log(clientId)
     submitting.value = true
     new ProfileService()
-      .getAccountByClientId(getClientId())
+      .getAccountByClientId(getClientId() ?? clientId)
       .then((resp: any) => {
         setStateOnboardingCompany(resp.clientData as unknown as OnboardingCompany)
         submitting.value = false
@@ -145,12 +152,12 @@ export const useOnboardingCompany = () => {
 
   const nextStep2 = () => {
     if (validateStep2()) {
-      router.push(`/onboarding/business/step2`)
+      router.push(`/onboarding/business/add-shareholders`)
     }
   }
 
   const hasPartner = computed((): boolean => {
-    return onboardingCompany.value.partners.length > 0
+    return onboardingCompany?.value?.partners?.length > 0
   })
 
   const nextStep3 = () => {
@@ -158,7 +165,11 @@ export const useOnboardingCompany = () => {
       showMessage(toast, 'Please add at least one partner')
       return
     }
-    router.push(`/onboarding/business/step3`)
+    router.push(`/onboarding/business/account-purpose`)
+  }
+
+  if (getClientId()) {
+    fetchDataToClientCompany()
   }
 
   return {

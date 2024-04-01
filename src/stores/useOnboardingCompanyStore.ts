@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { OnboardingCompany, Partner } from '../types/onboardingCompany'
 import { useAuth } from '../composables/useAuth'
+
 const { getUserEmail } = useAuth()
 
 export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore', {
@@ -9,6 +10,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
     informationCompany: {
       name: '',
       registerNumber: '',
+      companyType: '',
       naics: '',
       naicsDescription: '',
       establishedDate: '',
@@ -33,16 +35,24 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
       },
     },
     partners: [],
-    accountQuestionnaire: {
-      purposeAccount: '',
-      sourceAssetsAndIncome: '',
-      intendedUseAccount: '',
-      anticipatedTypesAssets: '',
-      anticipatedMonthlyCashVolume: '',
-      anticipatedTradingPatterns: '',
-      anticipatedMonthlyTransactionsIncoming: '',
-      anticipatedMonthlyTransactionsOutgoing: '',
-      natureBusinessCompany: '',
+    investmentProfile: {
+      primarySourceOfFunds: '',
+      usdValueOfFiat: '',
+      usdValueOfCrypto: '',
+      monthlyDeposits: '',
+      monthlyCryptoDeposits: '',
+      monthlyInvestmentDeposit: '',
+      monthlyCryptoInvestmentDeposit: '',
+      monthlyWithdrawals: '',
+      monthlyCryptoWithdrawals: '',
+      monthlyInvestmentWithdrawal: '',
+      monthlyCryptoInvestmentWithdrawal: '',
+    },
+    kycProfile: {
+      businessJurisdictions: [],
+      fundsSendReceiveJurisdictions: [],
+      engageInActivities: [],
+      regulatedStatus: ''
     },
   }),
   actions: {
@@ -51,19 +61,69 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
         email: this.email,
         informationCompany: this.informationCompany,
         partners: this.partners,
-        accountQuestionnaire: this.accountQuestionnaire,
+        investmentProfile: this.investmentProfile,
+        kycProfile: this.kycProfile,
       }
     },
     setStateOnboardingCompany(onboardingCompany: OnboardingCompany) {
       this.email = onboardingCompany.email
-      this.informationCompany = onboardingCompany.informationCompany
+      this.informationCompany = onboardingCompany.informationCompany ?? {
+        name: '',
+        registerNumber: '',
+        companyType: '',
+        naics: '',
+        naicsDescription: '',
+        establishedDate: '',
+        webSite: '',
+        phoneCountry: '',
+        phoneNumber: '',
+        registeredAddress: {
+          streetOne: '',
+          streetTwo: '',
+          postalCode: '',
+          city: '',
+          region: '',
+          country: '',
+        },
+        physicalAddress: {
+          streetOne: '',
+          streetTwo: '',
+          postalCode: '',
+          city: '',
+          region: '',
+          country: '',
+        },
+      }
       this.partners = onboardingCompany.partners
-      this.accountQuestionnaire = onboardingCompany.accountQuestionnaire
+      this.investmentProfile = onboardingCompany.investmentProfile ?? {
+        primarySourceOfFunds: '',
+        usdValueOfFiat: '',
+        usdValueOfCrypto: '',
+        monthlyDeposits: '',
+        monthlyCryptoDeposits: '',
+        monthlyInvestmentDeposit: '',
+        monthlyCryptoInvestmentDeposit: '',
+        monthlyWithdrawals: '',
+        monthlyCryptoWithdrawals: '',
+        monthlyInvestmentWithdrawal: '',
+        monthlyCryptoInvestmentWithdrawal: '',
+      }
+      this.kycProfile = onboardingCompany.kycProfile ?? {
+        businessJurisdictions: [],
+        fundsSendReceiveJurisdictions: [],
+        engageInActivities: [],
+        regulatedStatus: ''
+      }
     },
     getPartners(): Partner[] {
       return this.partners
     },
     addNewPartner(partner: Partner) {
+      if (this.partners === undefined) {
+        this.partners = [partner]
+        return
+      }
+
       const partnerIndex = this.partners.findIndex(p => p.dni === partner.dni)
 
       if (partnerIndex !== -1) {

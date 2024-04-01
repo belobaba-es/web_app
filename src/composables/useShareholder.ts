@@ -6,12 +6,14 @@ import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { useOnboardingCompany } from './useOnboardingCompany'
 import { useRouter } from 'vue-router'
 import showMessage from '../shared/showMessageArray'
+import { useAuth } from './useAuth'
 
 export const useShareholder = () => {
   const router = useRouter()
   const toast = useToast()
-  const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany } = useOnboardingCompany()
+  const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany, fetchDataToClient } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
+  const { getClientId, setClientId } = useAuth()
   const submitting = ref(false)
   const isHaveDocumentUS = ref(true)
 
@@ -79,16 +81,24 @@ export const useShareholder = () => {
     addNewPartner(partner.value)
     submitting.value = true
     requestToBackendForUpdateOnboardingCompany()
-      .then(() => {
+      .then((resp) => {
         submitting.value = false
         if (partner.value.passport !== '') {
           isHaveDocumentUS.value = false
         }
-        router.push('/onboarding/business/step2')
+
+        console.log('se ejecuta si no hay clientid')
+        router.push('/onboarding/business/add-shareholders')
+        
+        if (resp.data.clientId) {
+          fetchDataToClient(resp.data.clientId)
+        }
+        
       })
       .catch(e => {
+        console.log(e)
         submitting.value = false
-        showMessage(toast, e.response.data)
+        showMessage(toast, e)
       })
   }
 
@@ -97,7 +107,7 @@ export const useShareholder = () => {
   })
 
   const onCreateNewShareholder = () => {
-    router.push('/onboarding/business/step2/new-shareholder')
+    router.push('/onboarding/business/add-shareholders/new-shareholder')
   }
 
   const deleteShareholder = (dni: string) => {
@@ -106,7 +116,7 @@ export const useShareholder = () => {
     submitting.value = true
     requestToBackendForUpdateOnboardingCompany()
       .then(() => {
-        router.push('/onboarding/business/step2')
+        router.push('/onboarding/business/add-shareholders')
       })
       .catch(e => {
         submitting.value = false
@@ -115,18 +125,20 @@ export const useShareholder = () => {
   }
 
   const editShareholder = (dni: string) => {
-    router.push(`/onboarding/business/step2/edit-shareholder/${dni}`)
+    router.push(`/onboarding/business/add-shareholders/edit-shareholder/${dni}`)
   }
   const loadingDataToShareholder = (dni: any) => {
     getPartners().forEach(p => {
       if (p.dni === dni) {
+        console.log(p)
+        console.log(dni)
         partner.value = p
       }
     })
   }
 
   const redirectToStep2 = () => {
-    router.push('/onboarding/business/step2')
+    router.push('/onboarding/business/add-shareholders')
   }
 
   const showButtonForCancel = (): boolean => {

@@ -60,6 +60,7 @@ export type Address = {
 export type informationCompany = {
   name: string
   registerNumber: string
+  companyType: string
   naics: string
   naicsDescription: string
   establishedDate: string
@@ -70,21 +71,31 @@ export type informationCompany = {
   physicalAddress: Address
 }
 
-export type AccountQuestionnaire = {
-  purposeAccount: string
-  sourceAssetsAndIncome: string
-  intendedUseAccount: string
-  anticipatedTypesAssets: string
-  anticipatedMonthlyCashVolume: string
-  anticipatedTradingPatterns: string
-  anticipatedMonthlyTransactionsIncoming: string
-  anticipatedMonthlyTransactionsOutgoing: string
-  natureBusinessCompany: string
+export type InvestmentProfile = {
+  primarySourceOfFunds: string
+  usdValueOfFiat: string
+  usdValueOfCrypto: string
+  monthlyDeposits: string
+  monthlyCryptoDeposits: string
+  monthlyInvestmentDeposit: string
+  monthlyCryptoInvestmentDeposit: string
+  monthlyWithdrawals: string
+  monthlyCryptoWithdrawals: string
+  monthlyInvestmentWithdrawal: string
+  monthlyCryptoInvestmentWithdrawal: string
+};
+
+export type KycProfile = {
+  businessJurisdictions: string[]
+  fundsSendReceiveJurisdictions: string[]
+  engageInActivities: string[]
+  regulatedStatus: string
 }
 
 export type OnboardingCompany = {
   email: string
-  informationCompany: informationCompany
-  partners: Partner[]
-  accountQuestionnaire: AccountQuestionnaire
+  informationCompany: informationCompany;
+  partners: Partner[];
+  investmentProfile: InvestmentProfile;
+  kycProfile: KycProfile;
 }

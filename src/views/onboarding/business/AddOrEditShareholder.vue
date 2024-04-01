@@ -5,7 +5,7 @@
       <p class="font-light mt-2 text-primary">{{ t('shareholderInformationLabel') }}</p>
     </div>
 
-    <div class="formgrid grid col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+    <div class="formgrid grid col-12">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
@@ -39,13 +39,16 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
-          <InputMask v-model="dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
+          <div class="p-inputgroup">
+            <InputMask v-model="dateBirth" :model-value="partner.dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
+          </div>
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
+          <!-- //FIX readonly -->
           <InputText type="text" v-model="partner.email" class="w-full" required />
         </div>
       </div>
@@ -239,14 +242,19 @@ const {
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
+
 /////////////////// PALIATIVO PARA EL INPUTMASK
-const dateBirth = ref(partner.value.dateBirth)
+console.log("partner.value.dateBirth", partner.value.dateBirth)
+const dateBirth = ref<string>()
 watch(dateBirth, value => {
-  partner.value.dateBirth = value
+  if(value)
+    partner.value.dateBirth = value
 })
 ///////////////////////////////////////////////
 
 onMounted(async () => {
+  dateBirth.value = partner.value.dateBirth
+  console.log(partner.value)
   await fetchCountries()
   verifyRoute()
   watch(

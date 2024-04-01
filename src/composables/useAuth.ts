@@ -31,7 +31,7 @@ export const useAuth = () => {
   }
 
   const redirectPage = () => {
-    window.location.href = window.location.origin ?? 'https://noba.cash/'
+    window.location.href = window.location.origin ?? 'https://belobaba.io/'
   }
 
   const redirectSigning = () => {
@@ -42,7 +42,7 @@ export const useAuth = () => {
     if (getAccountType() === 'NATURAL_PERSON') {
       router.push(`/onboarding/personal/personal-data`)
     } else {
-      router.push(`/onboarding/business/step1`)
+      router.push(`/onboarding/business/company-information`)
     }
   }
 
