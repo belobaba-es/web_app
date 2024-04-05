@@ -13,7 +13,7 @@ export const useShareholder = () => {
   const toast = useToast()
   const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany, fetchDataToClient } = useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
-  const { getClientId, setClientId } = useAuth()
+  const dateBirth = ref("")
   const submitting = ref(false)
   const isHaveDocumentUS = ref(true)
 
@@ -89,11 +89,11 @@ export const useShareholder = () => {
 
         console.log('se ejecuta si no hay clientid')
         router.push('/onboarding/business/add-shareholders')
-        
+
         if (resp.data.clientId) {
           fetchDataToClient(resp.data.clientId)
         }
-        
+
       })
       .catch(e => {
         console.log(e)
@@ -130,9 +130,8 @@ export const useShareholder = () => {
   const loadingDataToShareholder = (dni: any) => {
     getPartners().forEach(p => {
       if (p.dni === dni) {
-        console.log(p)
-        console.log(dni)
         partner.value = p
+        dateBirth.value = p.dateBirth
       }
     })
   }
@@ -155,6 +154,7 @@ export const useShareholder = () => {
     submitting,
     typeDocumentPartner,
     isHaveDocumentUS,
+    dateBirth,
     enableDataForCreateNewShareholder,
     loadingDataToShareholder,
     showButtonForCancel,

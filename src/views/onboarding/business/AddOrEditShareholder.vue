@@ -40,7 +40,7 @@
         <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
         <div class="p-inputgroup">
           <div class="p-inputgroup">
-            <InputMask v-model="dateBirth" :model-value="partner.dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
+            <InputMask v-model="dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
           </div>
         </div>
       </div>
@@ -229,6 +229,7 @@ import InputMask from 'primevue/inputmask'
 const { countries, fetchCountries, loadingCountriesField, calling_code } = useWorld()
 const {
   partner,
+  dateBirth,
   submitting,
   loadingDataToShareholder,
   addNewShareholder,
@@ -243,14 +244,6 @@ const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
 
-/////////////////// PALIATIVO PARA EL INPUTMASK
-console.log("partner.value.dateBirth", partner.value.dateBirth)
-const dateBirth = ref<string>()
-watch(dateBirth, value => {
-  if(value)
-    partner.value.dateBirth = value
-})
-///////////////////////////////////////////////
 
 onMounted(async () => {
   dateBirth.value = partner.value.dateBirth
@@ -263,6 +256,14 @@ onMounted(async () => {
       verifyRoute()
     }
   )
+
+  /////////////////// PALIATIVO PARA EL INPUTMASK
+  watch(dateBirth, value => {
+    console.log(value)
+    partner.value.dateBirth = value
+    console.log("partner.value.dateBirth",partner.value.dateBirth)
+  })
+///////////////////////////////////////////////
 })
 
 const verifyRoute = () => {
