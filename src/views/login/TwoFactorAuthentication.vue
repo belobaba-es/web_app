@@ -76,7 +76,7 @@ const recoveryTwoFactorAuth = (res: boolean) => {
 
 .logo-noba {
   width: 265px;
-  height: 64px;
+  height: 'auto';
 }
 
 .help-text {

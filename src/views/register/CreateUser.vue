@@ -332,6 +332,6 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 
 .logo-noba {
   width: 265px;
-  height: 64px;
+  height: 'auto';
 }
 </style>
