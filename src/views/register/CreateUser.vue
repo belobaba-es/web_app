@@ -304,6 +304,7 @@ const handleSubmit = () => {
       })
     })
 }
+
 const alreadyRegisteredSendCodeVerifyEmail = () => {
   router.push('/confirm-email/create-user')
 }
