@@ -50,7 +50,7 @@ export const useOptionsAccounts = () => {
     monthlyDeposits: {
       values: [
         { name: t('upto5'), value: 'UPTO_5' },
-        { name: t('5to50'), value: 'FIVE_TO_10' },
+        { name: t('5to10'), value: 'FIVE_TO_10' },
         { name: t('10to25'), value: 'TEN_TO_25' },
         { name: t('moreThan25'), value: 'MORE_THAN_25' },
       ],
@@ -59,7 +59,7 @@ export const useOptionsAccounts = () => {
     monthlyCryptoDeposits: {
       values: [
         { name: t('upto5'), value: 'UPTO_5' },
-        { name: t('5to50'), value: 'FIVE_TO_10' },
+        { name: t('5to10'), value: 'FIVE_TO_10' },
         { name: t('10to25'), value: 'TEN_TO_25' },
         { name: t('moreThan25'), value: 'MORE_THAN_25' },
       ],
@@ -88,7 +88,7 @@ export const useOptionsAccounts = () => {
     monthlyWithdrawals: {
       values: [
         { name: t('upto5'), value: 'UPTO_5'},
-        { name: t('5to50'), value: 'FIVE_TO_10'},
+        { name: t('5to10'), value: 'FIVE_TO_10'},
         { name: t('10to25'), value: 'TEN_TO_25'},
         { name: t('moreThan25'), value: 'MORE_THAN_25'},
       ],
@@ -97,7 +97,7 @@ export const useOptionsAccounts = () => {
     monthlyCryptoWithdrawals: {
       values: [
         { name: t('upto5'), value: 'UPTO_5'},
-        { name: t('5to50'), value: 'FIVE_TO_10'},
+        { name: t('5to10'), value: 'FIVE_TO_10'},
         { name: t('10to25'), value: 'TEN_TO_25'},
         { name: t('moreThan25'), value: 'MORE_THAN_25'},
       ],
