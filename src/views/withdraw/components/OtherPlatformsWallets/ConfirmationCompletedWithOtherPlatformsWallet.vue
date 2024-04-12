@@ -17,6 +17,7 @@
       :amountFee="props.formData.total + 0"
       :transactionId="transactionId"
       :assetCode="props.formData.symbol"
+      :fee="props.formData.fee"
     ></CryptoTransferDetail>
 
     <div class="col-12 btn-container">
