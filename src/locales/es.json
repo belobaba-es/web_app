@@ -456,7 +456,7 @@
   "beneficiaryType": "Tipo de beneficiario",
   "fileSizeError": "El archivo supera los 5Mb.",
   "typeFileNotSelected": "Debe seleccionar el tipo de documento.",
-  "beneficiaryPending": "Los datos del beneficiario estan siendo valdiados, le enviaremos un correo electronico tan pronto sea aprobado",
+  "beneficiaryPending": "Los datos del beneficiario estan siendo validados, le enviaremos un correo electronico tan pronto sea aprobado",
   "textValidateDocument": "Tipo de Archivo no soportado",
   "typeDocumentAdmitted": "Documentos Admitidos, JPG, JPEG, PNG o PDF",
   "primarySourceOfFunds": "Fuente principal de fondos",
