@@ -525,5 +525,6 @@
   "helpTextSelectAOption": "Select an option",
   "validDocument": "Do you have a valid identification document in the US?",
   "profileKyc": "Profile KYC",
-  "transactionConfirmation": "Confirm transaction"
+  "transactionConfirmation": "Confirm transaction",
+  "typeImageAdmitted": "Supported Documents, JPG, JPEG, PNG"
 }
