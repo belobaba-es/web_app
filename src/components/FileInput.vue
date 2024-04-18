@@ -32,7 +32,9 @@ const { t } = useI18n({ useScope: 'global' })
 
 const emit = defineEmits(['uploadComplete'])
 
-const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'pdf']
+const allowedImageExtensions = ['jpg', 'jpeg', 'png']
+const allowedDocumentExtensions = ['jpg', 'jpeg', 'png', 'pdf']
+
 
 const props = defineProps({
   type: {
@@ -89,7 +91,17 @@ const handleUpload = async (event: any) => {
   // Validar la extensión del archivo
   const fileExtension = file.name.split('.').pop()?.toLowerCase()
 
-  if (!props.isProofOfAddress && !allowedImageExtensions.includes(fileExtension)) {
+  if (!props.isProofOfAddress && !allowedImageExtensions.includes(fileExtension) && (props.type === 'passport' || props.type === 'drivers_license' || props.type === 'government_id')) {
+    toast.add({
+      severity: 'warn',
+      summary: t('textValidateDocument'),
+      detail: t('typeImageAdmitted'),
+      life: 4000,
+    })
+    return
+  }
+
+  if (!props.isProofOfAddress && !allowedDocumentExtensions.includes(fileExtension)) {
     toast.add({
       severity: 'warn',
       summary: t('textValidateDocument'),
