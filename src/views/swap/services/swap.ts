@@ -38,7 +38,6 @@ export class SwapService {
       headers: {
         'Content-Type': type,
         Authorization: `Bearer ${token}`,
-        'tenant-name': 'belobaba',
       },
     }
   }
