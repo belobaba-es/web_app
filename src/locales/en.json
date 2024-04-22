@@ -122,6 +122,7 @@
   "routingNumber": "Routing Number",
   "creditTo": "Credit To",
   "address": "Address",
+  "addressBeneficiary": "Beneficiary address",
   "accountNumber": "Account Number",
   "bankAddress": "Bank Address",
   "bankPhone": "Bank Phone",

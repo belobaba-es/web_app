@@ -41,7 +41,7 @@
     </div>
     <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('address') }}</p>
+    <p class="font-medium text-sm">{{ t('addressBeneficiary') }}</p>
     <div class="flex justify-content-between align-items-center">
       <p class="mb-0">{{ bankNational?.address }}</p>
       <i v-if="bankNational?.address" @click="copyToClipboard(toast, bankNational?.address)" class="pi pi-clone"></i>
