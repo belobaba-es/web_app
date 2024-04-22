@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import { UserAuth } from '../types/login.interface'
 
 export const fetchLogin = async (email: string, password: string): Promise<UserAuth> => {
@@ -6,6 +6,15 @@ export const fetchLogin = async (email: string, password: string): Promise<UserA
     baseURL: import.meta.env.VITE_BASE_ENDPOINT,
   })
 
-  const response = await client.post(`user/login/`, { email, password })
+  const response = await client.post(
+    `user/login/`,
+    { email, password },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'tenant-name': 'belobaba',
+      },
+    }
+  )
   return response.data.data as UserAuth
 }
