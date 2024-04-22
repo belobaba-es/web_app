@@ -49,7 +49,7 @@
     </div>
     <Divider type="solid" />
 
-    <p class="font-medium text-sm">{{ t('addressBeneficiary') }}</p>
+    <p class="font-medium text-sm">{{ t('address') }}</p>
     <div class="flex justify-content-between align-items-center">
       <p class="">{{ bankInternational?.address }}</p>
       <i

@@ -7,11 +7,12 @@ export interface payloadInterface {
 }
 
 export class HttpService {
-  constructor(private readonly urlAPI: string) {}
+  constructor(private readonly urlAPI: string) {
+  }
 
   getClient() {
     return axios.create({
-      baseURL: this.urlAPI,
+      baseURL: this.urlAPI
     })
   }
 
@@ -26,9 +27,8 @@ export class HttpService {
     return {
       headers: {
         'Content-Type': type,
-        Authorization: 'Bearer ' + getToken(),
-        'tenant-name': 'belobaba',
-      },
+        Authorization: 'Bearer ' + getToken()
+      }
     }
   }
 
