@@ -11,7 +11,8 @@ export default async (isFormData: boolean = false) => {
   return {
     headers: {
       'Content-Type': type,
-      Authorization: 'Bearer ' + getToken()
-    }
+      Authorization: 'Bearer ' + getToken(),
+      'tenant-name': 'belobaba',
+    },
   }
 }
