@@ -37,7 +37,11 @@ export class HttpService {
     if (isPrivate) {
       headerRequest = await this.getHeader(isFormData)
     } else {
-      headerRequest = {}
+      headerRequest = {
+        headers: {
+          'tenant-name': 'belobaba',
+        }
+      }
     }
 
     const response = await this.getClient().post(url, form, headerRequest)
@@ -50,7 +54,11 @@ export class HttpService {
     if (isPrivate) {
       headerRequest = await this.getHeader(isFormData)
     } else {
-      headerRequest = {}
+      headerRequest = {
+        headers: {
+          'tenant-name': 'belobaba',
+        }
+      }
     }
 
     const response = await this.getClient().patch(url, form, headerRequest)
@@ -65,7 +73,11 @@ export class HttpService {
     if (isPrivate) {
       header = await this.getHeader()
     } else {
-      header = {}
+      header = {
+        headers: {
+          'tenant-name': 'belobaba',
+        }
+      }
     }
 
     if (Object.keys(payload).length > 0) {
