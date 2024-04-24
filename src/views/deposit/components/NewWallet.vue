@@ -20,12 +20,6 @@
       <div class="field col-12 mt-4">
         <SelectedAssets @selectedAsset="selectAsset" :asset-classification-filter="AssetClassificationFilter.ALL" />
       </div>
-      
-      <div class="field col-12" style="display: grid">
-        <label for="name" class="black-bold-text">{{ t('nameWallet') }}</label>
-        <InputText id="name" type="text" v-model="label" />
-        <!-- @update:model-value="emit('update:name', $event)" -->
-      </div>
     </div>
 
     <template #footer>
@@ -68,24 +62,27 @@ const { t } = useI18n({ useScope: 'global' })
 const onCreate = () => {
   submitting.value = true
   new AssetsService()
-    .paymentAddress({ label: label.value, assetCode: assetSelect.value?.code })
+    .paymentAddress({ label: '', assetCode: assetSelect.value?.code })
     .then(resp => {
       submitting.value = false
-      emit('create', {
-        assetId: assetSelect.value?.assetId,
-        paymentAddress: resp.paymentAddress,
-        name: label.value,
-        qr: resp.qr,
+
+      emit('create', {})
+
+      toast.add({
+        severity: 'info',
+        summary: '',
+        detail: resp.message,
+        life: 8000,
       })
     })
     .catch(e => {
       console.log(e)
       submitting.value = false
       toast.add({
-        severity: 'info',
+        severity: 'warn',
         summary: t('somethingWentWrong'),
         detail: e.response.data.message,
-        life: 4000,
+        life: 8000,
       })
     })
 }
