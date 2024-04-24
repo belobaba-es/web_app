@@ -22,8 +22,8 @@ export class AssetsService {
     )
   }
 
-  async paymentAddress(data: CreatePaymentAddress): Promise<CreatePaymentAddressResponse> {
-    return new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post(`assets/payment-address`, data)
+  async paymentAddress(data: CreatePaymentAddress): Promise<{ message:string }> {
+    return new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<{ message:string }>(`assets/payment-address`, data)
   }
 
   async getBalanceWallets(): Promise<any> {
