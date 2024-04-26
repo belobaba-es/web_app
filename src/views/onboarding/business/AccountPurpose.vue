@@ -55,7 +55,6 @@
                   option-value="countryCode"
                   :loading="loadingCountriesField"
                   :placeholder="t('countryPlaceholder')"
-                  :disabled="countriesInputIsEmpty"
                   class="w-full"
                   required
                 />
@@ -79,7 +78,6 @@
                   option-value="countryCode"
                   :loading="loadingCountriesField"
                   :placeholder="t('countryPlaceholder')"
-                  :disabled="countriesInputIsEmpty"
                   class="w-full"
                   required
                 />

@@ -527,5 +527,6 @@
   "validDocument": "Do you have a valid identification document in the US?",
   "profileKyc": "Profile KYC",
   "transactionConfirmation": "Confirm transaction",
-  "typeImageAdmitted": "Supported Documents, JPG, JPEG, PNG"
+  "typeImageAdmitted": "Supported Documents, JPG, JPEG, PNG",
+  "companyType":"Company type"
 }
