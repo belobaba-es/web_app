@@ -514,5 +514,6 @@
   "profileKyc": "Perfil KYC",
   "transactionConfirmation": "Confirma la transaccion",
   "typeImageAdmitted": "Documentos Admitidos, JPG, JPEG, PNG",
-  "companyType":"Tipo de empresa"
+  "companyType": "Tipo de empresa",
+  "soleProp": "Empresario por cuenta propia"
 }

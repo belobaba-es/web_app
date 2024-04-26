@@ -97,4 +97,3 @@ const generatePDFTransactionReceipt = async () => {
   opacity: 1;
 }
 </style>
-

@@ -40,7 +40,7 @@ export class HttpService {
       headerRequest = {
         headers: {
           'tenant-name': 'belobaba',
-        }
+        },
       }
     }
 
@@ -57,7 +57,7 @@ export class HttpService {
       headerRequest = {
         headers: {
           'tenant-name': 'belobaba',
-        }
+        },
       }
     }
 
@@ -76,7 +76,7 @@ export class HttpService {
       header = {
         headers: {
           'tenant-name': 'belobaba',
-        }
+        },
       }
     }
 

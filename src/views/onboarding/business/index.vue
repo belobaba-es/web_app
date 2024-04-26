@@ -60,5 +60,4 @@ const complete = () => {
 
   router.push('/dashboard')
 }
-
 </script>

@@ -25,25 +25,25 @@ export const useOptionsAccounts = () => {
     },
     usdValueOfFiat: {
       values: [
-        { name: t('upto10k'), value: 'UPTO_10K'},
-        { name: t('10kto100k'), value: 'TEN_TO_100K'},
-        { name: t('100kto1m'), value: 'ONEHUNDREDK_TO_1M'},
-        { name: t('1mto10m'), value: 'ONE_TO_10M'},
-        { name: t('10mto50m'), value: 'TEN_TO_50M'},
-        { name: t('50mto250m'), value: 'FIFTY_TO_250M'},
-        { name: t('moreThan250m'), value: 'MORE_THAN_250M'},
+        { name: t('upto10k'), value: 'UPTO_10K' },
+        { name: t('10kto100k'), value: 'TEN_TO_100K' },
+        { name: t('100kto1m'), value: 'ONEHUNDREDK_TO_1M' },
+        { name: t('1mto10m'), value: 'ONE_TO_10M' },
+        { name: t('10mto50m'), value: 'TEN_TO_50M' },
+        { name: t('50mto250m'), value: 'FIFTY_TO_250M' },
+        { name: t('moreThan250m'), value: 'MORE_THAN_250M' },
       ],
       label: t('usdValueOfFiat'),
     },
     usdValueOfCrypto: {
       values: [
-        { name: t('upto10k'), value: 'UPTO_10K'},
-        { name: t('10kto100k'), value: 'TEN_TO_100K'},
-        { name: t('100kto1m'), value: 'ONEHUNDREDK_TO_1M'},
-        { name: t('1mto10m'), value: 'ONE_TO_10M'},
-        { name: t('10mto50m'), value: 'TEN_TO_50M'},
-        { name: t('50mto250m'), value: 'FIFTY_TO_250M'},
-        { name: t('moreThan250m'), value: 'MORE_THAN_250M'},
+        { name: t('upto10k'), value: 'UPTO_10K' },
+        { name: t('10kto100k'), value: 'TEN_TO_100K' },
+        { name: t('100kto1m'), value: 'ONEHUNDREDK_TO_1M' },
+        { name: t('1mto10m'), value: 'ONE_TO_10M' },
+        { name: t('10mto50m'), value: 'TEN_TO_50M' },
+        { name: t('50mto250m'), value: 'FIFTY_TO_250M' },
+        { name: t('moreThan250m'), value: 'MORE_THAN_250M' },
       ],
       label: t('usdValueOfCrypto'),
     },
@@ -55,7 +55,7 @@ export const useOptionsAccounts = () => {
         { name: t('moreThan25'), value: 'MORE_THAN_25' },
       ],
       label: t('monthlyDeposits'),
-    }, 
+    },
     monthlyCryptoDeposits: {
       values: [
         { name: t('upto5'), value: 'UPTO_5' },
@@ -87,19 +87,19 @@ export const useOptionsAccounts = () => {
     },
     monthlyWithdrawals: {
       values: [
-        { name: t('upto5'), value: 'UPTO_5'},
-        { name: t('5to10'), value: 'FIVE_TO_10'},
-        { name: t('10to25'), value: 'TEN_TO_25'},
-        { name: t('moreThan25'), value: 'MORE_THAN_25'},
+        { name: t('upto5'), value: 'UPTO_5' },
+        { name: t('5to10'), value: 'FIVE_TO_10' },
+        { name: t('10to25'), value: 'TEN_TO_25' },
+        { name: t('moreThan25'), value: 'MORE_THAN_25' },
       ],
       label: t('monthlyWithdrawals'),
     },
     monthlyCryptoWithdrawals: {
       values: [
-        { name: t('upto5'), value: 'UPTO_5'},
-        { name: t('5to10'), value: 'FIVE_TO_10'},
-        { name: t('10to25'), value: 'TEN_TO_25'},
-        { name: t('moreThan25'), value: 'MORE_THAN_25'},
+        { name: t('upto5'), value: 'UPTO_5' },
+        { name: t('5to10'), value: 'FIVE_TO_10' },
+        { name: t('10to25'), value: 'TEN_TO_25' },
+        { name: t('moreThan25'), value: 'MORE_THAN_25' },
       ],
       label: t('monthlyCryptoWithdrawals'),
     },
@@ -140,7 +140,7 @@ export const useOptionsAccounts = () => {
     { value: 'REGULATED', name: t('regulated') },
     { value: 'REGISTERED', name: t('registered') },
     { value: 'LICENSED', name: t('licensed') },
-    { value: 'NOT_REQUIRED', name: t('other')}
+    { value: 'NOT_REQUIRED', name: t('other') },
   ])
 
   const companyType = ref([
@@ -149,17 +149,18 @@ export const useOptionsAccounts = () => {
     { value: 'HNWI', name: 'HNWI' },
     { value: 'LLC', name: 'LLC' },
     { value: 'LLP', name: 'LLP' },
+    { value: 'LP', name: 'LP' },
     { value: 'S_CORP ', name: 'SCorp' },
-    { value: 'SOLE_CORP', name: t('soleCorp')},
-    { value: 'TRUST', name: t('trust')},
-    { value: 'NON_PROFIT', name: t('nonProfit')},
-    { value: 'OTHER', name: t('Other')},
+    { value: 'SOLE_PROP', name: t('soleProp') },
+    { value: 'TRUST', name: t('trust') },
+    { value: 'NON_PROFIT', name: t('nonProfit') },
+    { value: 'OTHER', name: t('Other') },
   ])
 
   return {
     investmentData,
     engageInActivities,
     regulatedStatus,
-    companyType
+    companyType,
   }
 }

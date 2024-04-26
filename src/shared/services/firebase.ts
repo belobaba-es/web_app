@@ -1,5 +1,5 @@
 import { initializeApp } from '@firebase/app'
-import { getDatabase, off, onValue, ref, DataSnapshot } from '@firebase/database';
+import { getDatabase, off, onValue, ref, DataSnapshot } from '@firebase/database'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { BalanceWallet } from '../../views/deposit/types/asset.interface'
 import { AssetsService } from '../../views/deposit/services/assets'

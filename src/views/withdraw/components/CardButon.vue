@@ -42,7 +42,7 @@ const toRoute = () => {
 
 .card-button:hover {
   background: #fff;
-  box-shadow: 0px 3px 30px #ecb95663;;
+  box-shadow: 0px 3px 30px #ecb95663;
 }
 .card-button > div {
   height: 80px;

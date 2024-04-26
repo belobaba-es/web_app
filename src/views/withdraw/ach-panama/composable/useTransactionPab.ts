@@ -15,7 +15,7 @@ export const useTransactionPab = () => {
   const fee = ref(0)
   const balance = ref(0)
   const amount = ref(0)
-  
+
   balance.value = getBalanceByCode('USD_PA')
 
   const events = ref<any>([
@@ -23,7 +23,7 @@ export const useTransactionPab = () => {
     { amount: '10', label: `You send to `, name: true },
   ])
 
-  onMounted( async () =>{
+  onMounted(async () => {
     getUserFee()
   })
 

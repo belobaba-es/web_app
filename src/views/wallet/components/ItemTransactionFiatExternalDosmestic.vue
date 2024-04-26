@@ -7,7 +7,9 @@
       </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
-      <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">{{ item.reference }}</p>
+      <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">
+        {{ item.reference }}
+      </p>
     </div>
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">

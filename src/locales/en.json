@@ -528,5 +528,6 @@
   "profileKyc": "Profile KYC",
   "transactionConfirmation": "Confirm transaction",
   "typeImageAdmitted": "Supported Documents, JPG, JPEG, PNG",
-  "companyType":"Company type"
+  "companyType": "Company type",
+  "soleProp": "Sole proprietorship"
 }

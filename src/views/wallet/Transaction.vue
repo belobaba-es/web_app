@@ -112,7 +112,7 @@ const getAssetCode = () => {
   color: #000;
   a {
     color: #000;
-    h5{
+    h5 {
       color: #000;
     }
   }

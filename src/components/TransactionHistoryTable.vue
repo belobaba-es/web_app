@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main" style="height: 100%; paddingBottom: 5rem">
+  <section class="section-main" style="height: 100%; paddingbottom: 5rem">
     <FinishRegisterWarningBar v-if="!props.isDashboard" />
 
     <!-- <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p> -->
@@ -26,7 +26,7 @@
 
       <div class="ml-3 mb-25">
         <div class="flex align-items-center">
-          <p class="text-2xl ">{{ t('chooseExtract') }}</p>
+          <p class="text-2xl">{{ t('chooseExtract') }}</p>
         </div>
       </div>
 
@@ -142,10 +142,7 @@
               </div>
 
               <div class="col sm:col-3 md:col-3 lg:col-3 xl:col-3 data-hidden">
-                <p
-                  class="font-bold"
-                  style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f"
-                >
+                <p class="font-bold" style="width: 90%; overflow: hidden; text-overflow: ellipsis; color: #7f7f7f">
                   {{ item.reference }}
                 </p>
               </div>
@@ -163,7 +160,11 @@
               </div>
 
               <div class="col sm:col-4 md:col-3 lg:col-2 xl:col-2 data-hidden">
-                <p class="status" :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'" style='font-weight: 700 !important'>
+                <p
+                  class="status"
+                  :class="item.status !== 'CANCELLED' ? 'green-text' : 'red-text'"
+                  style="font-weight: 700 !important"
+                >
                   {{ item.status }}
                 </p>
               </div>
