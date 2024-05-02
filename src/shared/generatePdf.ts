@@ -40,7 +40,7 @@ type fillPayload = {
 export default (nameFile: string, logo: string, title: string, data: any) => {
   const pdf = ref(new jsPDF())
   pdf.value.addImage(logo, 'PNG', 15, 15, 45, 10)
-  pdf.value.addImage(footerImg, "PNG", 10, 270, 195, 25);
+  pdf.value.addImage(footerImg, 'PNG', 10, 270, 195, 25)
 
   pdf.value.setFontSize(18)
   pdf.value.text(title, 75, 40)
@@ -172,12 +172,7 @@ export const generateTransactionHistory = (
   pdf.value.save(`${nameFile}.pdf`)
 }
 
-export const generateTransactionReceipt = (
-  nameFile: string,
-  logo: string,
-  title: string,
-  data: any,
-) => {
+export const generateTransactionReceipt = (nameFile: string, logo: string, title: string, data: any) => {
   console.log('nameFile:', nameFile)
   console.log('logo:', logo)
   console.log('title:', title)
@@ -185,8 +180,8 @@ export const generateTransactionReceipt = (
   console.log('footer:', footerImg)
 
   const pdf = ref(new jsPDF())
-  pdf.value.addImage(logo, "PNG", 70, 10, 80, 20);
-  pdf.value.addImage(footerImg, "PNG", 10, 270, 195, 25);
+  pdf.value.addImage(logo, 'PNG', 70, 10, 80, 20)
+  pdf.value.addImage(footerImg, 'PNG', 10, 270, 195, 25)
   createText({ fontSize: 28, textColor: black, xPosition: 65, yPosition: 45, text: title }, pdf)
 
   let i = 1
@@ -233,7 +228,7 @@ const setHeader = (pdf: any, logo: string, title: string) => {
 }
 
 const setFooter = (pdf: any, footerImg: string) => {
-  pdf.value.addImage(footerImg, "PNG", 10, 180, 270, 20);
+  pdf.value.addImage(footerImg, 'PNG', 10, 180, 270, 20)
 }
 
 const setSubHeader = (pdf: any, owner: any, transaltions: any, dateFilters?: any) => {

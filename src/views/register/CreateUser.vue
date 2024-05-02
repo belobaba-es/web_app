@@ -4,8 +4,8 @@
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
-      <h1 class=" text-center font-semi-bold mb-0">{{ t('createAccount') }}</h1>
-      <h2 class=" text-center mb-0">{{ t('subtitleCreateAccount') }}</h2>
+      <h1 class="text-center font-semi-bold mb-0">{{ t('createAccount') }}</h1>
+      <h2 class="text-center mb-0">{{ t('subtitleCreateAccount') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">

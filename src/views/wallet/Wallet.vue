@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main" style="height: 100%; paddingBottom: 2rem">
+  <section class="section-main" style="height: 100%; paddingbottom: 2rem">
     <FinishRegisterWarningBar />
 
     <CardWallet :carousel="false" />

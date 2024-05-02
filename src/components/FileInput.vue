@@ -35,7 +35,6 @@ const emit = defineEmits(['uploadComplete'])
 const allowedImageExtensions = ['jpg', 'jpeg', 'png']
 const allowedDocumentExtensions = ['jpg', 'jpeg', 'png', 'pdf']
 
-
 const props = defineProps({
   type: {
     type: String,
@@ -91,7 +90,11 @@ const handleUpload = async (event: any) => {
   // Validar la extensión del archivo
   const fileExtension = file.name.split('.').pop()?.toLowerCase()
 
-  if (!props.isProofOfAddress && !allowedImageExtensions.includes(fileExtension) && (props.type === 'passport' || props.type === 'drivers_license' || props.type === 'government_id')) {
+  if (
+    !props.isProofOfAddress &&
+    !allowedImageExtensions.includes(fileExtension) &&
+    (props.type === 'passport' || props.type === 'drivers_license' || props.type === 'government_id')
+  ) {
     toast.add({
       severity: 'warn',
       summary: t('textValidateDocument'),

@@ -11,9 +11,10 @@ import { useAuth } from './useAuth'
 export const useShareholder = () => {
   const router = useRouter()
   const toast = useToast()
-  const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany, fetchDataToClient } = useOnboardingCompany()
+  const { hasPartner, getPartners, deletePartner, requestToBackendForUpdateOnboardingCompany, fetchDataToClient } =
+    useOnboardingCompany()
   const { addNewPartner } = useOnboardingCompanyStore()
-  const dateBirth = ref("")
+  const dateBirth = ref('')
   const submitting = ref(false)
   const isHaveDocumentUS = ref(true)
 
@@ -81,7 +82,7 @@ export const useShareholder = () => {
     addNewPartner(partner.value)
     submitting.value = true
     requestToBackendForUpdateOnboardingCompany()
-      .then((resp) => {
+      .then(resp => {
         submitting.value = false
         if (partner.value.passport !== '') {
           isHaveDocumentUS.value = false
@@ -93,7 +94,6 @@ export const useShareholder = () => {
         if (resp.data.clientId) {
           fetchDataToClient(resp.data.clientId)
         }
-
       })
       .catch(e => {
         console.log(e)

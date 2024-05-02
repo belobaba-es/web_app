@@ -513,5 +513,7 @@
   "validDocument": "¿Posee un Documento de identificación válido en EE.UU?",
   "profileKyc": "Perfil KYC",
   "transactionConfirmation": "Confirma la transaccion",
-  "typeImageAdmitted": "Documentos Admitidos, JPG, JPEG, PNG"
+  "typeImageAdmitted": "Documentos Admitidos, JPG, JPEG, PNG",
+  "companyType": "Tipo de empresa",
+  "soleProp": "Empresario por cuenta propia"
 }

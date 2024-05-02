@@ -345,7 +345,7 @@ import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../composables/useWorld'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import InputMask from 'primevue/inputmask'
-import { useOptionsAccounts } from '../../../composables/useOptionsAccounts';
+import { useOptionsAccounts } from '../../../composables/useOptionsAccounts'
 
 const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
 const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()

@@ -108,7 +108,7 @@ import { useInvestment } from '../../../composables/useInvestment'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { countryAllowedForUSA, fetchCountries,fetchCountryAllowUsa, loadingCountriesField } = useWorld()
+const { countryAllowedForUSA, fetchCountries, fetchCountryAllowUsa, loadingCountriesField } = useWorld()
 const { investmentData, engageInActivities } = useInvestment()
 const { onboardingPersonal, saveData, submitting } = useOnboardingPersonal()
 

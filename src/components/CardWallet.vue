@@ -259,7 +259,6 @@ const responsiveOptions = ref([
   small {
     color: #aa9872;
   }
-
 }
 
 .name-cripto {
