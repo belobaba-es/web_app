@@ -243,8 +243,6 @@ const {
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
-
-
 onMounted(async () => {
   dateBirth.value = partner.value.dateBirth
   console.log(partner.value)
@@ -261,9 +259,9 @@ onMounted(async () => {
   watch(dateBirth, value => {
     console.log(value)
     partner.value.dateBirth = value
-    console.log("partner.value.dateBirth",partner.value.dateBirth)
+    console.log('partner.value.dateBirth', partner.value.dateBirth)
   })
-///////////////////////////////////////////////
+  ///////////////////////////////////////////////
 })
 
 const verifyRoute = () => {

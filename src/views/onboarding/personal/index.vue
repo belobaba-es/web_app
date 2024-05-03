@@ -36,7 +36,7 @@ const items = ref([
     label: 'Investment profile',
     to: `/onboarding/personal/investment-data`,
   },
-    {
+  {
     label: 'Upload documents',
     to: `/onboarding/personal/upload-documents`,
   },

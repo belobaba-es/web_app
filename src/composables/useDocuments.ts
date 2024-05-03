@@ -10,7 +10,6 @@ export const useDocuments = () => {
     { value: 'monthly_utility', name: t('documentProofOfAddress1') },
     { value: 'statements', name: t('documentProofOfAddress2') },
     { value: 'rental_lease_agreement', name: t('documentProofOfAddress3') },
-
   ])
 
   const documentTypeOptions = computed(() => {

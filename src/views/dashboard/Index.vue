@@ -17,9 +17,8 @@ import TransactionHistoryTable from '../../components/TransactionHistoryTable.vu
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 </script>
 
-
 <style lang="scss">
-  .background-wallet {
-    background:#efe4ce;
-  }
+.background-wallet {
+  background: #efe4ce;
+}
 </style>

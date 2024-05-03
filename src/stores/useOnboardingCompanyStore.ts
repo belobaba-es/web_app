@@ -52,7 +52,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
       businessJurisdictions: [],
       fundsSendReceiveJurisdictions: [],
       engageInActivities: [],
-      regulatedStatus: ''
+      regulatedStatus: '',
     },
   }),
   actions: {
@@ -112,7 +112,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
         businessJurisdictions: [],
         fundsSendReceiveJurisdictions: [],
         engageInActivities: [],
-        regulatedStatus: ''
+        regulatedStatus: '',
       }
     },
     getPartners(): Partner[] {

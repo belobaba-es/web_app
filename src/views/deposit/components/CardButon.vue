@@ -30,7 +30,8 @@ defineProps({
 .card-deposit:hover {
   background: #dca854;
   box-shadow: 0px 3px 30px #ecb95663;
-  img, p{
+  img,
+  p {
     filter: invert(50%) sepia(90%) brightness(200%) contrast(100%);
   }
 }

@@ -5,7 +5,7 @@
   <div class="container-main">
     <div class="lg:bg-contain container">
       <h1 class="font-semi-bold text-center mb-0">{{ t('loginTitle') }}</h1>
-      <h2 class=" text-center mb-0">{{ t('loginSubtitle') }}</h2>
+      <h2 class="text-center mb-0">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
         <form @submit.prevent="handleSubmit" class="checkout-form">
           <div class="field">

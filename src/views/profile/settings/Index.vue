@@ -29,7 +29,7 @@ import Lang from '../../../components/Lang.vue'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 
 const { t } = useI18n({
-  useScope: 'global'
+  useScope: 'global',
 })
 
 const { twoFactorIsActive } = useTwoFactorAuth()

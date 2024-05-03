@@ -36,9 +36,9 @@ export const useAuthStore = defineStore('useAuthStore', {
           swapBuy: 0,
           swapSell: 0,
         },
-        feeACHPAB:{
-          in:0,
-          out:0
+        feeACHPAB: {
+          in: 0,
+          out: 0,
         },
         feeWire: {
           domestic: {
@@ -89,7 +89,7 @@ export const useAuthStore = defineStore('useAuthStore', {
     getUserFeeWire(): FeeWire {
       return this.client.feeWire
     },
-    getUserFeeACHPA(): FeeACH{
+    getUserFeeACHPA(): FeeACH {
       return this.client.feeACHPAB
     },
     isUserActive(): boolean {

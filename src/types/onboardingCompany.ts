@@ -83,7 +83,7 @@ export type InvestmentProfile = {
   monthlyCryptoWithdrawals: string
   monthlyInvestmentWithdrawal: string
   monthlyCryptoInvestmentWithdrawal: string
-};
+}
 
 export type KycProfile = {
   businessJurisdictions: string[]
@@ -94,8 +94,8 @@ export type KycProfile = {
 
 export type OnboardingCompany = {
   email: string
-  informationCompany: informationCompany;
-  partners: Partner[];
-  investmentProfile: InvestmentProfile;
-  kycProfile: KycProfile;
+  informationCompany: informationCompany
+  partners: Partner[]
+  investmentProfile: InvestmentProfile
+  kycProfile: KycProfile
 }
