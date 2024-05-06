@@ -3,7 +3,7 @@ import { UserAuth } from '../types/login.interface'
 
 export const fetchLogin = async (email: string, password: string): Promise<UserAuth> => {
   const client = axios.create({
-    baseURL: import.meta.env.VITE_BASE_ENDPOINT,
+    baseURL: `${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`,
   })
 
   const response = await client.post(

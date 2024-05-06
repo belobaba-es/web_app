@@ -11,7 +11,13 @@
         </div>
       </div>
       <div class="container-flex mt-lg-2">
-        <div class="float-left w-30">
+        <div class="float-left w-30" v-if="recoveryLink">
+          <p class="green-color cursor-pointer" style="padding-top: 1rem !important" @click="recoveryTwoFactorAuth">
+            {{ t('twoFactorAuthRecoveryText') }}
+          </p>
+        </div>
+
+        <div class="float-right w-30">
           <Button
             type="submit"
             class="mt-4"
@@ -22,22 +28,6 @@
             @click="makeVerifyCode()"
           />
         </div>
-
-        <div class="float-right w-30" v-if="recoveryLink">
-          <p class="green-color cursor-pointer" style="padding-top: 2rem !important" @click="recoveryTwoFactorAuth">
-            {{ t('twoFactorAuthRecoveryText') }}
-          </p>
-        </div>
-      </div>
-
-      <div class="w-50 mt-5" style="margin: 0 auto" v-if="recoveryLink">
-        <Button
-          type="button"
-          icon="pi pi-angle-left"
-          :label="t('backButtonTitle')"
-          class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5 w-100"
-          @click="redirectToLogin()"
-        />
       </div>
     </div>
   </div>
@@ -47,34 +37,29 @@
 import Button from 'primevue/button'
 import { useTwoFactorAuth } from '../composables/useTwoFactorAuth'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import InputMask from 'primevue/inputmask'
+import { useAuth } from '../composables/useAuth'
 
 interface Props {
-  accountId?: string
   recoveryLink?: boolean
 }
 
 const props = defineProps<Props>()
 
-const router = useRouter()
 const { verifyCode, codeForVerify, submitting } = useTwoFactorAuth()
+const { logout } = useAuth()
 
 const { t } = useI18n({ useScope: 'global' })
 
 const codeIsValidEmit = defineEmits(['codeIsValid', 'recoveryTwoFactorAuth'])
 
 const makeVerifyCode = async () => {
-  const isValid = await verifyCode(props.accountId)
-
+  const isValid = await verifyCode()
   codeIsValidEmit('codeIsValid', isValid)
 }
 
 const recoveryTwoFactorAuth = () => {
+  logout()
   codeIsValidEmit('recoveryTwoFactorAuth', true)
-}
-
-const redirectToLogin = () => {
-  window.location.href = '/'
 }
 </script>

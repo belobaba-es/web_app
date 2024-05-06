@@ -38,7 +38,7 @@ export const useTwoFactorAuth = () => {
 
   const lookQRTwoFactor = async (): Promise<void> => {
     const payload = {
-      accountId: getClientId(),
+      clientId: getClientId(),
       email: getUserEmail(),
       name: getUserName(),
     }
@@ -51,6 +51,7 @@ export const useTwoFactorAuth = () => {
         isShowView.value = true
       })
       .catch(e => {
+        console.log(e.response)
         isShowView.value = true
         toast.add({
           severity: 'error',
@@ -78,14 +79,10 @@ export const useTwoFactorAuth = () => {
     return twoFactorData.value?.code_recovery ?? []
   }
 
-  /**
-   *
-   * @param account Es el accountId
-   */
-  const verifyCode = (account?: string): Promise<boolean> => {
+  const verifyCode = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       if (codeForVerify.value.length < 6) {
-        ;-toast.add({
+        toast.add({
           severity: 'warn',
           detail: t('validVerifyCode'),
           life: 6000,
@@ -96,7 +93,7 @@ export const useTwoFactorAuth = () => {
       }
 
       const payload = {
-        accountId: getClientId(),
+        clientId: getClientId(),
         code: codeForVerify.value.replace('-', ''),
       }
 
@@ -140,7 +137,7 @@ export const useTwoFactorAuth = () => {
   const activeTwoFactor = async (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       const payload = {
-        accountId: getClientId(),
+        clientId: getClientId(),
         code: codeForVerify.value,
       }
 
@@ -189,7 +186,7 @@ export const useTwoFactorAuth = () => {
     const blob = new Blob([text], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.download = 'codesRecoveryTwoFactorAuth-NOBACASH.txt'
+    link.download = 'codesRecoveryTwoFactorAuth-BELOBABA.txt'
     link.href = url
     link.click()
   }

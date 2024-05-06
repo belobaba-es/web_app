@@ -4,10 +4,10 @@
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
-      <h1 class="font-semi-bold text-center mb-0">{{ t('loginTitle') }}</h1>
-      <h2 class="text-center mb-0">{{ t('loginSubtitle') }}</h2>
+      <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
+      <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
-        <form @submit.prevent="handleSubmit" class="checkout-form">
+        <form @submit.prevent="makeLogin" class="checkout-form">
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
@@ -38,15 +38,6 @@
           </div>
 
           <div class="container-flex mt-lg-2">
-            <!--            <div class="float-left w-25">-->
-            <!--              <Button-->
-            <!--                type="button"-->
-            <!--                icon="pi pi-angle-left"-->
-            <!--                :label="t('backButtonTitle')"-->
-            <!--                class="font-light w-100 border-300 p-button-outlined"-->
-            <!--                @click="redirectPage"-->
-            <!--              />-->
-            <!--            </div>-->
             <div class="float-right w-25">
               <Button
                 type="submit"
@@ -85,53 +76,38 @@
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import logo from '../../assets/img/logo-login.png'
+import logo from '../../assets/img/logo.svg'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import Checkbox from 'primevue/checkbox'
 import { useAuth } from '../../composables/useAuth'
-import { AccountStatus } from '../../types/accountStatus.enum'
-import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { useToast } from 'primevue/usetoast'
 
-const { form, submitting, makeLogin, redirectSigning, redirectPage } = useAuth()
+const { form, submitting, handleSubmit, redirectSigning } = useAuth()
 
-const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
-
+const toast = useToast()
 const router = useRouter()
 
-const handleSubmit = async () => {
+const alreadyRegisteredSendCodeVerifyEmail = () => {
+  router.push('/confirm-email/enable-user')
+}
+
+const makeLogin = async () => {
   try {
-    const userAuth = await makeLogin()
-    if (!userAuth) {
-      return
-    }
-
-    if (userAuth.clientId == undefined || userAuth.client.status === AccountStatus.REGISTERED) {
-      window.location.href = '/onboarding'
-      return
-    }
-
-    if (userAuth.client.status === AccountStatus.SUBMITTED) {
-      window.location.href = `/profile/${userAuth.clientId}`
-
-      return
-    }
-
-    window.location.href = '/dashboard'
+    submitting.value = true
+    await handleSubmit()
   } catch (e: any) {
     submitting.value = false
+
     toast.add({
       severity: 'warn',
-      summary: t('somethingWentWrong'),
+      summary: `Two Factor Authentication`,
       detail: e.response.data.message,
       life: 4000,
     })
   }
-}
-const alreadyRegisteredSendCodeVerifyEmail = () => {
-  router.push('/confirm-email/enable-user')
 }
 </script>
 
@@ -157,7 +133,7 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 }
 
 .logo-noba {
-  width: 265px;
-  height: 'auto';
+  width: 142px;
+  height: 64px;
 }
 </style>

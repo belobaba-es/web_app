@@ -3,7 +3,7 @@ import { RegisterResponse } from '../types/register.interface'
 
 export class RegisterService {
   async register(email: string, password: string): Promise<RegisterResponse> {
-    const resp = await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<RegisterResponse>(
+    const resp = await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).post<RegisterResponse>(
       `user/signin/`,
       { email, password },
       false
@@ -12,7 +12,7 @@ export class RegisterService {
   }
 
   async resendEmailCode(email: string, typeValidation: string): Promise<RegisterResponse> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<RegisterResponse>(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).post<RegisterResponse>(
       `user/new-validation-code/`,
       { email, typeValidation },
       false
@@ -20,7 +20,7 @@ export class RegisterService {
   }
 
   async confirmCode(code: string, email: string): Promise<RegisterResponse> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).post<RegisterResponse>(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).post<RegisterResponse>(
       `user/verify-email-code/`,
       { code, email },
       false

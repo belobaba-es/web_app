@@ -3,18 +3,24 @@ import { UserAccount } from '../../views/withdraw/types/account'
 
 export class AccountService {
   async getAccountByEmail(email: string | string[]): Promise<UserAccount> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<UserAccount>(`/account/by-email/${email}`)
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<UserAccount>(
+      `/account/by-email/${email}`
+    )
   }
 
   async enableTwoFactorAuthentication(): Promise<void> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).patch('account/two-factor-auth/enable', {}, true)
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).patch(
+      'account/two-factor-auth/enable',
+      {},
+      true
+    )
   }
 
-  async disableTwoFactorAuthentication(account: string): Promise<void> {
+  async disableTwoFactorAuthentication(clientId: string): Promise<void> {
     const payload = {
-      accountId: account,
+      clientId,
     }
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).patch(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).patch(
       'account/two-factor-auth/disabled',
       payload,
       false
