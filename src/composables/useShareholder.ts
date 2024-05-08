@@ -6,7 +6,8 @@ import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { useOnboardingCompany } from './useOnboardingCompany'
 import { useRouter } from 'vue-router'
 import showMessage from '../shared/showMessageArray'
-import { useAuth } from './useAuth'
+import { processException } from '../shared/processException'
+import { useI18n } from 'vue-i18n'
 
 export const useShareholder = () => {
   const router = useRouter()
@@ -17,6 +18,7 @@ export const useShareholder = () => {
   const dateBirth = ref('')
   const submitting = ref(false)
   const isHaveDocumentUS = ref(true)
+  const { t } = useI18n({ useScope: 'global' })
 
   const initStatePartner = () => {
     return {
@@ -98,7 +100,7 @@ export const useShareholder = () => {
       .catch(e => {
         console.log(e)
         submitting.value = false
-        showMessage(toast, e)
+        processException(toast, t, e.response.data)
       })
   }
 
