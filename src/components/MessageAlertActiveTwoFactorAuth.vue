@@ -1,16 +1,15 @@
 <template>
   <Message :closable="false" severity="warn" v-if="isShowMessage">
     <div class="pl-4">
-      <h2 class="font-bold mt-0">Active la autenticación de doble factor</h2>
-      Por seguridad es necesario que active la autenticación de doble factor para confirmar retiros en tu cuenta
-      BELOBABA
+      <h2 class="font-bold mt-0">{{ t('twoFactorAlertTitle') }}</h2>
+      {{ t('twoFactorAlertMessage') }}
       <div class="mt-5 float-right">
         <Button
           class="font-regular"
           severity="warning"
           icon="pi pi-angle-right"
           icon-pos="right"
-          label="Activar doble factor"
+          :label="t('btnActivateTwoFactorAuth')"
           @click="redirectForActiveTwoFactor()"
         />
       </div>

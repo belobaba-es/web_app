@@ -11,7 +11,7 @@
         <h3 class="font-semi-bold mt-5">Scan the QR code</h3>
 
         Use an authenticator app or browser extension to scan,
-        <a class="cursor-pointer" @click="visible = true">enter this secret.</a>
+        <a class="cursor-pointer" @click="visible = true">enter this secret key.</a>
         If you are unable to scan, instead. Password managers can use it to generate 2FA codes.
 
         <div class="mt-5 mb-5">
