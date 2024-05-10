@@ -515,5 +515,8 @@
   "transactionConfirmation": "Confirma la transaccion",
   "typeImageAdmitted": "Documentos Admitidos, JPG, JPEG, PNG",
   "companyType": "Tipo de empresa",
-  "soleProp": "Empresario por cuenta propia"
+  "soleProp": "Empresario por cuenta propia",
+  "twoFactorAlertTitle": "Active la autenticación de doble factor",
+  "twoFactorAlertMessage": "Por seguridad es necesario que active la autenticación de doble factor para confirmar retiros en tu cuenta BELOBABA",
+  "btnActivateTwoFactorAuth" : "Activar doble factor"
 }

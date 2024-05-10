@@ -3,7 +3,7 @@ import { HistoricTransactionsResponse } from '../types/historic-transactions-res
 
 export class HistoricService {
   async findTransactionByTransactionId(transactionId: string, isInternal: boolean, assetCode: any) {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get(
       `transaction/${transactionId}/${isInternal}/${assetCode}`,
       {},
       true
@@ -11,7 +11,7 @@ export class HistoricService {
   }
 
   async historic(assetCode: any) {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<HistoricTransactionsResponse>(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<HistoricTransactionsResponse>(
       `transaction/${assetCode}`,
       {},
       true
@@ -19,7 +19,7 @@ export class HistoricService {
   }
 
   async historicNextPage(assetCode: any, nextPag: string) {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<HistoricTransactionsResponse>(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<HistoricTransactionsResponse>(
       `transaction/${assetCode}/${nextPag}`,
       {},
       true

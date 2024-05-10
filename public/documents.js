@@ -6,7 +6,7 @@ function onProgress(progress) {
 }
 
 function onSuccess(response) {
-  sessionStorage.setItem('noba@documentUuid', response.documentUuid)
+  sessionStorage.setItem('belobaba@documentUuid', response.documentUuid)
 
   if (response.status === 'DOCUMENTS_UPLOADED') {
     clearSession()
@@ -39,7 +39,7 @@ function start() {
     console.log("DeviceRisk Response ======: "+JSON.stringify(response));
 
     if (response.sessionId !== "") {
-      sessionStorage.setItem('noba@deviceId', response.sessionId)
+      sessionStorage.setItem('belobaba@deviceId', response.sessionId)
     }
   })
 

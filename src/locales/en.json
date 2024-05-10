@@ -529,5 +529,8 @@
   "transactionConfirmation": "Confirm transaction",
   "typeImageAdmitted": "Supported Documents, JPG, JPEG, PNG",
   "companyType": "Company type",
-  "soleProp": "Sole proprietorship"
+  "soleProp": "Sole proprietorship",
+  "twoFactorAlertTitle": "Activate two-factor authentication",
+  "twoFactorAlertMessage": "For security, you need to activate two-factor authentication to confirm withdrawals in your BELOBABA account.",
+  "btnActivateTwoFactorAuth" : "Activate two factor"
 }

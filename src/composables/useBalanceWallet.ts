@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { BalanceWallet } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
-import { getBalanceWallets } from '../views/deposit/services/fetchAsset'
+import { AssetsService } from '../views/deposit/services/assets'
 
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
@@ -13,7 +13,7 @@ export const useBalanceWallet = () => {
   const { getClientId } = useAuth()
 
   const requestBalance = async () => {
-    getBalanceWallets().then(response => {
+    new AssetsService().getBalanceWallets().then(response => {
       balanceWalletStore.setBalanceWallet(response)
     })
   }

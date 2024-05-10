@@ -28,21 +28,13 @@ const initRemoteConfig = async (): Promise<RemoteConfig> => {
 }
 
 export const twoFactorAuthenticationIsActiveRemotely = async (): Promise<boolean> => {
-  // const remoteConfig = await initRemoteConfig()
-  //
-  // await fetchConfig(remoteConfig)
-  // // await getAll(remoteConfig)
-  // const f = getBoolean(remoteConfig, 'twoFactorAuth')
-  //
-  // console.log('RERRRRR', f)
-
   return new Promise(async resolve => {
     const db = await FirebaseService.initFirebase()
-    const collection = ref(db, 'twoFactorAuth')
+    const collection = ref(db, 'twoFactorAuthBELOBABA')
 
     onValue(collection, async snapshot => {
       if (snapshot.exists()) {
-        console.log('RESSS', snapshot.val())
+
         resolve(snapshot.val() as boolean)
       } else {
         resolve(false)

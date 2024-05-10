@@ -122,6 +122,7 @@ export const useAuthStore = defineStore('useAuthStore', {
         user.client.twoFactorActive = true
 
         sessionStorage.setItem('user', new CryptoService().encrypt(JSON.stringify({ ...user })))
+        this.client.twoFactorActive = true
       }
     },
     isTwoFactorActive(): boolean {

@@ -1,43 +1,39 @@
 import { HttpService } from './http'
 import { TwoFactor } from '../../views/profile/types/TwoFactorReponse'
+import axios from 'axios'
 
 export class TwoFactorService {
+  //private url = 'http://localhost:9091/two-factor-auth/api/v1'
+  private url = `${import.meta.env.VITE_BASE_ENDPOINT}/two-factor-auth/api/v1`
+
   async request(payload: any): Promise<TwoFactor> {
-    const data = await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_TWO_FACTOR).post<any>(
-      'request',
-      payload,
-      false
-    )
+    const data = await new HttpService(this.url).post<any>('request', payload, false)
 
     return data.data as TwoFactor
   }
 
   async active(payload: any): Promise<any> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_TWO_FACTOR).post<any>('active', payload, false)
+    return await new HttpService(this.url).post<any>('active', payload, false)
   }
 
   async verifyCode(payload: any): Promise<any> {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_TWO_FACTOR).post<any>('verify', payload, false)
+    return await new HttpService(this.url).post<any>('verify', payload, false)
   }
 
-  async verifyTokenToRecoveryTwoFactorAuth(accountId: string): Promise<any> {
+  async verifyTokenToRecoveryTwoFactorAuth(clientId: string): Promise<any> {
     const payload = {
-      accountId: accountId,
+      clientId,
     }
 
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_TWO_FACTOR).post<any>(
-      'verify-request-recovery-two-factor-auth',
-      payload,
-      false
-    )
+    return await new HttpService(this.url).post<any>('verify-request-recovery-two-factor-auth', payload, false)
   }
 
-  async requestRecoveryTwoFactorAuth(codes: string[], accountId: string) {
+  async requestRecoveryTwoFactorAuth(codes: string[], clientId: string) {
     const payload = {
-      accountId: accountId,
+      clientId,
       codeRecovery: codes,
     }
 
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT_TWO_FACTOR).post('recovery', payload, false)
+    return await new HttpService(this.url).post('recovery', payload, false)
   }
 }

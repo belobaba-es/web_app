@@ -39,6 +39,7 @@ export class HttpService {
     } else {
       headerRequest = {
         headers: {
+          'Content-Type': 'application/json',
           'tenant-name': 'belobaba',
         },
       }

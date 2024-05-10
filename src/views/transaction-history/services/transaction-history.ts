@@ -3,7 +3,7 @@ import { HistoricTransactionsResponse } from '../types/transaction-history-respo
 
 export class TransactionHistoricService {
   async getHistoric(payload = {}) {
-    return await new HttpService(import.meta.env.VITE_BASE_ENDPOINT).get<HistoricTransactionsResponse>(
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<HistoricTransactionsResponse>(
       `transactionHistory`,
       payload,
       true
