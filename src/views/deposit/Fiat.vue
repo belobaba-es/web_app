@@ -3,21 +3,28 @@
     <p class="text-3xl font-medium mb-4">
       {{ t('deposit') }} / <span class="text-primary">{{ t('fiat') }} </span>
     </p>
-    <TabMenu :model="menuItems" v-model:activeIndex="active" />
 
-    <FiatInstructionUSADomestic :bank-national="bankNational" v-if="active == 0" />
+    <TabView>
+      <TabPanel header="US Domestic">
+        <FiatInstructionUSADomestic :bank-national="bankNational"  />
+      </TabPanel>
 
-<!--    <FiatInstructionUSAInternational :bank-international="bankInternational" v-if="active == 1" />-->
+      <TabPanel header="US International" v-if="getAccountType() !=='NATURAL_PERSON'">
+        <FiatInstructionUSAInternational :bank-international="bankInternational"   />
+      </TabPanel>
+      <TabPanel header="ACH Panama" v-if="isExistsWallet('USD_PA')">
+        <FiatInstructionPanama :bank-panama="bankPanama"  />
+      </TabPanel>
+    </TabView>
 
-<!--    <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 2" v-show="isExistsWallet('USD_PA')" />-->
 
-    <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 1" v-show="isExistsWallet('USD_PA')" />
   </section>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import TabMenu from 'primevue/tabmenu'
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
 import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
@@ -30,7 +37,7 @@ import FiatInstructionUSAInternational from './components/FiatInstructionUSAInte
 const submitting = ref(false)
 
 const { t } = useI18n({ useScope: 'global' })
-const { getUserName } = useAuth()
+const { getUserName, getAccountType } = useAuth()
 const { isExistsWallet } = useBalanceWallet()
 
 const username = getUserName()
@@ -40,45 +47,21 @@ const bankNational = ref()
 const bankInternational = ref()
 const bankPanama = ref()
 
-new FiatService()
-  .bankData()
-  .then(data => {
-    submitting.value = false
-    dataBank.value = data
-
-    bankNational.value = dataBank.value.domestic
-
-    bankInternational.value = dataBank.value.international
-
-    bankPanama.value = dataBank.value.achInstructions
-  })
-  .catch(() => (submitting.value = false))
-
-const active = ref<number>(0)
-
-const menuItems = ref<{ label: string }[]>([
-  {
-    label: 'US Domestic',
-  },
-  // {
-  //   label: 'Internacional',
-  // },
-])
-
 onMounted(() => {
-  if (isExistsWallet('USD_PA')) {
-    menuItems.value = [
-      {
-        label: 'US Domestic',
-      },
-      // {
-      //   label: 'Internacional',
-      // },
-      {
-        label: 'ACH Panama',
-      },
-    ]
-  }
+
+  new FiatService()
+    .bankData()
+    .then(data => {
+      submitting.value = false
+      dataBank.value = data
+
+      bankNational.value = dataBank.value.domestic
+
+      bankInternational.value = dataBank.value.international
+
+      bankPanama.value = dataBank.value.achInstructions
+    })
+    .catch(() => (submitting.value = false))
 })
 </script>
 

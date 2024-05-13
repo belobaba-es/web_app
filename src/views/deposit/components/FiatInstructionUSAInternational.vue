@@ -83,7 +83,7 @@
     <Divider type="solid" />
 
     <div class="grid mt-2">
-      <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+      <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <Button
           icon="pi pi-angle-right"
           iconPos="right"
@@ -119,13 +119,13 @@ const bankInternationalPdf: any = {}
 
 const title = t('titleDespositFiat')
 
-bankInternationalPdf[t('depositBankName') + ':'] = props.bankInternational.bankName
-bankInternationalPdf[t('swiftCode') + ':'] = props.bankInternational.swiftCode
-bankInternationalPdf[t('creditTo') + ':'] = props.bankInternational.creditTo
-bankInternationalPdf[t('reference') + ':'] = props.bankInternational.reference
-bankInternationalPdf[t('address') + ':'] = props.bankInternational.address
-bankInternationalPdf[t('accountNumber') + ':'] = props.bankInternational.accountNumber
-bankInternationalPdf[t('bankAddress') + ':'] = props.bankInternational.bankAddress
+bankInternationalPdf[t('depositBankName') + ':'] = props.bankInternational?.bankName
+bankInternationalPdf[t('swiftCode') + ':'] = props.bankInternational?.swiftCode
+bankInternationalPdf[t('creditTo') + ':'] = props.bankInternational?.creditTo
+bankInternationalPdf[t('reference') + ':'] = props.bankInternational?.reference
+bankInternationalPdf[t('address') + ':'] = props.bankInternational?.address
+bankInternationalPdf[t('accountNumber') + ':'] = props.bankInternational?.accountNumber
+bankInternationalPdf[t('bankAddress') + ':'] = props.bankInternational?.bankAddress
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
   generatePdf(nameFile, logo, title, bankInternationalPdf)
