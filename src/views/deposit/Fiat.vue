@@ -7,7 +7,7 @@
 
     <FiatInstructionUSADomestic :bank-national="bankNational" v-if="active == 0" />
 
-    <FiatInstructionUSAInternational :bank-international="bankInternational" v-if="active == 1" />
+<!--    <FiatInstructionUSAInternational :bank-international="bankInternational" v-if="active == 1" />-->
 
     <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 2" v-show="isExistsWallet('USD_PA')" />
   </section>
@@ -58,9 +58,9 @@ const menuItems = ref<{ label: string }[]>([
   {
     label: 'US Domestic',
   },
-  {
-    label: 'Internacional',
-  },
+  // {
+  //   label: 'Internacional',
+  // },
 ])
 
 onMounted(() => {
@@ -69,9 +69,9 @@ onMounted(() => {
       {
         label: 'US Domestic',
       },
-      {
-        label: 'Internacional',
-      },
+      // {
+      //   label: 'Internacional',
+      // },
       {
         label: 'ACH Panama',
       },
