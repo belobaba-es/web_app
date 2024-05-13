@@ -111,10 +111,10 @@ export type NewBeneficiaryPanama = {
 export type RegisterCounterpartyAchPanama = {
   accountDestinationNumber: string
   bankName: string
-  holderEmail: string
-  holderId: string
   holderName: string
   productType: productType
+  holderId?: string
+  holderEmail?: string
 }
 
 export type productType = {

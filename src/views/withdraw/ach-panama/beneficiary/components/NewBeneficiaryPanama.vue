@@ -6,7 +6,7 @@
         {{ t('withdraw') }} / <span class="text-primary"> {{ t('fiat') }} </span>
       </p>
       <div class="flex align-items-center">
-        <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" @click="toBack" />
+        <Button class="p-button-text" icon="pi pi-angle-left" iconPos="left" label="" @click="toBack" />
         <span class="text-xl"> ACH Panama Wire</span>
       </div>
 
@@ -20,13 +20,13 @@
         <label>{{ t('bankName') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            class="select-asset"
             v-model="formObjectPanama.bankName"
             :options="allowed_banks"
-            optionLabel="name"
-            optionValue="name"
             :placeholder="t('bankName')"
             :showClear="true"
+            class="select-asset"
+            optionLabel="name"
+            optionValue="name"
           />
         </div>
       </div>
@@ -34,7 +34,7 @@
       <div class="field">
         <label>{{ t('accountNumber') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.accountDestinationNumber" required />
+          <InputText v-model="formObjectPanama.accountDestinationNumber" required type="text" />
         </div>
       </div>
 
@@ -42,13 +42,13 @@
         <label>{{ t('typeProduct') }}</label>
         <div class="p-inputgroup">
           <Dropdown
-            class="select-asset"
             v-model="formObjectPanama.productType"
             :options="productAccountType"
-            optionLabel="name"
-            optionValue="name"
             :placeholder="t('typeProduct')"
             :showClear="true"
+            class="select-asset"
+            optionLabel="name"
+            optionValue="name"
           />
         </div>
       </div>
@@ -56,32 +56,32 @@
       <div class="field">
         <label>{{ t('beneficiaryName') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderName" required />
+          <InputText v-model="formObjectPanama.holderName" required type="text" />
         </div>
       </div>
 
-      <div class="field">
-        <label>{{ t('dni') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderId" required />
-        </div>
-      </div>
+      <!--      <div class="field">-->
+      <!--        <label>{{ t('dni') }}</label>-->
+      <!--        <div class="p-inputgroup">-->
+      <!--          <InputText v-model="formObjectPanama.holderId" required type="text" />-->
+      <!--        </div>-->
+      <!--      </div>-->
 
-      <div class="field">
-        <label>{{ t('emailLabel') }}</label>
-        <div class="p-inputgroup">
-          <InputText type="text" v-model="formObjectPanama.holderEmail" />
-        </div>
-      </div>
+      <!--      <div class="field">-->
+      <!--        <label>{{ t('emailLabel') }}</label>-->
+      <!--        <div class="p-inputgroup">-->
+      <!--          <InputText v-model="formObjectPanama.holderEmail" type="text" />-->
+      <!--        </div>-->
+      <!--      </div>-->
 
       <div class="field mt-5 flex justify-content-end">
-        <Button :label="t('saveNewPayee')" class="px-5" @click="save" :loading="submitting" iconPos="right" />
+        <Button :label="t('saveNewPayee')" :loading="submitting" class="px-5" iconPos="right" @click="save" />
       </div>
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
