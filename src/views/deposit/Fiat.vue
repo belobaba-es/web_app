@@ -9,7 +9,9 @@
 
 <!--    <FiatInstructionUSAInternational :bank-international="bankInternational" v-if="active == 1" />-->
 
-    <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 2" v-show="isExistsWallet('USD_PA')" />
+<!--    <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 2" v-show="isExistsWallet('USD_PA')" />-->
+
+    <FiatInstructionPanama :bank-panama="bankPanama" v-if="active == 1" v-show="isExistsWallet('USD_PA')" />
   </section>
 </template>
 
