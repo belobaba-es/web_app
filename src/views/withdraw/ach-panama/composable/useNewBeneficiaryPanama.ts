@@ -36,14 +36,9 @@ export const useNewBeneficiaryPanama = () => {
 
   const validateFields = () => {
     const achPanama = formObjectPanama.value
-    return [
-      achPanama.bankName,
-      achPanama.accountDestinationNumber,
-      achPanama.productType,
-      achPanama.holderName,
-      achPanama.holderId,
-      achPanama.holderEmail,
-    ].every(field => field.toString() !== '')
+    return [achPanama.bankName, achPanama.accountDestinationNumber, achPanama.productType, achPanama.holderName].every(
+      field => field.toString() !== ''
+    )
   }
 
   const setDataBeneficiary = (beneficiary: any) => {

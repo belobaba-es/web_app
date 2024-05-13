@@ -1,146 +1,137 @@
 [
   {
-    "name": "Atlas Bank"
+    "name": "001-BANCO NACIONAL DE PANAMÁ"
   },
   {
-    "name": "Bac Credomatic"
+    "name": "002-BANISTMO"
   },
   {
-    "name": "Banco Aliado"
+    "name": "003-CITIBANK N.A."
   },
   {
-    "name": "Banco Azteca"
+    "name": "007-BANCO GENERAL"
   },
   {
-    "name": "Banco Delta"
+    "name": "018-DAVIVIENDA"
   },
   {
-    "name": "Banco Ficohsa"
+    "name": "037-MULTIBANK"
   },
   {
-    "name": "Banco General"
+    "name": "040-TOWER BANK"
   },
   {
-    "name": "Banco LAFISE"
+    "name": "042-SCOTIABANK"
   },
   {
-    "name": "Banco La Hipotecaria"
+    "name": "051-BICSA"
   },
   {
-    "name": "Banco Nacional de Panamá"
+    "name": "071-COOPERATIVA PROFESIONALES"
   },
   {
-    "name": "Banco Pichincha"
+    "name": "077-CAJA DE AHORROS"
   },
   {
-    "name": "Bancolombia"
+    "name": "091-BANCO DEL PACIFICO"
   },
   {
-    "name": "Banesco"
+    "name": "106-METROBANK"
   },
   {
-    "name": "Banisi"
+    "name": "108-BANCO ALIADO"
   },
   {
-    "name": "Banistmo"
+    "name": "110-CREDICORPBANK"
   },
   {
-    "name": "Bank of China"
+    "name": "115-GLOBAL BANK"
   },
   {
-    "name": "BBP Bank"
+    "name": "138-BAC INTL BANK"
   },
   {
-    "name": "BCT Bank"
+    "name": "139-BCT BANK"
   },
   {
-    "name": "Bibank Panamá"
+    "name": "147-MMG BANK"
   },
   {
-    "name": "Bicsa"
+    "name": "149-ST. GEORGES BANK"
   },
   {
-    "name": "Caja de Ahorros"
+    "name": "150-BANCO AZTECA"
   },
   {
-    "name": "Canal Bank"
+    "name": "151-BANCO PICHINCHA"
   },
   {
-    "name": "Capital Bank"
+    "name": "156-BANCO DELTA"
   },
   {
-    "name": "Citibank N.A."
+    "name": "157-BANCO LAFISE"
   },
   {
-    "name": "COOPACC"
+    "name": "158-BANESCO"
   },
   {
-    "name": "COOPRAC"
+    "name": "159-CAPITAL BANK"
   },
   {
-    "name": "COOPEDUC"
+    "name": "161-BANISI"
   },
   {
-    "name": "CACECHI"
+    "name": "162-G&T CONTINENTAL"
   },
   {
-    "name": "COEDUCO"
+    "name": "163-MERCANTIL BANK"
   },
   {
-    "name": "COOESAN"
+    "name": "165-BBP BANK"
   },
   {
-    "name": "COOPEVE"
+    "name": "167-PRIVAL BANK"
   },
   {
-    "name": "ECASESO"
+    "name": "170-UNIBANK"
   },
   {
-    "name": "EDIOACC"
+    "name": "172-BANCO FICOHSA"
   },
   {
-    "name": "Cooperativa Profesionales, R.L."
+    "name": "175-BANCOLOMBIA"
   },
   {
-    "name": "Credicorp Bank"
+    "name": "178-BIBANK PANAMA"
   },
   {
-    "name": "Davivienda"
+    "name": "180-ATLAS BANK"
   },
   {
-    "name": "Federal Reserve Bank"
+    "name": "250-COOPERATIVA COOPEDUC"
   },
   {
-    "name": "Global Bank"
+    "name": "251-COOPERATIVA COOESAN"
   },
   {
-    "name": "Mercantil Bank"
+    "name": "252-COOPERATIVA CACECHI"
   },
   {
-    "name": "Metrobank"
+    "name": "253-COOPERATIVA COEDUCO"
   },
   {
-    "name": "MMG Bank"
+    "name": "254-COOPERATIVA COOPEVE"
   },
   {
-    "name": "Multibank"
+    "name": "500-COOPERATIVA CRISTOBAL (COOPACC)"
   },
   {
-    "name": "Pacific Bank"
+    "name": "501-COOPERATIVA EDIOACC"
   },
   {
-    "name": "Prival Bank"
+    "name": "502-COOPERATIVA ECASESO"
   },
   {
-    "name": "Scotiabank"
-  },
-  {
-    "name": "St. Georges Bank"
-  },
-  {
-    "name": "Tower Bank"
-  },
-  {
-    "name": "Unibank"
+    "name": "503-COOPERATIVA COOPRAC, R.L."
   }
 ]
