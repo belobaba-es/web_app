@@ -33,19 +33,19 @@
     </div>
 
     <Button
+      :label="t('confirmWithdraw')"
+      :loading="submitting"
       class="w-50 p-button search-btn"
       iconPos="right"
-      :label="t('confirmWithdraw')"
       @click="showModalVeryCodeTwoFactorOrMakeTransaction()"
-      :loading="submitting"
     />
 
     <Dialog
       v-model:visible="visibleModalVeryCodeTwoFactor"
-      :header="t('twoFactor')"
-      position="bottom"
-      :modal="true"
       :draggable="false"
+      :header="t('twoFactor')"
+      :modal="true"
+      position="bottom"
     >
       <VeryCodeTwoFactorAuth @codeIsValid="verifyCodeTwoFactorAuth" />
     </Dialog>
@@ -54,7 +54,7 @@
   <ConfirmationCompletedWithdrawFiat v-if="isCompleted" :form-data="props.formData" :transaction-id="transactionId" />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
@@ -66,6 +66,7 @@ import { useTransactionPab } from './composable/useTransactionPab'
 import { WithdrawService } from '../services/withdraw'
 import showMessage from '../../../shared/showMessageArray'
 import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
+import Dialog from 'primevue/dialog'
 
 const toast = useToast()
 const submitting = ref(false)
