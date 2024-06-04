@@ -77,7 +77,7 @@ const handleClick = () => {
 }
 
 const getIdInput = () => {
-  return `${props.dni}${props.side}`
+  return `${props.dni}${props.side}${props.type}`
 }
 
 const icon = computed(() => {
