@@ -39,6 +39,7 @@ const formObject = ref<NewBeneficiary>({
   },
 
   informationBank: {
+    networkBank: '',
     typeBeneficiaryBankWithdrawal: '',
     accountNumber: '',
     bankName: '',
@@ -54,6 +55,7 @@ const formObject = ref<NewBeneficiary>({
       country: '',
     },
   },
+  bankNetworks: [],
 })
 
 export const useNewOrEditBeneficiary = () => {

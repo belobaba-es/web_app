@@ -59,7 +59,7 @@ onMounted(() => {
 
       bankInternational.value = dataBank.value.international
 
-      bankPanama.value = dataBank.value.achInstructions
+      bankPanama.value = dataBank.value.achPab
     })
     .catch(() => (submitting.value = false))
 })

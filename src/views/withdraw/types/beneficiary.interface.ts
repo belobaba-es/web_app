@@ -59,6 +59,12 @@ export enum CounterpartyType {
   FIAT_US = 'FIAT_US',
 }
 
+export enum NetworkBank {
+  WIRE = 'FEDWIRE',
+  SWIFT = 'SWIFT',
+  ACH = 'ACH',
+}
+
 export interface BankAdress {
   city: string
   country: string
@@ -152,6 +158,7 @@ export type NewBeneficiary = {
   }
 
   informationBank: {
+    networkBank: string,
     typeBeneficiaryBankWithdrawal: string
     accountNumber: string
     bankName: string
@@ -166,5 +173,6 @@ export type NewBeneficiary = {
       city: string
       country: string
     }
-  }
+  },
+  bankNetworks: NetworkBank[],
 }

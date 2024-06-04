@@ -28,5 +28,5 @@ export type InstructionsAchPabType = {
 export interface BankData {
   domestic: bankInstructionDetail
   international: bankInstructionDetail
-  achInstructions?: InstructionsAchPabType
+  achPab?: InstructionsAchPabType
 }

@@ -41,6 +41,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
+import { NetworkBank } from '../../types/beneficiary.interface'
 
 const emit = defineEmits(['nextPage', 'prevPage'])
 
@@ -86,8 +87,13 @@ const nextStep = () => {
   formObject.value.informationBank.typeBeneficiaryBankWithdrawal = typeBeneficiary.value
   //Iban / Swift - International | Routing number Domestic
   if (typeBeneficiary.value === 'INTERNATIONAL') {
+    formObject.value.bankNetworks = [NetworkBank.SWIFT]
+    formObject.value.informationBank.networkBank = NetworkBank.SWIFT
     formObject.value.informationBank.iban = routingNumberOrIBAN.value
+
   } else if (typeBeneficiary.value === 'DOMESTIC') {
+    formObject.value.bankNetworks = [NetworkBank.WIRE]
+    formObject.value.informationBank.networkBank = NetworkBank.WIRE
     formObject.value.informationBank.routingNumber = routingNumberOrIBAN.value
     delete formObject.value.informationBank.iban
     delete formObject.value.informationBank.swiftCode
