@@ -119,13 +119,15 @@ const bankInternationalPdf: any = {}
 
 const title = t('titleDespositFiat')
 
-bankInternationalPdf[t('depositBankName') + ':'] = props.bankInternational?.bankName
-bankInternationalPdf[t('swiftCode') + ':'] = props.bankInternational?.swiftCode
-bankInternationalPdf[t('creditTo') + ':'] = props.bankInternational?.creditTo
-bankInternationalPdf[t('reference') + ':'] = props.bankInternational?.reference
-bankInternationalPdf[t('address') + ':'] = props.bankInternational?.address
-bankInternationalPdf[t('accountNumber') + ':'] = props.bankInternational?.accountNumber
-bankInternationalPdf[t('bankAddress') + ':'] = props.bankInternational?.bankAddress
+if (props.bankInternational) {
+  bankInternationalPdf[t('depositBankName') + ':'] = props.bankInternational?.bankName
+  bankInternationalPdf[t('swiftCode') + ':'] = props.bankInternational?.swiftCode
+  bankInternationalPdf[t('creditTo') + ':'] = props.bankInternational?.creditTo
+  bankInternationalPdf[t('reference') + ':'] = props.bankInternational?.reference
+  bankInternationalPdf[t('address') + ':'] = props.bankInternational?.address
+  bankInternationalPdf[t('accountNumber') + ':'] = props.bankInternational?.accountNumber
+  bankInternationalPdf[t('bankAddress') + ':'] = props.bankInternational?.bankAddress
+}
 const generatePdfInternationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatInternational')}`
   generatePdf(nameFile, logo, title, bankInternationalPdf)
