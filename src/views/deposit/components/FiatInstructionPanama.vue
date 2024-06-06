@@ -86,11 +86,13 @@ const props = defineProps<{
 }>()
 
 const bankACHPdf: any = {}
-bankACHPdf[t('fullName') + ':'] = props.bankPanama.holderName
-bankACHPdf[t('bankNameLabel') + ':'] = props.bankPanama.bankName
-bankACHPdf[t('accountNumber') + ':'] = props.bankPanama.accountDestinationNumber
-bankACHPdf[t('typeProduct') + ':'] = props.bankPanama.productType
-bankACHPdf[t('conceptLabel') + ':'] = props.bankPanama.concept
+if (props.bankPanama) {
+  bankACHPdf[t('fullName') + ':'] = props.bankPanama.holderName
+  bankACHPdf[t('bankNameLabel') + ':'] = props.bankPanama.bankName
+  bankACHPdf[t('accountNumber') + ':'] = props.bankPanama.accountDestinationNumber
+  bankACHPdf[t('typeProduct') + ':'] = props.bankPanama.productType
+  bankACHPdf[t('conceptLabel') + ':'] = props.bankPanama.concept
+}
 
 const generatePdfACHlData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatPanamaACH')}`
