@@ -6,9 +6,9 @@
 
     <div class="formgrid grid col-12">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('businessNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('businessNameLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingCompany.informationCompany.name" class="w-full" required />
+          <InputText v-model="onboardingCompany.informationCompany.name" class="w-full" required type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextCompanyName') }}</span>
@@ -18,18 +18,18 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <label>{{ t('emailLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingCompany.email" class="w-full" readonly required />
+          <InputText v-model="onboardingCompany.email" class="w-full" readonly required type="text" />
         </div>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelDocumentCompany') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('labelDocumentCompany') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <InputText
-            type="text"
             v-model="onboardingCompany.informationCompany.registerNumber"
             class="w-full"
             required
+            type="text"
           />
         </div>
         <div>
@@ -38,16 +38,16 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('companyType') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('companyType') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <Dropdown
             v-model="onboardingCompany.informationCompany.companyType"
             :options="companyType"
-            optionLabel="name"
-            option-value="value"
-            filter
             :placeholder="t('helpTextSelectAOption')"
             class="w-full"
+            filter
+            option-value="value"
+            optionLabel="name"
             required
           />
         </div>
@@ -57,9 +57,9 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelNaics') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('labelNaics') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingCompany.informationCompany.naics" class="w-full" required />
+          <InputText v-model="onboardingCompany.informationCompany.naics" class="w-full" required type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextNaics') }}</span>
@@ -67,13 +67,13 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelnaicsDescription') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('labelnaicsDescription') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <InputText
-            type="text"
             v-model="onboardingCompany.informationCompany.naicsDescription"
             class="w-full"
             required
+            type="text"
           />
         </div>
         <div>
@@ -82,7 +82,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('labelEstablishedDate') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('labelEstablishedDate') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <InputMask
             v-model="onboardingCompany.informationCompany.establishedDate"
@@ -96,9 +96,9 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
-        <label>{{ t('labelWebsite') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('labelWebsite') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="onboardingCompany.informationCompany.webSite" class="w-full" />
+          <InputText v-model="onboardingCompany.informationCompany.webSite" class="w-full" type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextWebsite') }}</span>
@@ -106,13 +106,13 @@
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('phoneLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="field grid">
           <div class="col-4">
             <Dropdown
-              class="w-full"
               v-model="onboardingCompany.informationCompany.phoneCountry"
               :options="countries"
+              class="w-full"
               filter
               option-value="calling_code"
               optionLabel="calling_code"
@@ -121,10 +121,10 @@
           <div class="col-8">
             <InputText
               id="phoneNumber"
-              type="text"
-              class=""
               v-model="onboardingCompany.informationCompany.phoneNumber"
+              class=""
               required
+              type="text"
             />
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
@@ -133,22 +133,26 @@
         </div>
       </div>
 
-      <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressRegistration') }}</p>
+      <div class="col-12 mt-3">
+        <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressRegistration') }}</p>
+      </div>
+
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('countryLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingCompany.informationCompany.registeredAddress.country"
-              :options="countries"
-              optionLabel="name"
-              option-value="country_code"
-              filter
               :loading="loadingCountriesField"
+              :options="countries"
               :placeholder="t('countryPlaceholder')"
               class="w-full"
+              filter
+              option-value="country_code"
+              optionLabel="name"
               required
+              @change="onChangeCountryHandler"
             />
           </div>
           <div>
@@ -157,14 +161,28 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-          <div class="p-inputgroup">
+          <label>{{ t('stateLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
+          <div v-if="!showCombo" class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.registeredAddress.region"
               class="w-full"
               required
+              type="text"
             />
+          </div>
+          <div v-if="showCombo" class="p-inputgroup">
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="onboardingCompany.informationCompany.registeredAddress.region"
+                :options="state_us"
+                :placeholder="t('stateLabel')"
+                class="w-full"
+                filter
+                option-value="state_code"
+                optionLabel="name"
+                required
+              />
+            </div>
           </div>
           <div>
             <span class="help-text">{{ t('helpTextState') }}</span>
@@ -172,13 +190,13 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('cityLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.registeredAddress.city"
               class="w-full"
               required
+              type="text"
             />
           </div>
           <div>
@@ -187,12 +205,12 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('streetAddress') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.registeredAddress.streetOne"
               required
+              type="text"
             />
           </div>
           <div>
@@ -203,7 +221,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingCompany.informationCompany.registeredAddress.streetTwo" />
+            <InputText v-model="onboardingCompany.informationCompany.registeredAddress.streetTwo" type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -211,12 +229,12 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.registeredAddress.postalCode"
               required
+              type="text"
             />
           </div>
           <div>
@@ -230,12 +248,7 @@
           <p class="mt-4 mb-0 text-uppercase">{{ t('labelAdressFisical') }}</p>
         </div>
         <div class="field-checkbox mt-2">
-          <Checkbox
-            inputId="patriot"
-            v-model="isFisicalAdress"
-            @change="physicalAddressIsSameRegisteredAddress(isFisicalAdress)"
-            :binary="true"
-          />
+          <Checkbox v-model="isFisicalAdress" :binary="true" inputId="patriot" @change="copyPhysicalAddress" />
           <label for="patriot">{{ t('duplicateCompanyPhysicalAddress') }}</label>
         </div>
       </div>
@@ -243,17 +256,18 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('countryLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingCompany.informationCompany.physicalAddress.country"
-              :options="countries"
-              optionLabel="name"
-              option-value="country_code"
               :loading="loadingCountriesField"
+              :options="countries"
               :placeholder="t('countryPlaceholder')"
               class="w-full"
+              option-value="country_code"
+              optionLabel="name"
               required
+              @change="onChangeCountryHandlerPhysicalAddress"
             />
           </div>
           <div>
@@ -262,13 +276,27 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-          <div class="p-inputgroup">
+          <label>{{ t('stateLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
+          <div v-if="!showComboPhysicalAddress" class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.physicalAddress.region"
               class="w-full"
+              type="text"
             />
+          </div>
+          <div v-if="showComboPhysicalAddress" class="p-inputgroup">
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="onboardingCompany.informationCompany.physicalAddress.region"
+                :options="state_us"
+                :placeholder="t('stateLabel')"
+                class="w-full"
+                filter
+                option-value="state_code"
+                optionLabel="name"
+                required
+              />
+            </div>
           </div>
           <div>
             <span class="help-text">{{ t('helpTextState') }}</span>
@@ -276,13 +304,13 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('cityLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <InputText
-              type="text"
               v-model="onboardingCompany.informationCompany.physicalAddress.city"
               class="w-full"
               required
+              type="text"
             />
           </div>
           <div>
@@ -291,9 +319,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('streetAddress') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.streetOne" required />
+            <InputText v-model="onboardingCompany.informationCompany.physicalAddress.streetOne" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -303,7 +331,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.streetTwo" />
+            <InputText v-model="onboardingCompany.informationCompany.physicalAddress.streetTwo" type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -311,9 +339,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="onboardingCompany.informationCompany.physicalAddress.postalCode" required />
+            <InputText v-model="onboardingCompany.informationCompany.physicalAddress.postalCode" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }}</span>
@@ -324,9 +352,9 @@
       <div class="field mt-4 col-12 flex align-items-center justify-content-end">
         <Button
           :label="t('continue')"
+          class="px-5 mt-2 btn-submit"
           icon="pi pi-angle-right"
           iconPos="right"
-          class="px-5 mt-2 btn-submit"
           @click="nextStep2()"
         />
       </div>
@@ -335,8 +363,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import Dropdown from 'primevue/dropdown'
+import { computed, onMounted, ref, watch } from 'vue'
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider'
@@ -347,13 +375,32 @@ import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import InputMask from 'primevue/inputmask'
 import { useOptionsAccounts } from '../../../composables/useOptionsAccounts'
 
-const { countries, fetchCountries, loadingCountriesField, countriesInputIsEmpty, calling_code } = useWorld()
+const { countries, fetchCountries, loadingCountriesField } = useWorld()
 const { onboardingCompany, physicalAddressIsSameRegisteredAddress, nextStep2 } = useOnboardingCompany()
 const { companyType } = useOptionsAccounts()
 
 const { t } = useI18n({ useScope: 'global' })
 
+const { state_us, showCombo, onChangeCountryHandler } = useWorld()
+
 const isFisicalAdress = ref<boolean>(false)
+
+const showComboPhysicalAddress = ref<boolean>(false)
+
+const onChangeCountryHandlerPhysicalAddress = (event: DropdownChangeEvent) => {
+  showComboPhysicalAddress.value =
+    event.value == 'US' || onboardingCompany.value.informationCompany.physicalAddress.country == 'US'
+}
+
+const copyPhysicalAddress = () => {
+  physicalAddressIsSameRegisteredAddress(isFisicalAdress.value)
+
+  showComboPhysicalAddress.value = onboardingCompany.value.informationCompany.physicalAddress.country == 'US'
+}
+
+// const showComboState = computed(() => {
+//   return onboardingCompany.value.informationCompany.registeredAddress.country === 'US'
+// })
 
 onMounted(async () => {
   await fetchCountries()
@@ -369,10 +416,12 @@ onMounted(async () => {
     width: 100% !important;
   }
 }
+
 .bg-red {
   color: red;
   font-weight: bold;
 }
+
 #phoneNumber {
   width: 97%;
 }

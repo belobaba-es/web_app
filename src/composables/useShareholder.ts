@@ -90,7 +90,6 @@ export const useShareholder = () => {
           isHaveDocumentUS.value = false
         }
 
-        console.log('se ejecuta si no hay clientid')
         router.push('/onboarding/business/add-shareholders')
 
         if (resp.data.clientId) {
@@ -98,9 +97,8 @@ export const useShareholder = () => {
         }
       })
       .catch(e => {
-        console.log(e)
         submitting.value = false
-        processException(toast, t, e.response.data)
+        processException(toast, t, e.response)
       })
   }
 

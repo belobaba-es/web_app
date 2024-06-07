@@ -7,9 +7,9 @@
 
     <div class="formgrid grid col-12">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('nameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('nameLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.firstName" class="w-full" required />
+          <InputText v-model="partner.firstName" class="w-full" required type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextName') }}</span>
@@ -17,9 +17,9 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('secondNameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('secondNameLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.middleName" class="w-full" required />
+          <InputText v-model="partner.middleName" class="w-full" required type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextMiddleName') }}</span>
@@ -27,9 +27,9 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('surnameLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('surnameLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="partner.lastName" class="w-full" required />
+          <InputText v-model="partner.lastName" class="w-full" required type="text" />
         </div>
         <div>
           <span class="help-text">{{ t('helpTextSurname') }}</span>
@@ -37,7 +37,7 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
-        <label>{{ t('birthdateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('birthdateLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <div class="p-inputgroup">
             <InputMask v-model="dateBirth" mask="9999-99-99" slotChar="yyyy/mm/dd" />
@@ -46,21 +46,21 @@
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-        <label>{{ t('emailLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('emailLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
           <!-- //FIX readonly -->
-          <InputText type="text" v-model="partner.email" class="w-full" required />
+          <InputText v-model="partner.email" class="w-full" required type="text" />
         </div>
       </div>
 
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 phone-input">
-        <label>{{ t('phoneLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('phoneLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="field grid">
           <div class="col-4">
-            <Dropdown class="w-full" v-model="partner.phoneCountry" :options="calling_code" />
+            <Dropdown v-model="partner.phoneCountry" :options="calling_code" class="w-full" />
           </div>
           <div class="col-8">
-            <InputText id="phoneNumber" type="text" class="" v-model="partner.phoneNumber" required />
+            <InputText id="phoneNumber" v-model="partner.phoneNumber" class="" required type="text" />
             <div>
               <span class="help-text">{{ t('helpTextPhone') }}</span>
             </div>
@@ -69,12 +69,12 @@
       </div>
 
       <div class="flex flex-wrap gap-3 col-12 mb-4 mt-4 align-content-center">
-        <label>{{ t('validDocument') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <label>{{ t('validDocument') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
 
         <div class="flex justify-content-center">
           <div class="flex gap-3">
             <div v-for="data in typeDocumentPartner" :key="data.name" class="flex align-items-center">
-              <RadioButton v-model="isHaveDocumentUS" :inputId="data.name" name="dynamic" :value="data.key" />
+              <RadioButton v-model="isHaveDocumentUS" :inputId="data.name" :value="data.key" name="dynamic" />
               <label :for="data.name" class="ml-2">{{ data.name }}</label>
             </div>
           </div>
@@ -82,10 +82,10 @@
       </div>
 
       <div class="flex">
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4" v-if="!isHaveDocumentUS">
-          <label>{{ t('docTypeLabelPassport') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+        <div v-if="!isHaveDocumentUS" class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
+          <label>{{ t('docTypeLabelPassport') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-tooltip.top="'not required'" v-model="partner.passport" class="w-full" required />
+            <InputText v-model="partner.passport" v-tooltip.top="'not required'" class="w-full" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextPassport') }}</span>
@@ -93,9 +93,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('documentLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('documentLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.dni" class="w-full" required />
+            <InputText v-model="partner.dni" class="w-full" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextIdNumber') }}</span>
@@ -103,9 +103,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-5">
-          <label>{{ t('taxIdLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('taxIdLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.taxId" class="w-full" required />
+            <InputText v-model="partner.taxId" class="w-full" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextTaxIDNumber') }}</span>
@@ -118,17 +118,19 @@
       <Divider class="mt-0"></Divider>
       <div class="grid mt-2">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('countryLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('countryLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
             <Dropdown
               v-model="partner.country"
-              :options="countries"
-              optionLabel="name"
-              option-value="country_code"
               :loading="loadingCountriesField"
+              :options="countries"
               :placeholder="t('countryPlaceholder')"
               class="w-full"
+              filter
+              option-value="country_code"
+              optionLabel="name"
               required
+              @change="onChangeCountryHandler"
             />
           </div>
           <div>
@@ -137,9 +139,23 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('stateLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
-          <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.region" class="w-full" />
+          <label>{{ t('stateLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
+          <div v-if="!showComboState" class="p-inputgroup">
+            <InputText v-model="partner.region" class="w-full" type="text" />
+          </div>
+          <div v-if="showComboState" class="p-inputgroup">
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="partner.region"
+                :options="state_us"
+                :placeholder="t('stateLabel')"
+                class="w-full"
+                filter
+                option-value="state_code"
+                optionLabel="name"
+                required
+              />
+            </div>
           </div>
           <div>
             <span class="help-text">{{ t('helpTextState') }}</span>
@@ -147,9 +163,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('cityLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('cityLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.city" class="w-full" required />
+            <InputText v-model="partner.city" class="w-full" required type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextCity') }}</span>
@@ -157,9 +173,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('streetAddress') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('streetAddress') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.streetOne" />
+            <InputText v-model="partner.streetOne" type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressOne') }}</span>
@@ -169,7 +185,7 @@
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <label>{{ t('streetAddressTwo') }}</label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.streetTwo" />
+            <InputText v-model="partner.streetTwo" type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressTwo') }}</span>
@@ -177,9 +193,9 @@
         </div>
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
-          <label>{{ t('postalCodeLabel') }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+          <label>{{ t('postalCodeLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText type="text" v-model="partner.postalCode" />
+            <InputText v-model="partner.postalCode" type="text" />
           </div>
           <div>
             <span class="help-text">{{ t('helpTextAddressPostalCode') }} </span>
@@ -191,18 +207,18 @@
         <div class="float-left w-25">
           <Button
             v-show="showButtonForCancel()"
-            type="button"
             :label="t('cancel')"
             class="font-light w-100 border-300 p-button-outlined"
+            type="button"
             @click="redirectToStep2"
           />
         </div>
         <div class="float-right w-25">
           <Button
             :label="t('addShareHolder')"
+            :loading="submitting"
             class="px-5 mt-2 btn-submit"
             iconPos="right"
-            :loading="submitting"
             @click="addNewShareholder()"
           />
         </div>
@@ -212,7 +228,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -240,6 +256,8 @@ const {
   isHaveDocumentUS,
 } = useShareholder()
 
+const { state_us, onChangeCountryHandler } = useWorld()
+
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
 
@@ -262,6 +280,10 @@ onMounted(async () => {
     console.log('partner.value.dateBirth', partner.value.dateBirth)
   })
   ///////////////////////////////////////////////
+})
+
+const showComboState = computed(() => {
+  return partner.value.country === 'US'
 })
 
 const verifyRoute = () => {
