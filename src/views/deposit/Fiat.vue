@@ -4,7 +4,7 @@
       {{ t('deposit') }} / <span class="text-primary">{{ t('fiat') }} </span>
     </p>
 
-    <TabView>
+    <TabView v-if="!submitting">
       <TabPanel header="US Domestic">
         <FiatInstructionUSADomestic :bank-national="bankNational"  />
       </TabPanel>
@@ -16,7 +16,6 @@
         <FiatInstructionPanama :bank-panama="bankPanama"  />
       </TabPanel>
     </TabView>
-
 
   </section>
 </template>
@@ -34,7 +33,7 @@ import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionUSADomestic from './components/FiatInstructionUSADomestic.vue'
 import FiatInstructionUSAInternational from './components/FiatInstructionUSAInternational.vue'
 
-const submitting = ref(false)
+const submitting = ref(true)
 
 const { t } = useI18n({ useScope: 'global' })
 const { getUserName, getAccountType } = useAuth()
