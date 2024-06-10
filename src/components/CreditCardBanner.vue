@@ -1,6 +1,6 @@
 <template>
   <div class="credit-card-banner mb-5">
-    <img src="../assets/img/banner-completo.png" alt="" />
+    <img src="../assets/img/banner-complete.png" alt="" />
   </div>
 </template>
 <script setup lang="ts"></script>
