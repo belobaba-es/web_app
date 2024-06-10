@@ -35,6 +35,7 @@ import ButtonCreateWallet from '../../components/ButtonCreateWallet.vue'
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
+import CreditCardBanner from '../../components/CreditCardBanner.vue'
 
 const router = useRouter()
 const inactiveTime = ref(0)
