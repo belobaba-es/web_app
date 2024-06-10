@@ -6,6 +6,9 @@
     </div>
 
     <div class="layout-main-container">
+      <div class="pt-5 mt-5">
+        <CreditCardBanner />
+      </div>
       <div class="layout-main">
         <router-view />
       </div>
