@@ -45,14 +45,18 @@ import Button from 'primevue/button'
 import Steps from 'primevue/steps'
 import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
 import { useWorld } from '../../../composables/useWorld'
+import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const { itemSteps, typeBeneficiary, formObject, complete, nextPage, prevPage } = useNewOrEditBeneficiary()
-const { fetchCountries, fetchCountryAllowUsa } = useWorld()
+const { fetchCountries, fetchCountryAllowUsa, showCombo } = useWorld()
 
-fetchCountries()
-fetchCountryAllowUsa()
+onMounted(() => {
+  fetchCountries()
+  fetchCountryAllowUsa()
+  showCombo.value = false
+})
 </script>
 
 <style scoped></style>
