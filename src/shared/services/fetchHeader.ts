@@ -12,7 +12,7 @@ export default async (isFormData: boolean = false) => {
     headers: {
       'Content-Type': type,
       Authorization: 'Bearer ' + getToken(),
-      'tenant-name': 'belobaba',
+      'tenant-name': import.meta.env.VITE_TENANT_NAME,
     },
   }
 }

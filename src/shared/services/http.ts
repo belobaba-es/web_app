@@ -27,7 +27,7 @@ export class HttpService {
       headers: {
         'Content-Type': type,
         Authorization: 'Bearer ' + getToken(),
-        'tenant-name': 'belobaba',
+        'tenant-name': import.meta.env.VITE_TENANT_NAME,
       },
     }
   }
@@ -40,7 +40,7 @@ export class HttpService {
       headerRequest = {
         headers: {
           'Content-Type': 'application/json',
-          'tenant-name': 'belobaba',
+          'tenant-name': import.meta.env.VITE_TENANT_NAME,
         },
       }
     }
@@ -57,7 +57,7 @@ export class HttpService {
     } else {
       headerRequest = {
         headers: {
-          'tenant-name': 'belobaba',
+          'tenant-name': import.meta.env.VITE_TENANT_NAME,
         },
       }
     }
@@ -76,7 +76,7 @@ export class HttpService {
     } else {
       header = {
         headers: {
-          'tenant-name': 'belobaba',
+          'tenant-name': import.meta.env.VITE_TENANT_NAME,
         },
       }
     }

@@ -12,7 +12,7 @@ export const fetchLogin = async (email: string, password: string): Promise<UserA
     {
       headers: {
         'Content-Type': 'application/json',
-        'tenant-name': 'belobaba',
+        'tenant-name': import.meta.env.VITE_TENANT_NAME,
       },
     }
   )
