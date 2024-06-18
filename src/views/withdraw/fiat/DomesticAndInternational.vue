@@ -36,6 +36,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 
 import { useWithdraw } from '../composables/useWithdraw'
+import { useNewOrEditBeneficiary } from '../beneficiary/composable/useNewOrEditBeneficiary'
 
 const router = useRouter()
 const route = useRoute()
@@ -63,16 +64,20 @@ const items = ref([
 ])
 
 const { formObject, nextStepPage, prevStepPage, stepComplete, toBack } = useWithdraw(items)
+const { clearFormFiatBeneficiary } = useNewOrEditBeneficiary()
 
 const newBeneficiary = () => {
   return router.push(`/withdraw/usa/fiat/${route.params.type}/new`)
 }
 
 onMounted(async () => {
-  console.log('Domestic view', route.params.type)
   if (route.params.type !== 'domestic') {
     type.value = 'International'
+
+    return
   }
+
+  clearFormFiatBeneficiary()
 })
 </script>
 
