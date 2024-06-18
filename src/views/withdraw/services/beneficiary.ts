@@ -12,7 +12,7 @@ import { UnwrapRef } from 'vue'
 export class BeneficiaryService {
   async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<BeneficiaryAssetsResponse>(
-      `beneficiary/asset/${nextPag}`
+      `beneficiary/asset/${nextPag === 0 ? 1 : nextPag}`
     )
   }
 
@@ -36,7 +36,7 @@ export class BeneficiaryService {
 
   async listBeneficiaryAchPanama(nextPag = 1) {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(
-      `beneficiary/ach/pab/?type=EXTERNAL&page=${nextPag}`
+      `beneficiary/ach/pab/?type=EXTERNAL&page=${nextPag === 0 ? 1 : nextPag}`
     )
   }
 
