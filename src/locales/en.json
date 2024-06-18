@@ -533,6 +533,7 @@
   "twoFactorAlertTitle": "Activate two-factor authentication",
   "twoFactorAlertMessage": "For security, you need to activate two-factor authentication to confirm withdrawals in your BELOBABA account.",
   "btnActivateTwoFactorAuth" : "Activate two factor",
+  "relationToBeneficiary": "Relación con el beneficiario",
   "SELF": "Self",
   "FRIEND": "Friend",
   "CUSTOMER": "Customer",

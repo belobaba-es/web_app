@@ -519,6 +519,7 @@
   "twoFactorAlertTitle": "Active la autenticación de doble factor",
   "twoFactorAlertMessage": "Por seguridad es necesario que active la autenticación de doble factor para confirmar retiros en tu cuenta BELOBABA",
   "btnActivateTwoFactorAuth" : "Activar doble factor",
+  "relationToBeneficiary": "Relación con el beneficiario",
   "SELF": "Soy yo",
   "FRIEND": "Amigo",
   "BUSINESS_PARTNER": "Socio comercial",
