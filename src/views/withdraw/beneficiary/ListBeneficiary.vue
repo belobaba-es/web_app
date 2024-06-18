@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="mt-5" v-if="listNextPag.toString() !== ''">
+    <div class="mt-5" v-if="listNextPag > 0">
       <div class="grid flex justify-content-end">
         <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
           <Button

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import { NewBeneficiary } from '../../types/beneficiary.interface'
+import { NetworkBank, NewBeneficiary } from '../../types/beneficiary.interface'
 import { BeneficiaryService } from '../../services/beneficiary'
 import showExceptionError from '../../../../shared/showExceptionError'
 import showMessage from '../../../../shared/showMessageArray'
@@ -14,6 +14,7 @@ const submitting = ref<boolean>(false)
 const formObject = ref<NewBeneficiary>({
   counterpartyId: '',
   profileType: 'INDIVIDUAL',
+  relationToBeneficiary: '',
   informationOwner: {
     name: '',
     address: {
@@ -39,11 +40,13 @@ const formObject = ref<NewBeneficiary>({
   },
 
   informationBank: {
+    networkBank: '',
     typeBeneficiaryBankWithdrawal: '',
     accountNumber: '',
     bankName: '',
     swiftCode: '',
     routingNumber: '',
+    abaAch: '',
     iban: '',
     address: {
       streetOne: '',
@@ -54,7 +57,9 @@ const formObject = ref<NewBeneficiary>({
       country: '',
     },
   },
+  bankNetworks: [],
 })
+
 
 export const useNewOrEditBeneficiary = () => {
   const router = useRouter()
@@ -144,6 +149,11 @@ export const useNewOrEditBeneficiary = () => {
     let formData: NewBeneficiary = formObject.value as NewBeneficiary
     if (typeBeneficiary.value !== 'INTERNATIONAL') {
       delete formData.informationIntermediaryBank
+      formData.bankNetworks = [NetworkBank.WIRE]
+      formData.informationBank.networkBank = NetworkBank.WIRE
+    } else {
+      formData.bankNetworks = [NetworkBank.SWIFT]
+      formData.informationBank.networkBank = NetworkBank.SWIFT
     }
 
     if (!isUpdateBeneficiary.value) {
@@ -162,6 +172,7 @@ export const useNewOrEditBeneficiary = () => {
           life: 4000,
         })
         isUpdateBeneficiary.value = false
+        clearFormFiatBeneficiary()
         window.location.href = `/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}`
       })
       .catch(e => {
@@ -183,6 +194,58 @@ export const useNewOrEditBeneficiary = () => {
       })
   }
 
+  const clearFormFiatBeneficiary = () => {
+    formObject.value = {
+      counterpartyId: '',
+      profileType: 'INDIVIDUAL',
+      relationToBeneficiary: '',
+      informationOwner: {
+        name: '',
+        address: {
+          streetOne: '',
+          streetTwo: '',
+          postalCode: '',
+          region: '',
+          city: '',
+          country: '',
+        },
+      },
+      informationIntermediaryBank: {
+        bankName: '',
+        swiftCode: '',
+        address: {
+          streetOne: '',
+          streetTwo: '',
+          postalCode: '',
+          region: '',
+          city: '',
+          country: '',
+        },
+      },
+
+      informationBank: {
+        networkBank: '',
+        typeBeneficiaryBankWithdrawal: '',
+        accountNumber: '',
+        bankName: '',
+        swiftCode: '',
+        routingNumber: '',
+        abaAch: '',
+        iban: '',
+        address: {
+          streetOne: '',
+          streetTwo: '',
+          postalCode: '',
+          region: '',
+          city: '',
+          country: '',
+        },
+      },
+      bankNetworks: [],
+    }
+  }
+
+
   return {
     submitting,
     itemSteps,
@@ -194,5 +257,7 @@ export const useNewOrEditBeneficiary = () => {
     complete,
     nextPage,
     prevPage,
+    isUpdateBeneficiary,
+    clearFormFiatBeneficiary
   }
 }

@@ -11,6 +11,12 @@ export enum CounterpartyType {
   FIAT = 'FIAT',
 }
 
+export enum NetworkBank {
+  WIRE = 'FEDWIRE',
+  SWIFT = 'SWIFT',
+  ACH = 'ACH',
+}
+
 export enum CounterpartyStatus {
   REGISTERED = 'REGISTERED',
   PENDING = 'PENDING',
@@ -127,6 +133,7 @@ export type productType = {
 export type NewBeneficiary = {
   counterpartyId?: string
   profileType: 'INDIVIDUAL' | 'CORPORATION'
+  relationToBeneficiary: string
   informationOwner: {
     name: string
     address: {
@@ -152,11 +159,13 @@ export type NewBeneficiary = {
   }
 
   informationBank: {
+    networkBank: string
     typeBeneficiaryBankWithdrawal: string
     accountNumber: string
     bankName: string
     swiftCode?: string
     routingNumber: string
+    abaAch?: string
     iban?: string
     address: {
       streetOne: string
@@ -167,4 +176,5 @@ export type NewBeneficiary = {
       country: string
     }
   }
+  bankNetworks?: NetworkBank[]
 }
