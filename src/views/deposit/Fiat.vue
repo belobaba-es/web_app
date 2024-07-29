@@ -9,9 +9,14 @@
         <FiatInstructionUSADomestic :bank-national="bankNational"  />
       </TabPanel>
 
+<!--      <TabPanel v-if="bankAchUsd" header="US ACH">-->
+<!--        <FiatInstructionAchUsd :bank-ach-usd="bankAchUsd" />-->
+<!--      </TabPanel>-->
+
       <TabPanel header="US International" v-if="getAccountType() !=='NATURAL_PERSON'">
         <FiatInstructionUSAInternational :bank-international="bankInternational"   />
       </TabPanel>
+
       <TabPanel header="ACH Panama" v-if="isExistsWallet('USD_PA')">
         <FiatInstructionPanama :bank-panama="bankPanama"  />
       </TabPanel>
@@ -32,6 +37,7 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionUSADomestic from './components/FiatInstructionUSADomestic.vue'
 import FiatInstructionUSAInternational from './components/FiatInstructionUSAInternational.vue'
+// import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
 
 const submitting = ref(true)
 
@@ -45,6 +51,7 @@ const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
 const bankPanama = ref()
+const bankAchUsd = ref()
 
 onMounted(() => {
 
@@ -55,10 +62,10 @@ onMounted(() => {
       dataBank.value = data
 
       bankNational.value = dataBank.value.domestic
-
+      bankAchUsd.value = dataBank.value.achUsd
       bankInternational.value = dataBank.value.international
+      bankPanama.value = dataBank.value.achPab
 
-      bankPanama.value = dataBank.value.achInstructions
     })
     .catch(() => (submitting.value = false))
 })

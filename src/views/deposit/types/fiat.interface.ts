@@ -25,8 +25,16 @@ export type InstructionsAchPabType = {
   concept: string
 }
 
+export type AchUsdBankInstructionDetail = {
+  holderName: string
+  accountNumber: string
+  accountRoutingNumber: string
+  memo: string
+}
+
 export interface BankData {
   domestic: bankInstructionDetail
-  international: bankInstructionDetail
-  achInstructions?: InstructionsAchPabType
+  international?: bankInstructionDetail
+  achUsd: AchUsdBankInstructionDetail
+  achPab?: InstructionsAchPabType
 }
