@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main" style="height: 100%; paddingbottom: 5rem">
+  <section class="section-main" style="height: 100%; padding-bottom: 5rem">
     <FinishRegisterWarningBar v-if="!props.isDashboard" />
 
     <!-- <p class="text-3xl font-medium">{{ t('transactionHistory') }}</p> -->
@@ -198,7 +198,7 @@
         </template>
       </div>
 
-      <div class="mt-2" v-if="nextPage.nextPage === true && !props.isDashboard">
+      <div class="mt-2" v-if="nextPage.nextPage && !props.isDashboard">
         <div class="grid flex justify-content-end">
           <div class="col-12 sm:col-12 md:col-12 lg:col-3 xl:col-3">
             <Button
@@ -360,7 +360,6 @@ const getTransactions = async (filters: any = {}) => {
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
-  listTransaction.value = []
 
   // todo send nextPage as page into the payload
   await new TransactionHistoricService()
@@ -401,7 +400,6 @@ const loadMoreItems = async () => {
   isLoading.value = true
   isLoadingPDF.value = true
   submitting.value = true
-  listTransaction.value = []
 
   await filtersChange('page', nextPage.value.data)
   await getTransactions(filters)
