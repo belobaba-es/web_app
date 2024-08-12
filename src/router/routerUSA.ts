@@ -23,6 +23,24 @@ export const routerUSA = [
     ],
   },
   {
+    path: 'fiat/:type/:networkType',
+    component: WithdrawFiatDomestic,
+    children: [
+      {
+        path: '',
+        component: () => import('../views/withdraw/components/WitdrawFiat/StepAccounts.vue'),
+      },
+      {
+        path: 'amount',
+        component: WithdrawFiatStepAmount,
+      },
+      {
+        path: 'confirmation',
+        component: WithdrawFiatStepConfirmation,
+      },
+    ],
+  },
+  {
     path: 'fiat/domestic/new',
     component: () => import('../views/withdraw/beneficiary/NewBeneficiary.vue'),
     children: [

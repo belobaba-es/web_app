@@ -4,6 +4,7 @@ import {
   BeneficiaryAsset,
   BeneficiaryAssetsResponse,
   BeneficiaryType,
+  NetworkBank,
   RegisterCounterpartyAchPanama,
 } from '../types/beneficiary.interface'
 import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
@@ -16,10 +17,17 @@ export class BeneficiaryService {
     )
   }
 
-  async listBeneficiaryBankingExternal(beneficiaryType: BeneficiaryType, nextPag = 1) {
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(
-      `beneficiary/banking/external/${nextPag === 0 ? 1 : nextPag}?withdrawalType=${beneficiaryType}`
-    )
+  async listBeneficiaryBankingExternal(
+    beneficiaryType: BeneficiaryType,
+    nextPag = 1,
+    typeNetworkBankBeneficiary?: NetworkBank
+  ) {
+    let url = `beneficiary/banking/external/${nextPag === 0 ? 1 : nextPag}?withdrawalType=${beneficiaryType}`
+    if (typeNetworkBankBeneficiary) {
+      url += `&typeNetworkBankBeneficiary=${typeNetworkBankBeneficiary}`
+    }
+
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(url)
   }
 
   async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
