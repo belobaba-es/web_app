@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { OnboardingPersonal } from '../types/onboardingPersonal'
+import { AddressShipping, OnboardingPersonal } from '../types/onboardingPersonal'
 import { useAuth } from '../composables/useAuth'
 
 const { getUserEmail } = useAuth()
@@ -39,6 +39,18 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     monthlyCryptoInvestmentWithdrawal: '',
     fundsSendReceiveJurisdictions: [],
     engageInActivities: [],
+    nationality: '',
+    documentExpirationDate: '',
+    addressShipping: {
+      streetOne: '',
+      streetTwo: '',
+      postalCode: '',
+      city: '',
+      region: '',
+      country: '',
+      number: '',
+      apartmentNumber: '',
+    },
   }),
   actions: {
     setStateOnboardingPersonal(onboardingPersonal: OnboardingPersonal) {
@@ -75,6 +87,9 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
       this.monthlyCryptoInvestmentWithdrawal = onboardingPersonal.monthlyCryptoInvestmentWithdrawal
       this.fundsSendReceiveJurisdictions = onboardingPersonal.fundsSendReceiveJurisdictions
       this.engageInActivities = onboardingPersonal.engageInActivities
+      this.nationality = onboardingPersonal.nationality
+      this.documentExpirationDate = onboardingPersonal.documentExpirationDate
+      this.addressShipping = onboardingPersonal.addressShipping
     },
 
     dataOnboardingPersonal(): OnboardingPersonal {
@@ -112,7 +127,44 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
         monthlyCryptoInvestmentWithdrawal: this.monthlyCryptoInvestmentWithdrawal,
         fundsSendReceiveJurisdictions: this.fundsSendReceiveJurisdictions,
         engageInActivities: this.engageInActivities,
+        nationality: this.nationality,
+        documentExpirationDate: this.documentExpirationDate,
+        addressShipping: this.addressShipping,
       }
+    },
+
+    setAddressShipping(addressShipping: AddressShipping) {
+      this.addressShipping = addressShipping
+    },
+
+    getAddress() {
+      return {
+        streetOne: this.streetOne,
+        streetTwo: this.streetTwo,
+        postalCode: this.postalCode,
+        city: this.city,
+        region: this.region,
+        country: this.country,
+      }
+    },
+
+    getAddressShipping(): AddressShipping | undefined {
+      return this.addressShipping
+    },
+
+    setNationality(nationality: string) {
+      this.nationality = nationality
+    },
+    setDocumentExpirationDate(documentExpirationDate: string) {
+      this.documentExpirationDate = documentExpirationDate
+    },
+
+    getDNI() {
+      return this.dni
+    },
+
+    getDateBirth() {
+      return this.dateBirth
     },
   },
 })

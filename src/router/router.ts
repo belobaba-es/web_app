@@ -19,6 +19,7 @@ import { routerUSA } from './routerUSA'
 import { routerPanama } from './routerPanama'
 import { routerInternalTransfer } from './routerInternalTransfer'
 import { routerCrypto } from './routerCrypto'
+import { routerCard } from './routerCard'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -99,6 +100,11 @@ const routes: RouteRecordRaw[] = [
         meta: {
           noCache: true,
         },
+      },
+      {
+        path: '/cards',
+        component: () => import('../views/cards/Index.vue'),
+        children: routerCard,
       },
       {
         path: '/withdraw/crypto/',
