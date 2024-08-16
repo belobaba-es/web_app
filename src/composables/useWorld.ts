@@ -30,9 +30,9 @@ export interface StateUS {
 const countries = ref<Country[]>([])
 const state_us = ref<StateUS[]>(state_data)
 const countryAllowedForUSA = ref<CountryAllowed[]>([])
-const showCombo = ref<boolean>(false)
 
 export const useWorld = () => {
+  const showCombo = ref<boolean>(false)
   const calling_code = ref<string[]>([''])
 
   const states = ref<State[]>([])
@@ -94,11 +94,12 @@ export const useWorld = () => {
   }
 
   const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
-    showCombo.value = false
-
     if (event.value == 'US') {
       showCombo.value = true
+      return
     }
+
+    showCombo.value = false
   }
 
   const onChangeStateHandler = async (event: DropdownChangeEvent) => {
