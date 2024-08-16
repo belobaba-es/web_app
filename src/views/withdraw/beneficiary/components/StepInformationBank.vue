@@ -18,6 +18,7 @@
             option-value="countryCode"
             optionLabel="name"
             required
+            @change="changeCountryHandler"
           />
         </div>
       </div>
@@ -60,7 +61,6 @@
             option-value="state_code"
             optionLabel="name"
             required
-            @change="changeCountryHandler"
           />
         </div>
       </div>
