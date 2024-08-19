@@ -152,7 +152,7 @@
               option-value="country_code"
               optionLabel="name"
               required
-              @change="onChangeCountryHandler"
+              @change="changeCountryHandler"
             />
           </div>
           <div>
@@ -381,11 +381,12 @@ const { companyType } = useOptionsAccounts()
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { state_us, showCombo, onChangeCountryHandler } = useWorld()
+const { state_us, onChangeCountryHandler } = useWorld()
 
 const isFisicalAdress = ref<boolean>(false)
 
 const showComboPhysicalAddress = ref<boolean>(false)
+const showCombo = ref<boolean>(false)
 
 const onChangeCountryHandlerPhysicalAddress = (event: DropdownChangeEvent) => {
   showComboPhysicalAddress.value =
@@ -398,9 +399,10 @@ const copyPhysicalAddress = () => {
   showComboPhysicalAddress.value = onboardingCompany.value.informationCompany.physicalAddress.country == 'US'
 }
 
-// const showComboState = computed(() => {
-//   return onboardingCompany.value.informationCompany.registeredAddress.country === 'US'
-// })
+const changeCountryHandler = async (event: DropdownChangeEvent) => {
+  onboardingCompany.value.informationCompany.registeredAddress.region = ''
+  onChangeCountryHandler(event, showCombo)
+}
 
 onMounted(async () => {
   await fetchCountries()
@@ -426,4 +428,3 @@ onMounted(async () => {
   width: 97%;
 }
 </style>
-../../../composables/useOptionsAccounts
