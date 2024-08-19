@@ -7,12 +7,12 @@
 
       <div class="flex align-items-center">
         <router-link to="/withdraw">
-          <Button label="" icon="pi pi-angle-left" iconPos="left" class="p-button-text" />
+          <Button class="p-button-text" icon="pi pi-angle-left" iconPos="left" label="" />
         </router-link>
-        <span class="text-xl" v-if="typeBeneficiary.toUpperCase() === 'DOMESTIC'">
+        <span v-if="typeBeneficiary.toUpperCase() === 'DOMESTIC'" class="text-xl">
           {{ t('domesticWire') }}
         </span>
-        <span class="text-xl" v-else-if="typeBeneficiary.toUpperCase() === 'INTERNATIONAL'">
+        <span v-else-if="typeBeneficiary.toUpperCase() === 'INTERNATIONAL'" class="text-xl">
           {{ t('internationalWire') }}
         </span>
       </div>
@@ -27,9 +27,9 @@
       <router-view
         v-slot="{ Component }"
         :formData="formObject"
-        @prevPage="prevPage($event)"
-        @nextPage="nextPage($event)"
         @complete="complete"
+        @nextPage="nextPage($event)"
+        @prevPage="prevPage($event)"
       >
         <keep-alive>
           <component :is="Component" />
@@ -39,7 +39,7 @@
   </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Steps from 'primevue/steps'
@@ -50,12 +50,11 @@ import { onMounted } from 'vue'
 const { t } = useI18n({ useScope: 'global' })
 
 const { itemSteps, typeBeneficiary, formObject, complete, nextPage, prevPage } = useNewOrEditBeneficiary()
-const { fetchCountries, fetchCountryAllowUsa, showCombo } = useWorld()
+const { fetchCountries, fetchCountryAllowUsa } = useWorld()
 
 onMounted(() => {
   fetchCountries()
   fetchCountryAllowUsa()
-  showCombo.value = false
 })
 </script>
 

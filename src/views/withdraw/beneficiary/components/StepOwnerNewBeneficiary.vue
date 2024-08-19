@@ -6,9 +6,9 @@
         <Dropdown
           v-model="formObject.profileType"
           :options="accountType"
-          optionLabel="name"
-          option-value="description"
           class="w-full md:w-14rem"
+          option-value="description"
+          optionLabel="name"
         />
       </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="field">
       <label>{{ t('depositNameOnBank') }}</label>
       <div class="p-inputgroup">
-        <InputText type="text" v-model="formObject.informationOwner.name" />
+        <InputText v-model="formObject.informationOwner.name" type="text" />
       </div>
       <small>Make sure it exactly as it appears on your bank account</small>
     </div>
@@ -42,16 +42,16 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.country"
-            :options="countryAllowedForUSA"
-            filter
-            optionLabel="name"
-            option-value="countryCode"
-            :loading="loadingCountriesField"
-            :placeholder="t('countryPlaceholder')"
             :disabled="countriesInputIsEmpty"
-            @change="onChangeCountryHandler"
+            :loading="loadingCountriesField"
+            :options="countryAllowedForUSA"
+            :placeholder="t('countryPlaceholder')"
             class="w-full"
+            filter
+            option-value="countryCode"
+            optionLabel="name"
             required
+            @change="changeCountryHandler"
           />
         </div>
       </div>
@@ -59,40 +59,40 @@
       <div class="field col-12">
         <label>{{ t('streetAddress') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.streetOne" />
+          <InputText v-model="formObject.informationOwner.address.streetOne" type="text" />
         </div>
       </div>
 
       <div class="field col-12">
         <label>{{ t('streetAddressTwo') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.streetTwo" />
+          <InputText v-model="formObject.informationOwner.address.streetTwo" type="text" />
         </div>
       </div>
 
       <div class="field col-4">
         <label>{{ t('cityLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.city" class="w-full" required />
+          <InputText v-model="formObject.informationOwner.address.city" class="w-full" required type="text" />
         </div>
       </div>
 
-      <div class="field col-4" v-if="!showCombo">
+      <div v-if="!showCombo" class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.region" />
+          <InputText v-model="formObject.informationOwner.address.region" type="text" />
         </div>
       </div>
-      <div class="field col-4" v-if="showCombo">
+      <div v-if="showCombo" class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
           <Dropdown
             v-model="formObject.informationOwner.address.region"
             :options="state_us"
-            optionLabel="name"
-            option-value="state_code"
             :placeholder="t('countryPlaceholder')"
             class="w-full"
+            option-value="state_code"
+            optionLabel="name"
             required
           />
         </div>
@@ -101,23 +101,23 @@
       <div class="field col-4">
         <label>{{ t('postalCodeLabel') }}</label>
         <div class="p-inputgroup">
-          <InputText type="text" v-model="formObject.informationOwner.address.postalCode" />
+          <InputText v-model="formObject.informationOwner.address.postalCode" type="text" />
         </div>
       </div>
     </div>
     <div class="field mt-5 flex justify-content-end">
-      <Button :label="t('nextButtonText')" class="px-5" @click="next" iconPos="right" />
+      <Button :label="t('nextButtonText')" class="px-5" iconPos="right" @click="next" />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { useWorld } from '../../../../composables/useWorld'
 
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
+import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
@@ -131,13 +131,14 @@ const emit = defineEmits(['nextPage', 'prevPage'])
 
 const {
   countryAllowedForUSA,
-  showCombo,
   state_us,
   loadingCountriesField,
   countriesInputIsEmpty,
   onChangeCountryHandler,
   fetchCountries,
 } = useWorld()
+
+const showCombo = ref<boolean>(false)
 
 const accountType = ref([
   { name: 'CORPORATION', description: 'CORPORATION' },
@@ -197,5 +198,10 @@ const next = () => {
   emit('nextPage', {
     pageIndex: page,
   })
+}
+
+const changeCountryHandler = async (event: DropdownChangeEvent) => {
+  formObject.value.informationOwner.address.region = ''
+  onChangeCountryHandler(event, showCombo)
 }
 </script>
