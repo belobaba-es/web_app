@@ -12,7 +12,7 @@ import { UnwrapRef } from 'vue'
 export class BeneficiaryService {
   async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<BeneficiaryAssetsResponse>(
-      `beneficiary/asset/${nextPag === 0 ? 1 : nextPag}`
+      `beneficiary/asset/external/${nextPag === 0 ? 1 : nextPag}`
     )
   }
 

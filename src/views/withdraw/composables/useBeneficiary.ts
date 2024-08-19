@@ -18,7 +18,7 @@ export const useBeneficiary = () => {
   const listNextPag = ref(1)
   const submitting = ref(false)
   const nextPag = ref(1)
-  const listBeneficiariesInternal = ref<UserAccount[]>()
+  const listBeneficiariesInternal = ref<UserAccount[]>([])
 
   const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
     submitting.value = true
@@ -52,11 +52,11 @@ export const useBeneficiary = () => {
   }
 
   const fetchBeneficiariesAssets = async () => {
+    submitting.value = true
     new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })
-      listBeneficiary.value = resp.results
       submitting.value = false
       listNextPag.value = Number(resp.nextPag)
     })
@@ -71,16 +71,13 @@ export const useBeneficiary = () => {
 
     submitting.value = false
 
-    const list = []
     for (const listElement of result.results) {
-      list.push({
+      listBeneficiariesInternal.value.push({
         name: listElement.informationOwner.name,
         clientId: listElement.counterpartyId,
         email: listElement.informationOwner.email,
       })
     }
-
-    listBeneficiariesInternal.value = list
   }
 
   const fetchBeneficiariesInternalV2 = async (type: TypeBeneficiaryInternal): Promise<void> => {
@@ -92,16 +89,13 @@ export const useBeneficiary = () => {
 
     submitting.value = false
 
-    const list = []
     for (const listElement of result.results) {
-      list.push({
+      listBeneficiariesInternal.value.push({
         name: listElement.informationOwner.name,
         clientId: listElement.counterpartyId,
         email: listElement.informationOwner.email,
       })
     }
-
-    listBeneficiariesInternal.value = list
   }
 
   const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
