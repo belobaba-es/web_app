@@ -37,7 +37,6 @@ import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionUSADomestic from './components/FiatInstructionUSADomestic.vue'
 import FiatInstructionUSAInternational from './components/FiatInstructionUSAInternational.vue'
 import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
-// import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
 
 const submitting = ref(true)
 
