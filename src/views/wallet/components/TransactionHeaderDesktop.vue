@@ -1,17 +1,22 @@
 <template>
-  <div class="is-fiat" v-bind:class="{ 'is-fiat': wallet?.assetCode === 'USD' }">
+  <div
+    class="main-container"
+    v-bind:class="{
+      'is-fiat': wallet?.assetCode === FiatAssetCodes.USD || wallet?.assetCode === FiatAssetCodes.USD_PANAMA,
+    }"
+  >
+    <DepositInstructionsModal v-model:visible="visible" :asset-code="wallet?.assetCode" />
     <div class="flex justify-content-start flex-wrap container-name-cripto">
-      <h1 class="text-header name-cripto font-bold">
+      <h1 class="text-header name-cripto">
         Wallet / {{ isFiat(wallet) }} / <strong>{{ wallet?.name }}</strong>
       </h1>
       <div>
-        <div class="flex align-items-center mt-3 font-bold">
+        <div class="flex align-items-center mt-3">
           <Button
-            label=""
+            class="p-button-text to-back-desktop"
             icon="pi pi-angle-left"
             iconPos="left"
-            class="p-button-text to-back-desktop"
-            style="color: #000"
+            label=""
             @click="emit('toBack')"
           />
           <h2>{{ wallet?.name }}</h2>
@@ -21,7 +26,7 @@
     <div class="grid">
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <div class="flex justify-content-start">
-          <p class="text-balance-wallet-historic-desktop mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 font-semi-bold">
+          <p class="text-balance-wallet-historic-desktop mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
             {{ calculateBalance(wallet.assetCode, wallet.balance, wallet.blockedBalance ?? 0) }}
             <small>{{ wallet?.assetCode }}</small>
           </p>
@@ -32,42 +37,64 @@
         <div class="mt-3">
           <div class="grid flex justify-content-start flex-column">
             <div class="col-4 flex justify-content-start container-link-historic-desktop">
-              <router-link class="link-historic-desktop" :to="depositURL" exact role="menuitem" v-ripple>
-                <h5 class="text-link-historic-desktop font-semi-bold">Deposit</h5>
+              <router-link
+                v-if="!wallet?.assetCode.startsWith('USD')"
+                v-ripple
+                :to="depositURL"
+                class="link-historic-desktop"
+                exact
+                role="menuitem"
+              >
+                <h5 class="text-link-historic-desktop link-historic-desktop">{{ t('deposit') }}</h5>
               </router-link>
+              <h5
+                v-if="wallet?.assetCode.startsWith('USD')"
+                class="link-historic-desktop text-link-historic-desktop ml-0 cursor-pointer"
+                @click="openDepositInstructions(wallet)"
+              >
+                {{ t('deposit') }}
+              </h5>
             </div>
-            <WithdrawRouteSelectDesktop :isFiat="wallet?.assetCode === 'USD'"></WithdrawRouteSelectDesktop>
+            <WithdrawRouteSelectDesktop :asset-code="wallet?.assetCode"></WithdrawRouteSelectDesktop>
             <div class="col-4 justify-content-start container-link-historic-desktop">
-              <router-link class="link-historic-desktop" to="/swap" exact role="menuitem" v-ripple>
-                <h5 class="text-link-historic-desktop font-semi-bold">Swap</h5>
+              <router-link v-ripple class="link-historic-desktop" exact role="menuitem" to="/swap">
+                <h5 class="text-link-historic-desktop">{{ t('swap') }}</h5>
               </router-link>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6 flex justify-content-center no-padding">
-        <img class="icon-cripto-historic-desktop" :src="wallet?.icon" :alt="wallet?.name" />
+        <img :alt="wallet?.name" :src="wallet?.icon" class="icon-cripto-historic-desktop" />
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue'
+<script lang="ts" setup>
+import { defineProps, ref } from 'vue'
 import { BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import WithdrawRouteSelectDesktop from './WithdrawRouteSelectDesktop.vue'
+import DepositInstructionsModal from './DepositInstructionsModal.vue'
+import { FiatAssetCodes } from '../types/assetCodes.interface'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   wallet: BalanceWallet
 }>()
+
+const { t } = useI18n({ useScope: 'global' })
+
 let depositURL = ''
 const { calculateBalance } = useBalanceWallet()
 const emit = defineEmits(['toBack'])
 
+const visible = ref(false)
+
 const isFiat = (wallet: BalanceWallet | undefined) => {
-  if (wallet?.assetCode === 'USD') {
+  if (wallet?.assetCode === FiatAssetCodes.USD || wallet?.assetCode === FiatAssetCodes.USD_PANAMA) {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
@@ -75,12 +102,18 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
     return 'Crypto'
   }
 }
+
+const openDepositInstructions = (wallet: BalanceWallet | undefined) => {
+  if ([FiatAssetCodes.USD, FiatAssetCodes.USD_PANAMA].includes(wallet?.assetCode as FiatAssetCodes)) {
+    visible.value = true
+  }
+}
 </script>
 
 <style lang="scss">
 .text-balance-wallet-historic-desktop {
   margin-left: 4%;
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium !important;
   width: fit-content;
 
   @media only screen and (min-width: 991px) {
@@ -99,7 +132,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   margin-top: 5px;
   margin-left: 4%;
 
-  border: 1px solid #000;
+  border: 1px solid #fff;
   width: 30%;
 }
 
@@ -136,7 +169,7 @@ const isFiat = (wallet: BalanceWallet | undefined) => {
   width: 70%;
   position: relative;
   top: -40px;
-  border-radius: 50%;
+  filter: invert(100%) sepia(90%) brightness(200%) contrast(100%);
 
   @media only screen and (min-width: 992px) {
     max-width: 250px !important;

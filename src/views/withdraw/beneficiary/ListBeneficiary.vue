@@ -1,4 +1,22 @@
 <template>
+  <div v-if="isDomestic" class="flex mt-4 mb-6 flex-column justify-content-between align-items-center asset-item">
+    <span class="mb-3 text-lg">
+      {{ t('selectNetworkType') }}
+    </span>
+
+    <Dropdown
+      v-model="typeNetworkBankBeneficiary"
+      :highlightOnSelect="false"
+      :options="networkBankOptions"
+      checkmark
+      class="w-full md:w-14rem"
+      dataKey="code"
+      optionLabel="name"
+      optionValue="code"
+      placeholder="Select a City"
+      @change="loadMore(true)"
+    />
+  </div>
   <div class="container">
     <div class="flex justify-content-between align-items-center asset-item" v-for="item in listBeneficiary">
       <div class="col-8 sm:col-8 md:col-8 lg:col-8 xl:col-8">
@@ -28,7 +46,7 @@
             iconPos="right"
             class="p-button load-more-btn w-100"
             :label="t('loadMore')"
-            @click="loadMore"
+            @click="loadMore(true)"
             :loading="submitting"
           />
         </div>
@@ -39,7 +57,8 @@
 
 <script lang="ts" setup>
 import Button from 'primevue/button'
-import { BeneficiaryType } from '../types/beneficiary.interface'
+import Dropdown from 'primevue/dropdown'
+import { BeneficiaryType, NetworkBank } from '../types/beneficiary.interface'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -48,22 +67,47 @@ import { useNewOrEditBeneficiary } from './composable/useNewOrEditBeneficiary'
 
 const route = useRoute()
 const { t } = useI18n({ useScope: 'global' })
-const { submitting, listNextPag, listBeneficiary, fetchBeneficiaries, getBeneficiaryStatusColor } = useBeneficiary()
+const {
+  submitting,
+  listNextPag,
+  listBeneficiary,
+  fetchBeneficiaries,
+  getBeneficiaryStatusColor,
+  typeNetworkBankBeneficiary,
+  networkBankOptions,
+  isDomestic,
+} = useBeneficiary()
 const { setDataBeneficiary } = useNewOrEditBeneficiary()
 
 const emit = defineEmits(['select'])
 
-const loadMore = async () => {
-  //console.log(route.params.type)
+const loadMore = async (isFirstLoad: boolean = true) => {
+  console.log(route.params.type)
   if (route.params.type === 'domestic') {
-    await fetchBeneficiaries(BeneficiaryType.DOMESTIC)
+    await fetchBeneficiaries(BeneficiaryType.DOMESTIC, isFirstLoad)
+    isDomestic.value = true
   } else {
-    await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL)
+    await fetchBeneficiaries(BeneficiaryType.INTERNATIONAL, isFirstLoad)
+    isDomestic.value = false
   }
 }
 
 onMounted(async () => {
-  await loadMore()
+  typeNetworkBankBeneficiary.value = NetworkBank.WIRE
+
+  const networkTypeParam = route.params['networkType']
+  if (networkTypeParam && networkBankOptions.value.length > 0) {
+    const selectedOption = networkBankOptions.value.find(option => option.code === networkTypeParam)
+
+    if (selectedOption) {
+      typeNetworkBankBeneficiary.value = selectedOption.code
+      setTimeout(async () => {
+        await loadMore(true)
+      }, 100)
+    }
+    return
+  }
+  await loadMore(true)
 })
 </script>
 
