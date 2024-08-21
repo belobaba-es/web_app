@@ -6,29 +6,28 @@
 
     <TabView v-if="!submitting">
       <TabPanel header="US Domestic">
-        <FiatInstructionUSADomestic :bank-national="bankNational"  />
+        <FiatInstructionUSADomestic :bank-national="bankNational" />
       </TabPanel>
 
-<!--      <TabPanel v-if="bankAchUsd" header="US ACH">-->
-<!--        <FiatInstructionAchUsd :bank-ach-usd="bankAchUsd" />-->
-<!--      </TabPanel>-->
+      <TabPanel v-if="bankAchUsd" header="US ACH">
+        <FiatInstructionAchUsd :bank-ach-usd="bankAchUsd" />
+      </TabPanel>
 
-      <TabPanel header="US International" v-if="getAccountType() !=='NATURAL_PERSON'">
-        <FiatInstructionUSAInternational :bank-international="bankInternational"   />
+      <TabPanel header="US International" v-if="getAccountType() !== 'NATURAL_PERSON'">
+        <FiatInstructionUSAInternational :bank-international="bankInternational" />
       </TabPanel>
 
       <TabPanel header="ACH Panama" v-if="isExistsWallet('USD_PA')">
-        <FiatInstructionPanama :bank-panama="bankPanama"  />
+        <FiatInstructionPanama :bank-panama="bankPanama" />
       </TabPanel>
     </TabView>
-
   </section>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
 import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
@@ -37,7 +36,7 @@ import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionUSADomestic from './components/FiatInstructionUSADomestic.vue'
 import FiatInstructionUSAInternational from './components/FiatInstructionUSAInternational.vue'
-// import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
+import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
 
 const submitting = ref(true)
 
@@ -54,7 +53,6 @@ const bankPanama = ref()
 const bankAchUsd = ref()
 
 onMounted(() => {
-
   new FiatService()
     .bankData()
     .then(data => {
@@ -65,7 +63,6 @@ onMounted(() => {
       bankAchUsd.value = dataBank.value.achUsd
       bankInternational.value = dataBank.value.international
       bankPanama.value = dataBank.value.achPab
-
     })
     .catch(() => (submitting.value = false))
 })
