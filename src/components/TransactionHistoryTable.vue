@@ -541,7 +541,7 @@ const search = async () => {
     nextPage.value.data = '1'
     filters.page = '1'
   }
-
+  listTransaction.value = []
   await getTransactions(filters)
 }
 
