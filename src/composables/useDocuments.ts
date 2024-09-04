@@ -8,7 +8,7 @@ export const useDocuments = () => {
 
   const documentTypeProofOfAddress = ref([
     { value: 'monthly_utility', name: t('documentProofOfAddress1') },
-    { value: 'statements', name: t('documentProofOfAddress2') },
+    { value: 'bank_statement', name: t('documentProofOfAddress2') },
     { value: 'rental_lease_agreement', name: t('documentProofOfAddress3') },
   ])
 
@@ -24,8 +24,14 @@ export const useDocuments = () => {
     }
   })
 
+  const documentTypeIncomeDeclaration = ref([
+    { value: 'payslip', name: t('documentPayslip') },
+    { value: 'bank_statement', name: t('documentBankStatement') },
+  ])
+
   return {
     documentTypeProofOfAddress,
     documentTypeOptions,
+    documentTypeIncomeDeclaration,
   }
 }

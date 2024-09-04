@@ -10,8 +10,8 @@
       {{ t('filePlaceholder') }}
     </span>
     <span>
-      <i class="pi" :class="icon"></i>
-      <input :id="getIdInput()" type="file" hidden @change="handleUpload($event)" />
+      <i :class="icon" class="pi"></i>
+      <input :id="getIdInput()" hidden type="file" @change="handleUpload($event)" />
     </span>
   </div>
 </template>
@@ -179,6 +179,7 @@ const handleUpload = async (event: any) => {
         side: side,
         dni: props.dni,
         registerNumber: props.registerNumber,
+        type: props.type,
       })
     })
     .catch(error => {
