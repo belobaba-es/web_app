@@ -12,16 +12,16 @@
               class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4"
             >
               <div>
-                <label>{{ item.label }} <span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+                <label>{{ item.label }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
                 <div class="p-inputgroup">
                   <Dropdown
                     v-model="onboardingCompany.investmentProfile[key]"
                     :options="item.values"
-                    optionLabel="name"
-                    option-value="value"
-                    filter
                     :placeholder="t('helpTextSelectAOption')"
                     class="w-full"
+                    filter
+                    option-value="value"
+                    optionLabel="name"
                     required
                   />
                 </div>
@@ -42,17 +42,41 @@
 
         <div class="grid col-12 mt-2">
           <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
+            <label>{{ t('primaryBusiness') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
+            <div class="p-inputgroup">
+              <Dropdown
+                v-model="onboardingCompany.kycProfile.primaryBusiness"
+                :options="typesPrimaryBusiness"
+                class="w-full"
+                filter
+                option-value="value"
+                optionLabel="name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
+            <label
+              >{{ t('descriptionBusinessNature') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label
+            >
+            <div class="p-inputgroup">
+              <InputText v-model="onboardingCompany.kycProfile.descriptionBusinessNature" required type="text" />
+            </div>
+          </div>
+
+          <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
             <div>
-              <label>{{ t('businessJurisdictions') }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+              <label>{{ t('businessJurisdictions') }}<span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
               <div class="p-inputgroup">
                 <MultiSelect
                   v-model="onboardingCompany.kycProfile.businessJurisdictions"
-                  :options="countryAllowedForUSA"
-                  optionLabel="name"
-                  option-value="countryCode"
                   :loading="loadingCountriesField"
+                  :options="countryAllowedForUSA"
                   :placeholder="t('countryPlaceholder')"
                   class="w-full"
+                  option-value="countryCode"
+                  optionLabel="name"
                   required
                 />
               </div>
@@ -65,17 +89,17 @@
             <div>
               <label
                 >{{ t('fundsSendReceiveJurisdictions')
-                }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label
+                }}<span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label
               >
               <div class="p-inputgroup">
                 <MultiSelect
                   v-model="onboardingCompany.kycProfile.fundsSendReceiveJurisdictions"
-                  :options="countryAllowedForUSA"
-                  optionLabel="name"
-                  option-value="countryCode"
                   :loading="loadingCountriesField"
+                  :options="countryAllowedForUSA"
                   :placeholder="t('countryPlaceholder')"
                   class="w-full"
+                  option-value="countryCode"
+                  optionLabel="name"
                   required
                 />
               </div>
@@ -86,16 +110,16 @@
           </div>
           <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
             <div>
-              <label>{{ t('engageInActivities') }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+              <label>{{ t('engageInActivities') }}<span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
               <div class="p-inputgroup">
                 <MultiSelect
                   v-model="onboardingCompany.kycProfile.engageInActivities"
                   :options="engageInActivities"
-                  optionLabel="name"
-                  option-value="value"
-                  filter
                   :placeholder="t('engageInActivities')"
                   class="w-full"
+                  filter
+                  option-value="value"
+                  optionLabel="name"
                   required
                 />
               </div>
@@ -106,16 +130,16 @@
           </div>
           <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4 mt-4">
             <div>
-              <label>{{ t('regulatedStatus') }}<span class="bg-red" v-tooltip.top="'Mandatory'">*</span></label>
+              <label>{{ t('regulatedStatus') }}<span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
               <div class="p-inputgroup">
                 <Dropdown
                   v-model="onboardingCompany.kycProfile.regulatedStatus"
                   :options="regulatedStatus"
-                  optionLabel="name"
-                  option-value="value"
-                  filter
                   :placeholder="t('selectRegulatedStatus')"
                   class="w-full"
+                  filter
+                  option-value="value"
+                  optionLabel="name"
                   required
                 />
               </div>
@@ -137,7 +161,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
@@ -145,11 +168,13 @@ import Dropdown from 'primevue/dropdown'
 import { useWorld } from '../../../composables/useWorld'
 import MultiSelect from 'primevue/multiselect'
 import { useOptionsAccounts } from '../../../composables/useOptionsAccounts'
+import InputText from 'primevue/inputtext'
+
 const { t } = useI18n({ useScope: 'global' })
 
 const toast = useToast()
 const { onboardingCompany, saveData } = useOnboardingCompany()
-const { investmentData, engageInActivities, regulatedStatus } = useOptionsAccounts()
+const { investmentData, engageInActivities, regulatedStatus, typesPrimaryBusiness } = useOptionsAccounts()
 const { countryAllowedForUSA, fetchCountryAllowUsa, fetchCountries, loadingCountriesField, countriesInputIsEmpty } =
   useWorld()
 
@@ -173,4 +198,3 @@ onMounted(async () => {
   width: 97%;
 }
 </style>
-../../../composables/useOptionsAccounts

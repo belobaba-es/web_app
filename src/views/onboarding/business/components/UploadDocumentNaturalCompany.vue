@@ -8,17 +8,16 @@
             <label>{{ t('Document Type') }}</label>
             <div class="p-inputgroup">
               <Dropdown
+                v-model="identifyDocument"
                 :options="documentTypeOptions"
-                option-label="name"
-                option-value="value"
                 :placeholder="t('documentTypePlaceHolder')"
                 class="w-full"
-                v-model="identifyDocument"
+                option-label="name"
+                option-value="value"
               />
             </div>
           </div>
         </div>
-
         <div class="px-3 pb-0">
           <div class="field">
             <div class="grid">
@@ -26,20 +25,37 @@
                 <label> {{ t('Document Front side') }}</label>
                 <div class="mt-2">
                   <FileInput
-                    side="front"
-                    :type="identifyDocument"
+                    v-model="documentSide"
                     :dni="dni"
                     :isPartner="true"
-                    v-model="documentSide"
+                    :type="identifyDocument"
+                    side="front"
                   />
                 </div>
               </div>
 
-              <div class="col-6" v-if="shouldShowFrontBank()">
+              <div v-if="shouldShowFrontBank()" class="col-6">
                 <label>{{ t('Document Back side') }}</label>
                 <div class="mt-2">
-                  <FileInput side="back" :dni="dni" :isPartner="true" :type="identifyDocument" v-model="documentSide" />
+                  <FileInput v-model="documentSide" :dni="dni" :isPartner="true" :type="identifyDocument" side="back" />
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-2 pb-0">
+          <div class="field">
+            <div class="col-6">
+              <label>{{ t('selfieWithDocument') }}</label>
+              <div class="mt-2">
+                <FileInput
+                  v-model="selfie"
+                  :dni="dni"
+                  :is-selfie="true"
+                  :isPartner="true"
+                  :type="DocumentType.SELFIE"
+                  side="front"
+                />
               </div>
             </div>
           </div>
@@ -52,20 +68,20 @@
                 <label>{{ t('utilityBillLabel') }}</label>
                 <div class="mt-2 mb-4">
                   <Dropdown
+                    v-model="typeDocumentAddress"
                     :options="documentTypeProofOfAddress"
-                    option-label="name"
-                    option-value="value"
                     :placeholder="t('documentTypePlaceHolder')"
                     class="w-full"
-                    v-model="typeDocumentAddress"
+                    option-label="name"
+                    option-value="value"
                   />
                 </div>
                 <FileInput
-                  side="front"
+                  v-model="documentFiscal"
+                  :dni="dni"
                   :isPartner="true"
                   :type="typeDocumentAddress"
-                  :dni="dni"
-                  v-model="documentFiscal"
+                  side="front"
                 />
               </div>
             </div>
@@ -76,14 +92,15 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Dropdown from 'primevue/dropdown'
-import { ref, defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import FileInput from '../../../../components/FileInput.vue'
 import { useDocuments } from '../../../../composables/useDocuments'
 import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
+import { DocumentType } from '../../../../types/onboardingCompany'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -95,6 +112,7 @@ const identifyDocument = ref<string>('')
 const documentSide = ref<string>('')
 const documentFiscal = ref<string>('')
 const typeDocumentAddress = ref<string>('')
+const selfie = ref<string>('')
 
 const props = defineProps({
   dni: {
