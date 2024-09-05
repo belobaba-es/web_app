@@ -594,5 +594,12 @@
   "documentPayslip": "Payslip",
   "documentBankStatement": "Bank statement",
   "documentsRequired": "All documents are required",
-  "selfieWithDocument": "Selfie with document"
+  "selfieWithDocument": "Selfie with document",
+  "maintenanceDeposit": {
+    "title": "Notification important",
+    "textOne": "We inform you that, due to recent changes in our internal policies and compliance regulations, your banking instructions will be temporarily unavailable.",
+    "textTwo": "This measure is aimed at ensuring a more secure environment for your transactions, reaffirming our commitment to integrity and trust in every operation.",
+    "textThree": "We appreciate your understanding and trust in our institution, and we are continuously working to provide an efficient and secure service.",
+    "textFour": "We apologize for any inconvenience and are at your disposal to assist you."
+  }
 }
