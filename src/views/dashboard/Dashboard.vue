@@ -6,7 +6,7 @@
     </div>
 
     <div class="layout-main-container">
-      <div class="mt-5" style="padding-top: 2rem">
+      <div class="pt-5 mt-5">
         <CreditCardBanner />
       </div>
       <div class="layout-main">
@@ -19,12 +19,12 @@
     </div>
 
     <transition name="layout-mask">
-      <div class="layout-mask p-component-overlay" v-if="mobileMenuActive" @click="onMenuToggle"></div>
+      <div v-if="mobileMenuActive" class="layout-mask p-component-overlay" @click="onMenuToggle"></div>
     </transition>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AppTopBar from './AppTopbar.vue'
 import AppMenu from './AppMenu.vue'
@@ -36,8 +36,10 @@ import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
 import CreditCardBanner from '../../components/CreditCardBanner.vue'
+import { isEnableCardModule } from '../../shared/services/remoteConfig'
 
 const router = useRouter()
+const currentRoute = ref('')
 const inactiveTime = ref(0)
 const timeout = 5
 let interval: number = 0
@@ -45,7 +47,40 @@ let interval: number = 0
 const { t } = useI18n({ useScope: 'global' })
 const { fetchBalanceWallets } = useBalanceWallet()
 
-const menuDesktop = [
+const enableCardModule = ref(false)
+const hasAccess = ref(false)
+
+const { getClientId } = useAuth()
+const valuesMenumobile = ref(false)
+
+watch(
+  () => router.currentRoute.value,
+  newRoute => {
+    currentRoute.value = newRoute.path
+  }
+)
+
+onMounted(async () => {
+  enableCardModule.value = await isEnableCardModule()
+
+  if (enableCardModule.value) {
+    menuMobile = reactive([
+      { label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit' },
+      { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
+      { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
+      { label: t('cardNoba'), class: 'icon-card', icon: 'pi', to: '/cards/card-center/' },
+    ])
+  } else {
+    menuMobile = reactive([
+      { label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit' },
+      { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
+      { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
+      { label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/swap' },
+    ])
+  }
+})
+
+const menuDesktop = computed(() => [
   {
     label: '',
     items: [
@@ -55,23 +90,32 @@ const menuDesktop = [
       { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
       { label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/swap' },
       { label: t('transactionHistory'), class: 'icon-history', icon: 'pi', to: '/transaction-history' },
+      ...(enableCardModule.value
+        ? [
+            currentRoute.value && currentRoute.value.includes('/cards/')
+              ? { label: t('cardNoba'), class: 'icon-card', icon: 'pi', to: currentRoute.value }
+              : { label: t('cardNoba'), class: 'icon-card', icon: 'pi', to: '/cards' },
+          ]
+        : []),
     ],
   },
-]
+])
 
-const menuMobile = [
-  {
-    label: '',
-    items: [
-      // { label: t('home'), class: 'icon-home', icon: 'pi', to: '/dashboard' },
-      { label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit' },
-      { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
-      { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
-      { label: t('swap'), class: 'icon-swap', icon: 'pi', to: '/swap' },
-      { label: t('transactionHistory'), class: 'icon-history text-center', icon: 'pi', to: '/transaction-history' },
-    ],
-  },
-]
+let menuMobile = reactive([
+  { label: t('deposit'), class: 'icon-piggy-bank', icon: 'pi', to: '/deposit' },
+  { label: t('withdraw'), class: 'icon-bank', icon: 'pi', to: '/withdraw' },
+  { label: t('wallet'), class: 'icon-wallet', icon: 'pi', to: '/wallet' },
+  ...(!enableCardModule.value
+    ? [
+        {
+          label: t('swap'),
+          class: 'icon-swap',
+          icon: 'pi',
+          to: '/swap',
+        },
+      ]
+    : [{ label: t('cardNoba'), class: 'icon-card', icon: 'pi', to: '/cards/card-center/' }]),
+])
 
 const mobileMenuActive = ref(false)
 
