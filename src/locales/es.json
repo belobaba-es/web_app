@@ -580,5 +580,12 @@
   "documentPayslip": "Recibo de pago",
   "documentBankStatement": "Estado de cuenta bancario",
   "documentsRequired": "Todos los documentos son requeridos",
-  "selfieWithDocument": "Selfie con documento"
+  "selfieWithDocument": "Selfie con documento",
+  "maintenanceDeposit": {
+    "title": "Notificación importante",
+    "textOne": "Informamos que debido a recientes cambios en nuestras políticas internas y normativas de cumplimiento, sus instrucciones bancarias no estarán disponibles temporalmente.",
+    "textTwo": "Esta medida tiene como objetivo garantizar un entorno más seguro para sus transacciones, reafirmando nuestro compromiso con la integridad y la confianza en cada operación.",
+    "textThree": "Agradecemos su comprensión y confianza en nuestra institución, y trabajamos continuamente para ofrecer un servicio eficiente y seguro.",
+    "textFour": "Nos disculpamos por los inconvenientes y estamos a su disposición para ayudarle."
+  }
 }
