@@ -4,61 +4,70 @@
       {{ t('deposit') }} / <span class="text-primary">{{ t('fiat') }} </span>
     </p>
 
-    <TabView v-if="!submitting">
+    <template v-if="isLoading">
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+      <Skeleton class="px-3 mb-3" height="2rem" width="6rem"></Skeleton>
+    </template>
+
+    <TabView v-if="!isLoading">
       <TabPanel header="US Domestic">
-        <FiatInstructionUSADomestic :bank-national="bankNational"  />
+        <FiatInstructionUSADomestic v-if="!isFromUnitedStates()" :bank-national="bankNational" />
+        <MaintenanceDeposits />
       </TabPanel>
 
-<!--      <TabPanel v-if="bankAchUsd" header="US ACH">-->
-<!--        <FiatInstructionAchUsd :bank-ach-usd="bankAchUsd" />-->
-<!--      </TabPanel>-->
-
-      <TabPanel header="US International" v-if="getAccountType() !=='NATURAL_PERSON'">
-        <FiatInstructionUSAInternational :bank-international="bankInternational"   />
+      <TabPanel v-if="bankAchUsd" header="US ACH">
+        <FiatInstructionAchUsd v-if="!isFromUnitedStates()" :bank-ach-usd="bankAchUsd" />
+        <MaintenanceDeposits />
       </TabPanel>
 
-      <TabPanel header="ACH Panama" v-if="isExistsWallet('USD_PA')">
-        <FiatInstructionPanama :bank-panama="bankPanama"  />
+      <TabPanel v-if="!isNaturalAccount()" header="US International">
+        <FiatInstructionUSAInternational :bank-international="bankInternational" />
+      </TabPanel>
+
+      <TabPanel v-if="isExistsWallet('USD_PA') && bankPanama" header="ACH Panama">
+        <FiatInstructionPanama :bank-panama="bankPanama" />
       </TabPanel>
     </TabView>
-
   </section>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
 import { useI18n } from 'vue-i18n'
 import { FiatService } from './services/fiat'
 import { BankData } from './types/fiat.interface'
 import { useAuth } from '../../composables/useAuth'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
-import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionUSADomestic from './components/FiatInstructionUSADomestic.vue'
 import FiatInstructionUSAInternational from './components/FiatInstructionUSAInternational.vue'
-// import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
-
-const submitting = ref(true)
+import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
+import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
+import Skeleton from 'primevue/skeleton'
+import MaintenanceDeposits from './MaintenanceDeposits.vue'
 
 const { t } = useI18n({ useScope: 'global' })
-const { getUserName, getAccountType } = useAuth()
+const { isNaturalAccount, isFromUnitedStates } = useAuth()
 const { isExistsWallet } = useBalanceWallet()
-
-const username = getUserName()
 
 const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
 const bankPanama = ref()
 const bankAchUsd = ref()
+const isLoading = ref(false)
 
 onMounted(() => {
+  isLoading.value = true
 
   new FiatService()
     .bankData()
     .then(data => {
-      submitting.value = false
       dataBank.value = data
 
       bankNational.value = dataBank.value.domestic
@@ -66,8 +75,11 @@ onMounted(() => {
       bankInternational.value = dataBank.value.international
       bankPanama.value = dataBank.value.achPab
 
+      isLoading.value = false
     })
-    .catch(() => (submitting.value = false))
+    .catch(() => {
+      isLoading.value = false
+    })
 })
 </script>
 
@@ -113,7 +125,7 @@ p {
 
 @media only screen and (min-width: 1000px) {
   .max-width {
-    max-width: 500px;
+    max-width: 700px;
   }
 }
 </style>

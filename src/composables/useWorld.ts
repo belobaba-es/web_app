@@ -1,5 +1,5 @@
 import { WorldService } from '../shared/services/world'
-import { computed, ref } from 'vue'
+import { computed, Ref, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
 import state_data from '../assets/cities/cities_us.json'
 
@@ -30,7 +30,6 @@ export interface StateUS {
 const countries = ref<Country[]>([])
 const state_us = ref<StateUS[]>(state_data)
 const countryAllowedForUSA = ref<CountryAllowed[]>([])
-const showCombo = ref<boolean>(false)
 
 export const useWorld = () => {
   const calling_code = ref<string[]>([''])
@@ -93,12 +92,13 @@ export const useWorld = () => {
     state.value = payload
   }
 
-  const onChangeCountryHandler = async (event: DropdownChangeEvent) => {
-    showCombo.value = false
-
+  const onChangeCountryHandler = (event: DropdownChangeEvent, showCombo: Ref) => {
     if (event.value == 'US') {
       showCombo.value = true
+      return
     }
+
+    showCombo.value = false
   }
 
   const onChangeStateHandler = async (event: DropdownChangeEvent) => {
@@ -127,7 +127,6 @@ export const useWorld = () => {
     setState,
     fetchCountryAllowUsa,
     onChangeCountryHandler,
-    showCombo,
     onChangeStateHandler,
     countryAllowedForUSA,
   }

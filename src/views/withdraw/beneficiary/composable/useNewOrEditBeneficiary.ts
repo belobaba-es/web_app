@@ -9,6 +9,7 @@ import showMessage from '../../../../shared/showMessageArray'
 
 const routingNumberOrIBAN = ref<string>('')
 const isUpdateBeneficiary = ref<boolean>(false)
+const isAchUs = ref<boolean>(false)
 const typeBeneficiary = ref<string>('')
 const submitting = ref<boolean>(false)
 const formObject = ref<NewBeneficiary>({
@@ -59,7 +60,6 @@ const formObject = ref<NewBeneficiary>({
   },
   bankNetworks: [],
 })
-
 
 export const useNewOrEditBeneficiary = () => {
   const router = useRouter()
@@ -132,15 +132,35 @@ export const useNewOrEditBeneficiary = () => {
   }
 
   const setDataBeneficiary = (beneficiary: any) => {
+    beneficiary.bankNetworks = []
+
     isUpdateBeneficiary.value = true
     formObject.value = beneficiary
     formObject.value.counterpartyId = beneficiary.counterpartyId
 
-    if (beneficiary.informationBank.routingNumber) {
-      routingNumberOrIBAN.value = beneficiary.informationBank.routingNumber
-    } else {
+    if (!beneficiary.informationBank.routingNumber) {
       routingNumberOrIBAN.value = beneficiary.informationBank.iban
+      beneficiary.bankNetworks = []
+      beneficiary.bankNetworks.push(NetworkBank.SWIFT)
+    } else {
+      routingNumberOrIBAN.value = beneficiary.informationBank.routingNumber
+
+      if (isUpdateBeneficiary.value) {
+        if (beneficiary.informationBank.networkBank === NetworkBank.ACH) {
+          isAchUs.value = beneficiary.informationBank.networkBank === NetworkBank.ACH
+          beneficiary.bankNetworks = []
+          beneficiary.bankNetworks.push(NetworkBank.ACH)
+        }
+
+        if (beneficiary.informationBank.networkBank === NetworkBank.WIRE) {
+          isAchUs.value = false
+          beneficiary.bankNetworks = []
+          beneficiary.bankNetworks.push(NetworkBank.WIRE)
+        }
+      }
     }
+
+    formObject.value = beneficiary
 
     router.push(`/withdraw/usa/fiat/${typeBeneficiary.value.toLowerCase()}/new`)
   }
@@ -149,11 +169,6 @@ export const useNewOrEditBeneficiary = () => {
     let formData: NewBeneficiary = formObject.value as NewBeneficiary
     if (typeBeneficiary.value !== 'INTERNATIONAL') {
       delete formData.informationIntermediaryBank
-      formData.bankNetworks = [NetworkBank.WIRE]
-      formData.informationBank.networkBank = NetworkBank.WIRE
-    } else {
-      formData.bankNetworks = [NetworkBank.SWIFT]
-      formData.informationBank.networkBank = NetworkBank.SWIFT
     }
 
     if (!isUpdateBeneficiary.value) {
@@ -245,7 +260,6 @@ export const useNewOrEditBeneficiary = () => {
     }
   }
 
-
   return {
     submitting,
     itemSteps,
@@ -258,6 +272,7 @@ export const useNewOrEditBeneficiary = () => {
     nextPage,
     prevPage,
     isUpdateBeneficiary,
-    clearFormFiatBeneficiary
+    isAchUs,
+    clearFormFiatBeneficiary,
   }
 }

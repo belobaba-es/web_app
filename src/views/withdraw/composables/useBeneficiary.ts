@@ -1,6 +1,12 @@
 import { BeneficiaryService } from '../services/beneficiary'
-import { ref } from 'vue'
-import { Beneficiary, BeneficiaryAchPanama, BeneficiaryType, CounterpartyStatus } from '../types/beneficiary.interface'
+import { Ref, ref } from 'vue'
+import {
+  Beneficiary,
+  BeneficiaryAchPanama,
+  BeneficiaryType,
+  CounterpartyStatus,
+  NetworkBank,
+} from '../types/beneficiary.interface'
 import { UserAccount } from '../types/account'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
@@ -10,6 +16,25 @@ export enum TypeBeneficiaryInternal {
   FIAT = 'BANKING',
 }
 
+export type networkBankOptionType = {
+  name: string
+  code: NetworkBank
+}
+
+const typeNetworkBankBeneficiary: Ref<NetworkBank | undefined> = ref(NetworkBank.WIRE)
+const networkBankOptions: Ref<networkBankOptionType[]> = ref([
+  {
+    name: 'Wire',
+    code: NetworkBank.WIRE,
+  },
+  {
+    name: 'ACH',
+    code: NetworkBank.ACH,
+  },
+])
+
+const isDomestic = ref(false)
+
 export const useBeneficiary = () => {
   const listBeneficiary = ref<Beneficiary[]>([])
   const { t } = useI18n({ useScope: 'global' })
@@ -18,17 +43,25 @@ export const useBeneficiary = () => {
   const listNextPag = ref(1)
   const submitting = ref(false)
   const nextPag = ref(1)
-  const listBeneficiariesInternal = ref<UserAccount[]>()
+  const listBeneficiariesInternal = ref<UserAccount[]>([])
 
-  const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType) => {
+  const fetchBeneficiaries = async (beneficiaryType: BeneficiaryType, isFirstLoad: boolean = true) => {
     submitting.value = true
-    await new BeneficiaryService().listBeneficiaryBankingExternal(beneficiaryType, listNextPag.value).then(resp => {
-      resp.results.forEach((element: any) => {
-        listBeneficiary.value.push(element)
+    await new BeneficiaryService()
+      .listBeneficiaryBankingExternal(beneficiaryType, listNextPag.value, typeNetworkBankBeneficiary.value)
+      .then(resp => {
+        if (!isFirstLoad) {
+          resp.results.forEach((element: any) => {
+            listBeneficiary.value.push(element)
+          })
+        }
+
+        if (isFirstLoad) {
+          listBeneficiary.value = resp.results
+        }
+        submitting.value = false
+        listNextPag.value = Number(resp.nextPag)
       })
-      submitting.value = false
-      listNextPag.value = Number(resp.nextPag)
-    })
   }
 
   const fetchBeneficiariesAchPanama = async () => {
@@ -52,11 +85,11 @@ export const useBeneficiary = () => {
   }
 
   const fetchBeneficiariesAssets = async () => {
+    submitting.value = true
     new BeneficiaryService().listBeneficiaryAssets(listNextPag.value).then(resp => {
       resp.results.forEach(element => {
         listBeneficiary.value.push(element)
       })
-      listBeneficiary.value = resp.results
       submitting.value = false
       listNextPag.value = Number(resp.nextPag)
     })
@@ -71,16 +104,13 @@ export const useBeneficiary = () => {
 
     submitting.value = false
 
-    const list = []
     for (const listElement of result.results) {
-      list.push({
+      listBeneficiariesInternal.value.push({
         name: listElement.informationOwner.name,
         clientId: listElement.counterpartyId,
         email: listElement.informationOwner.email,
       })
     }
-
-    listBeneficiariesInternal.value = list
   }
 
   const fetchBeneficiariesInternalV2 = async (type: TypeBeneficiaryInternal): Promise<void> => {
@@ -92,16 +122,13 @@ export const useBeneficiary = () => {
 
     submitting.value = false
 
-    const list = []
     for (const listElement of result.results) {
-      list.push({
+      listBeneficiariesInternal.value.push({
         name: listElement.informationOwner.name,
         clientId: listElement.counterpartyId,
         email: listElement.informationOwner.email,
       })
     }
-
-    listBeneficiariesInternal.value = list
   }
 
   const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
@@ -130,5 +157,8 @@ export const useBeneficiary = () => {
     listBeneficiariesInternal,
     fetchBeneficiaries,
     getBeneficiaryStatusColor,
+    typeNetworkBankBeneficiary,
+    networkBankOptions,
+    isDomestic,
   }
 }

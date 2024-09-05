@@ -8,7 +8,11 @@
     <p class="mt-4 font-medium text-sm">{{ t('fullName') }}</p>
     <div class="flex justify-content-between align-items-center">
       <p class="mb-0">{{ bankAchUsd?.holderName }}</p>
-      <i v-if="bankAchUsd?.holderName" class="pi pi-clone" @click="copyToClipboard(toast, bankAchUsd?.holderName)"></i>
+      <i
+        v-if="bankAchUsd?.holderName"
+        class="pi pi-clone cursor-pointer"
+        @click="copyToClipboard(toast, bankAchUsd?.holderName)"
+      ></i>
     </div>
 
     <Divider type="solid" />
@@ -18,7 +22,7 @@
       <p class="mb-0">{{ bankAchUsd?.accountNumber }}</p>
       <i
         v-if="bankAchUsd?.accountNumber"
-        class="pi pi-clone"
+        class="pi pi-clone cursor-pointer"
         @click="copyToClipboard(toast, bankAchUsd?.accountNumber)"
       ></i>
     </div>
@@ -29,7 +33,7 @@
       <p class="mb-0">{{ bankAchUsd?.accountRoutingNumber }}</p>
       <i
         v-if="bankAchUsd?.accountRoutingNumber"
-        class="pi pi-clone"
+        class="pi pi-clone cursor-pointer"
         @click="copyToClipboard(toast, bankAchUsd?.accountRoutingNumber)"
       ></i>
     </div>
@@ -38,7 +42,11 @@
     <p class="font-medium text-sm">{{ t('reference') }}</p>
     <div class="flex justify-content-between align-items-center">
       <p class="mb-0">{{ bankAchUsd?.memo }}</p>
-      <i v-if="bankAchUsd?.memo" class="pi pi-clone" @click="copyToClipboard(toast, bankAchUsd?.memo)"></i>
+      <i
+        v-if="bankAchUsd?.memo"
+        class="pi pi-clone cursor-pointer"
+        @click="copyToClipboard(toast, bankAchUsd?.memo)"
+      ></i>
     </div>
     <Divider type="solid" />
 
@@ -95,3 +103,8 @@ const generatePdfACHlData = () => {
   generatePdf(nameFile, logo, title, bankAchUsdPdf)
 }
 </script>
+<style lang="css">
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>

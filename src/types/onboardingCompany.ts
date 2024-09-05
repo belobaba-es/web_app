@@ -20,6 +20,7 @@ export enum DocumentType {
   BENEFICIAL_OWNERSHIP_CERTIFICATE = 'beneficial_ownership_certificate',
   INCORPORATION_DOCUMENT = 'incorporation_document',
   W2 = 'w2',
+  SELFIE = 'selfie',
 }
 
 export type Documents = {
@@ -90,6 +91,8 @@ export type KycProfile = {
   fundsSendReceiveJurisdictions: string[]
   engageInActivities: string[]
   regulatedStatus: string
+  primaryBusiness: string
+  descriptionBusinessNature: string
 }
 
 export type OnboardingCompany = {

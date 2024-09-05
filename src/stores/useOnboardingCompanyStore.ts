@@ -53,6 +53,8 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
       fundsSendReceiveJurisdictions: [],
       engageInActivities: [],
       regulatedStatus: '',
+      primaryBusiness: '',
+      descriptionBusinessNature: '',
     },
   }),
   actions: {
@@ -94,6 +96,7 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
           country: '',
         },
       }
+
       this.partners = onboardingCompany.partners
       this.investmentProfile = onboardingCompany.investmentProfile ?? {
         primarySourceOfFunds: '',
@@ -113,6 +116,8 @@ export const useOnboardingCompanyStore = defineStore('useOnboardingCompanyStore'
         fundsSendReceiveJurisdictions: [],
         engageInActivities: [],
         regulatedStatus: '',
+        descriptionBusinessNature: '',
+        primaryBusiness: '',
       }
     },
     getPartners(): Partner[] {

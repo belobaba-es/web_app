@@ -18,7 +18,8 @@ export const useAuth = () => {
     remember: false,
   })
 
-  const { setInitialUserAuth, getAccountType, getClientId, getAccountStatus, isTwoFactorActive } = useAuthStore()
+  const { setInitialUserAuth, getAccountType, getCountry, getClientId, getAccountStatus, isTwoFactorActive } =
+    useAuthStore()
 
   const makeLogin = async (): Promise<UserAuth | undefined> => {
     submitting.value = true
@@ -55,6 +56,10 @@ export const useAuth = () => {
     return getAccountType() === 'NATURAL_PERSON'
   }
 
+  const isFromUnitedStates = () => {
+    return getCountry() === 'US'
+  }
+
   const handleSubmit = async () => {
     const userAuth = await makeLogin()
     if (!userAuth) {
@@ -88,6 +93,7 @@ export const useAuth = () => {
 
   return {
     ...useAuthStore(),
+    isFromUnitedStates,
     form,
     submitting,
     showModalOfVerifyTwoFactorAuth,

@@ -5,7 +5,10 @@
     </div>
 
     <div class="grid">
-      <DocumentsCompany :register-number="onboardingCompany.informationCompany.registerNumber" />
+      <DocumentsCompany
+        :register-number="onboardingCompany.informationCompany.registerNumber"
+        @companyDocumentUploaded="updateDocumentCompanyIsValid"
+      />
 
       <div class="p-panel p-component shareholders-panel col-6">
         <div class="p-panel-header">
@@ -13,14 +16,14 @@
         </div>
         <div class="p-toggleable-content" role="region">
           <div class="p-panel-content">
-            <div class="p-scrollpanel p-component custom" style="height: 434px">
+            <div class="p-scrollpanel p-component custom" style="min-height: 564px">
               <div class="p-scrollpanel-wrapper">
                 <div class="p-scrollpanel-content">
-                  <div class="px-3 pt-3 pb-0" v-for="(shareholder, idx) in getPartners()" :key="idx">
+                  <div v-for="(shareholder, idx) in getPartners()" :key="idx" class="px-3 pt-3 pb-0">
                     <UploadDocumentNaturalCompany
-                      :name="shareholder.firstName + shareholder.lastName"
-                      :dni="shareholder.dni"
                       v-if="getAccountStatus()"
+                      :dni="shareholder.dni"
+                      :name="shareholder.firstName + shareholder.lastName"
                     />
                   </div>
                 </div>
@@ -34,16 +37,16 @@
     <div class="field mt-4 col-12 flex align-items-center justify-content-end">
       <Button
         :label="t('continue')"
+        class="px-5 mt-2 btn-submit"
         icon="pi pi-angle-right"
         iconPos="right"
-        class="px-5 mt-2 btn-submit"
         @click="finish()"
       />
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 
@@ -53,7 +56,10 @@ import UploadDocumentNaturalCompany from './UploadDocumentNaturalCompany.vue'
 import { useAuth } from '../../../../composables/useAuth'
 import { useOnboardingCompany } from '../../../../composables/useOnboardingCompany'
 import DocumentsCompany from './DocumentsCompany.vue'
+import { ref } from 'vue'
+import { useToast } from 'primevue/usetoast'
 
+const toast = useToast()
 const { getAccountStatus } = useAuth()
 const { getPartners } = useOnboardingCompany()
 
@@ -62,7 +68,16 @@ const router = useRouter()
 
 const { onboardingCompany } = useOnboardingCompany()
 
+const documentCompanyIsValid = ref(false)
+
+const updateDocumentCompanyIsValid = (isValid: boolean) => {
+  documentCompanyIsValid.value = isValid
+}
 const finish = () => {
+  if (!documentCompanyIsValid.value) {
+    toast.add({ severity: 'warn', summary: t('warning'), detail: t('documentsRequired'), life: 5000 })
+    return
+  }
   router.push('/onboarding/business/completed')
 }
 </script>

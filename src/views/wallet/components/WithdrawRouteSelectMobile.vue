@@ -4,7 +4,7 @@
       <router-link class="link-historic" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
         <div class="flex align-items-center gap-2">
           <h5 class="text-link-historic">Withdraw</h5>
-          <span class="pi pi-angle-down primary-color"></span>
+          <span class="pi pi-angle-down secondary-color"></span>
         </div>
       </router-link>
       <div v-if="isDropdownOpen" class="dropdown">
@@ -29,6 +29,7 @@ const fiatLinks = [
   { name: 'Transfer between BELOBABA accounts', link: '/withdraw/noba/fiat' },
   { name: 'Domestic Wire', link: '/withdraw/usa/fiat/domestic' },
   { name: 'International Wire', link: '/withdraw/usa/fiat/international' },
+  { name: 'ACH', link: '/withdraw/usa/fiat/domestic/ACH' },
 ]
 const assetLinks = [
   { name: 'Between BELOBABA Crypto Wallets', link: '/withdraw/noba/crypto' },

@@ -18,6 +18,7 @@
             option-value="countryCode"
             optionLabel="name"
             required
+            @change="changeCountryHandler"
           />
         </div>
       </div>
@@ -49,6 +50,7 @@
           <InputText v-model="formObject.informationBank.address.region" type="text" />
         </div>
       </div>
+
       <div v-if="showCombo" class="field col-4">
         <label>{{ t('stateLabel') }}</label>
         <div class="p-inputgroup">
@@ -60,7 +62,6 @@
             option-value="state_code"
             optionLabel="name"
             required
-            @change="changeCountryHandler"
           />
         </div>
       </div>
@@ -90,13 +91,13 @@ import Divider from 'primevue/divider'
 import { useToast } from 'primevue/usetoast'
 import { useAuth } from '../../../../composables/useAuth'
 import { useNewOrEditBeneficiary } from '../composable/useNewOrEditBeneficiary'
+import { ref } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
-
+const showCombo = ref<boolean>(false)
 const toast = useToast()
 const { formObject, typeBeneficiary, saveBeneficiary, submitting } = useNewOrEditBeneficiary()
-const { loadingCountriesField, showCombo, state_us, onChangeCountryHandler, fetchCountries, countryAllowedForUSA } =
-  useWorld()
+const { loadingCountriesField, state_us, onChangeCountryHandler, fetchCountries, countryAllowedForUSA } = useWorld()
 const { getUserName } = useAuth()
 
 const emit = defineEmits(['nextPage', 'prevPage'])
@@ -105,11 +106,9 @@ const props = defineProps<{
   formData: any
 }>()
 
-const changeCountryHandler = (event: DropdownChangeEvent) => {
-  onChangeCountryHandler(event)
-  if (!showCombo.value) {
-    formObject.value.informationBank.address.country = ''
-  }
+const changeCountryHandler = async (event: DropdownChangeEvent) => {
+  formObject.value.informationBank.address.region = ''
+  onChangeCountryHandler(event, showCombo)
 }
 
 const validateFields = () => {
