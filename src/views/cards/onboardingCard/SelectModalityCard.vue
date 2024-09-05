@@ -15,38 +15,27 @@
     </div>
 
     <div class="grid contenedor mt-4">
-      <Button
-        :label="t('next')"
-        @click="nextStepUserData()"
-        icon-pos="right"
-        icon="pi pi-angle-right"
-        class="p-button-success col-1"
-      />
+      <Button :label="t('next')" class="col-1" icon="pi pi-angle-right" icon-pos="right" @click="nextStepUserData()" />
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import iconFisica from '../../../assets/icons/fisica.png'
 import iconVirtual from '../../../assets/icons/virtual.png'
 import iconFisicaWhite from '../../../assets/icons/fiisica-white.png'
 import iconVirtualWhite from '../../../assets/icons/virtual-white.png'
-import { useOnboardingCard } from '../composables/useOnboardingCard';
+import { useOnboardingCard } from '../composables/useOnboardingCard'
 import ButtonCardType from '../components/buttonCardType.vue'
 import { CardModality } from '../enums/cardModality.enum'
-import { onMounted, watch } from 'vue';
-import { useCardCenter } from '../cardCenter/Composables/useCardCenter';
+import { onMounted, watch } from 'vue'
+import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 
 const { t } = useI18n({ useScope: 'global' })
 const { nextStepUserData } = useOnboardingCard()
-
 </script>
-<style scoped lang="scss">
-Button {
-  background: #00beb0 !important;
-}
-
+<style lang="scss" scoped>
 h1 {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
 }

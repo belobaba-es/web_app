@@ -3,6 +3,7 @@ import { useAuth } from '../../../composables/useAuth'
 import { Ref, ref } from 'vue'
 import { BalanceCard } from '../types/balanceCard.type'
 import { TransactionCard } from '../types/transactionCard.type'
+import { searchPublicKey } from '../services/nobaCardBase.service'
 
 const isSubscribedCardTransactionResource = ref<boolean>(false)
 const isSubscribedCardBalanceResource = ref<boolean>(false)
@@ -22,8 +23,8 @@ export const useCardSocket = () => {
         CLIENT_ID: import.meta.env.VITE_NOBA_CARD_CLIENT_ID,
         CLIENT_SECRET: import.meta.env.VITE_NOBA_CARD_CLIENT_SECRET,
       },
-      import.meta.env.VITE_NOBA_CARD_PUBLIC_TOKEN,
-      'webapp:noba'
+      await searchPublicKey(),
+      'webapp:belobaba'
     )
 
     const socket = new WebSocket(`${import.meta.env.VITE_NOBA_CARD_SOCKET}?token=${token}`)

@@ -24,7 +24,7 @@ import router from '../../router/router'
 
 const { subscribeCardTransactionResource, subscribeBalanceCard } = useCardSocket()
 const { maskCardNumber } = useCardCenterValidation()
-const { fetchListCard, listCards, selectedCard, cardInfo } = useCardCenter()
+const { fetchListCard, selectedCard, cardInfo } = useCardCenter()
 const { itemsMenuLayout } = useLayoutCard()
 
 onMounted(async () => {

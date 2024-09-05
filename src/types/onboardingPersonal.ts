@@ -46,4 +46,5 @@ export type AddressShipping = {
   country: string
   number: string
   apartmentNumber: string
+  isShipping?: boolean
 }

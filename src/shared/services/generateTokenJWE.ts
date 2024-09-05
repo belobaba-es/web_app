@@ -1,5 +1,5 @@
-import { importSPKI } from 'jose'
 import * as jose from 'jose'
+import { importSPKI } from 'jose'
 
 export default async function (payload: any, publicKey: string, issuer = 'webapp:nobaswap:issuer') {
   const decoder = new TextDecoder('utf-8')
@@ -35,7 +35,7 @@ export const getHeader = async (
     headers: {
       'Content-Type': type,
       Authorization: `Bearer ${token}`,
-      'tenant-name': 'noba',
+      'tenant-name': import.meta.env.VITE_TENANT_NAME,
     },
   }
 }

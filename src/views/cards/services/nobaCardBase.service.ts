@@ -6,7 +6,7 @@ export const axiosInstanceNobaCard = axios.create({
   baseURL: import.meta.env.VITE_NOBA_CARD_API,
 })
 
-const searchPublicKey = async (): Promise<string> => {
+export const searchPublicKey = async (): Promise<string> => {
   const response = await axiosInstanceNobaCard.get('/public-key')
   return response.data.publicKey
 }
@@ -20,6 +20,8 @@ export const headerRequestNobaCard = async (): Promise<{
 }> => {
   const { getClientId } = useAuth()
 
+  const pubKey = await searchPublicKey()
+
   return await getHeader(
     await generateToken(
       {
@@ -27,8 +29,8 @@ export const headerRequestNobaCard = async (): Promise<{
         CLIENT_ID: import.meta.env.VITE_NOBA_CARD_CLIENT_ID,
         CLIENT_SECRET: import.meta.env.VITE_NOBA_CARD_CLIENT_SECRET,
       },
-      await searchPublicKey(),
-      'webapp:noba'
+      pubKey,
+      'webapp:belobaba'
     )
   )
 }

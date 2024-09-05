@@ -8,7 +8,7 @@
         <Button icon="pi pi-pencil" label="editar" @click="buttonEdit" />
       </div>
 
-      <div class="card-type-card p-0 m-0 pl-3 pr-3 primary-color">
+      <div class="card-type-card p-0 m-0 pl-3 pr-3">
         <p class="font-regular">{{ t('typeCardRequest') }}: {{ typeCardSelectString }}</p>
       </div>
     </div>
@@ -190,8 +190,7 @@ watch(domicileNumber, newValue => {
 </script>
 <style lang="scss" scoped>
 .card-type-card {
-  background-color: #00beb0;
-  color: #fff;
+  background-color: var(--primary-color);
   border-radius: 0.3rem;
 
   p {

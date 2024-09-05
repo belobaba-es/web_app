@@ -28,7 +28,7 @@ const toggleSelection = () => {
     return
   }
   isSelected.value = !isSelected.value
-  
+
   if (isSelected.value) {
     typeCardSelect.value.push(props.typeCard)
   } else {
@@ -48,6 +48,6 @@ img {
 }
 
 .selected {
-  background-color: #00beb0;
+  background-color: var(--primary-color);
 }
 </style>

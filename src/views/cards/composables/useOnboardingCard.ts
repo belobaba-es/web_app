@@ -32,7 +32,7 @@ export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
   const { cardInfo } = useCardCenter()
-  const { dataOnboardingPersonal, getAddress } = useOnboardingPersonalStore()
+  const { getAddress } = useOnboardingPersonalStore()
   const { setAddressShipping, getAddressShipping, setNationality, setDocumentExpirationDate, onboardingPersonal } =
     useOnboardingPersonal()
   const currentStepIndex = ref<number>(0)
@@ -146,7 +146,7 @@ export const useOnboardingCard = () => {
     submitting.value = true
     if (!validateForm()) return
 
-    if (route.path !== 'cards/onboarding/reposition/pysical') {
+    if (route.path === 'cards/onboarding/reposition/pysical') {
       try {
         const response = createRepositionCard(sendingDataRepositionCard.value)
         useToast().add({ severity: 'success', summary: 'Success', detail: response })

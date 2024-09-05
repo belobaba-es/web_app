@@ -134,7 +134,7 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     },
 
     setAddressShipping(addressShipping: AddressShipping) {
-      this.addressShipping = addressShipping
+      this.addressShipping = { ...addressShipping, isShipping: true }
     },
 
     getAddress() {
