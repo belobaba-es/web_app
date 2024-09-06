@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFromUnitedStates()" class="maintenance">
+  <div v-if="!isFromUnitedStates()" class="maintenance">
     <div class="pl-4 text-justify">
       <h2 class="title font-semi-bold">{{ t('maintenanceDeposit.title') }}</h2>
       <p>
