@@ -38,7 +38,8 @@ export class BeneficiaryService {
 
   async listBeneficiaryInternalV2(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v2`).get<BeneficiariesInternalResponse>(
-      `beneficiary/internal/${nextPag === 0 ? 1 : nextPag}`
+      `beneficiary/internal/`,
+      { page: nextPag === 0 ? 1 : nextPag }
     )
   }
 
