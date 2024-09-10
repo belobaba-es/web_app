@@ -29,8 +29,6 @@ import iconVirtualWhite from '../../../assets/icons/virtual-white.png'
 import { useOnboardingCard } from '../composables/useOnboardingCard'
 import ButtonCardType from '../components/buttonCardType.vue'
 import { CardModality } from '../enums/cardModality.enum'
-import { onMounted, watch } from 'vue'
-import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 
 const { t } = useI18n({ useScope: 'global' })
 const { nextStepUserData } = useOnboardingCard()

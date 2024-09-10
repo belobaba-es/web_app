@@ -44,7 +44,7 @@ const toggleSelection = () => {
 
 img {
   width: 41px;
-  height: 35px;
+  height: 42px;
 }
 
 .selected {

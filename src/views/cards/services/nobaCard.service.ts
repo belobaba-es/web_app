@@ -16,7 +16,14 @@ const { getClientId } = useAuth()
  * @param request
  */
 export const onboardingCard = async (request: OnboardingRequest) => {
-  return await axiosInstanceNobaCard.post('/customer/onboarding', request, await headerRequestNobaCard())
+  return await axiosInstanceNobaCard.post(
+    '/customer/onboarding',
+    {
+      ...request,
+      currency: 'EUR',
+    },
+    await headerRequestNobaCard()
+  )
 }
 
 export const getListCards = async (): Promise<ListCardsResponse[]> => {
