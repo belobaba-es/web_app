@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
-              <div style="color: #00beb0" class="pr-2">
+              <div class="pr-2" style="color: #00beb0">
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
@@ -28,7 +28,7 @@
             <td class="col-id-transaccion">#{{ getLastSixDigits(transaction.transactionId) }}</td>
             <td class="col-tipo">{{ t(transaction.operationType) }}</td>
             <td class="col-fecha">{{ formatDate(transaction.createdAt) }}</td>
-            <td class="col-monto" :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }">
+            <td :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }" class="col-monto">
               $
               {{ transaction.amount }}
             </td>
@@ -41,28 +41,28 @@
       <div v-if="nextPage" class="mt-5">
         <div class="flex justify-content-end mr-3">
           <Button
+            :label="t('loadMore')"
+            :loading="loadingTransactions"
+            class="p-button load-more-btn w-13rem"
             icon="pi pi-angle-right"
             iconPos="right"
-            class="p-button load-more-btn w-13rem"
-            :label="t('loadMore')"
             @click="loadMoreTransactions"
-            :loading="loadingTransactions"
           />
         </div>
       </div>
     </div>
 
     <template>
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
     </template>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
@@ -70,7 +70,15 @@ import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
-const { getHistoryTransaction, transactionList, getLastSixDigits, formatDate, loadMoreTransactions, loadingTransactions, nextPage } = useTransactionCard()
+const {
+  getHistoryTransaction,
+  transactionList,
+  getLastSixDigits,
+  formatDate,
+  loadMoreTransactions,
+  loadingTransactions,
+  nextPage,
+} = useTransactionCard()
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount.toString()
   const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
@@ -80,9 +88,8 @@ const isPositiveAmount = (amount: number) => {
 onMounted(async () => {
   await getHistoryTransaction(1, 10)
 })
-
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .table-container {
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -103,11 +110,12 @@ onMounted(async () => {
 }
 
 .table th {
-  color: #00beb0;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-family: RedHatDisplaySemiBold !important;
   padding: 12px 16px;
   border-bottom: 1px solid #ddd;
   white-space: nowrap;
-  font-weight: bold;
 }
 
 .table tbody {

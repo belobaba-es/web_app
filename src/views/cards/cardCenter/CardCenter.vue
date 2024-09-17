@@ -19,12 +19,16 @@
           <template #content>
             <div class="flex justify-content-between border-bottom-1 border-gray-300 pb-1">
               <div class="w-6">
-                <p class="m-0" style="color: #00beb0; font-size: 16px">{{ t('balance') }}</p>
+                <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
+                  {{ t('balance') }}
+                </p>
                 <p class="m-0 font-semi-bold">{{ selectedCard?.balance }}</p>
               </div>
               <div class="flex w-6 justify-content-between">
                 <div>
-                  <p class="m-0" style="color: #00beb0; font-size: 16px">{{ t('Cardholder') }}</p>
+                  <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
+                    {{ t('Cardholder') }}
+                  </p>
                   <p class="m-0 font-semi-bold">{{ getUserName() }}</p>
                 </div>
                 <Button
@@ -44,13 +48,17 @@
             </div>
             <div class="flex justify-content-between pt-4">
               <div class="w-6">
-                <p class="m-0" style="color: #00beb0; font-size: 16px">{{ t('cardType') }}</p>
+                <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
+                  {{ t('cardType') }}
+                </p>
                 <p class="m-0 font-semi-bold">{{ selectedCard?.isPhysical ? 'Fisica' : 'Virtual' }}</p>
               </div>
               <div class="flex w-6 justify-content-between">
                 <div class="flex align-items-center">
                   <div class="pr-2">
-                    <p class="m-0" style="color: #00beb0; font-size: 16px">{{ t('cardNumber') }}</p>
+                    <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
+                      {{ t('cardNumber') }}
+                    </p>
                     <p class="m-0 font-semi-bold">{{ selectedCard?.cardNumber }}</p>
                   </div>
                   <i
@@ -66,7 +74,9 @@
             <div class="flex justify-content-between pt-3">
               <div class="w-6 flex align-items-center">
                 <div class="pr-2">
-                  <p class="m-0" style="color: #00beb0; font-size: 16px">{{ t('expirationDate') }}</p>
+                  <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
+                    {{ t('expirationDate') }}
+                  </p>
                   <p class="m-0 font-semi-bold">
                     {{ formattedExpirationDate }}
                   </p>
@@ -81,7 +91,7 @@
               <div class="flex w-6 justify-content-between">
                 <div class="flex align-items-center">
                   <div class="pr-2">
-                    <p class="m-0" style="color: #00beb0; font-size: 16px">CVC</p>
+                    <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">CVC</p>
                     <p class="m-0 font-semi-bold">{{ isCardInfoVisible ? selectedCard?.cvv : '***' }}</p>
                   </div>
                   <i
@@ -230,17 +240,17 @@ const handlePausaCardChange = () => {
 </script>
 
 <style lang="scss" scoped>
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-  background-color: #00beb0;
-  background: #00beb0;
-  color: #fff;
-}
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-  background-color: #00beb0;
-  background: #00beb0;
-  color: #fff;
-}
+//.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+//  background-color: var(--primary-color);
+//  background: #00beb0;
+//  color: #fff;
+//}
+//
+//.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+//  background-color: #00beb0;
+//  background: #00beb0;
+//  color: #fff;
+//}
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   padding: 0rem;
