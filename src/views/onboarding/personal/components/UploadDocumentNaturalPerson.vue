@@ -89,6 +89,7 @@
                     :isPartner="false"
                     :type="typeDocumentAddress"
                     side="front"
+                    @uploadComplete="completed"
                   />
                 </div>
               </div>
@@ -140,7 +141,14 @@ import { DocumentType } from '../../../../types/onboardingCompany'
 const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
-const { documentTypeProofOfAddress, documentTypeOptions, documentTypeIncomeDeclaration } = useDocuments()
+const {
+  documentTypeProofOfAddress,
+  isProofOfAddress,
+  isIncomeDeclaration,
+  isDocumentType,
+  documentTypeOptions,
+  documentTypeIncomeDeclaration,
+} = useDocuments()
 const { onboardingPersonal } = useOnboardingPersonal()
 
 const typeDocumentIdentify = ref<string>('')
@@ -148,46 +156,59 @@ const typeDocumentAddress = ref<string>('')
 const incomeDeclaration = ref<string>('')
 
 const submissionCompletedDocuments = ref<{
-  front: boolean
-  back: boolean
+  documentFront: boolean
+  documentBack: boolean
   proofOfAddress: boolean
   selfie: boolean
+  incomeDeclaration: boolean
 }>({
-  front: false,
-  back: false,
+  documentFront: false,
+  documentBack: false,
   proofOfAddress: false,
   selfie: false,
+  incomeDeclaration: false,
 })
 
-const completed = (response: { side: string; dni: string; registerNumber: string }) => {
-  if (typeDocumentIdentify.value === 'passport') {
-    submissionCompletedDocuments.value.back = true
-  }
-
-  if (response.side === 'selfie') {
-    submissionCompletedDocuments.value.selfie = true
-  }
-
-  if (response.side === 'front') {
-    submissionCompletedDocuments.value.front = true
-  }
-
-  if (response.side === 'back') {
-    submissionCompletedDocuments.value.back = true
-  }
-
-  if (response.side === 'proofOfAddress') {
-    submissionCompletedDocuments.value.proofOfAddress = true
-  }
-
+const nextStep = () => {
   if (
-    submissionCompletedDocuments.value.front &&
-    submissionCompletedDocuments.value.back &&
+    submissionCompletedDocuments.value.documentFront &&
+    submissionCompletedDocuments.value.documentBack &&
     submissionCompletedDocuments.value.proofOfAddress &&
-    submissionCompletedDocuments.value.selfie
+    submissionCompletedDocuments.value.selfie &&
+    submissionCompletedDocuments.value.incomeDeclaration
   ) {
     router.push('/onboarding/personal/completed')
   }
+  return
+}
+
+const completed = (response: { side: string; dni: string; registerNumber: string; type: string }) => {
+  console.log(response)
+  if (isProofOfAddress(response.type) && !submissionCompletedDocuments.value.proofOfAddress) {
+    submissionCompletedDocuments.value.proofOfAddress = true
+    return nextStep()
+  }
+
+  if (isIncomeDeclaration(response.type)) {
+    submissionCompletedDocuments.value.incomeDeclaration = true
+    return nextStep()
+  }
+
+  if (isDocumentType(response.type)) {
+    if (response.side === 'front') {
+      submissionCompletedDocuments.value.documentFront = true
+    }
+    if (response.side === 'back' || response.type === 'passport') {
+      submissionCompletedDocuments.value.documentBack = true
+    }
+    return nextStep()
+  }
+
+  if (response.type === 'selfie') {
+    submissionCompletedDocuments.value.selfie = true
+  }
+
+  return nextStep()
 }
 </script>
 

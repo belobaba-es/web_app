@@ -156,27 +156,16 @@ const handleUpload = async (event: any) => {
     .then(response => {
       markDataSubmitted()
       setLoading(false)
-      let side = props.side
-      if (props.isProofOfAddress === true) {
-        side = 'proofOfAddress'
 
-        toast.add({
-          severity: 'success',
-          summary: t('successfulOperation'),
-          detail: t('userDataSuccessSend'),
-          life: 6000,
-        })
-      } else {
-        toast.add({
-          severity: 'success',
-          summary: t('successfulOperation'),
-          detail: t('shareholderDataSuccessSend'),
-          life: 6000,
-        })
-      }
+      toast.add({
+        severity: 'success',
+        summary: t('successfulOperation'),
+        detail: t('shareholderDataSuccessSend'),
+        life: 6000,
+      })
 
       emit('uploadComplete', {
-        side: side,
+        side: props.side,
         dni: props.dni,
         registerNumber: props.registerNumber,
         type: props.type,

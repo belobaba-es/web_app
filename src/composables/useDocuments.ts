@@ -29,7 +29,22 @@ export const useDocuments = () => {
     { value: 'bank_statement', name: t('documentBankStatement') },
   ])
 
+  const isProofOfAddress = (typeSelected: string) => {
+    return documentTypeProofOfAddress.value.some(item => item.value === typeSelected)
+  }
+
+  const isIncomeDeclaration = (typeSelected: string) => {
+    return documentTypeIncomeDeclaration.value.some(item => item.value === typeSelected)
+  }
+
+  const isDocumentType = (typeSelected: string) => {
+    return documentTypeOptions.value.some(item => item.value === typeSelected)
+  }
+
   return {
+    isProofOfAddress,
+    isIncomeDeclaration,
+    isDocumentType,
     documentTypeProofOfAddress,
     documentTypeOptions,
     documentTypeIncomeDeclaration,
