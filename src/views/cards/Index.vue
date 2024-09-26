@@ -39,7 +39,7 @@ watch(cardInfo, () => {
     cardNumber: maskCardNumber(cardInfo.value.cardNumber),
   }
 
-  if (cardInfo.value.status !== StatusCard.ACTIVE) {
+  if (cardInfo.value.status !== StatusCard.ACTIVE && cardInfo.value.status !== StatusCard.LOCKED) {
     itemsMenuLayout.value.forEach(item => {
       item.disabled = true
     })

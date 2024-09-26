@@ -1,12 +1,14 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 
 export const useLayoutCard = () => {
   const router = useRouter()
   const { t } = useI18n({ useScope: 'global' })
+  const { selectedCard, cardInfo } = useCardCenter()
 
-  const itemsMenuLayout = ref([
+  const itemsDefault = [
     {
       label: t('labelHistorialCard'),
       command: () => {
@@ -24,27 +26,32 @@ export const useLayoutCard = () => {
     {
       separator: true,
     },
-    {
-      label: t('labelPinChange'),
-      command: () => {
-        router.push('/cards/change-pin')
-      },
-      disabled: false,
-    },
-    {
-      label: t('labelConfigCard'),
-      command: () => {},
-      disabled: false,
-    },
+  ]
 
-    {
-      label: t('labelBlockCard'),
-      command: () => {
-        router.push('/cards/block-card')
-      },
-      disabled: false,
-    },
-  ])
+  let itemsMenuLayout = ref()
+
+  watch(cardInfo, () => {
+    if (selectedCard.value?.isPhysical) {
+      itemsMenuLayout.value = itemsDefault.concat(
+        {
+          label: t('labelPinChange'),
+          command: () => {
+            router.push('/cards/change-pin')
+          },
+          disabled: false,
+        },
+        {
+          label: t('labelBlockCard'),
+          command: () => {
+            router.push('/cards/block-card')
+          },
+          disabled: false,
+        }
+      )
+    } else {
+      itemsMenuLayout.value = itemsDefault
+    }
+  })
 
   return { itemsMenuLayout }
 }
