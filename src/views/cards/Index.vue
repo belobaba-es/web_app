@@ -1,10 +1,11 @@
 <template>
-  <section class="section-main">
+  <section v-if="!isMobile" class="section-main">
     <CardCenter />
   </section>
 
-  <section class="bg-gray-100">
-    <Menubar :model="itemsMenuLayout" />
+  <section class="md:bg-gray-100">
+    <Menubar v-if="!isMobile" :model="itemsMenuLayout" />
+
     <div class="pb-5">
       <router-view />
     </div>
@@ -19,13 +20,13 @@ import Menubar from 'primevue/menubar'
 import { useLayoutCard } from './composables/useLayoutCard'
 import { useCardCenter } from './cardCenter/Composables/useCardCenter'
 import { useCardCenterValidation } from './cardCenter/Composables/useCardCenterValidation'
-import { StatusCard } from './enums/statusCard.enum'
-import router from '../../router/router'
+import { useMediaQuery } from '../../composables/useMediaQuery'
 
 const { subscribeCardTransactionResource, subscribeBalanceCard } = useCardSocket()
 const { maskCardNumber } = useCardCenterValidation()
 const { fetchListCard, selectedCard, cardInfo } = useCardCenter()
 const { itemsMenuLayout } = useLayoutCard()
+const { isMobile } = useMediaQuery()
 
 onMounted(async () => {
   await subscribeCardTransactionResource()
@@ -34,19 +35,11 @@ onMounted(async () => {
 })
 
 watch(cardInfo, () => {
+  console.log('cardInfo index', cardInfo.value)
   selectedCard.value = {
     ...cardInfo.value,
     cardNumber: maskCardNumber(cardInfo.value.cardNumber),
   }
-
-  if (cardInfo.value.status !== StatusCard.ACTIVE && cardInfo.value.status !== StatusCard.LOCKED) {
-    itemsMenuLayout.value.forEach(item => {
-      item.disabled = true
-    })
-    router.push('/cards/new-card')
-    return
-  }
-  router.push('/cards/transactions-card')
 })
 </script>
 <style lang="scss" scoped>

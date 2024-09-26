@@ -7,16 +7,18 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { processException } from '../../../../shared/processException'
 import { StatusCard } from '../../enums/statusCard.enum'
+import { useMediaQuery } from '../../../../composables/useMediaQuery'
 
 const cardInfo = ref()
 const selectedCard = ref<cardSelectedWithDetails>()
 const listCards = ref<ListCardsResponse[]>([])
 const isDeleteCardModalShow = ref(false)
+const isCardInfoVisible = ref(false)
 
 export const useCardCenter = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
-  const isCardInfoVisible = ref(false)
+  const { isMobile } = useMediaQuery()
 
   let oldInfoCard = ref<ListCardsResponse>()
   const loading = ref(false)
@@ -24,6 +26,7 @@ export const useCardCenter = () => {
   const checkInputLoad = ref<boolean>(false)
 
   const checkedPausaCard = ref(false)
+  const showPauseModal = ref(false)
 
   const router = useRouter()
 
@@ -36,7 +39,15 @@ export const useCardCenter = () => {
     })
 
     listCards.value = response
+    if (isMobile.value) {
+      redirectValidationMobile()
+      return
+    }
 
+    redirectValidation()
+  }
+
+  const redirectValidation = () => {
     if (listCards.value && listCards.value.length !== 0) {
       cardInfo.value = listCards.value[0]
 
@@ -50,6 +61,22 @@ export const useCardCenter = () => {
       router.push('/cards/activation-card/wait')
     } else {
       router.push('/cards/onboarding')
+    }
+  }
+
+  const redirectValidationMobile = () => {
+    if (listCards.value && listCards.value.length !== 0) {
+      cardInfo.value = listCards.value[0]
+
+      if (
+        router.currentRoute.value.path !== '/cards/card-center/' ||
+        cardInfo.value.status !== StatusCard.WAITING_ACTIVATION
+      ) {
+        router.push('/cards/card-center/')
+        return
+      }
+    } else {
+      router.push('/cards/request-card')
     }
   }
 
@@ -101,28 +128,31 @@ export const useCardCenter = () => {
   }
 
   const pauseCardRequest = async () => {
-    checkInputLoad.value = true
+    loading.value = true
     try {
       if (checkedPausaCard.value) {
         const response = await pauseCard(selectedCard.value!.cardId)
         showModal.value = true
         checkInputLoad.value = false
         toast.add({ severity: 'success', summary: t('success'), detail: response })
-
+        cardInfo.value.status = StatusCard.LOCKED
         checkedPausaCard.value = true
-
+        showPauseModal.value = true
         return
       }
 
       const response = await unPauseCard(selectedCard.value!.cardId)
-
       toast.add({ severity: 'success', summary: t('success'), detail: response })
       checkInputLoad.value = false
-
+      cardInfo.value.status = StatusCard.ACTIVE
       checkedPausaCard.value = false
+      showPauseModal.value = true
     } catch (e: string | any) {
       processException(toast, t, e)
       checkedPausaCard.value = false
+      showPauseModal.value = false
+    } finally {
+      loading.value = false
     }
   }
 
@@ -191,5 +221,6 @@ export const useCardCenter = () => {
     showModal,
     checkInputLoad,
     pauseCardText,
+    showPauseModal,
   }
 }

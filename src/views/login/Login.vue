@@ -1,23 +1,23 @@
 <template>
   <div class="container-center">
-    <img class="logo-noba" :src="logo" alt="logo" />
+    <img :src="logo" alt="logo" class="logo-noba" />
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
       <h1 class="font-extra-light text-center">{{ t('loginTitle') }}</h1>
       <h2 class="font-extra-light text-center">{{ t('loginSubtitle') }}</h2>
       <div class="pt-5">
-        <form @submit.prevent="makeLogin" class="checkout-form">
+        <form class="checkout-form" @submit.prevent="makeLogin">
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" v-model="form.user" required :placeholder="t('emailPlaceholder')" />
+              <InputText v-model="form.user" :placeholder="t('emailPlaceholder')" required type="text" />
             </div>
           </div>
           <div class="field">
             <label>{{ t('passwordLabel') }}</label>
             <div class="p-inputgroup">
-              <Password v-model="form.pass" toggleMask required :feedback="false" placeholder="**********" />
+              <Password v-model="form.pass" :feedback="false" placeholder="**********" required toggleMask />
             </div>
             <div>
               <span class="help-text">{{ t('passwordHelpText') }}</span>
@@ -25,7 +25,7 @@
           </div>
           <div class="flex justify-content-between align-items-center">
             <div class="field-checkbox mt-2">
-              <Checkbox inputId="binary" v-model="form.remember" :binary="true" />
+              <Checkbox v-model="form.remember" :binary="true" inputId="binary" />
               <label for="binary">
                 {{ t('rememberMe') }}
               </label>
@@ -40,25 +40,25 @@
           <div class="container-flex mt-lg-2">
             <div class="float-right w-25">
               <Button
-                type="submit"
+                :loading="submitting"
+                class="font-light w-100"
                 icon="pi pi-angle-right"
                 iconPos="right"
                 label="Login"
-                class="font-light w-100"
-                :loading="submitting"
+                type="submit"
               />
             </div>
           </div>
           <Button
-            type="button"
             :label="t('noAccount')"
             class="font-light mt-lg-5 with-buttons p-button-outlined border-300 sm: mt-5"
+            type="button"
             @click="redirectSigning()"
           />
           <Button
-            type="button"
             :label="t('alreadyRegistered')"
             class="font-light mt-3 with-buttons p-button-outlined border-300"
+            type="button"
             @click="alreadyRegisteredSendCodeVerifyEmail()"
           />
         </form>
@@ -72,11 +72,11 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo-login.png'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import Checkbox from 'primevue/checkbox'
@@ -133,7 +133,11 @@ const makeLogin = async () => {
 }
 
 .logo-noba {
-  width: 142px;
-  height: 64px;
+  max-width: 10%;
+}
+@media only screen and (max-width: 992px) {
+  .logo-noba {
+    max-width: 60%;
+  }
 }
 </style>

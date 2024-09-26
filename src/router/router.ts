@@ -20,6 +20,10 @@ import { routerPanama } from './routerPanama'
 import { routerInternalTransfer } from './routerInternalTransfer'
 import { routerCrypto } from './routerCrypto'
 import { routerCard } from './routerCard'
+import { routerCardMobile } from './routerCardMobile'
+import { useMediaQuery } from '../composables/useMediaQuery'
+
+const { isMobile } = useMediaQuery()
 
 const routes: RouteRecordRaw[] = [
   {
@@ -100,11 +104,6 @@ const routes: RouteRecordRaw[] = [
         meta: {
           noCache: true,
         },
-      },
-      {
-        path: '/cards',
-        component: () => import('../views/cards/Index.vue'),
-        children: routerCard,
       },
       {
         path: '/withdraw/crypto/',
@@ -235,9 +234,25 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: '/cards/',
+        component: () => import('../views/cards/Index.vue'),
+        children: isMobile.value ? routerCardMobile : routerCard,
+      },
     ],
   },
 ]
+
+// let dashboardRoute = routes.find(route => route.path === '/dashboard')
+//
+// if (dashboardRoute && dashboardRoute.children) {
+//   console.log(isMobile.value)
+//   dashboardRoute.children.push({
+//     path: '/cards/',
+//     component: () => import('../views/cards/Index.vue'),
+//     children: isMobile.value ? routerCardMobile : routerCard,
+//   })
+// }
 
 const router = createRouter({
   history: createWebHistory(),

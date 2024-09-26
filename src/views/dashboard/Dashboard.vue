@@ -31,7 +31,6 @@ import AppMenu from './AppMenu.vue'
 import AppFooter from './AppFooter.vue'
 import AppTabBarContainer from './AppTabBarContainer.vue'
 import ButtonCreateWallet from '../../components/ButtonCreateWallet.vue'
-
 import { useI18n } from 'vue-i18n'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
@@ -48,10 +47,8 @@ const { t } = useI18n({ useScope: 'global' })
 const { fetchBalanceWallets } = useBalanceWallet()
 
 const enableCardModule = ref(false)
-const hasAccess = ref(false)
 
 const { getClientId } = useAuth()
-const valuesMenumobile = ref(false)
 
 watch(
   () => router.currentRoute.value,
