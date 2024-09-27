@@ -15,12 +15,12 @@
 
     <TabView v-if="!isLoading">
       <TabPanel header="US Domestic">
-        <FiatInstructionUSADomestic v-if="!isFromUnitedStates()" :bank-national="bankNational" />
+        <FiatInstructionUSADomestic v-if="isFromUnitedStates()" :bank-national="bankNational" />
         <MaintenanceDeposits />
       </TabPanel>
 
       <TabPanel v-if="bankAchUsd" header="US ACH">
-        <FiatInstructionAchUsd v-if="!isFromUnitedStates()" :bank-ach-usd="bankAchUsd" />
+        <FiatInstructionAchUsd v-if="isFromUnitedStates()" :bank-ach-usd="bankAchUsd" />
         <MaintenanceDeposits />
       </TabPanel>
 
