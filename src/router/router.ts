@@ -10,7 +10,6 @@ import WalletIndex from '../views/wallet/Wallet.vue'
 import TransactionHistoryWallet from '../views/wallet/Transaction.vue'
 
 import TransactionHistory from '../views/transaction-history/Index.vue'
-import BusinessPartners from '../views/profile/businessAllie/BusinessPartners.vue'
 
 import UploadDocumentsIndex from '../views/onboarding/index.vue'
 
@@ -61,10 +60,6 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'settings',
             component: () => import('../views/profile/settings/Index.vue'),
-          },
-          {
-            path: 'business-partners',
-            component: BusinessPartners,
           },
         ],
       },
