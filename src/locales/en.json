@@ -767,5 +767,19 @@
   "labelChangePin2": "Enter your pre-created questions and answers into your card application",
   "labelModalChangePin": "You have successfully changed your pin",
   "labelModalChangePin2": "You can now use your card with your new pin",
-  "dontHaveTransactions": "You don't have transactions"
+  "dontHaveTransactions": "You don't have transactions",
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  }
 }

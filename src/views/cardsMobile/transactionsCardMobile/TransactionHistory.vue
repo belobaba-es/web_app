@@ -2,10 +2,10 @@
   <div>
     <SelectCardHeader title="transactionHistory" />
     <div v-if="transactionList.length === 0" class="flex flex-column align-items-center justify-content-center h-30rem">
-      <div style="background: #00beb0; border-radius: 50%" class="p-4">
+      <div class="p-4" style="background: #00beb0; border-radius: 50%">
         <i class="pi pi-list" style="font-size: 2rem; color: white"></i>
       </div>
-      <p style="font-size: 16px" class="text-center font-semi-bold mb-0">{{ t('dontHaveTransactions') }}</p>
+      <p class="text-center font-semi-bold mb-0" style="font-size: 16px">{{ t('dontHaveTransactions') }}</p>
       <p class="text-center mb-0">{{ t('firstBuy') }}</p>
     </div>
     <div class="p-4">
@@ -25,9 +25,9 @@
           </div>
 
           <p
+            :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }"
             class="mb-0"
             style="font-size: 16px"
-            :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }"
           >
             $
             {{ transaction.amount }}
@@ -40,27 +40,27 @@
     <div v-if="nextPage" class="mt-5">
       <div class="flex justify-content-end mr-3">
         <Button
+          :label="t('loadMore')"
+          :loading="loadingTransactions"
+          class="p-button load-more-btn w-13rem"
           icon="pi pi-angle-right"
           iconPos="right"
-          class="p-button load-more-btn w-13rem"
-          :label="t('loadMore')"
           @click="loadMoreTransactions"
-          :loading="loadingTransactions"
         />
       </div>
     </div>
 
     <template>
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
-      <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
+      <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
     </template>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import Divider from 'primevue/divider'
@@ -73,8 +73,6 @@ const { t } = useI18n({ useScope: 'global' })
 const {
   getHistoryTransaction,
   transactionList,
-  getLastSixDigits,
-  formatDate,
   formatDateMobile,
   loadMoreTransactions,
   loadingTransactions,
@@ -90,7 +88,7 @@ onMounted(async () => {
   await getHistoryTransaction(1, 10)
 })
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .table-container {
   background-color: #f8f9fa;
   border-radius: 8px;

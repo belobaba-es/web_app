@@ -10,6 +10,7 @@ export const useCardBlock = () => {
   const { cardInfo } = useCardCenter()
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
+  const loading = ref(false)
   const visible = ref(false)
   const dataBlockCard = ref<{
     cardId: number
@@ -21,12 +22,15 @@ export const useCardBlock = () => {
     note: '',
   })
   const blockCard = () => {
+    loading.value = true
     reportCardAsLostOrStolen(dataBlockCard.value.cardId, dataBlockCard.value.reason, dataBlockCard.value.note)
       .then(() => {
         visible.value = true
+        loading.value = false
       })
 
       .catch(e => {
+        loading.value = false
         processException(toast, t, e)
       })
   }
@@ -35,5 +39,6 @@ export const useCardBlock = () => {
     blockCard,
     dataBlockCard,
     visible,
+    loading,
   }
 }
