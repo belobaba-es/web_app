@@ -1,6 +1,9 @@
 <template>
   <div class="credit-card-banner mb-5">
-    <img src="../assets/img/banner-completo.png" alt="" />
+    <a href="https://card.belobaba.io/es_es/?utm_source=Bankingapp&utm_campaign=Bankingapp" target="_blank">
+      <img src="../assets/img/BannerCardBELOBABA.png" alt="" />
+    </a>
+
   </div>
 </template>
 <script setup lang="ts"></script>
