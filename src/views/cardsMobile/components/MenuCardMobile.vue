@@ -15,4 +15,6 @@
 import { useLayoutCardMobile } from '../composables/useLayoutCardMobile'
 
 const { itemsMenuLayoutMobile } = useLayoutCardMobile()
+
+console.log('sss', itemsMenuLayoutMobile)
 </script>

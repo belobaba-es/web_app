@@ -751,5 +751,6 @@
   "labelChangePin": "Para hacer el cambio de pin de tu tarjeta fisica , debes seguir los siguientes pasos:",
   "labelChangePin2": "Ingresa tus preguntas y respuestas creadas previamente en tu solicitud de tarjeta",
   "labelModalChangePin": "Haz cambiado tu pin exitosamente",
-  "labelModalChangePin2": "Ya puedes hacer uso de tu tarjeta con tu nuevo pin"
+  "labelModalChangePin2": "Ya puedes hacer uso de tu tarjeta con tu nuevo pin",
+  "dontHaveTransactions": "No tienes transacciones en tu historial."
 }

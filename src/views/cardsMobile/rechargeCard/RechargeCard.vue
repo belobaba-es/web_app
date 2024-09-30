@@ -2,27 +2,28 @@
   <SelectCardHeader title="rechargeCard" />
   <div class="recharge-container">
     <div class="flex flex-column align-items-center" style="width: 100%">
-      <RechargeCardInput :type="AssetClassificationFilter.CRYPTO_STABLE_COIN" />
-      <RechargeCardInput :type="AssetClassificationFilter.FIAT" />
+      <SelectCard v-model="cardInfo" :listCards="listCards" />
+      <RechargeCardInput type="crypto" />
+      <RechargeCardInput type="fiat" />
       <div>
         <Button
           v-if="rechargeState.quoteId === ''"
+          :disabled="rechargeState.loading"
           :label="t('requestQuote')"
+          :loading="rechargeState.loading"
           class="w-12 py-2"
           icon="pi pi-sync"
           iconPos="right"
           @click="verifyRequestQuote()"
-          :disabled="rechargeState.loading"
-          :loading="rechargeState.loading"
         />
         <Button
           v-else
+          :disabled="rechargeState.quoteId === '' || rechargeState.loading"
           :label="t('confirm')"
           class="w-12 py-2"
           icon="pi pi-sync"
           iconPos="right"
           @click="openModal(true)"
-          :disabled="rechargeState.quoteId === '' || rechargeState.loading"
         />
       </div>
     </div>
@@ -30,7 +31,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import RechargeCardInput from '../../cards/rechargeCard/components/RechargeCardInput.vue'
 import ResumeRechargeCard from '../../cards/rechargeCard/components/ResumeRechargeCard.vue'
 import Button from 'primevue/button'
@@ -39,6 +40,7 @@ import { useRechargeCard } from '../../cards/rechargeCard/composables/useRecharg
 import SelectCardHeader from '../components/SelectCardHeader.vue'
 import { AssetClassificationFilter } from '../../deposit/types/asset.interface'
 import { useCardCenter } from '../../cards/cardCenter/Composables/useCardCenter'
+import SelectCard from '../../cards/components/selectCard/SelectCard.vue'
 
 const { rechargeState, openModal, handleRequestQuote } = useRechargeCard()
 const { listCards, cardInfo } = useCardCenter()
@@ -51,7 +53,7 @@ const verifyRequestQuote = async () => {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .recharge-container {
   display: flex;
   flex-direction: column;

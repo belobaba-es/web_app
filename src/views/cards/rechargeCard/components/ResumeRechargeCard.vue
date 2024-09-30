@@ -2,13 +2,13 @@
   <Dialog
     v-model:visible="props.showModal"
     :modal="true"
-    closeIcon="pi pi-times-circle"
-    class="modal-asset-selector"
     :style="{ width: '30rem' }"
+    class="modal-asset-selector"
+    closeIcon="pi pi-times-circle"
   >
     <template #header>
       <div class="header-container">
-        <h2 class="font-medium text-center mb-0" style="color: #00beb0">Aceptar cotización</h2>
+        <h2 class="font-medium text-center mb-0">Aceptar cotización</h2>
         <p class="text-center">Ahora puedes comprar, transmitir y transferir cómodamente.</p>
       </div>
     </template>
@@ -38,10 +38,10 @@
     <template #footer>
       <div class="footer-container">
         <Button
-          type="button"
-          class="accept-button w-4 py-3"
-          @click="handleAcceptQuote()"
           :loading="rechargeState.loading"
+          class="accept-button w-4 py-3"
+          type="button"
+          @click="handleAcceptQuote()"
         >
           {{ t('confirm') }}
         </Button>
@@ -50,7 +50,7 @@
   </Dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Dialog from 'primevue/dialog'
 import Divider from 'primevue/divider'
 import { useCardCenter } from '../../cardCenter/Composables/useCardCenter'
@@ -92,7 +92,7 @@ const props = defineProps({
 }
 
 .total-amount p:last-child {
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .accept-button {

@@ -766,5 +766,6 @@
   "labelChangePin": "To change the pin of your physical card, you must follow the following steps:",
   "labelChangePin2": "Enter your pre-created questions and answers into your card application",
   "labelModalChangePin": "You have successfully changed your pin",
-  "labelModalChangePin2": "You can now use your card with your new pin"
+  "labelModalChangePin2": "You can now use your card with your new pin",
+  "dontHaveTransactions": "You don't have transactions"
 }

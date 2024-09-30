@@ -257,8 +257,8 @@ const handlePausaCardChange = () => {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
-  background-color: #00beb0;
-  background: #00beb0;
+  background-color: var(--primary-color);
+  background: var(--primary-color);
   color: #fff;
 }
 

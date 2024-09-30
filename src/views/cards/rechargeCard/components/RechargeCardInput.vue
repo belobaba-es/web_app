@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-row mb-3" style="width: 31%">
+  <div class="flex-row mb-3">
     <div class="flex justify-content-between align-items-center">
       <template>
         <span v-if="type === 'fiat'">
@@ -11,24 +11,24 @@
       </template>
     </div>
 
-    <div class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100">
+    <div class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100 input">
       <div class="grid">
         <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">
             <Button
-              type="button"
               class="bg-white btn-select-crypto border-none border-round-3xl"
+              type="button"
               @click="openModalSelector"
             >
-              <img v-if="rechargeState.assetIcon" class="logo-cripto" alt="logo" :src="rechargeState.assetIcon" />
+              <img v-if="rechargeState.assetIcon" :src="rechargeState.assetIcon" alt="logo" class="logo-cripto" />
               <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">
-                {{ rechargeState.assetName ? rechargeState.assetName : t('selectCrypto') }}
+                {{ rechargeState.assetName ? rechargeState.assetName : 'Select Asset' }}
               </span>
               <i class="pi pi-caret-down text-primary icon-down-cripto"></i>
             </Button>
           </template>
           <template v-else>
-            <img alt="logo" class="logo-usd" :src="card" style="width: 3.5rem" />
+            <img :src="card" alt="logo" class="logo-usd" style="width: 3.5rem" />
           </template>
         </div>
 
@@ -36,18 +36,18 @@
           <template v-if="type === 'crypto'">
             <InputNumber
               v-model="rechargeState.amount"
-              mode="decimal"
               :max-fraction-digits="6"
               :min-fraction-digits="6"
+              mode="decimal"
             />
           </template>
           <template v-else>
             <InputNumber
               v-model="rechargeState.unitCount"
-              mode="decimal"
               :max-fraction-digits="2"
               :min-fraction-digits="2"
               disabled
+              mode="decimal"
             />
           </template>
         </div>
@@ -55,8 +55,8 @@
           <template v-if="type === 'crypto'">
             <div>
               <Button
-                type="button"
                 class="bg-white border-none border-round-3xl max-btn"
+                type="button"
                 @click="maxCountInput('Cripto')"
               >
                 <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span-max">MÁX</span>
@@ -66,26 +66,29 @@
         </div>
       </div>
     </div>
+
     <template v-if="type === 'fiat'">
       <span>
         {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
       </span>
     </template>
+
     <template v-else>
       <span v-if="rechargeState.assetCode">
         {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(rechargeState.assetCode) }}</span>
       </span>
     </template>
+
     <ModalAssetSelector
+      :asset-classification-filter="AssetClassificationFilter.ALL"
       :show-modal="rechargeState.showModalAssetSelector"
       @update:visible="modalAssetSelector($event)"
       @selected-asset="selectedAsset"
-      :asset-classification-filter="AssetClassificationFilter.CRYPTO_STABLE_COIN"
     />
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { defineProps } from 'vue'
 import Button from 'primevue/button'
@@ -149,8 +152,14 @@ const maxCountInput = (typeCode: string) => {
   }
 }
 
-.logo-cripto {
-  max-width: 25px;
+.input {
+  @media only screen and (max-width: 480px) {
+    width: 350px;
+  }
+
+  @media only screen and (min-width: 620px) {
+    width: 450px;
+  }
 }
 
 .text-span-max {

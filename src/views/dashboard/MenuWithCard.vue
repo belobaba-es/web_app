@@ -5,22 +5,22 @@
       <div v-for="link of firstPart">
         <div class="col flex flex-row justify-content-center align-content-center align-items-center w-6rem">
           <router-link
-            @click="onMenuItemClick($event)"
             v-if="link.to"
-            :to="link.to"
+            v-ripple
+            :aria-label="link.label"
             :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }]"
             :target="link.target"
-            :aria-label="link.label"
+            :to="link.to"
             exact
             role="menuitem"
-            v-ripple
+            @click="onMenuItemClick($event)"
           >
             <div class="link-tab-bar">
               <div class="flex align-items-center justify-content-center">
-                <i class="icon" :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }, link.icon]"></i>
+                <i :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }, link.icon]" class="icon"></i>
               </div>
               <div class="test">
-                <span style="font-size: 12px" :class="[link.class]">{{ link.label }}</span>
+                <span :class="[link.class]" style="font-size: 12px">{{ link.label }}</span>
               </div>
             </div>
           </router-link>
@@ -31,22 +31,22 @@
       <div v-for="link of SecondPart">
         <div class="col flex flex-row justify-content-center align-content-center align-items-center w-6rem">
           <router-link
-            @click="onMenuItemClick($event)"
             v-if="link.to"
-            :to="link.to"
+            v-ripple
+            :aria-label="link.label"
             :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }]"
             :target="link.target"
-            :aria-label="link.label"
+            :to="link.to"
             exact
             role="menuitem"
-            v-ripple
+            @click="onMenuItemClick($event)"
           >
             <div class="link-tab-bar">
               <div class="flex align-items-center justify-content-center">
-                <i class="icon" :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }, link.icon]"></i>
+                <i :class="[link.class, 'p-ripple', { 'p-disabled': link.disabled }, link.icon]" class="icon"></i>
               </div>
               <div class="test">
-                <span style="font-size: 12px" :class="[link.class]">{{ link.label }}</span>
+                <span :class="[link.class]" style="font-size: 12px">{{ link.label }}</span>
               </div>
             </div>
           </router-link>
@@ -93,7 +93,7 @@ const onMenuItemClick = (event: any) => {
 }
 
 .active {
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .icon {

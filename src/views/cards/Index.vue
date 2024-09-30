@@ -24,14 +24,17 @@ import { useMediaQuery } from '../../composables/useMediaQuery'
 
 const { subscribeCardTransactionResource, subscribeBalanceCard } = useCardSocket()
 const { maskCardNumber } = useCardCenterValidation()
-const { fetchListCard, selectedCard, cardInfo } = useCardCenter()
+const { fetchListCard, listCards, selectedCard, cardInfo } = useCardCenter()
 const { itemsMenuLayout } = useLayoutCard()
 const { isMobile } = useMediaQuery()
 
 onMounted(async () => {
   await subscribeCardTransactionResource()
   await subscribeBalanceCard()
-  await fetchListCard()
+
+  if (listCards.value.length === 0) {
+    await fetchListCard()
+  }
 })
 
 watch(cardInfo, () => {
