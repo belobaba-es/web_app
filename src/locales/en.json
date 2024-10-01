@@ -781,5 +781,7 @@
     "october": "October",
     "november": "November",
     "december": "December"
-  }
+  },
+  "transactionId": "Transaction ID",
+  "date": "Date"
 }

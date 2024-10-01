@@ -11,7 +11,7 @@
       </template>
     </div>
 
-    <div class="p-3 mt-2 border-1 border-primary-100 border-solid border-round-lg bg-gray-100 input">
+    <div class="p-3 mt-2 border-1 border-gray-500 border-solid border-round-lg bg-gray-100 input">
       <div class="grid">
         <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">

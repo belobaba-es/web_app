@@ -4,7 +4,7 @@
   </section>
 
   <section class="md:bg-gray-100">
-    <Menubar v-if="!isMobile" :model="itemsMenuLayout" />
+    <Menubar v-if="!isMobile" :model="itemsMenuLayout" class="font-semi-bold" />
 
     <div class="pb-5">
       <router-view />
@@ -49,7 +49,6 @@ watch(cardInfo, () => {
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: #495057;
   font-size: 1.2rem;
-  font-family: 'KanitRegular';
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link {

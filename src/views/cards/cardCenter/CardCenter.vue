@@ -1,7 +1,7 @@
 <template>
   <section class="section-main pb-8">
     <div class="flex md:align-items-center md:flex-row flex-column md:mb-0 mb-3">
-      <h3 class="pr-4" style="font-size: 16px">{{ t('cardCenter') }}</h3>
+      <h3 class="pr-4 font-regular" style="font-size: 16px">{{ t('cardCenter') }}</h3>
       <div class="md:w-3rem">
         <SelectCard v-model="cardInfo" :listCards="listCards" />
       </div>
@@ -115,7 +115,7 @@
         </Card>
       </div>
       <div class="md:h-13rem md:ml-4 md:w-2">
-        <p class="m-0 pb-3" style="font-size: 16px">{{ t('cardConfiguration') }}</p>
+        <p class="m-0 pb-3 font-regular" style="font-size: 16px">{{ t('cardConfiguration') }}</p>
         <Button class="btn btn-primary w-full text-center" @click="routerNewCard"
           ><i class="pi pi-plus pr-2" style="font-size: 1rem"></i> {{ t('requestNewCard') }}
         </Button>
@@ -240,18 +240,6 @@ const handlePausaCardChange = () => {
 </script>
 
 <style lang="scss" scoped>
-//.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-//  background-color: var(--primary-color);
-//  background: #00beb0;
-//  color: #fff;
-//}
-//
-//.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-//  background-color: #00beb0;
-//  background: #00beb0;
-//  color: #fff;
-//}
-
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   padding: 0rem;
 }

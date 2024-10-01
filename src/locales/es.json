@@ -766,5 +766,8 @@
     "october": "Octubre",
     "november": "Noviembre",
     "december": "Diciembre"
-  }
+  },
+  "description": "Descripción",
+  "transactionId": "ID de la transacción",
+  "date": "Fecha"
 }

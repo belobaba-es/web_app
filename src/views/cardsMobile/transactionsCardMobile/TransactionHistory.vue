@@ -1,8 +1,8 @@
 <template>
   <div>
-    <SelectCardHeader title="transactionHistory" />
+    <SelectCardHeader  title="transactionHistory" />
     <div v-if="transactionList.length === 0" class="flex flex-column align-items-center justify-content-center h-30rem">
-      <div class="p-4" style="background: #00beb0; border-radius: 50%">
+      <div class="p-4" style="background:  var(--primary-color); border-radius: 50%">
         <i class="pi pi-list" style="font-size: 2rem; color: white"></i>
       </div>
       <p class="text-center font-semi-bold mb-0" style="font-size: 16px">{{ t('dontHaveTransactions') }}</p>
@@ -10,27 +10,27 @@
     </div>
     <div class="p-4">
       <div v-for="(transaction, index) in transactionList" :key="index" class="mb-4">
-        <p class="mb-0" style="color: #00beb0">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
+        <p class="mb-0" style="color: var(--primary-color)">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
         <div class="flex justify-content-between">
           <div class="font-semi-bold pr-2 flex align-items-center" style="font-size: 16px">
             <i
               v-if="!isPositiveAmount(transaction.amount)"
               class="pi pi-arrow-circle-down"
-              style="font-size: 2.5rem; color: #00beb0"
+              style="font-size: 1.5rem; color: #FE5C73"
             ></i>
-            <i v-else class="pi pi-arrow-circle-up" style="font-size: 2rem; color: #00beb0"></i>
-            <span class="ml-3">
-              {{ transaction.reasonRejectingTransaction ? transaction.reasonRejectingTransaction : '--' }}
+            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
+            <span class="ml-3" style="font-size: 1rem">
+              {{ transaction.description ? transaction.description : '--' }}
             </span>
           </div>
 
           <p
-            :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }"
-            class="mb-0"
-            style="font-size: 16px"
+            :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
+            class="mb-0 font-semi-bold"
+            style="font-size: 1.2rem"
           >
-            $
             {{ transaction.amount }}
+            {{transaction.currency}}
           </p>
         </div>
         <Divider type="solid" />

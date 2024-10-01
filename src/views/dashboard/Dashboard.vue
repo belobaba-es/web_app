@@ -6,7 +6,7 @@
     </div>
 
     <div class="layout-main-container">
-      <div class="pt-5 mt-5">
+      <div class="pt-5 mt-5 mt-sm-5 pt-sm-4">
         <CreditCardBanner />
       </div>
       <div class="layout-main">

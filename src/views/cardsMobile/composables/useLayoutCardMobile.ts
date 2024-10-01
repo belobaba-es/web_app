@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import blockMobile from '../../../assets/icons/block-mobile.svg'
 import cardMobile from '../../../assets/icons/card-mobile.svg'
@@ -12,7 +12,7 @@ export const useLayoutCardMobile = () => {
 
   const { selectedCard, cardInfo } = useCardCenter()
 
-  const itemsDefaultMobile = [
+  let itemsDefaultMobile = [
     {
       label: t('labelHistorialCard'),
       to: '/cards/transactions-card',
@@ -32,7 +32,7 @@ export const useLayoutCardMobile = () => {
 
   const itemsMenuLayoutMobile = ref()
 
-  watch(cardInfo, () => {
+  const setItemsMenu = () => {
     if (selectedCard.value?.isPhysical) {
       itemsMenuLayoutMobile.value = itemsDefaultMobile.concat(
         {
@@ -49,6 +49,15 @@ export const useLayoutCardMobile = () => {
     } else {
       itemsMenuLayoutMobile.value = itemsDefaultMobile
     }
+  }
+
+  onMounted(() => {
+    setItemsMenu()
+  })
+
+  watch(cardInfo, () => {
+    console.log(selectedCard.value?.isPhysical)
+    setItemsMenu()
   })
 
   return { itemsMenuLayoutMobile }

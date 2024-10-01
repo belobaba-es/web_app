@@ -9,6 +9,7 @@ export type TransactionCard = {
   cardId: string
   operationType: TypesCardOperations
   reasonRejectingTransaction?: ReasonRejectingTransaction
+  description?: string
   status: TransactionCardStatus
   transactionId: string
 }

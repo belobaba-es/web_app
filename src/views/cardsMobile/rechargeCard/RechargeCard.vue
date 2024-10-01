@@ -2,7 +2,6 @@
   <SelectCardHeader title="rechargeCard" />
   <div class="recharge-container">
     <div class="flex flex-column align-items-center" style="width: 100%">
-      <SelectCard v-model="cardInfo" :listCards="listCards" />
       <RechargeCardInput type="crypto" />
       <RechargeCardInput type="fiat" />
       <div>

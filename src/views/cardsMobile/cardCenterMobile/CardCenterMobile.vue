@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main pb-5" style="background-color: #f7fdfd; margin: 0 -1rem">
+  <section class="section-main pb-5" style="margin: 0 -1rem">
     <SelectCardHeader title="card" />
     <div class="flex md:flex-row full flex-column align-items-center">
       <div
@@ -143,10 +143,6 @@ const handleDisplayUpdate = async (event: Event) => {
   }
 
   visible.value = e
-}
-
-const closeModal = () => {
-  showModal.value = false
 }
 </script>
 

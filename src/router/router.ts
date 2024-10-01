@@ -243,17 +243,6 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
-// let dashboardRoute = routes.find(route => route.path === '/dashboard')
-//
-// if (dashboardRoute && dashboardRoute.children) {
-//   console.log(isMobile.value)
-//   dashboardRoute.children.push({
-//     path: '/cards/',
-//     component: () => import('../views/cards/Index.vue'),
-//     children: isMobile.value ? routerCardMobile : routerCard,
-//   })
-// }
-
 const router = createRouter({
   history: createWebHistory(),
   routes,

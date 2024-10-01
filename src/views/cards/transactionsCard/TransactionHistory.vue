@@ -3,13 +3,13 @@
     <div class="table-container">
       <table class="table">
         <thead>
-          <tr>
-            <th class="col-descripcion">Descripción</th>
-            <th class="col-id-transaccion">ID Transacción</th>
-            <th class="col-tipo">Tipo</th>
-            <th class="col-fecha">Fecha</th>
-            <th class="col-monto">Monto</th>
-            <th class="col-recibo">Recibo</th>
+          <tr >
+            <th class="col-descripcion">{{t('description')}}</th>
+            <th class="col-id-transaccion">{{t('transactionId')}}</th>
+            <th class="col-tipo">{{t('transactionType')}}</th>
+            <th class="col-fecha">{{t('date')}}</th>
+            <th class="col-monto">{{t('amount')}}</th>
+            <th class="col-recibo"></th>
           </tr>
         </thead>
         <tbody>
@@ -19,21 +19,21 @@
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
-                  style="font-size: 1.5rem"
+                  style="font-size: 1.5rem; color: #FE5C73"
                 ></i>
-                <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem"></i>
+                <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem;"></i>
               </div>
-              {{ transaction.reasonRejectingTransaction ? transaction.reasonRejectingTransaction : '--' }}
+              {{ transaction.description ? transaction.description : '--' }}
             </td>
             <td class="col-id-transaccion">#{{ getLastSixDigits(transaction.transactionId) }}</td>
             <td class="col-tipo">{{ t(transaction.operationType) }}</td>
             <td class="col-fecha">{{ formatDate(transaction.createdAt) }}</td>
-            <td :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : '#00beb0' }" class="col-monto">
-              $
+            <td class="col-monto font-semi-bold" :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }">
               {{ transaction.amount }}
+              {{ transaction.currency}}
             </td>
             <td class="col-recibo">
-              <Button class="buttonColor" label="Descargar" outlined />
+<!--              <Button class="font-semi-bold buttonColor" :label="t('download')" outlined />-->
             </td>
           </tr>
         </tbody>
@@ -106,7 +106,6 @@ onMounted(async () => {
 .table thead {
   background-color: #fff;
   text-align: left;
-  font-weight: bold;
 }
 
 .table th {
@@ -134,7 +133,7 @@ onMounted(async () => {
 }
 
 .col-descripcion {
-  width: 200px;
+  width: 290px;
 }
 
 .col-id-transaccion {
@@ -161,7 +160,7 @@ onMounted(async () => {
 .col-recibo {
   width: 100px;
   text-align: center;
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .table tr:nth-child(even) {
@@ -169,7 +168,7 @@ onMounted(async () => {
 }
 
 .buttonColor {
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .buttonColor:hover {

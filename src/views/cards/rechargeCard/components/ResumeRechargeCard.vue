@@ -15,34 +15,31 @@
     <div class="body-container">
       <div class="quotation-details">
         <div class="flex flex-row justify-content-between align-items-center">
-          <p class="m-0" style="font-size: 14px">Desde tu balance:</p>
+          <p class="m-0 font-regular" style="font-size: 14px">Desde tu balance:</p>
         </div>
         <div class="flex flex-row justify-content-between align-items-center">
-          <p class="m-0" style="color: #00beb0">{{ rechargeState.assetName }}</p>
-          <p class="m-0" style="color: #00beb0">{{ rechargeState.amount }}</p>
+          <p class="m-0 font-semi-bold" style="color: var(--primary-color)">{{ rechargeState.assetName }}</p>
+          <p class="m-0">{{ rechargeState.amount }}</p>
         </div>
       </div>
       <Divider />
       <div class="payment-details">
         <div class="flex flex-row justify-content-between align-items-center">
           <div>
-            <p class="m-0" style="font-size: 14px">Hacia tarjeta:</p>
-            <p class="m-0" style="color: #00beb0">Card Noba {{ cardInfo.isPhysical ? 'Fisica' : 'Virtual' }}</p>
+            <p class="m-0 font-regular" style="font-size: 14px">Hacia tarjeta:</p>
+            <p class="m-0 font-semi-bold" style="color: var(--primary-color)">
+              Card Belobaba {{ cardInfo.isPhysical ? 'Fisica' : 'Virtual' }}
+            </p>
             <p class="m-0">{{ cardInfo.cardNumber }}</p>
           </div>
-          <p class="m-0" style="color: #00beb0">{{ rechargeState.unitCount }} USD</p>
+          <p class="m-0">{{ rechargeState.unitCount }} EUR</p>
         </div>
       </div>
       <Divider />
     </div>
     <template #footer>
       <div class="footer-container">
-        <Button
-          :loading="rechargeState.loading"
-          class="accept-button w-4 py-3"
-          type="button"
-          @click="handleAcceptQuote()"
-        >
+        <Button :loading="rechargeState.loading" class="p-3 pl-5 pr-5" type="button" @click="handleAcceptQuote()">
           {{ t('confirm') }}
         </Button>
       </div>
@@ -86,23 +83,12 @@ const props = defineProps({
 }
 
 .quotation-details,
-.payment-details,
-.total-amount {
+.payment-details {
   margin-bottom: 1rem;
 }
 
 .total-amount p:last-child {
   color: var(--primary-color);
-}
-
-.accept-button {
-  background-color: #00beb0;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 1rem;
 }
 
 .cancel-button {
