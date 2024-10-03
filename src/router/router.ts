@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import ProfileIndex from '../views/profile/Index.vue'
 import Deposit from '../views/deposit/Deposit.vue'
 import Login from '../views/login/Index.vue'
-import Withdraw from '../views/withdraw/Withdraw.vue'
 import SwapIndexVue from '../views/swap/Index.vue'
 import SwapSuccess from '../views/swap/Success.vue'
 
@@ -14,11 +13,15 @@ import TransactionHistory from '../views/transaction-history/Index.vue'
 import UploadDocumentsIndex from '../views/onboarding/index.vue'
 
 import { useAuth } from '../composables/useAuth'
-import { routerUSA } from './routerUSA'
-import { routerPanama } from './routerPanama'
-import { routerInternalTransfer } from './routerInternalTransfer'
-import { routerCrypto } from './routerCrypto'
+import { routerCrypto } from './withdrawRouters/withdrawRoutersDesk/routerCrypto'
+import { routerInternalTransfer } from './withdrawRouters/withdrawRoutersDesk/routerInternalTransfer'
+import { routerWithdrawalMobile } from './withdrawRouters/withdrawRoutersMobile/routerWithdrawalMobile'
+import { routerWithdrawal } from './withdrawRouters/withdrawRoutersDesk/routerWithdrawal'
+import { useMediaQuery } from '../composables/useMediaQuery'
+import { routerInternalTransferMobile } from './withdrawRouters/withdrawRoutersMobile/routerInternalTransferMobile'
+import { routerCryptoMobile } from './withdrawRouters/withdrawRoutersMobile/routerCryptoMobile'
 
+const { isMobile } = useMediaQuery()
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -82,26 +85,18 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/withdraw',
-        component: Withdraw,
+        name: 'fiat',
+        children: !isMobile.value ? routerWithdrawal : routerWithdrawalMobile,
       },
       {
-        path: '/withdraw/noba/',
-        children: routerInternalTransfer,
+        path: '/withdraw/crypto/internal',
+        component: () => (!isMobile.value ? import('../views/withdraw/Withdraw.vue') : null),
+        children: !isMobile.value ? routerInternalTransfer : routerInternalTransferMobile,
       },
       {
-        path: '/withdraw/usa/',
-        children: routerUSA,
-        meta: {
-          noCache: true,
-        },
-      },
-      {
-        path: '/withdraw/crypto/',
-        children: routerCrypto,
-      },
-      {
-        path: '/withdraw/panama/',
-        children: routerPanama,
+        path: '/withdraw/crypto',
+        name: 'crypto',
+        children: !isMobile.value ? routerCrypto : routerCryptoMobile,
       },
       {
         path: '/swap',

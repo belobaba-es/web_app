@@ -2,18 +2,22 @@
     font-family: RedHatDisplayLight;
     src: url('/src/assets/fonts/RedHatDisplay-Light.ttf');
 }
+
 @font-face {
     font-family: RedHatDisplayRegular;
     src: url('/src/assets/fonts/RedHatDisplay-Regular.ttf');
 }
+
 @font-face {
     font-family: RedHatDisplayMedium;
     src: url('/src/assets/fonts/RedHatDisplay-Medium.ttf');
 }
+
 @font-face {
     font-family: RedHatDisplayBold;
     src: url('/src/assets/fonts/RedHatDisplay-Bold.ttf');
 }
+
 @font-face {
     font-family: RedHatDisplaySemiBold;
     src: url('/src/assets/fonts/RedHatDisplay-SemiBold.ttf');
@@ -78,6 +82,11 @@ h2 {
     --surface-ground: #f9f9f9;
     --primary-color: #e4cea1;
     --text-color: #1b1b19;
+    --caption-orange: #e25f08;
+
+    .p-steps .p-steps-item .p-menuitem-link {
+        background: transparent !important;
+    }
 }
 
 *:focus {
@@ -146,6 +155,10 @@ h2 {
     padding: 3rem 0 3rem 0;
 }
 
+.p-dropdown {
+    border-radius: 25px !important;
+}
+
 .p-inputgroup input:first-child,
 .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext,
 .p-dropdown.p-component.p-inputwrapper {
@@ -176,7 +189,7 @@ h2 {
 .p-inputtext:nth-last-child(-n+2):hover {
     border: 1px solid #aa9872 !important;
     outline: none;
-  }
+}
 
 label {
     font-size: 1.1rem;
@@ -207,6 +220,29 @@ label {
 
 .float-left {
     float: left;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    color: var(--primary-color);
+    background: none;
+    font-family: KanitMedium, serif;
+
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.5rem 1rem;
+}
+
+.dialog-confirmation-beneficiary .p-message.p-message-warn {
+    background: #ffee002b !important;
+    border: 1px solid #ffcd00 !important;
+    border-top-width: medium;
+    border-right-width: medium;
+    border-bottom-width: medium;
+    border-left-width: medium;
+    border-width: 1px 1px 1px 1px;
+    color: #000000;
+    border-radius: 13px;
 }
 
 span.p-button.p-component.p-fileupload-choose {
@@ -402,6 +438,36 @@ small {
     border: 1px solid #aa9872 !important;
 }
 
+.p-dialog .p-dialog-content:last-of-type {
+    border-radius: 20px;
+}
+
+.dialog-confirm-withdrawal {
+    border-radius: 20px !important;
+
+    .p-dialog-content {
+        padding: 0 !important;
+    }
+
+}
+
+.dialog-confirmation-beneficiary {
+    @media (max-width: 991px) {
+        width: initial !important;
+
+    }
+    @media (max-width: 1024px) {
+        width: initial !important;
+    }
+
+    @media (min-width: 1440px) {
+        width: 25vw !important;
+    }
+}
+
+.p-inputgroup input:first-child, .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-dropdown.p-component.p-inputwrapper {
+    border-radius: 12px;
+}
 
 @media (max-width: 599px) {
     .p-hide-xs {

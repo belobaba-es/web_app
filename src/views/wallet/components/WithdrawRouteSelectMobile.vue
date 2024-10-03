@@ -1,10 +1,10 @@
 <template>
   <div class="col-4 flex justify-content-center">
     <div class="dropdown-wrapper">
-      <router-link class="link-historic" to="#" exact role="menuitem" v-ripple @click="toggleDropdown">
+      <router-link v-ripple class="link-historic" exact role="menuitem" to="#" @click="toggleDropdown">
         <div class="flex align-items-center gap-2">
-          <h5 class="text-link-historic">Withdraw</h5>
-          <span class="pi pi-angle-down secondary-color"></span>
+          <h5 class="text-link-historic">{{ t('withdraw') }}</h5>
+          <span class="pi pi-angle-down primary-color"></span>
         </div>
       </router-link>
       <div v-if="isDropdownOpen" class="dropdown">
@@ -18,36 +18,43 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { FiatAssetCodes } from '../types/assetCodes.interface'
+import { useI18n } from 'vue-i18n'
+import { useWallet } from '../composable/useWallet'
+import { WalletProvider } from '../../login/types/login.interface'
 
 const props = defineProps<{
-  isFiat: boolean
+  assetCode: string
 }>()
-const fiatLinks = [
-  { name: 'Transfer between BELOBABA accounts', link: '/withdraw/noba/fiat' },
-  { name: 'Domestic Wire', link: '/withdraw/usa/fiat/domestic' },
-  { name: 'International Wire', link: '/withdraw/usa/fiat/international' },
-  { name: 'ACH', link: '/withdraw/usa/fiat/domestic/ACH' },
-]
-const assetLinks = [
-  { name: 'Between BELOBABA Crypto Wallets', link: '/withdraw/noba/crypto' },
-  { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other' },
-]
+const { t } = useI18n({ useScope: 'global' })
 const links: any = ref()
 const router = useRouter()
+const isDropdownOpen = ref(false)
+const { getWalletProvider } = useWallet()
+const usdPanama = getWalletProvider() === WalletProvider.PINTTOSOFT
+const fiatLinks = [
+  { name: 'Transfer between BELOBABA accounts', link: '/withdraw/fiat/internal' },
+  { name: t('Withdraw Fiat'), link: '/withdraw/fiat/usa' },
+]
+const assetLinks = [
+  { name: 'Between BELOBABA Crypto Wallets', link: '/withdraw/crypto/internal/beneficiary' },
+  { name: 'To other platform crypto wallets', link: '/withdraw/crypto/other-platforms/beneficiary' },
+]
+const achPanamaLinks = [
+  { name: 'Transfer between BELOBABA accounts', link: '/withdraw/fiat/internal' },
+  { name: 'ACH Panama', link: '/withdraw/fiat/panama' },
+]
 
 onMounted(() => {
-  if (props.isFiat) {
-    links.value = fiatLinks
+  const linkOptions = {
+    [FiatAssetCodes.USD]: fiatLinks,
+    [FiatAssetCodes.USD_PANAMA]: usdPanama ? achPanamaLinks : undefined,
   }
-  if (!props.isFiat) {
-    links.value = assetLinks
-  }
+  links.value = linkOptions[props.assetCode as FiatAssetCodes] || assetLinks
 })
-
-const isDropdownOpen = ref(false)
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value

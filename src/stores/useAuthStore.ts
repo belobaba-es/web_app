@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { FeeACH, FeeWire, UserAuth } from '../views/login/types/login.interface'
+import { FeeACH, FeeWire, UserAuth, WalletProvider } from '../views/login/types/login.interface'
 import { AccountStatus } from '../types/accountStatus.enum'
 import { CryptoService } from '../shared/services/crypto'
 
@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('useAuthStore', {
         phoneNumber: '',
         phoneCountry: '',
         streetOne: '',
-
+        walletProvider: WalletProvider.LAYER2,
         dni: '',
         twoFactorActive: false,
         status: AccountStatus.REGISTERED,
@@ -97,6 +97,9 @@ export const useAuthStore = defineStore('useAuthStore', {
     },
     getClientId(): string {
       return this.clientId
+    },
+    getWalletProvider(): string {
+      return this.client.walletProvider
     },
     getUserDni(): string {
       return this.client.dni

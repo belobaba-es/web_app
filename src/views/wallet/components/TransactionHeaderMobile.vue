@@ -32,7 +32,7 @@
                 <h5 class="text-link-historic">Deposit</h5>
               </router-link>
             </div>
-            <WithdrawRouteSelectMobile :isFiat="wallet?.assetCode === 'USD'"></WithdrawRouteSelectMobile>
+            <WithdrawRouteSelectMobile ::asset-code="wallet?.assetCode"></WithdrawRouteSelectMobile>
             <div class="col-4 flex justify-content-center">
               <router-link class="link-historic" to="/swap" exact role="menuitem" v-ripple>
                 <h5 class="text-link-historic">Swap</h5>

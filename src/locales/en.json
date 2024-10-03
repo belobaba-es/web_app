@@ -601,5 +601,24 @@
     "textTwo": "This measure is aimed at ensuring a more secure environment for your transactions, reaffirming our commitment to integrity and trust in every operation.",
     "textThree": "We appreciate your understanding and trust in our institution, and we are continuously working to provide an efficient and secure service.",
     "textFour": "We apologize for any inconvenience and are at your disposal to assist you."
-  }
+  },
+  "abaAch": "ABA ACH",
+  "abaFed": "ABA Fedwire",
+  "access": "Access",
+  "accounts": "Accounts",
+  "addNewBeneficiaryText": "Add new wallet",
+  "ATM_DEPOSIT": "Atm deposit",
+  "ATM_TRANSFER": "Atm transfer",
+  "ATM_WITHDRAWAL": "Atm withdrawal",
+  "authorized": "Authorized",
+  "available": "Available",
+  "back": "Back",
+  "backHome": "Back to home",
+  "backToTop": "Regresar al inicio",
+  "Bank": "Bank",
+  "bankAccount": "Bank account",
+  "beneficiaryCreated": "You have submitted a request for a new crypto beneficiary",
+  "CompleteBeneficiaryDetailsTransaction": "Complete the details of the beneficiary of the transaction",
+  "completeForm": "Please complete all the obligatory fields",
+  "completeFormBeneficiary": "Fill in the details of the beneficiary of the transaction."
 }

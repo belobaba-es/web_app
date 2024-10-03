@@ -21,6 +21,11 @@ export interface FeeWire {
   }
 }
 
+export enum WalletProvider {
+  PINTTOSOFT = 'PINTTOSOFT',
+  LAYER2 = 'LAYER2',
+}
+
 interface Client {
   dateBirth: Date
   dni: string
@@ -39,6 +44,7 @@ interface Client {
   country: string
   streetOne: string
   isSegregated: boolean
+  walletProvider: WalletProvider
 }
 
 export interface UserAuth {
