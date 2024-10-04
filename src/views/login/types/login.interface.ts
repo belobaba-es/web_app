@@ -1,11 +1,27 @@
 import { AccountStatus } from '../../../types/accountStatus.enum'
 
+export enum WalletProvider {
+  PINTTOSOFT = 'PINTTOSOFT',
+  LAYER2 = 'LAYER2',
+}
+
 interface FeeSwap {
   swapBuy: number
   swapSell: number
 }
 
 export interface FeeACH {
+  domestic: {
+    in: number
+    out: number
+  }
+  international: {
+    in: number
+    out: number
+  }
+}
+
+export interface FeeAchUsd {
   in: number
   out: number
 }
@@ -21,17 +37,13 @@ export interface FeeWire {
   }
 }
 
-export enum WalletProvider {
-  PINTTOSOFT = 'PINTTOSOFT',
-  LAYER2 = 'LAYER2',
-}
-
 interface Client {
   dateBirth: Date
   dni: string
   feeSwap: FeeSwap
   feeWire: FeeWire
   feeACHPAB: FeeACH
+  feeAchUsd: FeeAchUsd
   status: AccountStatus
   twoFactorActive: boolean
   phoneNumber: string
@@ -44,7 +56,7 @@ interface Client {
   country: string
   streetOne: string
   isSegregated: boolean
-  walletProvider: WalletProvider
+  walletProvider: string
 }
 
 export interface UserAuth {

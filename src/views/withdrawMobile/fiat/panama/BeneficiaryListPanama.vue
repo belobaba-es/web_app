@@ -75,9 +75,7 @@
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import Skeleton from 'primevue/skeleton'
-
 import GeneralPaginator from '../../../../components/GeneralPaginator.vue'
-
 import { useBeneficiaryPanama } from '../../../withdraw/fiat/panama/composable/useBeneficiaryPanama'
 import router from '../../../../router/router'
 import InputSearch from '../../../withdraw/components/inputSearch/InputSearch.vue'
