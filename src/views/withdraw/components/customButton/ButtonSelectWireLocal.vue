@@ -1,8 +1,8 @@
 <template>
   <div
     :class="{ 'not-clickable': !isClickable }"
-    class="card col p-2 cursor-pointer dropDownWire"
-    style="margin: 0 auto; border: 1px solid #00beb0"
+    class="card col p-2 cursor-pointer dropDownWire border"
+    style="margin: 0 auto; background: #f2e6d8"
     @click="toggleDropdown"
   >
     <div class="flex justify-content-between align-items-center">
@@ -17,7 +17,7 @@
             <div
               class="card pl-3 pr-3 m-0 mr-3"
               style="
-                background: #dcf9eb;
+                background: #f2e6d8;
                 color: #21bf73 !important;
                 padding: 0.25rem 1rem !important;
                 line-height: 14px;
@@ -91,9 +91,9 @@ const props = defineProps({
   defaultDropdownVisible: { type: Boolean, default: false },
   isClickable: { type: Boolean, default: true },
   firstOptionBgColor: { type: String, default: '#FFFFFF' },
-  firstOptionTextColor: { type: String, default: '#00BEB0' },
+  firstOptionTextColor: { type: String, default: 'var(--primary-color)' },
   firstOptionOpacity: { type: Number, default: 1 },
-  secondOptionBgColor: { type: String, default: '#00BEB0' },
+  secondOptionBgColor: { type: String, default: 'var(--primary-color)' },
   secondOptionTextColor: { type: String, default: '#FFFFFF' },
   secondOptionOpacity: { type: String, default: 1 },
 })
@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
   margin: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #00beb0 #f0f0f0;
+  scrollbar-color: var(--primary-color) #f0f0f0;
 }
 
 .country-list div {

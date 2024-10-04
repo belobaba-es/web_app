@@ -15,7 +15,7 @@
     <h3>{{ t('withdrawWireLocalText') }}</h3>
   </div>
 
-  <div class="card ml-4 float-left w-full" style="border: 1px solid #00beb0">
+  <div class="card ml-4 float-left w-full border">
     <div class="flex flex-wrap">
       <div class="flex-auto">
         <p class="font-regular text-2xl m-0">{{ t('withdrawWireLocalText2') }}</p>
@@ -113,5 +113,9 @@ const onSelect = (item: Beneficiary) => {
 .p-datatable .p-datatable-thead > tr > th {
   color: var(--primary-color);
   font-family: KanitMedium, serif;
+}
+
+.border {
+  border: 1px solid var(--primary-color);
 }
 </style>

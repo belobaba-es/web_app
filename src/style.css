@@ -435,7 +435,7 @@ small {
 }
 
 .border {
-    border: 1px solid #aa9872 !important;
+    border: 1px solid var(--primary-color) !important;
 }
 
 .p-dialog .p-dialog-content:last-of-type {

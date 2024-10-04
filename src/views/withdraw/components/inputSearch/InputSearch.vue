@@ -4,7 +4,8 @@
       v-model="searchText"
       :placeholder="placeholder"
       @change="handleChange"
-      style="width: 100%; border-radius: 10px 0 0 10px; background: #f7fdfd; border: 1px solid #00beb0"
+      class="border"
+      style="width: 100%; border-radius: 10px 0 0 10px; background: #f7fdfd"
     />
     <Button
       icon="pi pi-search"
@@ -39,3 +40,9 @@ const handleChange = () => {
   }
 }
 </script>
+
+<style>
+.border {
+  border: 1px solid var(--primary-color);
+}
+</style>

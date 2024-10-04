@@ -14,7 +14,7 @@
         <ButtonSelectWireLocal
           :defaultDropdownVisible="true"
           :isClickable="false"
-          firstOptionBgColor="#00BEB0"
+          firstOptionBgColor="var(--primary-color)"
           firstOptionTextColor="#ffffff"
           secondOptionBgColor="#ffffff"
           secondOptionOpacity="0.4"

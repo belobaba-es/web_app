@@ -66,6 +66,6 @@ const toBack = () => {
 </script>
 <style lang="scss" scoped>
 .line-vertical {
-  border-left: 2px solid #00beb0;
+  border-left: 2px solid var(--primary-color);
 }
 </style>

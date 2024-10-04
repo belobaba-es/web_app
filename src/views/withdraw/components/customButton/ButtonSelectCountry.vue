@@ -1,5 +1,5 @@
 <template>
-  <div class="card col p-2 dropDownCountry" style="margin: 0 auto; border: 1px solid #00beb0" @click="toggleDropdown">
+  <div class="card col p-2 dropDownCountry border" style="margin: 0 auto" @click="toggleDropdown">
     <div class="flex justify-content-between align-items-center">
       <div class="flex col-10">
         <div class="mr-2">
