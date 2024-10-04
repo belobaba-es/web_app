@@ -8,7 +8,6 @@ import { processException } from '../../../../../shared/processException'
 import { Beneficiary } from '../../../type/beneficiary.type'
 import { CounterpartyStatus } from '../../../enums/beneficiary.enum'
 import countrycounterpartytype from '../../../../../shared/jsons/countryCounterpartyType.json'
-import { useWorld } from '../../../../../composables/useWorld'
 
 const listBeneficiaryUsa = ref<Beneficiary[]>([])
 const listBeneficiarySearch = ref<Beneficiary[]>([])
@@ -23,8 +22,6 @@ const showInputIban = ref<boolean>(false)
 
 export const useListBeneficiaryUsa = () => {
   const search = ref(false)
-
-  const { findCountryByCodeCountry } = useWorld()
   const useBeneficiaryUsaList = useBeneficiaryUsaListStore()
   const { setSelectedCounterpartyId } = useBeneficiaryUsaListStore()
   useBeneficiaryUsaList.$subscribe((mutation, state) => {
@@ -48,6 +45,7 @@ export const useListBeneficiaryUsa = () => {
   const fetchBeneficiariesUsa = (isFirstLoad?: boolean) => {
     submitting.value = true
     if (isFirstLoad) {
+      currentPage.value = 1
       useBeneficiaryUsaList.setNextPage(1)
     }
     try {
@@ -90,12 +88,15 @@ export const useListBeneficiaryUsa = () => {
   }
 
   const beneficiaryUsaSearch = (searchBeneficiary: string) => {
-    if (!searchBeneficiary) {
+    handleChange(searchBeneficiary)
+    useBeneficiaryUsaList.searchBeneficiaryUsa(searchBeneficiary)
+    search.value = true
+  }
+  const handleChange = async (searchText: string) => {
+    if (searchText == '') {
       fetchBeneficiariesUsa(true)
       return
     }
-    useBeneficiaryUsaList.searchBeneficiaryUsa(searchBeneficiary)
-    search.value = true
   }
 
   const getBeneficiaryStatusColor = (status: CounterpartyStatus) => {
@@ -158,5 +159,6 @@ export const useListBeneficiaryUsa = () => {
     wireLocalType,
     validateShowInputIban,
     showInputIban,
+    handleChange,
   }
 }

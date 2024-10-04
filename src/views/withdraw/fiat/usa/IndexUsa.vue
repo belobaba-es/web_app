@@ -22,7 +22,7 @@
       </div>
 
       <div class="flex justify-content-between">
-        <InputSearch :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
+        <InputSearch :onChange="handleChange" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
       </div>
     </div>
     <ListBeneficiaryUsa v-if="!submitting" @select="onSelect($event)" />
@@ -47,7 +47,8 @@ import { useWithdraw } from '../../composable/useWithdraw'
 import { useWorld } from '../../../../composables/useWorld'
 
 const { t } = useI18n({ useScope: 'global' })
-const { beneficiaryUsaSearch, submitting, listBeneficiaryUsa, fetchBeneficiariesUsa } = useListBeneficiaryUsa()
+const { beneficiaryUsaSearch, submitting, listBeneficiaryUsa, fetchBeneficiariesUsa, handleChange } =
+  useListBeneficiaryUsa()
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const toast = useToast()
 const { clearTransactionData } = useWithdraw()
@@ -72,6 +73,7 @@ const newBeneficiary = () => {
 const handleSearch = (searchText: string) => {
   beneficiaryUsaSearch(searchText)
 }
+
 const onSelect = (item: Beneficiary) => {
   if (item.status === CounterpartyStatus.PENDING) {
     toast.add({

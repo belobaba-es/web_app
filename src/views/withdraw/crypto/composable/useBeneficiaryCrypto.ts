@@ -113,6 +113,7 @@ export function useBeneficiaryCrypto() {
     if (newList) {
       cryptoBeneficiaryListStore.clearFilter()
       cryptoBeneficiaryListStore.setNextPage(1)
+      currentPage.value = 1
     }
     submitting.value = true
     new BeneficiaryCryptoService()
