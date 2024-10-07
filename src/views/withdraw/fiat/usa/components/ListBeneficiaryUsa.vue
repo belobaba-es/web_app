@@ -60,9 +60,7 @@ import { useListBeneficiaryUsa } from '../composable/useListBeneficiaryUsa'
 import { Beneficiary, NewBeneficiary } from '../../../type/beneficiary.type'
 import GeneralPaginator from '../../../../../components/GeneralPaginator.vue'
 import { useWithdraw } from '../../../composable/useWithdraw'
-import { onMounted } from 'vue'
 import { CounterpartyStatus, NetworkBank } from '../../../enums/beneficiary.enum'
-import { useWorld } from '../../../../../composables/useWorld'
 import { useNewBeneficiaryDomestic } from './beneficiary/composable/useNewBeneficiaryDomestic'
 import { useNewBeneficiaryInternational } from './beneficiary/composable/useNewBeneficiaryInternational'
 
@@ -91,6 +89,7 @@ const makeWithdraw = (item: Beneficiary) => {
 }
 
 const edit = (item: NewBeneficiary) => {
+  if (item.status !== CounterpartyStatus.ACTIVE) return
   if (item.informationBank.networkBank === NetworkBank.SWIFT) {
     editBeneficiaryUsaSwift(item)
   } else {

@@ -89,7 +89,6 @@ export function useListBeneficiaryInternal() {
   const filterInternal = ref<TableFilter>(internalBeneficiaryListStore.getFilters())
 
   const { prepareFormData } = useWithdraw()
-  internalBeneficiaryListStore.setBeneficiary([])
   internalBeneficiaryListStore.$subscribe((mutation, state) => {
     filterInternal.value = state.filter
     listInternalBeneficiary.value = state.beneficiary
@@ -108,7 +107,6 @@ export function useListBeneficiaryInternal() {
       .listBeneficiaryFiatInternal(internalBeneficiaryListStore.getFilters())
       .then(result => {
         loading.value = false
-
         nextPag.value = Number(result.nextPag) ? Number(result.nextPag) : nextPag.value > 0 ? nextPag.value : 1
         internalBeneficiaryListStore.setNextPage(Number(result.nextPag))
         internalBeneficiaryListStore.setBeneficiary(result.results)

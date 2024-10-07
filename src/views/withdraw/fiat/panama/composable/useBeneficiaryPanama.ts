@@ -36,6 +36,7 @@ export const useBeneficiaryPanama = () => {
     if (isFirstLoad) {
       useBeneficiaryPanamaList.clearBeneficiary()
       useBeneficiaryPanamaList.setNextPage(1)
+      currentPage.value = 1
     }
     try {
       new BeneficiaryService().listBeneficiaryAchPanama(useBeneficiaryPanamaList.getFilters()).then(resp => {
