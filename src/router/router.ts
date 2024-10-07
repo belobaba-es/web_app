@@ -90,7 +90,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/withdraw/crypto/internal',
-        component: () => (!isMobile.value ? import('../views/withdraw/Index.vue') : null),
+        component: !isMobile.value ? () => import('../views/withdraw/Index.vue') : undefined,
         children: !isMobile.value ? routerInternalTransfer : routerInternalTransferMobile,
       },
       {

@@ -68,13 +68,16 @@
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useLayout } from '../withdraw/composable/useLayout'
-import router from '../../router/router'
+
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n({ useScope: 'global' })
+const router = useRouter()
 
 const { optionButtonsFiat, optionButtonsCrypto, selectOption, selectedOption } = useLayout()
 
 const clickAction = (to: string) => {
+  console.log('to', to)
   router.push(to)
 }
 
