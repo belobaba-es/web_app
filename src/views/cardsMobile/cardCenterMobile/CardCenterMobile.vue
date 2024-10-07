@@ -103,7 +103,6 @@ const {
   isCardInfoVisible,
   cardInfo,
   checkedPausaCard,
-  showModal,
   pauseCardRequest,
   checkInputLoad,
   pauseCardText,

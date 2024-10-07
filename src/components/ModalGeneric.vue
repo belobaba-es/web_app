@@ -6,7 +6,7 @@
     modal
     @update:visible="emit('update:display', $event)"
   >
-    <h2 class="text-center font-medium" style="color: #00beb0">{{ title }}</h2>
+    <h2 class="text-center font-medium">{{ title }}</h2>
     <p class="m-0 text-center font-normal">
       {{ subtitle }}
     </p>

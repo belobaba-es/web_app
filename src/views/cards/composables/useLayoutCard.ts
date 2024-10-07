@@ -26,28 +26,26 @@ export const useLayoutCard = () => {
     {
       separator: true,
     },
+    {
+      label: t('labelBlockCard'),
+      command: () => {
+        router.push('/cards/block-card')
+      },
+      disabled: false,
+    },
   ]
 
   let itemsMenuLayout = ref()
 
   watch(cardInfo, () => {
     if (selectedCard.value?.isPhysical) {
-      itemsMenuLayout.value = itemsDefault.concat(
-        {
-          label: t('labelPinChange'),
-          command: () => {
-            router.push('/cards/change-pin')
-          },
-          disabled: false,
+      itemsMenuLayout.value = itemsDefault.concat({
+        label: t('labelPinChange'),
+        command: () => {
+          router.push('/cards/change-pin')
         },
-        {
-          label: t('labelBlockCard'),
-          command: () => {
-            router.push('/cards/block-card')
-          },
-          disabled: false,
-        }
-      )
+        disabled: false,
+      })
     } else {
       itemsMenuLayout.value = itemsDefault
     }

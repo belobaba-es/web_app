@@ -26,7 +26,6 @@
   </section>
 </template>
 <script lang="ts" setup>
-import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import iconVirtual from '../../../assets/icons/virtual.png'
 import iconVirtualWhite from '../../../assets/icons/virtual-white.png'

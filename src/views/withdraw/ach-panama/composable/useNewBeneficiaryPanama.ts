@@ -4,6 +4,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { BeneficiaryService } from '../../services/beneficiary'
 import { useRouter } from 'vue-router'
+import { processException } from '../../../../shared/processException'
 
 const formObjectPanama = ref<RegisterCounterpartyAchPanama>({
   holderEmail: '',
@@ -74,12 +75,8 @@ export const useNewBeneficiaryPanama = () => {
       })
     } catch (error) {
       submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('error'),
-        detail: t('errorDetail'),
-        life: 4000,
-      })
+
+      processException(toast, t, error)
     }
   }
 

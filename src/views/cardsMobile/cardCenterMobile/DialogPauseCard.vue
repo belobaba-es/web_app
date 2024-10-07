@@ -14,15 +14,15 @@
         <i class="pi pi-lock text-5xl text-white"></i>
       </div>
     </div>
-    <h2 class="text-center font-medium" style="color: #00beb0">
+    <h2 class="text-center font-medium">
       {{ cardInfo.status === StatusCard.ACTIVE ? t('cardPause') : t('CardActivated') }}
     </h2>
     <p class="m-0 text-center font-normal">
       {{ t('reactivateCard') }}
     </p>
     <div class="flex justify-content-around mt-4">
-      <Button severity="secondary" outlined class="text-center col-5" :label="t('cancel')" @click="closeModal()" />
-      <Button class="text-center col-5" :label="t('confirm')" @click="handlePausaCardChange()" :loading="loading" />
+      <Button :label="t('cancel')" class="text-center col-5" outlined severity="secondary" @click="closeModal()" />
+      <Button :label="t('confirm')" :loading="loading" class="text-center col-5" @click="handlePausaCardChange()" />
     </div>
   </Dialog>
 </template>

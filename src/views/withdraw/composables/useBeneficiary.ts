@@ -10,6 +10,7 @@ import {
 import { UserAccount } from '../types/account'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { processException } from '../../../shared/processException'
 
 export enum TypeBeneficiaryInternal {
   ASSET = 'ASSET',
@@ -75,12 +76,7 @@ export const useBeneficiary = () => {
         listNextPag.value = Number(resp.nextPag)
       })
     } catch (error) {
-      toast.add({
-        severity: 'error',
-        summary: 'Something went wrong',
-        detail: 'Please try again later',
-        life: 4000,
-      })
+      processException(toast, t, error)
     }
   }
 

@@ -14,7 +14,7 @@
         <i class="pi pi-lock text-5xl text-white"></i>
       </div>
     </div>
-    <h2 class="text-center font-medium" style="color: #00beb0">
+    <h2 class="text-center font-medium">
       {{ cardInfo.status === !StatusCard.LOCKED ? t('cardPause') : t('CardActivated') }}
     </h2>
 
@@ -37,7 +37,7 @@ interface Props {
 const props = defineProps<Props>()
 const { t } = useI18n({ useScope: 'global' })
 
-const { cardInfo, selectedCard, pauseCardRequest, showPauseModal } = useCardCenter()
+const { cardInfo, showPauseModal } = useCardCenter()
 
 const emit = defineEmits(['update:close', 'update:display'])
 

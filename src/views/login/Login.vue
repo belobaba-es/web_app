@@ -83,6 +83,7 @@ import Checkbox from 'primevue/checkbox'
 import { useAuth } from '../../composables/useAuth'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
+import { processException } from '../../shared/processException'
 
 const { form, submitting, handleSubmit, redirectSigning } = useAuth()
 
@@ -101,12 +102,7 @@ const makeLogin = async () => {
   } catch (e: any) {
     submitting.value = false
 
-    toast.add({
-      severity: 'warn',
-      summary: `Two Factor Authentication`,
-      detail: e.response.data.message,
-      life: 4000,
-    })
+    processException(toast, t, e)
   }
 }
 </script>

@@ -16,7 +16,7 @@ export const useCardReposition = () => {
   const sendingDataCard = ref<OnboardingRepositionCard>({
     clientId: getClientId(),
     cardModality: typeCardSelect.value,
-    currency: 'USD',
+    currency: 'EUR',
   })
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })

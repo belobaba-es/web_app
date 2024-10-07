@@ -100,10 +100,9 @@ export const useCardCenter = () => {
           flagType: card.flagType,
         })
       }
-    } catch (err) {
-      console.error(err)
-    } finally {
+    } catch (err: any) {
       loading.value = false
+      processException(toast, t, err)
     }
   }
 
@@ -122,7 +121,8 @@ export const useCardCenter = () => {
       loading.value = false
       toast.add({ severity: 'success', summary: t('success'), detail: t('cardDeleted') })
     } catch (error) {
-      toast.add({ severity: 'error', summary: t('somethingWentWrong'), detail: error })
+      processException(toast, t, error)
+
       loading.value = false
     }
   }

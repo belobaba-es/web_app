@@ -38,7 +38,6 @@ onMounted(async () => {
 })
 
 watch(cardInfo, () => {
-  console.log('cardInfo index', cardInfo.value)
   selectedCard.value = {
     ...cardInfo.value,
     cardNumber: maskCardNumber(cardInfo.value.cardNumber),
