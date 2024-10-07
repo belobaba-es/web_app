@@ -3,12 +3,12 @@
     <div class="table-container">
       <table class="table">
         <thead>
-          <tr >
-            <th class="col-descripcion">{{t('description')}}</th>
-            <th class="col-id-transaccion">{{t('transactionId')}}</th>
-            <th class="col-tipo">{{t('transactionType')}}</th>
-            <th class="col-fecha">{{t('date')}}</th>
-            <th class="col-monto">{{t('amount')}}</th>
+          <tr>
+            <th class="col-descripcion">{{ t('description') }}</th>
+            <th class="col-id-transaccion">{{ t('transactionId') }}</th>
+            <th class="col-tipo">{{ t('transactionType') }}</th>
+            <th class="col-fecha">{{ t('date') }}</th>
+            <th class="col-monto">{{ t('amount') }}</th>
             <th class="col-recibo"></th>
           </tr>
         </thead>
@@ -19,21 +19,24 @@
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
-                  style="font-size: 1.5rem; color: #FE5C73"
+                  style="font-size: 1.5rem; color: #fe5c73"
                 ></i>
-                <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem;"></i>
+                <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem"></i>
               </div>
-              {{ transaction.description ? transaction.description : '--' }}
+              {{ getDescriptions(transaction) }}
             </td>
             <td class="col-id-transaccion">#{{ getLastSixDigits(transaction.transactionId) }}</td>
             <td class="col-tipo">{{ t(transaction.operationType) }}</td>
             <td class="col-fecha">{{ formatDate(transaction.createdAt) }}</td>
-            <td class="col-monto font-semi-bold" :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }">
+            <td
+              :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
+              class="col-monto font-semi-bold"
+            >
               {{ transaction.amount }}
-              {{ transaction.currency}}
+              {{ transaction.currency }}
             </td>
             <td class="col-recibo">
-<!--              <Button class="font-semi-bold buttonColor" :label="t('download')" outlined />-->
+              <!--              <Button class="font-semi-bold buttonColor" :label="t('download')" outlined />-->
             </td>
           </tr>
         </tbody>
@@ -74,6 +77,7 @@ const {
   getHistoryTransaction,
   transactionList,
   getLastSixDigits,
+  getDescriptions,
   formatDate,
   loadMoreTransactions,
   loadingTransactions,

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <SelectCardHeader  title="transactionHistory" />
+    <SelectCardHeader title="transactionHistory" />
     <div v-if="transactionList.length === 0" class="flex flex-column align-items-center justify-content-center h-30rem">
-      <div class="p-4" style="background:  var(--primary-color); border-radius: 50%">
+      <div class="p-4" style="background: var(--primary-color); border-radius: 50%">
         <i class="pi pi-list" style="font-size: 2rem; color: white"></i>
       </div>
       <p class="text-center font-semi-bold mb-0" style="font-size: 16px">{{ t('dontHaveTransactions') }}</p>
@@ -16,11 +16,11 @@
             <i
               v-if="!isPositiveAmount(transaction.amount)"
               class="pi pi-arrow-circle-down"
-              style="font-size: 1.5rem; color: #FE5C73"
+              style="font-size: 1.5rem; color: #fe5c73"
             ></i>
             <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
             <span class="ml-3" style="font-size: 1rem">
-              {{ transaction.description ? transaction.description : '--' }}
+              {{ getDescriptions(transaction) }}
             </span>
           </div>
 
@@ -30,7 +30,7 @@
             style="font-size: 1.2rem"
           >
             {{ transaction.amount }}
-            {{transaction.currency}}
+            {{ transaction.currency }}
           </p>
         </div>
         <Divider type="solid" />
@@ -74,6 +74,7 @@ const {
   getHistoryTransaction,
   transactionList,
   formatDateMobile,
+  getDescriptions,
   loadMoreTransactions,
   loadingTransactions,
   nextPage,

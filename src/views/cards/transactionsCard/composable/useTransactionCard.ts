@@ -2,6 +2,7 @@ import { historyTransaction } from '../../services/nobaCard.service'
 import { ref } from 'vue'
 import { TransactionCard } from '../../types/transactionCard.type'
 import { useI18n } from 'vue-i18n'
+import { TransactionCardStatus } from '../../enums/transactionCardStatus.enum'
 
 export const useTransactionCard = () => {
   const transactionList = ref<TransactionCard[]>([])
@@ -60,7 +61,16 @@ export const useTransactionCard = () => {
     return `${day} ${monthNames[parseInt(month) - 1]}, ${time.slice(0, 5)}`
   }
 
+  const getDescriptions = (transaction: TransactionCard) => {
+    if ([TransactionCardStatus.DECLINED, TransactionCardStatus.REVERSED].includes(transaction.status)) {
+      return transaction.description + ' - ' + transaction.reasonRejectingTransaction
+    }
+
+    return transaction.description
+  }
+
   return {
+    getDescriptions,
     getHistoryTransaction,
     transactionList,
     getLastSixDigits,
