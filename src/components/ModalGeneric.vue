@@ -12,7 +12,7 @@
         aria-label="Close"
         class="p-dialog-header-icon p-dialog-header-close p-link p-2"
         type="button"
-        @click="close"
+        @click="closeModal"
       >
         <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
       </button>
