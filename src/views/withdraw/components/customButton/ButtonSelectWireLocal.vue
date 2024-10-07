@@ -99,10 +99,11 @@ const props = defineProps({
 })
 
 const { t } = useI18n({ useScope: 'global' })
-const { wireLocalType } = useListBeneficiaryUsa()
+const { wireLocalType, showInputIban } = useListBeneficiaryUsa()
 const dropdownVisible = ref(props.defaultDropdownVisible)
 
 const beneficiaryAch = (data: string) => {
+  showInputIban.value = false
   wireLocalType.value = data.toUpperCase()
   router.push(`/withdraw/fiat/usa/${data.toUpperCase()}/new-beneficiary`)
 }
