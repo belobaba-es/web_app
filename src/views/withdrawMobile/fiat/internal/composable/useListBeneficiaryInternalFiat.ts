@@ -3,6 +3,7 @@ import { useListBeneficiaryInternal } from '../../../../withdraw/fiat/internal/c
 import { validateEmail } from '../../../../../shared/helpers/validateEmail'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { useAssets } from '../../../../../composables/useAssets'
 
 export const useListBeneficiaryInternalFiat = () => {
   const {
@@ -13,14 +14,16 @@ export const useListBeneficiaryInternalFiat = () => {
     currentPage,
     numberRecords,
     totalRecords,
-    totalPage,
     listInternalBeneficiary,
     beneficiaryInternalSearch,
     makeWithdrawalInternal,
+    pagination,
   } = useListBeneficiaryInternal()
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
+  const { getAssets, listAssets } = useAssets()
   onMounted(async () => {
+    if (listAssets.value.length === 0) getAssets()
     await fetchInternalBeneficiary(true)
   })
   watch([nextPag, currentPage, numberRecords, totalRecords], () => {
@@ -48,13 +51,6 @@ export const useListBeneficiaryInternalFiat = () => {
     internalBeneficiaryListStore.setLimit(itemPage)
     fetchInternalBeneficiary()
   }
-  const pagination = reactive({
-    totalRecords: totalRecords.value,
-    nextPag: nextPag.value,
-    currentPage: currentPage.value,
-    itemsPage: numberRecords.value,
-    totalPages: totalPage.value === 0 ? 1 : totalPage.value,
-  })
 
   const dataTable = reactive({
     list: listInternalBeneficiary,

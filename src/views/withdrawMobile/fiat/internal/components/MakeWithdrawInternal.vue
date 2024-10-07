@@ -48,8 +48,17 @@
       </div>
     </div>
   </div>
-  <Dialog v-model:visible="visible" :draggable="false" :header="t('twoFactor')" :modal="true" position="bottom">
-    <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
+  <Dialog v-model:visible="visible" :draggable="false" :show-header="false" :modal="true" position="bottom">
+    <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
+      <button
+        aria-label="Close"
+        class="p-dialog-header-icon p-dialog-header-close p-link p-2"
+        type="button"
+        @click="close"
+      >
+        <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+      </button>
+    </div>
     <ConfirmWithdrawUsa :makeTransaction="makeFiatInternalTransfer" :subtitle="t('betweenNOBA')" />
   </Dialog>
 </template>

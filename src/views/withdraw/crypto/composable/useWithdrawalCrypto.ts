@@ -6,9 +6,9 @@ import { useI18n } from 'vue-i18n'
 import { DataAsset, DataBeneficiary } from '../../type/beneficiary.type'
 import { useBeneficiaryCrypto } from './useBeneficiaryCrypto'
 import { WithdrawCryptoService } from '../../services/withdrawCrypto'
-import { useInternalBeneficiaryListStore } from '../../../../stores/useInternalBeneficiaryListStore'
 import { useAuth } from '../../../../composables/useAuth'
 import { processException } from '../../../../shared/processException'
+import { useInternalBeneficiaryListCryptoStore } from '../../../../stores/useInternalBeneficiaryListCryptoStore'
 
 const transactionData = ref<MakeAssetExternalTransfer | MakeAssetInternalTransfer>({} as MakeAssetTransfer)
 const balance = ref(0.0)
@@ -22,7 +22,7 @@ export function useWithdrawalCrypto() {
   const route = useRoute()
   const router = useRouter()
   const visibleModalVeryCodeTwoFactor = ref(false)
-  const { getBeneficiaryInternalPrevious, setBeneficiary } = useInternalBeneficiaryListStore()
+  const { getBeneficiaryInternalPrevious, setBeneficiary } = useInternalBeneficiaryListCryptoStore()
   const beneficiaryInformation = ref<DataBeneficiary>({} as DataBeneficiary)
   const { form } = useBeneficiaryCrypto()
   const { isAccountSegregated } = useAuth()
@@ -118,6 +118,7 @@ export function useWithdrawalCrypto() {
         router.push(`/withdraw/crypto/other-platforms/beneficiary`)
       })
       .catch(e => {
+        submitting.value = false
         visible.value = false
         processException(toast, t, e)
       })
@@ -135,18 +136,15 @@ export function useWithdrawalCrypto() {
           detail: res.message,
           life: 4000,
         })
-
+        setBeneficiary(getBeneficiaryInternalPrevious())
         resetFormWithdrawal()
         clearAssetWithdrawal()
-
-        setBeneficiary(getBeneficiaryInternalPrevious())
         router.push(`/withdraw/crypto/internal/beneficiary`)
       })
       .catch(e => {
+        submitting.value = false
         visible.value = false
-        setBeneficiary(getBeneficiaryInternalPrevious())
         processException(toast, t, e)
-        router.push(`/withdraw/crypto/internal/beneficiary`)
       })
   }
   const clearAssetWithdrawal = () => {

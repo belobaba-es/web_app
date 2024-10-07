@@ -28,13 +28,17 @@ import { useToast } from 'primevue/usetoast'
 import { useInternalBeneficiary } from '../../composable/useInternalBeneficiary'
 import { validateEmail } from '../../../../../shared/helpers/validateEmail'
 import BackButtonMobile from '../../../../../components/BackButtonMobile.vue'
+import { useAssets } from '../../../../../composables/useAssets'
 
+const { getAssets, listAssets } = useAssets()
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const { loading, fetchInternalBeneficiary, listInternalBeneficiary, beneficiaryInternalSearch } =
   useInternalBeneficiary()
 
 onMounted(() => {
+  if (listAssets.value.length === 0) getAssets()
+
   if (listInternalBeneficiary.value.length === 0) {
     fetchInternalBeneficiary(true)
   }

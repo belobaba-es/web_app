@@ -3,19 +3,18 @@ import { WithdrawService } from '../../../services/withdraw'
 import router from '../../../../../router/router'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
-import { useBalanceWallet } from '../../../../../composables/useBalanceWallet'
 import { useAuth } from '../../../../../composables/useAuth'
 import { useBeneficiaryUsaListStore } from '../../../../../stores/useBeneficiaryUsaListStore'
 import { useWithdraw } from '../../../composable/useWithdraw'
 import { processException } from '../../../../../shared/processException'
+import { useInternalBeneficiaryListFiatStore } from '../../../../../stores/useInternalBeneficiaryListFiatStore'
 
 export const useWithdrawInternal = () => {
   const { getSelectedCounterpartyId } = useBeneficiaryUsaListStore()
   const { transactionData, loading, getBalance, balance } = useWithdraw()
-  const { getBalanceByCode } = useBalanceWallet()
   const selectedAsset = ref()
   const assetCodeFiat = ref('')
-
+  const { getBeneficiaryInternalPrevious, setBeneficiary } = useInternalBeneficiaryListFiatStore()
   const fee = ref(0)
   const submitting = ref(false)
   const toast = useToast()
@@ -38,6 +37,7 @@ export const useWithdrawInternal = () => {
           detail: res.message,
           life: 4000,
         })
+        setBeneficiary(getBeneficiaryInternalPrevious())
         loading.value = false
         resetFormWithdrawal()
         router.push(`/withdraw/fiat/internal`)

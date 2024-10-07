@@ -41,12 +41,19 @@ export const useAssets = () => {
       maximumFractionDigits: 2,
     })} ${asset?.code}`
   }
-
+  const getAssetByAssetClassification = (assetClassification: string): Asset => {
+    const asset = listAssets.value.find((asset: Asset) => asset.assetClassification === assetClassification)
+    if (!asset) {
+      throw new Error(`Asset with assetClassification ${assetClassification} not found`)
+    }
+    return asset
+  }
   return {
     listAssets,
     getAssetByAssetId,
     formatAmountAccordingTypeAsset,
     getAssets,
     getAssetByAssetCode,
+    getAssetByAssetClassification,
   }
 }

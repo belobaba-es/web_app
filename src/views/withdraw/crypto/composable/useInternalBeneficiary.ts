@@ -6,10 +6,9 @@ import { Beneficiary, TableFilter } from '../../type/beneficiary.type'
 import { BeneficiaryCryptoService } from '../../services/beneficiaryCrypto'
 import { AccountService } from '../../../../shared/services/account'
 import { CounterpartyStatus, CounterpartyType, NetworkBank } from '../../enums/beneficiary.enum'
-import { useInternalBeneficiaryListStore } from '../../../../stores/useInternalBeneficiaryListStore'
+import { useInternalBeneficiaryListCryptoStore } from '../../../../stores/useInternalBeneficiaryListCryptoStore'
 import { useBeneficiaryCrypto } from './useBeneficiaryCrypto'
 import { useWithdrawalCrypto } from './useWithdrawalCrypto'
-import { useAssets } from '../../../../composables/useAssets'
 import { processException } from '../../../../shared/processException'
 
 const internalBeneficiaryListInitial = ref<Beneficiary>({
@@ -80,8 +79,7 @@ export function useInternalBeneficiary() {
   const { resetFormWithdrawal, isWithdrawal } = useWithdrawalCrypto()
   const loading = ref(false)
   const isModalOpen = ref(false)
-  const { getAssets, listAssets } = useAssets()
-  const internalBeneficiaryListStore = useInternalBeneficiaryListStore()
+  const internalBeneficiaryListStore = useInternalBeneficiaryListCryptoStore()
   const filterInternal = ref<TableFilter>(internalBeneficiaryListStore.getFilters())
   const listInternalBeneficiary = ref<Beneficiary[]>(internalBeneficiaryListStore.getBeneficiary())
 
@@ -108,8 +106,6 @@ export function useInternalBeneficiary() {
         internalBeneficiaryListStore.setBeneficiary(result.results)
 
         internalBeneficiaryListStore.setTotalRecords(result.count)
-
-        if (listAssets.value.length === 0) getAssets()
       })
       .catch(error => {
         processException(toast, t, error)
@@ -136,13 +132,9 @@ export function useInternalBeneficiary() {
         internalBeneficiaryListInitial.value.informationOwner.name = resp.name
         internalBeneficiaryListInitial.value.clientId = resp.clientId
         internalBeneficiaryListInitial.value.counterpartyId = resp.clientId
-
-        listInternalBeneficiary.value.push(internalBeneficiaryListInitial.value)
         internalBeneficiaryListStore.setBeneficiaryInternalPrevious(listInternalBeneficiary.value)
-
         listInternalBeneficiary.value = []
         listInternalBeneficiary.value.push(internalBeneficiaryListInitial.value)
-
         internalBeneficiaryListStore.setBeneficiary(listInternalBeneficiary.value)
         internalBeneficiaryListStore.setTotalRecords(listInternalBeneficiary.value.length)
       })

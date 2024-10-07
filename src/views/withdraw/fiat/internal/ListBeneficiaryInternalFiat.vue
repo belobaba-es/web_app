@@ -22,13 +22,14 @@ import TableListBeneficiaryInternal from './component/TableListBeneficiaryIntern
 import TableListSkeleton from './component/TableListSkeleton.vue'
 import { useListBeneficiaryInternal } from './composable/useListBeneficiaryInternal'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
-import { useToast } from 'primevue/usetoast'
+import { useAssets } from '../../../../composables/useAssets'
 
+const { getAssets, listAssets } = useAssets()
 const { t } = useI18n({ useScope: 'global' })
 const { loading, fetchInternalBeneficiary, listInternalBeneficiary } = useListBeneficiaryInternal()
-const toast = useToast()
 
 onMounted(() => {
+  if (listAssets.value.length === 0) getAssets()
   if (listInternalBeneficiary.value.length === 0) {
     fetchInternalBeneficiary(true)
   }

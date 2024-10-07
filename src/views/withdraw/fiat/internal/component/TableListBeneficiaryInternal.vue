@@ -29,73 +29,29 @@
 <script lang="ts" setup>
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import { reactive, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useListBeneficiaryInternal } from '../composable/useListBeneficiaryInternal'
 import GeneralPaginator from '../../../../../components/GeneralPaginator.vue'
 import InputSearch from '../../../components/inputSearch/InputSearch.vue'
+import { watch } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
   listInternalBeneficiary,
   columnsInternalHeader,
   loading,
-  nextPag,
-  currentPage,
-  numberRecords,
-  totalRecords,
-  internalBeneficiaryListStore,
-  fetchInternalBeneficiary,
   makeWithdrawalInternal,
-  totalPage,
   onSearch,
   handleChange,
+  updateItemsPage,
+  prevPage,
+  nextPage,
+  pagination,
 } = useListBeneficiaryInternal()
 
-const pagination = reactive({
-  totalRecords: totalRecords.value,
-  nextPag: nextPag.value,
-  currentPage: currentPage.value,
-  itemsPage: numberRecords.value,
-  totalPages: totalPage.value === 0 ? 1 : totalPage.value,
-})
 watch(listInternalBeneficiary, newVal => {
+  console.log('listInternalBeneficiary', newVal)
   listInternalBeneficiary.value = newVal
-})
-
-watch([nextPag, currentPage, numberRecords, totalRecords], () => {
-  pagination.totalRecords = totalRecords.value
-  pagination.nextPag = nextPag.value
-  pagination.currentPage = currentPage.value
-  pagination.itemsPage = numberRecords.value
-  pagination.totalPages = totalPage.value === 0 ? 1 : totalPage.value
-})
-
-const nextPage = () => {
-  if (currentPage.value <= totalRecords.value) {
-    currentPage.value++
-    internalBeneficiaryListStore.setNextPage(currentPage.value)
-    fetchInternalBeneficiary()
-  }
-}
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--
-    internalBeneficiaryListStore.setNextPage(currentPage.value)
-    fetchInternalBeneficiary()
-  }
-}
-
-const updateItemsPage = (itemPage: number) => {
-  numberRecords.value = itemPage
-  internalBeneficiaryListStore.setLimit(itemPage)
-  fetchInternalBeneficiary()
-}
-
-watch(numberRecords, newValue => {
-  totalPage.value = Math.ceil(totalRecords.value / newValue)
-  pagination.totalPages = totalPage.value === 0 ? 1 : totalPage.value
 })
 </script>
 <style lang="scss" scoped>

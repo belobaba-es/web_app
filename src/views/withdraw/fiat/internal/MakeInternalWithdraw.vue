@@ -142,18 +142,19 @@ import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlert
 import { useWithdrawInternal } from './composable/useWithdrawInternal'
 import { onMounted, ref } from 'vue'
 import { Asset, AssetClassification } from '../../../deposit/types/asset.interface'
-import { AssetsService } from '../../../deposit/services/assets'
 import Dialog from 'primevue/dialog'
 import ConfirmWithdrawUsa from '../../components/modalWithdraw/ConfirmWithdrawUsa.vue'
 import { useWithdraw } from '../../composable/useWithdraw'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
+import { useAssets } from '../../../../composables/useAssets'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
 const { getBalanceByCode } = useBalanceWallet()
 const { dataBeneficiaryWithdrawal, transactionData, isValidFormWithdrawal } = useWithdraw()
 const visible = ref(false)
+const { getAssetByAssetClassification } = useAssets()
 const { makeFiatInternalTransfer, selectedAsset, balance, fee, goBack, isAccountSegregated } = useWithdrawInternal()
 
 const assetsPrepared = ref<Asset[]>([])
@@ -185,8 +186,7 @@ const close = () => {
   visible.value = false
 }
 onMounted(async () => {
-  const data = await new AssetsService().list()
-  assetsPrepared.value = data.filter(asset => asset.assetClassification === AssetClassification.FIAT)
+  assetsPrepared.value = [getAssetByAssetClassification(AssetClassification.FIAT)]
 })
 </script>
 <style lang="scss" scoped>

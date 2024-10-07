@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { Beneficiary, TableFilter } from '../views/withdraw/type/beneficiary.type'
 
-type InternalBeneficiaryStore = {
+type UseInternalBeneficiaryListFiatStore = {
   beneficiary: Beneficiary[]
   beneficiaryInternalPrevious: Beneficiary[]
   filter: TableFilter
@@ -10,8 +10,8 @@ type InternalBeneficiaryStore = {
   limit: number
 }
 
-export const useInternalBeneficiaryListStore = defineStore('useInternalBeneficiaryListStore', {
-  state: (): InternalBeneficiaryStore => ({
+export const useInternalBeneficiaryListFiatStore = defineStore('useInternalBeneficiaryListFiatStore', {
+  state: (): UseInternalBeneficiaryListFiatStore => ({
     beneficiary: [],
     beneficiaryInternalPrevious: [],
     filter: {

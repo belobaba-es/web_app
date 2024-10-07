@@ -3,6 +3,7 @@ import { onMounted, reactive, watch } from 'vue'
 import { validateEmail } from '../../../../../shared/helpers/validateEmail'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { useAssets } from '../../../../../composables/useAssets'
 
 export const useListBeneficiaryInternal = () => {
   const {
@@ -16,9 +17,11 @@ export const useListBeneficiaryInternal = () => {
     prevPage,
     updateItemsPage,
   } = useInternalBeneficiary()
+  const { getAssets, listAssets } = useAssets()
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   onMounted(async () => {
+    if (listAssets.value.length === 0) getAssets()
     await fetchInternalBeneficiary(true)
   })
 

@@ -1,6 +1,6 @@
 <template>
   <Dialog
-    :breakpoints="{ '2048px': '25vw', '1199px': '40vw', '575px': '90vw' }"
+    :breakpoints="{ '2048px': '20vw', '1600': '30vw', '1199px': '37vw', '767px': '50vw', '575px': '80vw' }"
     :visible="props.show"
     class="dialog-confirm-withdrawal"
     :show-header="false"
