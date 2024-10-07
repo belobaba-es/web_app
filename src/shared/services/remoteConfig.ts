@@ -1,9 +1,8 @@
 import { initializeApp } from '@firebase/app'
-import { fetchConfig, getAll, getBoolean, getRemoteConfig } from '@firebase/remote-config'
-import { RemoteConfig } from '@firebase/remote-config'
-import { getValue } from '@firebase/remote-config'
+import { getRemoteConfig, RemoteConfig } from '@firebase/remote-config'
 import { FirebaseService } from './firebase'
 import { onValue, ref } from '@firebase/database'
+import { useAuth } from '../../composables/useAuth'
 
 const initRemoteConfig = async (): Promise<RemoteConfig> => {
   const config = {
@@ -34,8 +33,35 @@ export const twoFactorAuthenticationIsActiveRemotely = async (): Promise<boolean
 
     onValue(collection, async snapshot => {
       if (snapshot.exists()) {
-
         resolve(snapshot.val() as boolean)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
+
+export const isEnableCardModule = async (): Promise<boolean> => {
+  const { getClientId } = useAuth()
+  const clientId = getClientId()
+
+  return new Promise(async resolve => {
+    const db = await FirebaseService.initFirebase()
+    const collectionRef = ref(db, 'usersCardBelobaba')
+
+    onValue(collectionRef, snapshot => {
+      if (snapshot.exists()) {
+        const data: string[] = snapshot.val()
+
+        const allClient = data.find(value => '*' === value)
+
+        if (allClient) {
+          resolve(true)
+        }
+
+        const enableCardModule = data.find(value => clientId === value)
+
+        resolve(!!enableCardModule)
       } else {
         resolve(false)
       }

@@ -1,46 +1,46 @@
 <template>
   <div class="container-center">
-    <img class="logo-noba" :src="logo" alt="logo" />
+    <img :src="logo" alt="logo" class="logo-noba" />
   </div>
   <div class="container-main">
     <div class="lg:bg-contain container">
       <h1 class="font-extra-light text-center">{{ t('forgotPasswordTitle') }}</h1>
       <p class="font-extra-light text-center">{{ t('forgotPasswordSubtitle') }}</p>
       <div class="pt-5">
-        <form @submit.prevent="handleSubmit" class="checkout-form">
+        <form class="checkout-form" @submit.prevent="handleSubmit">
           <div class="field">
             <label class="font-light">{{ t('emailLabel') }}</label>
             <div class="p-inputgroup">
-              <InputText type="text" v-model="form.email" :placeholder="t('emailPlaceholder')" />
+              <InputText v-model="form.email" :placeholder="t('emailPlaceholder')" type="text" />
             </div>
           </div>
           <div class="container-flex mt-lg-2">
             <div class="float-left w-25">
               <Button
-                type="button"
-                icon="pi pi-angle-left"
                 :label="t('backButtonTitle')"
                 class="font-light w-100 border-300 p-button-outlined"
+                icon="pi pi-angle-left"
+                type="button"
                 @click="router.push('/')"
               />
             </div>
             <div class="float-right w-25">
               <Button
-                type="submit"
+                :label="t('forgotPasswordButton')"
+                :loading="submitting"
+                class="font-light w-100"
                 icon="pi pi-angle-right"
                 iconPos="right"
-                :label="t('forgotPasswordButton')"
-                class="font-light w-100"
-                :loading="submitting"
+                type="submit"
               />
             </div>
           </div>
         </form>
       </div>
       <Button
-        type="button"
         :label="t('alreadyAccount')"
         class="font-light mt-4 p-button-outlined border-300"
+        type="button"
         @click="router.push('/')"
       />
     </div>
@@ -51,12 +51,12 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import logo from '../../assets/img/logo.svg'
+import logo from '../../assets/img/logo-login.png'
 import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
@@ -116,7 +116,11 @@ const handleSubmit = () => {
 }
 
 .logo-noba {
-  width: 265px;
-  height: 'auto';
+  max-width: 10%;
+}
+@media only screen and (max-width: 992px) {
+  .logo-noba {
+    max-width: 60%;
+  }
 }
 </style>

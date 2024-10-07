@@ -1,13 +1,12 @@
 <template>
   <div class="tap-bar-container block sm:block md:block lg:hidden xl:hidden" style="z-index: 5">
-    <AppTabBar :items="model"></AppTabBar>
+    <MenuWithCard :items="model" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { defineProps } from 'vue'
-
-import AppTabBar from './AppTabBar.vue'
+import MenuWithCard from './MenuWithCard.vue'
 
 defineProps<{
   model: Array<any>

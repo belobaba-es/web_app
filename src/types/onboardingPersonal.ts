@@ -32,4 +32,19 @@ export type OnboardingPersonal = {
   monthlyCryptoInvestmentWithdrawal: string
   fundsSendReceiveJurisdictions: string[]
   engageInActivities: string[]
+  addressShipping?: AddressShipping
+  documentExpirationDate?: string
+  nationality?: string
+}
+
+export type AddressShipping = {
+  streetOne: string
+  streetTwo: string
+  postalCode: string
+  city: string
+  region: string
+  country: string
+  number: string
+  apartmentNumber: string
+  isShipping?: boolean
 }

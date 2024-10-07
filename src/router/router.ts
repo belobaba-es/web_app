@@ -18,6 +18,11 @@ import { routerUSA } from './routerUSA'
 import { routerPanama } from './routerPanama'
 import { routerInternalTransfer } from './routerInternalTransfer'
 import { routerCrypto } from './routerCrypto'
+import { routerCard } from './routerCard'
+import { routerCardMobile } from './routerCardMobile'
+import { useMediaQuery } from '../composables/useMediaQuery'
+
+const { isMobile } = useMediaQuery()
 
 const routes: RouteRecordRaw[] = [
   {
@@ -223,6 +228,11 @@ const routes: RouteRecordRaw[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/cards/',
+        component: () => import('../views/cards/Index.vue'),
+        children: isMobile.value ? routerCardMobile : routerCard,
       },
     ],
   },

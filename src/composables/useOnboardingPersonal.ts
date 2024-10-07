@@ -8,21 +8,32 @@ import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
+import { useRouter } from 'vue-router'
 
 const isHaveDocumentUS = ref(true)
 const isUpdateData = ref<boolean>(false)
 
-export const useOnboardingPersonal = () => {
-  const { getClientId, setClientId } = useAuth()
+const {
+  setStateOnboardingPersonal,
+  dataOnboardingPersonal,
+  getDNI,
+  getDateBirth,
+  setAddressShipping,
+  getAddressShipping,
+  setNationality,
+  setDocumentExpirationDate,
+} = useOnboardingPersonalStore()
 
-  const { setStateOnboardingPersonal, dataOnboardingPersonal } = useOnboardingPersonalStore()
+const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
+
+export const useOnboardingPersonal = () => {
+  const router = useRouter()
+  const { getClientId, setClientId } = useAuth()
 
   const submitting = ref(false)
 
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
-
-  const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
   const useOnboardingPersonalState = useOnboardingPersonalStore()
 
@@ -107,6 +118,12 @@ export const useOnboardingPersonal = () => {
   })
 
   return {
+    setAddressShipping,
+    getAddressShipping,
+    setNationality,
+    setDocumentExpirationDate,
+    getDNI,
+    getDateBirth,
     onboardingPersonal,
     submitting,
     typeDocument,

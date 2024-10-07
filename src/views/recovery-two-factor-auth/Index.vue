@@ -1,6 +1,6 @@
 <template>
   <div class="container-center">
-    <img class="logo-noba" :src="logo" alt="logo" />
+    <img :src="logo" alt="logo" class="logo-noba" />
   </div>
 
   <div class="container-main">
@@ -9,11 +9,11 @@
         <div style="position: relative; margin: 0 auto; width: 50px">
           <ProgressSpinner
             v-if="submitting"
-            style="width: 50px; height: 50px"
-            strokeWidth="8"
-            fill="var(--surface-ground)"
             animationDuration=".5s"
             aria-label="Custom ProgressSpinner"
+            fill="var(--surface-ground)"
+            strokeWidth="8"
+            style="width: 50px; height: 50px"
           />
         </div>
 
@@ -34,7 +34,7 @@
         </div>
       </Message>
 
-      <Message v-if="showMessageInvalidToken" severity="warn" :closable="false">
+      <Message v-if="showMessageInvalidToken" :closable="false" severity="warn">
         <div class="pl-4">
           <h3 class="font-bold">
             {{ t('verificationTokenForRecoveryTwoFactorFail') }}
@@ -44,11 +44,11 @@
 
       <div class="container-main w-25 mt-5">
         <Button
-          type="submit"
+          class="font-light w-100"
           icon="pi pi-angle-right"
           iconPos="right"
           label="Login"
-          class="font-light w-100"
+          type="submit"
           @click="redirectLogin"
         />
       </div>
@@ -57,8 +57,8 @@
   <Lang />
 </template>
 
-<script setup lang="ts">
-import logo from '../../assets/img/logo.svg'
+<script lang="ts" setup>
+import logo from '../../assets/img/logo.png'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Message from 'primevue/message'
