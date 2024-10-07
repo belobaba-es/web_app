@@ -91,7 +91,7 @@ const close = () => {
 }
 
 .color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 
 .text-16 {

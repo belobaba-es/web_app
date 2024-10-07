@@ -3,7 +3,7 @@
     <BackButtonMobile :subtitle="t('fiat')" :title="t('withdraw')" />
 
     <h1 class="font-regular m-0">
-      {{ t('withdraw') }} <span style="color: #00beb0">{{ t('fiat') }}</span>
+      {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('fiat') }}</span>
     </h1>
 
     <p class="mb-4 text-1xl">{{ t('withdrawText') }}</p>

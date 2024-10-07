@@ -118,7 +118,14 @@
       </div>
     </div>
 
-    <Dialog v-model:visible="visible" :draggable="false" :header="t('twoFactor')" :modal="true" position="bottom">
+    <Dialog
+      v-model:visible="visible"
+      :draggable="false"
+      :header="t('twoFactor')"
+      :show-header="false"
+      :modal="true"
+      position="bottom"
+    >
       <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
       <ConfirmWithdrawUsa :makeTransaction="makeFiatInternalTransfer" :subtitle="t('betweenNOBA')" />
     </Dialog>
@@ -188,7 +195,7 @@ onMounted(async () => {
   margin: 0 auto;
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid #00beb0;
+  border: 1px solid var(--primary-color);
   float: left;
 }
 
@@ -210,13 +217,13 @@ onMounted(async () => {
   background-color: #eceff1;
   height: 90px;
   border-radius: 8px 8px 0 0;
-  color: #0f655d;
-  font-family: KanitSemiBold, serif;
+  color: var(--primary-color);
+  font-family: RedHatDisplayMedium, serif;
   font-size: 16px;
 }
 
 .text-color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 
 .p-dialog .p-dialog-header {
@@ -228,7 +235,7 @@ onMounted(async () => {
 }
 
 .font-family {
-  font-family: KanitSemiBold, serif;
+  font-family: RedHatDisplayMedium, serif;
 }
 
 .circle-bottom {

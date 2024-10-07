@@ -53,7 +53,6 @@
     <Dialog
       v-model:visible="visibleModalVeryCodeTwoFactor"
       :draggable="false"
-      :header="t('twoFactor')"
       :show-header="false"
       :modal="true"
       position="bottom"

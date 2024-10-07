@@ -3,7 +3,7 @@
     <div class="justify-content-center">
       <img alt="" src="../../assets/icons/withdraw.svg" width="164" />
       <h1 class="font-regular m-0">
-        {{ t('withdraw') }} <span style="color: #00beb0">{{ t('fiat') }}</span>
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('fiat') }}</span>
       </h1>
       <p class="mb-4 text-2xl">{{ t('withdrawText') }}</p>
 
@@ -32,7 +32,7 @@
 
     <div>
       <h1 class="font-medium m-0">
-        {{ t('withdraw') }} <span style="color: #00beb0">{{ t('fiat') }}</span>
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('fiat') }}</span>
       </h1>
       <h3 class="mt-0">{{ t('withdrawText') }}</h3>
 
@@ -42,7 +42,7 @@
           <div class="line-right mt-2">
             <h4 class="font-medium mt-0">{{ t('modalPanamaSubtitle') }}</h4>
             <div>
-              <p class="font-medium" style="color: #00beb0">{{ t('modalText') }}</p>
+              <p class="font-medium" style="color: var(--primary-color)">{{ t('modalText') }}</p>
               <ul class="pr-4">
                 <li>
                   <p class="font-semi-bold mb-0">{{ t('modalTextAccount') }}</p>
@@ -66,7 +66,9 @@
                 </li>
               </ul>
 
-              <p class="font-medium" style="color: #00beb0; text-transform: uppercase">{{ t('bankAccountHolder') }}</p>
+              <p class="font-medium" style="color: var(--primary-color); text-transform: uppercase">
+                {{ t('bankAccountHolder') }}
+              </p>
               <ul class="pr-4">
                 <li>
                   <p class="font-semi-bold mb-0">{{ t('modalTextNameHolder') }}</p>
@@ -90,7 +92,7 @@
           <div class="line-right mt-2">
             <h4 class="font-medium mt-0">{{ t('modalUSALocalSubtitle') }}</h4>
             <div>
-              <p class="font-medium" style="color: #00beb0">{{ t('modalText') }}</p>
+              <p class="font-medium" style="color: var(--primary-color)">{{ t('modalText') }}</p>
               <ul class="pr-4">
                 <li>
                   <p class="font-semi-bold mb-0">{{ t('modalTextAccount') }}</p>
@@ -110,7 +112,9 @@
                 </li>
               </ul>
 
-              <p class="font-medium" style="color: #00beb0; text-transform: uppercase">{{ t('bankAccountHolder') }}</p>
+              <p class="font-medium" style="color: var(--primary-color); text-transform: uppercase">
+                {{ t('bankAccountHolder') }}
+              </p>
               <ul class="pr-4">
                 <li>
                   <p class="font-semi-bold mb-0">{{ t('modalTextNameHolder') }}</p>
@@ -134,7 +138,7 @@
           <img alt="" src="../../assets/icons/eeu.svg" width="50" />
           <h4 class="font-medium mt-0">{{ t('modalUSAGlobalSubtitle') }}</h4>
           <div>
-            <p class="font-medium" style="color: #00beb0">{{ t('modalText') }}</p>
+            <p class="font-medium" style="color: var(--primary-color)">{{ t('modalText') }}</p>
             <ul class="pr-4">
               <li>
                 <p class="font-semi-bold mb-0">{{ t('modalTextAccount') }}</p>
@@ -161,7 +165,9 @@
               </li>
             </ul>
 
-            <p class="font-medium" style="color: #00beb0; text-transform: uppercase">{{ t('bankAccountHolder') }}</p>
+            <p class="font-medium" style="color: var(--primary-color); text-transform: uppercase">
+              {{ t('bankAccountHolder') }}
+            </p>
             <ul class="pr-4">
               <li>
                 <p class="font-semi-bold mb-0">{{ t('modalTextNameHolder') }}</p>

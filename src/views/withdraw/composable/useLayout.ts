@@ -2,9 +2,9 @@ import { useI18n } from 'vue-i18n'
 import { ref, watch } from 'vue'
 import router from '../../../router/router'
 import coin from '../../../assets/icons/coin.svg'
-import nobaIcon from '../../../assets/icons/noba-icon.svg'
-import nobaPanama from '../../../assets/icons/panama.svg'
-import nobaEstadosUnidos from '../../../assets/icons/eeu.svg'
+import belobabaIcon from '../../../assets/icons/logo.png'
+import belobabaPanama from '../../../assets/icons/panama.svg'
+import belobabaEstadosUnidos from '../../../assets/icons/eeu.svg'
 import { useAuthStore } from '../../../stores/useAuthStore'
 import { WalletProvider } from '../../login/types/login.interface'
 
@@ -28,7 +28,7 @@ export const useLayout = () => {
       label: t('uniteState'),
       icon: 'pi pi-angle-right',
       iconPos: 'right',
-      img: nobaEstadosUnidos,
+      img: belobabaEstadosUnidos,
       to: '/withdraw/fiat/usa',
     })
   }
@@ -37,7 +37,7 @@ export const useLayout = () => {
       label: t('Panama'),
       icon: 'pi pi-angle-right',
       iconPos: 'right',
-      img: nobaPanama,
+      img: belobabaPanama,
       to: '/withdraw/fiat/panama',
     })
   }
@@ -45,7 +45,7 @@ export const useLayout = () => {
     label: t('betweenNOBA'),
     icon: 'pi pi-angle-right',
     iconPos: 'right',
-    img: nobaIcon,
+    img: belobabaIcon,
     to: '/withdraw/fiat/internal',
   })
   const optionButtonsCrypto = [
@@ -54,7 +54,7 @@ export const useLayout = () => {
       icon: 'pi pi-angle-right',
       iconPos: 'right',
       to: '/withdraw/crypto/internal/beneficiary',
-      img: nobaIcon,
+      img: belobabaIcon,
     },
     {
       label: t('otherPlatformCrypto'),

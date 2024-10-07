@@ -165,7 +165,7 @@ const goBack = () => {
 </script>
 <style lang="scss" scoped>
 .card {
-  border: 1px solid #00beb0;
+  border: 1px solid var(--primary-color);
   margin: 0 auto;
 }
 

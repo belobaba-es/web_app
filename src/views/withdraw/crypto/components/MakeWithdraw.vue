@@ -227,13 +227,13 @@ const close = () => {
   background-color: #eceff1;
   height: 90px;
   border-radius: 8px 8px 0 0;
-  color: #0f655d;
-  font-family: KanitSemiBold, serif;
+  color: var(--primary-color);
+  font-family: RedHatDisplayMedium, serif;
   font-size: 16px;
 }
 
 .text-color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 
 .p-dialog .p-dialog-header {
@@ -245,7 +245,7 @@ const close = () => {
 }
 
 .font-family {
-  font-family: KanitSemiBold, serif;
+  font-family: RedHatDisplayMedium, serif;
 }
 
 .circle-bottom {

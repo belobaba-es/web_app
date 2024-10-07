@@ -12,8 +12,8 @@
             <div
               class="card pl-3 pr-3 m-0 mr-3"
               style="
-                background: #dcf9eb;
-                color: #21bf73 !important;
+                background: var(--primary-color);
+                color: #1b1b19 !important;
                 padding: 0.25rem 1rem !important;
                 line-height: 14px;
                 height: 1.8rem;
@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
   margin: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #00beb0 #f0f0f0;
+  scrollbar-color: var(--primary-color) #f0f0f0;
 }
 
 .country-list li {
@@ -119,6 +119,6 @@ onBeforeUnmount(() => {
 }
 
 .country-list li:hover {
-  background: #f0ffff;
+  background: var(--secondary-color);
 }
 </style>

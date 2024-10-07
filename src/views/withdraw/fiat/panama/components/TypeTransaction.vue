@@ -13,7 +13,7 @@
         <h3 class="ml-2">{{ t('withdrawLocalText') }}</h3>
         <div
           class="card p-2"
-          style="cursor: pointer; margin: 0 auto; border: 1px solid #00beb0"
+          style="cursor: pointer; margin: 0 auto; border: 1px solid var(--primary-color)"
           @click="newBeneficiaryPanama"
         >
           <div class="flex justify-content-between align-items-center">
@@ -24,7 +24,10 @@
               <div>
                 <h3 class="font-medium m-1">{{ t('withdrawTransferLocal') }}</h3>
                 <div class="flex">
-                  <div class="card pl-3 pt-1 pr-3 pb-1 m-0 mr-3" style="background: #dcf9eb; color: #21bf73 !important">
+                  <div
+                    class="card pl-3 pt-1 pr-3 pb-1 m-0 mr-3"
+                    style="background: var(--primary-color); color: #1b1b19 !important"
+                  >
                     {{ t('available') }}
                   </div>
                   <div class="card pl-3 pt-1 pr-3 pb-1 m-0" style="background: #01579b; color: white">

@@ -17,7 +17,10 @@
       </button>
     </div>
     <div class="items-center p-3 bg-surface-0 dark:bg-surface-900 rounded">
-      <p class="font-semi-bold text-2xl block m-0 mt-6 text-center px-5" style="font-size: 20px; color: #00beb0">
+      <p
+        class="font-semi-bold text-2xl block m-0 mt-6 text-center px-5"
+        style="font-size: 20px; color: var(--primary-color)"
+      >
         {{ t('beneficiaryCreated') }}
       </p>
       <p class="m-0 text-center px-5">{{ t('waitForEmail') }}</p>
@@ -69,7 +72,7 @@ const openModal = () => {
 .p-dialog.p-component.p-ripple-disabled.p-confirm-dialog > .p-dialog-header > #pv_id_4_header {
   font-size: 20px !important;
   color: var(--primary-color) !important;
-  font-family: KanitSemiBold, serif !important;
+  font-family: RedHatDisplayMedium, serif !important;
   justify-content: center;
   text-align: center;
 }

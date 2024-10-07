@@ -160,6 +160,6 @@ const goBack = () => {
 }
 
 .text-color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 </style>

@@ -158,7 +158,7 @@
   >
     <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
     <div class="text-center">
-      <h1 class="font-medium" style="line-height: 1; color: #00beb0">{{ t('modalCreateBeneficiary') }}</h1>
+      <h1 class="font-medium" style="line-height: 1; color: var(--primary-color)">{{ t('modalCreateBeneficiary') }}</h1>
       <p>{{ t('modalCreateBeneficiary2') }}</p>
       <Button :loading="submitting" class="col-12 p-3" label="OK" @click="redirectButton()" />
     </div>

@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="card" style="border: 1px solid #00beb0">
+      <div class="card border">
         <div class="field mt-1">
           <label>{{ t('bankName') }}</label>
           <div class="p-inputgroup">
@@ -125,7 +125,7 @@ const validateAndSave = () => {
 
 <style lang="scss" scoped>
 .card {
-  border: 1px solid #00beb0;
+  border: 1px solid var(--primary-color);
   margin: 0 auto;
 }
 

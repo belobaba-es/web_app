@@ -50,7 +50,7 @@
     :show-header="false"
   >
     <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
-    <ConfirmWithdrawUsa subtitle="t('withdrawTransferLocal')" :makeTransaction="makeTransaction" />
+    <ConfirmWithdrawUsa :subtitle="t('withdrawTransferLocal')" :makeTransaction="makeTransaction" />
   </Dialog>
 </template>
 <script lang="ts" setup>

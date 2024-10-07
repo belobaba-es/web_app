@@ -3,11 +3,21 @@
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     :style="{ width: '25rem' }"
     :visible="props.visible"
+    :show-header="false"
     modal
     @update:visible="emit('update:display', $event)"
   >
-    <div class="flex justify-content-end text-2xl cursor-pointer" @click="closeModal()">x</div>
-    <h2 class="text-center font-medium" style="color: #00beb0">{{ title }}</h2>
+    <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
+      <button
+        aria-label="Close"
+        class="p-dialog-header-icon p-dialog-header-close p-link p-2"
+        type="button"
+        @click="close"
+      >
+        <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+      </button>
+    </div>
+    <h2 class="text-center font-medium" style="color: var(--primary-color)">{{ title }}</h2>
     <p class="m-0 text-center font-normal">
       {{ subtitle }}
     </p>

@@ -10,7 +10,7 @@
   >
     <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
     <div>
-      <h1 class="font-medium primary-color text-center" style="line-height: 1.2; color: #00beb0">
+      <h1 class="font-medium primary-color text-center" style="line-height: 1.2; color: var(--primary-color)">
         {{ t('textModalStepConfirmation') }}
       </h1>
       <h3 class="mt-2 text-center font-normal">

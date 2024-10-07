@@ -19,7 +19,7 @@
           secondOptionBgColor="#ffffff"
           secondOptionOpacity="0.4"
           secondOptionTextColor="#000000"
-          style="background: #f1ffff"
+          style="background: var(--secondary-color)"
         />
       </div>
       <div class="mt-5 pt-5">
@@ -28,7 +28,7 @@
           :imageSrc="iconBank"
           :subtitle="t('withdrawalSWIFT')"
           class="mt-5"
-          style="opacity: 0.4"
+          style="opacity: 0.4; background: var(--secondary-color)"
         />
       </div>
     </div>

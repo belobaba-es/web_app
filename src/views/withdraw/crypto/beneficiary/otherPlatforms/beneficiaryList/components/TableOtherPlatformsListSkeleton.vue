@@ -43,3 +43,10 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n({ useScope: 'global' })
 const products = ref(new Array(4))
 </script>
+
+<style>
+.header-tablet {
+  color: var(--primary-color);
+  font-size: 14px;
+}
+</style>

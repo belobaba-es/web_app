@@ -83,6 +83,7 @@ h2 {
     --primary-color: #e4cea1;
     --text-color: #1b1b19;
     --caption-orange: #e25f08;
+    --secondary-color: #e4cea133;
 
     .p-steps .p-steps-item .p-menuitem-link {
         background: transparent !important;
@@ -225,7 +226,7 @@ label {
 .p-datatable .p-datatable-thead > tr > th {
     color: var(--primary-color);
     background: none;
-    font-family: KanitMedium, serif;
+    font-family: RedHatDisplayMedium, serif;
 
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 v-if="title">{{ title }}</h3>
-    <div class="card col p-2" style="margin: 0 auto; border: 1px solid #00beb0">
+    <div class="card col p-2" style="margin: 0 auto; border: 1px solid var(--primary-color)">
       <div class="flex justify-content-between align-items-center">
         <div class="flex col-10">
           <div class="mr-2">
@@ -14,8 +14,8 @@
               <div
                 class="card pl-3 pr-3 m-0 mr-2"
                 style="
-                  background: #dcf9eb;
-                  color: #21bf73 !important;
+                  background: var(--primary-color);
+                  color: #1b1b19 !important;
                   padding: 0.25rem 1rem !important;
                   line-height: 14px;
                   height: 1.8rem;

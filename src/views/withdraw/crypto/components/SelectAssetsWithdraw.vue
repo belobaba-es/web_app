@@ -19,7 +19,7 @@
     v-show="!isFiat"
     class="col-12 md:col-12 lg:col-12 xl:col-6 float-left"
   >
-    <Message :closable="false" class="my-0" severity="warn">
+    <Message :closable="false" class="my-0 border" severity="warn">
       {{ t('warningSendAsset', { asset: assetSelected.networkAddress }) }}
     </Message>
   </div>

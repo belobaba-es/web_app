@@ -1,26 +1,26 @@
 <template>
   <DataTable :value="products">
-    <Column :header="t('beneficiaryName')" field="code" style="color: #00beb0">
+    <Column :header="t('beneficiaryName')" field="code" style="color: var(--primary-color)">
       <template #body>
         <Skeleton></Skeleton>
       </template>
     </Column>
-    <Column :header="t('withdrawTableStatus')" field="name" style="color: #00beb0">
+    <Column :header="t('withdrawTableStatus')" field="name" style="color: var(--primary-color)">
       <template #body>
         <Skeleton></Skeleton>
       </template>
     </Column>
-    <Column :header="t('typeNetwork')" field="category" style="color: #00beb0">
+    <Column :header="t('typeNetwork')" field="category" style="color: var(--primary-color)">
       <template #body>
         <Skeleton></Skeleton>
       </template>
     </Column>
-    <Column :header="t('countryLabel')" field="category" style="color: #00beb0">
+    <Column :header="t('countryLabel')" field="category" style="color: var(--primary-color)">
       <template #body>
         <Skeleton></Skeleton>
       </template>
     </Column>
-    <Column :header="t('edit')" field="category" style="color: #00beb0">
+    <Column :header="t('edit')" field="category" style="color: var(--primary-color)">
       <template #body>
         <Skeleton></Skeleton>
       </template>

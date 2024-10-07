@@ -2,7 +2,7 @@
   <div
     :class="{ 'not-clickable': !isClickable }"
     class="card col p-2 cursor-pointer dropDownWire border"
-    style="margin: 0 auto; background: #f2e6d8"
+    style="margin: 0 auto"
     @click="toggleDropdown"
   >
     <div class="flex justify-content-between align-items-center">
@@ -17,8 +17,8 @@
             <div
               class="card pl-3 pr-3 m-0 mr-3"
               style="
-                background: #f2e6d8;
-                color: #21bf73 !important;
+                background: var(--primary-color);
+                color: #1b1b19 !important;
                 padding: 0.25rem 1rem !important;
                 line-height: 14px;
                 height: 1.8rem;

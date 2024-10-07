@@ -112,7 +112,7 @@ const onSelect = (item: Beneficiary) => {
 <style lang="scss" scoped>
 .p-datatable .p-datatable-thead > tr > th {
   color: var(--primary-color);
-  font-family: KanitMedium, serif;
+  font-family: RedHatDisplayMedium, serif;
 }
 
 .border {

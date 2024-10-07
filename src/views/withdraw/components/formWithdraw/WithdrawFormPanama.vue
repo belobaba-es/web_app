@@ -37,9 +37,11 @@
           <label class="font-regular color-green">{{ t('textSend') }}</label>
           <div class="p-inputgroup flex">
             <InputNumber
-              v-model="transactionData.amount"
+              v-model="transactionData.amount as number"
+              :maxFractionDigits="2"
+              :minFractionDigits="2"
               class="w-full text-center"
-              placeholder="$"
+              placeholder="0.00"
               required
               type="text"
             />
@@ -55,9 +57,11 @@
           <div class="p-inputgroup text-center">
             <InputNumber
               v-model="transactionData.amount"
+              :maxFractionDigits="2"
+              :minFractionDigits="2"
               class="w-full text-center"
               disabled
-              placeholder="$"
+              placeholder="0.00"
               type="text"
             />
           </div>
@@ -181,7 +185,7 @@ const close = () => {
 }
 
 .color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 
 .text-16 {

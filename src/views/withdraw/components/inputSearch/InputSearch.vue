@@ -5,7 +5,7 @@
       :placeholder="placeholder"
       @change="handleChange"
       class="border"
-      style="width: 100%; border-radius: 10px 0 0 10px; background: #f7fdfd"
+      style="width: 100%; border-radius: 10px 0 0 10px"
     />
     <Button
       icon="pi pi-search"

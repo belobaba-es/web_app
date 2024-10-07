@@ -161,12 +161,12 @@ const close = () => {
   background-color: #eceff1;
   min-height: 70px;
   border-radius: 12px 12px 0 0;
-  font-family: KanitSemiBold, serif;
+  font-family: RedHatDisplayMedium, serif;
   font-size: 14px;
 }
 
 .text-color-green {
-  color: #0f655d;
+  color: var(--primary-color);
 }
 
 .font-weight {
