@@ -68,7 +68,6 @@ export function useWithdrawalCrypto() {
   }
 
   if (route.params['clientId']) {
-    resetFormWithdrawal()
     transactionData.value = {
       ...transactionData.value,
       clientIdDestination: route.params.clientId.toString(),

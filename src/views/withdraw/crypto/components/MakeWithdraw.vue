@@ -64,6 +64,7 @@
                 class="w-full text-center mt-3"
                 :placeholder="getMaxPlaceholderDigits()"
                 required
+                readonly
                 type="number"
               />
             </div>

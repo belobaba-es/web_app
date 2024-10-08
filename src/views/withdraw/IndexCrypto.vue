@@ -3,7 +3,7 @@
     <div class="justify-content-center">
       <img alt="" src="../../assets/icons/withdraw.svg" width="164" />
       <h1 class="font-regular m-0">
-        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('crypo') }}</span>
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('crypto') }}</span>
       </h1>
       <p class="mb-4 text-2xl">{{ t('withdrawText') }}</p>
 
@@ -18,7 +18,13 @@
     :show-header="false"
     modal
   >
-    <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
+    <div
+      class="p-dialog-header-icons w-full justify-content-between p-2 float-right"
+      style="position: relative; top: 7px"
+    >
+      <h1 class="font-medium m-0">
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('crypto') }}</span>
+      </h1>
       <button
         aria-label="Close"
         class="p-dialog-header-icon p-dialog-header-close p-link p-2"
@@ -29,9 +35,6 @@
       </button>
     </div>
     <div>
-      <h1 class="font-medium m-0">
-        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('crypo') }}</span>
-      </h1>
       <h3 class="mt-0">{{ t('withdrawText') }}</h3>
 
       <div class="flex justify-content-center mt-2 p-2">

@@ -79,11 +79,11 @@ const {
 const { editBeneficiaryUsa } = useNewBeneficiaryDomestic()
 const { editBeneficiaryUsaSwift } = useNewBeneficiaryInternational()
 
-const { prepareFormData } = useWithdraw()
+const { prepareFormData, resetFormWithdrawal } = useWithdraw()
 
 const makeWithdraw = (item: Beneficiary) => {
   if (item.status !== CounterpartyStatus.ACTIVE) return
-
+  resetFormWithdrawal()
   prepareFormData(item)
   router.push(`/withdraw/fiat/usa/make-withdraw/${item.informationBank.networkBank}`)
 }

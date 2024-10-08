@@ -85,7 +85,7 @@ export function useListBeneficiaryInternal() {
 
   const filterInternal = ref<TableFilter>(internalBeneficiaryListStore.getFilters())
 
-  const { prepareFormData } = useWithdraw()
+  const { prepareFormData, resetFormWithdrawal } = useWithdraw()
   internalBeneficiaryListStore.$subscribe((mutation, state) => {
     filterInternal.value = state.filter
     listInternalBeneficiary.value = [...state.beneficiary]
@@ -177,6 +177,7 @@ export function useListBeneficiaryInternal() {
 
   const makeWithdrawalInternal = (data: Beneficiary) => {
     if (data.status !== CounterpartyStatus.ACTIVE) return
+    resetFormWithdrawal()
     setSelectedCounterpartyId(data.counterpartyId)
     prepareFormData(data, true)
     router.push('/withdraw/fiat/internal/withdraw')

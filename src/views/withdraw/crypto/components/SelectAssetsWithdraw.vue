@@ -53,7 +53,7 @@ const { isWithdrawal, assetSelected } = useWithdrawalCrypto()
 
 const assetFilter = ref()
 const { getAssetByAssetId } = useAssets()
-const { balance } = useWithdrawalCrypto()
+const { balance, transactionData } = useWithdrawalCrypto()
 const { getBalanceByCode } = useBalanceWallet()
 const modal = (b: boolean) => {
   if (isWithdrawal.value && form.value.informationWallet.assetId) return
@@ -103,6 +103,10 @@ if (isWithdrawal.value) {
     assetFilter.value = assetFound
     fillAsset(assetFound)
     if (assetFound) {
+      transactionData.value = {
+        ...transactionData.value,
+        assetCode: assetFound.code,
+      }
       balance.value = getBalanceByCode(assetFound.code)
     }
   }

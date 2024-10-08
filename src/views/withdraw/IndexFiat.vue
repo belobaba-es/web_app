@@ -19,7 +19,13 @@
     :style="{ width: '105rem' }"
     modal
   >
-    <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
+    <div
+      class="p-dialog-header-icons w-full justify-content-between p-2 float-right"
+      style="position: relative; top: 7px"
+    >
+      <h1 class="font-medium m-0">
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('fiat') }}</span>
+      </h1>
       <button
         aria-label="Close"
         class="p-dialog-header-icon p-dialog-header-close p-link p-2"
@@ -31,9 +37,6 @@
     </div>
 
     <div>
-      <h1 class="font-medium m-0">
-        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('fiat') }}</span>
-      </h1>
       <h3 class="mt-0">{{ t('withdrawText') }}</h3>
 
       <div class="flex justify-content-center mt-2 p-2">
