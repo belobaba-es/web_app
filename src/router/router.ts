@@ -17,9 +17,11 @@ import { routerCrypto } from './withdrawRouters/withdrawRoutersDesk/routerCrypto
 import { routerInternalTransfer } from './withdrawRouters/withdrawRoutersDesk/routerInternalTransfer'
 import { routerWithdrawalMobile } from './withdrawRouters/withdrawRoutersMobile/routerWithdrawalMobile'
 import { routerWithdrawal } from './withdrawRouters/withdrawRoutersDesk/routerWithdrawal'
-import { useMediaQuery } from '../composables/useMediaQuery'
 import { routerInternalTransferMobile } from './withdrawRouters/withdrawRoutersMobile/routerInternalTransferMobile'
 import { routerCryptoMobile } from './withdrawRouters/withdrawRoutersMobile/routerCryptoMobile'
+import { routerCard } from './routerCard'
+import { routerCardMobile } from './routerCardMobile'
+import { useMediaQuery } from '../composables/useMediaQuery'
 
 const { isMobile } = useMediaQuery()
 const routes: RouteRecordRaw[] = [
@@ -218,6 +220,11 @@ const routes: RouteRecordRaw[] = [
             ],
           },
         ],
+      },
+      {
+        path: '/cards/',
+        component: () => import('../views/cards/Index.vue'),
+        children: isMobile.value ? routerCardMobile : routerCard,
       },
     ],
   },

@@ -1030,5 +1030,7 @@
   "helpTextAlias": "Identificador de la dirección de pago",
   "ifYouHaveTwoNames": "Si tienes dos nombres, por favor escribe los dos.",
   "ifYouHaveTwoLastNames": "Si tienes dos apellidos, escribe los dos.",
-  "VerifyBeneficiaryInformation": "Verifica la información del beneficiario y completa los campos restantes."
+  "VerifyBeneficiaryInformation": "Verifica la información del beneficiario y completa los campos restantes.",
+  "description": "Descripción",
+  "transactionId": "ID de la transacción"
 }

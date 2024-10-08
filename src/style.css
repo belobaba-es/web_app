@@ -135,6 +135,10 @@ h2 {
     content: url(/src/assets/icons/history.svg);
 }
 
+.icon-card .pi::before {
+    content: url(/src/assets/icons/iconcardnobaselect1.svg);
+}
+
 .p-tieredmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover,
 .p-tieredmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
     color: var(--primary-color);
