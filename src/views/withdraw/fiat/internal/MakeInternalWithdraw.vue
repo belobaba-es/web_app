@@ -6,18 +6,18 @@
     <div class="beneficiary-form col-12">
       <div class="header-withdrawal p-4">
         <div class="col-12 md:col-12 lg:col-12 xl:col-7 float-left p-0">
-          <label class="float-left text-color font-family" for="fullName"
+          <label class="float-left text-white font-family" for="fullName"
             ><b>{{ t('beneficiary') }}:</b></label
           >
           <span class="float-left px-2">{{ dataBeneficiaryWithdrawal?.informationOwner.name }}</span>
           <div class="divider"></div>
-          <label class="float-left text-color font-family" for="fullName"
+          <label class="float-left text-white font-family" for="fullName"
             ><b>{{ t('accountNumber') }}:</b></label
           >
           <span class="float-left px-2">{{ dataBeneficiaryWithdrawal?.informationBank.accountNumber }}</span>
         </div>
         <div class="col-12 md:col-12 lg:col-12 xl:col-5 p-0 float-left container-balance">
-          <label class="text-color font-family">{{ t('balance') }}</label>
+          <label class="text-white font-family">{{ t('balance') }}</label>
           <div class="divider"></div>
           <div class="float-right balanceOtherPlatforms">{{ balance }}</div>
         </div>
@@ -39,7 +39,7 @@
             </Dropdown>
           </div>
           <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 float-left">
-            <label class="font-regular text-color-green">{{ t('textSend') }}</label>
+            <label class="font-regular">{{ t('textSend') }}</label>
             <div class="p-inputgroup">
               <InputNumber
                 v-model="transactionData.amount"
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 float-left">
-            <label class="font-regular text-color-green">{{ t('textReceives') }}</label>
+            <label class="font-regular">{{ t('textReceives') }}</label>
             <div class="p-inputgroup">
               <InputNumber
                 v-model="transactionData.amount"
@@ -126,7 +126,16 @@
       :modal="true"
       position="bottom"
     >
-      <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
+      <div class="flex justify-content-end text-2xl cursor-pointer">
+        <button
+          aria-label="Close"
+          class="p-dialog-header-icon p-dialog-header-close p-link p-2 mt-3"
+          type="button"
+          @click="close()"
+        >
+          <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+        </button>
+      </div>
       <ConfirmWithdrawUsa :makeTransaction="makeFiatInternalTransfer" :subtitle="t('betweenNOBA')" />
     </Dialog>
   </div>
@@ -214,7 +223,7 @@ onMounted(async () => {
 }
 
 .header-withdrawal {
-  background-color: #eceff1;
+  background-color: #000;
   height: 90px;
   border-radius: 8px 8px 0 0;
   color: var(--primary-color);

@@ -1038,6 +1038,7 @@
   "helpTextLastNameBeneficiary": "If have two last name, please witter as the two last names.",
   "helpTextAlias": "Payment address identifier",
   "ifYouHaveTwoNames": "If you have two names, write both.",
-  "ifYouHaveTwoLastNames": "If you have two last names, write both."
+  "ifYouHaveTwoLastNames": "If you have two last names, write both.",
+  "VerifyBeneficiaryInformation": "Verify the beneficiary information and complete the remaining fields."
 }
 

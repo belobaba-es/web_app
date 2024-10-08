@@ -4,18 +4,18 @@
     <div class="card col p-1">
       <div
         class="beneficiary-info flex justify-content-between p-4 mb-4"
-        style="background: #eceff1; border-top-left-radius: 10px; border-top-right-radius: 10px"
+        style="background: #000; border-top-left-radius: 10px; border-top-right-radius: 10px"
       >
         <div class="col-6">
           <div>
-            <p class="font-regular text-16 m-0">
+            <p class="font-regular text-16 m-0 text-white">
               {{ t('bankAccountHolder') }}:
               <span class="font-medium text-16 color-green">{{ dataBeneficiaryWithdrawalPanama.holderName }}</span>
             </p>
           </div>
 
           <div>
-            <p class="font-regular text-16 m-0">
+            <p class="font-regular text-16 m-0 text-white">
               {{ t('accountNumber') }}:
               <span class="font-medium text-16 color-green">{{
                 dataBeneficiaryWithdrawalPanama.accountDestinationNumber
@@ -26,7 +26,7 @@
 
         <div class="col-6 flex justify-content-end">
           <div>
-            <p class="font-regular m-0 text-right">{{ t('textBalance') }}</p>
+            <p class="font-regular m-0 text-right text-white">{{ t('textBalance') }}</p>
             <span class="font-medium text-16 color-green">${{ balance }} USD</span>
           </div>
         </div>
@@ -34,7 +34,7 @@
 
       <div class="amount-info flex justify-content-center pt-0">
         <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5">
-          <label class="font-regular color-green">{{ t('textSend') }}</label>
+          <label class="font-regular">{{ t('textSend') }}</label>
           <div class="p-inputgroup flex">
             <InputNumber
               v-model="transactionData.amount as number"
@@ -53,7 +53,7 @@
             <i class="pi pi-arrow-right-arrow-left text-16 text-1xl text-white" style="line-height: 2"></i>
           </div>
 
-          <label class="font-regular color-green">{{ t('textReceives') }}</label>
+          <label class="font-regular">{{ t('textReceives') }}</label>
           <div class="p-inputgroup text-center">
             <InputNumber
               v-model="transactionData.amount"
@@ -132,7 +132,16 @@
     :style="{ width: '30rem' }"
     modal
   >
-    <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
+    <div class="flex justify-content-end text-2xl cursor-pointer">
+      <button
+        aria-label="Close"
+        class="p-dialog-header-icon p-dialog-header-close p-link p-2 mt-3"
+        type="button"
+        @click="close()"
+      >
+        <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+      </button>
+    </div>
     <DialogConfirmWithdrawPanama />
   </Dialog>
 </template>

@@ -3,21 +3,21 @@
     <div class="mb-2 col-12">
       <p class="font-semi-bold m-0" style="font-size: 1.2rem">{{ t('VerifyBeneficiaryInformation') }}</p>
     </div>
-    <div class="beneficiary-form col-12">
+    <div class="beneficiary-form col-12 p-3">
       <div class="header-withdrawal p-4">
         <div class="col-12 md:col-12 lg:col-12 xl:col-7 float-left p-0">
-          <label class="float-left text-color font-family" for="fullName"
+          <label class="float-left text-white font-family" for="fullName"
             ><b>{{ t('beneficiary') }}:</b></label
           >
           <span class="float-left px-2">{{ beneficiaryInformation.name }}</span>
           <div class="divider"></div>
-          <label class="float-left text-color font-family" for="fullName"
+          <label class="float-left text-white font-family" for="fullName"
             ><b>{{ t('walletAddress') }}:</b></label
           >
           <span class="float-left px-2">{{ beneficiaryInformation.addressWallet }}</span>
         </div>
         <div class="col-12 md:col-12 lg:col-12 xl:col-5 p-0 float-left container-balance">
-          <label class="text-color font-family">{{ t('balance') }}</label>
+          <label class="text-white font-family">{{ t('balance') }}</label>
           <div class="divider"></div>
           <div class="float-right balanceOtherPlatforms">{{ balance }} {{ assetCodeSelected.code }}</div>
         </div>
@@ -26,7 +26,7 @@
         <div class="col-12 xl:col-6 form-group pl-3 pr-5 my-3 float-left" style="border-right: 1px solid #0f655d">
           <SelectAssetsWithdraw @selectedAsset="selectAsset" />
           <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 float-left">
-            <label class="font-regular text-color-green">{{ t('textSend') }}</label>
+            <label class="font-regular">{{ t('textSend') }}</label>
             <div class="p-inputgroup">
               <InputNumber
                 v-model="transactionData.amount"
@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="col-12 sm:col-12 md:col-12 lg:col-5 xl:col-5 float-left">
-            <label class="font-regular text-color-green">{{ t('textReceives') }}</label>
+            <label class="font-regular">{{ t('textReceives') }}</label>
             <div class="p-inputgroup">
               <InputNumber
                 v-model="transactionData.amount"
@@ -224,7 +224,7 @@ const close = () => {
 }
 
 .header-withdrawal {
-  background-color: #eceff1;
+  background-color: #000;
   height: 90px;
   border-radius: 8px 8px 0 0;
   color: var(--primary-color);

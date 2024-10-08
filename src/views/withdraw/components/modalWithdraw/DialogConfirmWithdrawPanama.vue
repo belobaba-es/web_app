@@ -52,10 +52,20 @@
       v-model:visible="visibleModalVeryCodeTwoFactor"
       :draggable="false"
       :header="t('twoFactor')"
+      :show-header="false"
       :modal="true"
       position="bottom"
     >
-      <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
+      <div class="flex justify-content-end text-2xl cursor-pointer">
+        <button
+          aria-label="Close"
+          class="p-dialog-header-icon p-dialog-header-close p-link p-2 mt-3"
+          type="button"
+          @click="close()"
+        >
+          <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+        </button>
+      </div>
       <VeryCodeTwoFactorAuth @codeIsValid="codeIsValid" />
     </Dialog>
   </div>
