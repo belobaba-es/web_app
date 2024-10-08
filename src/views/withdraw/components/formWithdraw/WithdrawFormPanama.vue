@@ -1,6 +1,6 @@
 <template>
   <div class="transfer-component pr-4 pl-4">
-    <h3>{{ t('textWithdrawPanama') }}</h3>
+    <h3>{{ t('VerifyBeneficiaryInformation') }}</h3>
     <div class="card col p-1">
       <div
         class="beneficiary-info flex justify-content-between p-4 mb-4"
@@ -130,6 +130,7 @@
     v-model:visible="visible"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     :style="{ width: '30rem' }"
+    :show-header="false"
     modal
   >
     <div class="flex justify-content-end text-2xl cursor-pointer">

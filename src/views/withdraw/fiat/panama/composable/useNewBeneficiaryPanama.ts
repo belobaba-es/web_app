@@ -91,6 +91,7 @@ export const useNewBeneficiaryPanama = () => {
           detail: t(response.data.message),
           life: 4000,
         })
+        resetFormPanama()
       })
     } catch (error) {
       submitting.value = false
@@ -102,6 +103,22 @@ export const useNewBeneficiaryPanama = () => {
     router.back()
   }
 
+  const resetFormPanama = () => {
+    formObjectPanama.value = {
+      holderEmail: '',
+      holderId: '',
+      holderName: '',
+      bankName: '',
+      accountDestinationNumber: '',
+      productType: {
+        PACA: '',
+        PACC: '',
+        LOAN: '',
+        ICCP: '',
+      },
+    }
+  }
+
   return {
     formObjectPanama,
     productAccountType,
@@ -111,5 +128,6 @@ export const useNewBeneficiaryPanama = () => {
     submitting,
     showModal,
     validateFields,
+    resetFormPanama,
   }
 }

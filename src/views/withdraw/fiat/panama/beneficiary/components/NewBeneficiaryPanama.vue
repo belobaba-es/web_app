@@ -4,7 +4,7 @@
       <div class="flex align-items-center">
         <Button class="p-button-text" icon="pi pi-angle-left" iconPos="left" label="" @click="toBack" />
         <p class="font-regular" style="font-size: 16px">
-          <span style="color: #cecece">{{ t('withdrawWireListBeneficiary') }}</span> /
+          <span style="color: #cecece">{{ t('newBeneficiary') }}</span> /
           <span>{{ t('typeWithdrawText') }}</span>
         </p>
       </div>

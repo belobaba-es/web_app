@@ -99,7 +99,9 @@ const {
 
 const { beneficiaryPanamaSearch } = useBeneficiaryPanama()
 const { setDataBeneficiary } = useNewBeneficiaryPanama()
-const { prepareFormDataPanama } = useWithdraw()
+const { prepareFormDataPanama, resetFormWithdrawal } = useWithdraw()
+
+const { resetFormPanama } = useNewBeneficiaryPanama()
 
 const editBeneficiary = (item: any) => {
   setDataBeneficiary(item)
@@ -108,10 +110,12 @@ onMounted(() => {
   fetchBeneficiariesAchPanama()
 })
 const newBeneficiary = () => {
+  resetFormPanama()
   router.push(`panama/wire-local`)
 }
 
 const makeWithdrawal = (data: BeneficiaryAchPanama) => {
+  resetFormWithdrawal()
   prepareFormDataPanama(data)
   router.push('/withdraw/fiat/panama/withdraw')
 }

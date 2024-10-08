@@ -41,7 +41,18 @@ export function useWithdrawalCrypto() {
   beneficiaryInformation.value.addressWallet = form.value.informationWallet.address
   beneficiaryInformation.value.isInternal = form.value.isInternal
 
+  const resetFormWithdrawal = () => {
+    transactionData.value = {
+      amount: 0,
+      purpose: '',
+      reference: '',
+      clientIdDestination: '',
+      assetCode: '',
+    }
+  }
+
   if (route.params['counterpartyId']) {
+    resetFormWithdrawal()
     transactionData.value = {
       ...transactionData.value,
       beneficiaryAssetId: route.params.counterpartyId.toString(),
@@ -57,6 +68,7 @@ export function useWithdrawalCrypto() {
   }
 
   if (route.params['clientId']) {
+    resetFormWithdrawal()
     transactionData.value = {
       ...transactionData.value,
       clientIdDestination: route.params.clientId.toString(),
@@ -166,15 +178,7 @@ export function useWithdrawalCrypto() {
       assetClassification: '',
     }
   }
-  const resetFormWithdrawal = () => {
-    transactionData.value = {
-      amount: 0,
-      purpose: '',
-      reference: '',
-      clientIdDestination: '',
-      assetCode: '',
-    }
-  }
+
   return {
     transactionData,
     balance,

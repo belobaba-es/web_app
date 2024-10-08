@@ -1,4 +1,14 @@
 <template>
+  <h3 class="font-regular m-0">
+    <BackButtonMobile
+      :title="
+        beneficiaryInformation.isInternal === 'N'
+          ? t('crypto') + '/' + t('otherPlatforms')
+          : t('crypto') + '/' + t('walletNob')
+      "
+      :subtitle="t('WITHDRAWAL')"
+    />
+  </h3>
   <div class="grid">
     <div class="mb-2 col-12">
       <p class="font-semi-bold m-0" style="font-size: 1.2rem">{{ t('VerifyBeneficiaryInformation') }}</p>
@@ -132,6 +142,7 @@ import { Asset } from '../../../deposit/types/asset.interface'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import DialogConfirmationWithdrawal from './DialogConfirmationWithdrawal.vue'
 import { useToast } from 'primevue/usetoast'
+import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const { isAssetEdit, form } = useBeneficiaryCrypto()

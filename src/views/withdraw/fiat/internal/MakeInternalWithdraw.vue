@@ -1,7 +1,10 @@
 <template>
+  <h3 class="font-regular m-0">
+    <BackButtonMobile :subtitle="t('WITHDRAWAL')" :title="t('fiat') + '/' + t('walletNob')" />
+  </h3>
   <div class="grid">
     <div class="mb-2 col-12">
-      <p class="font-semi-bold m-0" style="font-size: 1.2rem">{{ t('VerifyBeneficiaryInformation') }}</p>
+      <p class="font-semi-bold my-2" style="font-size: 1.2rem">{{ t('VerifyBeneficiaryInformation') }}</p>
     </div>
     <div class="beneficiary-form col-12">
       <div class="header-withdrawal p-4">
@@ -157,6 +160,7 @@ import { useWithdraw } from '../../composable/useWithdraw'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useAssets } from '../../../../composables/useAssets'
+import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })

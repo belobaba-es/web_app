@@ -37,7 +37,7 @@
         <span style="font-size: 12px">{{ t('helpTextAlias') }}</span>
       </div>
       <div class="col-12 px-2">
-        <label for="walletAddress">{{ t('walletAddress') }}</label>
+        <label for="walletAddress" class="font-semi-bold">{{ t('walletAddress') }}</label>
         <InputText
           class="custom-dropdown w-full"
           style="box-sizing: border-box"

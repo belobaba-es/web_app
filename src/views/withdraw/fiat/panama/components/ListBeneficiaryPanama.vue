@@ -12,7 +12,7 @@
 
       <Column :header="t('beneficiaryName')" class="cursor-pointer" field="holderName">
         <template #body="slotProps">
-          <p @click="beneficiary(slotProps.data)">{{ slotProps.data.holderName }}</p>
+          <p>{{ slotProps.data.holderName }}</p>
         </template>
       </Column>
       <Column :header="t('withdrawTableStatus')" field="status">
@@ -42,7 +42,7 @@
       </Column>
       <Column :header="t('withdraw')" field="withdraw">
         <template #body="{ data }">
-          <div class="img-button" @click="data.status !== CounterpartyStatus.REJECTED ? beneficiary(data) : null"></div>
+          <div class="img-button" @click="withdrawalPanama(data)"></div>
         </template>
       </Column>
     </DataTable>
@@ -86,9 +86,11 @@ const {
   fetchBeneficiariesAchPanama,
 } = useBeneficiaryPanama()
 const { setDataBeneficiary } = useNewBeneficiaryPanama()
-const { prepareFormDataPanama } = useWithdraw()
+const { prepareFormDataPanama, resetFormWithdrawal } = useWithdraw()
 
-const beneficiary = (item: BeneficiaryAchPanama) => {
+const withdrawalPanama = (item: BeneficiaryAchPanama) => {
+  if (item.status !== CounterpartyStatus.ACTIVE) return
+  resetFormWithdrawal()
   prepareFormDataPanama(item)
   router.push('/withdraw/fiat/panama/withdraw-local')
 }

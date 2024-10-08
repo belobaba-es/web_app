@@ -3,7 +3,10 @@
     <div class="card pt-5 pb-5">
       <div class="flex justify-content-between">
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3 line-vertical">
-          <BackButtonMobile :subtitle="t('typeWithdrawText')" :title="t('newBeneficiary')" />
+          <BackButtonMobile
+            :subtitle="t('typeWithdrawText')"
+            :title="balance ? t('WITHDRAWAL') : t('newBeneficiary')"
+          />
           <div class="pr-4 pl-4">
             <ButtonTypeTransaction
               v-if="isSwiftRoute"
@@ -55,7 +58,7 @@ import WithdrawFormPanama from '../../components/formWithdraw/WithdrawFormPanama
 import { NetworkBank } from '../../enums/beneficiary.enum'
 
 const { t } = useI18n({ useScope: 'global' })
-const { toBack } = useWithdraw()
+const { balance } = useWithdraw()
 
 const route = useRoute()
 const isSwiftRoute = route.path.includes(NetworkBank.SWIFT)

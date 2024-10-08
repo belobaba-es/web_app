@@ -201,5 +201,6 @@ export const useWithdraw = () => {
     prepareFormDataPanama,
     dataBeneficiaryWithdrawalPanama,
     getBalance,
+    resetFormWithdrawal,
   }
 }

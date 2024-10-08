@@ -22,7 +22,7 @@ export const useListBeneficiaryInternal = () => {
   const { t } = useI18n({ useScope: 'global' })
   onMounted(async () => {
     if (listAssets.value.length === 0) getAssets()
-    await fetchInternalBeneficiary(true)
+    if (listInternalBeneficiary.value.length === 0) await fetchInternalBeneficiary(true)
   })
 
   watch([listInternalBeneficiary, loading], () => {

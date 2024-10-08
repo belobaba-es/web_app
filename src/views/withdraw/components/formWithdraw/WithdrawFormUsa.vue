@@ -91,12 +91,7 @@
             <label>{{ t('Note') }}</label>
             <label>{{ t('Note') }}</label>
             <div class="p-inputgroup">
-              <InputText
-                v-model="transactionData.reference"
-                :placeholder="t('reference')"
-                class="w-full p-3"
-                type="text"
-              />
+              <InputText v-model="transactionData.reference" :placeholder="t('reference')" class="w-full" type="text" />
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export const useListBeneficiaryInternalFiat = () => {
   const { getAssets, listAssets } = useAssets()
   onMounted(async () => {
     if (listAssets.value.length === 0) getAssets()
-    await fetchInternalBeneficiary(true)
+    if (listInternalBeneficiary.value.length === 0) await fetchInternalBeneficiary(true)
   })
   watch([nextPag, currentPage, numberRecords, totalRecords], () => {
     pagination.totalRecords = totalRecords.value

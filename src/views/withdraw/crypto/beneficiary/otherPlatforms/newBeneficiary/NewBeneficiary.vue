@@ -38,7 +38,7 @@
         </div>
 
         <div class="col-12 md:col-12 lg:col-12 xl:col-6 float-left form-group px-2">
-          <label for="walletAddress">{{ t('walletAddress') }}</label>
+          <label for="walletAddress" class="font-semi-bold">{{ t('walletAddress') }}</label>
           <InputText
             id="walletAddress"
             v-model="form.informationWallet.address"
