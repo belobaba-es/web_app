@@ -13,9 +13,10 @@ export const useCardReposition = () => {
 
   const { getClientId } = useAuth()
 
+
   const sendingDataCard = ref<OnboardingRepositionCard>({
     clientId: getClientId(),
-    cardModality: typeCardSelect.value.join(', '),
+    cardModality: typeCardSelect.value,
     currency: 'EUR',
   })
   const toast = useToast()
