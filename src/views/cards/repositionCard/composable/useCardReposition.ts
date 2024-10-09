@@ -15,19 +15,20 @@ export const useCardReposition = () => {
 
   const sendingDataCard = ref<OnboardingRepositionCard>({
     clientId: getClientId(),
-    cardModality: typeCardSelect.value,
+    cardModality: typeCardSelect.value.join(', '),
     currency: 'EUR',
   })
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
 
-  const handleRepositionVirtualCard = () => {
+  const handleRepositionVirtualCard = async () => {
     try {
-      const response = createRepositionCard(sendingDataCard.value)
+      const response = await createRepositionCard(sendingDataCard.value)
       useToast().add({ severity: 'success', summary: 'Success', detail: response })
-      router.push('/cards/onboarding/reposition/confirmation')
+      await router.push('/cards/onboarding/reposition/confirmation')
     } catch (e: any) {
       processException(toast, t, e)
+      await router.push('/cards/onboarding/reposition/denied')
     }
   }
 

@@ -24,7 +24,7 @@ const props = defineProps<Props>()
 const isSelected = ref(false)
 
 const toggleSelection = () => {
-  if (!isSelected.value && typeCardSelect.value.length > 0) {
+  if (!isSelected.value && typeCardSelect.value.length > 2) {
     return
   }
   isSelected.value = !isSelected.value

@@ -1,0 +1,23 @@
+<template>
+  <div class="card mt-4">
+    <div class="flex flex-column align-items-center justify-content-center p-5">
+      <div class="surface-card p-4 border-round w-full md:w-50rem text-center pb-5 pt-5">
+        <i class="pi pi-times-circle text-8xl text-red-500 mb-4"></i>
+        <h1 class="text-5xl font-medium mb-2">{{ t('cardDenied') }}</h1>
+        <p class="text-gray-600 mb-4 text-2xl">{{ t('cardDeniedText') }}</p>
+        <Button :label="t('backHome')" class="p-button-outlined p-button-secondary" @click="goHome" />
+      </div>
+    </div>
+  </div>
+</template>
+<style scoped></style>
+<script lang="ts" setup>
+import Button from 'primevue/button'
+import router from '../../../../router/router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
+const goHome = () => {
+  router.push('/')
+}
+</script>

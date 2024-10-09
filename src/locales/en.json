@@ -783,5 +783,9 @@
     "december": "December"
   },
   "transactionId": "Transaction ID",
-  "date": "Date"
+  "date": "Date",
+
+  "cardDenied": "Card Denied",
+  "cardDeniedText": "Operation canceled, You already have a VIRTUAL card.",
+  "backHome": "Back to home"
 }

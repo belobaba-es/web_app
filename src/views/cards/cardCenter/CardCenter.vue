@@ -183,7 +183,7 @@ const { getUserName } = useAuth()
 const { t } = useI18n({ useScope: 'global' })
 
 const routerNewCard = () => {
-  router.push('/cards/onboarding')
+  router.push(listCards.value.length !== 0 ? '/cards/onboarding/reposition' : '/cards/onboarding')
 }
 
 const formattedExpirationDate = computed(() => {
@@ -241,7 +241,7 @@ const handlePausaCardChange = () => {
 
 <style lang="scss" scoped>
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 0rem;
+  padding: 0;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {

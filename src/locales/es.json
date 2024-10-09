@@ -769,5 +769,8 @@
   },
   "description": "Descripción",
   "transactionId": "ID de la transacción",
-  "date": "Fecha"
+  "date": "Fecha",
+  "cardDenied": "Tarjeta Denegada",
+  "cardDeniedText": "Operación cancelada, Ya tienes tarjeta VIRTUAL.",
+  "backHome": "Regresar al inicio"
 }
