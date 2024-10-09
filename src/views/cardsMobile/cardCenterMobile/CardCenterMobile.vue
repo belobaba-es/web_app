@@ -58,7 +58,7 @@
     </div>
     <div class="mt-3">
       <Button class="btn btn-primary w-full text-center"
-        ><i class="pi pi-plus pr-2" style="font-size: 1rem"></i> {{ t('requestNewCard') }}
+        ><i class="pi pi-plus pr-2" style="font-size: 1rem" @click="routerNewCard"></i> {{ t('requestNewCard') }}
       </Button>
       <Button
         v-if="selectedCard?.status === StatusCard.CANCELLED"
@@ -114,6 +114,10 @@ const {
 const visible = ref(false)
 const visibleSuccess = ref(false)
 
+const routerNewCard = () => {
+  router.push(listCards.value.length !== 0 ? '/cards/onboarding/reposition' : '/cards/onboarding')
+}
+
 const imgStyle = computed(() => {
   if (selectedCard.value?.status === StatusCard.LOCKED || listCards.value.length === 0) {
     return {
@@ -145,7 +149,7 @@ const handleDisplayUpdate = async (event: Event) => {
 }
 </script>
 
-<style>
+<style lang="scss">
 .card-container {
   background-image: url(/src/assets/img/card-mobile.png);
   background-repeat: no-repeat;
