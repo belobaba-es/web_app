@@ -1,51 +1,26 @@
 import { HttpService } from '../../../shared/services/http'
-import {
-  BeneficiariesInternalResponse,
-  BeneficiaryAsset,
-  BeneficiaryAssetsResponse,
-  BeneficiaryType,
-  NetworkBank,
-  RegisterCounterpartyAchPanama,
-} from '../types/beneficiary.interface'
-import { TypeBeneficiaryInternal } from '../composables/useBeneficiary'
-import { UnwrapRef } from 'vue'
+import { RegisterCounterpartyAchPanama } from '../type/beneficiary.type'
+import { FilterListBeneficiary } from '../type/filterListBeneficiary.type'
+import { BeneficiariesInternalResponse } from '../interface/beneficiary.interface'
+import { CounterpartyType } from '../enums/beneficiary.enum'
 
 export class BeneficiaryService {
-  async listBeneficiaryAssets(nextPag = 1): Promise<BeneficiaryAssetsResponse> {
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<BeneficiaryAssetsResponse>(
-      `beneficiary/asset/external/${nextPag === 0 ? 1 : nextPag}`
-    )
+  async listBeneficiaryBankingUsa(filters: FilterListBeneficiary) {
+    let url = `beneficiary/banking/`
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(url, { ...filters })
   }
 
-  async listBeneficiaryBankingExternal(
-    beneficiaryType: BeneficiaryType,
-    nextPag = 1,
-    typeNetworkBankBeneficiary?: NetworkBank
-  ) {
-    let url = `beneficiary/banking/external/${nextPag === 0 ? 1 : nextPag}?withdrawalType=${beneficiaryType}`
-    if (typeNetworkBankBeneficiary) {
-      url += `&typeNetworkBankBeneficiary=${typeNetworkBankBeneficiary}`
-    }
-
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(url)
-  }
-
-  async listBeneficiaryInternal(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<BeneficiariesInternalResponse>(
-      `beneficiary/${type}/internal/${nextPag === 0 ? 1 : nextPag}`
-    )
-  }
-
-  async listBeneficiaryInternalV2(type: TypeBeneficiaryInternal, nextPag = 1): Promise<BeneficiariesInternalResponse> {
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v2`).get<BeneficiariesInternalResponse>(
-      `beneficiary/internal/`,
-      { page: nextPag === 0 ? 1 : nextPag }
-    )
-  }
-
-  async listBeneficiaryAchPanama(nextPag = 1) {
+  async listBeneficiaryAchPanama(filters: FilterListBeneficiary) {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).get<any>(
-      `beneficiary/ach/pab/?type=EXTERNAL&page=${nextPag === 0 ? 1 : nextPag}`
+      `beneficiary/ach/pab/?type=EXTERNAL`,
+      { ...filters }
+    )
+  }
+
+  async listBeneficiaryFiatInternal(filters: FilterListBeneficiary): Promise<BeneficiariesInternalResponse> {
+    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v2`).get<BeneficiariesInternalResponse>(
+      `beneficiary/internal/${CounterpartyType.FIAT}`,
+      { ...filters }
     )
   }
 
@@ -56,11 +31,7 @@ export class BeneficiaryService {
     )
   }
 
-  async saveBeneficiaryAssets(payload: BeneficiaryAsset): Promise<any> {
-    return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).post<any>(`beneficiary/asset`, payload)
-  }
-
-  async saveBeneficiaryAchPanama(payload: UnwrapRef<RegisterCounterpartyAchPanama>): Promise<any> {
+  async saveBeneficiaryAchPanama(payload: RegisterCounterpartyAchPanama): Promise<any> {
     return await new HttpService(`${import.meta.env.VITE_BASE_ENDPOINT}/api/v1`).post<any>(
       `beneficiary/ach/pab`,
       payload

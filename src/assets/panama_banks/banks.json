@@ -1,137 +1,186 @@
 [
   {
-    "name": "001-BANCO NACIONAL DE PANAMÁ"
+    "name": "001-BANCO NACIONAL DE PANAMÁ",
+    "value": "BANCO NACIONAL DE PANAMÁ"
   },
   {
-    "name": "002-BANISTMO"
+    "name": "002-BANISTMO",
+    "value": "BANISTMO"
   },
   {
-    "name": "003-CITIBANK N.A."
+    "name": "003-CITIBANK N.A.",
+    "value": "CITIBANK N.A."
   },
   {
-    "name": "007-BANCO GENERAL"
+    "name": "007-BANCO GENERAL",
+    "value": "BANCO GENERAL"
   },
   {
-    "name": "018-DAVIVIENDA"
+    "name": "018-DAVIVIENDA",
+    "value": "DAVIVIENDA"
   },
   {
-    "name": "037-MULTIBANK"
+    "name": "037-MULTIBANK",
+    "value": "MULTIBANK"
   },
   {
-    "name": "040-TOWER BANK"
+    "name": "040-TOWER BANK",
+    "value": "TOWER BANK"
   },
   {
-    "name": "042-SCOTIABANK"
+    "name": "042-SCOTIABANK",
+    "value": "SCOTIABANK"
   },
   {
-    "name": "051-BICSA"
+    "name": "051-BICSA",
+    "value": "BICSA"
   },
   {
-    "name": "071-COOPERATIVA PROFESIONALES"
+    "name": "071-COOPERATIVA PROFESIONALES",
+    "value": "COOPERATIVA PROFESIONALES"
   },
   {
-    "name": "077-CAJA DE AHORROS"
+    "name": "077-CAJA DE AHORROS",
+    "value": "CAJA DE AHORROS"
   },
   {
-    "name": "091-BANCO DEL PACIFICO"
+    "name": "000-CANAL BANK",
+    "value": "CANAL BANK"
   },
   {
-    "name": "106-METROBANK"
+    "name": "091-BANCO DEL PACIFICO",
+    "value": "BANCO DEL PACIFICO"
   },
   {
-    "name": "108-BANCO ALIADO"
+    "name": "106-METROBANK",
+    "value": "METROBANK"
   },
   {
-    "name": "110-CREDICORPBANK"
+    "name": "108-BANCO ALIADO",
+    "value": "BANCO ALIADO"
   },
   {
-    "name": "115-GLOBAL BANK"
+    "name": "110-CREDICORPBANK",
+    "value": "CREDICORPBANK"
   },
   {
-    "name": "138-BAC INTL BANK"
+    "name": "115-GLOBAL BANK",
+    "value": "GLOBAL BANK"
   },
   {
-    "name": "139-BCT BANK"
+    "name": "138-BAC INTL BANK",
+    "value": "BAC INTL BANK"
   },
   {
-    "name": "147-MMG BANK"
+    "name": "139-BCT BANK",
+    "value": "BCT BANK"
   },
   {
-    "name": "149-ST. GEORGES BANK"
+    "name": "147-MMG BANK",
+    "value": "MMG BANK"
   },
   {
-    "name": "150-BANCO AZTECA"
+    "name": "149-ST. GEORGES BANK",
+    "value": "ST. GEORGES BANK"
   },
   {
-    "name": "151-BANCO PICHINCHA"
+    "name": "150-BANCO AZTECA",
+    "value": "BANCO AZTECA"
   },
   {
-    "name": "156-BANCO DELTA"
+    "name": "151-BANCO PICHINCHA",
+    "value": "BANCO PICHINCHA"
   },
   {
-    "name": "157-BANCO LAFISE"
+    "name": "156-BANCO DELTA",
+    "value": "BANCO DELTA"
   },
   {
-    "name": "158-BANESCO"
+    "name": "157-BANCO LAFISE",
+    "value": "BANCO LAFISE"
   },
   {
-    "name": "159-CAPITAL BANK"
+    "name": "158-BANESCO",
+    "value": "BANESCO"
   },
   {
-    "name": "161-BANISI"
+    "name": "159-CAPITAL BANK",
+    "value": "CAPITAL BANK"
   },
   {
-    "name": "162-G&T CONTINENTAL"
+    "name": "161-BANISI",
+    "value": "BANISI"
   },
   {
-    "name": "163-MERCANTIL BANK"
+    "name": "162-G&T CONTINENTAL",
+    "value": "G&T CONTINENTAL"
   },
   {
-    "name": "165-BBP BANK"
+    "name": "163-MERCANTIL BANK",
+    "value": "MERCANTIL BANK"
   },
   {
-    "name": "167-PRIVAL BANK"
+    "name": "165-BBP BANK",
+    "value": "BBP BANK"
   },
   {
-    "name": "170-UNIBANK"
+    "name": "167-PRIVAL BANK",
+    "value": "PRIVAL BANK"
   },
   {
-    "name": "172-BANCO FICOHSA"
+    "name": "170-UNIBANK",
+    "value": "UNIBANK"
   },
   {
-    "name": "175-BANCOLOMBIA"
+    "name": "172-BANCO FICOHSA",
+    "value": "BANCO FICOHSA"
   },
   {
-    "name": "178-BIBANK PANAMA"
+    "name": "175-BANCOLOMBIA",
+    "value": "BANCOLOMBIA"
   },
   {
-    "name": "180-ATLAS BANK"
+    "name": "178-BIBANK PANAMA",
+    "value": "BIBANK PANAMA"
   },
   {
-    "name": "250-COOPERATIVA COOPEDUC"
+    "name": "180-ATLAS BANK",
+    "value": "ATLAS BANK"
   },
   {
-    "name": "251-COOPERATIVA COOESAN"
+    "name": "250-COOPERATIVA COOPEDUC",
+    "value": "COOPERATIVA COOPEDUC"
   },
   {
-    "name": "252-COOPERATIVA CACECHI"
+    "name": "251-COOPERATIVA COOESAN",
+    "value": "COOPERATIVA COOESAN"
   },
   {
-    "name": "253-COOPERATIVA COEDUCO"
+    "name": "252-COOPERATIVA CACECHI",
+    "value": "COOPERATIVA CACECHI"
   },
   {
-    "name": "254-COOPERATIVA COOPEVE"
+    "name": "253-COOPERATIVA COEDUCO",
+    "value": "COOPERATIVA COEDUCO"
   },
   {
-    "name": "500-COOPERATIVA CRISTOBAL (COOPACC)"
+    "name": "254-COOPERATIVA COOPEVE",
+    "value": "COOPERATIVA COOPEVE"
   },
   {
-    "name": "501-COOPERATIVA EDIOACC"
+    "name": "500-COOPERATIVA CRISTOBAL (COOPACC)",
+    "value": "COOPERATIVA CRISTOBAL (COOPACC)"
   },
   {
-    "name": "502-COOPERATIVA ECASESO"
+    "name": "501-COOPERATIVA EDIOACC",
+    "value": "COOPERATIVA EDIOACC"
   },
   {
-    "name": "503-COOPERATIVA COOPRAC, R.L."
+    "name": "502-COOPERATIVA ECASESO",
+    "value": "COOPERATIVA ECASESO"
+  },
+  {
+    "name": "503-COOPERATIVA COOPRAC, R.L.",
+    "value": "COOPERATIVA COOPRAC, R.L."
   }
 ]
