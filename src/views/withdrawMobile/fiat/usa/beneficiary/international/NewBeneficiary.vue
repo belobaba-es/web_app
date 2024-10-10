@@ -2,7 +2,7 @@
   <section class="section-main">
     <BackButtonMobile
       v-if="!isShowRestFormBankData || !isShowRestFormIntermediary || showsStepTwoFirstPart"
-      :subtitle="t('typeWithdrawText')"
+      :subtitle="t('withdrawalSWIFT')"
       :title="t('bankAccountHolder')"
     />
     <BackButtonStep v-else :subtitle="t('typeWithdrawText')" :title="t('bankAccountHolder')" @goBack="handleGoBack" />

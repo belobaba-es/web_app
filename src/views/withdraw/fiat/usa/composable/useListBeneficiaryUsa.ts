@@ -19,7 +19,8 @@ const itemsPage = ref(10)
 const totalPages = ref(0)
 const wireLocalType = ref<string>('')
 const showInputIban = ref<boolean>(false)
-
+const showLabelInternational = ref(false)
+const showLabelDomestic = ref(false)
 export const useListBeneficiaryUsa = () => {
   const search = ref(false)
   const useBeneficiaryUsaList = useBeneficiaryUsaListStore()
@@ -161,5 +162,7 @@ export const useListBeneficiaryUsa = () => {
     validateShowInputIban,
     showInputIban,
     handleChange,
+    showLabelInternational,
+    showLabelDomestic,
   }
 }

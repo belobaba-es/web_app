@@ -4,8 +4,8 @@
       <div class="col flex" style="cursor: pointer" @click="toBack()">
         <i class="pi pi-angle-left align-content-center" />
         <p class="font-regular" style="font-size: 16px">
-          <span style="color: #cecece">{{ t('withdrawalSWIFT') }}</span> /
-          <span>{{ t('typeWithdrawUsa') }}</span>
+          <span style="color: #cecece">{{ t('typeWithdrawUsa') }}/{{ t('typeWithdrawText') }}</span>
+          <span>/{{ t(wireLocalType) }}</span>
         </p>
       </div>
 
@@ -44,9 +44,10 @@ import { useI18n } from 'vue-i18n'
 import router from '../../../../../../../router/router'
 import NewBeneficiaryDomestic from './NewBeneficiaryDomestic.vue'
 import ButtonSelectWireLocal from '../../../../../components/customButton/ButtonSelectWireLocal.vue'
+import { useListBeneficiaryUsa } from '../../../composable/useListBeneficiaryUsa'
 
 const { t } = useI18n({ useScope: 'global' })
-
+const { wireLocalType } = useListBeneficiaryUsa()
 const toBack = () => {
   router.back()
 }

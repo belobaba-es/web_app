@@ -47,8 +47,15 @@ import { useWithdraw } from '../../composable/useWithdraw'
 import { useWorld } from '../../../../composables/useWorld'
 
 const { t } = useI18n({ useScope: 'global' })
-const { beneficiaryUsaSearch, submitting, listBeneficiaryUsa, fetchBeneficiariesUsa, handleChange } =
-  useListBeneficiaryUsa()
+const {
+  beneficiaryUsaSearch,
+  submitting,
+  listBeneficiaryUsa,
+  fetchBeneficiariesUsa,
+  handleChange,
+  showLabelDomestic,
+  showLabelInternational,
+} = useListBeneficiaryUsa()
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const toast = useToast()
 const { clearTransactionData } = useWithdraw()
@@ -68,6 +75,8 @@ const toBack = () => {
 }
 
 const newBeneficiary = () => {
+  showLabelInternational.value = false
+  showLabelDomestic.value = false
   return router.push(`/withdraw/fiat/usa/withdraw-type`)
 }
 const handleSearch = (searchText: string) => {

@@ -99,7 +99,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n({ useScope: 'global' })
-const { wireLocalType, showInputIban } = useListBeneficiaryUsa()
+const { wireLocalType, showInputIban, showLabelInternational, showLabelDomestic } = useListBeneficiaryUsa()
 const dropdownVisible = ref(props.defaultDropdownVisible)
 
 const beneficiaryAch = (data: string) => {
@@ -112,6 +112,8 @@ const toggleDropdown = () => {
   if (props.isClickable) {
     dropdownVisible.value = !dropdownVisible.value
   }
+  showLabelInternational.value = false
+  showLabelDomestic.value = true
 }
 
 const route = useRouter()

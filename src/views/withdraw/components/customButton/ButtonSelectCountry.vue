@@ -30,7 +30,9 @@
       </div>
     </div>
     <ul v-if="dropdownVisible" class="country-list">
-      <p class="text-center font-medium" style="color: #979797; font-size: 13px">{{ t('selectCountryButton') }}</p>
+      <div class="text-center font-medium my-3" style="color: #979797; font-size: 13px">
+        {{ t('selectCountryButton') }}
+      </div>
       <li
         v-for="country in countryAllowedForUSA"
         :key="country.countryCode"
@@ -56,16 +58,18 @@ const { t } = useI18n({ useScope: 'global' })
 const dropdownVisible = ref(false)
 const { countryAllowedForUSA } = useWorld()
 const { formObject } = useNewBeneficiaryInternational()
-const { validateShowInputIban } = useListBeneficiaryUsa()
+const { validateShowInputIban, showLabelInternational, showLabelDomestic } = useListBeneficiaryUsa()
 const toggleDropdown = () => {
   dropdownVisible.value = !dropdownVisible.value
+  showLabelInternational.value = true
+  showLabelDomestic.value = false
 }
 
 const selectCountry = (country: CountryAllowed) => {
   formObject.value.informationBank.address.country = country.countryCode
   validateShowInputIban(country.counterpartyType)
-  router.push(`/withdraw/fiat/usa/swift/new-beneficiary`)
   dropdownVisible.value = false
+  router.push(`/withdraw/fiat/usa/swift/new-beneficiary`)
 }
 
 const handleClick = (e: MouseEvent) => {

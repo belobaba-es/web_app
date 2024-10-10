@@ -4,8 +4,8 @@
       <div class="col flex" style="cursor: pointer" @click="toBack()">
         <i class="pi pi-angle-left align-content-center" />
         <p class="font-regular" style="font-size: 16px">
-          <span style="color: #cecece">{{ t('withdrawalSWIFT') }}</span> /
-          <span>{{ t('typeWithdrawUsa') }}</span>
+          <span style="color: #cecece">{{ t('typeWithdrawUsa') }}</span>
+          <span> /{{ t('withdrawalSWIFT') }}</span>
         </p>
       </div>
 
