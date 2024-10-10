@@ -38,7 +38,7 @@
         </p>
         <div class="flex">
           <div class="col-4">
-            <img alt="" src="../../../assets/img/celular.png" />
+            <img alt="" src="../../../assets/img/celular.svg" />
           </div>
           <div class="col-8 listText">
             <ul>
