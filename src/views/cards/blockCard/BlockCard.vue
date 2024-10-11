@@ -32,8 +32,8 @@
           <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" />
         </div>
         <div class="flex justify-content-center">
-          <div class="col-4">
-            <Button :label="t('blockCardText6')" @click="requireConfirmation()" />
+          <div class="col-6">
+            <Button :label="t('labelBlockCard')" @click="requireConfirmation()" />
           </div>
         </div>
       </div>
