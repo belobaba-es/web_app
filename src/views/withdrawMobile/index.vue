@@ -82,7 +82,8 @@ const clickAction = (to: string) => {
 }
 
 const seeMore = () => {
-  router.push('/withdraw/requirement')
+  if (selectedOption.value === 'fiat') router.push('/withdraw/fiat/requirement')
+  if (selectedOption.value === 'crypto') router.push('/withdraw/crypto/requirement')
 }
 </script>
 

@@ -20,6 +20,10 @@ export const routerCryptoMobile = [
         path: 'other-platforms/make-withdrawal/:counterpartyId',
         component: () => import('../../../views/withdrawMobile/crypto/components/MakeWithdrawMobil.vue'),
       },
+      {
+        path: 'requirement',
+        component: () => import('../../../views/withdrawMobile/components/tabRequirement/crypto/TabIndex.vue'),
+      },
     ],
   },
 ]

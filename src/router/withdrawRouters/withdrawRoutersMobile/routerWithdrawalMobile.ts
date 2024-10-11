@@ -7,12 +7,12 @@ export const routerWithdrawalMobile = [
         component: () => import('../../../views/withdrawMobile/index.vue'),
       },
       {
-        path: 'requirement',
-        component: () => import('../../../views/withdrawMobile/components/tabRequirement/TabIndex.vue'),
-      },
-      {
         path: 'fiat',
         component: () => import('../../../views/withdrawMobile/index.vue'),
+      },
+      {
+        path: 'fiat/requirement',
+        component: () => import('../../../views/withdrawMobile/components/tabRequirement/TabIndex.vue'),
       },
       {
         path: 'fiat/panama',
