@@ -8,20 +8,27 @@ import { useI18n } from 'vue-i18n'
 import { processException } from '../../../../shared/processException'
 import { StatusCard } from '../../enums/statusCard.enum'
 import { useMediaQuery } from '../../../../composables/useMediaQuery'
+import { useCardStore } from '../../stores/useCard'
 
 const cardInfo = ref()
 const selectedCard = ref<cardSelectedWithDetails>()
 const listCards = ref<ListCardsResponse[]>([])
 const isDeleteCardModalShow = ref(false)
 const isCardInfoVisible = ref(false)
+const loading = ref(false)
 
 export const useCardCenter = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   const { isMobile } = useMediaQuery()
 
+  const useCard = useCardStore()
+
+  useCard.$subscribe((mutation, state) => {
+    listCards.value = state.listCard
+  })
+
   let oldInfoCard = ref<ListCardsResponse>()
-  const loading = ref(false)
   const showModal = ref(false)
   const checkInputLoad = ref<boolean>(false)
 
@@ -39,12 +46,8 @@ export const useCardCenter = () => {
     })
 
     listCards.value = response
-    if (isMobile.value) {
-      redirectValidationMobile()
-      return
-    }
-
-    redirectValidation()
+    useCard.setListCard(response)
+    loading.value = false
   }
 
   const redirectValidation = () => {
@@ -222,5 +225,7 @@ export const useCardCenter = () => {
     checkInputLoad,
     pauseCardText,
     showPauseModal,
+    redirectValidation,
+    redirectValidationMobile,
   }
 }
