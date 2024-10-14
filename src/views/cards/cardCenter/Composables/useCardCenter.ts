@@ -21,7 +21,6 @@ export const useCardCenter = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   const { isMobile } = useMediaQuery()
-
   const useCard = useCardStore()
 
   useCard.$subscribe((mutation, state) => {
@@ -29,6 +28,7 @@ export const useCardCenter = () => {
   })
 
   let oldInfoCard = ref<ListCardsResponse>()
+
   const showModal = ref(false)
   const checkInputLoad = ref<boolean>(false)
 
@@ -47,7 +47,6 @@ export const useCardCenter = () => {
 
     listCards.value = response
     useCard.setListCard(response)
-    loading.value = false
   }
 
   const redirectValidation = () => {
@@ -103,9 +102,11 @@ export const useCardCenter = () => {
           flagType: card.flagType,
         })
       }
-    } catch (err: any) {
       loading.value = false
+    } catch (err) {
       processException(toast, t, err)
+    } finally {
+      loading.value = false
     }
   }
 
@@ -125,7 +126,6 @@ export const useCardCenter = () => {
       toast.add({ severity: 'success', summary: t('success'), detail: t('cardDeleted') })
     } catch (error) {
       processException(toast, t, error)
-
       loading.value = false
     }
   }
@@ -179,6 +179,10 @@ export const useCardCenter = () => {
 
   const toggleVisibility = async () => {
     if (selectedCard.value === undefined) return
+
+    if (isMobile.value) {
+      router.push('/details-card')
+    }
 
     if (isCardInfoVisible.value) {
       hideCardDetails(selectedCard.value!)
