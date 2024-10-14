@@ -6,6 +6,7 @@ import { useCardCenter } from '../../cardCenter/Composables/useCardCenter'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { processException } from '../../../../shared/processException'
 
 export const useRechargeCard = () => {
   const toast = useToast()
@@ -43,14 +44,8 @@ export const useRechargeCard = () => {
         rechargeState.value.loading = false
       })
       .catch(error => {
-        console.error('Error requesting quote:', error)
         rechargeState.value.loading = false
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.message,
-          life: 4000,
-        })
+        processException(toast, t, error)
       })
   }
 
@@ -79,14 +74,8 @@ export const useRechargeCard = () => {
         rechargeState.value.quoteId = ''
       })
       .catch(error => {
-        console.error('Error accepting quote:', error)
         rechargeState.value.loading = false
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.message,
-          life: 4000,
-        })
+        processException(toast, t, error)
       })
   }
 

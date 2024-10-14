@@ -57,7 +57,6 @@ export const useLayoutCardMobile = () => {
   })
 
   watch(cardInfo, () => {
-    console.log(selectedCard.value?.isPhysical)
     setItemsMenu()
   })
 

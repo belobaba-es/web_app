@@ -171,11 +171,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -194,11 +190,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
