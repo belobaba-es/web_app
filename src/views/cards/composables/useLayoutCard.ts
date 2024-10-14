@@ -26,13 +26,6 @@ export const useLayoutCard = () => {
     {
       separator: true,
     },
-    {
-      label: t('labelBlockCard'),
-      command: () => {
-        router.push('/cards/block-card')
-      },
-      disabled: false,
-    },
   ]
 
   let itemsMenuLayout = ref()
@@ -43,6 +36,13 @@ export const useLayoutCard = () => {
         label: t('labelPinChange'),
         command: () => {
           router.push('/cards/change-pin')
+        },
+        disabled: false,
+      })
+      itemsMenuLayout.value = itemsMenuLayout.value.concat({
+        label: t('labelBlockCard'),
+        command: () => {
+          router.push('/cards/block-card')
         },
         disabled: false,
       })
