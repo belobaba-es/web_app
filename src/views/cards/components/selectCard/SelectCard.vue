@@ -7,7 +7,7 @@
     :placeholder="t('selectCard')"
     checkmark
     :highlightOnSelect="false"
-    class="w-full md:w-27rem border-round"
+    class="w-full md:w-27rem"
   >
     <template #option="slotProps" class="custom-hover">
       <DropDownItem
@@ -32,4 +32,10 @@ const props = defineProps({
 const t = useI18n({ useScope: 'global' }).t
 const localCardInfo = ref(props.cardInfo)
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.p-dropdown {
+  border-radius: 5px !important;
+  padding: 1px !important;
+  box-sizing: inherit !important;
+}
+</style>
