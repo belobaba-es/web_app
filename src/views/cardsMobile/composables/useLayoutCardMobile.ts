@@ -23,7 +23,11 @@ export const useLayoutCardMobile = () => {
       to: '/cards/recharge-card',
       icon: cardMobile,
     },
-
+    {
+      label: t('labelBlockCard'),
+      to: '/cards/block-card',
+      icon: blockMobile,
+    },
   ]
 
   const itemsMenuLayoutMobile = ref()
