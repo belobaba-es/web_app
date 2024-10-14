@@ -31,7 +31,6 @@ type OnboardingCardDataClient = {
 export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
-  const { cardInfo } = useCardCenter()
   const { getAddress } = useOnboardingPersonalStore()
   const { setAddressShipping, getAddressShipping, setNationality, setDocumentExpirationDate, onboardingPersonal } =
     useOnboardingPersonal()
@@ -166,11 +165,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -189,11 +184,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 

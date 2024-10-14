@@ -11,7 +11,7 @@ export const useTransactionCard = () => {
   const { t } = useI18n({ useScope: 'global' })
   const getHistoryTransaction = async (page: number, limit: number) => {
     const response = await historyTransaction(page, limit)
-    nextPage.value = response.nextPag ? true : false
+    nextPage.value = !!response.nextPag
 
     response.results.forEach(element => {
       if (transactionList.value) {
@@ -24,7 +24,7 @@ export const useTransactionCard = () => {
 
   const loadMoreTransactions = async () => {
     loadingTransactions.value = true
-    getHistoryTransaction(transactionList.value!.length, 10)
+    await getHistoryTransaction(transactionList.value!.length, 10)
   }
 
   const getLastSixDigits = (id: string) => {

@@ -6,6 +6,7 @@ import { useCardCenter } from '../../cardCenter/Composables/useCardCenter'
 import { useAuth } from '../../../../composables/useAuth'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { processException } from '../../../../shared/processException'
 
 const lastFourDigits = ref('')
 const pin = ref('')
@@ -91,8 +92,8 @@ export const useActivationCard = () => {
           loading.value = false
         })
         .catch(error => {
-          addToast('error', t('somethingWentWrong'), error.message)
           loading.value = false
+          processException(toast, t, error)
         })
     }
   }
