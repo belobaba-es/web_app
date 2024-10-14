@@ -154,7 +154,6 @@ import { useWorld } from '../../../../composables/useWorld'
 import { onMounted, ref, watch } from 'vue'
 import { useOnboardingCard } from '../../composables/useOnboardingCard'
 import InputMask from 'primevue/inputmask'
-import { useOnboardingPersonal } from '../../../../composables/useOnboardingPersonal'
 
 const { t } = useI18n({ useScope: 'global' })
 const { countries, fetchCountries, loadingCountriesField } = useWorld()
@@ -169,8 +168,9 @@ const {
   domicileNumber,
   domicileOptions,
   onChangeDomicileHandler,
+  getDNI,
+  getDateBirth,
 } = useOnboardingCard()
-const { getDNI, getDateBirth } = useOnboardingPersonal()
 
 onMounted(async () => {
   if (countries.value.length === 0) await fetchCountries()
