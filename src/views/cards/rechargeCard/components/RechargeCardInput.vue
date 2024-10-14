@@ -80,6 +80,7 @@
     </template>
 
     <ModalAssetSelector
+      v-if="type !== AssetClassificationFilter.FIAT"
       :asset-classification-filter="AssetClassificationFilter.ALL"
       :show-modal="rechargeState.showModalAssetSelector"
       @update:visible="modalAssetSelector($event)"
