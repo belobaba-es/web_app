@@ -3,6 +3,7 @@
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     :style="{ width: '25rem' }"
     :visible="props.visible"
+    :show-header="false"
     modal
     @update:visible="emit('update:display', $event)"
   >

@@ -56,7 +56,12 @@
     </template>
   </ConfirmDialog>
 
-  <ModalGeneric :subtitle="t('textBlock2')" :title="t('textBlock')" :visible="visible" />
+  <ModalGeneric
+    :subtitle="t('textBlock2')"
+    :title="t('textBlock')"
+    :visible="visible"
+    @update:display="handleDisplayUpdate"
+  />
 </template>
 
 <script setup>
@@ -70,6 +75,7 @@ import { useToast } from 'primevue/usetoast'
 import { ReasonLockingCard } from '../enums/cardBlock.enum.ts'
 import ModalGeneric from '../../../components/ModalGeneric.vue'
 import { useConfirm } from 'primevue/useconfirm'
+import router from '../../../router/router.js'
 
 const { t } = useI18n()
 const toast = useToast()
@@ -85,6 +91,10 @@ const requireConfirmation = () => {
       blockCard()
     },
   })
+}
+const handleDisplayUpdate = () => {
+  visible.value = false
+  router.push('new-card')
 }
 </script>
 
