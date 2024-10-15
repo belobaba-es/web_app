@@ -10,7 +10,6 @@
     </div>
     <div class="px-5 pb-5 pt-2">
       <div v-for="(transaction, index) in transactionList" :key="index" class="mb-4">
-        <p class="mb-0" style="color: var(--primary-color)">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
         <div class="flex justify-content-between">
           <div class="font-semi-bold pr-2 flex align-items-center" style="font-size: 16px">
             <i
@@ -24,14 +23,20 @@
             </span>
           </div>
 
-          <p
+          <p class=" align-items-center" style="color: var(--primary-color)">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
+
+          <div
             :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
-            class="mb-0 font-semi-bold"
+            class="mt-2 font-semi-bold"
             style="font-size: 1.2rem"
           >
             {{ transaction.amount }}
             {{ transaction.currency }}
-          </p>
+          </div>
+
+          <div>
+            <Button class="font-semi-bold buttonColor" :label="t('download')" :loading="isGeneratingTransactionPDF" @click="generatePdfTransactionCard(transaction)" outlined />
+          </div>
         </div>
         <Divider type="solid" />
       </div>
@@ -69,8 +74,17 @@ import { useTransactionCard } from '../../cards/transactionsCard/composable/useT
 import SelectCardHeader from '../components/SelectCardHeader.vue'
 
 const { t } = useI18n({ useScope: 'global' })
-const { transactionList, formatDateMobile, getDescriptions, loadMoreTransactions, loadingTransactions, nextPage } =
-  useTransactionCard()
+const {
+  getHistoryTransaction,
+  transactionList,
+  formatDateMobile,
+  getDescriptions,
+  loadMoreTransactions,
+  loadingTransactions,
+  generatePdfTransactionCard,
+  isGeneratingTransactionPDF,
+  nextPage,
+} = useTransactionCard()
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount.toString()
   const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))

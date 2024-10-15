@@ -4,6 +4,9 @@ import { TransactionCard } from '../../types/transactionCard.type'
 import { useI18n } from 'vue-i18n'
 import { TransactionCardStatus } from '../../enums/transactionCardStatus.enum'
 import { useTransactionHistoryStore } from '../../stores/useTransactionHistory'
+import { generateTransactionReceipt } from '../../../../shared/generatePdf'
+import logo from '../../../../assets/img/logo-login.png'
+import { useAuth } from '../../../../composables/useAuth'
 
 const transactionList = ref<TransactionCard[]>([])
 export const useTransactionCard = () => {
@@ -15,6 +18,9 @@ export const useTransactionCard = () => {
   useTransactionHistoryCard.$subscribe((mutation, state) => {
     transactionList.value = state.transactionList
   })
+  const isGeneratingTransactionPDF = ref(false)
+  const { getUserName } = useAuth()
+
   const getHistoryTransaction = async (page: number, limit: number) => {
     const response = await historyTransaction(page, limit)
     nextPage.value = !!response.nextPag
@@ -33,6 +39,34 @@ export const useTransactionCard = () => {
   const loadMoreTransactions = async () => {
     loadingTransactions.value = true
     await getHistoryTransaction(transactionList.value!.length, 10)
+    await getHistoryTransaction(transactionList.value!.length, 10)
+  }
+
+
+  const generatePdfTransactionCard = async (transaction: TransactionCard) =>{
+
+    isGeneratingTransactionPDF.value = true
+
+    const transactionPDF: any = {}
+    const title = t('transactionReceipt')
+    const footerPdf = t('footerPdfFiatData')
+    const fileName = `${t('transactionReceipt')}-${transaction.transactionId}`
+
+    const date = new Date()
+    const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    const formattedDate = formatter.format(date)
+
+    transactionPDF[t('userName')] = `${getUserName()}`
+    transactionPDF[t('assetType')] = transaction.currency
+    transactionPDF[t('amount')] = `${transaction.amount}`
+    transactionPDF[t('transactionType')] =  t(transaction.operationType)
+    transactionPDF[t('status')] = t(transaction.status)
+    transactionPDF[t('transactionNumber')] = transaction.transactionId
+    transactionPDF[t('reference')] = `${transaction.description}`
+    transactionPDF[t('datePicker')] = `${transaction.createdAt}`
+
+    generateTransactionReceipt(fileName, logo, title, transactionPDF)
+    isGeneratingTransactionPDF.value = false
   }
 
   const getLastSixDigits = (id: string) => {
@@ -87,5 +121,7 @@ export const useTransactionCard = () => {
     loadMoreTransactions,
     loadingTransactions,
     nextPage,
+    isGeneratingTransactionPDF,
+    generatePdfTransactionCard
   }
 }
