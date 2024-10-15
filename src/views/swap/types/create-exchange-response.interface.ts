@@ -36,5 +36,6 @@ export interface ExchangeData {
     assetCode: string
     amountCredit: number
   }
+  networkFee?: number
   feeNoba: number
 }

@@ -19,6 +19,10 @@
       <div class="flex-grow-1 flex-row align-items-center">
         <div class="font-medium">{{ transactionSummary.assetName }}</div>
         <div class="font-medium">{{ transactionSummary.unitCount }} {{ transactionSummary.assetName }}</div>
+        <p v-if="transactionSummary.networkFee !== 0" class="mt-1">
+          <span class="font-medium">{{ t('networkFee') }}</span
+          >: {{ props.transactionSummary.networkFee }} {{ transactionSummary.assetName }}
+        </p>
       </div>
     </div>
   </div>

@@ -7,9 +7,16 @@ import { useI18n } from 'vue-i18n'
 import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
+import { useAuth } from '../composables/useAuth'
+import { WalletProvider } from '../views/login/types/login.interface'
+import { FiatAssetCodes } from '../views/wallet/types/assetCodes.interface'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
+
+  const { getWalletProvider } = useAuth()
+  const FiatUsdAssetCode =
+    getWalletProvider() === WalletProvider.PINTTOSOFT ? FiatAssetCodes.USD_PANAMA : FiatAssetCodes.USD
 
   const router = useRouter()
   const toast = useToast()
@@ -17,6 +24,7 @@ export const useSwapStore = defineStore('swap', () => {
   const feeAmount = ref(0.0)
   const feeNoba = ref(0.0)
   const totalAmount = ref(0.0)
+  const networkFee = ref(0.0)
   const unitCount = ref(0.0)
   const amount = ref(0.0)
   const amountAfterRemovingFee = ref(0.0)
@@ -53,6 +61,7 @@ export const useSwapStore = defineStore('swap', () => {
     feeTradeDesk: 0,
     totalSpend: 0,
     amountAfterRemovingFee: 0,
+    networkFee: 0.0,
   })
   const feeTradeDesk = ref(0.0)
   const totalSpend = ref(0.0)
@@ -85,11 +94,11 @@ export const useSwapStore = defineStore('swap', () => {
     loading.value = true
 
     if (transactionType.value === 'buy') {
-      sourceWalletId.value = 'USD'
+      sourceWalletId.value = FiatUsdAssetCode
       destinationWalletId.value = assetCode.value
     } else {
       sourceWalletId.value = assetCode.value
-      destinationWalletId.value = 'USD'
+      destinationWalletId.value = FiatUsdAssetCode
     }
 
     const amountFormated = amountIsUnitCount.value
@@ -107,6 +116,7 @@ export const useSwapStore = defineStore('swap', () => {
         feeNoba.value = exchange.value?.feeNoba
         baseAmount.value = exchange.value?.sourceDetails.amountDebit
         feeAmount.value = exchange.value?.feeNoba
+        networkFee.value = exchange.value?.networkFee || 0
 
         totalAmount.value = exchange.value?.sourceDetails.amountDebit + feeAmount.value
 
@@ -167,6 +177,7 @@ export const useSwapStore = defineStore('swap', () => {
         transactionSummary.value.feeTradeDesk = feeTradeDesk.value
         transactionSummary.value.totalSpend = totalSpend.value
         transactionSummary.value.amountAfterRemovingFee = amountAfterRemovingFee.value
+        transactionSummary.value.networkFee = exchange.value?.networkFee
 
         router.push('/swap/success')
       })
@@ -330,5 +341,6 @@ export const useSwapStore = defineStore('swap', () => {
     destinationWalletId,
     sourceWalletId,
     amountAfterRemovingFee,
+    networkFee
   }
 })

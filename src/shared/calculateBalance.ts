@@ -1,6 +1,8 @@
+import { FiatAssetCodes } from '../views/wallet/types/assetCodes.interface'
+
 export default (assetCode: string, balance: number, blocked: number) => {
   const total = isNaN(balance - blocked) ? 0 : balance - blocked
-  if (assetCode === 'USD' || assetCode === 'USDC') {
+  if (assetCode === FiatAssetCodes.USD || assetCode === 'USDC' || assetCode === FiatAssetCodes.USD_PANAMA) {
     return total.toFixed(2)
   }
 
