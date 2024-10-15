@@ -4,11 +4,16 @@ import { Ref, ref } from 'vue'
 import { BalanceCard } from '../types/balanceCard.type'
 import { TransactionCard } from '../types/transactionCard.type'
 import { searchPublicKey } from '../services/nobaCardBase.service'
+import { useTransactionCard } from '../transactionsCard/composable/useTransactionCard'
+import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 
 const isSubscribedCardTransactionResource = ref<boolean>(false)
 const isSubscribedCardBalanceResource = ref<boolean>(false)
 
 export const useCardSocket = () => {
+  const { transactionList } = useTransactionCard()
+  const { selectedCard } = useCardCenter()
+
   async function makeConnectionSocket(
     resource: string,
     refSubscribed: Ref<boolean>,
@@ -24,7 +29,7 @@ export const useCardSocket = () => {
         CLIENT_SECRET: import.meta.env.VITE_NOBA_CARD_CLIENT_SECRET,
       },
       await searchPublicKey(),
-      'webapp:belobaba'
+      'webapp:noba'
     )
 
     const socket = new WebSocket(`${import.meta.env.VITE_NOBA_CARD_SOCKET}?token=${token}`)
@@ -73,9 +78,14 @@ export const useCardSocket = () => {
     )
   }
 
-  const processNewTransactionMessageSendBySocketServer = (message: TransactionCard) => {}
+  const processNewTransactionMessageSendBySocketServer = (message: TransactionCard) => {
+    transactionList.value = [...transactionList.value, message]
+  }
 
-  const processNewCardBalanceMessageSendBySocketServer = (message: BalanceCard) => {}
+  const processNewCardBalanceMessageSendBySocketServer = (message: BalanceCard) => {
+    if (!selectedCard.value) return
+    selectedCard.value.balance = message.balance
+  }
 
   return { subscribeCardTransactionResource, subscribeBalanceCard }
 }
