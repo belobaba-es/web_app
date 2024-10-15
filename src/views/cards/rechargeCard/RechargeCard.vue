@@ -25,6 +25,12 @@
           :disabled="rechargeState.quoteId === '' || rechargeState.loading"
         />
       </div>
+      <ModalAssetSelector
+        :show-modal="rechargeState.showModalAssetSelector"
+        @update:visible="modalAssetSelector($event)"
+        @selected-asset="selectedAsset"
+        :asset-classification-filter="AssetClassificationFilter.ALL"
+      />
     </div>
     <ResumeRechargeCard :show-modal="rechargeState.showModalResume" @update:visible="openModal($event)" />
   </div>
@@ -38,10 +44,11 @@ import ResumeRechargeCard from './components/ResumeRechargeCard.vue'
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useRechargeCard } from './composables/useRechargeCard'
-import { watch } from 'vue';
+import { Asset, AssetClassificationFilter } from '../../deposit/types/asset.interface'
+import ModalAssetSelector from '../../../components/ModalAssetSelector.vue'
 
 const { listCards, cardInfo } = useCardCenter()
-const { rechargeState, openModal, handleRequestQuote } = useRechargeCard()
+const { rechargeState, openModal, handleRequestQuote, openModalSelector } = useRechargeCard()
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -50,7 +57,16 @@ const verifyRequestQuote = async () => {
     await handleRequestQuote()
   }
 }
-
+const selectedAsset = async (asset: Asset) => {
+  rechargeState.value.showModalAssetSelector = false
+  rechargeState.value.assetIcon = asset.icon
+  rechargeState.value.assetName = asset.name
+  rechargeState.value.assetId = asset.assetId
+  rechargeState.value.assetCode = asset.code
+}
+const modalAssetSelector = (b: boolean) => {
+  rechargeState.value.showModalAssetSelector = b
+}
 </script>
 <style scoped lang="scss">
 .recharge-container {
