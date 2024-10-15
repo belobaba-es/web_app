@@ -1,9 +1,8 @@
 <template>
-  <SelectCardHeader title="rechargeCard" />
   <section>
     <OnboardingHeader />
     <div class="text-center">
-      <h1 class="font-regular mb-0">{{ t('textRequestCard') }}</h1>
+      <h1 class="font-regular mb-0" style="font-size: 18px">{{ t('textRequestCard') }}</h1>
       <p class="mt-0 font-light">{{ t('selectTextRequestCard') }}</p>
 
       <div class="flex flex-column containerCard mt-5">
@@ -16,14 +15,13 @@
       </div>
     </div>
 
-    <div class="grid containerCard mt-4">
+    <div class="containerCard mt-4">
       <Button
         :label="t('next')"
         @click="nextStepUserData()"
         icon-pos="right"
         icon="pi pi-angle-right"
-        class="p-button-success"
-        style="background: #00beb0 !important"
+        style="background: var(--primary-color)"
       />
     </div>
   </section>
@@ -39,7 +37,6 @@ import { useOnboardingCard } from '../../cards/composables/useOnboardingCard'
 import ButtonCardType from '../../cards/components/buttonCardType.vue'
 import { CardModality } from '../../cards/enums/cardModality.enum'
 import OnboardingHeader from './components/OnboardingHeader.vue'
-import SelectCardHeader from '../components/SelectCardHeader.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const { nextStepUserData } = useOnboardingCard()
