@@ -11,7 +11,6 @@ import { OnboardingService } from '../../onboarding/services/onboarding'
 import { createRepositionCard, onboardingCard } from '../services/nobaCard.service'
 import { OnboardingRepositionCard, OnboardingRequest } from '../types/onboardingRequest.type'
 import { useAuth } from '../../../composables/useAuth'
-import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 import { useRoute } from 'vue-router'
 import { processException } from '../../../shared/processException'
 
@@ -31,10 +30,16 @@ type OnboardingCardDataClient = {
 export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
-  const { cardInfo } = useCardCenter()
   const { getAddress } = useOnboardingPersonalStore()
-  const { setAddressShipping, getAddressShipping, setNationality, setDocumentExpirationDate, onboardingPersonal } =
-    useOnboardingPersonal()
+  const {
+    setAddressShipping,
+    getAddressShipping,
+    setNationality,
+    setDocumentExpirationDate,
+    onboardingPersonal,
+    getDNI,
+    getDateBirth,
+  } = useOnboardingPersonal()
   const currentStepIndex = ref<number>(0)
   const toast = useToast()
   const enableEdit = ref(true)
@@ -166,11 +171,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -189,11 +190,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -259,5 +256,8 @@ export const useOnboardingCard = () => {
     enableEdit,
     typeCardSelect,
     sendingTypeCard,
+    onboardingPersonal,
+    getDNI,
+    getDateBirth,
   }
 }

@@ -23,7 +23,11 @@ export const useLayoutCardMobile = () => {
       to: '/cards/recharge-card',
       icon: cardMobile,
     },
-
+    {
+      label: t('labelBlockCard'),
+      to: '/cards/block-card',
+      icon: blockMobile,
+    },
   ]
 
   const itemsMenuLayoutMobile = ref()
@@ -57,7 +61,6 @@ export const useLayoutCardMobile = () => {
   })
 
   watch(cardInfo, () => {
-    console.log(selectedCard.value?.isPhysical)
     setItemsMenu()
   })
 
