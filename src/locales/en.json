@@ -4,6 +4,7 @@
   "login": "Login",
   "backButtonTitle": "Back",
   "noAccount": "Not yet registered?",
+  "networkFee": "Estimated network fee",
   "emailLabel": "Email",
   "emailPlaceholder": "you-emailcorporate.com",
   "passwordLabel": "Password",

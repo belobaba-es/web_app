@@ -4,6 +4,7 @@
   "backButtonTitle": "Volver",
   "noAccount": "¿Aun no estas registrado?",
   "emailLabel": "Correo electrónico",
+  "networkFee": "Tarifa de red estimada",
   "emailPlaceholder": "su-email corporativo.com",
   "passwordLabel": "Contraseña",
   "changePassword": "Cambiar contraseña",
