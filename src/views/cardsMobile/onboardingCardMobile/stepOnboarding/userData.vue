@@ -242,8 +242,8 @@ const handleShowRestOfForm = () => {
 </script>
 <style lang="scss">
 .card-type-card {
-  background-color: #00beb0;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: #000;
   border-radius: 0.3rem;
 
   p {
