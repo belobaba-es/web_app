@@ -8,7 +8,7 @@ import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
-import { useRouter } from 'vue-router'
+import { useOnboardingCard } from '../views/cards/composables/useOnboardingCard'
 
 const isHaveDocumentUS = ref(true)
 const isUpdateData = ref<boolean>(false)
@@ -27,9 +27,8 @@ const {
 const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
 export const useOnboardingPersonal = () => {
-  const router = useRouter()
   const { getClientId, setClientId } = useAuth()
-
+  const { isCard } = useOnboardingCard()
   const submitting = ref(false)
 
   const toast = useToast()
@@ -109,7 +108,7 @@ export const useOnboardingPersonal = () => {
       })
   }
 
-  if (getClientId()) {
+  if (getClientId() && !isCard.value) {
     fetchDataToClient()
   }
 

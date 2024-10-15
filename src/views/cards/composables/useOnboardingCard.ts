@@ -26,7 +26,7 @@ type OnboardingCardDataClient = {
   nationality: string
   addressShipping: AddressShipping
 }
-
+const isCard = ref(true)
 export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
@@ -46,7 +46,6 @@ export const useOnboardingCard = () => {
   const route = useRoute()
   const { t } = useI18n({ useScope: 'global' })
   const { getClientId } = useAuth()
-
   const sendingDataCard = ref<OnboardingRequest>({
     clientId: getClientId(),
     requestCardModality: typeCardSelect.value,
@@ -259,5 +258,6 @@ export const useOnboardingCard = () => {
     onboardingPersonal,
     getDNI,
     getDateBirth,
+    isCard,
   }
 }
