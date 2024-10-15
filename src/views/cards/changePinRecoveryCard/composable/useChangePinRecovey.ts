@@ -5,6 +5,7 @@ import { useToast } from 'primevue/usetoast'
 import router from '../../../../router/router'
 import { useActivationCard } from '../../activationCard/composables/useActivationCard'
 import { changePinCard } from '../../services/nobaCard.service'
+import { processException } from '../../../../shared/processException'
 
 export const useChangePin = () => {
   const { t } = useI18n()
@@ -12,7 +13,7 @@ export const useChangePin = () => {
 
   const showModal = ref(false)
   const toast = useToast()
-  const { pin, confirmPin, questions, questionAnswerPairs, addToast } = useActivationCard()
+  const { pin, questions, questionAnswerPairs, addToast } = useActivationCard()
   const isQuestionAnswerPairsValid = ref(false)
 
   const steps = ref([
@@ -41,7 +42,8 @@ export const useChangePin = () => {
 
       addToast('success', t('success'), response.message)
     } catch (error: any) {
-      addToast('error', t('error'), error.message)
+      processException(toast, t, error)
+
     }
   }
 

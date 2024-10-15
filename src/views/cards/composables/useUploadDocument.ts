@@ -3,6 +3,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '../../../composables/useAuth'
 import { ProfileService } from '../../profile/services/profile'
+import { processException } from '../../../shared/processException'
 
 export const useUploadDocument = (props: any) => {
   const files = ref<File[]>([])
@@ -127,11 +128,7 @@ export const useUploadDocument = (props: any) => {
       })
       .catch(error => {
         loading.value = false
-        toast.add({
-          severity: 'error',
-          detail: error.message,
-          life: 6000,
-        })
+        processException(toast, t, error)
       })
   }
 

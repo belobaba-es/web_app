@@ -8,7 +8,7 @@
       <p class="text-center font-semi-bold mb-0" style="font-size: 16px">{{ t('dontHaveTransactions') }}</p>
       <p class="text-center mb-0">{{ t('firstBuy') }}</p>
     </div>
-    <div class="p-4">
+    <div class="px-5 pb-5 pt-2">
       <div v-for="(transaction, index) in transactionList" :key="index" class="mb-4">
         <div class="flex justify-content-between">
           <div class="font-semi-bold pr-2 flex align-items-center" style="font-size: 16px">
@@ -70,7 +70,6 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 import { useTransactionCard } from '../../cards/transactionsCard/composable/useTransactionCard'
 import SelectCardHeader from '../components/SelectCardHeader.vue'
 
@@ -91,10 +90,6 @@ const isPositiveAmount = (amount: number) => {
   const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
-
-onMounted(async () => {
-  await getHistoryTransaction(1, 10)
-})
 </script>
 <style lang="scss" scoped>
 .table-container {

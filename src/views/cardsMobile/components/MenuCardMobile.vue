@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-2 bg-white">
+  <section class="pt-0 bg-white">
     <div v-for="item in itemsMenuLayoutMobile" :key="item.label" class="px-4 py-2">
       <router-link :to="item.to">
         <div class="flex justify-between items-center">

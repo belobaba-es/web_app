@@ -26,6 +26,13 @@ export const useLayoutCard = () => {
     {
       separator: true,
     },
+    {
+      label: t('labelBlockCard'),
+      command: () => {
+        router.push('/cards/block-card')
+      },
+      disabled: false,
+    },
   ]
 
   let itemsMenuLayout = ref()

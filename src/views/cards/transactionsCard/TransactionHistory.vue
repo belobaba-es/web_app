@@ -70,11 +70,9 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
-  getHistoryTransaction,
   transactionList,
   getLastSixDigits,
   getDescriptions,
@@ -90,10 +88,6 @@ const isPositiveAmount = (amount: number) => {
   const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
-
-onMounted(async () => {
-  await getHistoryTransaction(1, 10)
-})
 </script>
 <style lang="scss" scoped>
 .table-container {
