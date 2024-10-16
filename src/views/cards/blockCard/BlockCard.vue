@@ -29,7 +29,11 @@
           </div>
         </div>
         <div class="p-field">
-          <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" />
+          <InputText
+            v-model="dataBlockCard.note"
+            :placeholder="t('blockCardText5')"
+            style="box-sizing: inherit !important"
+          />
         </div>
         <div class="flex justify-content-center">
           <div class="col-6">

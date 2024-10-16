@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
-              <div class="pr-2" style="color: #00beb0">
+              <div class="pr-2" style="color: var(--primary-color)">
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
@@ -81,9 +81,10 @@ const {
   loadingTransactions,
   nextPage,
 } = useTransactionCard()
+
 const isPositiveAmount = (amount: number) => {
-  const formatedAmount = amount.toString()
-  const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
+  const formatedAmount = amount?.toString()
+  const numericAmount = Number(formatedAmount?.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
 </script>

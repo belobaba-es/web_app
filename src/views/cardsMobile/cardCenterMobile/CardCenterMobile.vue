@@ -57,8 +57,8 @@
       </div>
     </div>
     <div class="mt-3 px-4">
-      <Button class="btn btn-primary w-full text-center"
-        ><i class="pi pi-plus pr-2" style="font-size: 1rem" @click="routerNewCard"></i> {{ t('requestNewCard') }}
+      <Button class="btn btn-primary w-full text-center" @click="routerNewCard"
+        ><i class="pi pi-plus pr-2" style="font-size: 1rem"></i> {{ t('requestNewCard') }}
       </Button>
       <Button
         v-if="selectedCard?.status === StatusCard.CANCELLED"
