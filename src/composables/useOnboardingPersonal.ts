@@ -8,7 +8,6 @@ import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
-import { useOnboardingCard } from '../views/cards/composables/useOnboardingCard'
 
 const isHaveDocumentUS = ref(true)
 const isUpdateData = ref<boolean>(false)
@@ -23,12 +22,11 @@ const {
   setNationality,
   setDocumentExpirationDate,
 } = useOnboardingPersonalStore()
-
 const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
 export const useOnboardingPersonal = () => {
   const { getClientId, setClientId } = useAuth()
-  const { isCard } = useOnboardingCard()
+
   const submitting = ref(false)
 
   const toast = useToast()
@@ -108,7 +106,7 @@ export const useOnboardingPersonal = () => {
       })
   }
 
-  if (getClientId() && !isCard.value) {
+  if (getClientId()) {
     fetchDataToClient()
   }
 

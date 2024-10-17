@@ -8,10 +8,10 @@
 </template>
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue'
-import { useOnboardingCard } from '../composables/useOnboardingCard'
 import { CardModality } from '../enums/cardModality.enum'
+import { useLayoutCard } from '../composables/useLayoutCard'
 
-const { typeCardSelect } = useOnboardingCard()
+const { typeCardSelect } = useLayoutCard()
 
 interface Props {
   img: string
