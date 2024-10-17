@@ -18,7 +18,7 @@
               class="pi pi-arrow-circle-down"
               style="font-size: 1.5rem; color: #fe5c73"
             ></i>
-            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
+            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: var(--primary-color)"></i>
             <span class="ml-3" style="font-size: 1rem">
               {{ getDescriptions(transaction) }}
             </span>
