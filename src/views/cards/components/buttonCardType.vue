@@ -43,7 +43,7 @@ const toggleSelection = () => {
 </script>
 <style lang="scss" scoped>
 .border {
-  border: 1px solid #00beb0;
+  border: 1px solid var(--primary-color);
   cursor: pointer;
 }
 
