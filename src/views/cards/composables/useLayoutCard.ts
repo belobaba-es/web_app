@@ -2,6 +2,9 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
+import { CardModality } from '../enums/cardModality.enum'
+
+const typeCardSelect = ref<CardModality[]>([] as CardModality[])
 
 export const useLayoutCard = () => {
   const router = useRouter()
@@ -58,5 +61,5 @@ export const useLayoutCard = () => {
     }
   })
 
-  return { itemsMenuLayout }
+  return { itemsMenuLayout, typeCardSelect }
 }

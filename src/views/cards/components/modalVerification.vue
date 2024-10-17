@@ -37,7 +37,7 @@
         </p>
         <div class="flex md:flex-row flex-column align-items-center md:justify-content-start">
           <div class="md:col-4">
-            <img alt="" src="../../../assets/img/celular.png" />
+            <img alt="" src="../../../assets/img/celular.svg" style="height: 213px" />
           </div>
           <div class="md:col-8 listText">
             <ul>
@@ -97,7 +97,7 @@ const nextStep = () => {
 
 .verification-step,
 .selfie-step {
-  padding: 0rem;
+  padding: 0;
 }
 
 #text1 {
