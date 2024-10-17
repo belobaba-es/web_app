@@ -60,10 +60,15 @@
     </template>
   </ConfirmDialog>
 
-  <ModalGeneric :subtitle="t('textBlock2')" :title="t('textBlock')" :visible="visible" />
+  <ModalGeneric
+    :subtitle="t('textCancel2')"
+    :title="t('textCancel')"
+    :visible="visible"
+    @update:display="handleDisplayUpdate"
+  />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import RadioButton from 'primevue/radiobutton'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
@@ -89,6 +94,11 @@ const requireConfirmation = () => {
       blockCard()
     },
   })
+}
+
+const handleDisplayUpdate = (newValue: boolean) => {
+  visible.value = newValue
+  router.push('new-card')
 }
 </script>
 
