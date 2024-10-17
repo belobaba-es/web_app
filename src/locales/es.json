@@ -772,5 +772,8 @@
   "date": "Fecha",
   "cardDenied": "Tarjeta Denegada",
   "cardDeniedText": "Operación cancelada, Ya tienes tarjeta VIRTUAL.",
-  "backHome": "Regresar al inicio"
+  "backHome": "Regresar al inicio",
+  "rechargeCard": "Recarga",
+  "card": "Tarjeta",
+  "blockCard": "Block card"
 }

@@ -16,6 +16,7 @@ const listCards = ref<ListCardsResponse[]>([])
 const isDeleteCardModalShow = ref(false)
 const isCardInfoVisible = ref(false)
 const loading = ref(false)
+const checkedPausaCard = ref(false)
 
 export const useCardCenter = () => {
   const toast = useToast()
@@ -32,7 +33,6 @@ export const useCardCenter = () => {
   const showModal = ref(false)
   const checkInputLoad = ref<boolean>(false)
 
-  const checkedPausaCard = ref(false)
   const showPauseModal = ref(false)
 
   const router = useRouter()
@@ -152,8 +152,15 @@ export const useCardCenter = () => {
       showPauseModal.value = true
     } catch (e: string | any) {
       processException(toast, t, e)
+
       checkedPausaCard.value = false
       showPauseModal.value = false
+
+      if (checkedPausaCard.value) {
+        checkedPausaCard.value = false
+      } else {
+        checkedPausaCard.value = true
+      }
     } finally {
       loading.value = false
     }

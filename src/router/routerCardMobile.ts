@@ -35,6 +35,10 @@ export const routerCardMobile = [
         component: () => import('../views/cardsMobile/repositionCard/Physical.vue'),
       },
       {
+        path: 'onboarding/reposition/denied',
+        component: () => import('../views/cards/components/stepOnboarding/requestDenied.vue'),
+      },
+      {
         path: 'onboarding/reposition/confirmation',
         component: () => import('../views/cardsMobile/onboardingCardMobile/stepOnboarding/finalStep.vue'),
       },

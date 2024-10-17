@@ -104,6 +104,7 @@ export const useUploadDocument = (props: any) => {
     formData.append('isPartner', props.isPartner ? 'true' : 'false')
     formData.append('documentSide', props.side)
     formData.append('documentType', props.type)
+    formData.append('isOnboardingCard', 'true')
 
     if (props.registerNumber) {
       formData.append('dni', props.registerNumber)
