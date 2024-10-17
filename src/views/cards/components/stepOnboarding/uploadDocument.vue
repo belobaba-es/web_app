@@ -77,11 +77,9 @@ import Button from 'primevue/button'
 import ModalVerification from '../modalVerification.vue'
 import { ref } from 'vue'
 import { useOnboardingCard } from '../../composables/useOnboardingCard'
-import { useOnboardingPersonal } from '../../../../composables/useOnboardingPersonal'
 
 const showModal = ref(true)
-const { onboardingPersonal } = useOnboardingPersonal()
-const { sendingTypeCard, toBack } = useOnboardingCard()
+const { sendingTypeCard, toBack, onboardingPersonal } = useOnboardingCard()
 
 const disabled = ref<boolean>(true)
 

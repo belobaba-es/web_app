@@ -18,7 +18,7 @@
             :img="iconFisica"
             :imgSelected="iconFisicaWhite"
             :typeCard="CardModality.PHYSICAL"
-            @click="handleRepositionPhysicalCard"
+            style="opacity: 0.5"
           />
         </div>
       </div>
@@ -37,7 +37,7 @@ import { useCardReposition } from './composable/useCardReposition'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { handleRepositionVirtualCard, handleRepositionPhysicalCard } = useCardReposition()
+const { handleRepositionVirtualCard } = useCardReposition()
 </script>
 <style lang="scss" scoped>
 Button {
