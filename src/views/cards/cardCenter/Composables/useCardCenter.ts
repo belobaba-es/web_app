@@ -124,6 +124,7 @@ export const useCardCenter = () => {
       await handleDeleteCardModal(false)
       loading.value = false
       toast.add({ severity: 'success', summary: t('success'), detail: t('cardDeleted') })
+      listCards.value = listCards.value.filter(card => card.cardId !== selectedCard.value?.cardId)
     } catch (error) {
       processException(toast, t, error)
       loading.value = false

@@ -61,8 +61,8 @@
   </ConfirmDialog>
 
   <ModalGeneric
-    :subtitle="t('textBlock2')"
-    :title="t('textBlock')"
+    :subtitle="t('textCancel2')"
+    :title="t('textCancel')"
     :visible="visible"
     @update:display="handleDisplayUpdate"
   />
