@@ -37,7 +37,7 @@
       <div v-if="listCards.length !== 0" class="flex p-0 align-items-center">
         <p class="font-normal">{{ pauseCardText }}</p>
         <div class="mt-2 ml-3">
-          <InputSwitch v-model="checkedPausaCard" :disabled="checkInputLoad" @change="handleDisplayUpdate" />
+          <InputSwitch v-model="checkedPausaCard" :disabled="checkInputLoad" @change="handleDisplayUpdateWrapper" />
         </div>
       </div>
       <div v-if="listCards.length !== 0" class="flex align-items-center">
@@ -57,8 +57,8 @@
       </div>
     </div>
     <div class="mt-3 px-4">
-      <Button class="btn btn-primary w-full text-center"
-        ><i class="pi pi-plus pr-2" style="font-size: 1rem" @click="routerNewCard"></i> {{ t('requestNewCard') }}
+      <Button class="btn btn-primary w-full text-center" @click="routerNewCard"
+        ><i class="pi pi-plus pr-2" style="font-size: 1rem"></i> {{ t('requestNewCard') }}
       </Button>
       <Button
         v-if="selectedCard?.status === StatusCard.CANCELLED"
@@ -134,8 +134,15 @@ const handleClose = (e: boolean) => {
   visibleSuccess.value = e
 }
 
-const handleDisplayUpdate = async (event: Event) => {
-  const e = (event.target as HTMLInputElement).checked
+const handleDisplayUpdateWrapper = async (event: Event) => {
+  const target = event.currentTarget as HTMLInputElement
+  console.log('isChecked', target.classList)
+  const isChecked = !target?.classList?.contains('p-inputswitch-checked')
+
+  await handleDisplayUpdate(isChecked)
+}
+
+const handleDisplayUpdate = async (event: boolean) => {
   if (cardInfo.value?.status === StatusCard.LOCKED) {
     await pauseCardRequest()
     if (showPauseModal.value) {
@@ -145,7 +152,7 @@ const handleDisplayUpdate = async (event: Event) => {
     return
   }
 
-  visible.value = e
+  visible.value = event
 }
 </script>
 

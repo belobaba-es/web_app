@@ -1,7 +1,6 @@
 <template>
-  <Dialog v-model:visible="props.visible" :closeOnEscape="true" :modal="true">
-    <template #header></template>
-    <h2 class="text-center font-bold">
+  <Dialog v-model:visible="props.visible" :modal="true" :show-header="false" class="modal-validation m-3">
+    <h2 class="text-center font-bold dialog-title-document pt-4">
       <span v-if="step === 1">
         {{ t('verifyID1') }} <span class="text-primary">{{ t('verifyID2') }}</span>
       </span>
@@ -11,36 +10,36 @@
     </h2>
     <div v-if="step === 1">
       <div class="verification-step">
-        <p id="text1" class="text-center font-light mt-0">
+        <p id="text1" class="text-center font-light mt-0 dialog-text-document">
           {{ t('textVerifyID1') }} <br />
           {{ t('textVerifyID2') }}
         </p>
-        <ul>
+        <ul class="grid">
           <li><img alt="Correcto" src="../../../assets/img/DocumentoEscaneado.png" /> {{ t('photoDocument') }}</li>
           <li><img alt="Borroso" src="../../../assets/img/DocumentoBorroso.png" /> {{ t('documentBorroso') }}</li>
           <li><img alt="Con flash" src="../../../assets/img/DocumentoBorroso.png" /> {{ t('documentFlash') }}</li>
           <li><img alt="Imagen Cortada" src="../../../assets/img/DocumentoBorroso.png" /> {{ t('imgCortada') }}</li>
         </ul>
-        <p id="text2" class="text-center">
+        <p id="text2" class="text-center dialog-text-document">
           {{ t('textPhotoDocument') }}
           {{ t('textPhotoDocument1') }} <span class="font-bold">{{ t('textPhotoDocument2') }}</span>
           {{ t('textPhotoDocument3') }} <br />
           {{ t('textPhotoDocument4') }}
         </p>
-        <p id="text3" class="text-center font-semi-bold">{{ t('textAdmite') }}</p>
+        <p id="text3" class="text-center font-semi-bold mb-0">{{ t('textAdmite') }}</p>
       </div>
     </div>
     <div v-else-if="step === 2">
       <div class="selfie-step">
-        <p id="text1" class="text-center mt-0">
+        <p id="text1" class="text-center mt-0 dialog-text-document">
           {{ t('txtRecomendation1') }} <br />
           {{ t('txtRecomendation2') }}
         </p>
-        <div class="flex">
-          <div class="col-4">
-            <img alt="" src="../../../assets/img/celular.svg" />
+        <div class="flex md:flex-row flex-column align-items-center md:justify-content-start">
+          <div class="md:col-4">
+            <img alt="" src="../../../assets/img/celular.svg" style="height: 213px" />
           </div>
-          <div class="col-8 listText">
+          <div class="md:col-8 listText">
             <ul>
               <li>* {{ t('txtList1') }}</li>
               <li>* {{ t('txtList2') }}</li>
@@ -87,14 +86,18 @@ const nextStep = () => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.modal-validation .p-dialog-content {
+  border-radius: 13px !important;
+}
+
 .p-dialog-header-close-icon {
   display: none !important;
 }
 
 .verification-step,
 .selfie-step {
-  padding: 1rem;
+  padding: 0;
 }
 
 #text1 {
@@ -147,5 +150,19 @@ const nextStep = () => {
 .verification-step li img,
 .selfie-step li img {
   margin-right: 0.5rem;
+}
+
+.dialog-title-document {
+  line-height: 30px;
+  @media only screen and (max-width: 991px) {
+    font-size: 30px;
+    margin-bottom: 0;
+  }
+}
+
+.dialog-text-document {
+  @media only screen and (max-width: 991px) {
+    font-size: 17px !important;
+  }
 }
 </style>

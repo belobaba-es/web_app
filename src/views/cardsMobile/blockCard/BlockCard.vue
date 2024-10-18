@@ -30,7 +30,11 @@
           </div>
         </div>
         <div class="p-field">
-          <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" />
+          <InputText
+            v-model="dataBlockCard.note"
+            :placeholder="t('blockCardText5')"
+            style="box-sizing: inherit !important"
+          />
         </div>
         <div class="flex justify-content-center">
           <div class="col-6">
@@ -57,8 +61,8 @@
   </ConfirmDialog>
 
   <ModalGeneric
-    :subtitle="t('textBlock2')"
-    :title="t('textBlock')"
+    :subtitle="t('textCancel2')"
+    :title="t('textCancel')"
     :visible="visible"
     @update:display="handleDisplayUpdate"
   />

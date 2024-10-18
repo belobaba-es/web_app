@@ -2,7 +2,6 @@ import { computed, ref, watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import router from '../../../router/router'
 import { useOnboardingPersonalStore } from '../../../stores/useOnboardingPersonalStore'
-import { CardModality } from '../enums/cardModality.enum'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 import { useI18n } from 'vue-i18n'
 
@@ -10,16 +9,15 @@ import { AddressShipping } from '../../../types/onboardingPersonal'
 import { OnboardingService } from '../../onboarding/services/onboarding'
 import { createRepositionCard, onboardingCard } from '../services/nobaCard.service'
 import { OnboardingRepositionCard, OnboardingRequest } from '../types/onboardingRequest.type'
-import { useAuth } from '../../../composables/useAuth'
 import { useRoute } from 'vue-router'
 import { processException } from '../../../shared/processException'
+import { useAuthStore } from '../../../stores/useAuthStore'
+import { useLayoutCard } from './useLayoutCard'
 
 type Option = {
   value: string
   label: string
 }
-
-const typeCardSelect = ref<CardModality[]>([] as CardModality[])
 
 type OnboardingCardDataClient = {
   documentExpirationDate: string
@@ -31,6 +29,8 @@ export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
   const { getAddress } = useOnboardingPersonalStore()
+  const { typeCardSelect } = useLayoutCard()
+
   const {
     setAddressShipping,
     getAddressShipping,
@@ -45,8 +45,7 @@ export const useOnboardingCard = () => {
   const enableEdit = ref(true)
   const route = useRoute()
   const { t } = useI18n({ useScope: 'global' })
-  const { getClientId } = useAuth()
-
+  const { getClientId } = useAuthStore()
   const sendingDataCard = ref<OnboardingRequest>({
     clientId: getClientId(),
     requestCardModality: typeCardSelect.value,

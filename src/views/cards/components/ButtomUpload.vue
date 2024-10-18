@@ -83,7 +83,7 @@ const uploadDocument = (event: Event) => {
 
 <style scoped>
 .upload-container {
-  border: 1px dashed #00beb0;
+  border: 1px dashed var(--primary-color);
 }
 
 .upload-container.has-file {

@@ -4,14 +4,19 @@
       <img :src="isSelected ? imgSelected : img" alt="" />
     </div>
     <p :style="{ color: isSelected ? '#ffffff' : '' }" class="text-2xl font-medium">{{ typeCard }}</p>
+    <div v-if="loading && isSelected">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: #fff"></i>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue'
-import { useOnboardingCard } from '../composables/useOnboardingCard'
 import { CardModality } from '../enums/cardModality.enum'
+import { useCardReposition } from '../repositionCard/composable/useCardReposition'
+import { useLayoutCard } from '../composables/useLayoutCard'
 
-const { typeCardSelect } = useOnboardingCard()
+const { loading } = useCardReposition()
+const { typeCardSelect } = useLayoutCard()
 
 interface Props {
   img: string
@@ -38,7 +43,7 @@ const toggleSelection = () => {
 </script>
 <style lang="scss" scoped>
 .border {
-  border: 1px solid #00beb0;
+  border: 1px solid var(--primary-color);
   cursor: pointer;
 }
 

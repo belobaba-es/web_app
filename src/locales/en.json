@@ -636,6 +636,7 @@
   "labelQuestion": "Do you want to cancel this card?",
   "labelQuestion2": "Please confirm that you wish to cancel this card.",
   "labelRecargaCard": "Recharge card",
+  "rechargeCard": "Recharge card",
   "labelHome": "Home",
   "labelApartament": "Apartament",
   "errorDocumentLabel": "Document expiration date is required",
@@ -643,8 +644,8 @@
   "errorNumberDomicileLabel": "Address number is required",
   "requestQuote": "Request quote",
   "ACTIVE": "Active",
-  "LOCKED": "Loked",
-  "CANCELLED": "cancelled",
+  "LOCKED": "Locked",
+  "CANCELLED": "Cancelled",
   "INACTIVE": "Inactive",
   "DELETE": "delete",
   "WAITING_DATA": "Paused",
@@ -784,8 +785,11 @@
   },
   "transactionId": "Transaction ID",
   "date": "Date",
-
   "cardDenied": "Card Denied",
   "cardDeniedText": "Operation canceled, You already have a VIRTUAL card.",
-  "backHome": "Back to home"
+  "backHome": "Back to home",
+  "card": "Card",
+  "blockCard": "Block card",
+  "textCancel": "successfully canceled",
+  "textCancel2": "you will not be able to use it, you can click request a new one"
 }
