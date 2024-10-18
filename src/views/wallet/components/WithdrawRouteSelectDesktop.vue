@@ -3,7 +3,7 @@
     <div class="dropdown-wrapper">
       <router-link v-ripple class="link-historic-desktop" exact role="menuitem" to="#" @click="toggleDropdown">
         <h5 class="text-link-historic-desktop">
-          {{ t('withdraw') }} <span class="p-2 pi pi-angle-down primary-color"></span>
+          {{ t('withdraw') }} <span class="p-2 pi pi-angle-down secondary-color"></span>
         </h5>
       </router-link>
 

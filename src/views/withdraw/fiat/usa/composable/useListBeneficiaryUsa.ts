@@ -118,6 +118,7 @@ export const useListBeneficiaryUsa = () => {
 
   const updateItemsPage = (itemPage: number) => {
     itemsPage.value = itemPage
+    currentPage.value = 1
     useBeneficiaryUsaList.setLimit(itemPage)
     useBeneficiaryUsaList.setNextPage(1)
     fetchBeneficiariesUsa()
