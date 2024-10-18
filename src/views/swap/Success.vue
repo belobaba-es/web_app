@@ -80,14 +80,22 @@ import SuccessComponentDesktop from './components/SuccessComponentDesktop.vue'
 import SuccessComponentMobile from './components/SuccessComponentMobile.vue'
 import ShowFee from './components/ShowFee.vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
+import { useAuth } from '../../composables/useAuth'
+import { WalletProvider } from '../login/types/login.interface'
+import { FiatAssetCodes } from '../wallet/types/assetCodes.interface'
 
 const { t } = useI18n({ useScope: 'global' })
 const { successIcon, transactionSummary } = useSwap()
 
 const router = useRouter()
 const { getWalletByAssetCode } = useBalanceWallet()
-const usdIcon = getWalletByAssetCode('USD')?.icon
-const usdName = getWalletByAssetCode('USD')?.name
+
+const { getWalletProvider } = useAuth()
+const fiatUsdAssetCode =
+  getWalletProvider() === WalletProvider.PINTTOSOFT ? FiatAssetCodes.USD_PANAMA : FiatAssetCodes.USD
+
+const usdIcon = getWalletByAssetCode(fiatUsdAssetCode)?.icon
+const usdName = getWalletByAssetCode(fiatUsdAssetCode)?.name
 
 const summary = transactionSummary.value as SummarySwap
 </script>

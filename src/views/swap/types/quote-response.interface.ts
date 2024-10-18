@@ -29,6 +29,7 @@ export interface ExchangeCreated {
   totalAmount: number
   acceptedAt: string
   id: string
+  networkFee?: number
 }
 
 export enum Code {

@@ -73,7 +73,12 @@ export class SwapService {
     return data.data.data
   }
 
-  async cancelQuote(quiteId: string) {
-    return await new HttpService(import.meta.env.VITE_SWAP_API).patch<any>(`/quotes/cancel/${quiteId}`, {}, true)
+  async cancelQuote(exchangeId: string) {
+    const { getClientId } = useAuth()
+
+    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const response = await this.getClient().post<any>(`/exchanges/cancel/${exchangeId}`, {}, headerRequest)
+
+    return response.data
   }
 }

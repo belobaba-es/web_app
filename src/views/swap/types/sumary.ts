@@ -10,4 +10,5 @@ export type SummarySwap = {
   feeTradeDesk: number
   totalSpend: number
   amountAfterRemovingFee?: number
+  networkFee?: number
 }
