@@ -95,16 +95,13 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
-import data_banks from '../../../../../../assets/panama_banks/banks.json'
 import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import ModalGeneric from '../../../../../../components/ModalGeneric.vue'
 import router from '../../../../../../router/router'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const allowed_banks = ref(data_banks)
-
 const isNewBeneficiaryRoute = computed(() => route.path.includes('new-beneficiary'))
 const { t } = useI18n({ useScope: 'global' })
 
@@ -113,7 +110,7 @@ const closeModal = () => {
   router.push('/withdraw/fiat/panama')
 }
 
-const { formObjectPanama, validateFields, showModal, save, toBack, productAccountType, submitting } =
+const { formObjectPanama, validateFields, showModal, save, toBack, productAccountType, submitting, allowed_banks } =
   useNewBeneficiaryPanama()
 
 const validateAndSave = () => {

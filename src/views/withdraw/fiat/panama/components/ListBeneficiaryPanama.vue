@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <DataTable :value="listBeneficiaryAchPanama" tableStyle="min-width: 50rem">
+    <SkeletonListPanama v-if="submitting" />
+    <DataTable v-else :value="listBeneficiaryAchPanama" tableStyle="min-width: 50rem">
       <template #empty>
         <div class="text-center mt-4 flex flex-column align-items-center" style="position: relative; bottom: 40%">
           <p class="font-semi-bold m-0">{{ t('dontHaveBeneficiary') }}</p>
@@ -68,11 +69,21 @@ import GeneralPaginator from '../../../../../components/GeneralPaginator.vue'
 import { BeneficiaryAchPanama } from '../../../type/beneficiary.type'
 import { useWithdraw } from '../../../composable/useWithdraw'
 import { CounterpartyStatus } from '../../../enums/beneficiary.enum'
+import { onMounted } from 'vue'
+import SkeletonListPanama from './SkeletonListPanama.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { listBeneficiaryAchPanama, nextPage, prevPage, pagination, updateItemsPage, getBeneficiaryStatusColor } =
-  useBeneficiaryPanama()
+const {
+  listBeneficiaryAchPanama,
+  nextPage,
+  prevPage,
+  submitting,
+  pagination,
+  updateItemsPage,
+  getBeneficiaryStatusColor,
+  fetchBeneficiariesAchPanama,
+} = useBeneficiaryPanama()
 const { setDataBeneficiary } = useNewBeneficiaryPanama()
 const { prepareFormDataPanama, resetFormWithdrawal } = useWithdraw()
 
@@ -82,6 +93,11 @@ const withdrawalPanama = (item: BeneficiaryAchPanama) => {
   prepareFormDataPanama(item)
   router.push('/withdraw/fiat/panama/withdraw-local')
 }
+onMounted(async () => {
+  if (listBeneficiaryAchPanama.value.length === 0) {
+    await fetchBeneficiariesAchPanama(true)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

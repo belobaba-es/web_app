@@ -22,7 +22,7 @@
               :showClear="true"
               class="dropdown-select"
               optionLabel="name"
-              optionValue="name"
+              optionValue="value"
             />
           </div>
         </div>
@@ -96,15 +96,11 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
-
-import { ref } from 'vue'
 import router from '../../../../router/router'
-import data_banks from '../../../../assets/panama_banks/banks.json'
 import ModalGeneric from '../../../../components/ModalGeneric.vue'
 import { useNewBeneficiaryPanama } from '../../../withdraw/fiat/panama/composable/useNewBeneficiaryPanama'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 
-const allowed_banks = ref(data_banks)
 const { t } = useI18n({ useScope: 'global' })
 
 const closeModal = () => {
@@ -116,7 +112,7 @@ const cancelProcess = () => {
   router.push('/withdraw/fiat/panama')
 }
 
-const { formObjectPanama, showModal, save, productAccountType, submitting } = useNewBeneficiaryPanama()
+const { formObjectPanama, showModal, save, productAccountType, submitting, allowed_banks } = useNewBeneficiaryPanama()
 </script>
 
 <style lang="scss" scoped>
