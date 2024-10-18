@@ -40,7 +40,8 @@
 
         <div class="col-6 pt-1">
           <p>
-            {{ props.transaction.amount }} {{ props.transaction.assetCode ?? props.transaction.assetId?.slice(-3) }}
+            {{ props.transaction.amount }}
+            {{ props.transaction.assetCode ?? getAsset(props.transaction.assetId, listAssets).code }}
           </p>
           <p v-if="!props.transaction.isInternal && props.transaction.feeWire">{{ props.transaction.feeWire }}</p>
           <p></p>
@@ -92,11 +93,13 @@ import { generateTransactionReceipt } from '../shared/generatePdf'
 import logo from '../assets/img/logo-login.png'
 import { TransactionHistory } from '../views/transaction-history/types/transaction-history-response.interface'
 import { useAuth } from '../composables/useAuth'
+import { useTransactionHistoryTable } from '../views/transaction-history/composables/useTransactionHistoryTable'
+import { getAsset } from '../shared/getAsset'
 
 const { getUserName, getClientId } = useAuth()
 
 const username = getUserName()
-
+const { listAssets } = useTransactionHistoryTable()
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['update:asset-select', 'update:display', 'create'])
 const props = defineProps<{
@@ -155,16 +158,20 @@ const generatePDFTransactionReceipt = () => {
 .red-text {
   color: red;
 }
+
 .content {
   display: contents;
 }
+
 .inner-row-flex {
   display: flex;
   padding: 0;
 }
+
 .green-color {
   color: var(--primary-color);
 }
+
 .p-divider-dashed.p-divider-horizontal:before {
   border-color: var(--primary-color);
 }

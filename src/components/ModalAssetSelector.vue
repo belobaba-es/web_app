@@ -42,13 +42,18 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { AssetsService } from '../views/deposit/services/assets'
 
-interface Props {
-  showModal: boolean
-  assetClassificationFilter: AssetClassificationFilter
-}
+const props = defineProps({
+  showModal: {
+    type: Boolean,
+    required: true,
+  },
+  assetClassificationFilter: {
+    type: String,
+    required: true,
+  },
+})
 
 const { t } = useI18n({ useScope: 'global' })
-const props = defineProps<Props>()
 const emit = defineEmits(['selectedAsset'])
 
 const assets = ref<Asset[]>([])
@@ -104,7 +109,7 @@ const onSearch = () => {
 }
 </script>
 
-<style scoped>
+<style>
 .selectCypto {
   cursor: pointer;
   border: 1px solid #ccc;
@@ -116,5 +121,9 @@ const onSearch = () => {
 
 .p-dialog.p-component.p-ripple-disabled.modal-asset-selector .p-dialog-content {
   overflow-y: visible !important;
+}
+
+.modal-asset-selector .p-dialog-content {
+  border-radius: 0px !important;
 }
 </style>

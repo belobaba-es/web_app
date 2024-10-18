@@ -7,7 +7,17 @@
     modal
     @update:visible="emit('update:display', $event)"
   >
-    <h2 class="text-center font-medium">{{ title }}</h2>
+    <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
+      <button
+        aria-label="Close"
+        class="p-dialog-header-icon p-dialog-header-close p-link p-2"
+        type="button"
+        @click="closeModal"
+      >
+        <span class="p-dialog-header-close-icon pi pi-times-circle"></span>
+      </button>
+    </div>
+    <h2 class="text-center font-medium" style="color: var(--primary-color)">{{ title }}</h2>
     <p class="m-0 text-center font-normal">
       {{ subtitle }}
     </p>

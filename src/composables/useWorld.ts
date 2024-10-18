@@ -2,30 +2,7 @@ import { WorldService } from '../shared/services/world'
 import { computed, Ref, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
 import state_data from '../assets/cities/cities_us.json'
-
-export interface Country {
-  country_code: string
-  country_id: string
-  calling_code: string
-  name: string
-}
-
-export interface State {
-  country_id: string
-  id: number
-  name: string
-}
-
-export interface CountryAllowed {
-  country_code: string
-  name: string
-}
-
-export interface StateUS {
-  state_code: string
-  name: string
-  country_id: string
-}
+import { Country, CountryAllowed, State, StateUS } from '../interface/country.interface'
 
 const countries = ref<Country[]>([])
 const state_us = ref<StateUS[]>(state_data)
@@ -46,6 +23,10 @@ export const useWorld = () => {
 
   const statesInputIsEmpty = computed<boolean>(() => states.value.length === 0)
   const countriesInputIsEmpty = computed<boolean>(() => countryAllowedForUSA.value.length === 0)
+
+  const findCountryByCodeCountry = (codeCountry: string) => {
+    return countryAllowedForUSA.value.find(c => c.countryCode == codeCountry)
+  }
 
   const fetchCountries = async () => {
     loadingCountriesField.value = true
@@ -129,5 +110,6 @@ export const useWorld = () => {
     onChangeCountryHandler,
     onChangeStateHandler,
     countryAllowedForUSA,
+    findCountryByCodeCountry,
   }
 }
