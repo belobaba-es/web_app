@@ -21,10 +21,13 @@ import { useLayoutCard } from './composables/useLayoutCard'
 import { useCardCenter } from './cardCenter/Composables/useCardCenter'
 import { useCardCenterValidation } from './cardCenter/Composables/useCardCenterValidation'
 import { useMediaQuery } from '../../composables/useMediaQuery'
+import { useTransactionCard } from './transactionsCard/composable/useTransactionCard'
 
 const { subscribeCardTransactionResource, subscribeBalanceCard } = useCardSocket()
 const { maskCardNumber } = useCardCenterValidation()
-const { fetchListCard, listCards, selectedCard, cardInfo } = useCardCenter()
+const { fetchListCard, listCards, selectedCard, cardInfo, redirectValidationMobile, redirectValidation } =
+  useCardCenter()
+const { getHistoryTransaction } = useTransactionCard()
 const { itemsMenuLayout } = useLayoutCard()
 const { isMobile } = useMediaQuery()
 
@@ -32,9 +35,15 @@ onMounted(async () => {
   await subscribeCardTransactionResource()
   await subscribeBalanceCard()
 
+  await getHistoryTransaction(1, 10)
   if (listCards.value.length === 0) {
     await fetchListCard()
   }
+  if (isMobile.value) {
+    redirectValidationMobile()
+    return
+  }
+  redirectValidation()
 })
 
 watch(cardInfo, () => {

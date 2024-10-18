@@ -31,6 +31,10 @@ export const routerCard = [
         component: () => import('../views/cards/blockCard/MessageCardBlock.vue'),
       },
       {
+        path: 'onboarding/reposition/denied',
+        component: () => import('../views/cards/components/stepOnboarding/requestDenied.vue'),
+      },
+      {
         path: 'onboarding/step',
         component: () => import('../views/cards/onboardingCard/OnboardingCard.vue'),
         children: [

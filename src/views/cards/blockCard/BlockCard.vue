@@ -29,11 +29,15 @@
           </div>
         </div>
         <div class="p-field">
-          <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" />
+          <InputText
+            v-model="dataBlockCard.note"
+            :placeholder="t('blockCardText5')"
+            style="box-sizing: inherit !important"
+          />
         </div>
         <div class="flex justify-content-center">
-          <div class="col-4">
-            <Button :label="t('blockCardText6')" @click="requireConfirmation()" />
+          <div class="col-6">
+            <Button :label="t('labelBlockCard')" @click="requireConfirmation()" />
           </div>
         </div>
       </div>
@@ -56,7 +60,12 @@
     </template>
   </ConfirmDialog>
 
-  <ModalGeneric :subtitle="t('textBlock2')" :title="t('textBlock')" :visible="visible" />
+  <ModalGeneric
+    :subtitle="t('textBlock2')"
+    :title="t('textBlock')"
+    :visible="visible"
+    @update:display="handleDisplayUpdate"
+  />
 </template>
 
 <script setup>
@@ -66,16 +75,15 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useCardBlock } from '../composables/useCardBlock.ts'
 import ConfirmDialog from 'primevue/confirmdialog'
-import { useToast } from 'primevue/usetoast'
 import { ReasonLockingCard } from '../enums/cardBlock.enum.ts'
 import ModalGeneric from '../../../components/ModalGeneric.vue'
 import { useConfirm } from 'primevue/useconfirm'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
-const toast = useToast()
+const router = useRouter()
 const confirm = useConfirm()
 const { blockCard, dataBlockCard, visible } = useCardBlock()
-
 const requireConfirmation = () => {
   confirm.require({
     group: 'headless',
@@ -85,6 +93,10 @@ const requireConfirmation = () => {
       blockCard()
     },
   })
+}
+const handleDisplayUpdate = () => {
+  visible.value = false
+  router.push('new-card')
 }
 </script>
 

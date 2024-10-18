@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
-              <div class="pr-2" style="color: #00beb0">
+              <div class="pr-2" style="color: var(--primary-color)">
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
@@ -70,11 +70,9 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
-  getHistoryTransaction,
   transactionList,
   getLastSixDigits,
   getDescriptions,
@@ -83,15 +81,12 @@ const {
   loadingTransactions,
   nextPage,
 } = useTransactionCard()
+
 const isPositiveAmount = (amount: number) => {
-  const formatedAmount = amount.toString()
-  const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
+  const formatedAmount = amount?.toString()
+  const numericAmount = Number(formatedAmount?.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
-
-onMounted(async () => {
-  await getHistoryTransaction(1, 10)
-})
 </script>
 <style lang="scss" scoped>
 .table-container {

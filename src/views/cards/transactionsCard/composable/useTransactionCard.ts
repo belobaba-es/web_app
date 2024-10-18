@@ -3,15 +3,21 @@ import { ref } from 'vue'
 import { TransactionCard } from '../../types/transactionCard.type'
 import { useI18n } from 'vue-i18n'
 import { TransactionCardStatus } from '../../enums/transactionCardStatus.enum'
+import { useTransactionHistoryStore } from '../../stores/useTransactionHistory'
 
+const transactionList = ref<TransactionCard[]>([])
 export const useTransactionCard = () => {
-  const transactionList = ref<TransactionCard[]>([])
   const nextPage = ref<boolean>(false)
   const loadingTransactions = ref<boolean>(false)
   const { t } = useI18n({ useScope: 'global' })
+  const useTransactionHistoryCard = useTransactionHistoryStore()
+
+  useTransactionHistoryCard.$subscribe((mutation, state) => {
+    transactionList.value = state.transactionList
+  })
   const getHistoryTransaction = async (page: number, limit: number) => {
     const response = await historyTransaction(page, limit)
-    nextPage.value = response.nextPag ? true : false
+    nextPage.value = !!response.nextPag
 
     response.results.forEach(element => {
       if (transactionList.value) {
@@ -19,12 +25,14 @@ export const useTransactionCard = () => {
       }
     })
 
+    useTransactionHistoryCard.setTransactionList(transactionList.value)
+
     loadingTransactions.value = false
   }
 
   const loadMoreTransactions = async () => {
     loadingTransactions.value = true
-    getHistoryTransaction(transactionList.value!.length, 10)
+    await getHistoryTransaction(transactionList.value!.length, 10)
   }
 
   const getLastSixDigits = (id: string) => {

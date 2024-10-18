@@ -30,12 +30,16 @@
           </div>
         </div>
         <div class="p-field">
-          <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" />
+          <InputText
+            v-model="dataBlockCard.note"
+            :placeholder="t('blockCardText5')"
+            style="box-sizing: inherit !important"
+          />
         </div>
         <div class="flex justify-content-center">
-          <div class="col-5">
+          <div class="col-6">
             <Button
-              :label="t('blockCardText6')"
+              :label="t('labelBlockCard')"
               :loading="loading"
               icon="pi pi-angle-right"
               iconPos="right"
@@ -121,7 +125,7 @@ const handleDisplayUpdate = (newValue: boolean) => {
 }
 
 .shadow {
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.02), 0 0 2px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.08) !important;
 }
 
 .p-dialog-header,

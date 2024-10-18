@@ -8,6 +8,7 @@ import { ref } from 'vue'
 import { OnboardingRepositionCard } from '../../types/onboardingRequest.type'
 import { useAuth } from '../../../../composables/useAuth'
 
+const loading = ref<boolean>(false)
 export const useCardReposition = () => {
   const { typeCardSelect } = useOnboardingCard()
 
@@ -21,13 +22,17 @@ export const useCardReposition = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
 
-  const handleRepositionVirtualCard = () => {
+  const handleRepositionVirtualCard = async () => {
+    loading.value = true
     try {
-      const response = createRepositionCard(sendingDataCard.value)
+      const response = await createRepositionCard(sendingDataCard.value)
       useToast().add({ severity: 'success', summary: 'Success', detail: response })
-      router.push('/cards/onboarding/reposition/confirmation')
+      await router.push('/cards/onboarding/reposition/confirmation')
+      loading.value = false
     } catch (e: any) {
       processException(toast, t, e)
+      await router.push('/cards/onboarding/reposition/denied')
+      loading.value = false
     }
   }
 
@@ -38,5 +43,6 @@ export const useCardReposition = () => {
   return {
     handleRepositionVirtualCard,
     handleRepositionPhysicalCard,
+    loading,
   }
 }

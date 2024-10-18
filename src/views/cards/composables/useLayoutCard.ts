@@ -46,6 +46,13 @@ export const useLayoutCard = () => {
         },
         disabled: false,
       })
+      itemsMenuLayout.value = itemsMenuLayout.value.concat({
+        label: t('labelBlockCard'),
+        command: () => {
+          router.push('/cards/block-card')
+        },
+        disabled: false,
+      })
     } else {
       itemsMenuLayout.value = itemsDefault
     }
