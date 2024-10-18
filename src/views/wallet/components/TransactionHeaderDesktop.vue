@@ -111,6 +111,10 @@ const openDepositInstructions = (wallet: BalanceWallet | undefined) => {
 </script>
 
 <style lang="scss">
+.modal-deposit-selector .p-dialog-content {
+  border-radius: 0px !important;
+}
+
 .text-balance-wallet-historic-desktop {
   margin-left: 4%;
   font-family: RedHatDisplayMedium !important;

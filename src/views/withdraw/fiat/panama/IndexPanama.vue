@@ -23,12 +23,13 @@
       </div>
 
       <div class="flex justify-content-between">
-        <InputSearch :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
+        <InputSearch :onChange="handleChange" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
       </div>
     </div>
 
     <div class="mt-5">
-      <ListBeneficiaryPanama @select="onSelect($event)" />
+      <SkeletonListPanama v-if="submitting" />
+      <ListBeneficiaryPanama v-if="!submitting" @select="onSelect($event)" />
     </div>
   </div>
 </template>
@@ -38,23 +39,31 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import router from '../../../../router/router'
-import ListBeneficiaryPanama from './components/ListBeneficiaryPanama.vue'
 import { Beneficiary } from '../../type/beneficiary.type'
 import { CounterpartyStatus } from '../../enums/beneficiary.enum'
 import InputSearch from '../../components/inputSearch/InputSearch.vue'
 import { useBeneficiaryPanama } from './composable/useBeneficiaryPanama'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import { useNewBeneficiaryPanama } from './composable/useNewBeneficiaryPanama'
+import SkeletonListPanama from './components/SkeletonListPanama.vue'
+import { onMounted } from 'vue'
+import ListBeneficiaryPanama from './components/ListBeneficiaryPanama.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const toast = useToast()
-const { beneficiaryPanamaSearch } = useBeneficiaryPanama()
+const { beneficiaryPanamaSearch, handleChange, submitting, fetchBeneficiariesAchPanama, listBeneficiaryAchPanama } =
+  useBeneficiaryPanama()
 const { resetFormPanama } = useNewBeneficiaryPanama()
 const toBack = () => {
   router.back()
 }
-
+onMounted(async () => {
+  console.log('listBeneficiaryAchPanama index', listBeneficiaryAchPanama.value.length)
+  if (listBeneficiaryAchPanama.value.length === 0) {
+    await fetchBeneficiariesAchPanama(true)
+  }
+})
 const newBeneficiary = () => {
   resetFormPanama()
   return router.push(`panama/wire-local`)

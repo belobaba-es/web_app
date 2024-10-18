@@ -27,7 +27,7 @@
         <p class="m-0 font-medium">{{ t('Bank') }}:</p>
       </div>
       <div class="col text-right">
-        <p class="m-0 font-medium">{{ dataBeneficiaryWithdrawal.informationOwner.name }}</p>
+        <p class="m-0 font-medium">{{ truncate(dataBeneficiaryWithdrawal.informationOwner.name, 29) }}</p>
         <p class="m-0 font-medium">{{ dataBeneficiaryWithdrawal.informationBank.bankName }}</p>
       </div>
     </div>
@@ -78,6 +78,7 @@ import { useWithdraw } from '../../composable/useWithdraw'
 import Dialog from 'primevue/dialog'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
+import { truncate } from '../../../../shared/helpers/truncate'
 
 const { t } = useI18n({ useScope: 'global' })
 const { transactionData, fee, loading, dataBeneficiaryWithdrawal, visibleModalVeryCodeTwoFactor } = useWithdraw()

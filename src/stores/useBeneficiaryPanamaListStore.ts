@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Beneficiary, BeneficiaryAchPanama } from '../views/withdraw/type/beneficiary.type'
+import { Beneficiary } from '../views/withdraw/type/beneficiary.type'
 import { FilterListBeneficiary } from '../views/withdraw/type/filterListBeneficiary.type'
 
 export const useBeneficiaryPanamaListStore = defineStore('useBeneficiaryPanamaListStore', {
@@ -60,15 +60,14 @@ export const useBeneficiaryPanamaListStore = defineStore('useBeneficiaryPanamaLi
     },
 
     searchBeneficiary(searchName: string) {
-      this.beneficiaryAchPanama =
-        this.beneficiaryAchPanama.length === 0 ? this.beneficiaryAchPanama : this.beneficiaryAchPanama
-
-      const resultSearchPanama = this.beneficiaryAchPanama.filter((beneficiary: BeneficiaryAchPanama) => {
-        return searchName ? beneficiary.holderName.toLowerCase().includes(searchName.toLowerCase()) : true
+      const searchLower = searchName.toLowerCase()
+      const resultSearch = this.beneficiaryAchPanama.filter(beneficiary => {
+        const name = beneficiary.holderName?.toLowerCase() || ''
+        return name.includes(searchLower)
       })
 
-      this.beneficiaryAchPanama = [...resultSearchPanama]
-      return resultSearchPanama
+      this.beneficiaryAchPanama = [...resultSearch]
+      return resultSearch
     },
   },
 })

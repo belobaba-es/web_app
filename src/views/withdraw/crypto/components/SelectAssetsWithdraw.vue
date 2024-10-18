@@ -56,7 +56,7 @@ const { getAssetByAssetId } = useAssets()
 const { balance, transactionData } = useWithdrawalCrypto()
 const { getBalanceByCode } = useBalanceWallet()
 const modal = (b: boolean) => {
-  if (isWithdrawal.value && form.value.informationWallet.assetId) return
+  if (isWithdrawal.value && form.value.informationWallet.assetId && form.value.isInternal === 'N') return
   showModal.value = b
 }
 const fillAsset = (asset: Asset | undefined) => {
