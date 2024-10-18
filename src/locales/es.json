@@ -1037,6 +1037,10 @@
   "cardDenied": "Tarjeta Denegada",
   "cardDeniedText": "Operación cancelada, Ya tienes tarjeta VIRTUAL.",
   "backHome": "Regresar al inicio",
+  "CLEARED": "Liquidado",
+  "DECLINED": "Rechazado",
+  "AUTHORIZED": "Autorizado",
+  "REVERSED": "Revertido"
   "rechargeCard": "Recarga",
   "card": "Tarjeta",
   "blockCard": "Block card",
@@ -1057,5 +1061,7 @@
   "RequirementsBetweenWalletsText": "Para crear un beneficiario, simplemente necesitas obtener el correo electrónico de la persona a la que deseas realizar el retiro.",
   "RequirementsEssentialText": "Estos requisitos son esenciales para asegurar la correcta transferencia de fondos.",
   "importantNoteText": "Antes de retirar criptomonedas, verifica las opciones y selecciona la red correcta. Consulta la documentación de tu wallet o exchange para asegurarte del procedimiento adecuado; esto puede evitar la pérdida de tus activos.",
-  "importantNote": "NOTA IMPORTANTE: "
+  "importantNote": "NOTA IMPORTANTE: ",
+  "textCancel": "Cancelada con éxito",
+  "textCancel2": "Tarjeta cancelada con éxito, no podrás hacer uso de la misma, puedes hacer clic en solicitar una nueva."
 }
