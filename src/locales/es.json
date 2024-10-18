@@ -775,5 +775,7 @@
   "backHome": "Regresar al inicio",
   "rechargeCard": "Recarga",
   "card": "Tarjeta",
-  "blockCard": "Block card"
+  "blockCard": "Block card",
+  "textCancel": "Cancelada con éxito",
+  "textCancel2": "Tarjeta cancelada con éxito, no podrás hacer uso de la misma, puedes hacer clic en solicitar una nueva."
 }
