@@ -53,6 +53,7 @@ export const useListBeneficiaryUsa = () => {
       new BeneficiaryService().listBeneficiaryBankingUsa(useBeneficiaryUsaList.getFilters()).then(resp => {
         listBeneficiaryUsa.value = resp.results
         useBeneficiaryUsaList.setBeneficiary(resp.results)
+        useBeneficiaryUsaList.setListBeneficiarySearch(resp.results)
         useBeneficiaryUsaList.setTotalRecords(resp.count)
         submitting.value = false
         nextPag.value = Number(resp.nextPag) ? Number(resp.nextPag) : nextPag.value > 0 ? nextPag.value : 1
