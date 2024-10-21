@@ -54,13 +54,11 @@
       <div class="mt-1 mb-3 col-12 py-4 px-5 float-left text-color" style="background: #eceff1">
         <div class="col-12 p-0 float-left">
           <p class="m-0 text-general float-left">{{ t('textReceives') }}:</p>
-          <p class="m-0 text-general float-right">{{ beneficiaryInformation.name }}</p>
+          <p class="m-0 text-general float-right shorten-text">{{ beneficiaryInformation.name }}</p>
         </div>
         <div class="col-12 p-0 float-left text-right">
-          <p class="m-0 text-general font-light float-left">
-            {{ t('wallets') }} {{ truncate(props.assetCodeSelected?.name, 29) }}:
-          </p>
-          <h4 class="m-0 text-general float-right">{{ truncate(beneficiaryInformation.addressWallet, 21) }}</h4>
+          <p class="m-0 text-general font-light float-left">{{ t('wallets') }} {{ props.assetCodeSelected?.name }}:</p>
+          <h4 class="m-0 text-general float-right shorten-text">{{ beneficiaryInformation.addressWallet }}</h4>
         </div>
       </div>
       <Divider type="dashed"></Divider>
@@ -114,7 +112,6 @@ import { MakeAssetExternalTransfer, MakeAssetInternalTransfer } from '../../type
 import { currencyFormat } from '../../../../shared/helpers/currencyFormat'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
-import { truncate } from '../../../../shared/helpers/truncate'
 
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps({
@@ -165,6 +162,13 @@ const verifyCodeTwoFactorAuth = (isValidCode: boolean) => {
 <style lang="scss" scoped>
 .text-color-green {
   color: var(--primary-color);
+}
+
+.shorten-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 210px;
 }
 
 .text-color {
