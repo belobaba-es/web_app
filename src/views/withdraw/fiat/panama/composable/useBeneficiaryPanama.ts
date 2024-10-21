@@ -9,12 +9,12 @@ import { BeneficiaryAchPanama } from '../../../type/beneficiary.type'
 import { CounterpartyStatus } from '../../../enums/beneficiary.enum'
 
 const listBeneficiaryAchPanama = ref<BeneficiaryAchPanama[]>([])
+const currentPage = ref(1)
+const totalRecords = ref(0)
+const nextPag = ref(1)
+const itemsPage = ref(10)
+const totalPages = ref(0)
 export const useBeneficiaryPanama = () => {
-  const currentPage = ref(1)
-  const totalRecords = ref(0)
-  const nextPag = ref(1)
-  const itemsPage = ref(10)
-  const totalPages = ref(0)
   const search = ref(false)
   const { t } = useI18n({ useScope: 'global' })
 
@@ -53,10 +53,6 @@ export const useBeneficiaryPanama = () => {
 
   const beneficiaryPanamaSearch = async (searchBeneficiary: string) => {
     handleChange(searchBeneficiary)
-    if (!searchBeneficiary) {
-      await fetchBeneficiariesAchPanama(true)
-      return
-    }
     useBeneficiaryPanamaList.searchBeneficiary(searchBeneficiary)
     search.value = true
   }

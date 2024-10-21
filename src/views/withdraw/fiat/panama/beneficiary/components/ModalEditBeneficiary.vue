@@ -16,7 +16,7 @@
             :placeholder="t('bankName')"
             class="select-asset"
             optionLabel="name"
-            optionValue="name"
+            optionValue="value"
           />
         </div>
       </div>
@@ -68,13 +68,10 @@ import InputText from 'primevue/inputtext'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
-import data_banks from '../../../../../../assets/panama_banks/banks.json'
 import { useNewBeneficiaryPanama } from '../../composable/useNewBeneficiaryPanama'
-import { ref } from 'vue'
 import ModalGeneric from '../../../../../../components/ModalGeneric.vue'
 import router from '../../../../../../router/router'
 
-const allowed_banks = ref(data_banks)
 const { t } = useI18n({ useScope: 'global' })
 
 const closeModal = () => {
@@ -82,5 +79,5 @@ const closeModal = () => {
   router.push('/withdraw/fiat/panama')
 }
 
-const { formObjectPanama, showModal, save, productAccountType, submitting } = useNewBeneficiaryPanama()
+const { formObjectPanama, showModal, save, productAccountType, submitting, allowed_banks } = useNewBeneficiaryPanama()
 </script>

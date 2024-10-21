@@ -23,7 +23,7 @@
       </div>
 
       <div class="flex justify-content-between">
-        <InputSearch :onChange="handleChange" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
+        <InputSearch :onChange="handleSearch" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
       </div>
     </div>
 
@@ -49,12 +49,8 @@ import ListBeneficiaryPanama from './components/ListBeneficiaryPanama.vue'
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const toast = useToast()
-const { beneficiaryPanamaSearch, handleChange, submitting, fetchBeneficiariesAchPanama, listBeneficiaryAchPanama } =
-  useBeneficiaryPanama()
+const { beneficiaryPanamaSearch } = useBeneficiaryPanama()
 const { resetFormPanama } = useNewBeneficiaryPanama()
-const toBack = () => {
-  router.back()
-}
 
 const newBeneficiary = () => {
   resetFormPanama()
