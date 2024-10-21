@@ -8,7 +8,6 @@ import { useAuth } from './useAuth'
 import { ProfileService } from '../views/profile/services/profile'
 import { useOnboardingPersonalStore } from '../stores/useOnboardingPersonalStore'
 import { processException } from '../shared/processException'
-import { useRouter } from 'vue-router'
 
 const isHaveDocumentUS = ref(true)
 const isUpdateData = ref<boolean>(false)
@@ -23,11 +22,9 @@ const {
   setNationality,
   setDocumentExpirationDate,
 } = useOnboardingPersonalStore()
-
 const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
 export const useOnboardingPersonal = () => {
-  const router = useRouter()
   const { getClientId, setClientId } = useAuth()
 
   const submitting = ref(false)

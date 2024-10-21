@@ -78,13 +78,6 @@
         {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(rechargeState.assetCode) }}</span>
       </span>
     </template>
-
-    <ModalAssetSelector
-      :asset-classification-filter="AssetClassificationFilter.ALL"
-      :show-modal="rechargeState.showModalAssetSelector"
-      @update:visible="modalAssetSelector($event)"
-      @selected-asset="selectedAsset"
-    />
   </div>
 </template>
 
@@ -93,8 +86,7 @@ import { useI18n } from 'vue-i18n'
 import { defineProps } from 'vue'
 import Button from 'primevue/button'
 import InputNumber from 'primevue/inputnumber'
-import ModalAssetSelector from '../../../../components/ModalAssetSelector.vue'
-import { Asset, AssetClassificationFilter } from '../../../deposit/types/asset.interface'
+import { Asset } from '../../../deposit/types/asset.interface'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useRechargeCard } from '../composables/useRechargeCard'
 import card from '../../../../assets/img/card.png'
@@ -108,7 +100,6 @@ const { getBalanceByCode } = useBalanceWallet()
 
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps<Props>()
-const balance = getBalanceByCode('USD')
 
 const selectedAsset = async (asset: Asset) => {
   rechargeState.value.showModalAssetSelector = false

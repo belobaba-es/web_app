@@ -1066,5 +1066,7 @@
   "cardDeniedText": "Operation canceled, You already have a VIRTUAL card.",
   "backHome": "Back to home",
   "card": "Card",
-  "blockCard": "Block card"
+  "blockCard": "Block card",
+  "textCancel": "successfully canceled",
+  "textCancel2": "you will not be able to use it, you can click request a new one"
 }
