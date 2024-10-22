@@ -44,18 +44,11 @@
     </div>
   </div>
 
-  <ConfirmDialog group="headless">
-    <template #container="{ message, acceptCallback, rejectCallback }">
-      <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
-        <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem -mt-8">
-          <i class="pi pi-question text-5xl"></i>
-        </div>
-        <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
-        <p class="p-5 mt-5 text-2xl font-regular">{{ message.message }}</p>
-        <div class="flex align-items-center gap-2 mt-4">
-          <Button label="Save" @click="acceptCallback"></Button>
-          <Button label="Cancel" outlined @click="rejectCallback"></Button>
-        </div>
+  <ConfirmDialog group="templating">
+    <template #message="slotProps">
+      <div class="flex flex-column align-items-center w-full">
+        <i :class="slotProps.message.icon" class="text-primary" style="font-size: 3rem"></i>
+        <p>{{ slotProps.message.message }}</p>
       </div>
     </template>
   </ConfirmDialog>
@@ -68,7 +61,7 @@
   />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import RadioButton from 'primevue/radiobutton'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
@@ -86,12 +79,12 @@ const confirm = useConfirm()
 const { blockCard, dataBlockCard, visible } = useCardBlock()
 const requireConfirmation = () => {
   confirm.require({
-    group: 'headless',
+    group: 'templating',
     header: t('labelQuestion'),
     message: t('labelQuestion2'),
     accept: () => {
       blockCard()
-    },
+    }
   })
 }
 
