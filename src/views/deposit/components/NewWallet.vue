@@ -62,7 +62,7 @@ const { t } = useI18n({ useScope: 'global' })
 const onCreate = () => {
   submitting.value = true
   new AssetsService()
-    .paymentAddress({ label: '', assetCode: assetSelect.value?.code })
+    .paymentAddress({ label: '', assetCode: assetSelect.value?.code, assetId: assetSelect.value?.assetId!})
     .then(resp => {
       submitting.value = false
 
