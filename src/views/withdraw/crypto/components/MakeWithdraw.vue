@@ -73,7 +73,7 @@
             <span class="fee flex justify-content-start font-medium text-color-green">{{ t('fee') }} {{ fee }}</span>
           </div>
         </div>
-        <div class="col-12 xl:col-6 float-left form-group pl-4 pr-5 my-3">
+        <div class="col-12 xl:col-6 float-left form-group pl-4 pr-4 my-3">
           <div class="col-12">
             <label>{{ t('purposeWithdrawal') }}</label>
             <Dropdown
@@ -98,8 +98,10 @@
               />
             </div>
           </div>
+          <div class="col-12 p-0">
+            <MessageAlertActiveTwoFactorAuth />
+          </div>
         </div>
-        <MessageAlertActiveTwoFactorAuth />
       </div>
 
       <div class="col-12 footer-withdrawal float-left">

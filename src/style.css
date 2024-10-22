@@ -238,6 +238,10 @@ label {
     padding: 0.5rem 1rem;
 }
 
+.p-message.p-message-warn {
+    border-radius: 8px;
+}
+
 .dialog-confirmation-beneficiary .p-message.p-message-warn {
     background: #ffee002b !important;
     border: 1px solid #ffcd00 !important;
