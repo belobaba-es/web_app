@@ -36,7 +36,13 @@
               {{ transaction.currency }}
             </td>
             <td class="col-recibo">
-              <Button class="font-semi-bold buttonColor" :label="t('download')" :loading="isGeneratingTransactionPDF" @click="generatePdfTransactionCard(transaction)" outlined />
+              <Button
+                class="font-semi-bold buttonColor"
+                :label="t('download')"
+                :loading="isGeneratingTransactionPDF"
+                @click="generatePdfTransactionCard(transaction)"
+                outlined
+              />
             </td>
           </tr>
         </tbody>
@@ -81,7 +87,7 @@ const {
   loadingTransactions,
   nextPage,
   generatePdfTransactionCard,
-  isGeneratingTransactionPDF
+  isGeneratingTransactionPDF,
 } = useTransactionCard()
 
 const isPositiveAmount = (amount: number) => {
@@ -112,7 +118,7 @@ const isPositiveAmount = (amount: number) => {
 .table th {
   color: var(--primary-color);
   font-weight: bold;
-  font-family: RedHatDisplaySemiBold,serif !important;
+  font-family: RedHatDisplaySemiBold, serif !important;
   padding: 12px 16px;
   border-bottom: 1px solid #ddd;
   white-space: nowrap;

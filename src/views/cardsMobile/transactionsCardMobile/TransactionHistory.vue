@@ -23,7 +23,9 @@
             </span>
           </div>
 
-          <p class=" align-items-center" style="color: var(--primary-color)">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
+          <p class="align-items-center" style="color: var(--primary-color)">
+            {{ formatDateMobile(transaction.createdAt.toString()) }}
+          </p>
 
           <div
             :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
@@ -35,7 +37,13 @@
           </div>
 
           <div>
-            <Button class="font-semi-bold buttonColor" :label="t('download')" :loading="isGeneratingTransactionPDF" @click="generatePdfTransactionCard(transaction)" outlined />
+            <Button
+              class="font-semi-bold buttonColor"
+              :label="t('download')"
+              :loading="isGeneratingTransactionPDF"
+              @click="generatePdfTransactionCard(transaction)"
+              outlined
+            />
           </div>
         </div>
         <Divider type="solid" />
