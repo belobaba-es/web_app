@@ -3,7 +3,7 @@
     <div class="justify-content-center">
       <img alt="" src="../../assets/icons/withdraw.svg" width="164" />
       <h1 class="font-regular m-0">
-        {{ t('withdraw') }} <span style="color: #00beb0">{{ t('crypto') }}</span>
+        {{ t('withdraw') }} <span style="color: var(--primary-color)">{{ t('crypto') }}</span>
       </h1>
       <p class="mb-4 text-2xl">{{ t('withdrawText') }}</p>
 

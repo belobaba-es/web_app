@@ -8,24 +8,31 @@ import { useI18n } from 'vue-i18n'
 import { processException } from '../../../../shared/processException'
 import { StatusCard } from '../../enums/statusCard.enum'
 import { useMediaQuery } from '../../../../composables/useMediaQuery'
+import { useCardStore } from '../../stores/useCard'
 
 const cardInfo = ref()
 const selectedCard = ref<cardSelectedWithDetails>()
 const listCards = ref<ListCardsResponse[]>([])
 const isDeleteCardModalShow = ref(false)
 const isCardInfoVisible = ref(false)
+const loading = ref(false)
+const checkedPausaCard = ref(false)
 
 export const useCardCenter = () => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   const { isMobile } = useMediaQuery()
+  const useCard = useCardStore()
+
+  useCard.$subscribe((mutation, state) => {
+    listCards.value = state.listCard
+  })
 
   let oldInfoCard = ref<ListCardsResponse>()
-  const loading = ref(false)
+
   const showModal = ref(false)
   const checkInputLoad = ref<boolean>(false)
 
-  const checkedPausaCard = ref(false)
   const showPauseModal = ref(false)
 
   const router = useRouter()
@@ -39,12 +46,7 @@ export const useCardCenter = () => {
     })
 
     listCards.value = response
-    if (isMobile.value) {
-      redirectValidationMobile()
-      return
-    }
-
-    redirectValidation()
+    useCard.setListCard(response)
   }
 
   const redirectValidation = () => {
@@ -100,9 +102,11 @@ export const useCardCenter = () => {
           flagType: card.flagType,
         })
       }
-    } catch (err: any) {
       loading.value = false
+    } catch (err) {
       processException(toast, t, err)
+    } finally {
+      loading.value = false
     }
   }
 
@@ -120,9 +124,9 @@ export const useCardCenter = () => {
       await handleDeleteCardModal(false)
       loading.value = false
       toast.add({ severity: 'success', summary: t('success'), detail: t('cardDeleted') })
+      listCards.value = listCards.value.filter(card => card.cardId !== selectedCard.value?.cardId)
     } catch (error) {
       processException(toast, t, error)
-
       loading.value = false
     }
   }
@@ -149,8 +153,15 @@ export const useCardCenter = () => {
       showPauseModal.value = true
     } catch (e: string | any) {
       processException(toast, t, e)
+
       checkedPausaCard.value = false
       showPauseModal.value = false
+
+      if (checkedPausaCard.value) {
+        checkedPausaCard.value = false
+      } else {
+        checkedPausaCard.value = true
+      }
     } finally {
       loading.value = false
     }
@@ -176,6 +187,10 @@ export const useCardCenter = () => {
 
   const toggleVisibility = async () => {
     if (selectedCard.value === undefined) return
+
+    if (isMobile.value) {
+      router.push('/details-card')
+    }
 
     if (isCardInfoVisible.value) {
       hideCardDetails(selectedCard.value!)
@@ -222,5 +237,7 @@ export const useCardCenter = () => {
     checkInputLoad,
     pauseCardText,
     showPauseModal,
+    redirectValidation,
+    redirectValidationMobile,
   }
 }

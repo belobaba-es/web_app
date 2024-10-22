@@ -1,5 +1,5 @@
 <template>
-  <SpeedDial :model="items" :radius="80" direction="up" style="bottom: 4rem; right: 0; left: 0">
+  <SpeedDial :model="items" :radius="80" direction="up" style="bottom: 4rem; right: 0; left: 49%; width: 1rem">
     <template #item="{ item, toggleCallback }">
       <router-link :class="[item.class, 'p-ripple']" :to="item.to">
         <div
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import SpeedDial from 'primevue/speeddial'
 import { useI18n } from 'vue-i18n'
 import { isEnableCardModule } from '../../shared/services/remoteConfig'

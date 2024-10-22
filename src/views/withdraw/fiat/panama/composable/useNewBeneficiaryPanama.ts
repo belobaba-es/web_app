@@ -5,6 +5,7 @@ import { BeneficiaryService } from '../../../services/beneficiary'
 import { useRouter } from 'vue-router'
 import { processException } from '../../../../../shared/processException'
 import { RegisterCounterpartyAchPanama } from '../../../type/beneficiary.type'
+import data_banks from '../../../../../assets/panama_banks/banks.json'
 
 const formObjectPanama = ref<RegisterCounterpartyAchPanama>({
   holderEmail: '',
@@ -21,7 +22,7 @@ const formObjectPanama = ref<RegisterCounterpartyAchPanama>({
 })
 
 const isUpdateBeneficiary = ref<boolean>(false)
-
+const allowed_banks = ref(data_banks)
 export const useNewBeneficiaryPanama = () => {
   const router = useRouter()
   const toast = useToast()
@@ -129,5 +130,6 @@ export const useNewBeneficiaryPanama = () => {
     showModal,
     validateFields,
     resetFormPanama,
+    allowed_banks,
   }
 }

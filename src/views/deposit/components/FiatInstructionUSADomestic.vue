@@ -117,7 +117,6 @@ const bankNationalPdf: any = {}
 
 const title = t('titleDespositFiat')
 
-
 bankNationalPdf[t('depositBankName') + ':'] = props.bankNational?.bankName
 bankNationalPdf['ABA Fedwire:'] = props.bankNational?.routingNumber
 bankNationalPdf[t('creditTo') + ':'] = props.bankNational?.creditTo
@@ -126,7 +125,6 @@ bankNationalPdf[t('address') + ':'] = props.bankNational?.address
 bankNationalPdf[t('accountNumber') + ':'] = props.bankNational?.accountNumber
 bankNationalPdf[t('bankAddress') + ':'] = props.bankNational?.bankAddress
 bankNationalPdf[t('bankPhone') + ':'] = props.bankNational?.bankPhone
-
 
 const generatePdfNationalData = () => {
   const nameFile = `${username} ${t('namePdfDepositFiatDomestic')}`

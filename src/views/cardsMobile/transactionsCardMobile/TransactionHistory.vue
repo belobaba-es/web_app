@@ -8,9 +8,8 @@
       <p class="text-center font-semi-bold mb-0" style="font-size: 16px">{{ t('dontHaveTransactions') }}</p>
       <p class="text-center mb-0">{{ t('firstBuy') }}</p>
     </div>
-    <div class="p-4">
+    <div class="px-5 pb-5 pt-2">
       <div v-for="(transaction, index) in transactionList" :key="index" class="mb-4">
-        <p class="mb-0" style="color: var(--primary-color)">{{ formatDateMobile(transaction.createdAt.toString()) }}</p>
         <div class="flex justify-content-between">
           <div class="font-semi-bold pr-2 flex align-items-center" style="font-size: 16px">
             <i
@@ -18,20 +17,33 @@
               class="pi pi-arrow-circle-down"
               style="font-size: 1.5rem; color: #fe5c73"
             ></i>
-            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
+            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: var(--primary-color)"></i>
             <span class="ml-3" style="font-size: 1rem">
               {{ getDescriptions(transaction) }}
             </span>
           </div>
+          <p class="align-items-center" style="color: var(--primary-color); width: 10rem">
+            {{ formatDateMobile(transaction.createdAt.toString()) }}
+          </p>
 
-          <p
+          <div
             :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
-            class="mb-0 font-semi-bold"
+            class="mt-2 font-semi-bold"
             style="font-size: 1.2rem"
           >
             {{ transaction.amount }}
             {{ transaction.currency }}
-          </p>
+          </div>
+
+          <div>
+            <Button
+              class="font-semi-bold buttonColor"
+              :label="t('download')"
+              :loading="isGeneratingTransactionPDF"
+              @click="generatePdfTransactionCard(transaction)"
+              outlined
+            />
+          </div>
         </div>
         <Divider type="solid" />
       </div>
@@ -65,7 +77,6 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 import { useTransactionCard } from '../../cards/transactionsCard/composable/useTransactionCard'
 import SelectCardHeader from '../components/SelectCardHeader.vue'
 
@@ -77,6 +88,8 @@ const {
   getDescriptions,
   loadMoreTransactions,
   loadingTransactions,
+  generatePdfTransactionCard,
+  isGeneratingTransactionPDF,
   nextPage,
 } = useTransactionCard()
 const isPositiveAmount = (amount: number) => {
@@ -84,10 +97,6 @@ const isPositiveAmount = (amount: number) => {
   const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
-
-onMounted(async () => {
-  await getHistoryTransaction(1, 10)
-})
 </script>
 <style lang="scss" scoped>
 .table-container {

@@ -23,7 +23,7 @@
       </div>
 
       <div class="flex justify-content-between">
-        <InputSearch :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
+        <InputSearch :onChange="handleSearch" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
       </div>
     </div>
 
@@ -38,22 +38,19 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import router from '../../../../router/router'
-import ListBeneficiaryPanama from './components/ListBeneficiaryPanama.vue'
 import { Beneficiary } from '../../type/beneficiary.type'
 import { CounterpartyStatus } from '../../enums/beneficiary.enum'
 import InputSearch from '../../components/inputSearch/InputSearch.vue'
 import { useBeneficiaryPanama } from './composable/useBeneficiaryPanama'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import { useNewBeneficiaryPanama } from './composable/useNewBeneficiaryPanama'
+import ListBeneficiaryPanama from './components/ListBeneficiaryPanama.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['nextPage', 'prevPage', 'selectBeneficiary', 'update:beneficiary'])
 const toast = useToast()
 const { beneficiaryPanamaSearch } = useBeneficiaryPanama()
 const { resetFormPanama } = useNewBeneficiaryPanama()
-const toBack = () => {
-  router.back()
-}
 
 const newBeneficiary = () => {
   resetFormPanama()

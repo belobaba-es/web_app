@@ -7,4 +7,5 @@ export type cardSelectedWithDetails = {
   expirationDate: string
   cvv: string
   flagType: string
+  currency?: string
 }

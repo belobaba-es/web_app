@@ -13,7 +13,7 @@
   </div>
   <h3 class="m-0 mt-5 ml-5 font-normal">{{ t('withdrawWireLocalText2') }}</h3>
   <div class="col-12 pl-4 pr-4 container-search-text flex justify-content-center">
-    <InputSearch :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
+    <InputSearch :onChange="handleChange" :onSearch="handleSearch" :placeholder="t('searchBeneficiary')" />
   </div>
   <div class="col-12 p-3 pb-5">
     <div v-if="submitting" class="skeleton-wrapper">
@@ -95,6 +95,7 @@ const {
   updateItemsPage,
   getBeneficiaryStatusColor,
   fetchBeneficiariesAchPanama,
+  handleChange,
 } = useBeneficiaryPanama()
 
 const { beneficiaryPanamaSearch } = useBeneficiaryPanama()

@@ -1,11 +1,7 @@
 <template>
   <div>
     <button class="w-6rem" :disabled="prop.pagination.currentPage === 1" @click="prevPage">{{ t('previous') }}</button>
-    <span v-if="!isMobile"
-      >{{ t('page') }} {{ prop.pagination.currentPage }} {{ t('of') }} {{ prop.pagination.totalPages }} {{ t('of') }}
-      {{ prop.pagination.totalRecords }} {{ t('record') }}
-    </span>
-    <span v-else>{{ prop.pagination.currentPage }} {{ t('of') }} {{ prop.pagination.totalPages }} </span>
+    <span>{{ t('page') }} {{ prop.pagination.currentPage }} {{ t('of') }} {{ prop.pagination.totalPages }} </span>
     <button
       class="w-6rem"
       :disabled="prop.pagination.nextPag === prop.pagination.totalPages + 1 || prop.pagination.totalPages === 1"

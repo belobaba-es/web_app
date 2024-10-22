@@ -27,7 +27,7 @@
         <p class="m-0 font-medium">{{ t('Bank') }}:</p>
       </div>
       <div class="col text-right">
-        <p class="m-0 font-medium">{{ dataBeneficiaryWithdrawal.informationOwner.name }}</p>
+        <p class="m-0 font-medium shorten-text">{{ dataBeneficiaryWithdrawal.informationOwner.name }}</p>
         <p class="m-0 font-medium">{{ dataBeneficiaryWithdrawal.informationBank.bankName }}</p>
       </div>
     </div>
@@ -112,6 +112,13 @@ const codeIsValid = (isValid: boolean) => {
 <style lang="scss" scoped>
 .line-top {
   border-top: 1px solid #f3f4f6;
+}
+
+.shorten-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 210px;
 }
 
 .text-color-primary {

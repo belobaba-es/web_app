@@ -22,7 +22,7 @@
                 <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
                   {{ t('balance') }}
                 </p>
-                <p class="m-0 font-semi-bold">{{ selectedCard?.balance }}</p>
+                <p class="m-0 font-semi-bold">{{ selectedCard?.currency }} {{ selectedCard?.balance }}</p>
               </div>
               <div class="flex w-6 justify-content-between">
                 <div>
@@ -125,9 +125,6 @@
           @click="handleDeleteCardModal(true)"
           ><i class="pi pi-times pr-2" style="font-size: 1rem"></i> {{ t('deleteCard') }}
         </Button>
-        <Button v-else class="btn btn-primary w-full text-center mt-3" severity="secondary"
-          ><i class="pi pi-ban pr-2" style="font-size: 1rem"></i> {{ t('textBlockCard') }}
-        </Button>
         <div
           v-if="listCards.length !== 0 || selectedCard?.status === StatusCard.DELETE"
           class="card border-radius-0 flex p-0 mt-3 justify-content-between align-items-center"
@@ -183,7 +180,7 @@ const { getUserName } = useAuth()
 const { t } = useI18n({ useScope: 'global' })
 
 const routerNewCard = () => {
-  router.push('/cards/onboarding')
+  router.push(listCards.value.length !== 0 ? '/cards/onboarding/reposition' : '/cards/onboarding')
 }
 
 const formattedExpirationDate = computed(() => {
@@ -241,7 +238,7 @@ const handlePausaCardChange = () => {
 
 <style lang="scss" scoped>
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 0rem;
+  padding: 0;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {

@@ -88,11 +88,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/withdraw',
         name: 'fiat',
+        meta: { noCache: true },
         children: !isMobile.value ? routerWithdrawal : routerWithdrawalMobile,
       },
       {
         path: '/withdraw/crypto/internal',
         component: !isMobile.value ? () => import('../views/withdraw/Index.vue') : undefined,
+        meta: { noCache: true },
         children: !isMobile.value ? routerInternalTransfer : routerInternalTransferMobile,
       },
       {

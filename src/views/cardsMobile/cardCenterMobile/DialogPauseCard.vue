@@ -40,11 +40,16 @@ interface Props {
 const props = defineProps<Props>()
 const { t } = useI18n({ useScope: 'global' })
 
-const { cardInfo, selectedCard, pauseCardRequest, loading } = useCardCenter()
+const { cardInfo, selectedCard, pauseCardRequest, loading, checkedPausaCard } = useCardCenter()
 
 const emit = defineEmits(['update:display'])
 
 const closeModal = () => {
+  if (checkedPausaCard.value) {
+    checkedPausaCard.value = false
+  } else {
+    checkedPausaCard.value = true
+  }
   emit('update:display', false)
 }
 

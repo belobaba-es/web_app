@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <SkeletonListPanama v-if="submitting" />
-
-    <DataTable v-if="!submitting" :value="listBeneficiaryAchPanama" tableStyle="min-width: 50rem">
+    <DataTable v-else :value="listBeneficiaryAchPanama" tableStyle="min-width: 50rem">
       <template #empty>
         <div class="text-center mt-4 flex flex-column align-items-center" style="position: relative; bottom: 40%">
           <p class="font-semi-bold m-0">{{ t('dontHaveBeneficiary') }}</p>
@@ -65,21 +64,21 @@ import { useBeneficiaryPanama } from '../composable/useBeneficiaryPanama'
 import { useNewBeneficiaryPanama } from '../composable/useNewBeneficiaryPanama'
 import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
-import { onMounted } from 'vue'
 import router from '../../../../../router/router'
 import GeneralPaginator from '../../../../../components/GeneralPaginator.vue'
 import { BeneficiaryAchPanama } from '../../../type/beneficiary.type'
 import { useWithdraw } from '../../../composable/useWithdraw'
-import SkeletonListPanama from './SkeletonListPanama.vue'
 import { CounterpartyStatus } from '../../../enums/beneficiary.enum'
+import { onMounted } from 'vue'
+import SkeletonListPanama from './SkeletonListPanama.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 
 const {
-  submitting,
   listBeneficiaryAchPanama,
   nextPage,
   prevPage,
+  submitting,
   pagination,
   updateItemsPage,
   getBeneficiaryStatusColor,
@@ -94,7 +93,6 @@ const withdrawalPanama = (item: BeneficiaryAchPanama) => {
   prepareFormDataPanama(item)
   router.push('/withdraw/fiat/panama/withdraw-local')
 }
-
 onMounted(async () => {
   if (listBeneficiaryAchPanama.value.length === 0) {
     await fetchBeneficiariesAchPanama(true)

@@ -41,6 +41,11 @@ export const useLayoutCardMobile = () => {
           icon: pinMobile,
         },
         {
+          label: t('labelBlockCard'),
+          to: '/cards/block-card',
+          icon: blockMobile,
+        },
+        {
           label: t('labelConfigCard'),
           to: '',
           icon: securityMobile,
@@ -56,7 +61,6 @@ export const useLayoutCardMobile = () => {
   })
 
   watch(cardInfo, () => {
-    console.log(selectedCard.value?.isPhysical)
     setItemsMenu()
   })
 

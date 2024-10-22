@@ -1,16 +1,18 @@
 <template>
-  <section class="section-main pb-5" style="margin: 0 -1rem">
+  <section class="pb-5" style="background-color: #f7fdfd; margin: 0 -1rem">
     <SelectCardHeader title="card" />
-    <div class="flex md:flex-row full flex-column align-items-center">
+    <div class="flex md:flex-row full flex-column align-items-center section-main">
       <div
         :class="selectedCard?.isPhysical ? 'card-img-physical' : 'card-img-virtual'"
         :style="imgStyle"
-        class="card-container"
+        class="card-container px-4"
       >
         <div class="flex flex-row justify-content-between align-items-center">
           <div>
             <p class="font-bold" style="font-size: 16px; margin: 0; opacity: 54%">{{ t('balance') }}</p>
-            <p class="m-0 pt-3" style="font-size: 28px">${{ selectedCard?.balance ?? 0.0 }}</p>
+            <p class="m-0 pt-3" style="font-size: 28px">
+              <span style="font-size: 16px">{{ selectedCard?.currency }}</span> {{ selectedCard?.balance ?? 0.0 }}
+            </p>
           </div>
           <div class="flex flex-column justify-content-end">
             <img :src="mastercard" alt="" />
@@ -33,17 +35,17 @@
         </div>
       </div>
     </div>
-    <div class="mt-2 flex justify-content-around align-items-center">
+    <div class="mt-2 flex justify-content-around align-items-center px-4">
       <div v-if="listCards.length !== 0" class="flex p-0 align-items-center">
         <p class="font-normal">{{ pauseCardText }}</p>
         <div class="mt-2 ml-3">
-          <InputSwitch v-model="checkedPausaCard" :disabled="checkInputLoad" @change="handleDisplayUpdate" />
+          <InputSwitch v-model="checkedPausaCard" :disabled="checkInputLoad" @change="handleDisplayUpdateWrapper" />
         </div>
       </div>
       <div v-if="listCards.length !== 0" class="flex align-items-center">
         <span>{{ t('viewDetails') }}</span>
         <Button
-          :disabled="selectedCard?.status === StatusCard.LOCKED || loading"
+          :disabled="selectedCard?.status !== StatusCard.ACTIVE || loading"
           class="btn btn-secondary p-button"
           text
           @click="toggleVisibility()"
@@ -56,8 +58,8 @@
         </Button>
       </div>
     </div>
-    <div class="mt-3">
-      <Button class="btn btn-primary w-full text-center"
+    <div class="mt-3 px-4">
+      <Button class="btn btn-primary w-full text-center" @click="routerNewCard"
         ><i class="pi pi-plus pr-2" style="font-size: 1rem"></i> {{ t('requestNewCard') }}
       </Button>
       <Button
@@ -65,9 +67,6 @@
         class="btn w-full text-center mt-3 bg-red-500 border-red-500"
         @click="handleDeleteCardModal(true)"
         ><i class="pi pi-times pr-2" style="font-size: 1rem"></i> {{ t('deleteCard') }}
-      </Button>
-      <Button v-else class="btn btn-primary w-full text-center mt-3" severity="secondary"
-        ><i class="pi pi-ban pr-2" style="font-size: 1rem"></i> {{ t('textBlockCard') }}
       </Button>
     </div>
   </section>
@@ -114,6 +113,10 @@ const {
 const visible = ref(false)
 const visibleSuccess = ref(false)
 
+const routerNewCard = () => {
+  router.push(listCards.value.length !== 0 ? '/cards/onboarding/reposition' : '/cards/onboarding')
+}
+
 const imgStyle = computed(() => {
   if (selectedCard.value?.status === StatusCard.LOCKED || listCards.value.length === 0) {
     return {
@@ -130,8 +133,15 @@ const handleClose = (e: boolean) => {
   visibleSuccess.value = e
 }
 
-const handleDisplayUpdate = async (event: Event) => {
-  const e = (event.target as HTMLInputElement).checked
+const handleDisplayUpdateWrapper = async (event: Event) => {
+  const target = event.currentTarget as HTMLInputElement
+  console.log('isChecked', target.classList)
+  const isChecked = !target?.classList?.contains('p-inputswitch-checked')
+
+  await handleDisplayUpdate(isChecked)
+}
+
+const handleDisplayUpdate = async (event: boolean) => {
   if (cardInfo.value?.status === StatusCard.LOCKED) {
     await pauseCardRequest()
     if (showPauseModal.value) {
@@ -141,11 +151,11 @@ const handleDisplayUpdate = async (event: Event) => {
     return
   }
 
-  visible.value = e
+  visible.value = event
 }
 </script>
 
-<style>
+<style lang="scss">
 .card-container {
   background-image: url(/src/assets/img/card-mobile.png);
   background-repeat: no-repeat;

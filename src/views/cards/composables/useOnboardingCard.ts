@@ -2,7 +2,6 @@ import { computed, ref, watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import router from '../../../router/router'
 import { useOnboardingPersonalStore } from '../../../stores/useOnboardingPersonalStore'
-import { CardModality } from '../enums/cardModality.enum'
 import { useOnboardingPersonal } from '../../../composables/useOnboardingPersonal'
 import { useI18n } from 'vue-i18n'
 
@@ -10,17 +9,15 @@ import { AddressShipping } from '../../../types/onboardingPersonal'
 import { OnboardingService } from '../../onboarding/services/onboarding'
 import { createRepositionCard, onboardingCard } from '../services/nobaCard.service'
 import { OnboardingRepositionCard, OnboardingRequest } from '../types/onboardingRequest.type'
-import { useAuth } from '../../../composables/useAuth'
-import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
 import { useRoute } from 'vue-router'
 import { processException } from '../../../shared/processException'
+import { useAuthStore } from '../../../stores/useAuthStore'
+import { useLayoutCard } from './useLayoutCard'
 
 type Option = {
   value: string
   label: string
 }
-
-const typeCardSelect = ref<CardModality[]>([] as CardModality[])
 
 type OnboardingCardDataClient = {
   documentExpirationDate: string
@@ -31,17 +28,24 @@ type OnboardingCardDataClient = {
 export const useOnboardingCard = () => {
   const submitting = ref(false)
   const domicileNumber = ref('')
-  const { cardInfo } = useCardCenter()
   const { getAddress } = useOnboardingPersonalStore()
-  const { setAddressShipping, getAddressShipping, setNationality, setDocumentExpirationDate, onboardingPersonal } =
-    useOnboardingPersonal()
+  const { typeCardSelect } = useLayoutCard()
+
+  const {
+    setAddressShipping,
+    getAddressShipping,
+    setNationality,
+    setDocumentExpirationDate,
+    onboardingPersonal,
+    getDNI,
+    getDateBirth,
+  } = useOnboardingPersonal()
   const currentStepIndex = ref<number>(0)
   const toast = useToast()
   const enableEdit = ref(true)
   const route = useRoute()
   const { t } = useI18n({ useScope: 'global' })
-  const { getClientId } = useAuth()
-
+  const { getClientId } = useAuthStore()
   const sendingDataCard = ref<OnboardingRequest>({
     clientId: getClientId(),
     requestCardModality: typeCardSelect.value,
@@ -166,11 +170,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -189,11 +189,7 @@ export const useOnboardingCard = () => {
       })
       .catch(e => {
         submitting.value = false
-        toast.add({
-          severity: 'error',
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -230,7 +226,7 @@ export const useOnboardingCard = () => {
   }
 
   const toBack = () => {
-    currentStepIndex.value--
+    router.go(-1)
   }
 
   const nextStep2 = () => {
@@ -259,5 +255,8 @@ export const useOnboardingCard = () => {
     enableEdit,
     typeCardSelect,
     sendingTypeCard,
+    onboardingPersonal,
+    getDNI,
+    getDateBirth,
   }
 }

@@ -53,7 +53,9 @@ export const useBeneficiaryUsaListStore = defineStore('useBeneficiaryUsaListStor
 
       this.beneficiary = [...newBeneficiary]
     },
-
+    setListBeneficiarySearch(beneficiary: Beneficiary[]) {
+      this.listBeneficiarySearch = [...beneficiary]
+    },
     setSelectedCounterpartyId(counterpartyId: string) {
       this.selectedCounterpartyId = counterpartyId
     },
@@ -63,13 +65,12 @@ export const useBeneficiaryUsaListStore = defineStore('useBeneficiaryUsaListStor
     },
 
     searchBeneficiaryUsa(search: string) {
-      this.beneficiary = this.beneficiary.length === 0 ? this.beneficiary : this.beneficiary
-
-      const resultSearch = this.beneficiary.filter((beneficiary: Beneficiary) => {
-        return search
-          ? beneficiary.informationOwner.name.toLowerCase().includes(search) ||
-              beneficiary.status.toUpperCase().includes(search.toLowerCase())
-          : true
+      this.beneficiary = this.listBeneficiarySearch.length === 0 ? this.listBeneficiarySearch : this.beneficiary
+      const searchLower = search.toLowerCase()
+      const resultSearch = this.beneficiary.filter(beneficiary => {
+        const name = beneficiary.informationOwner.name?.toLowerCase() || ''
+        const status = beneficiary.status?.toLowerCase() || ''
+        return name.includes(searchLower) || status.includes(searchLower)
       })
 
       this.beneficiary = [...resultSearch]

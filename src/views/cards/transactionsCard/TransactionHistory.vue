@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
-              <div class="pr-2" style="color: #00beb0">
+              <div class="pr-2" style="color: var(--primary-color)">
                 <i
                   v-if="!isPositiveAmount(transaction.amount)"
                   class="pi pi-arrow-circle-down"
@@ -36,7 +36,13 @@
               {{ transaction.currency }}
             </td>
             <td class="col-recibo">
-              <!--              <Button class="font-semi-bold buttonColor" :label="t('download')" outlined />-->
+              <Button
+                class="font-semi-bold buttonColor"
+                :label="t('download')"
+                :loading="isGeneratingTransactionPDF"
+                @click="generatePdfTransactionCard(transaction)"
+                outlined
+              />
             </td>
           </tr>
         </tbody>
@@ -70,11 +76,9 @@ import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
-  getHistoryTransaction,
   transactionList,
   getLastSixDigits,
   getDescriptions,
@@ -82,16 +86,15 @@ const {
   loadMoreTransactions,
   loadingTransactions,
   nextPage,
+  generatePdfTransactionCard,
+  isGeneratingTransactionPDF,
 } = useTransactionCard()
+
 const isPositiveAmount = (amount: number) => {
-  const formatedAmount = amount.toString()
-  const numericAmount = Number(formatedAmount.replace(/[$,]/g, ''))
+  const formatedAmount = amount?.toString()
+  const numericAmount = Number(formatedAmount?.replace(/[$,]/g, ''))
   return numericAmount >= 0
 }
-
-onMounted(async () => {
-  await getHistoryTransaction(1, 10)
-})
 </script>
 <style lang="scss" scoped>
 .table-container {
@@ -115,7 +118,7 @@ onMounted(async () => {
 .table th {
   color: var(--primary-color);
   font-weight: bold;
-  font-family: RedHatDisplaySemiBold !important;
+  font-family: RedHatDisplaySemiBold, serif !important;
   padding: 12px 16px;
   border-bottom: 1px solid #ddd;
   white-space: nowrap;

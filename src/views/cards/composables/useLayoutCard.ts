@@ -2,6 +2,9 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
+import { CardModality } from '../enums/cardModality.enum'
+
+const typeCardSelect = ref<CardModality[]>([] as CardModality[])
 
 export const useLayoutCard = () => {
   const router = useRouter()
@@ -46,10 +49,17 @@ export const useLayoutCard = () => {
         },
         disabled: false,
       })
+      itemsMenuLayout.value = itemsMenuLayout.value.concat({
+        label: t('labelBlockCard'),
+        command: () => {
+          router.push('/cards/block-card')
+        },
+        disabled: false,
+      })
     } else {
       itemsMenuLayout.value = itemsDefault
     }
   })
 
-  return { itemsMenuLayout }
+  return { itemsMenuLayout, typeCardSelect }
 }

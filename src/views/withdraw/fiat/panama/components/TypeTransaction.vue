@@ -53,9 +53,9 @@
             style="width: 300px; height: 150px; border-radius: 9px"
         /></Button>
 
-        <Button text @click="onClickLearnMore"
+        <Button text @click="onClickLearnMoreCovert"
           ><img
-            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.help')}`"
+            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.convert')}`"
             alt="placeholder"
             class="mt-3"
             style="width: 300px; height: 150px; border-radius: 9px"
@@ -76,8 +76,22 @@ const toBack = () => {
 const newBeneficiaryPanama = () => {
   return router.push(`/withdraw/fiat/panama/new-beneficiary`)
 }
+const { locale } = useI18n()
 
-const onClickLearnMore = () => window.open('https://bit.ly/nobacash', '_blank')
+const onClickLearnMore = () =>
+  window.open(
+    locale.value == 'en'
+      ? 'https://belobaba.io/crypto-regulated-global-banking/khan-plus-en'
+      : 'https://belobaba.io/crypto-regulated-global-banking/khan-plus',
+    '_blank'
+  )
+const onClickLearnMoreCovert = () =>
+  window.open(
+    locale.value == 'en'
+      ? 'https://belobaba.io/crypto-regulated-global-banking/cuentas-en-eur-gbp-english'
+      : 'https://belobaba.io/crypto-regulated-global-banking/cuentas-eur-gbp',
+    '_blank'
+  )
 </script>
 <style lang="scss" scoped>
 .line-vertical {

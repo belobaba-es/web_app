@@ -30,7 +30,7 @@ export const headerRequestNobaCard = async (): Promise<{
         CLIENT_SECRET: import.meta.env.VITE_NOBA_CARD_CLIENT_SECRET,
       },
       pubKey,
-      'webapp:belobaba'
+      'webapp:' + import.meta.env.VITE_TENANT_NAME
     )
   )
 }
