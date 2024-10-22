@@ -226,7 +226,7 @@ export const useOnboardingCard = () => {
   }
 
   const toBack = () => {
-    currentStepIndex.value--
+    router.go(-1)
   }
 
   const nextStep2 = () => {

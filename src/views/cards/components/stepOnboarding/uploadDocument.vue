@@ -52,14 +52,19 @@
       </div>
     </div>
     <div class="field col-12 flex align-items-center justify-content-end">
-      <router-link v-slot="{ navigate }" custom to="/cards/onboarding/step/user-data">
-        <Button :label="t('backButtonText')" class="px-5 mt-2 mr-5" severity="secondary" @click="toBack" />
-      </router-link>
+      <Button
+        :label="t('backButtonText')"
+        class="mb-4 mt-3 mr-2 w-8rem"
+        outlined
+        severity="secondary"
+        style="color: #242731; display: flex; justify-content: center"
+        @click="toBack"
+      />
       <router-link v-slot="{ navigate }" custom to="/cards/onboarding/step/confirmation">
         <Button
           :disabled="disabled"
           :label="t('nextButtonText')"
-          class="px-5 mt-2 btn-submit"
+          class="mb-4 mt-3 mr-2 w-8rem"
           @click="sendingTypeCard"
         />
       </router-link>
@@ -79,7 +84,7 @@ import { ref } from 'vue'
 import { useOnboardingCard } from '../../composables/useOnboardingCard'
 
 const showModal = ref(true)
-const { sendingTypeCard, toBack, onboardingPersonal } = useOnboardingCard()
+const { sendingTypeCard, toBack, onboardingPersonal, submitting } = useOnboardingCard()
 
 const disabled = ref<boolean>(true)
 

@@ -22,7 +22,7 @@
                 <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
                   {{ t('balance') }}
                 </p>
-                <p class="m-0 font-semi-bold">{{ selectedCard?.balance }}</p>
+                <p class="m-0 font-semi-bold">{{ selectedCard?.currency }} {{ selectedCard?.balance }}</p>
               </div>
               <div class="flex w-6 justify-content-between">
                 <div>
@@ -124,9 +124,6 @@
           class="btn w-full text-center mt-3 bg-red-500 border-red-500"
           @click="handleDeleteCardModal(true)"
           ><i class="pi pi-times pr-2" style="font-size: 1rem"></i> {{ t('deleteCard') }}
-        </Button>
-        <Button v-else class="btn btn-primary w-full text-center mt-3" severity="secondary"
-          ><i class="pi pi-ban pr-2" style="font-size: 1rem"></i> {{ t('textBlockCard') }}
         </Button>
         <div
           v-if="listCards.length !== 0 || selectedCard?.status === StatusCard.DELETE"

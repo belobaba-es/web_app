@@ -10,7 +10,9 @@
         <div class="flex flex-row justify-content-between align-items-center">
           <div>
             <p class="font-bold" style="font-size: 16px; margin: 0; opacity: 54%">{{ t('balance') }}</p>
-            <p class="m-0 pt-3" style="font-size: 28px">${{ selectedCard?.balance ?? 0.0 }}</p>
+            <p class="m-0 pt-3" style="font-size: 28px">
+              <span style="font-size: 16px">{{ selectedCard?.currency }}</span> {{ selectedCard?.balance ?? 0.0 }}
+            </p>
           </div>
           <div class="flex flex-column justify-content-end">
             <img :src="mastercard" alt="" />
@@ -65,9 +67,6 @@
         class="btn w-full text-center mt-3 bg-red-500 border-red-500"
         @click="handleDeleteCardModal(true)"
         ><i class="pi pi-times pr-2" style="font-size: 1rem"></i> {{ t('deleteCard') }}
-      </Button>
-      <Button v-else class="btn btn-primary w-full text-center mt-3" severity="secondary"
-        ><i class="pi pi-ban pr-2" style="font-size: 1rem"></i> {{ t('textBlockCard') }}
       </Button>
     </div>
   </section>
