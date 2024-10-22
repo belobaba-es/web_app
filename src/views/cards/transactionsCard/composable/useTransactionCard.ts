@@ -42,9 +42,7 @@ export const useTransactionCard = () => {
     await getHistoryTransaction(transactionList.value!.length, 10)
   }
 
-
-  const generatePdfTransactionCard = async (transaction: TransactionCard) =>{
-
+  const generatePdfTransactionCard = async (transaction: TransactionCard) => {
     isGeneratingTransactionPDF.value = true
 
     const transactionPDF: any = {}
@@ -59,7 +57,7 @@ export const useTransactionCard = () => {
     transactionPDF[t('userName')] = `${getUserName()}`
     transactionPDF[t('assetType')] = transaction.currency
     transactionPDF[t('amount')] = `${transaction.amount}`
-    transactionPDF[t('transactionType')] =  t(transaction.operationType)
+    transactionPDF[t('transactionType')] = t(transaction.operationType)
     transactionPDF[t('status')] = t(transaction.status)
     transactionPDF[t('transactionNumber')] = transaction.transactionId
     transactionPDF[t('reference')] = `${transaction.description}`
@@ -122,6 +120,6 @@ export const useTransactionCard = () => {
     loadingTransactions,
     nextPage,
     isGeneratingTransactionPDF,
-    generatePdfTransactionCard
+    generatePdfTransactionCard,
   }
 }

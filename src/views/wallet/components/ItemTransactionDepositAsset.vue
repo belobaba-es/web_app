@@ -14,7 +14,7 @@
     <div class="col-3 flex align-items-center data-hidden">
       <p class="amount">
         {{ item.amount }}
-        <small>{{ item.assetId.slice(-3) }}</small>
+        <small>{{ getAsset(item.assetId, listAssets).code }}</small>
         &nbsp;
         <i v-if="item.transactionType === 'withdraw-funds'" class="pi pi-arrow-circle-up icon-withdraw-funds"></i>
         <i v-if="item.transactionType === 'deposit'" class="pi pi-arrow-circle-down icon-deposit-funds"></i>
@@ -42,9 +42,12 @@
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '../../../composables/useAuth'
+import { getAsset } from '../../../shared/getAsset'
+import { useTransactionHistoryTable } from '../../transaction-history/composables/useTransactionHistoryTable'
 
 const { t } = useI18n({ useScope: 'global' })
 const { getUserName } = useAuth()
+const { listAssets } = useTransactionHistoryTable()
 defineProps<{
   item: any
 }>()

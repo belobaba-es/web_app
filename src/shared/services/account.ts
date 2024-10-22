@@ -1,5 +1,5 @@
 import { HttpService } from './http'
-import { UserAccount } from '../../views/withdraw/types/account'
+import { UserAccount } from '../../types/account'
 
 export class AccountService {
   async getAccountByEmail(email: string | string[]): Promise<UserAccount> {

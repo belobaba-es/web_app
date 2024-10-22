@@ -43,7 +43,6 @@ export const useChangePin = () => {
       addToast('success', t('success'), response.message)
     } catch (error: any) {
       processException(toast, t, error)
-
     }
   }
 

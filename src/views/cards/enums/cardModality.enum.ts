@@ -1,4 +1,4 @@
 export enum CardModality {
-  VIRTUAL = "VIRTUAL",
-  PHYSICAL = "PHYSICAL",
+  VIRTUAL = 'VIRTUAL',
+  PHYSICAL = 'PHYSICAL',
 }

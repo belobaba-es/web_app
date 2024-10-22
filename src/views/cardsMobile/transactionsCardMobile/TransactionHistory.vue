@@ -22,7 +22,6 @@
               {{ getDescriptions(transaction) }}
             </span>
           </div>
-
           <p class="align-items-center" style="color: var(--primary-color); width: 10rem">
             {{ formatDateMobile(transaction.createdAt.toString()) }}
           </p>

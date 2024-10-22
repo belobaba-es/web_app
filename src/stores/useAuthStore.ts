@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { FeeACH, FeeWire, UserAuth } from '../views/login/types/login.interface'
+import { FeeACH, FeeAchUsd, FeeWire, UserAuth, WalletProvider } from '../views/login/types/login.interface'
 import { AccountStatus } from '../types/accountStatus.enum'
 import { CryptoService } from '../shared/services/crypto'
 
@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('useAuthStore', {
         phoneNumber: '',
         phoneCountry: '',
         streetOne: '',
-
+        walletProvider: WalletProvider.LAYER2,
         dni: '',
         twoFactorActive: false,
         status: AccountStatus.REGISTERED,
@@ -37,8 +37,14 @@ export const useAuthStore = defineStore('useAuthStore', {
           swapSell: 0,
         },
         feeACHPAB: {
-          in: 0,
-          out: 0,
+          domestic: {
+            in: 0,
+            out: 0,
+          },
+          international: {
+            in: 0,
+            out: 0,
+          },
         },
         feeWire: {
           domestic: {
@@ -49,6 +55,10 @@ export const useAuthStore = defineStore('useAuthStore', {
             in: 0,
             out: 0,
           },
+        },
+        feeAchUsd: {
+          out: 0,
+          in: 0,
         },
       },
     }
@@ -92,11 +102,17 @@ export const useAuthStore = defineStore('useAuthStore', {
     getUserFeeACHPA(): FeeACH {
       return this.client.feeACHPAB
     },
+    getUserFeeAchUsd(): FeeAchUsd {
+      return <FeeAchUsd>this.client.feeAchUsd
+    },
     isUserActive(): boolean {
       return this.active
     },
     getClientId(): string {
       return this.clientId
+    },
+    getWalletProvider(): string {
+      return this.client.walletProvider
     },
     getUserDni(): string {
       return this.client.dni
