@@ -44,23 +44,23 @@
       </div>
     </div>
     <div class="col-12 sm:col-12 md:col-5 lg:col-5 xl:col-5 line-vertical hidden md:block">
-      <div class="flex flex-column align-items-center pl-4">
-        <Button text @click="onClickLearnMore"
-          ><img
-            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.otc')}`"
-            alt="placeholder"
-            class="mt-3"
-            style="width: 300px; height: 150px; border-radius: 9px"
-        /></Button>
+<!--      <div class="flex flex-column align-items-center pl-4">-->
+<!--        <Button text @click="onClickLearnMore"-->
+<!--          ><img-->
+<!--            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.otc')}`"-->
+<!--            alt="placeholder"-->
+<!--            class="mt-3"-->
+<!--            style="width: 300px; height: 150px; border-radius: 9px"-->
+<!--        /></Button>-->
 
-        <Button text @click="onClickLearnMore"
-          ><img
-            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.help')}`"
-            alt="placeholder"
-            class="mt-3"
-            style="width: 300px; height: 150px; border-radius: 9px"
-        /></Button>
-      </div>
+<!--        <Button text @click="onClickLearnMore"-->
+<!--          ><img-->
+<!--            :src="`https://storage.googleapis.com/noba-dev/${t('imgPublicity.help')}`"-->
+<!--            alt="placeholder"-->
+<!--            class="mt-3"-->
+<!--            style="width: 300px; height: 150px; border-radius: 9px"-->
+<!--        /></Button>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
