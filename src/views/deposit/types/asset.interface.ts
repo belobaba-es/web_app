@@ -36,6 +36,7 @@ export interface EventCreatePaymentAddress extends CreatePaymentAddress {
 
 export interface CreatePaymentAddress {
   assetCode?: string
+  assetId: string
   label: string
   asset?: Asset
 }
