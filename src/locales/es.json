@@ -922,9 +922,9 @@
   "applyToBusinessAlliesProgram": "Solicitar al programa de aliados de negocios",
   "enterForSend": "Presiona Enter para enviar",
   "imgPublicity": {
-    "convert": "convert_es.png",
-    "help": "help_es.png",
-    "otc": "otc_es.png"
+    "convert": "convert_es_belobaba.jpeg",
+    "help": "help_es_belobaba.jpeg",
+    "otc": "otc_es_belobaba.jpeg"
   },
   "suspendedText": {
     "part1": "Su acceso al servicio de Socios Comerciales ha sido deshabilitado. Esto puede deberse a varias razones, y lamentamos cualquier inconveniente que esto pueda causarle.",
@@ -1063,5 +1063,4 @@
   "importantNote": "NOTA IMPORTANTE: ",
   "textCancel": "Cancelada con éxito",
   "textCancel2": "Tarjeta cancelada con éxito, no podrás hacer uso de la misma, puedes hacer clic en solicitar una nueva."
-
 }
