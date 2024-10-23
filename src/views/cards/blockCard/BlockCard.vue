@@ -1,6 +1,6 @@
 <template>
   <div class="p-4">
-    <div class="card p-fluid">
+    <div class="card p-fluid flex-column justify-content-center">
       <div class="container-card">
         <h2 class="font-medium mb-0 text-center">{{ t('blockCardText') }}</h2>
         <p class="font-normal mt-0 mb-4 text-center">
@@ -28,15 +28,11 @@
             </div>
           </div>
         </div>
-        <div class="p-field">
-          <InputText
-            v-model="dataBlockCard.note"
-            :placeholder="t('blockCardText5')"
-            style="box-sizing: inherit !important"
-          />
+        <div class="p-field flex justify-content-center">
+          <InputText v-model="dataBlockCard.note" :placeholder="t('blockCardText5')" style="width: 100%" />
         </div>
         <div class="flex justify-content-center">
-          <div class="col-6">
+          <div style="width: 100%">
             <Button :label="t('labelBlockCard')" @click="requireConfirmation()" />
           </div>
         </div>
@@ -84,7 +80,7 @@ const requireConfirmation = () => {
     message: t('labelQuestion2'),
     accept: () => {
       blockCard()
-    }
+    },
   })
 }
 

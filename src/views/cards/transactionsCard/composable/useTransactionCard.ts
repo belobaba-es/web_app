@@ -60,7 +60,6 @@ export const useTransactionCard = () => {
     transactionPDF[t('transactionType')] = t(transaction.operationType)
     transactionPDF[t('status')] = t(transaction.status)
     transactionPDF[t('transactionNumber')] = transaction.transactionId
-    transactionPDF[t('reference')] = `${transaction.description}`
     transactionPDF[t('datePicker')] = `${transaction.createdAt}`
 
     generateTransactionReceipt(fileName, logo, title, transactionPDF)
