@@ -47,18 +47,6 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="nextPage" class="mt-5">
-        <div class="flex justify-content-end mr-3">
-          <Button
-            :label="t('loadMore')"
-            :loading="loadingTransactions"
-            class="p-button load-more-btn w-13rem"
-            icon="pi pi-angle-right"
-            iconPos="right"
-            @click="loadMoreTransactions"
-          />
-        </div>
-      </div>
     </div>
 
     <template>
@@ -70,24 +58,36 @@
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
     </template>
   </div>
+  <div class="justify-content-center align-items-center flex mt-4">
+    <GeneralPaginator
+      v-if="transactionList.length !== 0"
+      :pagination="pagination"
+      class="mt-4"
+      @nextPage="nextPage"
+      @prevPage="prevPage"
+      @updateItemsPage="updateItemsPage"
+    />
+  </div>
 </template>
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
+import GeneralPaginator from '../../../components/GeneralPaginator.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
   transactionList,
   getLastSixDigits,
-  getDescriptions,
   formatDate,
-  loadMoreTransactions,
-  loadingTransactions,
   nextPage,
+  getDescriptions,
   generatePdfTransactionCard,
   isGeneratingTransactionPDF,
+  pagination,
+  prevPage,
+  updateItemsPage,
 } = useTransactionCard()
 
 const isPositiveAmount = (amount: number) => {
