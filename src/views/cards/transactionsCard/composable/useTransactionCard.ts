@@ -1,37 +1,39 @@
 import { historyTransaction } from '../../services/nobaCard.service'
-import { ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { TransactionCard } from '../../types/transactionCard.type'
 import { useI18n } from 'vue-i18n'
 import { TransactionCardStatus } from '../../enums/transactionCardStatus.enum'
 import { useTransactionHistoryStore } from '../../stores/useTransactionHistory'
 import { generateTransactionReceipt } from '../../../../shared/generatePdf'
-import logo from '../../../../assets/img/logo-login.png'
 import { useAuth } from '../../../../composables/useAuth'
+import logo from '../../../../assets/img/logo.png'
 
 const transactionList = ref<TransactionCard[]>([])
+const currentPage = ref(1)
+const totalRecords = ref(0)
+const nextPag = ref(1)
+const itemsPage = ref(10)
+const totalPages = ref(0)
+const isGeneratingTransactionPDF = ref(false)
+
 export const useTransactionCard = () => {
-  const nextPage = ref<boolean>(false)
   const loadingTransactions = ref<boolean>(false)
   const { t } = useI18n({ useScope: 'global' })
   const useTransactionHistoryCard = useTransactionHistoryStore()
 
+  const { getUserName } = useAuth()
+
   useTransactionHistoryCard.$subscribe((mutation, state) => {
     transactionList.value = state.transactionList
+    totalRecords.value = state.totalRecords
   })
-  const isGeneratingTransactionPDF = ref(false)
-  const { getUserName } = useAuth()
 
   const getHistoryTransaction = async (page: number, limit: number) => {
     const response = await historyTransaction(page, limit)
-    nextPage.value = !!response.nextPag
-
-    response.results.forEach(element => {
-      if (transactionList.value) {
-        transactionList.value = [...transactionList.value, element]
-      }
-    })
+    transactionList.value = response.results
 
     useTransactionHistoryCard.setTransactionList(transactionList.value)
+    useTransactionHistoryCard.setTotalRecords(response.count)
 
     loadingTransactions.value = false
   }
@@ -39,39 +41,53 @@ export const useTransactionCard = () => {
   const loadMoreTransactions = async () => {
     loadingTransactions.value = true
     await getHistoryTransaction(transactionList.value!.length, 10)
-    await getHistoryTransaction(transactionList.value!.length, 10)
-  }
-
-  const generatePdfTransactionCard = async (transaction: TransactionCard) => {
-    isGeneratingTransactionPDF.value = true
-
-    const transactionPDF: any = {}
-    const title = t('transactionReceipt')
-    const footerPdf = t('footerPdfFiatData')
-    const fileName = `${t('transactionReceipt')}-${transaction.transactionId}`
-
-    const date = new Date()
-    const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    const formattedDate = formatter.format(date)
-
-    transactionPDF[t('userName')] = `${getUserName()}`
-    transactionPDF[t('assetType')] = transaction.currency
-    transactionPDF[t('amount')] = `${transaction.amount}`
-    transactionPDF[t('transactionType')] = t(transaction.operationType)
-    transactionPDF[t('status')] = t(transaction.status)
-    transactionPDF[t('transactionNumber')] = transaction.transactionId
-    transactionPDF[t('datePicker')] = `${transaction.createdAt}`
-
-    generateTransactionReceipt(fileName, logo, title, transactionPDF)
-    isGeneratingTransactionPDF.value = false
   }
 
   const getLastSixDigits = (id: string) => {
     return id.slice(-6)
   }
 
+  const generatePdfTransactionCard = (transaction: TransactionCard) => {
+    isGeneratingTransactionPDF.value = true
+
+    try {
+      const transactionPDF: any = {}
+      const title = t('transactionReceipt')
+      const footerPdf = t('footerPdfFiatData')
+      const fileName = `${t('transactionReceipt')}-${transaction.transactionId}`
+
+      const date = new Date()
+      const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      const formattedDate = formatter.format(date)
+
+      transactionPDF[t('userName')] = `${getUserName()}`
+      transactionPDF[t('assetType')] = transaction.currency
+      transactionPDF[t('amount')] = `${transaction.amount}`
+      transactionPDF[t('transactionType')] = t(transaction.operationType)
+      transactionPDF[t('status')] = t(transaction.status)
+      transactionPDF[t('transactionNumber')] = transaction.transactionId
+      transactionPDF[t('datePicker')] = `${transaction.createdAt}`
+
+      generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+    } finally {
+      isGeneratingTransactionPDF.value = false
+    }
+  }
+
+  const getDescriptions = (transaction: TransactionCard) => {
+    const statuses: TransactionCardStatus[] = [TransactionCardStatus.DECLINED, TransactionCardStatus.REVERSED]
+
+    if (statuses.includes(transaction.status)) {
+      return transaction.description + ' - ' + transaction.reasonRejectingTransaction
+    }
+
+    return transaction.description
+  }
+
   const formatDate = (date: Date) => {
-    const d = new Date(date)
+    const d = new Date()
     const year = d.getFullYear()
     const month = ('0' + (d.getMonth() + 1)).slice(-2)
     const day = ('0' + d.getDate()).slice(-2)
@@ -100,25 +116,72 @@ export const useTransactionCard = () => {
     return `${day} ${monthNames[parseInt(month) - 1]}, ${time.slice(0, 5)}`
   }
 
-  const getDescriptions = (transaction: TransactionCard) => {
-    if ([TransactionCardStatus.DECLINED, TransactionCardStatus.REVERSED].includes(transaction.status)) {
-      return transaction.description + ' - ' + transaction.reasonRejectingTransaction
-    }
+  totalPages.value = Math.ceil(totalRecords.value / itemsPage.value)
 
-    return transaction.description
+  const pagination = reactive({
+    totalRecords: totalRecords.value,
+    nextPag: nextPag.value,
+    currentPage: currentPage.value,
+    itemsPage: itemsPage.value,
+    totalPages: totalPages.value,
+  })
+
+  const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+      currentPage.value++
+      useTransactionHistoryCard.setNextPage(currentPage.value)
+      getHistoryTransaction(currentPage.value, 10)
+    }
   }
 
+  const prevPage = () => {
+    if (currentPage.value > 1) {
+      currentPage.value--
+      useTransactionHistoryCard.setNextPage(currentPage.value)
+      getHistoryTransaction(currentPage.value, 10)
+    }
+  }
+
+  const updateItemsPage = (itemPage: number) => {
+    itemsPage.value = itemPage
+    useTransactionHistoryCard.setLimit(itemPage)
+    getHistoryTransaction(currentPage.value, itemsPage.value)
+  }
+
+  watch(totalRecords, newValue => {
+    pagination.totalRecords = newValue
+    totalPages.value = Math.ceil(newValue / itemsPage.value)
+    pagination.totalPages = totalPages.value === 0 ? 1 : totalPages.value
+  })
+
+  watch(itemsPage, newValue => {
+    totalPages.value = Math.ceil(totalRecords.value / newValue)
+    pagination.totalPages = totalPages.value === 0 ? 1 : totalPages.value
+  })
+
+  watch(nextPag, newVal => {
+    pagination.nextPag = newVal
+  })
+
+  watch(currentPage, newVal => {
+    pagination.currentPage = newVal
+  })
+
   return {
-    getDescriptions,
     getHistoryTransaction,
     transactionList,
     getLastSixDigits,
     formatDate,
     formatDateMobile,
     loadMoreTransactions,
+    getDescriptions,
     loadingTransactions,
-    nextPage,
-    isGeneratingTransactionPDF,
     generatePdfTransactionCard,
+    isGeneratingTransactionPDF,
+    pagination,
+    nextPage,
+    currentPage,
+    prevPage,
+    updateItemsPage,
   }
 }
