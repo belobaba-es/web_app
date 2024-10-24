@@ -104,10 +104,12 @@
             </div>
           </div>
         </div>
-        <MessageAlertActiveTwoFactorAuth />
       </div>
 
       <div class="col-12 footer-withdrawal float-left">
+        <div class="col-12 float-left">
+          <MessageAlertActiveTwoFactorAuth />
+        </div>
         <div class="col-12 xl:col-8 float-left">
           {{ t('informationCorrectContinue') }}<b class="font-semi-bold"> {{ t('continue') }}</b> <br />
           {{ t('reviewDataAgain') }}<b class="font-semi-bold"> {{ t('backButtonTitle') }}</b>
