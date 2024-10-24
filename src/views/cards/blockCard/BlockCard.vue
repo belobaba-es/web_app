@@ -33,7 +33,7 @@
         </div>
         <div class="flex justify-content-center">
           <div style="width: 100%">
-            <Button :label="t('labelBlockCard')" @click="requireConfirmation()" />
+            <Button :label="t('labelBlockCard')" :loading="loading" @click="requireConfirmation()" />
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ import { useRouter } from 'vue-router'
 const { t } = useI18n()
 const router = useRouter()
 const confirm = useConfirm()
-const { blockCard, dataBlockCard, visible } = useCardBlock()
+const { blockCard, dataBlockCard, visible, loading } = useCardBlock()
 const requireConfirmation = () => {
   confirm.require({
     group: 'templating',

@@ -5,13 +5,13 @@
     </div>
     <div class="mt-4 px-4 pb-8" style="color: #444444; background-color: white">
       <div v-if="loading">
-        <Skeleton width="10rem" class="mb-2"></Skeleton>
-        <Skeleton width="15rem" height="2rem" class="mb-3"></Skeleton>
-        <Skeleton width="5rem" class="mb-2"></Skeleton>
-        <Skeleton width="10rem" height="2rem" class="mb-3"></Skeleton>
-        <Skeleton width="5rem" class="mb-2"></Skeleton>
-        <Skeleton width="4rem" height="2rem" class="mb-3"></Skeleton>
-        <Skeleton width="8rem" height="2rem" class="mb-3"></Skeleton>
+        <Skeleton class="mb-2" width="10rem"></Skeleton>
+        <Skeleton class="mb-3" height="2rem" width="15rem"></Skeleton>
+        <Skeleton class="mb-2" width="5rem"></Skeleton>
+        <Skeleton class="mb-3" height="2rem" width="10rem"></Skeleton>
+        <Skeleton class="mb-2" width="5rem"></Skeleton>
+        <Skeleton class="mb-3" height="2rem" width="4rem"></Skeleton>
+        <Skeleton class="mb-3" height="2rem" width="8rem"></Skeleton>
       </div>
       <div v-else>
         <div class="flex justify-content-between">
@@ -23,7 +23,7 @@
             <i
               v-if="isCardInfoVisible"
               class="pi pi-clone pl-3 pt-3"
-              style="font-size: 1.5rem; color: #00beb0"
+              style="font-size: 1.5rem; color: var(--primary-color)"
               @click="copyToClipboard(selectedCard?.cardNumber)"
             ></i>
           </div>
@@ -38,7 +38,7 @@
           <i
             v-if="isCardInfoVisible"
             class="pi pi-clone pl-3 pt-3"
-            style="font-size: 1.5rem; color: #00beb0"
+            style="font-size: 1.5rem; color: var(--primary-color)"
             @click="copyToClipboard(selectedCard?.expirationDate)"
           ></i>
         </div>
@@ -51,7 +51,7 @@
             <i
               v-if="isCardInfoVisible"
               class="pi pi-clone pl-3 pt-3"
-              style="font-size: 1.5rem; color: #00beb0"
+              style="font-size: 1.5rem; color: var(--primary-color)"
               @click="copyToClipboard(selectedCard?.cvv)"
             ></i>
           </div>
@@ -68,7 +68,7 @@
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useCardCenter } from '../Composables/useCardCenter'
 import { useCardCenterValidation } from '../Composables/useCardCenterValidation'
 import { useI18n } from 'vue-i18n'

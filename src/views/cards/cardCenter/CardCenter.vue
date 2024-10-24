@@ -51,7 +51,7 @@
                 <p class="m-0 font-semi-bold" style="color: var(--primary-color); font-size: 16px">
                   {{ t('cardType') }}
                 </p>
-                <p class="m-0 font-semi-bold">{{ selectedCard?.isPhysical ? 'Fisica' : 'Virtual' }}</p>
+                <p class="m-0 font-semi-bold">{{ selectedCard?.isPhysical ? 'Physical' : 'Virtual' }}</p>
               </div>
               <div class="flex w-6 justify-content-between">
                 <div class="flex align-items-center">

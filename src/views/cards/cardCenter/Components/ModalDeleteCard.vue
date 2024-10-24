@@ -2,13 +2,13 @@
   <Dialog
     v-model:visible="props.showModal"
     :modal="true"
-    closeIcon="pi pi-times-circle"
-    class="modal-asset-selector"
     :style="{ width: '30rem' }"
+    class="modal-asset-selector"
+    closeIcon="pi pi-times-circle"
   >
     <template #header>
       <div class="header-container ml-6">
-        <h2 class="font-medium text-center mb-0" style="color: #00beb0">{{ t('deleteVirtualCard') }}</h2>
+        <h2 class="font-medium text-center mb-0" style="color: var(--primary-color)">{{ t('deleteVirtualCard') }}</h2>
         <p class="text-center">{{ t('deleteCardText') }}</p>
       </div>
     </template>
@@ -16,26 +16,26 @@
     <template #footer>
       <div class="footer-container">
         <Button
-          @click="handleDeleteCardModal(false)"
+          :label="t('cancel')"
           class="accept-button w-4 py-2"
           severity="secondary"
-          :label="t('cancel')"
+          @click="handleDeleteCardModal(false)"
         />
         <Button
+          :disabled="loading"
+          :label="t('confirm')"
+          :loading="loading"
+          class="bg-red-500 border-red-500 w-4 py-2"
           icon="pi pi-sync"
           iconPos="right"
-          class="bg-red-500 border-red-500 w-4 py-2"
-          :label="t('confirm')"
           @click="handleDeleteCard()"
-          :disabled="loading"
-          :loading="loading"
         />
       </div>
     </template>
   </Dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Dialog from 'primevue/dialog'
 
 import { defineProps } from 'vue'
