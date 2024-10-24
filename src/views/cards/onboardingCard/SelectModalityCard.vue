@@ -8,9 +8,9 @@
         <div class="col-2">
           <ButtonCardType :img="iconVirtual" :imgSelected="iconVirtualWhite" :typeCard="CardModality.VIRTUAL" />
         </div>
-        <div class="col-2">
-          <ButtonCardType :img="iconFisica" :imgSelected="iconFisicaWhite" :typeCard="CardModality.PHYSICAL" />
-        </div>
+        <!--        <div class="col-2">-->
+        <!--          <ButtonCardType :img="iconFisica" :imgSelected="iconFisicaWhite" :typeCard="CardModality.PHYSICAL" />-->
+        <!--        </div>-->
       </div>
     </div>
 

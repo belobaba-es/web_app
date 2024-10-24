@@ -4,9 +4,6 @@
       <div class="col-11">
         <h2 class="font-regular">{{ t('dataUser') }}</h2>
       </div>
-      <div class="col mt-4">
-        <Button icon="pi pi-pencil" label="editar" @click="buttonEdit" />
-      </div>
 
       <div class="card-type-card p-0 m-0 pl-3 pr-3">
         <p class="font-regular">{{ t('typeCardRequest') }}: {{ typeCardSelectString }}</p>
@@ -26,7 +23,6 @@
           <InputMask
             id="basic"
             v-model="onboardingCardDataClient.documentExpirationDate"
-            :disabled="enableEdit"
             class="w-full"
             mask="9999-99-99"
             required
@@ -71,7 +67,6 @@
         <div class="p-inputgroup">
           <Dropdown
             v-model="onboardingCardDataClient.nationality"
-            :disabled="enableEdit"
             :loading="loadingCountriesField"
             :options="countries"
             :placeholder="t('selectNationality')"
@@ -104,19 +99,13 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-4 xl:col-5">
         <label>{{ t('divisorLabel') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText
-            v-model="onboardingCardDataClient.addressShipping.streetOne"
-            :disabled="enableEdit"
-            class="w-full"
-            required
-            type="text"
-          />
+          <InputText v-model="onboardingCardDataClient.addressShipping.streetOne" class="w-full" required type="text" />
         </div>
       </div>
       <div class="field col-12 sm:col-12 md:col-12 lg:col-2 xl:col-2">
         <label>{{ t('numberDomicile') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText v-model="domicileNumber" :disabled="enableEdit" class="w-full" required type="text" />
+          <InputText v-model="domicileNumber" class="w-full" required type="text" />
         </div>
       </div>
 
@@ -163,8 +152,6 @@ const {
   typeCardSelectString,
   saveData,
   onboardingCardDataClient,
-  buttonEdit,
-  enableEdit,
   domicileNumber,
   domicileOptions,
   onChangeDomicileHandler,

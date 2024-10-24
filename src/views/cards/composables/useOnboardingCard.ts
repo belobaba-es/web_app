@@ -42,7 +42,6 @@ export const useOnboardingCard = () => {
   } = useOnboardingPersonal()
   const currentStepIndex = ref<number>(0)
   const toast = useToast()
-  const enableEdit = ref(true)
   const route = useRoute()
   const { t } = useI18n({ useScope: 'global' })
   const { getClientId } = useAuthStore()
@@ -99,10 +98,6 @@ export const useOnboardingCard = () => {
       detail: t('msnErrorCard'),
       life: 4000,
     })
-  }
-
-  const buttonEdit = () => {
-    enableEdit.value = !enableEdit.value
   }
 
   const onChangeDomicileHandler = (event: string) => {
@@ -250,9 +245,7 @@ export const useOnboardingCard = () => {
     saveData,
     submitting,
     onboardingCardDataClient,
-    buttonEdit,
     domicileOptions,
-    enableEdit,
     typeCardSelect,
     sendingTypeCard,
     onboardingPersonal,

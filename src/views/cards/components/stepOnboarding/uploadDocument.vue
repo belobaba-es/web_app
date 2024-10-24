@@ -64,6 +64,7 @@
         <Button
           :disabled="disabled"
           :label="t('nextButtonText')"
+          :loading="submitting"
           class="mb-4 mt-3 mr-2 w-8rem"
           @click="sendingTypeCard"
         />
