@@ -17,7 +17,7 @@
               class="pi pi-arrow-circle-down"
               style="font-size: 1.5rem; color: #fe5c73"
             ></i>
-            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
+            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: var(--primary-color)"></i>
             <span class="ml-3" style="font-size: 1rem">
               {{ getDescriptions(transaction) }}
             </span>
@@ -122,7 +122,7 @@ const isPositiveAmount = (amount: number) => {
 }
 
 .table th {
-  color: #00beb0;
+  color: var(--primary-color);
   padding: 12px 16px;
   border-bottom: 1px solid #ddd;
   white-space: nowrap;
@@ -172,7 +172,7 @@ const isPositiveAmount = (amount: number) => {
 .col-recibo {
   width: 100px;
   text-align: center;
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .table tr:nth-child(even) {
@@ -180,7 +180,7 @@ const isPositiveAmount = (amount: number) => {
 }
 
 .buttonColor {
-  color: #00beb0;
+  color: var(--primary-color);
 }
 
 .buttonColor:hover {
