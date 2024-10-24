@@ -145,7 +145,7 @@ export const deleteVirtualCard = async (cardId: number): Promise<{ message: stri
 
 export const historyTransaction = async (page: number, limit: number = 10): Promise<Pagination<TransactionCard>> => {
   const response = await axiosInstanceNobaCard.get(
-    `/transaction-history/${page}&limit=${limit}`,
+    `/transaction-history/${page}?limit=${limit}`,
     await headerRequestNobaCard()
   )
 
