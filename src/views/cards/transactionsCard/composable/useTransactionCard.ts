@@ -68,7 +68,7 @@ export const useTransactionCard = () => {
       transactionPDF[t('transactionNumber')] = transaction.transactionId
       transactionPDF[t('datePicker')] = `${transaction.createdAt}`
 
-      generateTransactionReceipt(fileName, logo, title, transactionPDF, footerPdf)
+      generateTransactionReceipt(fileName, logo, title, transactionPDF)
     } catch (error) {
       console.error('Error generating PDF:', error)
     } finally {

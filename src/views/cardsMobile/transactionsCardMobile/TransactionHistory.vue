@@ -17,11 +17,12 @@
               class="pi pi-arrow-circle-down"
               style="font-size: 1.5rem; color: #fe5c73"
             ></i>
-            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: var(--primary-color)"></i>
+            <i v-else class="pi pi-arrow-circle-up" style="font-size: 1.5rem; color: #00beb0"></i>
             <span class="ml-3" style="font-size: 1rem">
               {{ getDescriptions(transaction) }}
             </span>
           </div>
+
           <p class="align-items-center" style="color: var(--primary-color); width: 10rem">
             {{ formatDateMobile(transaction.createdAt.toString()) }}
           </p>
@@ -37,28 +38,18 @@
 
           <div>
             <Button
-              class="font-semi-bold buttonColor"
-              :label="t('download')"
               :loading="isGeneratingTransactionPDF"
-              @click="generatePdfTransactionCard(transaction)"
+              class="buttonColor"
+              icon="pi pi-download"
               outlined
+              size="large"
+              style="border: none; font-size: 1rem"
+              text
+              @click="generatePdfTransactionCard(transaction)"
             />
           </div>
         </div>
         <Divider type="solid" />
-      </div>
-    </div>
-
-    <div v-if="nextPage" class="mt-5">
-      <div class="flex justify-content-end mr-3">
-        <Button
-          :label="t('loadMore')"
-          :loading="loadingTransactions"
-          class="p-button load-more-btn w-13rem"
-          icon="pi pi-angle-right"
-          iconPos="right"
-          @click="loadMoreTransactions"
-        />
       </div>
     </div>
 
@@ -71,6 +62,17 @@
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
     </template>
   </div>
+
+  <div class="justify-content-center align-items-center flex mt-4">
+    <GeneralPaginator
+      v-if="transactionList.length !== 0"
+      :pagination="pagination"
+      class="mt-4"
+      @nextPage="nextPage"
+      @prevPage="prevPage"
+      @updateItemsPage="updateItemsPage"
+    />
+  </div>
 </template>
 <script lang="ts" setup>
 import Button from 'primevue/button'
@@ -79,18 +81,19 @@ import Divider from 'primevue/divider'
 import { useI18n } from 'vue-i18n'
 import { useTransactionCard } from '../../cards/transactionsCard/composable/useTransactionCard'
 import SelectCardHeader from '../components/SelectCardHeader.vue'
+import GeneralPaginator from '../../../components/GeneralPaginator.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
-  getHistoryTransaction,
   transactionList,
   formatDateMobile,
   getDescriptions,
-  loadMoreTransactions,
-  loadingTransactions,
+  nextPage,
   generatePdfTransactionCard,
   isGeneratingTransactionPDF,
-  nextPage,
+  pagination,
+  prevPage,
+  updateItemsPage,
 } = useTransactionCard()
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount.toString()

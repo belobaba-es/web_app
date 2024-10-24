@@ -4,9 +4,7 @@
       <div class="col-11">
         <h2 class="font-regular">{{ t('dataUser') }}</h2>
       </div>
-      <div>
-        <Button icon="pi pi-pencil" label="editar" @click="buttonEdit" />
-      </div>
+   
       <div class="col-12 flex justify-content-between flex-wrap px-0">
         <div class="card-type-card p-0 m-0 pl-3 pr-3 primary-color">
           <p class="font-regular my-2 mt-md-3 mb-md-3">{{ t('typeCardRequest') }}: {{ typeCardSelectString }}</p>
@@ -14,7 +12,7 @@
       </div>
     </div>
 
-    <div class="mt-3" v-if="!isShowRestOfForm">
+    <div v-if="!isShowRestOfForm" class="mt-3">
       <div class="grid mt-4">
         <div class="field col-6">
           <label>{{ t('dni') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
@@ -28,7 +26,6 @@
             <InputMask
               id="basic"
               v-model="onboardingCardDataClient.documentExpirationDate"
-              :disabled="enableEdit"
               class="w-full"
               mask="9999-99-99"
               required
@@ -73,7 +70,6 @@
           <div class="p-inputgroup">
             <Dropdown
               v-model="onboardingCardDataClient.nationality"
-              :disabled="enableEdit"
               :loading="loadingCountriesField"
               :options="countries"
               :placeholder="t('selectNationality')"
@@ -110,7 +106,6 @@
           <div class="p-inputgroup">
             <InputText
               v-model="onboardingCardDataClient.addressShipping.streetOne"
-              :disabled="enableEdit"
               class="w-full"
               required
               type="text"
@@ -122,7 +117,7 @@
           <div class="field col-12">
             <label>{{ t('numberDomicile') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
             <div class="p-inputgroup">
-              <InputText v-model="domicileNumber" :disabled="enableEdit" required type="text" />
+              <InputText v-model="domicileNumber" required type="text" />
             </div>
           </div>
           <div class="field col-8">
@@ -130,19 +125,19 @@
             <div class="p-inputgroup">
               <div class="flex flex-wrap gap-4">
                 <div
-                  class="flex items-center border-1"
-                  :class="{ 'hover-domicile': !disableDomicileType }"
-                  style="border-color: #ececec; padding: 0.5rem"
                   v-for="item in domicileOptions"
+                  :class="{ 'hover-domicile': !disableDomicileType }"
+                  class="flex items-center border-1"
+                  style="border-color: #ececec; padding: 0.5rem"
                   @click="() => onChangeDomicileHandler(addressShippingDomicileNumber)"
                 >
                   <label :for="item.label" class="mr-2">{{ item.label }}</label>
                   <RadioButton
                     v-model="addressShippingDomicileNumber"
+                    :disabled="disableDomicileType"
                     :inputId="item.label"
                     :name="item.label"
                     :value="item.value"
-                    :disabled="disableDomicileType"
                   />
                 </div>
               </div>
@@ -154,12 +149,12 @@
       <div class="field col-12 flex align-items-center justify-content-center">
         <Button
           :label="t('cancel')"
-          outlined
           class="px-5 mt-2 btn-submit mr-2"
-          @click="() => router.push('/cards/onboarding')"
+          outlined
           severity="secondary"
+          @click="() => router.push('/cards/onboarding')"
         />
-        <div class="ml-2" v-if="isShowRestOfForm">
+        <div v-if="isShowRestOfForm" class="ml-2">
           <router-link v-slot="{ navigate }" custom to="/cards/onboarding/step/document-upload">
             <Button
               :label="t('nextButtonText')"
@@ -174,9 +169,9 @@
             :label="t('next')"
             :loading="submitting"
             class="px-5 mt-2 btn-submit ml-2"
-            @click="handleShowRestOfForm"
-            icon-pos="right"
             icon="pi pi-angle-right"
+            icon-pos="right"
+            @click="handleShowRestOfForm"
           />
         </div>
       </div>
@@ -206,8 +201,6 @@ const {
   typeCardSelectString,
   saveData,
   onboardingCardDataClient,
-  buttonEdit,
-  enableEdit,
   domicileNumber,
   domicileOptions,
   onChangeDomicileHandler,
