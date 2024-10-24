@@ -67,7 +67,7 @@
         <div class="col-2 flex align-items-center">
           <template v-if="type === 'fiat'">
             <div v-if="transactionType === 'buy'">
-              <Button type="button" class="bg-white border-none border-round-3xl max-btn" @click="maxCountInput('USD')">
+              <Button type="button" class="bg-white border-none border-round-3xl max-btn" @click="maxCountInput(fiatUsdAssetCode)">
                 <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span-max">MÁX</span>
               </Button>
             </div>
@@ -90,15 +90,21 @@
 
     <template v-if="type === 'fiat'">
       <span v-if="transactionType === 'buy'">
-        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
+        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(fiatUsdAssetCode) }}</span>
       </span>
     </template>
 
-    <template v-else>
+    <article v-else class="flex flex-row justify-content-between">
       <span v-if="assetCode">
         {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(assetCode) }}</span>
       </span>
-    </template>
+      <span v-if="assetCode && transactionType === 'sell'">
+        {{ t('networkFee') }}:
+        <span class="font-medium">{{
+            networkFee ? `${networkFee} ${assetCode}` : '--'
+          }}</span>
+      </span>
+    </article>
   </div>
 </template>
 
@@ -111,6 +117,9 @@ import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import InputNumber from 'primevue/inputnumber'
 import { storeToRefs } from 'pinia'
 import { useToast } from 'primevue/usetoast'
+import { FiatAssetCodes } from '../../wallet/types/assetCodes.interface'
+import { useAuth } from '../../../composables/useAuth'
+import { WalletProvider } from '../../login/types/login.interface'
 
 interface Props {
   type: string
@@ -119,6 +128,7 @@ interface Props {
 const toast = useToast()
 
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
+const { getWalletProvider } = useAuth()
 
 const {
   amountAfterRemovingFee,
@@ -131,6 +141,7 @@ const {
   transactionType,
   assetCode,
   assetId,
+  networkFee
 } = storeToRefs(useSwapStore())
 
 const { createExchange, clearTimer } = useSwapStore()
@@ -138,7 +149,8 @@ const { createExchange, clearTimer } = useSwapStore()
 const { t } = useI18n({ useScope: 'global' })
 
 const props = defineProps<Props>()
-const balance = getBalanceByCode('USD')
+const fiatUsdAssetCode =
+  getWalletProvider() === WalletProvider.PINTTOSOFT ? FiatAssetCodes.USD_PANAMA : FiatAssetCodes.USD
 
 const openModalSelector = () => {
   showModalAssetSelector.value = true
@@ -185,8 +197,8 @@ const verifyAmountForCreateQoute = () => {
 }
 
 const maxCountInput = (typeCode: string) => {
-  if (typeCode === 'USD') {
-    amountAfterRemovingFee.value = getBalanceByCode('USD', false)
+  if (typeCode === fiatUsdAssetCode) {
+    amountAfterRemovingFee.value = getBalanceByCode(fiatUsdAssetCode, false)
   } else {
     unitCount.value = getBalanceByCode(assetCode.value)
   }
@@ -194,8 +206,13 @@ const maxCountInput = (typeCode: string) => {
 
 const getUsdIcon = () => {
   const defaultUsdIcon = 'https://storage.googleapis.com/noba-dev/USD.svg'
+  const defaultUsdPanamaIcon = 'https://storage.googleapis.com/noba-dev/USD_PANAMA.svg'
+  const defaultUSDIcon = {
+    [FiatAssetCodes.USD]: defaultUsdIcon,
+    [FiatAssetCodes.USD_PANAMA]: defaultUsdPanamaIcon,
+  }
 
-  return getWalletByAssetCode('USD')?.icon ?? defaultUsdIcon
+  return getWalletByAssetCode(fiatUsdAssetCode)?.icon ?? defaultUSDIcon[fiatUsdAssetCode]
 }
 </script>
 

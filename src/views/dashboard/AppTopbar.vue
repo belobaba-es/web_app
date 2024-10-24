@@ -8,7 +8,7 @@
       <div class="mr-2 ml-2">
         <p style="margin: 0; font-size: 12px">{{ t('balance') }}</p>
         <span>
-          <strong class="font-bold"> {{ getBalanceByCode('USD') }} USD</strong>
+          <strong class="font-bold"> {{ getBalanceByCode(usdAssetCode) }} {{usdAssetCode}}</strong>
         </span>
       </div>
       <!--      <Button class="p-button-outlined mr-2 ml-2">-->
@@ -31,6 +31,8 @@ import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo-blanco.png'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
+import { WalletProvider } from '../login/types/login.interface'
+import { FiatAssetCodes } from '../wallet/types/assetCodes.interface'
 
 const router = useRouter()
 const { getBalanceByCode } = useBalanceWallet()
@@ -38,7 +40,8 @@ const emit = defineEmits(['menu-toggle'])
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { getUserName, getClientId, logout } = useAuth()
+const { getUserName, getClientId, logout, getWalletProvider } = useAuth()
+const usdAssetCode = getWalletProvider() === WalletProvider.PINTTOSOFT ? FiatAssetCodes.USD_PANAMA : FiatAssetCodes.USD
 
 const username = getUserName()
 
