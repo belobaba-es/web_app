@@ -9,24 +9,24 @@
         <div style="width: 251px">
           <ButtonCardType :img="iconVirtual" :imgSelected="iconVirtualWhite" :typeCard="CardModality.VIRTUAL" />
         </div>
-        <div style="width: 251px">
-          <ButtonCardType :img="iconFisica" :imgSelected="iconFisicaWhite" :typeCard="CardModality.PHYSICAL" />
-        </div>
+        <!--        <div style="width: 251px">-->
+        <!--          <ButtonCardType :img="iconFisica" :imgSelected="iconFisicaWhite" :typeCard="CardModality.PHYSICAL" />-->
+        <!--        </div>-->
       </div>
     </div>
 
     <div class="containerCard mt-4">
       <Button
         :label="t('next')"
-        @click="nextStepUserData()"
-        icon-pos="right"
         icon="pi pi-angle-right"
+        icon-pos="right"
         style="background: var(--primary-color)"
+        @click="nextStepUserData()"
       />
     </div>
   </section>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import iconFisica from '../../../assets/icons/fisica.png'
@@ -41,7 +41,7 @@ import OnboardingHeader from './components/OnboardingHeader.vue'
 const { t } = useI18n({ useScope: 'global' })
 const { nextStepUserData } = useOnboardingCard()
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 h1 {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
