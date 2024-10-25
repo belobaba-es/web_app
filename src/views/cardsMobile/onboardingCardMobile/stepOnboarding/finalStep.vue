@@ -27,6 +27,6 @@ import cardDone from '../../../../assets/icons/card-done.png'
 const router = useRouter()
 const { t } = useI18n({ useScope: 'global' })
 const goHome = () => {
-  router.push('/')
+  router.push('/cards')
 }
 </script>
