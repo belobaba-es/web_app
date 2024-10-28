@@ -33,8 +33,6 @@
           @goBack="toBack"
           @validForm="validForm"
         />
-
-        <MessageAlertActiveTwoFactorAuth />
       </div>
     </div>
   </div>
@@ -54,7 +52,6 @@
 import { useWithdraw } from '../../../withdraw/composable/useWithdraw'
 import { useI18n } from 'vue-i18n'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
-import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'

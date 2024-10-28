@@ -36,8 +36,6 @@
           @goBack="toBack"
           @validForm="validForm"
         />
-
-        <MessageAlertActiveTwoFactorAuth />
       </div>
     </div>
   </div>
@@ -57,7 +55,6 @@
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import { useI18n } from 'vue-i18n'
 import MakeMobileWithdrawals from '../../components/MakeMobileWithdrawals.vue'
-import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import Dialog from 'primevue/dialog'
 import ConfirmWithdrawUsa from '../../../withdraw/components/modalWithdraw/ConfirmWithdrawUsa.vue'
 import { ref } from 'vue'

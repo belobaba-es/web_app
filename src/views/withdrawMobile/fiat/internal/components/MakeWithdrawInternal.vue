@@ -43,7 +43,6 @@
             @goBack="goBack"
             @validForm="validForm"
           />
-          <MessageAlertActiveTwoFactorAuth />
         </div>
       </div>
     </div>
@@ -69,7 +68,6 @@ import MakeMobileWithdrawals from '../../../components/MakeMobileWithdrawals.vue
 import { useBalanceWallet } from '../../../../../composables/useBalanceWallet'
 import { useMobileWithdrawalInternalFiat } from '../composable/useMobileWithdrawalInternalFiat'
 import { useAssets } from '../../../../../composables/useAssets'
-import MessageAlertActiveTwoFactorAuth from '../../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import BackButtonMobile from '../../../../../components/BackButtonMobile.vue'
 import Dialog from 'primevue/dialog'
