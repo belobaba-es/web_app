@@ -8,6 +8,7 @@ export interface BeneficiariesInternalResponse extends Pagination<Beneficiary> {
 export interface BeneficiaryAsset {
   counterpartyId?: string
   clientId?: string
+  assetId: string
   isInternal: string
   informationWallet: {
     assetId: string

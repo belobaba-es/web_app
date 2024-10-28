@@ -1062,5 +1062,7 @@
   "importantNoteText": "Antes de retirar criptomonedas, verifica las opciones y selecciona la red correcta. Consulta la documentación de tu wallet o exchange para asegurarte del procedimiento adecuado; esto puede evitar la pérdida de tus activos.",
   "importantNote": "NOTA IMPORTANTE: ",
   "textCancel": "Cancelada con éxito",
-  "textCancel2": "Tarjeta cancelada con éxito, no podrás hacer uso de la misma, puedes hacer clic en solicitar una nueva."
+  "textCancel2": "Tarjeta cancelada con éxito, no podrás hacer uso de la misma, puedes hacer clic en solicitar una nueva.",
+  "assets": "Assets",
+  "messageErrorAsset": "Probablemente haya un problema con el activo de su contraparte, comuníquese con el servicio de atención al cliente"
 }

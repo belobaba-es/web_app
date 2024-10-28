@@ -49,10 +49,9 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { onMounted, watch } from 'vue'
+import { watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import MakeMobileWithdrawals from '../../components/MakeMobileWithdrawals.vue'
-import { useBeneficiaryCrypto } from '../../../withdraw/crypto/composable/useBeneficiaryCrypto'
 import { useWithdrawalCrypto } from '../../../withdraw/crypto/composable/useWithdrawalCrypto'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { Asset } from '../../../deposit/types/asset.interface'
@@ -61,7 +60,6 @@ import DialogConfirmationWithdrawal from '../../../withdraw/crypto/components/Di
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 
 const { t } = useI18n({ useScope: 'global' })
-const { isAssetEdit, form } = useBeneficiaryCrypto()
 const toast = useToast()
 const {
   transactionData,
@@ -69,17 +67,13 @@ const {
   fee,
   goBack,
   beneficiaryInformation,
-  isWithdrawal,
   isValidFormWithdrawal,
   assetCodeSelected,
   visible,
+  form,
 } = useWithdrawalCrypto()
 
 const { getBalanceByCode } = useBalanceWallet()
-onMounted(() => {
-  isAssetEdit.value = false
-  isWithdrawal.value = true
-})
 
 const validForm = () => {
   if (!isValidFormWithdrawal()) {
