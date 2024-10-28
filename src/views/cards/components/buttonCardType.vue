@@ -10,7 +10,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, watchEffect } from 'vue'
 import { CardModality } from '../enums/cardModality.enum'
 import { useCardReposition } from '../repositionCard/composable/useCardReposition'
 import { useLayoutCard } from '../composables/useLayoutCard'
@@ -28,12 +28,20 @@ const props = defineProps<Props>()
 
 const isSelected = ref(false)
 
+watchEffect(() => {
+  isSelected.value = typeCardSelect.value.includes(props.typeCard)
+})
+
 const toggleSelection = () => {
   if (!isSelected.value && typeCardSelect.value.length > 2) {
     return
   }
-  isSelected.value = !isSelected.value
 
+  if (!isSelected.value && typeCardSelect.value.includes(props.typeCard)) {
+    return
+  }
+
+  isSelected.value = !isSelected.value
   if (isSelected.value) {
     typeCardSelect.value.push(props.typeCard)
   } else {

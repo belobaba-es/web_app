@@ -171,7 +171,6 @@ export const useOnboardingCard = () => {
 
   const sendingTypeCard = () => {
     submitting.value = true
-
     onboardingCard(sendingDataCard.value)
       .then(r => {
         submitting.value = false

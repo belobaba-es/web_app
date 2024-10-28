@@ -55,7 +55,7 @@
       </div>
     </div>
     <div>
-      <div class="field col-12 flex align-items-center justify-content-end" v-if="showLastUploadDocumentButton">
+      <div class="field col-12 flex align-items-center justify-content-center" v-if="showLastUploadDocumentButton">
         <Button
           :label="t('backButtonText')"
           class="px-5 mt-2 mr-5"
@@ -143,12 +143,7 @@ const handleFileUploader = (event: { side: string; type: string }) => {
 
   submissionTypeDocument.value.selfie = true
 
-  if (
-    submissionTypeDocument.value.sideFront &&
-    submissionTypeDocument.value.sideBack &&
-    submissionTypeDocument.value.selfie
-  ) {
-    console.log('habil')
+  if (submissionTypeDocument.value.selfie) {
     buttonToSendIsdisabled.value = false
   }
 }
