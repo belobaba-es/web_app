@@ -1,7 +1,6 @@
 import { ref, watch } from 'vue'
 import { OnboardingPersonal } from '../types/onboardingPersonal'
 import { OnboardingService } from '../views/onboarding/services/onboarding'
-import showMessage from '../shared/showMessageArray'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
@@ -80,7 +79,7 @@ export const useOnboardingPersonal = () => {
         })
         .catch(e => {
           submitting.value = false
-          processException(toast, t, e.response.data)
+          processException(toast, t, e)
           reject(e)
         })
     })
@@ -102,7 +101,7 @@ export const useOnboardingPersonal = () => {
       })
       .catch(e => {
         submitting.value = false
-        showMessage(toast, e.response.data)
+        processException(toast, t, e)
       })
   }
 

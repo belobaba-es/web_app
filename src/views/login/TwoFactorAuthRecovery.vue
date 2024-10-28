@@ -53,8 +53,8 @@ import { useToast } from 'primevue/usetoast'
 import { TwoFactorService } from '../../shared/services/twoFactor'
 import Message from 'primevue/message'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useAuth } from '../../composables/useAuth'
+import { processException } from '../../shared/processException'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -81,11 +81,7 @@ const makeRequestRecoveryTwoFactorAuth = () => {
       verifySuccess.value = true
     })
     .catch(e => {
-      toast.add({
-        severity: 'warn',
-        detail: e.response.data.error ?? e.response.data.message,
-        life: 8000,
-      })
+      processException(toast, t, e)
     })
 }
 </script>

@@ -5,7 +5,6 @@ import { useToast } from 'primevue/usetoast'
 import { useOnboardingCompanyStore } from '../stores/useOnboardingCompanyStore'
 import { useOnboardingCompany } from './useOnboardingCompany'
 import { useRouter } from 'vue-router'
-import showMessage from '../shared/showMessageArray'
 import { processException } from '../shared/processException'
 import { useI18n } from 'vue-i18n'
 
@@ -120,7 +119,7 @@ export const useShareholder = () => {
       })
       .catch(e => {
         submitting.value = false
-        showMessage(toast, e.response.data)
+        processException(toast, t, e)
       })
   }
 

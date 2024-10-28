@@ -50,11 +50,13 @@ import FiatInstructionPanama from './components/FiatInstructionPanama.vue'
 import FiatInstructionAchUsd from './components/FiatInstructionAchUsd.vue'
 import Skeleton from 'primevue/skeleton'
 import MaintenanceDeposits from './MaintenanceDeposits.vue'
+import { processException } from '../../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
 const { isNaturalAccount, isFromUnitedStates } = useAuth()
 const { isExistsWallet } = useBalanceWallet()
-
+const toast = useToast()
 const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
@@ -77,8 +79,9 @@ onMounted(() => {
 
       isLoading.value = false
     })
-    .catch(() => {
+    .catch(e => {
       isLoading.value = false
+      processException(toast, t, e)
     })
 })
 </script>

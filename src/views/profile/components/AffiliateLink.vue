@@ -17,6 +17,7 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import InputText from 'primevue/inputtext'
 import { useAuth } from '../../../composables/useAuth'
+import { processException } from '../../../shared/processException'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -33,12 +34,17 @@ const generateReferralLink = (accountId: string) => {
 }
 
 const getBusinessAllieStatus = async () => {
-  businessAllieService.getBusinessAllieStatus().then(res => {
-    if (res.status === 'APPROVED') {
-      isApproved.value = true
-      generateReferralLink(getClientId())
-    }
-  })
+  businessAllieService
+    .getBusinessAllieStatus()
+    .then(res => {
+      if (res.status === 'APPROVED') {
+        isApproved.value = true
+        generateReferralLink(getClientId())
+      }
+    })
+    .catch(e => {
+      processException(toast, t, e)
+    })
 }
 
 const copyToClipboardReferralLink = () => {

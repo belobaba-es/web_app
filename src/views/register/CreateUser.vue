@@ -158,6 +158,8 @@ import Checkbox from 'primevue/checkbox'
 import patriotEs from './components/patriotEs.vue'
 import patriotEn from './components/patriotEn.vue'
 import { RegisterService } from './services/register'
+import { processException } from '../../shared/processException'
+import showExceptionError from '../../shared/showExceptionError'
 
 const submitting = ref(false)
 const visible = ref(false)
@@ -216,62 +218,32 @@ const getTheLinkToPoliticsAndPrivacy = () => {
 
 const handleSubmit = () => {
   if (form.password.length < 8) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('passwordLength'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('passwordLength'))
     return
   }
 
   if (!/[A-Z]/.test(form.password)) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('passwordOneCapitalLetter'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('passwordOneCapitalLetter'))
     return
   }
 
   if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.email)) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('invalidFormatEmail'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('invalidFormatEmail'))
     return
   }
 
   if (form.password !== form.passwordConfirmation) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('passwordsDontMatch'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('passwordsDontMatch'))
     return
   }
 
   if (form.terms === false) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('acceptTermsAndConditions'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('acceptTermsAndConditions'))
     return
   }
 
   if (form.patriot === false) {
-    toast.add({
-      severity: 'error',
-      summary: t('somethingWentWrong'),
-      detail: t('acceptPatriot'),
-      life: 4000,
-    })
+    showExceptionError(toast, 'error', t('somethingWentWrong'), t('acceptPatriot'))
     return
   }
 
@@ -296,12 +268,7 @@ const handleSubmit = () => {
     })
     .catch(e => {
       submitting.value = false
-      toast.add({
-        severity: 'info',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
+      processException(toast, t, e)
     })
 }
 
@@ -333,6 +300,6 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 
 .logo-noba {
   width: 265px;
-  height: 'auto';
+  height: auto;
 }
 </style>

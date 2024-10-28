@@ -61,6 +61,7 @@ import Lang from '../../components/Lang.vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { ForgotPasswordService } from './services/forgot-password'
+import { processException } from '../../shared/processException'
 
 const submitting = ref(false)
 const toast = useToast()
@@ -88,12 +89,7 @@ const handleSubmit = () => {
     })
     .catch(e => {
       submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('error'),
-        life: 4000,
-        detail: e.response.data.message,
-      })
+      processException(toast, t, e)
     })
 }
 </script>
@@ -118,6 +114,7 @@ const handleSubmit = () => {
 .logo-noba {
   max-width: 10%;
 }
+
 @media only screen and (max-width: 992px) {
   .logo-noba {
     max-width: 60%;

@@ -68,9 +68,11 @@ import Lang from '../../components/Lang.vue'
 import Button from 'primevue/button'
 import { TwoFactorService } from '../../shared/services/twoFactor'
 import { AccountService } from '../../shared/services/account'
+import { processException } from '../../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
-
+const toast = useToast()
 const submitting = ref(false)
 const verifySuccess = ref(false)
 
@@ -100,6 +102,7 @@ onMounted(() => {
     .catch(e => {
       submitting.value = false
       showMessageInvalidToken.value = true
+      processException(toast, t, e)
     })
 })
 
@@ -126,6 +129,6 @@ const redirectLogin = () => {
 
 .logo-noba {
   width: 265px;
-  height: 'auto';
+  height: auto;
 }
 </style>

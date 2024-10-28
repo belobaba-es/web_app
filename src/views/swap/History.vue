@@ -24,7 +24,10 @@
           <tbody v-if="!isLoading">
             <!--          todo-->
             <tr v-for="item in exchanges.results as ExchangeCreated[]">
-              <td v-if="item.sourceDetails.assetCode === 'USD'" class="h-5rem w-6rem relative icons-container">
+              <td
+                v-if="item.sourceDetails.assetCode === FiatAssetCodes.USD"
+                class="h-5rem w-6rem relative icons-container"
+              >
                 <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
                   :src="iconAssetByCode(item.destinationDetails.assetCode, listAssets)"
@@ -82,14 +85,30 @@
 
           <template v-if="isLoading">
             <tr>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
-              <td><Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" /></td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
+              <td>
+                <Skeleton width="100%" height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" />
+              </td>
             </tr>
           </template>
         </table>
@@ -123,8 +142,12 @@ import { ExchangeCreated } from './types/quote-response.interface'
 import Skeleton from 'primevue/skeleton'
 import swapIcon from '../../assets/icons/swap.svg'
 import { iconAssetByCode } from '../../shared/iconAssetByCode'
+import { processException } from '../../shared/processException'
+import { useToast } from 'primevue/usetoast'
+import { FiatAssetCodes } from '../wallet/types/assetCodes.interface'
 
 const { t } = useI18n({ useScope: 'global' })
+const toast = useToast()
 const { exchanges } = useSwap()
 const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
@@ -133,9 +156,14 @@ const isLoading = ref<boolean>(true)
 const exchangesList = ref<ExchangeCreated[]>()
 
 onMounted(async () => {
-  await new AssetsService().list().then(data => {
-    listAssets.value = data
-  })
+  await new AssetsService()
+    .list()
+    .then(data => {
+      listAssets.value = data
+    })
+    .catch(e => {
+      processException(toast, t, e)
+    })
 
   await fetchExchanges()
   isLoading.value = false
