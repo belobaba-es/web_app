@@ -16,15 +16,13 @@ const fee = ref(0)
 const transactionId = ref('')
 const visible = ref(false)
 
-const isWithdrawal = ref(true)
-
 export function useWithdrawalCrypto() {
   const route = useRoute()
   const router = useRouter()
   const visibleModalVeryCodeTwoFactor = ref(false)
   const { getBeneficiaryInternalPrevious, setBeneficiary } = useInternalBeneficiaryListCryptoStore()
   const beneficiaryInformation = ref<DataBeneficiary>({} as DataBeneficiary)
-  const { form } = useBeneficiaryCrypto()
+  const { form, isWithdrawal } = useBeneficiaryCrypto()
   const { isAccountSegregated } = useAuth()
   const submitting = ref(false)
   const toast = useToast()
@@ -36,7 +34,7 @@ export function useWithdrawalCrypto() {
     assetName: '',
     networkAddress: '',
   })
-
+  isWithdrawal.value = true
   beneficiaryInformation.value.name = form.value.informationOwner.name
   beneficiaryInformation.value.addressWallet = form.value.informationWallet.address
   beneficiaryInformation.value.isInternal = form.value.isInternal
@@ -194,5 +192,6 @@ export function useWithdrawalCrypto() {
     isAccountSegregated,
     resetFormWithdrawal,
     assetSelected,
+    form,
   }
 }

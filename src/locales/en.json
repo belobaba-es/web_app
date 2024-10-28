@@ -1068,5 +1068,7 @@
   "card": "Card",
   "blockCard": "Block card",
   "textCancel": "successfully canceled",
-  "textCancel2": "you will not be able to use it, you can click request a new one"
+  "textCancel2": "you will not be able to use it, you can click request a new one",
+  "assets": "Assets",
+  "messageErrorAsset": "There is probably a problem with your counterparty's asset, contact customer service"
 }

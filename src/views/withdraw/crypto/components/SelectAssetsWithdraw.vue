@@ -19,7 +19,7 @@
     v-show="!isFiat"
     class="col-12 md:col-12 lg:col-12 xl:col-6 float-left"
   >
-    <Message :closable="false" class="my-0 border" severity="warn">
+    <Message :closable="false" class="my-0" severity="warn">
       {{ t('warningSendAsset', { asset: assetSelected.networkAddress }) }}
     </Message>
   </div>
@@ -34,51 +34,29 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { Asset, AssetClassification, AssetClassificationFilter } from '../../../deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import ModalAssetSelector from '../../../../components/ModalAssetSelector.vue'
 import Message from 'primevue/message'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useWithdrawalCrypto } from '../composable/useWithdrawalCrypto'
-import { useBeneficiaryCrypto } from '../composable/useBeneficiaryCrypto'
 import { useAssets } from '../../../../composables/useAssets'
+import { useToast } from 'primevue/usetoast'
+import showExceptionError from '../../../../shared/showExceptionError'
 
 const showModal = ref(false)
 const isFiat = ref(false)
 const { t } = useI18n({ useScope: 'global' })
 const emit = defineEmits(['selectedAsset'])
-const { isAssetEdit, form } = useBeneficiaryCrypto()
-const { isWithdrawal, assetSelected } = useWithdrawalCrypto()
-
-const assetFilter = ref()
+const { balance, form, isWithdrawal, assetSelected, transactionData } = useWithdrawalCrypto()
+const toast = useToast()
 const { getAssetByAssetId } = useAssets()
-const { balance, transactionData } = useWithdrawalCrypto()
 const { getBalanceByCode } = useBalanceWallet()
 const modal = (b: boolean) => {
   if (isWithdrawal.value && form.value.informationWallet.assetId && form.value.isInternal === 'N') return
   showModal.value = b
 }
-const fillAsset = (asset: Asset | undefined) => {
-  if (asset) {
-    emit('selectedAsset', asset)
-    assetSelected.value.nameAsset = asset.name
-    assetSelected.value.iconAsset = asset.icon
-    assetSelected.value.assetName = asset.name
-    assetSelected.value.networkAddress = asset.networkName + ' ' + asset.network
-  }
-}
-
-watch(
-  assetFilter,
-  newVal => {
-    assetSelected.value.nameAsset = newVal.name
-    assetSelected.value.iconAsset = newVal.icon
-    assetSelected.value.assetName = newVal.name
-    assetSelected.value.networkAddress = newVal.networkName + ' ' + newVal.network
-  },
-  { deep: true }
-)
 
 const selectedAsset = (asset: Asset | undefined) => {
   emit('selectedAsset', asset)
@@ -92,17 +70,16 @@ const selectedAsset = (asset: Asset | undefined) => {
 
   showModal.value = false
 }
-if (isAssetEdit.value) {
-  const assetFound = getAssetByAssetId(form.value.informationWallet.assetId)
-  assetFilter.value = assetFound
-  fillAsset(assetFound)
-}
-if (isWithdrawal.value) {
-  if (form.value.informationWallet.assetId) {
-    const assetFound = getAssetByAssetId(form.value.informationWallet.assetId)
-    assetFilter.value = assetFound
-    fillAsset(assetFound)
+onMounted(() => {
+  console.log('assetId', form.value.assetId)
+  if (form.value.assetId && isWithdrawal.value) {
+    const assetFound = getAssetByAssetId(form.value.assetId)
+    if (!assetFound) {
+      showExceptionError(toast, 'error', t('assets'), t('messageErrorAsset'), 8000)
+      return
+    }
     if (assetFound) {
+      selectedAsset(assetFound)
       transactionData.value = {
         ...transactionData.value,
         assetCode: assetFound.code,
@@ -110,26 +87,7 @@ if (isWithdrawal.value) {
       balance.value = getBalanceByCode(assetFound.code)
     }
   }
-}
-const clearAsset = () => {
-  assetSelected.value.nameAsset = ''
-  assetSelected.value.iconAsset = ''
-  assetSelected.value.assetName = ''
-  assetSelected.value.networkAddress = ''
-}
-
-if (!isAssetEdit.value) {
-  clearAsset()
-}
-if (isWithdrawal.value) {
-  const assetFound = getAssetByAssetId(form.value.informationWallet.assetId)
-
-  fillAsset(assetFound)
-}
-
-if (!isWithdrawal.value) {
-  clearAsset()
-}
+})
 
 const dynamicClass = computed(() => {
   return isWithdrawal.value ? 'xl:col-12' : 'xl:col-6'

@@ -12,11 +12,13 @@ import { useAssets } from '../../../../composables/useAssets'
 import { CounterpartyStatus } from '../../enums/beneficiary.enum'
 import { processException } from '../../../../shared/processException'
 
+const isWithdrawal = ref(false)
 const showInstitutionSection = ref(false)
 const assetName = ref<string | undefined>('')
 const form = ref<BeneficiaryAsset>({
   counterpartyId: '',
   clientId: '',
+  assetId: '',
   isInternal: '',
   informationOwner: {
     name: '',
@@ -202,6 +204,7 @@ export function useBeneficiaryCrypto() {
     form.value = {
       counterpartyId: '',
       isInternal: '',
+      assetId: '',
       informationOwner: {
         name: '',
         country: '',
@@ -239,6 +242,7 @@ export function useBeneficiaryCrypto() {
     const clientId = isWithdrawal ? beneficiary.clientId : ''
     form.value = {
       ...form.value,
+      assetId: beneficiary.assetId,
       informationOwner: {
         name: beneficiary.informationOwner.name,
         country: beneficiary.informationOwner.country,
@@ -353,5 +357,6 @@ export function useBeneficiaryCrypto() {
     prevPage,
     updateItemsPage,
     getIcon,
+    isWithdrawal,
   }
 }
