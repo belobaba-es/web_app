@@ -7,6 +7,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { processException } from '../../../../shared/processException'
+import { useMediaQuery } from '../../../../composables/useMediaQuery'
 
 export const useRechargeCard = () => {
   const toast = useToast()
@@ -14,6 +15,7 @@ export const useRechargeCard = () => {
   const { t } = useI18n({ useScope: 'global' })
   const { dataRechargeCard, setStateRechargeCard } = useRechargeCardStore()
   const { cardInfo } = useCardCenter()
+  const { isMobile } = useMediaQuery()
 
   const rechargeState = ref<RechargeState>(dataRechargeCard())
   const rechargeStore = useRechargeCardStore()
@@ -55,7 +57,11 @@ export const useRechargeCard = () => {
     return acceptQuote(rechargeState.value.quoteId)
       .then(response => {
         openModal(false)
-        router.push('/cards/transactions-card')
+        if (isMobile) {
+          router.push('/cards')
+        } else {
+          router.push('/cards/transactions-card')
+        }
 
         toast.add({
           severity: 'success',
