@@ -25,6 +25,12 @@
           @click="openModal(true)"
         />
       </div>
+      <ModalAssetSelector
+        :show-modal="rechargeState.showModalAssetSelector"
+        @update:visible="modalAssetSelector($event)"
+        @selected-asset="selectedAsset"
+        :asset-classification-filter="AssetClassificationFilter.ALL"
+      />
     </div>
     <ResumeRechargeCard :show-modal="rechargeState.showModalResume" @update:visible="openModal($event)" />
   </div>
@@ -37,9 +43,9 @@ import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
 import { useRechargeCard } from '../../cards/rechargeCard/composables/useRechargeCard'
 import SelectCardHeader from '../components/SelectCardHeader.vue'
-import { AssetClassificationFilter } from '../../deposit/types/asset.interface'
+import { Asset, AssetClassificationFilter } from '../../deposit/types/asset.interface'
 import { useCardCenter } from '../../cards/cardCenter/Composables/useCardCenter'
-import SelectCard from '../../cards/components/selectCard/SelectCard.vue'
+import ModalAssetSelector from '../../../components/ModalAssetSelector.vue'
 
 const { rechargeState, openModal, handleRequestQuote } = useRechargeCard()
 const { listCards, cardInfo } = useCardCenter()
@@ -50,6 +56,18 @@ const verifyRequestQuote = async () => {
   if (cardInfo.value.cardId !== '' && rechargeState.value.assetCode !== '' && rechargeState.value.amount !== 0) {
     await handleRequestQuote()
   }
+}
+
+const selectedAsset = async (asset: Asset) => {
+  rechargeState.value.showModalAssetSelector = false
+  rechargeState.value.assetIcon = asset.icon
+  rechargeState.value.assetName = asset.name
+  rechargeState.value.assetId = asset.assetId
+  rechargeState.value.assetCode = asset.code
+}
+
+const modalAssetSelector = (b: boolean) => {
+  rechargeState.value.showModalAssetSelector = b
 }
 </script>
 <style lang="scss" scoped>
