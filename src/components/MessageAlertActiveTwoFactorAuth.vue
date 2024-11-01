@@ -1,5 +1,5 @@
 <template>
-  <Message :closable="false" severity="warn">
+  <Message :closable="false" severity="warn" v-if="isShowMessage">
     <div class="pl-4">
       <h2 class="font-bold mt-0">{{ t('twoFactorAlertTitle') }}</h2>
       {{ t('twoFactorAlertMessage') }}
