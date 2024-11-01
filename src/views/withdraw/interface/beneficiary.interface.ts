@@ -9,6 +9,7 @@ export interface BeneficiaryAsset {
   counterpartyId?: string
   clientId?: string
   assetId: string
+  assetCode: string
   isInternal: string
   informationWallet: {
     assetId: string

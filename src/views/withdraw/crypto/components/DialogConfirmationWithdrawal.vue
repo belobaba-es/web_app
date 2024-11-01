@@ -45,9 +45,7 @@
         </div>
         <div class="col-12 p-0 float-left">
           <p class="m-0 text-general float-left">{{ t('fee') }}:</p>
-          <p class="m-0 text-general float-right">
-            {{ currencyFormat(props.assetCodeSelected?.assetClassification, props.fee ?? 0) }}
-          </p>
+          currencyFormat(props.assetCodeSelected?.assetClassification, props.fee ?? 0) }} {{ assetsCode }}
         </div>
       </div>
       <Divider type="dashed"></Divider>
@@ -122,6 +120,7 @@ const props = defineProps({
   },
   beneficiary: Object,
   fee: Number,
+  assetsCode: String,
   assetCodeSelected: Object,
 })
 const emit = defineEmits(['update:visible'])

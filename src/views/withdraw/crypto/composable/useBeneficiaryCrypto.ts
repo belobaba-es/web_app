@@ -19,6 +19,7 @@ const form = ref<BeneficiaryAsset>({
   counterpartyId: '',
   clientId: '',
   assetId: '',
+  assetCode: '',
   isInternal: '',
   informationOwner: {
     name: '',
@@ -205,6 +206,7 @@ export function useBeneficiaryCrypto() {
       counterpartyId: '',
       isInternal: '',
       assetId: '',
+      assetCode: '',
       informationOwner: {
         name: '',
         country: '',
@@ -243,6 +245,7 @@ export function useBeneficiaryCrypto() {
     form.value = {
       ...form.value,
       assetId: beneficiary.assetId,
+      assetCode: beneficiary.assetCode,
       informationOwner: {
         name: beneficiary.informationOwner.name,
         country: beneficiary.informationOwner.country,

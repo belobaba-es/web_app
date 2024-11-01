@@ -70,7 +70,9 @@
             </div>
           </div>
           <div class="col-12 float-left">
-            <span class="fee flex justify-content-start font-medium text-color-green">{{ t('fee') }} {{ fee }}</span>
+            <span class="fee flex justify-content-start font-medium text-color-green"
+              >{{ t('fee') }} {{ fee }} {{ assetsCode }}</span
+            >
           </div>
         </div>
         <div class="col-12 xl:col-6 float-left form-group pl-4 pr-4 my-3">
@@ -110,7 +112,7 @@
           {{ t('reviewDataAgain') }}<b class="font-semi-bold"> {{ t('backButtonTitle') }}</b>
         </div>
         <div class="col-12 xl:col-2 float-right">
-          <Button :label="t('continue')" class="w-full" @click="validForm" />
+          <Button :loading="submitting" :label="t('continue')" class="w-full" @click="validForm" />
         </div>
         <div class="col-12 xl:col-2 float-right">
           <Button :label="t('backButtonTitle')" class="mr-4 w-full" outlined severity="" @click="goBack()" />
@@ -122,6 +124,7 @@
     :assetCodeSelected="assetCodeSelected"
     :beneficiary="beneficiaryInformation"
     :fee="fee"
+    :assets-code="assetsCode"
     :show="visible"
     :transactionData="transactionData"
     @update:visible="close"
@@ -132,7 +135,7 @@ import { useBeneficiaryCrypto } from '../composable/useBeneficiaryCrypto'
 import { useI18n } from 'vue-i18n'
 import InputNumber from 'primevue/inputnumber'
 
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
 import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
@@ -146,6 +149,7 @@ import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlert
 import DialogConfirmationWithdrawal from './DialogConfirmationWithdrawal.vue'
 import { useToast } from 'primevue/usetoast'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
+import { useCalculateFee } from '../../composable/useCalculateFee'
 
 const { t } = useI18n({ useScope: 'global' })
 const { isAssetEdit, form } = useBeneficiaryCrypto()
@@ -153,7 +157,6 @@ const toast = useToast()
 const {
   transactionData,
   balance,
-  fee,
   goBack,
   beneficiaryInformation,
   isWithdrawal,
@@ -164,6 +167,7 @@ const {
 } = useWithdrawalCrypto()
 
 const { getBalanceByCode } = useBalanceWallet()
+const { fee, assetsCode, handleCalculateFee, submitting } = useCalculateFee()
 
 onMounted(() => {
   isAssetEdit.value = false
@@ -205,6 +209,25 @@ function getMaxPlaceholderDigits(): string {
 const close = () => {
   visible.value = false
 }
+
+watch(
+  () => transactionData.value.amount,
+  value => {
+    if (value && form.value.counterpartyId && beneficiaryInformation.value.isInternal === 'S') {
+      handleCalculateFee({
+        amount: value,
+        assetCode: assetCodeSelected.value.code,
+        destinationCounterpartyId: form.value.counterpartyId,
+      })
+    } else if (value && form.value.clientId) {
+      handleCalculateFee({
+        amount: value,
+        assetCode: assetCodeSelected.value.code,
+        destinationClientId: form.value?.clientId!,
+      })
+    }
+  }
+)
 </script>
 <style lang="scss" scoped>
 .beneficiary-form {

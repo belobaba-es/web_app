@@ -30,6 +30,8 @@
             :assetCodeSelected="assetCodeSelected.code"
             :balance="balance"
             :fee="fee"
+            :submitting="submitting"
+            :assetsCode="assetsCode"
             :withdrawForm="transactionData"
             @goBack="goBack"
             @validForm="validForm"
@@ -58,13 +60,14 @@ import { Asset } from '../../../deposit/types/asset.interface'
 import SelectAssetsWithdraw from '../../../withdraw/crypto/components/SelectAssetsWithdraw.vue'
 import DialogConfirmationWithdrawal from '../../../withdraw/crypto/components/DialogConfirmationWithdrawal.vue'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
+import { useCalculateFee } from '../../../withdraw/composable/useCalculateFee'
 
+const { fee, assetsCode, handleCalculateFee, submitting } = useCalculateFee()
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const {
   transactionData,
   balance,
-  fee,
   goBack,
   beneficiaryInformation,
   isValidFormWithdrawal,
@@ -100,9 +103,29 @@ const selectAsset = (asset: Asset) => {
 
   balance.value = getBalanceByCode(asset.code)
 }
+
 watch(assetCodeSelected, newValue => {
   assetCodeSelected.value.assetClassification = newValue.assetClassification
 })
+
+watch(
+  () => transactionData.value.amount,
+  value => {
+    if (value && form.value.counterpartyId && beneficiaryInformation.value.isInternal === 'S') {
+      handleCalculateFee({
+        amount: value,
+        assetCode: assetCodeSelected.value.code,
+        destinationCounterpartyId: form.value.counterpartyId,
+      })
+    } else if (value && form.value.clientId) {
+      handleCalculateFee({
+        amount: value,
+        assetCode: assetCodeSelected.value.code,
+        destinationClientId: form.value?.clientId!,
+      })
+    }
+  }
+)
 const close = () => {
   visible.value = false
 }
