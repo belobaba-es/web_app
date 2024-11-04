@@ -6,6 +6,7 @@ import { useI18n } from 'vue-i18n'
 import { AccountService } from '../shared/services/account'
 import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
 import { useAuth } from './useAuth'
+import { processException } from '../shared/processException'
 
 export const useTwoFactorAuth = () => {
   const isShowView = ref(false)
@@ -51,14 +52,8 @@ export const useTwoFactorAuth = () => {
         isShowView.value = true
       })
       .catch(e => {
-        console.log(e.response)
         isShowView.value = true
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: e.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, e)
       })
   }
 
@@ -108,28 +103,8 @@ export const useTwoFactorAuth = () => {
         })
         .catch(e => {
           submitting.value = false
-
           resolve(false)
-
-          if (e.response.data.error) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: e.response.data.error,
-              life: 6000,
-            })
-            return
-          }
-
-          if (e.response.data.message) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: e.response.data.message,
-              life: 6000,
-            })
-            return
-          }
+          processException(toast, t, e)
         })
     })
   }
@@ -163,16 +138,7 @@ export const useTwoFactorAuth = () => {
         .catch(e => {
           resolve(false)
           submitting.value = false
-
-          if (e.response.data.message) {
-            toast.add({
-              severity: 'error',
-              summary: t('somethingWentWrong'),
-              detail: e.response.data.message,
-              life: 4000,
-            })
-            return
-          }
+          processException(toast, t, e)
         })
     })
   }

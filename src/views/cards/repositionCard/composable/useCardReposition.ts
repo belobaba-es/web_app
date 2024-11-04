@@ -30,9 +30,9 @@ export const useCardReposition = () => {
       await router.push('/cards/onboarding/reposition/confirmation')
       loading.value = false
     } catch (e: any) {
+      loading.value = false
       processException(toast, t, e)
       await router.push('/cards/onboarding/reposition/denied')
-      loading.value = false
     }
   }
 

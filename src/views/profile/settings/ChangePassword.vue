@@ -47,6 +47,7 @@ import InputText from 'primevue/inputtext'
 import { ProfileService } from '../services/profile'
 import { useAuth } from '../../../composables/useAuth'
 import { useToast } from 'primevue/usetoast'
+import { processException } from '../../../shared/processException'
 
 const { t } = useI18n({
   useScope: 'global',
@@ -77,12 +78,7 @@ const submitUpdatePassword = async () => {
     })
     .catch(error => {
       submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('somethingWentWrong'),
-        detail: error.response.data.message,
-        life: 4000,
-      })
+      processException(toast, t, error)
     })
 }
 

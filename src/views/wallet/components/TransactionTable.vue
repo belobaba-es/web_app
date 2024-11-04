@@ -96,12 +96,15 @@ import Button from 'primevue/button'
 import ModalTransactionDetails from '../../../components/ModalTransactionDetails.vue'
 import { formatDate } from '../../../shared/formatDate'
 import { TransactionModalPayload } from '../../../types/transactionModal.interface'
+import { processException } from '../../../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
 const isLoadingTransactionDetails = ref(false)
 const modalTransactionDetail: any = ref({})
 const { t } = useI18n({ useScope: 'global' })
+const toast = useToast()
 const props = defineProps<{
   assetCode: string | undefined
 }>()
@@ -130,8 +133,9 @@ onMounted(async () => {
       }
       isLoadingTransactionDetails.value = false
     })
-    .catch(() => {
+    .catch(e => {
       isLoadingTransactionDetails.value = false
+      processException(toast, t, e)
     })
 })
 
@@ -176,19 +180,24 @@ const getTransactionType = (transactionData: any) => {
 const loadMoreItems = async () => {
   submitting.value = true
 
-  await new HistoricService().historicNextPage(props.assetCode, nextPage.value.data).then(data => {
-    data.results.forEach(element => {
-      listTransaction.value.push(element)
+  await new HistoricService()
+    .historicNextPage(props.assetCode, nextPage.value.data)
+    .then(data => {
+      data.results.forEach(element => {
+        listTransaction.value.push(element)
+      })
+
+      nextPage.value.data = data.nextPag
+      nextPage.value.nextPage = false
+      submitting.value = false
+
+      if (data.nextPag) {
+        nextPage.value.nextPage = true
+      }
     })
-
-    nextPage.value.data = data.nextPag
-    nextPage.value.nextPage = false
-    submitting.value = false
-
-    if (data.nextPag) {
-      nextPage.value.nextPage = true
-    }
-  })
+    .catch(e => {
+      processException(toast, t, e)
+    })
 }
 
 const prepareTransactionName = (transaction: any) => {
@@ -221,6 +230,9 @@ const loadTransactionDetail = async (transaction: any) => {
         nameTo,
       } as TransactionModalPayload
     })
+    .catch(e => {
+      processException(toast, t, e)
+    })
 }
 </script>
 <style lang="css" scoped>
@@ -229,6 +241,7 @@ const loadTransactionDetail = async (transaction: any) => {
   margin-left: 33%;
   z-index: 999;
 }
+
 .load-more-btn {
   width: 100% !important;
 }

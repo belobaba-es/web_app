@@ -71,10 +71,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import VirtualScroller from 'primevue/virtualscroller'
-import { Asset, PaymentAddress, PaymentAddressResponse } from './types/asset.interface'
+import { Asset, PaymentAddressResponse } from './types/asset.interface'
 import NewWallet from './components/NewWallet.vue'
 import ViewAddress from './components/ViewAddress.vue'
 import { AssetsService } from './services/assets'
@@ -82,9 +81,11 @@ import AssetDetail from './components/AssetDetail.vue'
 import Skeleton from 'primevue/skeleton'
 import Dropdown from 'primevue/dropdown'
 import { useRoute } from 'vue-router'
+import { processException } from '../../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })
-
+const toast = useToast()
 const assetCode = ref('')
 const nextPag = ref('')
 const display = ref(false)
@@ -99,7 +100,12 @@ const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddressResponse[]>([])
 
 onMounted(async () => {
-  await new AssetsService().list().then(data => (assets.value = data))
+  await new AssetsService()
+    .list()
+    .then(data => (assets.value = data))
+    .catch(error => {
+      processException(toast, t, error)
+    })
 
   const assetCode = (route.params.assetCode as string) ?? ''
 
@@ -134,6 +140,9 @@ const findAssetByName = () => {
         submitting.value = false
         lazyLoading.value = false
       })
+      .catch(error => {
+        processException(toast, t, error)
+      })
       .finally(() => {
         submitting.value = false
         lazyLoading.value = false
@@ -157,22 +166,40 @@ const viewAddressAsset = (item: PaymentAddressResponse) => {
 
 const searchWallets = () => {
   lazyLoading.value = true
-  new AssetsService().list().then(data => (assets.value = data))
-  new AssetsService().listPaymentAddress().then((data: PaymentAddressResponse[]) => {
-    paymentAddress.value = data
-    lazyLoading.value = false
-    // nextPag.value = data.nextPag
-  })
+  new AssetsService()
+    .list()
+    .then(data => (assets.value = data))
+    .catch(error => {
+      processException(toast, t, error)
+    })
+  new AssetsService()
+    .listPaymentAddress()
+    .then((data: PaymentAddressResponse[]) => {
+      paymentAddress.value = data
+      lazyLoading.value = false
+    })
+    .catch(error => {
+      processException(toast, t, error)
+    })
 }
 
 const searchWallet = (assetId: string) => {
   lazyLoading.value = true
-  new AssetsService().list().then(data => (assets.value = data))
-  new AssetsService().listPaymentAddress().then(data => {
-    lazyLoading.value = false
-    paymentAddress.value = data.filter((res: PaymentAddressResponse) => res.assetId === assetId)
-    // nextPag.value = data.nextPag
-  })
+  new AssetsService()
+    .list()
+    .then(data => (assets.value = data))
+    .catch(error => {
+      processException(toast, t, error)
+    })
+  new AssetsService()
+    .listPaymentAddress()
+    .then(data => {
+      lazyLoading.value = false
+      paymentAddress.value = data.filter((res: PaymentAddressResponse) => res.assetId === assetId)
+    })
+    .catch(error => {
+      processException(toast, t, error)
+    })
 }
 
 const onCreateAddress = (event: any) => {
@@ -210,7 +237,9 @@ const onLazyLoad = (event: any) => {
       .listPaymentAddress(nextPag.value)
       .then(data => {
         paymentAddress.value = [...paymentAddress.value, ...data]
-        // nextPag.value = data.nextPag
+      })
+      .catch(error => {
+        processException(toast, t, error)
       })
       .finally(() => {
         lazyLoading.value = false
@@ -235,6 +264,7 @@ const onLazyLoad = (event: any) => {
 .select-asset {
   width: 100%;
 }
+
 .pi-search {
   z-index: 9;
   color: var(--primary-color) !important;

@@ -3,6 +3,9 @@ import { computed, Ref, ref } from 'vue'
 import { DropdownChangeEvent } from 'primevue/dropdown'
 import state_data from '../assets/cities/cities_us.json'
 import { Country, CountryAllowed, State, StateUS } from '../interface/country.interface'
+import { processException } from '../shared/processException'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
 
 const countries = ref<Country[]>([])
 const state_us = ref<StateUS[]>(state_data)
@@ -10,6 +13,8 @@ const countryAllowedForUSA = ref<CountryAllowed[]>([])
 
 export const useWorld = () => {
   const calling_code = ref<string[]>([''])
+  const toast = useToast()
+  const { t } = useI18n({ useScope: 'global' })
 
   const states = ref<State[]>([])
   const statesTwo = ref<State[]>([])
@@ -31,25 +36,35 @@ export const useWorld = () => {
   const fetchCountries = async () => {
     loadingCountriesField.value = true
 
-    new WorldService().getCountries().then((resp: Country[]) => {
-      countries.value = resp
-      countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
+    new WorldService()
+      .getCountries()
+      .then((resp: Country[]) => {
+        countries.value = resp
+        countries.value = countries.value.sort((a, b) => a.name.localeCompare(b.name))
 
-      const arrayCallingCode = resp.map(c => c.calling_code).sort()
-      calling_code.value = [...new Set(arrayCallingCode)]
+        const arrayCallingCode = resp.map(c => c.calling_code).sort()
+        calling_code.value = [...new Set(arrayCallingCode)]
 
-      loadingCountriesField.value = false
-    })
+        loadingCountriesField.value = false
+      })
+      .catch(error => {
+        processException(toast, t, error)
+      })
   }
 
   const fetchCountryAllowUsa = async () => {
     // Fetch countries layer
     loadingCountriesField.value = true
-    new WorldService().getCountryAllowedForUsa().then((resp: any) => {
-      countryAllowedForUSA.value = resp
-      countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
-      loadingCountriesField.value = false
-    })
+    new WorldService()
+      .getCountryAllowedForUsa()
+      .then((resp: any) => {
+        countryAllowedForUSA.value = resp
+        countryAllowedForUSA.value = countryAllowedForUSA.value.sort((a, b) => a.name.localeCompare(b.name))
+        loadingCountriesField.value = false
+      })
+      .catch(error => {
+        processException(toast, t, error)
+      })
   }
 
   const fetchStatesUS = async () => {

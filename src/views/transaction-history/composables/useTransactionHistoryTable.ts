@@ -13,6 +13,7 @@ import { generateTransactionHistory, jsPDFOptionsOrientationEnum } from '../../.
 import logo from '../../../assets/img/logo.png'
 import { useI18n } from 'vue-i18n'
 import { useAssets } from '../../../composables/useAssets'
+import { processException } from '../../../shared/processException'
 
 export const useTransactionHistoryTable = () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -148,8 +149,9 @@ export const useTransactionHistoryTable = () => {
           selectedTransactionType: filters.transactionType,
         })
       })
-      .catch(() => {
+      .catch(e => {
         registerSearchFilters({})
+        processException(toast, t, e)
       })
   }
 

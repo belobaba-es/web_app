@@ -38,7 +38,6 @@
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import { Asset, AssetClassificationFilter } from '../types/asset.interface'
@@ -46,6 +45,7 @@ import SelectedAssets from '../../../components/SelectedAssets.vue'
 import { AssetsService } from '../services/assets'
 import { useToast } from 'primevue/usetoast'
 import Divider from 'primevue/divider'
+import { processException } from '../../../shared/processException'
 
 defineProps<{
   display: boolean
@@ -62,7 +62,7 @@ const { t } = useI18n({ useScope: 'global' })
 const onCreate = () => {
   submitting.value = true
   new AssetsService()
-    .paymentAddress({ label: '', assetCode: assetSelect.value?.code, assetId: assetSelect.value?.assetId!})
+    .paymentAddress({ label: '', assetCode: assetSelect.value?.code, assetId: assetSelect.value?.assetId! })
     .then(resp => {
       submitting.value = false
 
@@ -76,14 +76,8 @@ const onCreate = () => {
       })
     })
     .catch(e => {
-      console.log(e)
       submitting.value = false
-      toast.add({
-        severity: 'warn',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 8000,
-      })
+      processException(toast, t, e)
     })
 }
 

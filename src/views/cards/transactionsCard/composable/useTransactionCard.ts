@@ -7,6 +7,8 @@ import { useTransactionHistoryStore } from '../../stores/useTransactionHistory'
 import { generateTransactionReceipt } from '../../../../shared/generatePdf'
 import { useAuth } from '../../../../composables/useAuth'
 import logo from '../../../../assets/img/logo.png'
+import { processException } from '../../../../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 const transactionList = ref<TransactionCard[]>([])
 const currentPage = ref(1)
@@ -20,7 +22,7 @@ export const useTransactionCard = () => {
   const loadingTransactions = ref<boolean>(false)
   const { t } = useI18n({ useScope: 'global' })
   const useTransactionHistoryCard = useTransactionHistoryStore()
-
+  const toast = useToast()
   const { getUserName } = useAuth()
 
   useTransactionHistoryCard.$subscribe((mutation, state) => {
@@ -70,7 +72,7 @@ export const useTransactionCard = () => {
 
       generateTransactionReceipt(fileName, logo, title, transactionPDF)
     } catch (error) {
-      console.error('Error generating PDF:', error)
+      processException(toast, t, error)
     } finally {
       isGeneratingTransactionPDF.value = false
     }

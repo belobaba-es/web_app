@@ -70,7 +70,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { isReadonly, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
@@ -80,6 +80,7 @@ import Lang from '../../components/Lang.vue'
 import { RegisterService } from './services/register'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
+import { processException } from '../../shared/processException'
 
 const isReadonly = ref(true)
 const submitting = ref(false)
@@ -118,12 +119,7 @@ const resendCode = () => {
     })
     .catch(e => {
       submittingResendTheCode.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
+      processException(toast, t, e)
     })
 }
 
@@ -147,12 +143,7 @@ const handleSubmit = () => {
     })
     .catch(e => {
       submitting.value = false
-      toast.add({
-        severity: 'error',
-        summary: t('somethingWentWrong'),
-        detail: e.response.data.message,
-        life: 4000,
-      })
+      processException(toast, t, e)
     })
 }
 
@@ -184,7 +175,7 @@ const redirectLogin = () => {
 
 .logo-noba {
   width: 265px;
-  height: 'auto';
+  height: auto;
 }
 
 .p-dialog {

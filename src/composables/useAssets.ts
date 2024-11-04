@@ -1,10 +1,15 @@
 import { ref } from 'vue'
 import { Asset, AssetClassification } from '../views/deposit/types/asset.interface'
 import { AssetsService } from '../views/deposit/services/assets'
+import { processException } from '../shared/processException'
+import { useI18n } from 'vue-i18n'
+import { useToast } from 'primevue/usetoast'
 
 const listAssets = ref<Asset[]>([])
 
 export const useAssets = () => {
+  const toast = useToast()
+  const { t } = useI18n({ useScope: 'global' })
   const getAssets = async () => {
     await new AssetsService()
       .list()
@@ -12,7 +17,7 @@ export const useAssets = () => {
         listAssets.value = assets
       })
       .catch(error => {
-        console.log(error)
+        processException(toast, t, error)
       })
   }
 

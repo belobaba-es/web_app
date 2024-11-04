@@ -7,6 +7,7 @@ import { useI18n } from 'vue-i18n'
 import { ExchangeCreated, ExchangeResponse } from '../views/swap/types/quote-response.interface'
 import { SummarySwap } from '../views/swap/types/sumary'
 import { ExchangeData } from '../views/swap/types/create-exchange-response.interface'
+import { processException } from '../shared/processException'
 
 export const useSwapStore = defineStore('swap', () => {
   const { t } = useI18n({ useScope: 'global' })
@@ -129,12 +130,7 @@ export const useSwapStore = defineStore('swap', () => {
       .catch(error => {
         loading.value = false
         shouldRefreshQuote.value = true
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.response.data.message,
-          life: 4000,
-        })
+        processException(toast, t, error)
       })
   }
 
@@ -172,15 +168,10 @@ export const useSwapStore = defineStore('swap', () => {
       })
       .catch(async error => {
         loading.value = false
-        toast.add({
-          severity: 'error',
-          summary: t('somethingWentWrong'),
-          detail: error.response.data.message,
-          life: 4000,
-        })
         await cancelQuote()
         clearTimer()
         refreshQuote()
+        processException(toast, t, error)
       })
   }
 
@@ -277,6 +268,9 @@ export const useSwapStore = defineStore('swap', () => {
           exchanges.value.results.push(result)
         })
         exchanges.value.nextPag = response.nextPag
+      })
+      .catch(e => {
+        processException(toast, t, e)
       })
       .finally(() => {
         loading.value = false

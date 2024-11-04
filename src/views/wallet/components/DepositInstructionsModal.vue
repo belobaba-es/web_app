@@ -38,6 +38,9 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import { useAuth } from '../../../composables/useAuth'
 import { FiatAssetCodes } from '../types/assetCodes.interface'
+import { processException } from '../../../shared/processException'
+import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
 
 defineProps<{
   assetCode: string
@@ -51,17 +54,24 @@ const dataBank = ref<BankData>()
 const bankNational = ref()
 const bankInternational = ref()
 const bankPanama = ref()
+const toast = useToast()
+const { t } = useI18n({ useScope: 'global' })
 
 onMounted(() => {
-  new FiatService().bankData().then(data => {
-    dataBank.value = data
+  new FiatService()
+    .bankData()
+    .then(data => {
+      dataBank.value = data
 
-    bankNational.value = dataBank.value.domestic
+      bankNational.value = dataBank.value.domestic
 
-    bankInternational.value = dataBank.value.international
+      bankInternational.value = dataBank.value.international
 
-    bankPanama.value = dataBank.value.achPab
-  })
+      bankPanama.value = dataBank.value.achPab
+    })
+    .catch(e => {
+      processException(toast, t, e)
+    })
 })
 </script>
 <style scoped></style>

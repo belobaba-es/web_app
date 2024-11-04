@@ -4,6 +4,8 @@ import { BalanceWallet } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
 import { AssetsService } from '../views/deposit/services/assets'
+import { processException } from '../shared/processException'
+import { useToast } from 'primevue/usetoast'
 
 export const useBalanceWallet = () => {
   const { locale } = useI18n()
@@ -11,11 +13,18 @@ export const useBalanceWallet = () => {
   const { isExistsWallet } = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
   const { getClientId } = useAuth()
+  const toast = useToast()
+  const { t } = useI18n({ useScope: 'global' })
 
   const requestBalance = async () => {
-    new AssetsService().getBalanceWallets().then(response => {
-      balanceWalletStore.setBalanceWallet(response)
-    })
+    new AssetsService()
+      .getBalanceWallets()
+      .then(response => {
+        balanceWalletStore.setBalanceWallet(response)
+      })
+      .catch(error => {
+        processException(toast, t, error)
+      })
   }
   const fetchBalanceWallets = async () => {
     if (getClientId() === '') return

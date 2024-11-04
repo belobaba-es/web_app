@@ -1,6 +1,7 @@
 import { useToast } from 'primevue/usetoast'
 import { StatusCard } from '../../enums/statusCard.enum'
 import { useI18n } from 'vue-i18n'
+import { processException } from '../../../../shared/processException'
 
 export const useCardCenterValidation = () => {
   const toast = useToast()
@@ -25,12 +26,7 @@ export const useCardCenterValidation = () => {
           })
         })
         .catch(err => {
-          toast.add({
-            severity: 'error',
-            summary: t('errorToCopy'),
-            detail: err,
-            life: 4000,
-          })
+          processException(toast, t, err)
         })
     }
   }
