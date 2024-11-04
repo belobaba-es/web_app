@@ -13,7 +13,7 @@ export type MakeFiatInternalTransfer = {
   amount: number
   clientIdDestination: string
   reference: string
-  assetCode: string
+  assetCode?: string
   purpose: string
 }
 
@@ -21,6 +21,7 @@ export type MakeFiatExternalTransfer = {
   amount: number
   beneficiaryId: string
   reference: string
+  assetCode?: string
   purpose: string
 }
 
@@ -36,7 +37,7 @@ export type MakeFiatTransfer = {
 export type MakeAssetInternalTransfer = {
   amount: number
   clientIdDestination: string
-  assetCode: string
+  assetCode?: string
   reference: string
   purpose: string
 }
@@ -54,4 +55,16 @@ export type MakeAssetTransfer = {
   clientIdDestination: string
   purpose: string
   reference: string
+}
+
+export type CalculateFee = {
+  amount: number
+  assetCode: string
+  destinationClientId?: string
+  destinationCounterpartyId?: string
+}
+
+export type Fee = {
+  fee: number
+  assetCode: string
 }

@@ -20,7 +20,7 @@
             <span class="float-left font-medium text-color-green pl-2">{{ balance }} {{ assetCodeSelected }}</span>
           </div>
           <div class="col-5">
-            <span class="float-right font-medium text-color-green pl-2">{{ fee }} {{ assetCodeSelected }}</span>
+            <span class="float-right font-medium text-color-green pl-2">{{ fee }} {{ assetsCode }}</span>
             <span class="font-medium float-right"> {{ t('fee') }}:</span>
           </div>
         </div>
@@ -75,7 +75,14 @@
     <MessageAlertActiveTwoFactorAuth />
   </div>
   <div class="col-12 footer-withdrawal text-center">
-    <Button :label="t('backButtonTitle')" class="w-8rem mr-3" outlined severity="" @click="goBack()" />
+    <Button
+      :loading="submitting"
+      :label="t('backButtonTitle')"
+      class="w-8rem mr-3"
+      outlined
+      severity=""
+      @click="goBack()"
+    />
     <Button :label="t('continue')" class="w-8rem" @click="validForm" />
   </div>
 </template>
@@ -112,6 +119,12 @@ const props = defineProps({
   fee: {
     type: Number,
     required: true,
+  },
+  assetsCode: {
+    type: String,
+  },
+  submitting: {
+    type: Boolean,
   },
   balance: {
     type: Number,
