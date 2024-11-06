@@ -119,7 +119,7 @@
             />
           </div>
           <div v-if="isEnabledButtonToProceedWithdrawal" class="">
-            <Button :label="t('continue')" class="mb-4 mt-3 mr-2 w-8rem" @click="visible = true" />
+            <Button :label="t('continue')" class="mb-4 mt-3 mr-2 w-8rem" @click="validateForm" />
           </div>
         </div>
       </div>
@@ -161,16 +161,26 @@ import { useAuth } from '../../../../composables/useAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 import DialogConfirmWithdrawPanama from '../modalWithdraw/DialogConfirmWithdrawPanama.vue'
+import { useToast } from 'primevue/usetoast'
+import showExceptionError from '../../../../shared/showExceptionError'
 
 const { t } = useI18n({ useScope: 'global' })
-const { transactionData, toBack, dataBeneficiaryWithdrawalPanama, balance, feePanama } = useWithdraw()
+const { transactionData, toBack, dataBeneficiaryWithdrawalPanama, balance, feePanama, isValidFormWithdrawal } =
+  useWithdraw()
 const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 const { isAccountSegregated } = useAuth()
-
+const toast = useToast()
 const visible = ref(false)
 
 const close = () => {
   visible.value = false
+}
+const validateForm = () => {
+  if (!isValidFormWithdrawal()) {
+    showExceptionError(toast, 'warn', 'Warn', t('completeForm'), 6000)
+    return
+  }
+  visible.value = true
 }
 </script>
 
