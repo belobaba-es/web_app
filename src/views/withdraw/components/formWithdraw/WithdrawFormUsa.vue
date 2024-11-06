@@ -115,8 +115,13 @@
           <div>
             <Button :label="t('backButtonTitle')" class="mr-4 w-8rem" outlined severity="secondary" @click="toBack" />
           </div>
-          <div v-if="isEnabledButtonToProceedWithdrawal" class="">
-            <Button :label="t('continue')" class="mr-4 w-8rem" @click="validateForm" />
+          <div>
+            <Button
+              :disabled="!isEnabledButtonToProceedWithdrawal"
+              :label="t('continue')"
+              class="mr-4 w-8rem"
+              @click="validateForm"
+            />
           </div>
         </div>
       </div>

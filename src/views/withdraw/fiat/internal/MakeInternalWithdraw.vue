@@ -115,7 +115,12 @@
           {{ t('reviewDataAgain') }}<b class="font-semi-bold"> {{ t('backButtonTitle') }}</b>
         </div>
         <div class="col-12 xl:col-2 float-right">
-          <Button :label="t('continue')" class="w-full" @click="validateForm" />
+          <Button
+            :label="t('continue')"
+            :disabled="!isEnabledButtonToProceedWithdrawal"
+            class="w-full"
+            @click="validateForm"
+          />
         </div>
         <div class="col-12 xl:col-2 float-right">
           <Button :label="t('backButtonTitle')" class="mr-4 w-full" outlined severity="" @click="goBack()" />
@@ -163,6 +168,7 @@ import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useAssets } from '../../../../composables/useAssets'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const toast = useToast()
 const { t } = useI18n({ useScope: 'global' })
@@ -171,7 +177,7 @@ const { dataBeneficiaryWithdrawal, transactionData, isValidFormWithdrawal } = us
 const visible = ref(false)
 const { getAssetByAssetClassification } = useAssets()
 const { makeFiatInternalTransfer, selectedAsset, balance, fee, goBack, isAccountSegregated } = useWithdrawInternal()
-
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 const assetsPrepared = ref<Asset[]>([])
 const findBalance = (event: DropdownChangeEvent) => {
   balance.value = getBalanceByCode(event.value)
