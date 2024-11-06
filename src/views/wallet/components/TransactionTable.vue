@@ -98,6 +98,8 @@ import { formatDate } from '../../../shared/formatDate'
 import { TransactionModalPayload } from '../../../types/transactionModal.interface'
 import { processException } from '../../../shared/processException'
 import { useToast } from 'primevue/usetoast'
+import { useAssets } from '../../../composables/useAssets'
+import { AssetClassification } from '../../deposit/types/asset.interface'
 
 const emit = defineEmits(['modal-transaction-detail-load-data'])
 const displayModalTransactionDetail = ref(false)
@@ -105,6 +107,7 @@ const isLoadingTransactionDetails = ref(false)
 const modalTransactionDetail: any = ref({})
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
+const { getAssetByAssetCode } = useAssets()
 const props = defineProps<{
   assetCode: string | undefined
 }>()
@@ -118,7 +121,6 @@ const showModal = ref(false)
 const modal = (b: boolean) => {
   showModal.value = b
 }
-
 onMounted(async () => {
   isLoadingTransactionDetails.value = true
   await new HistoricService()
@@ -140,17 +142,22 @@ onMounted(async () => {
 })
 
 const getTransactionType = (transactionData: any) => {
-  if (transactionData.assetCode === 'USD' && transactionData.transactionType === 'deposit') {
+  if (!props.assetCode) {
+    return
+  }
+  const assetClassification = getAssetByAssetCode(props.assetCode).assetClassification
+
+  if (assetClassification === AssetClassification.FIAT && transactionData.transactionType === 'deposit') {
     return 'deposit-fiat'
   }
 
-  if (transactionData.assetCode === 'USD' && transactionData.isInternal) {
+  if (assetClassification === AssetClassification.FIAT && transactionData.isInternal) {
     return 'internal-fiat'
   }
 
   if (
     !transactionData.isInternal &&
-    transactionData.assetCode === 'USD' &&
+    assetClassification === AssetClassification.FIAT &&
     transactionData.to?.typeBeneficiaryBankWithdrawal === 'DOMESTIC'
   ) {
     return 'external-fiat-domestic'
@@ -158,21 +165,21 @@ const getTransactionType = (transactionData: any) => {
 
   if (
     !transactionData.isInternal &&
-    transactionData.assetCode === 'USD' &&
+    assetClassification === AssetClassification.FIAT &&
     transactionData.to?.typeBeneficiaryBankWithdrawal === 'INTERNATIONAL'
   ) {
     return 'external-fiat-international'
   }
 
-  if (transactionData.transactionType === 'deposit' && transactionData.assetCode !== 'USD') {
+  if (transactionData.transactionType === 'deposit' && assetClassification !== AssetClassification.FIAT) {
     return 'deposit-asset'
   }
 
-  if (transactionData.isInternal && transactionData.assetCode !== 'USD') {
+  if (transactionData.isInternal && assetClassification !== AssetClassification.FIAT) {
     return 'internal-asset'
   }
 
-  if (!transactionData.isInternal && transactionData.assetCode !== 'USD') {
+  if (!transactionData.isInternal && assetClassification !== AssetClassification.FIAT) {
     return 'external-asset'
   }
 }
