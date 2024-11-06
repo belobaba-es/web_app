@@ -70,12 +70,20 @@ import { useI18n } from 'vue-i18n'
 import { useLayout } from '../withdraw/composable/useLayout'
 
 import { useRouter } from 'vue-router'
+import { useAssets } from '../../composables/useAssets'
+import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 
 const { optionButtonsFiat, optionButtonsCrypto, selectOption, selectedOption } = useLayout()
+const { listAssets, getAssets } = useAssets()
 
+onMounted(() => {
+  if (listAssets.value.length === 0) {
+    getAssets()
+  }
+})
 const clickAction = (to: string) => {
   console.log('to', to)
   router.push(to)

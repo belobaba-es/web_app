@@ -9,7 +9,7 @@ const listAssets = ref<Asset[]>([])
 
 export const useAssets = () => {
   const toast = useToast()
-  const { t } = useI18n({ useScope: 'global' })
+  const { t, locale } = useI18n({ useScope: 'global' })
   const getAssets = async () => {
     await new AssetsService()
       .list()
@@ -35,16 +35,15 @@ export const useAssets = () => {
 
   const formatAmountAccordingTypeAsset = (amount: number, assetCode: string) => {
     const asset = getAssetByAssetCode(assetCode)
-    if (asset?.assetClassification === AssetClassification.CRYPTO) {
-      return ` ${amount.toLocaleString('de-DE', {
-        minimumFractionDigits: 8,
-        maximumFractionDigits: 8,
-      })} ${asset.code}`
-    }
-    return `${amount.toLocaleString('de-DE', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })} ${asset?.code}`
+    const decimalSeparator = locale.value === 'en' ? '.' : ','
+    const thousandSeparator = locale.value === 'en' ? ',' : '.'
+
+    const formattedAmount =
+      asset?.assetClassification === AssetClassification.CRYPTO
+        ? amount.toFixed(8)
+        : amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator)
+
+    return formattedAmount.replace('.', decimalSeparator)
   }
   const getAssetByAssetClassification = (assetClassification: string): Asset => {
     const asset = listAssets.value.find((asset: Asset) => asset.assetClassification === assetClassification)

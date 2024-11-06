@@ -14,4 +14,15 @@ import CardWallet from '../../components/CardWallet.vue'
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
 
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import { useAssets } from '../../composables/useAssets'
+import { onMounted } from 'vue'
+
+const { listAssets, getAssets } = useAssets()
+
+onMounted(() => {
+  if (listAssets.value.length === 0) {
+    getAssets()
+  }
+})
+
 </script>

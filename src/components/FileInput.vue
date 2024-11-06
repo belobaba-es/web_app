@@ -174,7 +174,7 @@ const handleUpload = async (event: any) => {
     .catch(error => {
       setLoading(false)
 
-      processException(toast, t, e)
+      processException(toast, t, error)
     })
 }
 

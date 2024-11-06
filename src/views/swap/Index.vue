@@ -85,9 +85,10 @@ import ProgressBar from 'primevue/progressbar'
 import { useRouter } from 'vue-router'
 import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
-import { onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import { useAssets } from '../../composables/useAssets'
 
 const {
   assetIcon,
@@ -105,7 +106,7 @@ const {
 } = storeToRefs(useSwapStore())
 
 const { t } = useI18n({ useScope: 'global' })
-
+const { getAssets, listAssets } = useAssets();
 const router = useRouter()
 const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
 
@@ -121,6 +122,13 @@ const selectedAsset = async (asset: Asset) => {
 const modal = (b: boolean) => {
   showModalAssetSelector.value = b
 }
+
+onMounted(() => {
+  if(listAssets.value.length === 0) {
+    getAssets()
+  }
+})
+
 
 onUnmounted(() => {
   clearSwap()
