@@ -2,7 +2,7 @@
   <div
     class="main-container"
     v-bind:class="{
-      'is-fiat': wallet?.assetCode === FiatAssetCodes.USD || wallet?.assetCode === FiatAssetCodes.USD_PANAMA,
+      'is-fiat': assetClassification === AssetClassification.FIAT,
     }"
   >
     <DepositInstructionsModal v-model:visible="visible" :asset-code="wallet?.assetCode" />
@@ -38,7 +38,7 @@
           <div class="grid flex justify-content-start flex-column">
             <div class="col-4 flex justify-content-start container-link-historic-desktop">
               <router-link
-                v-if="!wallet?.assetCode.startsWith('USD')"
+                v-if="assetClassification !== AssetClassification.FIAT"
                 v-ripple
                 :to="depositURL"
                 class="link-historic-desktop"
@@ -48,7 +48,7 @@
                 <h5 class="text-link-historic-desktop link-historic-desktop">{{ t('deposit') }}</h5>
               </router-link>
               <h5
-                v-if="wallet?.assetCode.startsWith('USD')"
+                v-if="assetClassification === AssetClassification.FIAT"
                 class="link-historic-desktop text-link-historic-desktop ml-0 cursor-pointer"
                 @click="openDepositInstructions(wallet)"
               >
@@ -73,7 +73,7 @@
 
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue'
-import { BalanceWallet } from '../../deposit/types/asset.interface'
+import { AssetClassification, BalanceWallet } from '../../deposit/types/asset.interface'
 import Button from 'primevue/button'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import WithdrawRouteSelectDesktop from './WithdrawRouteSelectDesktop.vue'
@@ -81,8 +81,9 @@ import DepositInstructionsModal from './DepositInstructionsModal.vue'
 import { FiatAssetCodes } from '../types/assetCodes.interface'
 import { useI18n } from 'vue-i18n'
 
-defineProps<{
+const props = defineProps<{
   wallet: BalanceWallet
+  assetClassification: AssetClassification
 }>()
 
 const { t } = useI18n({ useScope: 'global' })
@@ -94,7 +95,7 @@ const emit = defineEmits(['toBack'])
 const visible = ref(false)
 
 const isFiat = (wallet: BalanceWallet | undefined) => {
-  if (wallet?.assetCode === FiatAssetCodes.USD || wallet?.assetCode === FiatAssetCodes.USD_PANAMA) {
+  if (props.assetClassification === AssetClassification.FIAT) {
     depositURL = '/deposit/fiat'
     return 'Fiat'
   } else {
@@ -112,12 +113,12 @@ const openDepositInstructions = (wallet: BalanceWallet | undefined) => {
 
 <style lang="scss">
 .modal-deposit-selector .p-dialog-content {
-  border-radius: 0px !important;
+  border-radius: 0 !important;
 }
 
 .text-balance-wallet-historic-desktop {
   margin-left: 4%;
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium,serif !important;
   width: fit-content;
 
   @media only screen and (min-width: 991px) {
