@@ -1,5 +1,5 @@
 <template>
-  <section class="section-main" style="height: 100%; paddingbottom: 2rem">
+  <section class="section-main" style="height: 100%; padding-bottom: 2rem">
     <FinishRegisterWarningBar />
     <!--    todo uncomment-->
     <!--    <AccountValidationProcess />-->
@@ -19,20 +19,18 @@
           </div>
           <div class="flex-row">
             <div>
-              <AssetInput type="fiat" v-if="transactionType === 'buy'" />
-              <AssetInput type="crypto" v-else />
+              <AssetInput type="fiat" @selectedAsset="null" @selectSupportedAsset="getSupportedAssets" />
             </div>
             <div class="flex justify-content-center align-items-center">
               <div
                 class="swap-circle border-circle w-5rem h-5rem m-2 flex align-items-center justify-content-center cursor-pointer"
-                @click="switchTransactionType()"
+                @click=""
               >
-                <img :src="swapIcon" />
+                <img alt="" :src="swapIcon" />
               </div>
             </div>
             <div>
-              <AssetInput type="crypto" v-if="transactionType === 'buy'" />
-              <AssetInput type="fiat" v-else />
+              <AssetInput type="crypto" @selectedAsset="selectedAsset" @selectSupportedAsset="null" />
             </div>
 
             <ShowQuotePrice v-if="exchangeId" />
@@ -51,7 +49,7 @@
               <Button
                 :label="swapBtnText"
                 class="w-full py-3 text-uppercase"
-                style="color: #000; fontweight: 700"
+                style="color: #000; font-weight: 700"
                 :disabled="loading || (!exchangeId && !shouldRefreshQuote)"
                 @click="swapHandler"
                 :loading="loading"
@@ -63,12 +61,6 @@
           </div>
         </div>
       </div>
-      <ModalAssetSelector
-        :show-modal="showModalAssetSelector"
-        @update:visible="modal($event)"
-        @selected-asset="selectedAsset"
-        :asset-classification-filter="AssetClassificationFilter.CRYPTO_STABLE_COIN"
-      />
     </PageLayout>
   </section>
 </template>
@@ -79,15 +71,16 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import AssetInput from './components/AssetInput.vue'
 import swapIcon from '../../assets/icons/swap.svg'
-import { Asset, AssetClassificationFilter } from '../deposit/types/asset.interface'
-import ModalAssetSelector from '../../components/ModalAssetSelector.vue'
+import { Asset } from '../deposit/types/asset.interface'
 import ProgressBar from 'primevue/progressbar'
 import { useRouter } from 'vue-router'
 import { useSwapStore } from '../../stores/swap'
 import { storeToRefs } from 'pinia'
-import { onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import ShowQuotePrice from './components/ShowQuotePrice.vue'
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
+import { useExchangePairs } from '../../composables/useExchangePairs'
+import { useAssets } from '../../composables/useAssets'
 
 const {
   assetIcon,
@@ -99,13 +92,14 @@ const {
   swapBtnText,
   loading,
   exchangeId,
-  transactionType,
   assetCode,
   shouldRefreshQuote,
+  fiatUsdAssetCode,
 } = storeToRefs(useSwapStore())
+const { listAssetPairs, getSupportedAssets } = useExchangePairs()
 
 const { t } = useI18n({ useScope: 'global' })
-
+const { getAssets, listAssets } = useAssets()
 const router = useRouter()
 const { createExchange, swapHandler, switchTransactionType, clearSwap } = useSwapStore()
 
@@ -121,7 +115,14 @@ const selectedAsset = async (asset: Asset) => {
 const modal = (b: boolean) => {
   showModalAssetSelector.value = b
 }
-
+onMounted(async () => {
+  fiatUsdAssetCode.value = ''
+  assetCode.value = ''
+  if (listAssets.value.length === 0) {
+    await getAssets()
+  }
+  await listAssetPairs()
+})
 onUnmounted(() => {
   clearSwap()
 })

@@ -1,4 +1,3 @@
-import { HttpService } from '../../../shared/services/http'
 import { createExchangeResponse } from '../types/create-exchange-response.interface'
 import axios from 'axios'
 
@@ -31,7 +30,9 @@ export class SwapService {
     })
   }
 
-  async getHeader(token: string, isFormData: boolean = false) {
+  async getHeader(isFormData: boolean = false) {
+    const { getClientId } = useAuth()
+    const token = await generateToken({ clientId: getClientId() })
     const type = isFormData ? 'multipart/form-data' : 'application/json'
 
     return {
@@ -44,25 +45,20 @@ export class SwapService {
   }
 
   async createExchange(payload: any): Promise<createExchangeResponse> {
-    const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
-
+    const headerRequest = await this.getHeader()
     const data = await this.getClient().post<createExchangeResponse>(`/exchanges`, payload, headerRequest)
     return data.data
   }
 
   async execute(exchangeId: string): Promise<any> {
-    const { getClientId } = useAuth()
-
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader()
     const response = await this.getClient().post<any>(`/exchanges/accept/${exchangeId}`, {}, headerRequest)
 
     return response.data
   }
 
   async exchanges(nextPag: number = 1) {
-    const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader()
 
     const data = await this.getClient().get<any>(
       `/exchanges/${nextPag}/20`,
@@ -73,7 +69,16 @@ export class SwapService {
     return data.data.data
   }
 
-  async cancelQuote(quiteId: string) {
-    return await new HttpService(import.meta.env.VITE_SWAP_API).patch<any>(`/quotes/cancel/${quiteId}`, {}, true)
+  async cancelQuote(exchangeId: string) {
+    const headerRequest = await this.getHeader()
+    const response = await this.getClient().post<any>(`/exchanges/cancel/${exchangeId}`, {}, headerRequest)
+
+    return response.data
+  }
+
+  async getExchangePairs() {
+    const headerRequest = await this.getHeader()
+    const response = await this.getClient().get<any>(`/exchanges/supported-pairs`, { headers: headerRequest.headers })
+    return response.data
   }
 }

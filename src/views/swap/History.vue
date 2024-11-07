@@ -28,8 +28,9 @@
                 v-if="item.sourceDetails.assetCode === FiatAssetCodes.USD"
                 class="h-5rem w-6rem relative icons-container"
               >
-                <img :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
+                <img alt="" :src="usdIcon" class="h-3rem h-3rem absolute top-0 left-0" />
                 <img
+                  alt=""
                   :src="iconAssetByCode(item.destinationDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute bottom-0 right-0"
                 />
@@ -38,17 +39,18 @@
               <!--              sell-->
               <td v-if="item.sourceDetails.assetCode !== 'USD'" class="h-5rem w-6rem relative icons-container">
                 <img
+                  alt=""
                   :src="iconAssetByCode(item.sourceDetails.assetCode, listAssets)"
                   class="h-3rem h-3rem absolute top-0 left-0"
                 />
-                <img :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
+                <img alt="" :src="usdIcon" class="h-3rem h-3rem absolute bottom-0 right-0" />
               </td>
 
               <td class="total-amount-container">
                 <h3 class="text-center">{{ item.sourceDetails.amountDebit }} {{ item.sourceDetails.assetCode }}</h3>
               </td>
 
-              <td class="swap-icon-container"><img :src="swapIcon" /></td>
+              <td class="swap-icon-container"><img alt="" :src="swapIcon" /></td>
 
               <!--              buy-->
               <td v-if="item.sourceDetails.assetCode === 'USD'" class="balance-in-container">
@@ -136,34 +138,26 @@ import { onMounted, ref } from 'vue'
 import { useSwap } from '../../composables/useSwap'
 import { useSwapStore } from '../../stores/swap'
 import { useRouter } from 'vue-router'
-import { Asset } from '../deposit/types/asset.interface'
-import { AssetsService } from '../deposit/services/assets'
 import { ExchangeCreated } from './types/quote-response.interface'
 import Skeleton from 'primevue/skeleton'
 import swapIcon from '../../assets/icons/swap.svg'
 import { iconAssetByCode } from '../../shared/iconAssetByCode'
-import { processException } from '../../shared/processException'
 import { useToast } from 'primevue/usetoast'
 import { FiatAssetCodes } from '../wallet/types/assetCodes.interface'
+import { useAssets } from '../../composables/useAssets'
 
 const { t } = useI18n({ useScope: 'global' })
 const toast = useToast()
 const { exchanges } = useSwap()
 const { fetchExchanges, getNextPage } = useSwapStore()
 const router = useRouter()
-const listAssets = ref<Asset[]>([])
 const isLoading = ref<boolean>(true)
 const exchangesList = ref<ExchangeCreated[]>()
-
+const { getAssets, listAssets } = useAssets()
 onMounted(async () => {
-  await new AssetsService()
-    .list()
-    .then(data => {
-      listAssets.value = data
-    })
-    .catch(e => {
-      processException(toast, t, e)
-    })
+  if (listAssets.value.length === 0) {
+    await getAssets()
+  }
 
   await fetchExchanges()
   isLoading.value = false

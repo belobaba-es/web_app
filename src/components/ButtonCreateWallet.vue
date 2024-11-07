@@ -1,5 +1,5 @@
 <template>
-  <div class="container-new-wallet" style="height: 172px; paddingbottom: 2rem">
+  <div class="container-new-wallet" style="height: 172px; padding-bottom: 2rem">
     <div class="grid">
       <div class="col-12 sm:col-12 md:col-12 lg:col-4 xl:col-4">
         <p class="text-btn-new-wallet font-semi-bold mb-3">{{ t('textNewWalletAddress') }}</p>
@@ -20,6 +20,7 @@ import NewWallet from '../views/deposit/components/NewWallet.vue'
 import { Asset, PaymentAddressResponse } from '../views/deposit/types/asset.interface'
 import { AssetsService } from '../views/deposit/services/assets'
 import { useI18n } from 'vue-i18n'
+import { useAssets } from '../composables/useAssets'
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -34,6 +35,7 @@ const selectPaymentAddress = ref<PaymentAddressResponse | null>(null)
 
 const assets = ref<Asset[]>([])
 const paymentAddress = ref<PaymentAddressResponse[]>([])
+const { getAssets } = useAssets()
 
 const findAsset = (assetId: string) => {
   const assetSelect = assets.value.find(asset => asset.assetId == assetId)
@@ -43,9 +45,9 @@ const findAsset = (assetId: string) => {
   return null
 }
 
-const searchWallets = () => {
+const searchWallets = async () => {
   lazyLoading.value = true
-  new AssetsService().list().then(data => (assets.value = data))
+  await getAssets()
   new AssetsService().listPaymentAddress().then(data => {
     lazyLoading.value = false
     paymentAddress.value = data
@@ -90,8 +92,8 @@ const onCreateAddress = (event: any) => {
   text-align: center;
 
   @media only screen and (min-width: 991px) {
-    margin-bottom: 0rem;
-    margin-top: 0rem;
+    margin-bottom: 0;
+    margin-top: 0;
     text-align: start;
   }
 }
