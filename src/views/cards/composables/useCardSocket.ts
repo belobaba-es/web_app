@@ -29,10 +29,17 @@ export const useCardSocket = () => {
         CLIENT_SECRET: import.meta.env.VITE_NOBA_CARD_CLIENT_SECRET,
       },
       await searchPublicKey(),
-      'webapp:belobaba'
+      `webapp:${import.meta.env.VITE_TENANT_NAME}`
     )
 
     const socket = new WebSocket(`${import.meta.env.VITE_NOBA_CARD_SOCKET}?token=${token}`)
+
+    // Enviar pings periódicamente
+    const pingInterval = setInterval(() => {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: 'ping' }))
+      }
+    }, 30000)
 
     socket.addEventListener('open', function (event) {
       console.log('Connected to the WebSocket server')
@@ -47,6 +54,8 @@ export const useCardSocket = () => {
     socket.addEventListener('close', function (event) {
       console.log('Disconnected from the WebSocket server')
       refSubscribed.value = false
+
+      clearInterval(pingInterval)
     })
 
     socket.addEventListener('error', function (event) {
