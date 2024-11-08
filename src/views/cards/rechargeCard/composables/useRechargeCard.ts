@@ -41,7 +41,7 @@ export const useRechargeCard = () => {
 
     return requestQuote(cardInfo.value.cardId, rechargeState.value.assetCode, rechargeState.value.amount)
       .then(response => {
-        rechargeState.value.unitCount = parseInt(response.totalReceived)
+        rechargeState.value.unitCount = parseFloat(response.totalReceived)
         rechargeState.value.quoteId = response.quoteId
         rechargeState.value.loading = false
       })
@@ -53,7 +53,6 @@ export const useRechargeCard = () => {
 
   const handleAcceptQuote = async () => {
     rechargeState.value.loading = true
-
     return acceptQuote(rechargeState.value.quoteId)
       .then(response => {
         openModal(false)
