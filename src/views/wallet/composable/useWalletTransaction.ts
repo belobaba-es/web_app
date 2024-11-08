@@ -14,7 +14,7 @@ import { FiatService } from '../../deposit/services/fiat'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import { Asset, BalanceWallet } from '../../deposit/types/asset.interface'
 import { useRoute } from 'vue-router'
-import { TransactionType } from '../../swap/types/quote-response.interface'
+import { TransactionType } from '../../transaction-history/types/transaction-history-response.interface'
 
 const dataBank = ref<BankData>()
 const bankNational = ref()

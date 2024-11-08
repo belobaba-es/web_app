@@ -26,6 +26,12 @@ type Counterparty = {
   }
 }
 
+export enum TransactionType {
+  DEPOSIT = 'deposit',
+  WITHDRAW = 'withdraw-funds',
+  REVERT = 'revert',
+}
+
 export type TransactionHistory = {
   _id?: {
     $oid: string
@@ -40,7 +46,7 @@ export type TransactionHistory = {
   reference: string
   status: string
   transactionId: string
-  transactionType: string
+  transactionType: TransactionType
   formatedDate?: any
   feeWire: any
 }
