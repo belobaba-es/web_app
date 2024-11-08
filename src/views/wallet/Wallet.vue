@@ -10,9 +10,7 @@
 
 <script setup lang="ts">
 import CardWallet from '../../components/CardWallet.vue'
-
 import AccountValidationProcess from '../../components/AccountValidationProcess.vue'
-
 import FinishRegisterWarningBar from '../../components/FinishRegisterWarningBar.vue'
 import { useAssets } from '../../composables/useAssets'
 import { onMounted } from 'vue'
@@ -24,5 +22,4 @@ onMounted(() => {
     getAssets()
   }
 })
-
 </script>

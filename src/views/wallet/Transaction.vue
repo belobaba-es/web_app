@@ -1,34 +1,37 @@
 <template>
   <section class="section-main">
-    <TransactionHeaderMobile class="transaction-header-mobile" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
+    <TransactionHeaderMobile
+      class="transaction-header-mobile"
+      v-if="wallet && isMobile"
+      :wallet="wallet"
+      :assetClassification="asset?.assetClassification as AssetClassification"
+      @to-back="toBack()"
+    />
 
-    <TransactionHeaderDesktop class="transaction-header-desktop" v-if="wallet" :wallet="wallet" @to-back="toBack()" />
+    <TransactionHeaderDesktop
+      class="transaction-header-desktop"
+      v-if="wallet && !isMobile"
+      :wallet="wallet"
+      :assetClassification="asset?.assetClassification as AssetClassification"
+      @to-back="toBack()"
+    />
 
     <TransactionTable v-if="wallet" :assetCode="getAssetCode()" />
   </section>
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import { useBalanceWallet } from '../../composables/useBalanceWallet'
-import { BalanceWallet } from '../deposit/types/asset.interface'
-
+import { useRouter } from 'vue-router'
 import TransactionHeaderMobile from './components/TransactionHeaderMobile.vue'
 import TransactionHeaderDesktop from './components/TransactionHeaderDesktop.vue'
 import TransactionTable from './components/TransactionTable.vue'
+import { useWalletTransaction } from './composable/useWalletTransaction'
+import { useMediaQuery } from '../../composables/useMediaQuery'
+import { AssetClassification } from '../deposit/types/asset.interface'
 
 const router = useRouter()
-const route = useRoute()
-const { getWalletByAssetCode } = useBalanceWallet()
-
-const assetCode: string = route.params.assetCode.toString()
-
-const wallet = ref<BalanceWallet | undefined>()
-
-onMounted(async () => {
-  wallet.value = getWalletByAssetCode(assetCode)
-})
+const { wallet, asset } = useWalletTransaction()
+const { isMobile } = useMediaQuery()
 
 const toBack = () => {
   router.back()
@@ -50,7 +53,7 @@ const getAssetCode = () => {
   margin: 0.5rem;
   color: #ffff;
   background-color: #0f655d;
-  box-shadow: 0px 3px 5px rgb(0 0 0 / 2%), 0px 0px 2px rgb(0 0 0 / 5%), 0px 1px 4px rgb(0 0 0 / 8%) !important;
+  box-shadow: 0 3px 5px rgb(0 0 0 / 2%), 0 0 2px rgb(0 0 0 / 5%), 0 1px 4px rgb(0 0 0 / 8%) !important;
   transition: box-shadow 0.2s ease-in-out;
 
   &:hover {
@@ -59,13 +62,13 @@ const getAssetCode = () => {
 }
 
 .container-data {
-  font-family: RedHatDisplayLight !important;
+  font-family: KanitLight,serif !important;
   padding: 1rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem;
 
   border: 1px solid #ebebeb;
   background-color: #fff;
-  box-shadow: 0px 3px 5px rgb(0 0 0 / 2%), 0px 0px 2px rgb(0 0 0 / 5%), 0px 1px 4px rgb(0 0 0 / 8%) !important;
+  box-shadow: 0 3px 5px rgb(0 0 0 / 2%), 0 0 2px rgb(0 0 0 / 5%), 0 1px 4px rgb(0 0 0 / 8%) !important;
   transition: box-shadow 0.2s ease-in-out;
 
   &:hover {
@@ -83,7 +86,7 @@ const getAssetCode = () => {
 }
 
 .name-cripto {
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium,serif !important;
 }
 
 .text-header {
@@ -107,19 +110,11 @@ const getAssetCode = () => {
 }
 
 .is-fiat {
-  padding: 1rem;
-  background-color: #e4cea1 !important;
-  color: #000;
-  a {
-    color: #000;
-    h5 {
-      color: #000;
-    }
-  }
+  background-color: #134591 !important;
 }
 
 .text-balance-wallet-historic {
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium,serif !important;
   margin: auto;
   width: fit-content;
 
@@ -157,7 +152,7 @@ const getAssetCode = () => {
 }
 
 .text-link-historic {
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium,serif !important;
   margin: auto;
   width: fit-content;
 
@@ -184,7 +179,7 @@ const getAssetCode = () => {
 }
 
 .title-historic {
-  font-family: RedHatDisplayMedium !important;
+  font-family: KanitMedium,serif !important;
   font-weight: bold !important;
   width: fit-content;
 
@@ -201,7 +196,7 @@ const getAssetCode = () => {
 }
 
 .no-padding {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .transaction-header-mobile {

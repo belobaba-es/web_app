@@ -118,8 +118,13 @@
               @click="toBack"
             />
           </div>
-          <div v-if="isEnabledButtonToProceedWithdrawal" class="">
-            <Button :label="t('continue')" class="mb-4 mt-3 mr-2 w-8rem" @click="visible = true" />
+          <div>
+            <Button
+              :label="t('continue')"
+              :disabled="!isEnabledButtonToProceedWithdrawal"
+              class="mb-4 mt-3 mr-2 w-8rem"
+              @click="visible = true"
+            />
           </div>
         </div>
       </div>

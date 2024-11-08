@@ -112,7 +112,13 @@
           {{ t('reviewDataAgain') }}<b class="font-semi-bold"> {{ t('backButtonTitle') }}</b>
         </div>
         <div class="col-12 xl:col-2 float-right">
-          <Button :loading="submitting" :label="t('continue')" class="w-full" @click="validForm" />
+          <Button
+            :loading="submitting"
+            :disabled="!isEnabledButtonToProceedWithdrawal"
+            :label="t('continue')"
+            class="w-full"
+            @click="validForm"
+          />
         </div>
         <div class="col-12 xl:col-2 float-right">
           <Button :label="t('backButtonTitle')" class="mr-4 w-full" outlined severity="" @click="goBack()" />
@@ -150,6 +156,7 @@ import DialogConfirmationWithdrawal from './DialogConfirmationWithdrawal.vue'
 import { useToast } from 'primevue/usetoast'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import { useCalculateFee } from '../../composable/useCalculateFee'
+import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const { t } = useI18n({ useScope: 'global' })
 const { isAssetEdit, form } = useBeneficiaryCrypto()
@@ -165,7 +172,7 @@ const {
   visible,
   isAccountSegregated,
 } = useWithdrawalCrypto()
-
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 const { getBalanceByCode } = useBalanceWallet()
 const { fee, assetsCode, handleCalculateFee, submitting } = useCalculateFee()
 
