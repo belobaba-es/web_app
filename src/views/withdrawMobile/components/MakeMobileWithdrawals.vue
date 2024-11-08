@@ -83,7 +83,7 @@
       severity=""
       @click="goBack()"
     />
-    <Button :label="t('continue')" class="w-8rem" @click="validForm" />
+    <Button :disabled="!isEnabledButtonToProceedWithdrawal" :label="t('continue')" class="w-8rem" @click="validForm" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -104,9 +104,11 @@ import { WithdrawalPurpose } from '../../../shared/propuseWithdrawal'
 import { useAuth } from '../../../composables/useAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../components/MessageAlertActiveTwoFactorAuth.vue'
 import { AssetClassification } from '../../deposit/types/asset.interface'
+import { useTwoFactorAuth } from '../../../composables/useTwoFactorAuth'
 
 const { t } = useI18n({ useScope: 'global' })
 const { isAccountSegregated } = useAuth()
+const { isEnabledButtonToProceedWithdrawal } = useTwoFactorAuth()
 const props = defineProps({
   withdrawForm: {
     type: Object as () =>

@@ -45,7 +45,9 @@
         </div>
         <div class="col-12 p-0 float-left">
           <p class="m-0 text-general float-left">{{ t('fee') }}:</p>
-          currencyFormat(props.assetCodeSelected?.assetClassification, props.fee ?? 0) }} {{ assetsCode }}
+          <p class="m-0 text-general float-right">
+            {{ currencyFormat(props.assetCodeSelected?.assetClassification, props.fee ?? 0) }} {{ assetsCode }}
+          </p>
         </div>
       </div>
       <Divider type="dashed"></Divider>
