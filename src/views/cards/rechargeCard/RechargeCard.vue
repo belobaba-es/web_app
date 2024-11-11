@@ -4,7 +4,8 @@
       <SelectCard v-model="cardInfo" :listCards="listCards" />
       <RechargeCardInput type="crypto" />
       <RechargeCardInput type="fiat" />
-      <div>
+''
+      <div class="flex gap-2">
         <Button
           v-if="rechargeState.quoteId === ''"
           :label="t('requestQuote')"
@@ -15,15 +16,25 @@
           :disabled="rechargeState.loading"
           :loading="rechargeState.loading"
         />
-        <Button
-          v-else
-          :label="t('confirm')"
-          class="w-12 py-2"
-          icon="pi pi-sync"
-          iconPos="right"
-          @click="openModal(true)"
-          :disabled="rechargeState.quoteId === '' || rechargeState.loading"
-        />
+        <template v-else>
+          <Button
+            :label="t('confirm')"
+            class="w-12 py-2"
+            icon="pi pi-check"
+            iconPos="right"
+            @click="openModal(true)"
+            :disabled="rechargeState.quoteId === '' || rechargeState.loading"
+          />
+          <Button
+            :label="t('requestQuote')"
+            class="w-12 py-2"
+            icon="pi pi-refresh"
+            iconPos="right"
+            @click="verifyRequestQuote()"
+            :disabled="rechargeState.loading"
+            :loading="rechargeState.loading"
+          />
+        </template>
       </div>
       <ModalAssetSelector
         :show-modal="rechargeState.showModalAssetSelector"
