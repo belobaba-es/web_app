@@ -14,7 +14,7 @@
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
         <label>{{ t('dni') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
         <div class="p-inputgroup">
-          <InputText :model-value="getDNI()" class="w-full" disabled required type="text" />
+          <InputText v-model="onboardingCardDataClient.dni" class="w-full" required type="text" />
         </div>
       </div>
       <div class="field col-12 sm:col-12 md:col-12 lg:col-6 xl:col-6">
@@ -29,6 +29,7 @@
             type="text"
           />
         </div>
+        <small class="help-text">Format: YYYY-MM-DD</small>
       </div>
     </div>
 
@@ -155,7 +156,6 @@ const {
   domicileNumber,
   domicileOptions,
   onChangeDomicileHandler,
-  getDNI,
   getDateBirth,
 } = useOnboardingCard()
 
