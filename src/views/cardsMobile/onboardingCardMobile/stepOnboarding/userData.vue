@@ -4,7 +4,7 @@
       <div class="col-11">
         <h2 class="font-regular">{{ t('dataUser') }}</h2>
       </div>
-   
+
       <div class="col-12 flex justify-content-between flex-wrap px-0">
         <div class="card-type-card p-0 m-0 pl-3 pr-3 primary-color">
           <p class="font-regular my-2 mt-md-3 mb-md-3">{{ t('typeCardRequest') }}: {{ typeCardSelectString }}</p>
@@ -17,7 +17,7 @@
         <div class="field col-6">
           <label>{{ t('dni') }} <span v-tooltip.top="'Mandatory'" class="bg-red">*</span></label>
           <div class="p-inputgroup">
-            <InputText :model-value="getDNI()" class="w-full" disabled required type="text" />
+            <InputText v-model="onboardingCardDataClient.dni" class="w-full" required type="text" />
           </div>
         </div>
         <div class="field col-6">
@@ -32,6 +32,7 @@
               type="text"
             />
           </div>
+          <small class="help-text">Format: YYYY-MM-DD</small>
         </div>
       </div>
 
@@ -204,8 +205,9 @@ const {
   domicileNumber,
   domicileOptions,
   onChangeDomicileHandler,
+  validatePartOfTheOnboardingForm,
 } = useOnboardingCard()
-const { getDNI, getDateBirth } = useOnboardingPersonal()
+const { getDateBirth } = useOnboardingPersonal()
 
 onMounted(async () => {
   if (countries.value.length === 0) await fetchCountries()
@@ -216,21 +218,11 @@ const addressShippingDomicileNumber = ref()
 const disableDomicileType = ref(true)
 
 watch(domicileNumber, newValue => {
-  if (newValue.length > 0) {
-    disableDomicileType.value = false
-  } else {
-    disableDomicileType.value = true
-  }
+  disableDomicileType.value = newValue.length <= 0
 })
 
 const handleShowRestOfForm = () => {
-  if (
-    onboardingCardDataClient.value.addressShipping.country !== '' &&
-    onboardingCardDataClient.value.addressShipping.region !== '' &&
-    onboardingCardDataClient.value.nationality !== ''
-  ) {
-    isShowRestOfForm.value = true
-  }
+  isShowRestOfForm.value = validatePartOfTheOnboardingForm()
 }
 </script>
 <style lang="scss">

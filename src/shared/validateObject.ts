@@ -1,4 +1,3 @@
-import { useToast } from 'primevue/usetoast'
 import { ToastServiceMethods } from 'primevue/toastservice'
 
 export const validateObject = (toast: ToastServiceMethods, object: any): boolean => {
@@ -12,9 +11,9 @@ export const validateObject = (toast: ToastServiceMethods, object: any): boolean
     if (!trimmedValue) {
       toast.add({
         severity: 'warn',
-        summary: 'Valdation field',
+        summary: 'Field validation',
         detail: `The field ${fieldKey} is required.`,
-        life: 4000,
+        life: 14000,
       })
       isValid = false
     }

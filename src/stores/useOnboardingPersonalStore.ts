@@ -158,7 +158,9 @@ export const useOnboardingPersonalStore = defineStore('useOnboardingPersonalStor
     setDocumentExpirationDate(documentExpirationDate: string) {
       this.documentExpirationDate = documentExpirationDate
     },
-
+    setDNI(dni: string) {
+      this.dni = dni
+    },
     getDNI() {
       return this.dni
     },

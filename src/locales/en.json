@@ -560,7 +560,7 @@
   "typeCardRequest": "Type of card requested",
   "nationality": "Nationality",
   "selectNationality": "Select your nationality",
-  "dataExpiredId": "ID Expiration Date ",
+  "dataExpiredId": "DNI Expiration Date ",
   "typeDomicile": "Type of domicile",
   "numberDomicile": "Domicile number",
   "selectTypeDomicile": "Select the type of address",

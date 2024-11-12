@@ -489,3 +489,8 @@ small {
         display: none;
     }
 }
+
+.p-toast {
+    background-color: #fff !important; /* Change the background color to white */
+    opacity: 1 !important; /* Ensure the opacity is 1 (no transparency) */
+}

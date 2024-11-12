@@ -13,6 +13,7 @@ import { useRoute } from 'vue-router'
 import { processException } from '../../../shared/processException'
 import { useAuthStore } from '../../../stores/useAuthStore'
 import { useLayoutCard } from './useLayoutCard'
+import { validateObject } from '../../../shared/validateObject'
 
 type Option = {
   value: string
@@ -20,6 +21,7 @@ type Option = {
 }
 
 type OnboardingCardDataClient = {
+  dni: string
   documentExpirationDate: string
   nationality: string
   addressShipping: AddressShipping
@@ -36,6 +38,7 @@ export const useOnboardingCard = () => {
     getAddressShipping,
     setNationality,
     setDocumentExpirationDate,
+    setDNI,
     onboardingPersonal,
     getDNI,
     getDateBirth,
@@ -63,6 +66,7 @@ export const useOnboardingCard = () => {
   ]
 
   const onboardingCardDataClient = ref<OnboardingCardDataClient>({
+    dni: getDNI() ?? '',
     documentExpirationDate: '',
     nationality: '',
     addressShipping: getAddressShipping() ?? { ...getAddress(), number: '', apartmentNumber: '' },
@@ -85,6 +89,7 @@ export const useOnboardingCard = () => {
 
     onboardingCardDataClient.value.documentExpirationDate = state.documentExpirationDate ?? ''
     onboardingCardDataClient.value.nationality = state.nationality ?? ''
+    onboardingCardDataClient.value.dni = state.dni
   })
 
   const nextStepUserData = () => {
@@ -117,24 +122,34 @@ export const useOnboardingCard = () => {
     }
   }
 
+  const validatePartOfTheOnboardingForm = () => {
+    const fieldsToValidate: any = {
+      country: onboardingCardDataClient.value.addressShipping.country,
+      region: onboardingCardDataClient.value.addressShipping.region,
+      nationality: onboardingCardDataClient.value.nationality,
+      dni: onboardingCardDataClient.value.dni,
+      documentExpirationDate: onboardingCardDataClient.value.documentExpirationDate,
+    }
+
+    return validateObject(toast, fieldsToValidate)
+  }
+
   const validateForm = () => {
     let validate = true
-
-    if (onboardingCardDataClient.value.documentExpirationDate == '') {
-      toast.add({ severity: 'error', summary: t('errorDocumentLabel'), life: 4000 })
-      validate = false
-    }
     if (onboardingCardDataClient.value.nationality == '') {
-      toast.add({ severity: 'error', summary: t('errorNationalityLabel'), life: 4000 })
+      toast.add({ severity: 'warn', summary: 'Field validation', detail: t('errorNationalityLabel'), life: 14000 })
       validate = false
     }
     if (
       onboardingCardDataClient.value.addressShipping.number == '' &&
       onboardingCardDataClient.value.addressShipping.apartmentNumber == ''
     ) {
-      toast.add({ severity: 'error', summary: t('errorNumberDomicileLabel'), life: 4000 })
+      toast.add({ severity: 'warn', summary: 'Field validation', detail: t('errorNumberDomicileLabel'), life: 14000 })
       validate = false
     }
+
+    if (validate) validate = validatePartOfTheOnboardingForm()
+
     return validate
   }
   const typeCardSelectString = computed(() => {
@@ -142,8 +157,9 @@ export const useOnboardingCard = () => {
   })
 
   const saveData = () => {
-    submitting.value = true
     if (!validateForm()) return
+
+    submitting.value = true
 
     if (route.path === 'cards/onboarding/reposition/pysical') {
       try {
@@ -212,10 +228,8 @@ export const useOnboardingCard = () => {
   const updateStateOnboardingPersonal = () => {
     setAddressShipping(onboardingCardDataClient.value.addressShipping)
     setNationality(onboardingCardDataClient.value.nationality)
-
-    if (onboardingCardDataClient.value.documentExpirationDate)
-      setDocumentExpirationDate(onboardingCardDataClient.value.documentExpirationDate)
-
+    setDocumentExpirationDate(onboardingCardDataClient.value.documentExpirationDate)
+    setDNI(onboardingCardDataClient.value.dni)
     return onboardingPersonal.value
   }
 
@@ -232,6 +246,7 @@ export const useOnboardingCard = () => {
   }
 
   return {
+    validatePartOfTheOnboardingForm,
     currentStepIndex,
     stepperItems,
     typeCardSelectString,
@@ -248,7 +263,6 @@ export const useOnboardingCard = () => {
     typeCardSelect,
     sendingTypeCard,
     onboardingPersonal,
-    getDNI,
     getDateBirth,
   }
 }

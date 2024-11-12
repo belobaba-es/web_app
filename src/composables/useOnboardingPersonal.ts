@@ -20,6 +20,7 @@ const {
   getAddressShipping,
   setNationality,
   setDocumentExpirationDate,
+  setDNI,
 } = useOnboardingPersonalStore()
 const onboardingPersonal = ref<OnboardingPersonal>(dataOnboardingPersonal())
 
@@ -114,6 +115,7 @@ export const useOnboardingPersonal = () => {
   })
 
   return {
+    setDNI,
     setAddressShipping,
     getAddressShipping,
     setNationality,
