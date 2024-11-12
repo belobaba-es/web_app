@@ -19,6 +19,7 @@ export const headerRequestNobaCard = async (): Promise<{
   }
 }> => {
   const { getClientId } = useAuth()
+  const supportedProviders = sessionStorage.getItem('provider')
 
   const pubKey = await searchPublicKey()
 

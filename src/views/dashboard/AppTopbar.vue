@@ -11,10 +11,17 @@
           <strong class="font-bold"> {{ getBalanceByCode('USD') }} USD</strong>
         </span>
       </div>
-      <!--      <Button class="p-button-outlined mr-2 ml-2">-->
-      <!--        <i class="pi pi-bell p-text-secondary" v-badge.danger="2"></i>-->
-      <!--      </Button>-->
-
+      <div class="mx-2">
+        <Dropdown
+          v-model="selectedWalletProviderDrop"
+          :options="walletsProvider"
+          :placeholder="t('textOption')"
+          class="custom-dropdown p-1 w-8rem"
+          option-value="value"
+          option-label="name"
+          required
+        />
+      </div>
       <SplitButton label="Save" :model="items" class="p-button-text mr-2 mb-2 ml-2">
         <img alt="logo" :src="avatar()" class="avatar" />
         <span class="hidden sm:hidden md:hidden lg:flex xl:flex" style="margin: auto 0">{{ username }}</span>
@@ -25,12 +32,14 @@
 
 <script lang="ts" setup>
 import SplitButton from 'primevue/splitbutton'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import logo from '../../assets/img/logo-blanco.png'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { useAuth } from '../../composables/useAuth'
+import Dropdown from 'primevue/dropdown'
+import { useDashboard } from './composable/useDashboard'
 
 const router = useRouter()
 const { getBalanceByCode } = useBalanceWallet()
@@ -38,9 +47,11 @@ const emit = defineEmits(['menu-toggle'])
 
 const { t } = useI18n({ useScope: 'global' })
 
-const { getUserName, getClientId, logout } = useAuth()
+const { getUserName, getClientId, logout, getSupportedWalletProviders } = useAuth()
 
 const username = getUserName()
+const { handleSelectedWalletProvider } = useDashboard()
+const selectedWalletProviderDrop = ref()
 
 const items = ref([
   {
@@ -74,6 +85,23 @@ const items = ref([
 const avatar = () => {
   return `https://ui-avatars.com/api/?name=${getUserName()}`
 }
+
+const walletsProvider = ref(
+  getSupportedWalletProviders().map(provider => {
+    return {
+      name: provider,
+      value: provider,
+    }
+  })
+)
+
+onMounted(() => {
+  selectedWalletProviderDrop.value = getSupportedWalletProviders()[0]
+})
+
+watch(selectedWalletProviderDrop, newValue => {
+  handleSelectedWalletProvider(newValue)
+})
 </script>
 
 <style lang="scss">

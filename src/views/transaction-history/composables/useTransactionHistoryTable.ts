@@ -369,5 +369,7 @@ export const useTransactionHistoryTable = () => {
     loadMoreItems,
     shouldClearPaginator,
     isNullOrUndefinedOrEmpty,
+    getAssetsHistory,
+    getTransactions,
   }
 }

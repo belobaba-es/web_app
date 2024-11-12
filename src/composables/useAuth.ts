@@ -18,8 +18,15 @@ export const useAuth = () => {
     remember: false,
   })
 
-  const { setInitialUserAuth, getAccountType, getCountry, getClientId, getAccountStatus, isTwoFactorActive } =
-    useAuthStore()
+  const {
+    setInitialUserAuth,
+    getAccountType,
+    getCountry,
+    getClientId,
+    getAccountStatus,
+    isTwoFactorActive,
+    getSupportedWalletProviders,
+  } = useAuthStore()
 
   const makeLogin = async (): Promise<UserAuth | undefined> => {
     submitting.value = true
