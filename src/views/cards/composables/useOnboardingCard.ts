@@ -77,14 +77,14 @@ export const useOnboardingCard = () => {
     const address = getAddress()
 
     onboardingCardDataClient.value.addressShipping = {
-      streetOne: addressShipping.streetOne ?? address.streetOne,
-      streetTwo: addressShipping.streetTwo ?? address.streetTwo,
-      postalCode: addressShipping.postalCode ?? address.postalCode,
-      city: addressShipping.city ?? address.city,
-      region: addressShipping.region ?? address.region,
-      country: addressShipping.country ?? address.country,
-      number: addressShipping.number ?? '',
-      apartmentNumber: addressShipping.apartmentNumber ?? '',
+      streetOne: addressShipping?.streetOne || address.streetOne,
+      streetTwo: addressShipping?.streetTwo || address.streetTwo,
+      postalCode: addressShipping?.postalCode || address.postalCode,
+      city: addressShipping?.city || address.city,
+      region: addressShipping?.region || address.region,
+      country: addressShipping?.country || address.country,
+      number: addressShipping?.number || '',
+      apartmentNumber: addressShipping?.apartmentNumber || '',
     }
 
     onboardingCardDataClient.value.documentExpirationDate = state.documentExpirationDate ?? ''
