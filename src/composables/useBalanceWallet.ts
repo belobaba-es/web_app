@@ -22,9 +22,7 @@ export const useBalanceWallet = () => {
       .then(response => {
         balanceWalletStore.setBalanceWallet(response)
       })
-      .catch(error => {
-        processException(toast, t, error)
-      })
+      .catch(e => {})
   }
   const fetchBalanceWallets = async () => {
     if (getClientId() === '') return
