@@ -12,7 +12,7 @@
             <th class="col-recibo"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="!loadingTransactions">
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
               <div class="pr-2" style="color: var(--primary-color)">
@@ -49,7 +49,7 @@
       </table>
     </div>
 
-    <template>
+    <template v-if="loadingTransactions">
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
@@ -75,6 +75,7 @@ import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
 import GeneralPaginator from '../../../components/GeneralPaginator.vue'
 import { useI18n } from 'vue-i18n'
+import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
@@ -82,13 +83,19 @@ const {
   getLastSixDigits,
   formatDate,
   nextPage,
+  loadingTransactions,
   getDescriptions,
   generatePdfTransactionCard,
   isGeneratingTransactionPDF,
   pagination,
   prevPage,
+  getHistoryTransaction,
   updateItemsPage,
 } = useTransactionCard()
+
+onMounted(() => {
+  getHistoryTransaction()
+})
 
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount?.toString()

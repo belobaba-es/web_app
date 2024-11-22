@@ -128,26 +128,26 @@ export const useTransactionCard = () => {
     totalPages: totalPages.value,
   })
 
-  const nextPage = () => {
+  const nextPage = async () => {
     if (currentPage.value < totalPages.value) {
       currentPage.value++
       useTransactionHistoryCard.setNextPage(currentPage.value)
-      getHistoryTransaction(currentPage.value, 10)
+      await getHistoryTransaction(currentPage.value, 10)
     }
   }
 
-  const prevPage = () => {
+  const prevPage = async () => {
     if (currentPage.value > 1) {
       currentPage.value--
       useTransactionHistoryCard.setNextPage(currentPage.value)
-      getHistoryTransaction(currentPage.value, 10)
+      await getHistoryTransaction(currentPage.value, 10)
     }
   }
 
-  const updateItemsPage = (itemPage: number) => {
+  const updateItemsPage = async (itemPage: number) => {
     itemsPage.value = itemPage
     useTransactionHistoryCard.setLimit(itemPage)
-    getHistoryTransaction(currentPage.value, itemsPage.value)
+    await getHistoryTransaction(currentPage.value, itemsPage.value)
   }
 
   watch(totalRecords, newValue => {
@@ -181,6 +181,7 @@ export const useTransactionCard = () => {
     generatePdfTransactionCard,
     isGeneratingTransactionPDF,
     pagination,
+    getHistoryTransaction,
     nextPage,
     currentPage,
     prevPage,
