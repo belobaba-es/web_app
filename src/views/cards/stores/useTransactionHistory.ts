@@ -18,6 +18,10 @@ export const useTransactionHistoryStore = defineStore('transactionHistoryCard', 
     setTransactionList(payload: TransactionCard[]) {
       this.transactionList = payload
     },
+    setNewTransaction(transaction: TransactionCard) {
+      console.log('setNewTransaction called with:', transaction)
+      this.transactionList.unshift(transaction)
+    },
     getNextPage() {
       return this.page
     },

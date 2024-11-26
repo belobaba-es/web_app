@@ -75,7 +75,6 @@ import Skeleton from 'primevue/skeleton'
 import { useTransactionCard } from './composable/useTransactionCard'
 import GeneralPaginator from '../../../components/GeneralPaginator.vue'
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const {
@@ -89,13 +88,9 @@ const {
   isGeneratingTransactionPDF,
   pagination,
   prevPage,
-  getHistoryTransaction,
   updateItemsPage,
 } = useTransactionCard()
 
-onMounted(() => {
-  getHistoryTransaction()
-})
 
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount?.toString()

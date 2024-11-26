@@ -22,6 +22,7 @@ export const useTransactionCard = () => {
   const loadingTransactions = ref<boolean>(false)
   const { t } = useI18n({ useScope: 'global' })
   const useTransactionHistoryCard = useTransactionHistoryStore()
+
   const toast = useToast()
   const { getUserName } = useAuth()
 
@@ -181,7 +182,6 @@ export const useTransactionCard = () => {
     generatePdfTransactionCard,
     isGeneratingTransactionPDF,
     pagination,
-    getHistoryTransaction,
     nextPage,
     currentPage,
     prevPage,
