@@ -57,7 +57,7 @@ export const useRechargeCard = () => {
       .then(response => {
         openModal(false)
         if (isMobile) {
-          router.push('/cards')
+          router.push('/cards/transactions-card')
         } else {
           router.push('/cards/transactions-card')
         }

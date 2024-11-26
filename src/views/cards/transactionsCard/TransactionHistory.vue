@@ -12,7 +12,7 @@
             <th class="col-recibo"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="!loadingTransactions">
           <tr v-for="(transaction, index) in transactionList" :key="index">
             <td class="col-descripcion flex">
               <div class="pr-2" style="color: var(--primary-color)">
@@ -49,7 +49,7 @@
       </table>
     </div>
 
-    <template>
+    <template v-if="loadingTransactions">
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
       <Skeleton height="1.3rem" style="margin-top: 15px; margin-bottom: 5px" width="100%" />
@@ -82,6 +82,7 @@ const {
   getLastSixDigits,
   formatDate,
   nextPage,
+  loadingTransactions,
   getDescriptions,
   generatePdfTransactionCard,
   isGeneratingTransactionPDF,
@@ -89,6 +90,7 @@ const {
   prevPage,
   updateItemsPage,
 } = useTransactionCard()
+
 
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount?.toString()
