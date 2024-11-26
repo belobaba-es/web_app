@@ -4,14 +4,14 @@ import { Ref, ref } from 'vue'
 import { BalanceCard } from '../types/balanceCard.type'
 import { TransactionCard } from '../types/transactionCard.type'
 import { searchPublicKey } from '../services/nobaCardBase.service'
-import { useTransactionCard } from '../transactionsCard/composable/useTransactionCard'
 import { useCardCenter } from '../cardCenter/Composables/useCardCenter'
+import { useTransactionHistoryStore } from '../stores/useTransactionHistory'
 
 const isSubscribedCardTransactionResource = ref<boolean>(false)
 const isSubscribedCardBalanceResource = ref<boolean>(false)
 
 export const useCardSocket = () => {
-  const { transactionList } = useTransactionCard()
+  const { setNewTransaction } = useTransactionHistoryStore()
   const { selectedCard } = useCardCenter()
 
   async function makeConnectionSocket(
@@ -47,7 +47,6 @@ export const useCardSocket = () => {
     })
 
     socket.addEventListener('message', function (event) {
-      console.log(event.data)
       functionProcessMessageSendBySocketServer(event.data)
     })
 
@@ -87,9 +86,15 @@ export const useCardSocket = () => {
     )
   }
 
-  const processNewTransactionMessageSendBySocketServer = (message: TransactionCard) => {
-    if (!message.cardId) return
-    transactionList.value = [...transactionList.value, message]
+  const processNewTransactionMessageSendBySocketServer = (message: any) => {
+    const parsedMessage: TransactionCard = JSON.parse(message)
+
+    console.log('message', message)
+    console.log('message ', 'cardId' in parsedMessage)
+
+    if (!('cardId' in parsedMessage)) return
+
+    setNewTransaction({ ...parsedMessage })
   }
 
   const processNewCardBalanceMessageSendBySocketServer = (message: BalanceCard) => {
