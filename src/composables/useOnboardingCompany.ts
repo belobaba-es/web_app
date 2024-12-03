@@ -20,7 +20,7 @@ export const useOnboardingCompany = () => {
   const { t } = useI18n({ useScope: 'global' })
 
   const { dataOnboardingCompany, setStateOnboardingCompany } = useOnboardingCompanyStore()
-  const { getClientId, setClientId } = useAuth()
+  const { getClientId } = useAuth()
   const onboardingCompany = ref<OnboardingCompany>(dataOnboardingCompany())
 
   const useOnboardingCompanyState = useOnboardingCompanyStore()
@@ -36,6 +36,7 @@ export const useOnboardingCompany = () => {
 
     requestToBackendForUpdateOnboardingCompany()
       .then(resp => {
+        console.log(resp)
         submitting.value = false
         toast.add({
           severity: 'success',
@@ -44,7 +45,6 @@ export const useOnboardingCompany = () => {
         })
 
         isUpdateData.value = true
-        setClientId(resp.clientId)
         router.push('/onboarding/business/upload-documents')
       })
       .catch(e => {
@@ -135,7 +135,6 @@ export const useOnboardingCompany = () => {
   }
 
   const fetchDataToClientCompany = (clientId?: string) => {
-    console.log(clientId)
     submitting.value = true
     new ProfileService()
       .getAccountByClientId(getClientId() ?? clientId)

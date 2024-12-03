@@ -161,7 +161,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Button from 'primevue/button'
-import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useOnboardingCompany } from '../../../composables/useOnboardingCompany'
 import Dropdown from 'primevue/dropdown'
@@ -172,7 +171,6 @@ import InputText from 'primevue/inputtext'
 
 const { t } = useI18n({ useScope: 'global' })
 
-const toast = useToast()
 const { onboardingCompany, saveData } = useOnboardingCompany()
 const { investmentData, engageInActivities, regulatedStatus, typesPrimaryBusiness } = useOptionsAccounts()
 const { countryAllowedForUSA, fetchCountryAllowUsa, fetchCountries, loadingCountriesField, countriesInputIsEmpty } =
