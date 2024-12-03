@@ -26,8 +26,7 @@ import { useAuth } from '../composables/useAuth'
 import { processException } from '../shared/processException'
 
 const toast = useToast()
-const { markDataSubmitted } = useAuth()
-
+const { markDataSubmitted, getClientId } = useAuth()
 const { t } = useI18n({ useScope: 'global' })
 
 const emit = defineEmits(['uploadComplete'])
@@ -140,6 +139,7 @@ const handleUpload = async (event: any) => {
 
   let formData = new FormData()
 
+  formData.append('clientId', getClientId())
   formData.append('file', file)
   formData.append('isPartner', props.isPartner ? 'true' : 'false')
   formData.append('documentSide', props.side)
