@@ -139,8 +139,6 @@ const handleUpload = async (event: any) => {
 
   let formData = new FormData()
 
-  console.log(getClientId())
-
   formData.append('clientId', getClientId())
   formData.append('file', file)
   formData.append('isPartner', props.isPartner ? 'true' : 'false')
