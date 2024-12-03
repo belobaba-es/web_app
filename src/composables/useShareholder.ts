@@ -7,6 +7,7 @@ import { useOnboardingCompany } from './useOnboardingCompany'
 import { useRouter } from 'vue-router'
 import { processException } from '../shared/processException'
 import { useI18n } from 'vue-i18n'
+import { useAuth } from './useAuth'
 
 export const useShareholder = () => {
   const router = useRouter()
@@ -17,6 +18,7 @@ export const useShareholder = () => {
   const dateBirth = ref('')
   const submitting = ref(false)
   const isHaveDocumentUS = ref(true)
+  const {setClientId} = useAuth()
   const { t } = useI18n({ useScope: 'global' })
 
   const initStatePartner = () => {
@@ -63,11 +65,9 @@ export const useShareholder = () => {
       return false
     }
 
-    if (partner.value.passport === '' && partner.value.taxId === '') {
-      return false
-    }
+    return !(partner.value.passport === '' && partner.value.taxId === '');
 
-    return true
+
   }
 
   const typeDocumentPartner = ref([
@@ -84,6 +84,7 @@ export const useShareholder = () => {
     submitting.value = true
     requestToBackendForUpdateOnboardingCompany()
       .then(resp => {
+        setClientId(resp.data.clientId)
         submitting.value = false
         if (partner.value.passport !== '') {
           isHaveDocumentUS.value = false
