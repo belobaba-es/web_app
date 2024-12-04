@@ -74,7 +74,7 @@ export const useOnboardingPersonal = () => {
           if (navigate) navigate()
 
           isUpdateData.value = true
-          setClientId(resp.clientId)
+          setClientId(resp.data.clientId)
 
           resolve(resp)
         })
