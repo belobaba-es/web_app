@@ -76,18 +76,19 @@
 <style lang="scss" scoped></style>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
 import ButtomUpload from '../ButtomUpload.vue'
 import imgUpload from '../../../../assets/icons/upload.svg'
 import imgSelf from '../../../../assets/icons/Selfievector.svg'
 import Button from 'primevue/button'
 import ModalVerification from '../modalVerification.vue'
-import { ref } from 'vue'
 import { useOnboardingCard } from '../../composables/useOnboardingCard'
+import { useUploadDocument } from '../../composables/useUploadDocument'
 
 const showModal = ref(true)
 const { sendingTypeCard, toBack, onboardingPersonal, submitting } = useOnboardingCard()
 
-const disabled = ref<boolean>(true)
+const { disabled } = useUploadDocument( '')
 
 const { t } = useI18n({ useScope: 'global' })
 
@@ -116,12 +117,11 @@ const handleFileUploader = (event: { side: string; type: string }) => {
 
   submissionTypeDocument.value.selfie = true
 
-  if (
-    submissionTypeDocument.value.sideFront &&
+  if(submissionTypeDocument.value.sideFront &&
     submissionTypeDocument.value.sideBack &&
-    submissionTypeDocument.value.selfie
-  ) {
+    submissionTypeDocument.value.selfie){
     disabled.value = false
   }
 }
+
 </script>
