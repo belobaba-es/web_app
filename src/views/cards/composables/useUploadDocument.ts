@@ -5,13 +5,17 @@ import { useAuth } from '../../../composables/useAuth'
 import { ProfileService } from '../../profile/services/profile'
 import { processException } from '../../../shared/processException'
 
+const disabled = ref<boolean>(true)
+
 export const useUploadDocument = (props: any) => {
   const files = ref<File[]>([])
   const fileInput = ref<HTMLInputElement | null>(null)
   const loading = ref(false)
 
+
   const allowedDocumentExtensions = ['jpg', 'jpeg', 'png', 'pdf']
   const toast = useToast()
+  const { getClientId } = useAuth()
   const { t } = useI18n({ useScope: 'global' })
   const { markDataSubmitted } = useAuth()
 
@@ -21,6 +25,7 @@ export const useUploadDocument = (props: any) => {
 
   const handleFileUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
+
     if (target.files && target.files.length > 0) {
       const file = target.files[0]
 
@@ -96,10 +101,13 @@ export const useUploadDocument = (props: any) => {
 
   const removeFile = (index: number) => {
     files.value.splice(index, 1)
+    disabled.value = true
   }
+
 
   const uploadFile = async (file: File) => {
     const formData = new FormData()
+    formData.append('clientId', getClientId())
     formData.append('file', file)
     formData.append('isPartner', props.isPartner ? 'true' : 'false')
     formData.append('documentSide', props.side)
@@ -140,5 +148,6 @@ export const useUploadDocument = (props: any) => {
     handleFileUpload,
     getFileIcon,
     removeFile,
+    disabled
   }
 }
