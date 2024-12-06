@@ -57,6 +57,7 @@ interface Client {
   streetOne: string
   isSegregated: boolean
   walletProvider: string
+  supportedWalletProviders: WalletProvider[]
 }
 
 export interface UserAuth {

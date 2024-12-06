@@ -84,5 +84,6 @@ export const useBalanceWallet = () => {
     getBalanceByCode,
     getWalletByAssetCode,
     getAllWallets,
+    requestBalance,
   }
 }

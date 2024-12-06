@@ -6,6 +6,8 @@ import * as jose from 'jose'
 import { importSPKI } from 'jose'
 import { useAuth } from '../../../composables/useAuth'
 
+const supportedProviders = sessionStorage.getItem('provider')
+const { getSupportedWalletProviders } = useAuth()
 const generateToken = async (payload: any) => {
   const decoder = new TextDecoder('utf-8')
   const publicKeyPEM = decoder.decode(
@@ -39,13 +41,18 @@ export class SwapService {
         'Content-Type': type,
         Authorization: `Bearer ${token}`,
         'tenant-name': import.meta.env.VITE_TENANT_NAME,
+        'x-provider': supportedProviders ? JSON.parse(supportedProviders) : getSupportedWalletProviders()[0],
       },
     }
   }
 
   async createExchange(payload: any): Promise<createExchangeResponse> {
     const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(
+      await generateToken({
+        clientId: getClientId(),
+      })
+    )
 
     const data = await this.getClient().post<createExchangeResponse>(`/exchanges`, payload, headerRequest)
     return data.data
@@ -54,7 +61,11 @@ export class SwapService {
   async execute(exchangeId: string): Promise<any> {
     const { getClientId } = useAuth()
 
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(
+      await generateToken({
+        clientId: getClientId(),
+      })
+    )
     const response = await this.getClient().post<any>(`/exchanges/accept/${exchangeId}`, {}, headerRequest)
 
     return response.data
@@ -62,7 +73,11 @@ export class SwapService {
 
   async exchanges(nextPag: number = 1) {
     const { getClientId } = useAuth()
-    const headerRequest = await this.getHeader(await generateToken({ clientId: getClientId() }))
+    const headerRequest = await this.getHeader(
+      await generateToken({
+        clientId: getClientId(),
+      })
+    )
 
     const data = await this.getClient().get<any>(
       `/exchanges/${nextPag}/20`,

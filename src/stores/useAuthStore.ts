@@ -28,6 +28,7 @@ export const useAuthStore = defineStore('useAuthStore', {
         phoneCountry: '',
         streetOne: '',
         walletProvider: WalletProvider.LAYER2,
+        supportedWalletProviders: [],
         dni: '',
         twoFactorActive: false,
         status: AccountStatus.REGISTERED,
@@ -130,6 +131,9 @@ export const useAuthStore = defineStore('useAuthStore', {
     },
     getUserEmail(): string {
       return this.email
+    },
+    getSupportedWalletProviders(): string[] {
+      return this.client.supportedWalletProviders
     },
     twoFactorActive() {
       const storageUser = sessionStorage.getItem('user')

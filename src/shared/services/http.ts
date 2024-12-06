@@ -7,7 +7,12 @@ export interface payloadInterface {
 }
 
 export class HttpService {
-  constructor(private readonly urlAPI: string) {}
+  private readonly getSupportedWalletProviders: () => string[]
+
+  constructor(private readonly urlAPI: string) {
+    const { getSupportedWalletProviders } = useAuth()
+    this.getSupportedWalletProviders = getSupportedWalletProviders
+  }
 
   getClient() {
     return axios.create({
@@ -22,18 +27,22 @@ export class HttpService {
       return
     }
 
+    const supportedProviders = sessionStorage.getItem('provider')
+
     const type = isFormData ? 'multipart/form-data' : 'application/json'
     return {
       headers: {
         'Content-Type': type,
         Authorization: 'Bearer ' + getToken(),
         'tenant-name': import.meta.env.VITE_TENANT_NAME,
+        'x-provider': supportedProviders ? JSON.parse(supportedProviders) : this.getSupportedWalletProviders()[0],
       },
     }
   }
 
   public async post<T>(url: string, form: any, isPrivate: boolean = true, isFormData: boolean = false): Promise<T> {
     let headerRequest: any
+    const supportedProviders = sessionStorage.getItem('provider')
     if (isPrivate) {
       headerRequest = await this.getHeader(isFormData)
     } else {
@@ -41,6 +50,7 @@ export class HttpService {
         headers: {
           'Content-Type': 'application/json',
           'tenant-name': import.meta.env.VITE_TENANT_NAME,
+          'x-provider': supportedProviders ? JSON.parse(supportedProviders) : this.getSupportedWalletProviders()[0],
         },
       }
     }
@@ -52,12 +62,15 @@ export class HttpService {
 
   public async patch<T>(url: string, form: any, isPrivate: boolean = true, isFormData: boolean = false): Promise<T> {
     let headerRequest: any
+    const supportedProviders = sessionStorage.getItem('provider')
+
     if (isPrivate) {
       headerRequest = await this.getHeader(isFormData)
     } else {
       headerRequest = {
         headers: {
           'tenant-name': import.meta.env.VITE_TENANT_NAME,
+          'x-provider': supportedProviders ? JSON.parse(supportedProviders) : this.getSupportedWalletProviders()[0],
         },
       }
     }
@@ -68,15 +81,18 @@ export class HttpService {
   }
 
   public async get<T>(url: string, payload: payloadInterface = {}, isPrivate = true): Promise<T> {
+    const supportedProviders = sessionStorage.getItem('provider')
     let data: any
     let header: any
     let params: any
+
     if (isPrivate) {
       header = await this.getHeader()
     } else {
       header = {
         headers: {
           'tenant-name': import.meta.env.VITE_TENANT_NAME,
+          'x-provider': supportedProviders ? JSON.parse(supportedProviders) : this.getSupportedWalletProviders()[0],
         },
       }
     }
