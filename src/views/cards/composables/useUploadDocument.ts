@@ -12,12 +12,11 @@ export const useUploadDocument = (props: any) => {
   const fileInput = ref<HTMLInputElement | null>(null)
   const loading = ref(false)
 
-
   const allowedDocumentExtensions = ['jpg', 'jpeg', 'png', 'pdf']
   const toast = useToast()
-  const { getClientId } = useAuth()
   const { t } = useI18n({ useScope: 'global' })
   const { markDataSubmitted } = useAuth()
+  const { getClientId } = useAuth()
 
   const triggerFileInput = () => {
     fileInput.value?.click()
@@ -25,7 +24,6 @@ export const useUploadDocument = (props: any) => {
 
   const handleFileUpload = async (event: Event) => {
     const target = event.target as HTMLInputElement
-
     if (target.files && target.files.length > 0) {
       const file = target.files[0]
 
@@ -103,7 +101,6 @@ export const useUploadDocument = (props: any) => {
     files.value.splice(index, 1)
     disabled.value = true
   }
-
 
   const uploadFile = async (file: File) => {
     const formData = new FormData()
