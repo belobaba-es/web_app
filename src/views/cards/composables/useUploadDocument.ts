@@ -14,6 +14,7 @@ export const useUploadDocument = (props: any) => {
   const toast = useToast()
   const { t } = useI18n({ useScope: 'global' })
   const { markDataSubmitted } = useAuth()
+  const { getClientId } = useAuth()
 
   const triggerFileInput = () => {
     fileInput.value?.click()
@@ -100,6 +101,8 @@ export const useUploadDocument = (props: any) => {
 
   const uploadFile = async (file: File) => {
     const formData = new FormData()
+
+    formData.append('clientId', getClientId())
     formData.append('file', file)
     formData.append('isPartner', props.isPartner ? 'true' : 'false')
     formData.append('documentSide', props.side)
