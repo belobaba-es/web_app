@@ -145,7 +145,7 @@ const getTransactionType = (transactionData: any) => {
   if (!props.assetCode) {
     return
   }
-  const assetClassification = getAssetByAssetCode(props.assetCode).assetClassification
+  const assetClassification = getAssetByAssetCode(props.assetCode)?.assetClassification
 
   if (assetClassification === AssetClassification.FIAT && transactionData.transactionType === 'deposit') {
     return 'deposit-fiat'
@@ -243,12 +243,6 @@ const loadTransactionDetail = async (transaction: any) => {
 }
 </script>
 <style lang="css" scoped>
-.p-progress-spinner {
-  position: fixed;
-  margin-left: 33%;
-  z-index: 999;
-}
-
 .load-more-btn {
   width: 100% !important;
 }

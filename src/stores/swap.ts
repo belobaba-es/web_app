@@ -34,6 +34,7 @@ export const useSwapStore = defineStore('swap', () => {
   let timer: any
   const shouldRefreshQuote = ref(false)
   const assetCode = ref()
+  const fiatUsdAssetCode = ref('')
   const destinationWalletId = ref()
   const sourceWalletId = ref()
   const exchanges = ref<ExchangeResponse>({
@@ -86,11 +87,11 @@ export const useSwapStore = defineStore('swap', () => {
     loading.value = true
 
     if (transactionType.value === 'buy') {
-      sourceWalletId.value = 'USD'
+      sourceWalletId.value = fiatUsdAssetCode.value
       destinationWalletId.value = assetCode.value
     } else {
       sourceWalletId.value = assetCode.value
-      destinationWalletId.value = 'USD'
+      destinationWalletId.value = fiatUsdAssetCode.value
     }
 
     const amountFormated = amountIsUnitCount.value
@@ -324,5 +325,6 @@ export const useSwapStore = defineStore('swap', () => {
     destinationWalletId,
     sourceWalletId,
     amountAfterRemovingFee,
+    fiatUsdAssetCode,
   }
 })

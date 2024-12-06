@@ -25,12 +25,8 @@ export const useAssets = () => {
     return listAssets.value.find((asset: Asset) => asset.assetId === assetId)
   }
 
-  const getAssetByAssetCode = (assetCode: string): Asset => {
-    const asset = listAssets.value.find((asset: Asset) => asset.code === assetCode)
-    if (!asset) {
-      throw new Error(`Asset with code ${assetCode} not found`)
-    }
-    return asset
+  const getAssetByAssetCode = (assetCode: string): Asset | undefined => {
+    return listAssets.value.find((asset: Asset) => asset.code === assetCode)
   }
 
   const formatAmountAccordingTypeAsset = (amount: number, assetCode: string) => {

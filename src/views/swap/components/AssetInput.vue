@@ -24,21 +24,69 @@
       <div class="grid">
         <div class="col-5 flex align-items-center">
           <template v-if="type === 'crypto'">
-            <Button
-              type="button"
-              class="bg-white btn-select-crypto border-none border-round-3xl"
-              @click="openModalSelector"
+            <Dropdown
+              filter
+              v-model="assetCode"
               :disabled="disabledBtnSelectCrypto"
+              :options="listAssetSupported"
+              optionLabel="name"
+              :placeholder="t('selectDestinationAsset')"
+              class="bg-white btn-select-crypto border-none font-medium w-full asset-base"
+              @change="selectedAsset($event.value)"
             >
-              <img v-if="assetIcon" class="logo-cripto" alt="logo" :src="assetIcon" />
-              <span class="ml-2 font-medium text-black-alpha-70 mx-3 text-span">
-                {{ assetName ? assetName : t('selectCrypto') }}
-              </span>
-              <i class="pi pi-caret-down text-primary icon-down-cripto"></i>
-            </Button>
+              <template #value="slotProps">
+                <div v-if="slotProps.value" class="flex align-items-center">
+                  <img
+                    :alt="slotProps.value"
+                    :src="getAssetByAssetCode(slotProps.value)?.icon"
+                    class="mr-2"
+                    style="width: 25px"
+                  />
+                  <div>{{ slotProps.value }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="flex align-items-center">
+                  <img :alt="slotProps.option.label" :src="slotProps.option.icon" class="mr-2" style="width: 25px" />
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
           </template>
           <template v-else>
-            <img alt="logo" class="logo-usd" :src="getUsdIcon()" style="width: 3.5rem" />
+            <Dropdown
+              v-model="fiatUsdAssetCode"
+              filter
+              :options="assetsBase"
+              optionLabel="name"
+              :disabled="disabledAsset"
+              :loading="loadingPairsAssets"
+              :placeholder="t('selectOrigenAsset')"
+              class="bg-white btn-select-crypto border-none font-medium w-full asset-base"
+              @change="selectSupportedAsset($event.value)"
+            >
+              <template #value="slotProps: any">
+                <div v-if="slotProps.value" class="flex align-items-center">
+                  <img
+                    :alt="slotProps.value"
+                    :src="getAssetByAssetCode(slotProps.value)?.icon"
+                    class="mr-2"
+                    style="width: 25px"
+                  />
+                  <div>{{ slotProps.value }}</div>
+                </div>
+                <span v-else> {{ slotProps.placeholder }} </span>
+              </template>
+              <template #option="slotProps">
+                <div class="flex align-items-center">
+                  <img :alt="slotProps.option.label" :src="slotProps.option.icon" class="mr-2" style="width: 25px" />
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
           </template>
         </div>
 
@@ -47,8 +95,8 @@
             <InputNumber
               v-model="amountAfterRemovingFee"
               mode="decimal"
-              :max-fraction-digits="2"
-              :min-fraction-digits="2"
+              :max-fraction-digits="assetClassificationOrigen !== AssetClassification.CRYPTO ? 2 : 6"
+              :min-fraction-digits="assetClassificationOrigen !== AssetClassification.CRYPTO ? 2 : 6"
               @blur="verifyAmountForCreateQoute()"
               :readonly="transactionType === 'sell'"
             />
@@ -57,8 +105,8 @@
             <InputNumber
               v-model="unitCount"
               mode="decimal"
-              :max-fraction-digits="6"
-              :min-fraction-digits="6"
+              :max-fraction-digits="assetClassificationDestination !== AssetClassification.CRYPTO ? 2 : 6"
+              :min-fraction-digits="assetClassificationDestination !== AssetClassification.CRYPTO ? 2 : 6"
               :readonly="transactionType === 'buy'"
             />
           </template>
@@ -90,7 +138,7 @@
 
     <template v-if="type === 'fiat'">
       <span v-if="transactionType === 'buy'">
-        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode('USD') }}</span>
+        {{ t('iHave') }}: <span class="font-medium">{{ getBalanceByCode(fiatUsdAssetCode) }}</span>
       </span>
     </template>
 
@@ -104,13 +152,20 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { computed, defineProps, watch } from 'vue'
+import { computed, defineProps, ref, watch } from 'vue'
 import Button from 'primevue/button'
+import Dropdown from 'primevue/dropdown'
 import { useSwapStore } from '../../../stores/swap'
 import { useBalanceWallet } from '../../../composables/useBalanceWallet'
 import InputNumber from 'primevue/inputnumber'
 import { storeToRefs } from 'pinia'
 import { useToast } from 'primevue/usetoast'
+import { useExchangePairs } from '../../../composables/useExchangePairs'
+import { useAssets } from '../../../composables/useAssets'
+import { AssetClassification } from '../../deposit/types/asset.interface'
+
+const { assetsBase, disabledAsset, listAssetSupported, loadingPairsAssets } = useExchangePairs()
+const { getAssetByAssetCode } = useAssets()
 
 interface Props {
   type: string
@@ -120,28 +175,31 @@ const toast = useToast()
 
 const { getWalletByAssetCode, getBalanceByCode } = useBalanceWallet()
 
-const {
-  amountAfterRemovingFee,
-  amount,
-  assetName,
-  assetIcon,
-  unitCount,
-  showModalAssetSelector,
-  loading,
-  transactionType,
-  assetCode,
-  assetId,
-} = storeToRefs(useSwapStore())
+const { amountAfterRemovingFee, unitCount, loading, transactionType, assetCode, assetId, fiatUsdAssetCode } =
+  storeToRefs(useSwapStore())
 
 const { createExchange, clearTimer } = useSwapStore()
 
 const { t } = useI18n({ useScope: 'global' })
+const assetClassificationOrigen = ref(AssetClassification.FIAT)
+const assetClassificationDestination = ref(AssetClassification.FIAT)
 
 const props = defineProps<Props>()
-const balance = getBalanceByCode('USD')
+const emit = defineEmits(['selectSupportedAsset', 'selectedAsset'])
 
-const openModalSelector = () => {
-  showModalAssetSelector.value = true
+const balance = getBalanceByCode('USD')
+const selectedAsset = (event: any) => {
+  const asset = getAssetByAssetCode(event.code)
+  assetClassificationDestination.value = asset?.assetClassification ?? AssetClassification.FIAT
+  emit('selectedAsset', asset)
+}
+const selectSupportedAsset = (event: any) => {
+  assetCode.value = ''
+  amountAfterRemovingFee.value = 0.0
+  unitCount.value = 0.0
+  fiatUsdAssetCode.value = event.value
+  assetClassificationOrigen.value = getAssetByAssetCode(event.value)?.assetClassification ?? AssetClassification.FIAT
+  emit('selectSupportedAsset', event.value)
 }
 
 const disabledBtnSelectCrypto = computed(() => {
@@ -200,6 +258,16 @@ const getUsdIcon = () => {
 </script>
 
 <style lang="scss">
+.asset-base {
+  .pi {
+    color: var(--primary-color) !important;
+  }
+}
+
+.p-inputtext:nth-last-child(-n + 2):hover {
+  border: none !important;
+}
+
 .logo-usd {
   text-align: center !important;
   vertical-align: middle !important;
@@ -207,6 +275,11 @@ const getUsdIcon = () => {
 
 .border-round-3xl {
   border-radius: 2.5rem !important;
+}
+
+.p-inputtext,
+.p-dropdown.p-component.p-inputwrapper {
+  box-sizing: inherit !important;
 }
 
 .input-mount .p-inputtext {

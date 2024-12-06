@@ -124,12 +124,12 @@ const validForm = () => {
 const selectAsset = (event: DropdownChangeEvent) => {
   const assetCode = event.value
   const asset = getAssetByAssetCode(assetCode)
-  assetCodeSelected.value.code = asset.code
-  assetCodeSelected.value.icon = asset.icon
-  assetCodeSelected.value.name = asset.name
-  assetCodeSelected.value.assetClassification = asset.assetClassification
-  selectedAsset.value = asset.code
-  balance.value = getBalanceByCode(asset.code)
+  assetCodeSelected.value.code = asset!.code
+  assetCodeSelected.value.icon = asset!.icon
+  assetCodeSelected.value.name = asset!.name
+  assetCodeSelected.value.assetClassification = asset!.assetClassification
+  selectedAsset.value = asset!.code
+  balance.value = getBalanceByCode(asset!.code)
 }
 const close = () => {
   visible.value = false
