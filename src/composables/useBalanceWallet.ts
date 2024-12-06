@@ -6,9 +6,10 @@ import { useAuth } from './useAuth'
 import { AssetsService } from '../views/deposit/services/assets'
 import { processException } from '../shared/processException'
 import { useToast } from 'primevue/usetoast'
+import { useAssets } from './useAssets'
 
 export const useBalanceWallet = () => {
-  const { locale } = useI18n()
+  const { formatAmountAccordingTypeAsset } = useAssets()
   const balanceWalletStore = useBalanceWalletStore()
   const { isExistsWallet } = useBalanceWalletStore()
   const balanceWallets = storeToRefs(balanceWalletStore)
@@ -62,19 +63,9 @@ export const useBalanceWallet = () => {
 
   const calculateBalance = (assetCode: string, balance: number, blocked: number, format: boolean = true) => {
     const total = isNaN(balance + blocked) ? 0 : balance + blocked
-    const isUSD = assetCode === 'USD' || assetCode === 'USDC' || assetCode === 'USDT' || assetCode === 'USD_PA'
-    const decimalSeparator = locale.value === 'en' ? '.' : ','
-    const thousandSeparator = locale.value === 'en' ? ',' : '.'
     if (!format) return total
 
-    if (isUSD) {
-      return total
-        .toFixed(2)
-        .replace('.', decimalSeparator)
-        .replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator)
-    }
-
-    return total.toFixed(8).replace('.', decimalSeparator)
+    return formatAmountAccordingTypeAsset(total, assetCode)
   }
 
   return {

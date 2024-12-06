@@ -196,10 +196,18 @@
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useAssets } from '../../composables/useAssets'
 
 const { t } = useI18n({ useScope: 'global' })
 const visible = ref(false)
+const { listAssets, getAssets } = useAssets()
+
+onMounted(() => {
+  if (listAssets.value.length === 0) {
+    getAssets()
+  }
+})
 
 const close = () => {
   visible.value = false
