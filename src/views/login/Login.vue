@@ -96,14 +96,8 @@ const alreadyRegisteredSendCodeVerifyEmail = () => {
 }
 
 const makeLogin = async () => {
-  try {
     submitting.value = true
     await handleSubmit()
-  } catch (e: any) {
-    submitting.value = false
-
-    processException(toast, t, e)
-  }
 }
 </script>
 

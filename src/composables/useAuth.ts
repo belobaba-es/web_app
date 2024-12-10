@@ -21,19 +21,28 @@ export const useAuth = () => {
   const { setInitialUserAuth, getAccountType, getCountry, getClientId, getAccountStatus, isTwoFactorActive } =
     useAuthStore()
 
-  const makeLogin = async (): Promise<UserAuth | undefined> => {
-    submitting.value = true
+  const makeLogin = async (): Promise<string | undefined> => {
+    try {
+      submitting.value = true;
 
-    const data: UserAuth = await fetchLogin(form.user.toLowerCase().trim(), form.pass.trim())
-    setInitialUserAuth(data)
-    submitting.value = false
+      const data: UserAuth = await fetchLogin(form.user.toLowerCase().trim(), form.pass.trim());
+      sessionStorage.setItem('authData', JSON.stringify(data));
 
-    return data
-  }
+      submitting.value = false;
+      setInitialUserAuth(data);
+      return data
+    } catch (error) {
+      submitting.value = false;
+
+      console.error('Error en el inicio de sesión:', error);
+      return error.message || 'Error desconocido al iniciar sesión';
+    }
+  };
 
   const logout = async () => {
     sessionStorage.removeItem('belobaba')
     sessionStorage.removeItem('user')
+    sessionStorage.removeItem('authData')
   }
 
   const redirectPage = () => {
@@ -48,7 +57,7 @@ export const useAuth = () => {
     if (getAccountType() === 'NATURAL_PERSON') {
       router.push(`/onboarding/personal/personal-data`)
     } else {
-      router.push(`/onboarding/business/company-information`)
+       router.push(`/onboarding/business/company-information`)
     }
   }
 
@@ -61,34 +70,37 @@ export const useAuth = () => {
   }
 
   const handleSubmit = async () => {
-    const userAuth = await makeLogin()
-    if (!userAuth) {
-      return
+    const message = await makeLogin();
+    console.log(`Resultado del inicio de sesión:`, message);
+
+    if (!message) {
+      console.error('No se pudo procesar el inicio de sesión.');
+      return;
     }
 
     if ((await twoFactorAuthenticationIsActiveRemotely()) && isTwoFactorActive()) {
-      showModalOfVerifyTwoFactorAuth.value = true
+      showModalOfVerifyTwoFactorAuth.value = true;
+      console.log('Autenticación de dos factores requerida.');
+    } else {
+      processRedirectAfterLogin();
+      console.log('Inicio de sesión exitoso, redirigiendo...');
     }
-
-    if (!showModalOfVerifyTwoFactorAuth.value) {
-      processRedirectAfterLogin()
-    }
-  }
+  };
 
   const processRedirectAfterLogin = () => {
     console.log(`processRedirectAfterLogin`)
     if (getClientId() == undefined || getAccountStatus() === AccountStatus.REGISTERED) {
-      window.location.href = '/onboarding'
+     // window.location.href = '/onboarding'
       return
     }
 
-    if (getAccountStatus() === AccountStatus.SUBMITTED) {
-      window.location.href = `/profile/${getClientId()}`
-
-      return
-    }
-
-    window.location.href = '/dashboard'
+    // if (getAccountStatus() === AccountStatus.SUBMITTED) {
+    //   window.location.href = `/profile/${getClientId()}`
+    //
+    //   return
+    // }
+    //
+    // window.location.href = '/dashboard'
   }
 
   return {

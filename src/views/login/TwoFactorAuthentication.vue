@@ -40,10 +40,14 @@ const recoveryTwoFactorAuth = (res: boolean) => {
   }
 }
 
-const codeValid = (res: boolean) => {
+const codeValid = (res: boolean = false) => {
   if (res) {
     showModalOfVerifyTwoFactorAuth.value = false
     processRedirectAfterLogin()
+  }else{
+    showModalOfVerifyTwoFactorAuth.value = false
+    isRecoveryTwoFactorAuth.value = false
+    logout()
   }
 }
 </script>
