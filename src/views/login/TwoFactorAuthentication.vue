@@ -44,6 +44,9 @@ const codeValid = (res: boolean) => {
   if (res) {
     showModalOfVerifyTwoFactorAuth.value = false
     processRedirectAfterLogin()
+  }else{
+    isRecoveryTwoFactorAuth.value = false
+    logout()
   }
 }
 </script>
