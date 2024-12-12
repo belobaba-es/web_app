@@ -7,10 +7,10 @@ import { AccountStatus } from '../types/accountStatus.enum'
 import { twoFactorAuthenticationIsActiveRemotely } from '../shared/services/remoteConfig'
 
 const showModalOfVerifyTwoFactorAuth = ref<boolean>(false)
+const userAuth = ref<UserAuth | undefined>(undefined)
 
 export const useAuth = () => {
   const submitting = ref(false)
-
   const router = useRouter()
   const form = reactive({
     user: '',
@@ -18,18 +18,11 @@ export const useAuth = () => {
     remember: false,
   })
 
-  const { setInitialUserAuth, getAccountType, getCountry, getClientId, getAccountStatus, isTwoFactorActive } =
-    useAuthStore()
+  const { setInitialUserAuth, getAccountType, getCountry, getAccountStatus } = useAuthStore()
 
-  const makeLogin = async (): Promise<UserAuth | undefined> => {
-    submitting.value = true
-
-    const data: UserAuth = await fetchLogin(form.user.toLowerCase().trim(), form.pass.trim())
-    setInitialUserAuth(data)
-    submitting.value = false
-
-    return data
-  }
+  useAuthStore().$subscribe((mutation, state) => {
+    userAuth.value = { ...state }
+  })
 
   const logout = async () => {
     sessionStorage.removeItem('belobaba')
@@ -37,7 +30,7 @@ export const useAuth = () => {
   }
 
   const redirectPage = () => {
-    window.location.href = window.location.origin ?? 'https://noba.cash/'
+    window.location.href = window.location.origin ?? 'https://belobaba.io/'
   }
 
   const redirectSigning = () => {
@@ -61,12 +54,13 @@ export const useAuth = () => {
   }
 
   const handleSubmit = async () => {
-    const userAuth = await makeLogin()
-    if (!userAuth) {
+    userAuth.value = await fetchLogin(form.user.toLowerCase().trim(), form.pass.trim())
+
+    if (!userAuth.value) {
       return
     }
 
-    if ((await twoFactorAuthenticationIsActiveRemotely()) && isTwoFactorActive()) {
+    if ((await twoFactorAuthenticationIsActiveRemotely()) && userAuth.value.client.twoFactorActive) {
       showModalOfVerifyTwoFactorAuth.value = true
     }
 
@@ -76,7 +70,8 @@ export const useAuth = () => {
   }
 
   const processRedirectAfterLogin = () => {
-    console.log(`processRedirectAfterLogin`)
+    if (userAuth.value) setInitialUserAuth(userAuth.value)
+
     if (getClientId() == undefined || getAccountStatus() === AccountStatus.REGISTERED) {
       window.location.href = '/onboarding'
       return
@@ -91,9 +86,14 @@ export const useAuth = () => {
     window.location.href = '/dashboard'
   }
 
+  const getClientId = () => {
+    return userAuth.value!.clientId
+  }
+
   return {
     ...useAuthStore(),
     isFromUnitedStates,
+    getClientId,
     form,
     submitting,
     showModalOfVerifyTwoFactorAuth,
@@ -101,7 +101,6 @@ export const useAuth = () => {
     handleSubmit,
     isNaturalAccount,
     editProfile,
-    makeLogin,
     redirectSigning,
     redirectPage,
     logout,

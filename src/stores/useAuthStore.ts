@@ -108,9 +108,6 @@ export const useAuthStore = defineStore('useAuthStore', {
     isUserActive(): boolean {
       return this.active
     },
-    getClientId(): string {
-      return this.clientId
-    },
     getWalletProvider(): string {
       return this.client.walletProvider
     },
