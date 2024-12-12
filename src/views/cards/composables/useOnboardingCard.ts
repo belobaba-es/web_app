@@ -11,9 +11,9 @@ import { createRepositionCard, onboardingCard } from '../services/nobaCard.servi
 import { OnboardingRepositionCard, OnboardingRequest } from '../types/onboardingRequest.type'
 import { useRoute } from 'vue-router'
 import { processException } from '../../../shared/processException'
-import { useAuthStore } from '../../../stores/useAuthStore'
 import { useLayoutCard } from './useLayoutCard'
 import { validateObject } from '../../../shared/validateObject'
+import { useAuth } from '../../../composables/useAuth'
 
 type Option = {
   value: string
@@ -47,7 +47,7 @@ export const useOnboardingCard = () => {
   const toast = useToast()
   const route = useRoute()
   const { t } = useI18n({ useScope: 'global' })
-  const { getClientId } = useAuthStore()
+  const { getClientId } = useAuth()
   const sendingDataCard = ref<OnboardingRequest>({
     clientId: getClientId(),
     requestCardModality: typeCardSelect.value,

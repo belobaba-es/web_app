@@ -4,7 +4,6 @@ import { BalanceWallet } from '../views/deposit/types/asset.interface'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from './useAuth'
 import { AssetsService } from '../views/deposit/services/assets'
-import { processException } from '../shared/processException'
 import { useToast } from 'primevue/usetoast'
 
 export const useBalanceWallet = () => {
@@ -25,7 +24,7 @@ export const useBalanceWallet = () => {
       .catch(e => {})
   }
   const fetchBalanceWallets = async () => {
-    if (getClientId() === '') return
+    if (getClientId() === undefined) return
 
     await requestBalance()
     setInterval(async () => {
