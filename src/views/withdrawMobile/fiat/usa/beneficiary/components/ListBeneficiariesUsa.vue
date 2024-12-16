@@ -39,7 +39,7 @@ import { useListBeneficiaryUsa } from '../../../../../withdraw/fiat/usa/composab
 import { useListBeneficiaryUsaMobile } from '../composables/useListBeneficiaryUsaMobile'
 import router from '../../../../../../router/router'
 import { Beneficiary, NewBeneficiary } from '../../../../../withdraw/type/beneficiary.type'
-import { useWithdraw } from '../../../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../../../withdraw/composables/useWithdraw'
 import { useBeneficiary } from '../../../../composables/useBeneficiary'
 import { onMounted } from 'vue'
 import { useWorld } from '../../../../../../composables/useWorld'

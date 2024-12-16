@@ -40,8 +40,8 @@
   <Dialog
     v-model:visible="visible"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-    :style="{ width: '30rem' }"
     :show-header="false"
+    :style="{ width: '30rem' }"
     modal
   >
     <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
@@ -49,7 +49,7 @@
   </Dialog>
 </template>
 <script lang="ts" setup>
-import { useWithdraw } from '../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../withdraw/composables/useWithdraw'
 import { useI18n } from 'vue-i18n'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import Dialog from 'primevue/dialog'

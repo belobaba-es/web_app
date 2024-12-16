@@ -81,7 +81,7 @@ import router from '../../../../router/router'
 import InputSearch from '../../../withdraw/components/inputSearch/InputSearch.vue'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import { useNewBeneficiaryPanama } from '../../../withdraw/fiat/panama/composable/useNewBeneficiaryPanama'
-import { useWithdraw } from '../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../withdraw/composables/useWithdraw'
 import { BeneficiaryAchPanama } from '../../../withdraw/type/beneficiary.type'
 import { onMounted } from 'vue'
 

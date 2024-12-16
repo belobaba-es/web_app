@@ -2,7 +2,7 @@ import { onMounted, ref } from 'vue'
 import { useWithdrawInternal } from '../../../../withdraw/fiat/internal/composable/useWithdrawInternal'
 import { Asset, AssetClassification } from '../../../../deposit/types/asset.interface'
 import { useAssets } from '../../../../../composables/useAssets'
-import { useWithdraw } from '../../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../../withdraw/composables/useWithdraw'
 
 const submitting = ref(false)
 export const useMobileWithdrawalInternalFiat = () => {

@@ -51,7 +51,7 @@
 import { useI18n } from 'vue-i18n'
 import ButtonTypeTransaction from '../../components/customButton/ButtonTypeTransaction.vue'
 import iconBank from '../../../../assets/icons/bank_wire.svg'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { useRoute } from 'vue-router'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import WithdrawFormPanama from '../../components/formWithdraw/WithdrawFormPanama.vue'

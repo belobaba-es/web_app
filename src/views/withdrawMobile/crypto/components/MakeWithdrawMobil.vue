@@ -28,10 +28,10 @@
           <MakeMobileWithdrawals
             :assetClassification="assetCodeSelected"
             :assetCodeSelected="assetCodeSelected.code"
+            :assetsCode="assetsCode"
             :balance="balance"
             :fee="fee"
             :submitting="submitting"
-            :assetsCode="assetsCode"
             :withdrawForm="transactionData"
             @goBack="goBack"
             @validForm="validForm"
@@ -60,7 +60,7 @@ import { Asset } from '../../../deposit/types/asset.interface'
 import SelectAssetsWithdraw from '../../../withdraw/crypto/components/SelectAssetsWithdraw.vue'
 import DialogConfirmationWithdrawal from '../../../withdraw/crypto/components/DialogConfirmationWithdrawal.vue'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
-import { useCalculateFee } from '../../../withdraw/composable/useCalculateFee'
+import { useCalculateFee } from '../../../withdraw/composables/useCalculateFee'
 
 const { fee, assetsCode, handleCalculateFee, submitting } = useCalculateFee()
 const { t } = useI18n({ useScope: 'global' })

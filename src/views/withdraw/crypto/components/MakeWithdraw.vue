@@ -1,12 +1,12 @@
 <template>
   <h3 class="font-regular m-0">
     <BackButtonMobile
+      :subtitle="t('WITHDRAWAL')"
       :title="
         beneficiaryInformation.isInternal === 'N'
           ? t('crypto') + '/' + t('otherPlatforms')
           : t('crypto') + '/' + t('walletNob')
       "
-      :subtitle="t('WITHDRAWAL')"
     />
   </h3>
   <div class="grid">
@@ -42,8 +42,8 @@
                 v-model="transactionData.amount"
                 :maxFractionDigits="getMaxFractionDigits()"
                 :minFractionDigits="getMaxFractionDigits()"
-                class="w-full text-center mt-3"
                 :placeholder="getMaxPlaceholderDigits()"
+                class="w-full text-center mt-3"
                 required
                 type="number"
               />
@@ -61,10 +61,10 @@
                 v-model="transactionData.amount"
                 :maxFractionDigits="getMaxFractionDigits()"
                 :minFractionDigits="getMaxFractionDigits()"
-                class="w-full text-center mt-3"
                 :placeholder="getMaxPlaceholderDigits()"
-                required
+                class="w-full text-center mt-3"
                 readonly
+                required
                 type="number"
               />
             </div>
@@ -113,9 +113,9 @@
         </div>
         <div class="col-12 xl:col-2 float-right">
           <Button
-            :loading="submitting"
             :disabled="!isEnabledButtonToProceedWithdrawal"
             :label="t('continue')"
+            :loading="submitting"
             class="w-full"
             @click="validForm"
           />
@@ -128,9 +128,9 @@
   </div>
   <DialogConfirmationWithdrawal
     :assetCodeSelected="assetCodeSelected"
+    :assets-code="assetsCode"
     :beneficiary="beneficiaryInformation"
     :fee="fee"
-    :assets-code="assetsCode"
     :show="visible"
     :transactionData="transactionData"
     @update:visible="close"
@@ -155,7 +155,7 @@ import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlert
 import DialogConfirmationWithdrawal from './DialogConfirmationWithdrawal.vue'
 import { useToast } from 'primevue/usetoast'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
-import { useCalculateFee } from '../../composable/useCalculateFee'
+import { useCalculateFee } from '../../composables/useCalculateFee'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const { t } = useI18n({ useScope: 'global' })

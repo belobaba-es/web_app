@@ -5,7 +5,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import { useAuth } from '../../../../../composables/useAuth'
 import { useBeneficiaryUsaListStore } from '../../../../../stores/useBeneficiaryUsaListStore'
-import { useWithdraw } from '../../../composable/useWithdraw'
+import { useWithdraw } from '../../../composables/useWithdraw'
 import { processException } from '../../../../../shared/processException'
 import { useInternalBeneficiaryListFiatStore } from '../../../../../stores/useInternalBeneficiaryListFiatStore'
 

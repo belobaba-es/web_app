@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import { useLayout } from './composable/useLayout'
+import { useLayout } from './composables/useLayout'
 import CardWallet from '../../components/CardWallet.vue'
 import { useBalanceWallet } from '../../composables/useBalanceWallet'
 import { onMounted } from 'vue'

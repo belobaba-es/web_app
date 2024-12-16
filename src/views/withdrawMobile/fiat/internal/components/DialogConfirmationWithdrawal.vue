@@ -100,10 +100,9 @@ import Divider from 'primevue/divider'
 import { computed, PropType } from 'vue'
 import VeryCodeTwoFactorAuth from '../../../../../components/VeryCodeTwoFactorAuth.vue'
 import { MakeAssetExternalTransfer, MakeAssetInternalTransfer } from '../../../../withdraw/type/withdraw'
-import { useTwoFactorAuth } from '../../../../../composables/useTwoFactorAuth'
 import { currencyFormat } from '../../../../../shared/helpers/currencyFormat'
 import { useMobileWithdrawalInternalFiat } from '../composable/useMobileWithdrawalInternalFiat'
-import { useWithdraw } from '../../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../../withdraw/composables/useWithdraw'
 
 const { t } = useI18n({ useScope: 'global' })
 const props = defineProps({

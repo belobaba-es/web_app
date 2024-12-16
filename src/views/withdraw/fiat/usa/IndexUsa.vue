@@ -43,7 +43,7 @@ import { useListBeneficiaryUsa } from './composable/useListBeneficiaryUsa'
 import BackButtonMobile from '../../../../components/BackButtonMobile.vue'
 import TableOtherPlatformsListSkeleton from '../../crypto/beneficiary/otherPlatforms/beneficiaryList/components/TableOtherPlatformsListSkeleton.vue'
 import { onMounted } from 'vue'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { useWorld } from '../../../../composables/useWorld'
 
 const { t } = useI18n({ useScope: 'global' })

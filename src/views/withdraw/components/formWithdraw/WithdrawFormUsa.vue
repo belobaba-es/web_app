@@ -131,9 +131,9 @@
   <Dialog
     v-model:visible="visible"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+    :show-header="false"
     :style="{ width: '30rem' }"
     modal
-    :show-header="false"
   >
     <div class="flex justify-content-end text-2xl cursor-pointer">
       <button
@@ -157,7 +157,7 @@ import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
 import { useAuth } from '../../../../composables/useAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'

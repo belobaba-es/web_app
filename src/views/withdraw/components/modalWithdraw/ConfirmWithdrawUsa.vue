@@ -53,8 +53,8 @@
     <Dialog
       v-model:visible="visibleModalVeryCodeTwoFactor"
       :draggable="false"
-      :show-header="false"
       :modal="true"
+      :show-header="false"
       position="bottom"
     >
       <div class="flex justify-content-end text-2xl cursor-pointer">
@@ -74,7 +74,7 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import Dialog from 'primevue/dialog'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'

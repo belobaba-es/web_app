@@ -43,12 +43,12 @@
   <Dialog
     v-model:visible="visible"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+    :show-header="false"
     :style="{ width: '30rem' }"
     modal
-    :show-header="false"
   >
     <div class="flex justify-content-end text-2xl cursor-pointer" @click="close()">x</div>
-    <ConfirmWithdrawUsa :subtitle="t('withdrawTransferLocal')" :makeTransaction="makeTransaction" />
+    <ConfirmWithdrawUsa :makeTransaction="makeTransaction" :subtitle="t('withdrawTransferLocal')" />
   </Dialog>
 </template>
 <script lang="ts" setup>
@@ -58,7 +58,7 @@ import MakeMobileWithdrawals from '../../components/MakeMobileWithdrawals.vue'
 import Dialog from 'primevue/dialog'
 import ConfirmWithdrawUsa from '../../../withdraw/components/modalWithdraw/ConfirmWithdrawUsa.vue'
 import { ref } from 'vue'
-import { useWithdraw } from '../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../withdraw/composables/useWithdraw'
 import { useToast } from 'primevue/usetoast'
 
 const { t } = useI18n({ useScope: 'global' })

@@ -116,8 +116,8 @@
         </div>
         <div class="col-12 xl:col-2 float-right">
           <Button
-            :label="t('continue')"
             :disabled="!isEnabledButtonToProceedWithdrawal"
+            :label="t('continue')"
             class="w-full"
             @click="validateForm"
           />
@@ -132,8 +132,8 @@
       v-model:visible="visible"
       :draggable="false"
       :header="t('twoFactor')"
-      :show-header="false"
       :modal="true"
+      :show-header="false"
       position="bottom"
     >
       <div class="flex justify-content-end text-2xl cursor-pointer">
@@ -163,7 +163,7 @@ import { onMounted, ref } from 'vue'
 import { Asset, AssetClassification } from '../../../deposit/types/asset.interface'
 import Dialog from 'primevue/dialog'
 import ConfirmWithdrawUsa from '../../components/modalWithdraw/ConfirmWithdrawUsa.vue'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { useToast } from 'primevue/usetoast'
 import { useBalanceWallet } from '../../../../composables/useBalanceWallet'
 import { useAssets } from '../../../../composables/useAssets'

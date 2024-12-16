@@ -52,8 +52,8 @@
       v-model:visible="visibleModalVeryCodeTwoFactor"
       :draggable="false"
       :header="t('twoFactor')"
-      :show-header="false"
       :modal="true"
+      :show-header="false"
       position="bottom"
     >
       <div class="flex justify-content-end text-2xl cursor-pointer">
@@ -76,7 +76,7 @@ import { useI18n } from 'vue-i18n'
 
 import Dialog from 'primevue/dialog'
 import VeryCodeTwoFactorAuth from '../../../../components/VeryCodeTwoFactorAuth.vue'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { useTwoFactorAuth } from '../../../../composables/useTwoFactorAuth'
 
 const { t } = useI18n({ useScope: 'global' })

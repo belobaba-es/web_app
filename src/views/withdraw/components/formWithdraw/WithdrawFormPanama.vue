@@ -120,8 +120,8 @@
           </div>
           <div>
             <Button
-              :label="t('continue')"
               :disabled="!isEnabledButtonToProceedWithdrawal"
+              :label="t('continue')"
               class="mb-4 mt-3 mr-2 w-8rem"
               @click="visible = true"
             />
@@ -134,8 +134,8 @@
   <Dialog
     v-model:visible="visible"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-    :style="{ width: '30rem' }"
     :show-header="false"
+    :style="{ width: '30rem' }"
     modal
   >
     <div class="flex justify-content-end text-2xl cursor-pointer">
@@ -160,7 +160,7 @@ import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
-import { useWithdraw } from '../../composable/useWithdraw'
+import { useWithdraw } from '../../composables/useWithdraw'
 import { WithdrawalPurpose } from '../../../../shared/propuseWithdrawal'
 import { useAuth } from '../../../../composables/useAuth'
 import MessageAlertActiveTwoFactorAuth from '../../../../components/MessageAlertActiveTwoFactorAuth.vue'

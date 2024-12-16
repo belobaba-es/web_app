@@ -67,7 +67,7 @@
 <script lang="ts" setup>
 import Button from 'primevue/button'
 import { useI18n } from 'vue-i18n'
-import { useLayout } from '../withdraw/composable/useLayout'
+import { useLayout } from '../withdraw/composables/useLayout'
 
 import { useRouter } from 'vue-router'
 

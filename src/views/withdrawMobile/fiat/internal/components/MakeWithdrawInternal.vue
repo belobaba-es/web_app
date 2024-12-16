@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <Dialog v-model:visible="visible" :draggable="false" :show-header="false" :modal="true" position="bottom">
+  <Dialog v-model:visible="visible" :draggable="false" :modal="true" :show-header="false" position="bottom">
     <div class="p-dialog-header-icons w-full justify-content-end p-2 float-right" style="position: relative; top: 7px">
       <button
         aria-label="Close"
@@ -72,7 +72,7 @@ import Dropdown, { DropdownChangeEvent } from 'primevue/dropdown'
 import BackButtonMobile from '../../../../../components/BackButtonMobile.vue'
 import Dialog from 'primevue/dialog'
 import ConfirmWithdrawUsa from '../../../../withdraw/components/modalWithdraw/ConfirmWithdrawUsa.vue'
-import { useWithdraw } from '../../../../withdraw/composable/useWithdraw'
+import { useWithdraw } from '../../../../withdraw/composables/useWithdraw'
 import { watch } from 'vue'
 
 const { t } = useI18n({ useScope: 'global' })
