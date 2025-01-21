@@ -8,8 +8,8 @@ export const WithdrawalPurpose = (isAccountSegregated: boolean) => {
       { value: 'TAX', name: 'TAX' },
       { value: 'LOAN', name: 'LOAN' },
       { value: 'TELECOM', name: 'TELECOM' },
-      { value: 'INTELLECTUAL_PROPERTY', name: 'INTELLECTUAL_PROPERTY' },
-      { value: 'OTHER_BUSINESS_SERVICES', name: 'OTHER_BUSINESS_SERVICES' },
+      { value: 'INTELLECTUAL_PROPERTY', name: 'INTELLECTUAL_PROPERTY' }
+
     ]
   }
 
@@ -35,7 +35,6 @@ export const WithdrawalPurpose = (isAccountSegregated: boolean) => {
     { value: 'EXPENSES_REIMBURSEMENT', name: 'EXPENSES_REIMBURSEMENT' },
     { value: 'PROFESSIONAL_SERVICES', name: 'PROFESSIONAL_SERVICES' },
     { value: 'MARKETING', name: 'MARKETING' },
-    { value: 'RENTAL_PROPERTY', name: 'RENTAL_PROPERTY' },
-    { value: 'OTHER', name: 'OTHER' },
+    { value: 'RENTAL_PROPERTY', name: 'RENTAL_PROPERTY' }
   ]
 }
