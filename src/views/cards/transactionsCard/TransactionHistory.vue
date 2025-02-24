@@ -9,6 +9,7 @@
             <th class="col-tipo">{{ t('transactionType') }}</th>
             <th class="col-fecha">{{ t('date') }}</th>
             <th class="col-monto">{{ t('amount') }}</th>
+            <th class="col-monto">{{ t('status') }}</th>
             <th class="col-recibo"></th>
           </tr>
         </thead>
@@ -28,6 +29,7 @@
             <td class="col-id-transaccion">#{{ getLastSixDigits(transaction.transactionId) }}</td>
             <td class="col-tipo">{{ t(transaction.operationType) }}</td>
             <td class="col-fecha">{{ formatDate(transaction.createdAt) }}</td>
+            <td class="col-fecha">{{ transaction.status }}</td>
             <td
               :style="{ color: !isPositiveAmount(transaction.amount) ? '#FE5C73' : 'var(--primary-color)' }"
               class="col-monto font-semi-bold"
@@ -37,11 +39,11 @@
             </td>
             <td class="col-recibo">
               <Button
-                class="font-semi-bold buttonColor"
                 :label="t('download')"
                 :loading="isGeneratingTransactionPDF"
-                @click="generatePdfTransactionCard(transaction)"
+                class="font-semi-bold buttonColor"
                 outlined
+                @click="generatePdfTransactionCard(transaction)"
               />
             </td>
           </tr>
@@ -90,7 +92,6 @@ const {
   prevPage,
   updateItemsPage,
 } = useTransactionCard()
-
 
 const isPositiveAmount = (amount: number) => {
   const formatedAmount = amount?.toString()
